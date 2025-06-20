@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_shared_link_icons",
+  "info": {
+    "displayName": "LinkIcons",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "LinkIcons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "Icons": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "HoverIcon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addact_blogs",
+  "info": {
+    "singularName": "addact-blog",
+    "pluralName": "addact-blogs",
+    "displayName": "AddactBlog"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "CommonSection": {
+      "type": "component",
+      "component": "base-template.common-section",
+      "repeatable": false
+    },
+    "BlogBanner": {
+      "type": "component",
+      "component": "blog-hero-banner.blog-hero-banner",
+      "repeatable": false
+    },
+    "ContentBody": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author.author"
+    },
+    "SimilarBlogs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::addact-blog.addact-blog"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_blog_hero_banner_blog_hero_banners",
+  "info": {
+    "displayName": "BlogHeroBanner"
+  },
+  "options": {},
+  "attributes": {
+    "BannerTitle": {
+      "type": "string"
+    },
+    "BannerDescription": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultMarkdown"
+      }
+    },
+    "PublishDate": {
+      "type": "date"
+    },
+    "BannerImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "blogcategory": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::blog-category.blog-category"
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author.author"
+    },
+    "ReadNow": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

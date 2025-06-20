@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_structured_data",
+  "info": {
+    "displayName": "structuredData",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "structuredData": {
+      "type": "richtext"
+    }
+  }
+}

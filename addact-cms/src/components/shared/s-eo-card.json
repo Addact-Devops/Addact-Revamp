@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_shared_s_eo_cards",
+  "info": {
+    "displayName": "SEoCard",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Site": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "label1": {
+      "type": "string"
+    },
+    "data1": {
+      "type": "string"
+    },
+    "label2": {
+      "type": "string"
+    },
+    "data2": {
+      "type": "string"
+    },
+    "Card": {
+      "type": "string"
+    },
+    "Creator": {
+      "type": "string"
+    },
+    "Publisher": {
+      "type": "string"
+    }
+  }
+}

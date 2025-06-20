@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_base_template_common_sections",
+  "info": {
+    "displayName": "CommonSection",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "PageTitle": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "string"
+    },
+    "BlogTag": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::blog-category.blog-category"
+    }
+  },
+  "config": {}
+}
