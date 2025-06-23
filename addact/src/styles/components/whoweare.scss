@@ -1,0 +1,72 @@
+@import "../base/variables";
+@import "../base/mixins";
+@import "../base/typography";
+@import "../base/functions";
+
+.who-we-are {
+  &__title {
+    width: 40%;
+  }
+
+  .flex {
+    gap: 100px;
+  }
+
+  &__description {
+    text-align: left;
+    width: 100%;
+  }
+
+  &__paragraph {
+    display: inline;
+  }
+
+  &__word {
+    display: inline-block;
+    opacity: 0.2;
+  }
+
+  .fade-in {
+    animation: fadeWord 1.3s ease forwards;
+  }
+
+  @keyframes fadeWord {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    overflow: hidden;
+    margin-top: 100px;
+  }
+
+  &__stat-item {
+    text-align: center;
+    padding: 60px;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  &__number {
+    color: $white;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+    font-weight: 700;
+  }
+
+  &__text {
+    font-size: pxToRem(24);
+    line-height: lineHeightRatio(42, 24);
+    font-weight: 400;
+  }
+}
