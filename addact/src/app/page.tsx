@@ -1,3 +1,4 @@
+import OurCmsExperts from "@/components/organisms/OurCmsExperts";
 import OurPartners from "@/components/organisms/OurPartners";
 import OurServices from "@/components/organisms/OurServices";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
@@ -9,7 +10,8 @@ export default function HomePage() {
       <OurPartners />
       <WhoWeAre />
       <OurServices />
-      <WhyAddact/>
+      <OurCmsExperts />
+      <WhyAddact />
     </main>
   );
 }

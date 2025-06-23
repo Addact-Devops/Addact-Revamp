@@ -40,7 +40,7 @@ const WhyAddact = () => {
     },
   ];
   return (
-    <section>
+    <section className="my-28 lg:my-48 xl:my-60">
       <div className="container">
         <div className="flex flex-col">
           <h2 className="border-after">Why Addact</h2>
