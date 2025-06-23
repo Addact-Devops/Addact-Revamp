@@ -1,58 +1,16 @@
 @import "./../base/variables";
 
 .partners {
-  padding: 100px 0;
-  border-top: 1px solid #2e2e2e;
-  border-bottom: 1px solid #2e2e2e;
-
-  &__container {
-    margin: 0 auto;
-  }
-
-  &__heading {
-    text-align: center;
-    margin-bottom: 80px;
-    color: $white;
-  }
-
-  &__marquee {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    padding: 1rem 0;
-  }
-
-  &__marquee-content {
-    display: flex;
-    gap: 80px;
-    animation: scroll-marquee 20s linear infinite;
-    width: fit-content;
-  }
-
-  &__logo-item {
-    min-width: 160px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    img {
-      max-width: 100%;
-      height: 64px;
-      object-fit: contain;
-      width: 100%;
+    &__marquee-content {
+        animation: scroll-marquee 20s linear infinite;
     }
-
-    &--large {
-      min-width: 160px;
-    }
-  }
 }
 
 @keyframes scroll-marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
