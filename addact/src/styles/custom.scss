@@ -5,27 +5,25 @@
 
 // Optional reset
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: $font-main;
-  background-color: $primary-color;
-  color: $white;
+    font-family: $font-main;
+    background-color: $primary-color;
+    color: $white;
 }
 
 .bg-dark {
-  background-color: $primary-color;
+    background-color: $primary-color;
 }
 
 .container {
-  max-width: 1640px;
-  padding: 0 20px;
-  margin: 0 auto;
+    max-width: 1640px;
+    padding: 0 20px;
+    margin: 0 auto;
 }
 
 .gap {
-  margin: 240px auto;
+    margin: 240px auto;
 }
