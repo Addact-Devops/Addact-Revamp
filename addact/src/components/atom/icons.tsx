@@ -28,3 +28,32 @@ export const RightArrowIcon: React.FC = () => {
     </svg>
   );
 };
+
+export const RightArrowUpIcon: React.FC = () => {
+  return (
+    <svg
+      width="44"
+      height="44"
+      viewBox="0 0 44 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M18.7832 14.4863L29.5135 14.4863L29.5135 25.2167"
+        stroke="white"
+        strokeWidth="2"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14.4883 29.5127L29.364 14.6369"
+        stroke="white"
+        strokeWidth="2"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};

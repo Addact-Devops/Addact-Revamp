@@ -1,5 +1,6 @@
 import CtaBanner from "@/components/molecules/CtaBanner";
 import OurCmsExperts from "@/components/organisms/OurCmsExperts";
+import OurInsights from "@/components/organisms/OurInsights";
 import OurPartners from "@/components/organisms/OurPartners";
 import OurServices from "@/components/organisms/OurServices";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
@@ -14,6 +15,7 @@ export default function HomePage() {
       <OurCmsExperts />
       <WhyAddact />
       <CtaBanner />
+      <OurInsights />
     </main>
   );
 }

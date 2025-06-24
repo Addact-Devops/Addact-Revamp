@@ -28,7 +28,9 @@ const OurCmsExperts = () => {
     <section className="my-24 sm:my-32 md:my-40 lg:my-60">
       <div className="container">
         <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-          <h2 className="w-full lg:w-[40%] border-after">Our CMS Expertise</h2>
+          <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10">
+            Our CMS Expertise
+          </h2>
 
           <div className="w-full text-left">
             <p className="text-base sm:text-3xl inline">
