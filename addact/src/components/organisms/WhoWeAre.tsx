@@ -55,14 +55,14 @@ const WhoWeAre = () => {
     }, []);
 
     return (
-        <section className='who-we-are gap' ref={sectionRef}>
-            <div className='container'>
-                <div className='flex gap-[100px]'>
-                    <h2 className='w-[40%] border-after'>Who Are We?</h2>
+        <section className="who-we-are gap" ref={sectionRef}>
+            <div className="container">
+                <div className="flex gap-[100px]">
+                    <h2 className="w-[40%] border-after">Who Are We?</h2>
 
-                    <div className='w-full text-left'>
+                    <div className="w-full text-left">
                         {paragraphLines.map((line, lineIndex) => (
-                            <p key={lineIndex} className='text-lg large inline'>
+                            <p key={lineIndex} className="text-lg large inline">
                                 {line.split(" ").map((word, wordIndex) => (
                                     <span
                                         key={wordIndex}
@@ -77,18 +77,18 @@ const WhoWeAre = () => {
                     </div>
                 </div>
 
-                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border border-white/15 mt-24 overflow-hidden'>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border border-white/15 mt-24 overflow-hidden">
                     {stats.map((item, index) => (
-                        <div key={index} className='text-center p-[60px] border-r border-white/15 last:border-r-0'>
+                        <div key={index} className="text-center p-[60px] border-r border-white/15 last:border-r-0">
                             <h2
-                                className='text-white !font-bold text-3xl mb-2 transition-colors duration-300'
+                                className="text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left"
                                 ref={(el) => {
                                     numberRefs.current[index] = el;
                                 }}
                             >
                                 0+
                             </h2>
-                            <div className='text-2xl text-left font-normal leading-[1.75]'>{item.content}</div>
+                            <div className="text-2xl text-left font-normal leading-[1.75]">{item.content}</div>
                         </div>
                     ))}
                 </div>

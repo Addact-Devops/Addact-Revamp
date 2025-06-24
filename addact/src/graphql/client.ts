@@ -1,14 +1,9 @@
-// import { GraphQLClient } from "graphql-request";
+// graphql/client.ts
 
-import { GraphQLClient } from "../../node_modules/graphql-request/build/entrypoints/main";
+import { GraphQLClient } from "graphql-request";
 
-const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT || "https://your-strapi.com/graphql";
+const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT || "https://uatcms.addact.net/graphql";
 
-const client = new GraphQLClient(endpoint, {
-   headers: {
-      // Add your token if needed
-      // Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_TOKEN}`,
-   },
-});
+const client = new GraphQLClient(endpoint);
 
 export default client;
