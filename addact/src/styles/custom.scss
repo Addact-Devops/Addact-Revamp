@@ -1,0 +1,29 @@
+@import "base/variables";
+@import "base/mixins";
+@import "base/typography";
+@import "base/functions";
+
+// Optional reset
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-main;
+    background-color: $primary-color;
+    color: $white;
+}
+
+.bg-dark {
+    background-color: $primary-color;
+}
+
+.container {
+    max-width: 1640px;
+    padding: 0 20px;
+    margin: 0 auto;
+}
+
+.gap {
+    margin: 240px auto;
+}

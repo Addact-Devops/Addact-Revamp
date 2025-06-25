@@ -1,0 +1,39 @@
+@use "sass:math";
+
+@function pxToRem($px, $base: 16) {
+    @return math.div($px, $base) * 1rem;
+}
+
+@function lineHeightRatio($lineHeightPx, $fontSizePx: 16) {
+    @return math.div($lineHeightPx, $fontSizePx);
+}
+
+h2 {
+    font-size: pxToRem(60);
+    line-height: normal;
+    font-family: $font-main;
+    font-weight: 400;
+
+    &.border-after {
+        position: relative;
+        padding-bottom: 40px;
+        height: fit-content;
+
+        &::after {
+            content: "";
+            position: absolute;
+            height: 5px;
+            width: 160px;
+            left: 0;
+            bottom: 0;
+            background-color: $blue;
+        }
+    }
+}
+
+p {
+    &.large {
+        font-size: pxToRem(34);
+        line-height: lineHeightRatio(54, 34);
+    }
+}
