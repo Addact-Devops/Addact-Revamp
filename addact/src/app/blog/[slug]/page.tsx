@@ -22,12 +22,12 @@ export default function BlogPage() {
         }
     }, [slug]);
 
-    if (loading) return <p className='p-6'>Loading...</p>;
-    if (!blog) return <p className='p-6 text-red-600'>Blog not found.</p>;
+    if (loading) return <p className="p-6">Loading...</p>;
+    if (!blog) return <p className="p-6 text-red-600">Blog not found.</p>;
 
     return (
-        <main className='max-w-3xl mx-auto p-6'>
-            <h1 className='text-3xl font-bold mb-6'>{blog.HeadingSection?.[0]?.PageTitle || "Untitled Blog"}</h1>
+        <main className="bg-black">
+            <h1 className="text-3xl font-bold mb-6">{blog.HeadingSection?.[0]?.PageTitle || "Untitled Blog"}</h1>
             {Array.isArray(blog.BlogContent) ? (
                 <BlogContentRenderer blocks={blog.BlogContent} />
             ) : (
