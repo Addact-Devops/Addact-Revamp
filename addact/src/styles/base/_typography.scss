@@ -8,6 +8,7 @@
     @return math.div($lineHeightPx, $fontSizePx);
 }
 
+h1,
 h2 {
     font-size: pxToRem(60);
     line-height: normal;
@@ -18,7 +19,7 @@ h2 {
         font-size: pxToRem(45);
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1300px) {
         font-size: pxToRem(40);
     }
 
