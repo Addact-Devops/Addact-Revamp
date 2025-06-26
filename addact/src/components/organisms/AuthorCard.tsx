@@ -45,7 +45,7 @@ export default function AuthorCard({ author }: { author: Author }) {
                                 alt={author.AuthorImage?.alternativeText || author.AuthorImage?.name || "Author Image"}
                                 width={120}
                                 height={120}
-                                className="object-cover rounded-full !m-[0] max-[991px]:!mb-[10px]"
+                                className="object-cover rounded-full !m-[0] max-[991px]:!mb-[10px] !w-[120px] !min-w-[120px] h-[120px]"
                                 priority
                             />
                         </div>
@@ -53,8 +53,8 @@ export default function AuthorCard({ author }: { author: Author }) {
                 </div>
 
                 <div>
-                    <h3 className="!text-[#5865F2] !font-bold !mb-[20px] !mt-0">{AuthorName}</h3>
-                    <p className="!text-[25px] max-[991px]:!text-[20px]">{designationText}</p>
+                    <h3 className="!text-[#5865F2] !font-black !mb-[20px] !mt-0">{AuthorName}</h3>
+                    <p className="!text-[25px] max-[991px]:!text-[20px] font-medium">{designationText}</p>
                 </div>
             </div>
 

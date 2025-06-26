@@ -20,11 +20,11 @@ const GET_BLOG_BY_SLUG = gql`
                     BannerTitle
                     BannerDescription
                     BannerImage {
-                        url
-                        width
+                        alternativeText
                         height
                         name
-                        alternativeText
+                        url
+                        width
                     }
                     PublishDate
                     ReadNow {
@@ -47,46 +47,46 @@ const GET_BLOG_BY_SLUG = gql`
                 }
             }
             BlogContent {
-                ... on ComponentHeadingsH1 {
+                ... on ComponentHeadingsH6 {
                     id
-                    h1
-                }
-                ... on ComponentHeadingsH2 {
-                    id
-                    h2
-                }
-                ... on ComponentHeadingsH3 {
-                    id
-                    h3
-                }
-                ... on ComponentHeadingsH4 {
-                    id
-                    h5
+                    h6
                 }
                 ... on ComponentHeadingsH5 {
                     id
                     h5
                 }
-                ... on ComponentHeadingsH6 {
+                ... on ComponentHeadingsH4 {
                     id
-                    h6
+                    h5
+                }
+                ... on ComponentHeadingsH3 {
+                    id
+                    h3
+                }
+                ... on ComponentHeadingsH2 {
+                    id
+                    h2
+                }
+                ... on ComponentHeadingsH1 {
+                    id
+                    h1
                 }
                 ... on ComponentSharedImage {
                     id
                     Image {
+                        alternativeText
+                        name
+                        height
                         url
                         width
-                        height
-                        name
-                        alternativeText
                     }
                 }
                 ... on ComponentSharedLink {
                     id
                     href
                     label
-                    isExternal
                     target
+                    isExternal
                 }
                 ... on ComponentBaseTemplateRichtext {
                     id
@@ -102,38 +102,23 @@ const GET_BLOG_BY_SLUG = gql`
                     AuthorName
                     AuthorDescription
                     AuthorImage {
-                        url
-                        width
-                        height
-                        name
                         alternativeText
+                        height
+                        width
+                        url
+                        name
                     }
                     designation {
                         DesignationTitle
                     }
                 }
             }
-            contactcard {
-                ContactCard {
-                    ... on ComponentCardCard {
-                        id
-                        CardTitle
-                        CardDescription
-                        CardLink {
-                            id
-                            href
-                            label
-                            isExternal
-                            target
-                        }
-                    }
-                }
-            }
+
             similarstorytitle {
                 CommonTitle {
                     ... on ComponentBaseTemplateTitleWithDescription {
-                        Title
                         Description
+                        Title
                     }
                 }
             }
@@ -143,11 +128,11 @@ const GET_BLOG_BY_SLUG = gql`
                         BannerTitle
                         BannerDescription
                         BannerImage {
-                            url
-                            width
+                            alternativeText
                             height
                             name
-                            alternativeText
+                            url
+                            width
                         }
                         PublishDate
                         ReadNow {
@@ -179,24 +164,42 @@ const GET_BLOG_BY_SLUG = gql`
                             id
                             href
                             label
-                            isExternal
                             target
+                            isExternal
                         }
                         Icons {
+                            alternativeText
+                            name
+                            height
                             url
                             width
-                            height
-                            name
-                            alternativeText
                         }
                         HoverIcon {
+                            alternativeText
+                            name
+                            height
                             url
                             width
-                            height
-                            name
-                            alternativeText
                         }
                     }
+                }
+            }
+            card {
+                CardTitle
+                CardDescription
+                CardLink {
+                    id
+                    href
+                    label
+                    target
+                    isExternal
+                }
+                BgImage {
+                    height
+                    name
+                    alternativeText
+                    url
+                    width
                 }
             }
         }
