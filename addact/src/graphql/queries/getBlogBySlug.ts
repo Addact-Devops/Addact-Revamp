@@ -8,6 +8,11 @@ const GET_BLOG_BY_SLUG = gql`
             HeadingSection {
                 ... on ComponentBaseTemplateCommonSection {
                     PageTitle
+                    BlogTag {
+                        Category {
+                            CategoryTitle
+                        }
+                    }
                 }
             }
             BlogBanner {
@@ -21,19 +26,27 @@ const GET_BLOG_BY_SLUG = gql`
                         name
                         alternativeText
                     }
+                    PublishDate
+                    ReadNow {
+                        id
+                        href
+                        label
+                        target
+                        isExternal
+                    }
+                    author {
+                        Author {
+                            AuthorName
+                        }
+                    }
                     blogcategory {
                         Category {
-                            id
                             CategoryTitle
                         }
                     }
                 }
             }
             BlogContent {
-                ... on ComponentBaseTemplateRichtext {
-                    id
-                    Richtext
-                }
                 ... on ComponentHeadingsH1 {
                     id
                     h1
@@ -75,6 +88,10 @@ const GET_BLOG_BY_SLUG = gql`
                     isExternal
                     target
                 }
+                ... on ComponentBaseTemplateRichtext {
+                    id
+                    Richtext
+                }
                 ... on Error {
                     code
                     message
@@ -83,7 +100,6 @@ const GET_BLOG_BY_SLUG = gql`
             author {
                 Author {
                     AuthorName
-                    Designation
                     AuthorDescription
                     AuthorImage {
                         url
@@ -91,6 +107,9 @@ const GET_BLOG_BY_SLUG = gql`
                         height
                         name
                         alternativeText
+                    }
+                    designation {
+                        DesignationTitle
                     }
                 }
             }
@@ -101,10 +120,81 @@ const GET_BLOG_BY_SLUG = gql`
                         CardTitle
                         CardDescription
                         CardLink {
+                            id
                             href
                             label
                             isExternal
                             target
+                        }
+                    }
+                }
+            }
+            similarstorytitle {
+                CommonTitle {
+                    ... on ComponentBaseTemplateTitleWithDescription {
+                        Title
+                        Description
+                    }
+                }
+            }
+            similarBlogs {
+                BlogBanner {
+                    ... on ComponentBlogHeroBannerBlogHeroBanner {
+                        BannerTitle
+                        BannerDescription
+                        BannerImage {
+                            url
+                            width
+                            height
+                            name
+                            alternativeText
+                        }
+                        PublishDate
+                        ReadNow {
+                            id
+                            href
+                            label
+                            target
+                            isExternal
+                        }
+                        author {
+                            Author {
+                                AuthorName
+                            }
+                        }
+                        blogcategory {
+                            Category {
+                                CategoryTitle
+                            }
+                        }
+                    }
+                }
+            }
+            socialicons {
+                SocialIcon {
+                    ... on ComponentBaseTemplateLinkImage {
+                        Title
+                        ClassName
+                        Links {
+                            id
+                            href
+                            label
+                            isExternal
+                            target
+                        }
+                        Icons {
+                            url
+                            width
+                            height
+                            name
+                            alternativeText
+                        }
+                        HoverIcon {
+                            url
+                            width
+                            height
+                            name
+                            alternativeText
                         }
                     }
                 }
@@ -138,7 +228,6 @@ type BlogBySlugResponse = {
         author?: {
             Author?: {
                 AuthorName: string;
-                Designation: string;
                 AuthorDescription: string;
                 AuthorImage?: {
                     url: string;
@@ -147,8 +236,12 @@ type BlogBySlugResponse = {
                     name: string;
                     alternativeText?: string;
                 };
+                designation?: {
+                    DesignationTitle: string;
+                };
             };
         };
+
         contactcard?: {
             ContactCard?: {
                 id: string;

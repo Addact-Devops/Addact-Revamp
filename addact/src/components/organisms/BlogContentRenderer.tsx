@@ -9,7 +9,7 @@ type ContentBlock = Record<string, any>;
 export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
     console.log("blocks", blocks);
     return (
-        <div className='space-y-6'>
+        <>
             {blocks.map((block, index) => {
                 if (block.h1) return <Heading key={index} level={1} text={block.h1} />;
 
@@ -46,6 +46,6 @@ export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[]
 
                 return null;
             })}
-        </div>
+        </>
     );
 }
