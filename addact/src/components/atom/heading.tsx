@@ -6,5 +6,5 @@ type Props = {
 
 export default function Heading({ text, level = 1 }: Props) {
     const Tag = `h${level}` as keyof JSX.IntrinsicElements;
-    return <Tag className='text-xl font-bold my-4'>{text}</Tag>;
+    return <Tag>{text}</Tag>;
 }
