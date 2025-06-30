@@ -206,7 +206,7 @@ const GET_BLOG_BY_SLUG = gql`
     }
 `;
 
-type BlogBySlugResponse = {
+export type BlogBySlugResponse = {
     addactBlogs: {
         Slug: string;
         HeadingSection?: { PageTitle?: string }[];
@@ -227,7 +227,27 @@ type BlogBySlugResponse = {
                 };
             };
         }[];
-        BlogContent?: any[];
+        BlogContent?: {
+            id: string;
+            Richtext?: string;
+            Image?: {
+                alternativeText: string;
+                name: string;
+                height: number;
+                url: string;
+                width: number;
+            };
+            h1?: string;
+            h2?: string;
+            h3?: string;
+            h4?: string;
+            h5?: string;
+            h6?: string;
+            href?: string;
+            label?: string;
+            target?: string;
+            isExternal?: boolean;
+        }[];
         author?: {
             Author?: {
                 AuthorName: string;
@@ -256,6 +276,24 @@ type BlogBySlugResponse = {
                     isExternal: boolean;
                     target: string;
                 };
+            };
+        };
+        card?: {
+            CardTitle: string;
+            CardDescription: string;
+            CardLink: {
+                id: string;
+                href: string;
+                label: string;
+                target: string;
+                isExternal: boolean;
+            };
+            BgImage: {
+                height: number;
+                name: string;
+                alternativeText: string;
+                url: string;
+                width: number;
             };
         };
     }[];
