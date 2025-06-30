@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { getAllBlogs } from "@/graphql/queries/getAllBlog";
 
 export default async function BlogListPage() {
@@ -9,7 +8,7 @@ export default async function BlogListPage() {
         <main className='max-w-6xl mx-auto p-6'>
             <h1 className='text-4xl font-bold mb-8'>Latest Blogs</h1>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-                {blogs.map((blog: any) => (
+                {blogs.map((blog) => (
                     <Link key={blog.Slug} href={`/blog${blog.Slug}`}>
                         <div className='border rounded-lg p-4 hover:shadow-md transition'>
                             {/* {blog.BlogBanner?.[0]?.BannerImage?.url && (
