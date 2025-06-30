@@ -1,15 +1,35 @@
 "use client";
 import StrapiImage from "../atom/blogImage";
-import Button from "../atom/button";
 import Heading from "../atom/heading";
 import RichText from "../atom/richText";
+import LinkBase from "../atom/linkBase";
 
-type ContentBlock = Record<string, any>;
+type ContentBlock = {
+    id: string;
+    Richtext?: string;
+    Image?: {
+        alternativeText: string;
+        name: string;
+        height: number;
+        url: string;
+        width: number;
+    };
+    h1?: string;
+    h2?: string;
+    h3?: string;
+    h4?: string;
+    h5?: string;
+    h6?: string;
+    href?: string;
+    label?: string;
+    target?: string;
+    isExternal?: boolean;
+}[];
 
-export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
+export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock }) {
     console.log("blocks", blocks);
     return (
-        <div className='space-y-6'>
+        <>
             {blocks.map((block, index) => {
                 if (block.h1) return <Heading key={index} level={1} text={block.h1} />;
 
@@ -26,7 +46,7 @@ export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[]
                     return (
                         <StrapiImage
                             key={index}
-                            src={block.Image.formats?.medium?.url || block.Image.url}
+                            src={block.Image.url}
                             alt={block.Image.alternativeText}
                             width={block.Image.width}
                             height={block.Image.height}
@@ -35,7 +55,7 @@ export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[]
 
                 if (block.href && block.label)
                     return (
-                        <Button
+                        <LinkBase
                             key={index}
                             href={block.href}
                             label={block.label}
@@ -46,6 +66,6 @@ export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[]
 
                 return null;
             })}
-        </div>
+        </>
     );
 }
