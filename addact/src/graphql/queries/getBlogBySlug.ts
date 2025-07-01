@@ -117,16 +117,16 @@ const GET_BLOG_BY_SLUG = gql`
             similarstorytitle {
                 CommonTitle {
                     ... on ComponentBaseTemplateTitleWithDescription {
-                        Description
                         Title
+                        Description
                     }
                 }
             }
+
             similarBlogs {
                 BlogBanner {
                     ... on ComponentBlogHeroBannerBlogHeroBanner {
                         BannerTitle
-                        BannerDescription
                         BannerImage {
                             alternativeText
                             height
@@ -155,6 +155,26 @@ const GET_BLOG_BY_SLUG = gql`
                     }
                 }
             }
+
+            card {
+                CardTitle
+                CardDescription
+                CardLink {
+                    id
+                    href
+                    label
+                    target
+                    isExternal
+                }
+                BgImage {
+                    height
+                    name
+                    alternativeText
+                    url
+                    width
+                }
+            }
+
             socialicons {
                 SocialIcon {
                     ... on ComponentBaseTemplateLinkImage {
@@ -182,24 +202,6 @@ const GET_BLOG_BY_SLUG = gql`
                             width
                         }
                     }
-                }
-            }
-            card {
-                CardTitle
-                CardDescription
-                CardLink {
-                    id
-                    href
-                    label
-                    target
-                    isExternal
-                }
-                BgImage {
-                    height
-                    name
-                    alternativeText
-                    url
-                    width
                 }
             }
         }
@@ -264,20 +266,6 @@ export type BlogBySlugResponse = {
                 };
             };
         };
-
-        contactcard?: {
-            ContactCard?: {
-                id: string;
-                CardTitle: string;
-                CardDescription: string;
-                CardLink?: {
-                    href: string;
-                    label: string;
-                    isExternal: boolean;
-                    target: string;
-                };
-            };
-        };
         card?: {
             CardTitle: string;
             CardDescription: string;
@@ -296,6 +284,42 @@ export type BlogBySlugResponse = {
                 width: number;
             };
         };
+        similarstorytitle?: {
+            CommonTitle?: {
+                Title?: string;
+                Description?: string;
+            };
+        };
+        similarBlogs?: {
+            BlogBanner?: {
+                BannerTitle?: string;
+                PublishDate?: string;
+                BannerImage?: {
+                    alternativeText?: string;
+                    name?: string;
+                    url?: string;
+                    width?: number;
+                    height?: number;
+                };
+                ReadNow?: {
+                    id?: string;
+                    href?: string;
+                    label?: string;
+                    target?: string;
+                    isExternal?: boolean;
+                };
+                author?: {
+                    Author?: {
+                        AuthorName?: string;
+                    };
+                };
+                blogcategory?: {
+                    Category?: {
+                        CategoryTitle?: string;
+                    };
+                };
+            }[];
+        }[];
     }[];
 };
 
