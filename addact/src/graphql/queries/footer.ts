@@ -70,6 +70,8 @@ const GET_FOOTER = gql`
                     }
                 }
             }
+            CopyrightText
+            SiteSlog
         }
     }
 `;
@@ -134,6 +136,8 @@ export type FooterResponse = {
                 width?: number;
             } | null;
         }[];
+        CopyrightText?: string;
+        SiteSlog?: string;
     }[];
 };
 

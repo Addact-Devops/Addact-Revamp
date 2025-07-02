@@ -64,17 +64,24 @@ type FooterProps = {
                 name?: string;
             } | null;
         }[];
+        CopyrightText?: string;
+        SiteSlog?: string;
     };
 };
 
 export default function Footer({ data }: FooterProps) {
     if (!data) return null;
 
-    const { Logo, BackGroundImage, BackGroundImageMobile, AddressInfo, footerlinks, milestonestitle, milestonesimage } =
-        data;
+    const { Logo, BackGroundImage, AddressInfo, footerlinks, milestonestitle, milestonesimage } = data;
 
     return (
-        <footer className="relative bg-[#111] text-white pt-20 pb-10 px-6 overflow-hidden">
+        <footer
+            className="relative bg-[#0F0F0F] text-white py-[60px] mt-[120px]
+             bg-[length:10%_100%] 
+             bg-[linear-gradient(to_right,rgba(255,255,255,0.15)_1px,transparent_1px)] 
+             bg-repeat-x
+             border-t border-b border-white/15"
+        >
             {/* Background Image */}
             {BackGroundImage?.Image?.url && (
                 <Image
@@ -87,7 +94,7 @@ export default function Footer({ data }: FooterProps) {
             )}
 
             <div className="container mx-auto relative z-10 grid grid-cols-12 gap-6">
-                {/* col-span-3: Logo & tagline */}
+                {/* Logo Section */}
                 <div className="col-span-3 flex flex-col justify-start">
                     {Logo?.Image?.url && (
                         <Image
@@ -95,79 +102,94 @@ export default function Footer({ data }: FooterProps) {
                             alt={Logo.Image.alternativeText || ""}
                             width={380}
                             height={47}
-                            className="mb-3"
+                            className="mb-[30px]"
                         />
                     )}
-                    <p className="text-base">We add Values!</p>
+
+                    {data?.SiteSlog && <p className="!text-[24px] !font-normal text-white">{data.SiteSlog}</p>}
                 </div>
 
-                {/* offset col-span-1 */}
-                <div className="col-span-1"></div>
+                {/* Spacer */}
+                <div className="col-span-1" />
 
-                {/* col-span-2: Services */}
-                {footerlinks?.slice(0, 4).map((column, index) => {
-                    const links = column.NavLink || [];
-                    const titleItem = links[0] as { Title?: string };
-                    const linkItems = links.slice(1) as FooterLink[];
+                {/* Links & Contact Info */}
+                <div className="col-span-8">
+                    {/* 4 Link Sections */}
+                    <div className="grid grid-cols-4 gap-6">
+                        {footerlinks?.slice(0, 4).map((column, index) => {
+                            const links = column.NavLink || [];
+                            const titleItem = links[0] as { Title?: string };
+                            const linkItems = links.slice(1) as FooterLink[];
 
-                    return (
-                        <div key={index} className="col-span-2">
-                            <h4 className="text-lg font-medium mb-3">{titleItem?.Title}</h4>
-                            <ul className="space-y-2">
-                                {linkItems.map((link, i) => (
-                                    <li key={link.id || i}>
-                                        <Link
-                                            href={link.href || "/"}
-                                            target={link.target || "_self"}
-                                            rel={link.isExternal ? "noopener noreferrer" : undefined}
-                                            className="text-sm text-gray-300 hover:text-white"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    );
-                })}
+                            return (
+                                <div key={index}>
+                                    <div className="text-[24px] font-semibold mb-6">{titleItem?.Title}</div>
 
-                {/* col-span-2: Contact Info (right side column) */}
-                <div className="col-span-2">
-                    <h4 className="text-lg font-medium mb-3">Contact Info</h4>
-                    {AddressInfo?.map((item, i) => (
-                        <div key={i} className="mb-4">
-                            <h5 className="text-base font-semibold mb-1">{item.Title}</h5>
-                            <div
-                                className="text-sm text-gray-300"
-                                dangerouslySetInnerHTML={{ __html: item.Description || "" }}
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                {/* Milestone Section */}
-                {(milestonestitle?.CommonTitle?.[0]?.Title || milestonesimage?.some((i) => i.Image?.url)) && (
-                    <div className="col-span-12 mt-12 text-center">
-                        <h3 className="text-2xl font-semibold mb-6">{milestonestitle?.CommonTitle?.[0]?.Title}</h3>
-                        <div className="flex flex-wrap justify-center gap-6">
-                            {milestonesimage
-                                ?.filter((m) => m.Image?.url)
-                                .map((item, i) => (
-                                    <Image
-                                        key={i}
-                                        src={item.Image!.url!}
-                                        alt={item.Image!.alternativeText || ""}
-                                        width={item.Image!.width || 100}
-                                        height={item.Image!.height || 100}
-                                        className="h-16 w-auto object-contain"
-                                    />
-                                ))}
-                        </div>
+                                    <ul className="space-y-[15px]">
+                                        {linkItems.map((link, i) => (
+                                            <li key={link.id || i}>
+                                                <Link
+                                                    href={link.href || "/"}
+                                                    target={link.target || "_self"}
+                                                    rel={link.isExternal ? "noopener noreferrer" : undefined}
+                                                    className="text-[20px] text-[#AEAEAE] font-medium hover:text-white"
+                                                >
+                                                    {link.label}
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            );
+                        })}
                     </div>
-                )}
 
-                {/* Copyright */}
-                <div className="col-span-12 mt-10 text-sm text-gray-400">© Addact - 2025 All Rights Reserved</div>
+                    {/* Contact Info Below Link Sections */}
+                    <div className="grid grid-cols-4 gap-6 mt-[60px]">
+                        {AddressInfo?.map((item, i) => (
+                            <div key={i}>
+                                <div className="text-[24px] font-semibold mb-6">{item.Title}</div>
+                                <div
+                                    className="custom-html-content"
+                                    dangerouslySetInnerHTML={{ __html: item.Description || "" }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Milestone + Copyright Section in one row */}
+                <div className="col-span-12 grid grid-cols-12 mt-12 gap-6 items-end">
+                    {/* Copyright Text - col-span-6 */}
+                    {data?.CopyrightText && (
+                        <div className="col-span-6 text-left text-[18px] font-medium text-white">
+                            {data.CopyrightText}
+                        </div>
+                    )}
+
+                    {/* Milestone Section - col-span-6 */}
+                    {(milestonestitle?.CommonTitle?.[0]?.Title || milestonesimage?.some((i) => i.Image?.url)) && (
+                        <div className="col-span-6 text-left">
+                            <div className="text-[24px] font-semibold mb-[50px]">
+                                {milestonestitle?.CommonTitle?.[0]?.Title}
+                            </div>
+                            <div className="flex flex-wrap gap-[65px]">
+                                {milestonesimage
+                                    ?.filter((m) => m.Image?.url)
+                                    .map((item, i) => (
+                                        <Image
+                                            key={i}
+                                            src={item.Image!.url!}
+                                            alt={item.Image!.alternativeText || ""}
+                                            width={item.Image!.width || 100}
+                                            height={item.Image!.height || 100}
+                                            className="h-16 w-auto object-contain"
+                                        />
+                                    ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </footer>
     );

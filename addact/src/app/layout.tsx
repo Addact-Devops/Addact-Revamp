@@ -4,8 +4,8 @@ import "./globals.css";
 import "../styles/custom.scss";
 
 // Add these imports
-// import Footer from "@/components/organisms/Footer";
-// import { getFooterData } from "@/graphql/queries/footer";
+import Footer from "@/components/organisms/Footer";
+import { getFooterData } from "@/graphql/queries/footer";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -28,7 +28,7 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    // const footerData = await getFooterData();
+    const footerData = await getFooterData();
 
     return (
         <html lang="en">
@@ -42,7 +42,7 @@ export default async function RootLayout({
             </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 {children}
-                {/* <Footer data={footerData} /> */}
+                <Footer data={footerData} />
             </body>
         </html>
     );

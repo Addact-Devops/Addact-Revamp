@@ -106,3 +106,15 @@ p {
         line-height: lineHeightRatio(54, 34);
     }
 }
+
+.custom-html-content {
+    p {
+        font-size: 18px;
+        line-height: 33px;
+    }
+
+    a {
+        display: block;
+        margin-top: 15px;
+    }
+}
