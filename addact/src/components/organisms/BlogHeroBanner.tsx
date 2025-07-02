@@ -4,30 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { getAllBlogs } from "@/graphql/queries/getAllBlog";
 
-type BlogType = {
-    Slug: string;
-    BlogBanner?: {
-        BannerTitle?: string;
-        BannerImage?: {
-            url: string;
-            width: number;
-            height: number;
-            name: string;
-            alternativeText?: string;
-        };
-        author?: {
-            Author?: {
-                AuthorName?: string;
-            };
-        };
-        blogcategory?: {
-            Category?: {
-                CategoryTitle?: string;
-            };
-        };
-    }[];
-};
-
 export default function BlogHeroBanner({
     searchText,
     setSearchText,
@@ -104,10 +80,12 @@ export default function BlogHeroBanner({
         >
             <div className="container text-center pt-[80px]">
                 <h1 className="text-[42px] md:text-[60px] font-bold mb-[20px] leading-[1.2]">{title}</h1>
-                <p className="!text-[18px] !md:text-[20px] max-w-[800px] mx-auto mb-[40px]">{description}</p>
+                <p className="!text-[18px] !md:text-[20px] max-w-[800px] mx-auto mb-[40px] font-medium">
+                    {description}
+                </p>
 
                 <div className="flex max-w-[500px] mx-auto rounded-full overflow-hidden shadow-md bg-white">
-                    <span className="text-[#e97777] pl-[15px] pr-[5px] py-[15px] flex items-center">
+                    <span className="text-[#e97777] pl-[15px] pr-[5px] flex items-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -127,7 +105,7 @@ export default function BlogHeroBanner({
                     <input
                         type="text"
                         placeholder="Search blogs"
-                        className="flex-1 text-black outline-none bg-transparent text-md font-medium"
+                        className="flex-1 text-black outline-none bg-transparent text-md font-medium py-[15px]"
                         value={localSearch}
                         onChange={(e) => {
                             setLocalSearch(e.target.value);
@@ -139,7 +117,7 @@ export default function BlogHeroBanner({
                     />
 
                     <button
-                        className="bg-[#e97777] hover:bg-[#e56d6d] text-white text-md font-semibold px-5 py-[15px] cursor-pointer rounded-full"
+                        className="bg-[#e97777] hover:bg-[#e56d6d] text-white text-md font-semibold px-5 py-[15px] cursor-pointer"
                         onClick={handleURLSearch}
                     >
                         Search

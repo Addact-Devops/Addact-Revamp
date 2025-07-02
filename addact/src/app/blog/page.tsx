@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { getAllBlogs } from "@/graphql/queries/getAllBlog";
 import BlogHeroBanner from "@/components/organisms/BlogHeroBanner";
 import { useSearchParams } from "next/navigation";
@@ -33,7 +34,7 @@ type BlogType = {
     }[];
 };
 
-export default function BlogListPage() {
+function BlogListContent() {
     const [addactBlogs, setAddactBlogs] = useState<BlogType[]>([]);
     const [filteredBlogs, setFilteredBlogs] = useState<BlogType[]>([]);
     const [searchText, setSearchText] = useState("");
@@ -83,7 +84,7 @@ export default function BlogListPage() {
     }, [searchText, selectedCategory, addactBlogs]);
 
     return (
-        <main className="bg-[#0E0D0D]">
+        <>
             <BlogHeroBanner
                 searchText={searchText}
                 setSearchText={setSearchText}
@@ -124,13 +125,15 @@ export default function BlogListPage() {
                                 <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
                                     {imageUrl && (
                                         <div className="rounded-xl overflow-hidden mb-4">
-                                            <img
+                                            <Image
                                                 src={imageUrl}
                                                 alt={
                                                     banner.BannerImage?.alternativeText ||
                                                     banner.BannerImage?.name ||
                                                     "Blog Image"
                                                 }
+                                                width={600}
+                                                height={400}
                                                 className="w-full object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
                                             />
                                         </div>
@@ -151,6 +154,16 @@ export default function BlogListPage() {
                     })}
                 </div>
             </div>
+        </>
+    );
+}
+
+export default function BlogListPage() {
+    return (
+        <main className="bg-[#0E0D0D]">
+            <Suspense fallback={<div className="text-white text-center py-10">Loading...</div>}>
+                <BlogListContent />
+            </Suspense>
         </main>
     );
 }
