@@ -55,7 +55,7 @@ export default function BlogPage() {
 
                     {windowWidth > 1100 && (
                         <div className="w-[30%] sticky top-[30px] self-start z-[20]">
-                            <BlogContactCard card={blog.card} />
+                            <BlogContactCard card={blog.contactCard?.ContactCard?.[0]} />
                         </div>
                     )}
                 </div>
