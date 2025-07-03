@@ -2,6 +2,18 @@
 module.exports = {
     content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
+        container: {
+            center: true,
+            padding: "16px",
+            screens: {
+                sm: "720px",
+                md: "960px",
+                lg: "1152px",
+                xl: "1248px",
+                "2xl": "1600px",
+            },
+        },
+
         colors: {
             grayCustom: "#2e2e2e",
         },
