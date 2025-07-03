@@ -9,15 +9,15 @@ import WhyAddact from "@/components/organisms/WhyAddact";
 
 export default function HomePage() {
     return (
-        <main className="bg-dark">
+        <main className='bg-dark'>
             <OurPartners />
             <WhoWeAre />
             <OurServices />
             <OurCmsExperts />
             <WhyAddact />
             <CtaBanner />
-            <OurInsights />
             <OurProcess />
+            <OurInsights />
         </main>
     );
 }
