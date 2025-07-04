@@ -67,20 +67,9 @@ export default function Footer({ data }: FooterProps) {
     } = data;
 
     return (
-        <footer className="relative bg-[#0F0F0F] text-white mt-[120px] pt-[60px] pb-[40px] border-t border-b border-white/15">
-            {/* Desktop Background */}
-            {BackGroundImage?.Image?.url && (
-                <Image
-                    src={BackGroundImage.Image.url}
-                    alt={BackGroundImage.Image.alternativeText || "Background"}
-                    width={1200}
-                    height={1200}
-                    className="absolute top-0 left-0 h-full w-auto z-0 object-cover opacity-100 hidden md:block"
-                />
-            )}
-
-            {/* Mobile Contact Info with BG */}
-            <div className="block md:hidden relative z-10 px-6 pb-6">
+        <>
+            {/* Mobile Contact Info + Background */}
+            <div className="block lg:hidden relative bg-[#0F0F0F] p-[40px] px-[25px]">
                 {AddressInformationMobileBgImg?.[0]?.Image?.url && (
                     <Image
                         src={AddressInformationMobileBgImg[0].Image.url}
@@ -90,105 +79,171 @@ export default function Footer({ data }: FooterProps) {
                         className="absolute top-0 left-0 w-full h-full object-cover z-0"
                     />
                 )}
-
-                <div className="relative z-10 py-8 text-white space-y-6">
-                    {AddressInformation?.filter(Boolean).map((item, i) => (
-                        <div key={i}>
-                            {item?.Title && <h3 className="text-lg font-semibold mb-1">{item.Title}</h3>}
-                            {item?.Description && (
-                                <div className="text-sm" dangerouslySetInnerHTML={{ __html: item.Description }} />
+                <div className="relative text-white">
+                    {/* Title Block - Contact Info */}
+                    {AddressInformation?.[0] && (
+                        <div>
+                            {AddressInformation[0].Title && (
+                                <div className="text-[28px] font-normal mb-[12px]">{AddressInformation[0].Title}</div>
+                            )}
+                            {AddressInformation[0].Description && (
+                                <div
+                                    className="text-[14px] font-normal"
+                                    dangerouslySetInnerHTML={{ __html: AddressInformation[0].Description }}
+                                />
                             )}
                         </div>
-                    ))}
-                </div>
-            </div>
+                    )}
 
-            <div className="container mx-auto relative z-10 px-4 md:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                    {/* Logo and Tagline */}
-                    <div className="md:col-span-3 flex flex-col justify-start">
-                        {Logo?.Image?.url && (
-                            <Image
-                                src={Logo.Image.url}
-                                alt={Logo.Image.alternativeText || ""}
-                                width={380}
-                                height={47}
-                                className="mb-[30px]"
-                            />
-                        )}
-                        {SiteSlog && <p className="!text-[24px] !font-normal text-white">{SiteSlog}</p>}
-                    </div>
-
-                    {/* Spacer */}
-                    <div className="hidden md:block md:col-span-1" />
-
-                    {/* Footer Columns */}
-                    <div className="md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {footerlinks?.slice(0, 4).map((column, index) => {
-                            const links = column.NavLink || [];
-                            const titleItem = links[0] as { Title?: string };
-                            const linkItems = links.slice(1) as FooterLink[];
-
-                            return (
-                                <div key={index}>
-                                    <div className="text-[20px] md:text-[24px] font-semibold mb-4 md:mb-6">
-                                        {titleItem?.Title}
-                                    </div>
-                                    <ul className="space-y-[10px] md:space-y-[15px]">
-                                        {linkItems.map((link, i) => (
-                                            <li key={link.id || i}>
-                                                <Link
-                                                    href={link.href || "/"}
-                                                    target={link.target || "_self"}
-                                                    rel={link.isExternal ? "noopener noreferrer" : undefined}
-                                                    className="text-[16px] md:text-[20px] text-[#AEAEAE] font-medium hover:text-white"
-                                                >
-                                                    {link.label}
-                                                </Link>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    {/* Divider */}
-                    <div className="hidden md:block md:col-span-12 my-[50px] border-t border-white/20" />
-
-                    {/* Desktop Address Info */}
-                    <div className="hidden md:grid md:col-span-12 grid-cols-3 gap-6">
-                        {AddressInformation?.filter(Boolean).map((item, i) => (
+                    {/* Grid for India and United States */}
+                    <div className="grid grid-cols-2 gap-[15px] mt-6">
+                        {AddressInformation?.slice(1, 3).map((item, i) => (
                             <div key={i}>
-                                {item?.Title && <div className="text-[24px] font-semibold mb-6">{item.Title}</div>}
+                                {item?.Title && (
+                                    <div className="lg:text-[28px] text-[16px] font-[600] mb-[10px]">{item.Title}</div>
+                                )}
                                 {item?.Description && (
                                     <div
-                                        className="custom-html-content"
+                                        className="text-[14px] font-normal footer-richtext"
                                         dangerouslySetInnerHTML={{ __html: item.Description }}
                                     />
                                 )}
                             </div>
                         ))}
                     </div>
+                </div>
+            </div>
+
+            {/* Main Footer starts here */}
+            <footer
+                className="relative bg-[#0F0F0F] text-white lg:py-[60px] py-[40px] mt-[40px] lg:mt-[120px]
+                bg-[length:25%_100%] lg:bg-[length:10%_100%]
+                bg-[linear-gradient(to_right,rgba(255,255,255,0.10)_1px,transparent_1px)] 
+                bg-repeat-x border-t border-b border-white/15"
+            >
+                {/* Desktop BG Image */}
+                {BackGroundImage?.Image?.url && (
+                    <Image
+                        src={BackGroundImage.Image.url}
+                        alt="footer background"
+                        width={1200}
+                        height={1200}
+                        className="absolute bottom-0 right-0 
+                        max-h-[400px] h-full w-auto z-0 object-cover opacity-100 
+                        scale-x-[-1] 
+                        md:top-0 md:left-0 md:bottom-auto md:right-auto 
+                        md:max-h-none md:scale-x-100"
+                    />
+                )}
+
+                <div className="container relative grid grid-cols-12">
+                    {/* Logo and Slogan */}
+                    <div className="col-span-12 lg:col-span-3 flex flex-col justify-start">
+                        {Logo?.Image?.url && (
+                            <Image
+                                src={Logo.Image.url}
+                                alt={Logo.Image.alternativeText || ""}
+                                width={380}
+                                height={47}
+                                className="
+                                    mb-[10px]
+                                    sm:mb-[15px]
+                                    lg:mb-[20px]
+                                    w-[120px] h-auto
+                                    sm:w-[150px]
+                                    lg:w-[200px]
+                                    xl:w-[320px]
+                                    2xl:w-[380px] 2xl:h-[47px]
+                                "
+                            />
+                        )}
+                        {SiteSlog && (
+                            <p
+                                className="
+                                    text-[12px]
+                                    sm:text-[14px]
+                                    lg:text-[16px]
+                                    xl:text-[20px]
+                                    2xl:text-[24px]
+                                    font-normal text-white
+                                    "
+                            >
+                                {SiteSlog}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Spacer */}
+                    <div className="hidden lg:block lg:col-span-1" />
+
+                    {/* Links */}
+                    <div className="col-span-12 lg:col-span-8">
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                            {footerlinks?.slice(0, 4).map((column, index) => {
+                                const links = column.NavLink || [];
+                                const titleItem = links[0] as { Title?: string };
+                                const linkItems = links.slice(1) as FooterLink[];
+
+                                return (
+                                    <div key={index}>
+                                        <div className="text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] font-semibold lg:mb-6 mb-2 mt-[25px] lg:mt-0">
+                                            {titleItem?.Title}
+                                        </div>
+                                        <ul className="lg:space-y-[15px] space-y-[5px]">
+                                            {linkItems.map((link, i) => (
+                                                <li key={link.id || i}>
+                                                    <Link
+                                                        href={link.href || "/"}
+                                                        target={link.target || "_self"}
+                                                        rel={link.isExternal ? "noopener noreferrer" : undefined}
+                                                        className="2xl:text-[20px] xl:text-[18px] md:text-[17px] text-[16px] text-[#AEAEAE] font-medium hover:text-white"
+                                                    >
+                                                        {link.label}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* Desktop Address Info */}
+                        <div className="hidden lg:grid 2xl:grid-cols-4 lg:grid-cols-3 2xl:gap-4 xl:gap-6 mt-[60px]">
+                            {AddressInformation?.filter(Boolean).map((item, i) => (
+                                <div key={i}>
+                                    {item?.Title && (
+                                        <div className="2xl:text-[24px] xl:text-[20px] md:text-[18px] font-semibold mb-6">
+                                            {item.Title}
+                                        </div>
+                                    )}
+                                    {item?.Description && (
+                                        <div
+                                            className="custom-html-content"
+                                            dangerouslySetInnerHTML={{ __html: item.Description }}
+                                        />
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
 
                     {/* Bottom Row */}
-                    <div className="col-span-12 grid md:grid-cols-12 mt-12 gap-6 items-start md:items-end">
-                        {/* Copyright */}
+                    <div className="col-span-12 flex flex-col-reverse 2xl:grid lg:grid-cols-12 lg:mt-12 2xl:gap-6 lg:gap-[50px] items-end">
+                        {/* Copyright - shown last on mobile */}
                         {CopyrightText && (
-                            <div className="col-span-12 md:col-span-6 text-left text-[16px] md:text-[18px] font-medium text-white mb-4 md:mb-0">
+                            <div className="w-full lg:col-span-6 2xl:text-left text-center lg:text-[18px] text-[14px] font-medium text-[#AEAEAE]">
                                 {CopyrightText}
                             </div>
                         )}
 
-                        {/* Milestones */}
+                        {/* Milestones - shown first on mobile */}
                         {(milestonestitle?.CommonTitle?.[0]?.Title || milestonesimage?.some((i) => i.Image?.url)) && (
-                            <div className="col-span-12 md:col-span-6 text-left">
-                                {milestonestitle?.CommonTitle?.[0]?.Title && (
-                                    <div className="text-[20px] md:text-[24px] font-semibold mb-6 md:mb-[50px]">
-                                        {milestonestitle.CommonTitle[0].Title}
-                                    </div>
-                                )}
-                                <div className="flex flex-wrap gap-[30px] md:gap-[65px]">
+                            <div className="w-full lg:col-span-6 2xl:text-left lg:text-center mb-[40px] lg:mb-0">
+                                <div className="text-[16px] md:text-[22px] xl:text-[24px] font-semibold 2xl:mb-[50px] xl:mb-[20px] mb-[15px] mt-[25px] lg:mt-0">
+                                    {milestonestitle?.CommonTitle?.[0]?.Title}
+                                </div>
+                                <div className="flex flex-wrap gap-[5px] lg:gap-[65px] xl:justify-center 2xl:justify-start">
                                     {milestonesimage
                                         ?.filter((m) => m.Image?.url)
                                         .map((item, i) => (
@@ -198,7 +253,13 @@ export default function Footer({ data }: FooterProps) {
                                                 alt={item.Image!.alternativeText || ""}
                                                 width={item.Image!.width || 100}
                                                 height={item.Image!.height || 100}
-                                                className="h-16 w-auto object-contain"
+                                                className="
+                                                    max-w-[60px]
+                                                    sm:max-w-[70px]
+                                                    lg:max-w-[90px]
+                                                    xl:max-w-[100px]
+                                                    h-auto object-contain
+                                                "
                                             />
                                         ))}
                                 </div>
@@ -206,7 +267,7 @@ export default function Footer({ data }: FooterProps) {
                         )}
                     </div>
                 </div>
-            </div>
-        </footer>
+            </footer>
+        </>
     );
 }
