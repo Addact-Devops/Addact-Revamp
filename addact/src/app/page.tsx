@@ -1,4 +1,5 @@
 import CtaBanner from "@/components/molecules/CtaBanner";
+import ContactUs from "@/components/organisms/ContactUs";
 import OurCmsExperts from "@/components/organisms/OurCmsExperts";
 import OurInsights from "@/components/organisms/OurInsights";
 import OurPartners from "@/components/organisms/OurPartners";
@@ -18,6 +19,7 @@ export default function HomePage() {
             <CtaBanner />
             <OurProcess />
             <OurInsights />
+            <ContactUs />
         </main>
     );
 }
