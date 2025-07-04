@@ -1,5 +1,6 @@
 import { getClientTestimonialsData } from "@/graphql/queries/getClientTestimonialsData";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
+import ContactUs from "@/components/organisms/ContactUs";
 import OurPartners from "@/components/organisms/OurPartners";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
 import OurServices from "@/components/organisms/OurServices";
@@ -23,6 +24,7 @@ export default async function HomePage() {
             <OurProcess />
             <ClientTestimonials data={data} />
             <OurInsights />
+            <ContactUs />
         </main>
     );
 }
