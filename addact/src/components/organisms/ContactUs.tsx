@@ -70,75 +70,77 @@ const ContactUs = () => {
             <div className='container mx-auto border border-gray-700 overflow-hidden !p-0'>
                 <div className='flex flex-col justify-between'>
                     <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
-                        <div className='md:w-1/3 border-r border-gray-700 px-16 py-28'>
-                            <h2 className='text-5xl font-semibold leading-tight'>Contact us</h2>
-                            <div className='h-[5px] w-[160px] bg-blue-600 mt-2 mb-4'></div>
+                        <div className='md:w-1/3 border-r border-gray-700 px-6 md:px-16 py-10 md:py-28'>
+                            <h2 className='text-3xl md:text-5xl font-semibold leading-tight'>Contact us</h2>
+                            <div className='h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-blue-600 mt-2 mb-4'></div>
                         </div>
-                        <p className='md:w-[77%] text-white px-16 font-light !text-3xl !leading-[54px]'>
+                        <p className='md:w-[77%] text-white px-6 md:px-16 font-light text-base md:!text-3xl md:!leading-[54px]'>
                             We would love to hear from you. Feel free to reach out to us for your next project and we
                             will be available at your earliest convenience.
                         </p>
                     </div>
-                    <div className='flex items-center justify-center'>
+                    <div className='flex flex-col lg:flex-row items-center justify-center'>
                         <form
                             onSubmit={handleSubmit}
-                            className='space-y-6 w-1/2 px-11 py-20 border-t border-gray-700 h-[594px]'
+                            className='space-y-6 w-full lg:w-1/2 px-6 md:px-11 py-10 md:py-20 border-t border-gray-700'
                         >
                             <div className='grid md:grid-cols-2 gap-6'>
                                 <div>
-                                    <label className='block text-xl font-semibold mb-1'>
+                                    <label className='block text-base md:text-xl font-semibold mb-1'>
                                         Your Name <span className='text-red-500'>*</span>
                                     </label>
                                     <input
                                         name='name'
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className='w-full bg-transparent border-b border-gray-700 px-3 pl-0 py-2 placeholder-gray-500 focus:outline-none'
+                                        className='w-full bg-transparent border-b border-gray-700 px-3 py-2 placeholder-gray-500 focus:outline-none'
                                         placeholder='Type your name here'
                                     />
                                     {errors.name && <p className='text-red-500 text-sm mt-1'>{errors.name}</p>}
                                 </div>
                                 <div>
-                                    <label className='block text-xl font-semibold mb-1'>
+                                    <label className='block text-base md:text-xl font-semibold mb-1'>
                                         Email Address <span className='text-red-500'>*</span>
                                     </label>
                                     <input
                                         name='email'
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className='w-full bg-transparent border-b border-gray-700 px-3 pl-0 py-2 placeholder-gray-500 focus:outline-none'
+                                        className='w-full bg-transparent border-b border-gray-700 px-3 py-2 placeholder-gray-500 focus:outline-none'
                                         placeholder='Type your email here'
                                     />
                                     {errors.email && <p className='text-red-500 text-sm mt-1'>{errors.email}</p>}
                                 </div>
                             </div>
                             <div>
-                                <label className='block text-xl font-semibold mb-1'>
+                                <label className='block text-base md:text-xl font-semibold mb-1'>
                                     Company Name <span className='text-red-500'>*</span>
                                 </label>
                                 <input
                                     name='company'
                                     value={formData.company}
                                     onChange={handleChange}
-                                    className='w-full bg-transparent border-b border-gray-700 px-3 pl-0 py-2 placeholder-gray-500 focus:outline-none'
+                                    className='w-full bg-transparent border-b border-gray-700 px-3 py-2 placeholder-gray-500 focus:outline-none'
                                     placeholder='Type your company name here'
                                 />
                                 {errors.company && <p className='text-red-500 text-sm mt-1'>{errors.company}</p>}
                             </div>
                             <div>
-                                <label className='block text-xl font-semibold mb-1'>Describe Your Requirements</label>
+                                <label className='block text-base md:text-xl font-semibold mb-1'>
+                                    Describe Your Requirements
+                                </label>
                                 <textarea
                                     name='message'
                                     value={formData.message}
                                     onChange={handleChange}
                                     rows={4}
-                                    className='w-full bg-transparent border-b border-gray-700 px-3 pl-0 py-2 placeholder-gray-500 focus:outline-none'
+                                    className='w-full bg-transparent border-b border-gray-700 px-3 py-2 placeholder-gray-500 focus:outline-none'
                                     placeholder='Type here...'
                                 ></textarea>
                             </div>
                             <button
                                 type='submit'
-                                className='w-full bg-blue-600 text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
+                                className='w-full bg-blue-600 text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
                             >
                                 Contact Us
                             </button>
