@@ -19,9 +19,41 @@ body {
 }
 
 .container {
-    max-width: 1640px;
-    padding: 0 20px;
-    margin: 0 auto;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1152px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1248px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .container {
+        max-width: 1600px;
+    }
 }
 
 .gap {
