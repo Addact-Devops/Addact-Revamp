@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllBlogs } from "@/graphql/queries/getAllBlog";
 import BlogHeroBanner from "@/components/organisms/BlogHeroBanner";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 type BlogType = {
     Slug: string;
@@ -41,6 +41,11 @@ function BlogListContent() {
     const [selectedCategory, setSelectedCategory] = useState("All Blogs");
 
     const searchParams = useSearchParams();
+    const router = useRouter();
+
+    const blogsPerPage = 12;
+    const pageParam = parseInt(searchParams.get("page") || "1", 10);
+    const [currentPage, setCurrentPage] = useState(pageParam);
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -53,12 +58,12 @@ function BlogListContent() {
     useEffect(() => {
         const query = searchParams.get("query")?.trim() || "";
         const categoryParam = searchParams.get("category")?.trim() || "All Blogs";
+        const pageParam = parseInt(searchParams.get("page") || "1", 10);
 
-        if (query && !searchText) setSearchText(query);
-        if (categoryParam && categoryParam !== selectedCategory) {
-            setSelectedCategory(categoryParam);
-        }
-    }, [searchParams]);
+        if (query !== searchText) setSearchText(query);
+        if (categoryParam !== selectedCategory) setSelectedCategory(categoryParam);
+        if (!isNaN(pageParam)) setCurrentPage(pageParam);
+    }, [searchParams, searchText, selectedCategory]);
 
     useEffect(() => {
         const query = searchText.toLowerCase();
@@ -81,7 +86,18 @@ function BlogListContent() {
         }
 
         setFilteredBlogs(filtered);
+        setCurrentPage(1);
     }, [searchText, selectedCategory, addactBlogs]);
+
+    const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
+    const indexOfLastBlog = currentPage * blogsPerPage;
+    const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+    const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
+
+    const goToPage = (page: number) => {
+        setCurrentPage(page);
+        router.push(`?page=${page}`, { scroll: false });
+    };
 
     return (
         <>
@@ -94,7 +110,7 @@ function BlogListContent() {
 
             <div className="container">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
-                    {filteredBlogs.length === 0 && (
+                    {currentBlogs.length === 0 && (
                         <p className="text-white !text-[35px] font-semibold col-span-full text-center">
                             {searchText.trim()
                                 ? `No blogs found for "${searchText}"`
@@ -103,7 +119,7 @@ function BlogListContent() {
                                 : "No blogs found"}
                         </p>
                     )}
-                    {filteredBlogs.map((blog) => {
+                    {currentBlogs.map((blog) => {
                         const banner = blog.BlogBanner?.[0];
                         if (!banner) return null;
 
@@ -153,6 +169,54 @@ function BlogListContent() {
                         );
                     })}
                 </div>
+
+                {totalPages > 1 && (
+                    <div className="flex justify-center items-center gap-2 mt-10 flex-wrap text-white">
+                        <button
+                            className="px-3 py-2 bg-gray-800 rounded disabled:opacity-50"
+                            onClick={() => goToPage(Math.max(currentPage - 1, 1))}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+
+                        {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
+                            .filter((page) => page >= 1 && page <= totalPages)
+                            .map((page) => (
+                                <button
+                                    key={page}
+                                    className={`px-3 py-2 rounded ${
+                                        page === currentPage ? "bg-[#e97777]" : "bg-gray-700"
+                                    }`}
+                                    onClick={() => goToPage(page)}
+                                >
+                                    {page}
+                                </button>
+                            ))}
+
+                        {currentPage < totalPages - 1 && (
+                            <>
+                                {currentPage < totalPages - 2 && <span className="px-2">...</span>}
+                                <button
+                                    className={`px-3 py-2 rounded ${
+                                        currentPage === totalPages ? "bg-[#e97777]" : "bg-gray-700"
+                                    }`}
+                                    onClick={() => goToPage(totalPages)}
+                                >
+                                    {totalPages}
+                                </button>
+                            </>
+                        )}
+
+                        <button
+                            className="px-3 py-2 bg-gray-800 rounded disabled:opacity-50"
+                            onClick={() => goToPage(Math.min(currentPage + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
             </div>
         </>
     );

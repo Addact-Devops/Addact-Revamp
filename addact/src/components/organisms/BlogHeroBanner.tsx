@@ -32,15 +32,18 @@ export default function BlogHeroBanner({
         const fetchData = async () => {
             try {
                 const data = await getAllBlogs();
-                const categoryList =
-                    data.blogCategories
-                        ?.map((cat) => cat?.Category?.CategoryTitle)
-                        .filter((title) => title && title !== "All Blogs") || [];
+                console.log("Fetched blog data:", data);
 
-                setCategories(categoryList);
+                const banner = data.blogs?.blogBanner?.Banner?.[0]; // ✅ FIXED
 
-                const banner = data.blogs?.blogBanner?.Banner?.[0];
-                if (banner?.BannerImage?.url) setBgImageUrl(banner.BannerImage.url);
+                if (banner?.BannerImage?.url) {
+                    const rawUrl = banner.BannerImage.url;
+                    const fullUrl = rawUrl.startsWith("http")
+                        ? rawUrl
+                        : `${process.env.NEXT_PUBLIC_STRAPI_URL || ""}${rawUrl}`;
+                    setBgImageUrl(fullUrl);
+                }
+
                 if (banner?.BannerTitle) setTitle(banner.BannerTitle);
 
                 if (banner?.BannerDescription) {
@@ -48,6 +51,13 @@ export default function BlogHeroBanner({
                     const parsed = parser.parseFromString(banner.BannerDescription, "text/html");
                     setDescription(parsed.body.textContent || "");
                 }
+
+                const categoryList =
+                    data.blogCategories
+                        ?.map((cat) => cat?.Category?.CategoryTitle)
+                        .filter((title) => title && title !== "All Blogs") || [];
+
+                setCategories(categoryList);
             } catch (err) {
                 console.error("Failed to load blog data", err);
             }
