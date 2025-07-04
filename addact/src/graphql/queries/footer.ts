@@ -31,7 +31,16 @@ const GET_FOOTER = gql`
                     width
                 }
             }
-            AddressInfo {
+            AddressInformationMobileBgImg {
+                Image {
+                    alternativeText
+                    height
+                    name
+                    url
+                    width
+                }
+            }
+            AddressInformation {
                 ... on ComponentBaseTemplateTitleWithDescription {
                     Title
                     Description
@@ -105,7 +114,17 @@ export type FooterResponse = {
                 width?: number;
             };
         };
-        AddressInfo?: {
+        AddressInformationMobileBgImg?: {
+            Image?: {
+                alternativeText?: string;
+                height?: number;
+                name?: string;
+                url?: string;
+                width?: number;
+            };
+        }[];
+
+        AddressInformation?: {
             Title?: string;
             Description?: string;
         }[];
@@ -141,8 +160,21 @@ export type FooterResponse = {
     }[];
 };
 
-// Fetch footer data
+// ✅ Fetch footer data safely
 export async function getFooterData() {
     const data = await client.request<FooterResponse>(GET_FOOTER);
-    return data.footers?.[0] || null;
+
+    const footer = data.footers?.[0];
+
+    // ✅ Clean up invalid AddressInformation entries (e.g., nulls or bad shapes)
+    if (footer?.AddressInformation) {
+        footer.AddressInformation = footer.AddressInformation.filter((item) => item && typeof item.Title === "string");
+    }
+
+    // ✅ Normalize AddressInformationMobileBgImg to always be an array
+    if (footer?.AddressInformationMobileBgImg && !Array.isArray(footer.AddressInformationMobileBgImg)) {
+        footer.AddressInformationMobileBgImg = [footer.AddressInformationMobileBgImg];
+    }
+
+    return footer || null;
 }
