@@ -3,7 +3,7 @@ import { gql } from "graphql-request";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
-    query AddactBlogs {
+    query AddactBlogs($page: Int, $pageSize: Int) {
         blogs {
             PageHeading {
                 id
@@ -32,7 +32,7 @@ const GET_ALL_BLOGS = gql`
             }
         }
 
-        addactBlogs {
+        addactBlogs(pagination: { page: $page, pageSize: $pageSize }) {
             Slug
             documentId
             HeadingSection {
@@ -82,6 +82,29 @@ const GET_ALL_BLOGS = gql`
 `;
 
 type AddactBlogsResponse = {
+    blogs: {
+        PageHeading?: {
+            id: string;
+            PageTitle?: string;
+            Slug?: string;
+        };
+        blogBanner?: {
+            Banner: {
+                id?: string;
+                BannerTitle?: string;
+                BannerDescription?: string;
+                BannerImage?: {
+                    width: number;
+                    url: string;
+                    name: string;
+                    height: number;
+                };
+                show_searchbox?: boolean;
+                code?: string;
+                message?: string;
+            }[];
+        };
+    }; // ✅ blogs is an object
     addactBlogs: {
         Slug: string;
         documentId: string;
@@ -118,29 +141,6 @@ type AddactBlogsResponse = {
             };
         }[];
     }[];
-    blogs: {
-        PageHeading?: {
-            id: string;
-            PageTitle?: string;
-            Slug?: string;
-        };
-        blogBanner?: {
-            Banner: {
-                id?: string;
-                BannerTitle?: string;
-                BannerDescription?: string;
-                BannerImage?: {
-                    width: number;
-                    url: string;
-                    name: string;
-                    height: number;
-                };
-                show_searchbox?: boolean;
-                code?: string; // In case of error
-                message?: string; // In case of error
-            }[];
-        };
-    };
     blogCategories: {
         Category: {
             CategoryTitle: string;
@@ -149,6 +149,34 @@ type AddactBlogsResponse = {
 };
 
 export async function getAllBlogs(): Promise<AddactBlogsResponse> {
-    const data = await client.request<AddactBlogsResponse>(GET_ALL_BLOGS);
-    return data;
+    const pageSize = 50;
+    let page = 1;
+    const allBlogs: AddactBlogsResponse["addactBlogs"] = [];
+    let blogMeta: Omit<AddactBlogsResponse, "addactBlogs"> | null = null;
+
+    while (true) {
+        const data = await client.request<AddactBlogsResponse>(GET_ALL_BLOGS, {
+            page,
+            pageSize,
+        });
+
+        if (page === 1) {
+            blogMeta = {
+                blogs: data.blogs,
+                blogCategories: data.blogCategories,
+            };
+        }
+
+        const currentBatch = data?.addactBlogs || [];
+        allBlogs.push(...currentBatch);
+
+        if (currentBatch.length < pageSize) break;
+        page++;
+    }
+
+    return {
+        addactBlogs: allBlogs,
+        blogs: blogMeta?.blogs || {},
+        blogCategories: blogMeta?.blogCategories || [],
+    };
 }

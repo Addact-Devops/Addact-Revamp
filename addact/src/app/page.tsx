@@ -1,15 +1,20 @@
-import CtaBanner from "@/components/molecules/CtaBanner";
-import OurCmsExperts from "@/components/organisms/OurCmsExperts";
-import OurInsights from "@/components/organisms/OurInsights";
+import { getClientTestimonialsData } from "@/graphql/queries/getClientTestimonialsData";
+import ClientTestimonials from "@/components/organisms/ClientTestimonials";
+import ContactUs from "@/components/organisms/ContactUs";
 import OurPartners from "@/components/organisms/OurPartners";
-import OurProcess from "@/components/organisms/OurProcess";
-import OurServices from "@/components/organisms/OurServices";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
+import OurServices from "@/components/organisms/OurServices";
+import OurCmsExperts from "@/components/organisms/OurCmsExperts";
 import WhyAddact from "@/components/organisms/WhyAddact";
+import CtaBanner from "@/components/molecules/CtaBanner";
+import OurProcess from "@/components/organisms/OurProcess";
+import OurInsights from "@/components/organisms/OurInsights";
 
-export default function HomePage() {
+export default async function HomePage() {
+    const data = await getClientTestimonialsData();
+
     return (
-        <main className='bg-dark'>
+        <main className="bg-dark">
             <OurPartners />
             <WhoWeAre />
             <OurServices />
@@ -17,7 +22,9 @@ export default function HomePage() {
             <WhyAddact />
             <CtaBanner />
             <OurProcess />
+            <ClientTestimonials data={data} />
             <OurInsights />
+            <ContactUs />
         </main>
     );
 }
