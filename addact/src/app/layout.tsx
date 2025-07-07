@@ -4,7 +4,7 @@ import "./globals.css";
 import "../styles/custom.scss";
 import Header from "@/components/templates/header";
 import { getHeaderData } from "@/graphql/queries/header";
-import Footer from "@/components/organisms/Footer";
+import Footer from "@/components/templates/Footer";
 import { getFooterData } from "@/graphql/queries/footer";
 
 const geistSans = Geist({
