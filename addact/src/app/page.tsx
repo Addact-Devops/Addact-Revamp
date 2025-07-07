@@ -1,4 +1,3 @@
-import { getClientTestimonialsData } from "@/graphql/queries/getClientTestimonialsData";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import ContactUs from "@/components/organisms/ContactUs";
 import OurPartners from "@/components/organisms/OurPartners";
@@ -10,9 +9,7 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 import OurProcess from "@/components/organisms/OurProcess";
 import OurInsights from "@/components/organisms/OurInsights";
 
-export default async function HomePage() {
-    const data = await getClientTestimonialsData();
-
+export default function HomePage() {
     return (
         <main className="bg-dark">
             <OurPartners />
@@ -22,7 +19,7 @@ export default async function HomePage() {
             <WhyAddact />
             <CtaBanner />
             <OurProcess />
-            <ClientTestimonials data={data} />
+            <ClientTestimonials />
             <OurInsights />
             <ContactUs />
         </main>
