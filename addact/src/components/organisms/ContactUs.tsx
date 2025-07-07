@@ -1,7 +1,12 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
-import contactImage from "../../../public/contact.png";
+import { CONTACTUS } from "@/graphql/queries/getHomePage";
+import RichText from "../atom/richText";
+
+interface IProps {
+    data: CONTACTUS;
+}
 
 export interface ContactFormData {
     name: string;
@@ -16,7 +21,7 @@ export interface FormErrors {
     company?: string;
 }
 
-const ContactUs = () => {
+const ContactUs = ({ data }: IProps) => {
     const [formData, setFormData] = useState<ContactFormData>({
         name: "",
         email: "",
@@ -71,13 +76,10 @@ const ContactUs = () => {
                 <div className='flex flex-col justify-between'>
                     <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
                         <div className='md:w-1/3 border-r border-gray-700 px-5 md:px-16 py-5 md:py-28'>
-                            <h2 className='text-3xl md:text-5xl font-semibold leading-tight'>Contact us</h2>
+                            <h2 className='text-3xl md:text-5xl font-semibold leading-tight'>{data.Form[0].Title}</h2>
                             <div className='h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-blue-600 mt-2 mb-4'></div>
                         </div>
-                        <p className='md:w-[77%] text-white px-5 pb-5 md:px-16 font-light text-base md:!text-3xl md:!leading-[54px]'>
-                            We would love to hear from you. Feel free to reach out to us for your next project and we
-                            will be available at your earliest convenience.
-                        </p>
+                        <RichText html={data.Form[0].Description} />
                     </div>
                     <div className='flex flex-col lg:flex-row items-center justify-center'>
                         <form
@@ -157,10 +159,10 @@ const ContactUs = () => {
 
                         <div className='hidden lg:block w-1/2 h-[594px]'>
                             <Image
-                                src={contactImage}
-                                alt='contact illustration'
-                                width={868}
-                                height={594}
+                                src={data?.Form[0]?.Image?.url}
+                                alt={data?.Form[0]?.Image?.alternativeText}
+                                width={data?.Form[0]?.Image?.width}
+                                height={data?.Form[0]?.Image?.height}
                                 className='w-full h-full object-cover'
                             />
                         </div>
