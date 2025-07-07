@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "../styles/custom.scss";
-import Header from "./header";
-
-import Footer from "@/components/organisms/Footer";
+import Header from "@/components/templates/header";
+import { getHeaderData } from "@/graphql/queries/header";
+import Footer from "@/components/templates/Footer";
 import { getFooterData } from "@/graphql/queries/footer";
 
 const geistSans = Geist({
@@ -23,20 +23,21 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+    const HeaderData = await getHeaderData();
     const footerData = await getFooterData();
 
     return (
-        <html lang="en">
+        <html lang='en'>
             <head>
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+                <link rel='preconnect' href='https://fonts.googleapis.com' />
+                <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
                 <link
-                    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-                    rel="stylesheet"
+                    href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'
+                    rel='stylesheet'
                 />
             </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-                <Header />
+                <Header headers={HeaderData} />
                 {children}
                 <Footer data={footerData} />
             </body>
