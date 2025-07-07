@@ -1,4 +1,3 @@
-import { getClientTestimonialsData } from "@/graphql/queries/getClientTestimonialsData";
 import { getHOmePageData } from "@/graphql/queries/getHomePage";
 
 import OurPartners from "@/components/organisms/OurPartners";
@@ -13,7 +12,6 @@ import OurInsights from "@/components/organisms/OurInsights";
 import ContactUs from "@/components/organisms/ContactUs";
 
 export default async function HomePage() {
-    const data = await getClientTestimonialsData();
     const homeResponse = await getHOmePageData();
     const homeData = homeResponse?.home;
 
@@ -26,7 +24,7 @@ export default async function HomePage() {
             <WhyAddact />
             <CtaBanner data={homeData?.cta} />
             <OurProcess />
-            <ClientTestimonials data={data} />
+            <ClientTestimonials />
             <OurInsights />
             <ContactUs data={homeData?.contactus} />
         </main>
