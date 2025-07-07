@@ -1,67 +1,62 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { CMSResponse, getCMSExpertiseData } from "@/graphql/queries/getCmsExperts";
 import Image from "../atom/image";
+import RichText from "../atom/richText";
 
 const OurCmsExperts = () => {
-  const expertLogo = "/expertlogo.png";
-  const servicesList = [
-    {
-      icon: expertLogo,
-    },
-    {
-      icon: expertLogo,
-    },
-    {
-      icon: expertLogo,
-    },
-    {
-      icon: expertLogo,
-    },
-    {
-      icon: expertLogo,
-    },
-    {
-      icon: expertLogo,
-    },
-  ];
+    const [data, setData] = useState<CMSResponse | null>(null);
 
-  return (
-    <section className="my-24 sm:my-32 md:my-40 lg:my-60">
-      <div className="container">
-        <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-          <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10">
-            Our CMS Expertise
-          </h2>
+    useEffect(() => {
+        async function fetchData() {
+            const response = await getCMSExpertiseData();
+            setData(response);
+        }
+        fetchData();
+    }, []);
 
-          <div className="w-full text-left">
-            <p className="text-base sm:text-3xl inline">
-              {` At ADDACT, we don't just build websites, we craft exceptional
-              digital experiences powered by the industry-leading Sitecore
-              platform.`}
-            </p>
-          </div>
-        </div>
-        <section>
-          <div className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 lg:mt-24">
-            {servicesList.map((service, index) => (
-              <div
-                className="bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-20 md:px-14 hover:bg-red-400 flex justify-center items-center"
-                key={index}
-              >
-                <Image
-                  src={expertLogo}
-                  alt="Expert Logo"
-                  width={310}
-                  height={69}
-                  className="w-[113px] md:w-[310px]"
-                  unoptimized={false}
-                />
-              </div>
-            ))}
-          </div>
+    if (!data) {
+        return null;
+    }
+
+    return (
+        <section className='my-24 sm:my-32 md:my-40 lg:my-60'>
+            <div className='container'>
+                <div className='flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center'>
+                    <h2 className='w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10'>
+                        {data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title}
+                    </h2>
+
+                    <div className='w-full text-left'>
+                        <RichText html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description} />
+                    </div>
+                </div>
+                <section>
+                    <div className='mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 lg:mt-24'>
+                        {data.ourExpertises[0].CMS.map((service) => (
+                            <Link
+                                className='bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-20 md:px-14 hover:bg-red-400 flex justify-center items-center'
+                                key={service?.id}
+                                href={service?.Links?.href}
+                                target={service?.Links?.target}
+                            >
+                                <Image
+                                    src={service?.Icons?.url}
+                                    alt={service?.Icons?.alternativeText}
+                                    width={service?.Icons?.width}
+                                    height={service?.Icons?.height}
+                                    className='w-[113px] md:w-[310px]'
+                                    unoptimized={false}
+                                />
+                            </Link>
+                        ))}
+                    </div>
+                </section>
+            </div>
         </section>
-      </div>
-    </section>
-  );
+    );
 };
 
 export default OurCmsExperts;
