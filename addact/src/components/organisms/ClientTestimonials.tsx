@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import Slider from "react-slick";
+import { getClientTestimonialsData } from "@/graphql/queries/getClientTestimonialsData";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -13,24 +14,34 @@ export type Testimonial = {
     rating: string;
 };
 
-type Props = {
-    data: {
-        Title: string;
-        Item: Testimonial[];
-    } | null;
+type Data = {
+    Title: string;
+    Item: Testimonial[];
 };
 
-export default function ClientTestimonials({ data }: Props) {
-    // if (!data) return null;
-
+export default function ClientTestimonials() {
     const sliderRef = useRef<Slider | null>(null);
     const [currentSlide, setCurrentSlide] = useState(0);
-    const totalSlides = data?.Item.length ?? 1;
+    const [data, setData] = useState<Data | null>(null);
 
     const getRatingNumber = (rating: string): number => {
         const match = rating.match(/star(\d)/);
         return match ? parseInt(match[1]) : 0;
     };
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await getClientTestimonialsData();
+            setData(response);
+        }
+        fetchData();
+    }, []);
+
+    const totalSlides = data?.Item.length ?? 1;
+
+    if (!data) {
+        return null; // Or add loading spinner here if needed
+    }
 
     const settings = {
         dots: false,
@@ -44,11 +55,12 @@ export default function ClientTestimonials({ data }: Props) {
         beforeChange: (_: number, next: number) => setCurrentSlide(next),
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1023,
                 settings: {
                     slidesToShow: 1.1,
                     slidesToScroll: 1,
                     arrows: false,
+                    centerMode: false,
                     beforeChange: (_: number, next: number) => setCurrentSlide(next),
                 },
             },
@@ -56,99 +68,107 @@ export default function ClientTestimonials({ data }: Props) {
     };
 
     return (
-        <section className="bg-[#0F0F0F] text-white py-16 px-4 lg:px-24">
-            <div className="grid grid-cols-1 lg:grid-cols-3 items-start mb-10">
-                {/* Title & Arrows */}
-                <div className="col-span-1 mb-6 lg:mb-0">
-                    <h2 className="text-[36px] lg:text-[48px] font-semibold leading-tight">
-                        Client <br /> Testimonials
-                    </h2>
-                    <div className="w-[60px] h-[3px] bg-[#2F3AF9] mt-3 mb-6" />
+        <section className="bg-[#0F0F0F] text-white">
+            <div className="container">
+                <div className="grid grid-cols-1 lg:grid-cols-3 items-start">
+                    {/* Title & Arrows */}
+                    <div className="col-span-1 mb-6 lg:mb-0">
+                        <h2 className="w-full lg:w-[40%] border-after">{data?.Title}</h2>
 
-                    {/* Custom Arrow Buttons (only on desktop) */}
-                    <div className="hidden lg:flex gap-4 mt-4">
-                        {/* Prev */}
-                        <button
-                            aria-label="Previous"
-                            onClick={() => sliderRef.current?.slickPrev()}
-                            className="bg-[#2E2E2E] rounded-[6px] flex items-center justify-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="48"
-                                height="48"
-                                viewBox="0 0 48 48"
-                                fill="none"
+                        {/* Arrow Buttons */}
+                        <div className="hidden lg:flex gap-[10px] mt-[82px] xl:mt-[60px]">
+                            {/* Previous */}
+                            <button
+                                aria-label="Previous"
+                                onClick={() => sliderRef.current?.slickPrev()}
+                                className="xl:w-[70px] xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
                             >
-                                <path
-                                    d="M38 24H10M10 24L20 14M10 24L20 34"
-                                    stroke="white"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
-                        </button>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="70"
+                                    height="70"
+                                    viewBox="0 0 70 70"
+                                    fill="none"
+                                    className="block"
+                                >
+                                    <path
+                                        d="M60 35H10M10 35L20 25M10 35L20 45"
+                                        stroke="white"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
+                            </button>
 
-                        {/* Next */}
-                        <button
-                            aria-label="Next"
-                            onClick={() => sliderRef.current?.slickNext()}
-                            className="bg-[#2E2E2E] rounded-[6px] flex items-center justify-center"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="48"
-                                height="48"
-                                viewBox="0 0 48 48"
-                                fill="none"
+                            {/* Next */}
+                            <button
+                                aria-label="Next"
+                                onClick={() => sliderRef.current?.slickNext()}
+                                className="xl:w-[70px] xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
                             >
-                                <path
-                                    d="M10 24H38M38 24L28 14M38 24L28 34"
-                                    stroke="white"
-                                    strokeWidth="1.5"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            </svg>
-                        </button>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="70"
+                                    height="70"
+                                    viewBox="0 0 70 70"
+                                    fill="none"
+                                    className="block"
+                                >
+                                    <path
+                                        d="M10 35H60M60 35L50 25M60 35L50 45"
+                                        stroke="white"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                {/* Slider */}
-                <div className="col-span-2">
-                    <Slider ref={sliderRef} {...settings}>
-                        {data?.Item.map((testimonial, index) => (
-                            <div key={index} className="px-4">
-                                <div className="bg-[#1A1A1A] rounded-md p-6 h-full min-h-[240px] flex flex-col justify-between">
-                                    <div>
-                                        <div className="flex mb-4">
-                                            {Array.from({ length: getRatingNumber(testimonial.rating) }).map((_, i) => (
-                                                <FaStar key={i} className="text-yellow-400 text-xl mr-1" />
-                                            ))}
+                    {/* Slider */}
+                    <div className="col-span-2 lg:-mx-[6px] overflow-visible pl-[12px] lg:pl-0">
+                        <Slider ref={sliderRef} {...settings}>
+                            {data?.Item.map((testimonial, index) => (
+                                <div key={index} className="px-[6px]">
+                                    <div className="bg-[#1C1C1C] xl:px-[40px] xl:py-[30px] p-[24px] h-full min-h-[240px] flex flex-col justify-between">
+                                        <div>
+                                            <div className="flex mb-[30px]">
+                                                {Array.from({ length: getRatingNumber(testimonial.rating) }).map(
+                                                    (_, i) => (
+                                                        <FaStar
+                                                            key={i}
+                                                            className="text-[#FFA800] xl:text-[24px] text-[35px] mr-[15px]"
+                                                        />
+                                                    )
+                                                )}
+                                            </div>
+                                            <p className="xl:!text-[30px] md:!text-[22px] !text-[18px] font-[400] text-white mb-[30px]">
+                                                {testimonial.quote?.[0]?.children?.[0]?.text || ""}
+                                            </p>
                                         </div>
-                                        <p className="text-[18px] font-normal leading-relaxed text-white mb-6">
-                                            {testimonial.quote?.[0]?.children?.[0]?.text || ""}
+                                        <p className="xl:!text-[18px] !text-[15px] mb-[5px] font-[400]">
+                                            {testimonial.author_position}
+                                        </p>
+                                        <p className="xl:!text-[18px] !text-[15px] font-[400]">
+                                            {testimonial.author_name}
                                         </p>
                                     </div>
-                                    <div className="text-sm text-gray-400 mt-auto">
-                                        <p className="font-medium">{testimonial.author_position}</p>
-                                        <p>{testimonial.author_name}</p>
-                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </Slider>
+                            ))}
+                        </Slider>
 
-                    {/* Mobile Progress Bar */}
-                    <div className="block lg:hidden mt-6 relative h-[2px] bg-[#303030]">
-                        <div
-                            className="absolute h-[2px] bg-[#2F3AF9] transition-all duration-300"
-                            style={{
-                                width: `${100 / totalSlides}%`,
-                                left: `${(100 / totalSlides) * currentSlide}%`,
-                            }}
-                        />
+                        {/* Mobile Progress Bar */}
+                        <div className="block lg:hidden mt-6 relative h-[2px] bg-[#303030]">
+                            <div
+                                className="absolute h-[2px] bg-[#2F3AF9] transition-all duration-300"
+                                style={{
+                                    width: `${100 / totalSlides}%`,
+                                    left: `${(100 / totalSlides) * currentSlide}%`,
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

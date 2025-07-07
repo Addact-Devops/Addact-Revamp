@@ -2,6 +2,7 @@ import ExcelJS from "exceljs";
 import { gql, request } from "graphql-request";
 
 const GRAPHQL_ENDPOINT = "https://uatcms.addact.net/graphql";
+const SITE_BASE_URL = "https://addact-revamp.vercel.app/blog"; // Adjust your base URL if needed
 
 const GET_ALL_BLOGS = gql`
     query AddactBlogs($page: Int, $pageSize: Int) {
@@ -77,6 +78,7 @@ async function exportToExcel() {
     const sheet = workbook.addWorksheet("All Blogs");
 
     sheet.columns = [
+        { header: "URL", key: "url", width: 50 },
         { header: "Blog Title", key: "title", width: 40 },
         { header: "Author", key: "author", width: 25 },
         { header: "Publish Date", key: "publishDate", width: 20 },
@@ -85,7 +87,11 @@ async function exportToExcel() {
 
     blogs.forEach((blog) => {
         const banner = blog.BlogBanner?.[0];
+        const slug = blog.Slug || "no-slug";
+        const fullUrl = `${SITE_BASE_URL}${slug}`;
+
         sheet.addRow({
+            url: fullUrl,
             title: banner?.BannerTitle || "Untitled",
             author: banner?.author?.Author?.AuthorName || "N/A",
             publishDate: banner?.PublishDate || "N/A",
