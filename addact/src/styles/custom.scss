@@ -74,10 +74,25 @@ footer {
     }
 }
 
-// .slick-slide {
-//     &.slick-active {
-//         @media (max-width: 1023px) {
-//             margin-left: 24px !important;
-//         }
-//     }
-// }
+@media (max-width: 1023px) {
+    .slick-slider {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .slick-slide {
+        padding-left: 0 !important;
+    }
+
+    .slick-slide > div {
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+}
+
+@media (max-width: 575px) {
+    .slick-slide > div {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
