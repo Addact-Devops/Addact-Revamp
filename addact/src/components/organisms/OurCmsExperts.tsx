@@ -8,7 +8,6 @@ import RichText from "../atom/richText";
 
 const OurCmsExperts = () => {
     const [data, setData] = useState<CMSResponse | null>(null);
-    console.log("🚀 ~ OurCmsExperts ~ data:", data);
 
     useEffect(() => {
         async function fetchData() {
