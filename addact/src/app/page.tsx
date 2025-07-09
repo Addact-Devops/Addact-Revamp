@@ -16,7 +16,7 @@ export default async function HomePage() {
     const homeData = homeResponse?.home;
 
     return (
-        <main className='bg-dark'>
+        <main className="bg-dark">
             <OurPartners />
             <WhoWeAre />
             <OurServices data={homeData?.ourservices} />
