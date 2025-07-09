@@ -1,10 +1,17 @@
-// src/components/organisms/OurVisionMission.tsx
 import Image from "next/image";
+
+type ParagraphBlock = {
+    type: "paragraph";
+    children: {
+        type: string;
+        text: string;
+    }[];
+};
 
 type Item = {
     SubTitle: string;
     Title: string;
-    Description: any[];
+    Description: ParagraphBlock[];
     Image: {
         url: string;
         alternativeText?: string | null;
@@ -16,12 +23,12 @@ type Props = {
 };
 
 const OurVisionMission = ({ data }: Props) => {
-    const renderText = (blocks: any[]) => {
+    const renderText = (blocks: ParagraphBlock[]) => {
         return blocks?.map((block, i) => {
             if (block.type === "paragraph") {
                 return (
                     <p key={i} className="text-gray-700 text-base leading-relaxed mb-4">
-                        {block.children.map((child: any) => child.text)}
+                        {block.children.map((child) => child.text)}
                     </p>
                 );
             }

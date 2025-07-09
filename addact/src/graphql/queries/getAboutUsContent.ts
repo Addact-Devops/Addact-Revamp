@@ -1,12 +1,20 @@
 import { gql } from "graphql-request";
 import client from "../client";
 
+type ParagraphBlock = {
+    type: "paragraph";
+    children: {
+        type: string;
+        text: string;
+    }[];
+};
+
 export type AboutUsContentData = {
     aboutUs: {
         AboutUsContent: {
             SubTitle: string;
             Title: string;
-            Content: any;
+            Content: ParagraphBlock[];
             Image: {
                 url: string;
                 alternativeText?: string | null;
@@ -31,7 +39,6 @@ export const getAboutUsContent = async (): Promise<AboutUsContentData> => {
             }
         }
     `;
-
     const data = await client.request(query);
     return data as AboutUsContentData;
 };

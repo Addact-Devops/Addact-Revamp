@@ -1,10 +1,18 @@
 import { gql } from "graphql-request";
 import client from "../client";
 
+type ParagraphBlock = {
+    type: "paragraph";
+    children: {
+        type: string;
+        text: string;
+    }[];
+};
+
 export type VisionMissionItem = {
     SubTitle: string;
     Title: string;
-    Description: any[];
+    Description: ParagraphBlock[];
     Image: {
         url: string;
         alternativeText?: string | null;
