@@ -40,7 +40,7 @@ export default function ClientTestimonials() {
     const totalSlides = data?.Item.length ?? 1;
 
     if (!data) {
-        return null; // Or add loading spinner here if needed
+        return null;
     }
 
     const settings = {
@@ -81,7 +81,7 @@ export default function ClientTestimonials() {
                             <button
                                 aria-label="Previous"
                                 onClick={() => sliderRef.current?.slickPrev()}
-                                className="xl:w-[70px] xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
+                                className="2xl:w-[70px] 2xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ export default function ClientTestimonials() {
                             <button
                                 aria-label="Next"
                                 onClick={() => sliderRef.current?.slickNext()}
-                                className="xl:w-[70px] xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
+                                className="2xl:w-[70px] 2xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -128,35 +128,43 @@ export default function ClientTestimonials() {
                     </div>
 
                     {/* Slider */}
-                    <div className="col-span-2 lg:-mx-[6px] overflow-visible pl-[12px] lg:pl-0">
+                    <div className="col-span-2">
                         <Slider ref={sliderRef} {...settings}>
-                            {data?.Item.map((testimonial, index) => (
-                                <div key={index} className="px-[6px]">
-                                    <div className="bg-[#1C1C1C] xl:px-[40px] xl:py-[30px] p-[24px] h-full min-h-[240px] flex flex-col justify-between">
-                                        <div>
-                                            <div className="flex mb-[30px]">
-                                                {Array.from({ length: getRatingNumber(testimonial.rating) }).map(
-                                                    (_, i) => (
+                            {data?.Item.map((testimonial, index) => {
+                                const isFirstVisible = currentSlide === index;
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`xl:px-[12px] px-[6px] ${
+                                            isFirstVisible ? "max-[1023px]:ml-[16px] lg:ml-0" : ""
+                                        }`}
+                                    >
+                                        <div className="bg-[#1C1C1C] xl:px-[40px] xl:py-[30px] p-[24px] h-full min-h-[240px] flex flex-col justify-between">
+                                            <div>
+                                                <div className="flex mb-[30px]">
+                                                    {Array.from({
+                                                        length: getRatingNumber(testimonial.rating),
+                                                    }).map((_, i) => (
                                                         <FaStar
                                                             key={i}
-                                                            className="text-[#FFA800] xl:text-[24px] text-[35px] mr-[15px]"
+                                                            className="text-[#FFA800] 2xl:text-[35px] xl:text-[30px] text-[24px] 2xl:mr-[15px] mr-[10px]"
                                                         />
-                                                    )
-                                                )}
+                                                    ))}
+                                                </div>
+                                                <p className="2xl:!text-[30px] lg:!text-[22px] !text-[18px] font-[400] text-white xl:mb-[30px] mb-[24px]">
+                                                    {testimonial.quote?.[0]?.children?.[0]?.text || ""}
+                                                </p>
                                             </div>
-                                            <p className="xl:!text-[30px] md:!text-[22px] !text-[18px] font-[400] text-white mb-[30px]">
-                                                {testimonial.quote?.[0]?.children?.[0]?.text || ""}
+                                            <p className="2xl:!text-[18px] md:!text-[15px] !text-[12px] mb-[5px] font-[400]">
+                                                {testimonial.author_position}
+                                            </p>
+                                            <p className="2xl:!text-[18px] md:!text-[15px] !text-[12px] font-[400]">
+                                                {testimonial.author_name}
                                             </p>
                                         </div>
-                                        <p className="xl:!text-[18px] !text-[15px] mb-[5px] font-[400]">
-                                            {testimonial.author_position}
-                                        </p>
-                                        <p className="xl:!text-[18px] !text-[15px] font-[400]">
-                                            {testimonial.author_name}
-                                        </p>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </Slider>
 
                         {/* Mobile Progress Bar */}
