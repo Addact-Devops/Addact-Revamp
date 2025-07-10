@@ -35,9 +35,6 @@ export default async function SitecorePage() {
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
-            <div className='bg-lime-400'>
-                <h1>FAQ</h1>
-            </div>
             <FAQ data={data.faq} />
         </main>
     );
