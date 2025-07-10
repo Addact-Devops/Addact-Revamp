@@ -11,7 +11,6 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import ContactUs from "@/components/organisms/ContactUs";
 import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
-// import HeroBanner from "@/components/organisms/HeroBanner";
 
 export default async function HomePage() {
     const homeResponse = await getHOmePageData();
@@ -20,13 +19,6 @@ export default async function HomePage() {
     return (
         <main className='bg-dark'>
             <HomeHeroBanner data={homeData?.banner} />
-            {/* <HeroBanner
-                title='Sitecore XM Cloud Services'
-                description='Unlock new potential and upgrade existing business capabilities with AI services that streamline operations.'
-                button={{ label: "Connect with Our Experts", url: "/contact" }}
-                backgroundImageUrl='/path-to-banner-image.jpg'
-            /> */}
-
             <OurPartners />
             <WhoWeAre />
             <OurServices data={homeData?.ourservices} />
