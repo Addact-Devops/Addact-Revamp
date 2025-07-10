@@ -6,6 +6,7 @@ import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import { notFound } from "next/navigation";
+import FAQ from "@/components/organisms/FAQ";
 
 export default async function SitecorePage() {
     const service = "sitecore";
@@ -37,6 +38,7 @@ export default async function SitecorePage() {
             <div className='bg-lime-400'>
                 <h1>FAQ</h1>
             </div>
+            <FAQ data={data.faq} />
         </main>
     );
 }

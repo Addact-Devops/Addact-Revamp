@@ -296,6 +296,15 @@ export interface GlobalCard2 {
     Link: Link | null;
 }
 
+export interface Faq {
+    Title: string;
+    FAQ: {
+        Description: string;
+        Title: string;
+        id: string;
+    }[];
+}
+
 // Main interface
 export interface HomeItems {
     documentId: string;
@@ -308,6 +317,7 @@ export interface HomeItems {
     ourservices: OURSERVICES;
     contactus: CONTACTUS;
     whyaddact: Whyaddact;
+    faq: Faq;
 }
 
 export interface HomeResponse {
