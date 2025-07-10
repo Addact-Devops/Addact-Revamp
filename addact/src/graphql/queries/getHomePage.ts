@@ -214,7 +214,7 @@ const GET_HOME_PAGE = gql`
 
 // Reusable types
 export interface Image {
-    alternativeText: string;
+    alternativeText: string | null;
     height: number;
     name: string;
     url: string;
@@ -293,7 +293,7 @@ export interface GlobalCard2 {
     Title: string;
     Description: string;
     Image: Image;
-    Link: Link;
+    Link: Link | null;
 }
 
 // Main interface

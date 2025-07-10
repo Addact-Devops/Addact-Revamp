@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import bg from "../../../public/serviceBG.png";
 
-interface SitecoreCloudBannerProps {
-    title: string;
+interface BannerProps {
+    title: string | null;
     description: string;
     button: {
         label: string;
@@ -14,11 +13,16 @@ interface SitecoreCloudBannerProps {
     backgroundImageUrl: string;
 }
 
-const HeroBanner = ({ title, description, button, backgroundImageUrl }: SitecoreCloudBannerProps) => {
-    console.log("🚀 ~ ServiceHeroBanner ~ backgroundImageUrl:", backgroundImageUrl);
+const HeroBanner = ({ title, description, button, backgroundImageUrl }: BannerProps) => {
     return (
         <div className='relative w-full h-[600px] md:h-[700px] lg:h-[800px] text-white overflow-hidden'>
-            <Image src={bg} alt='Sitecore XM Cloud Banner' fill className='object-cover object-center z-0' priority />
+            <Image
+                src={backgroundImageUrl}
+                alt='Sitecore XM Cloud Banner'
+                fill
+                className='object-cover object-center z-0'
+                priority
+            />
 
             <div className='relative z-30 max-w-[1600px] mx-auto px-4 py-12 md:py-20 flex flex-col justify-center h-full'>
                 <div className='max-w-4xl'>
