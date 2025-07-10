@@ -31,7 +31,7 @@ const HomeHeroBanner = ({ data }: IProps) => {
                             className='inline-block group relative shrink-0'
                         >
                             <div className='relative w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-full bg-[#3C4CFF] overflow-visible float-right'>
-                                <div className='absolute w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] left-[-20px] lg:left-[-30px] top-1/2 -translate-y-1/2 text-white'>
+                                <div className='absolute w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] left-[-20px] hover:left-0 duration-100 lg:left-[-30px] top-1/2 -translate-y-1/2 text-white'>
                                     <div className='hidden lg:block'>
                                         <svg
                                             width='120'

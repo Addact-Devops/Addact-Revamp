@@ -11,6 +11,7 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import ContactUs from "@/components/organisms/ContactUs";
 import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
+// import FAQ from "@/components/organisms/FAQ";
 // import HeroBanner from "@/components/organisms/HeroBanner";
 
 export default async function HomePage() {
@@ -26,7 +27,7 @@ export default async function HomePage() {
                 button={{ label: "Connect with Our Experts", url: "/contact" }}
                 backgroundImageUrl='/path-to-banner-image.jpg'
             /> */}
-
+            {/* <FAQ /> */}
             <OurPartners />
             <WhoWeAre />
             <OurServices data={homeData?.ourservices} />
