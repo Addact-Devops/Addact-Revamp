@@ -1,18 +1,18 @@
+import AboutUsHeroBanner from "@/components/organisms/AboutUsHeroBanner";
 import Quote from "@/components/organisms/Quote";
 import AboutUsContent from "@/components/organisms/AboutUsContent";
 import OurVisionMission from "@/components/organisms/OurVisionMission";
 import GenericCTA from "@/components/organisms/GenericCTA";
 import BrandValue from "@/components/organisms/BrandValue";
 import WeAreAddact from "@/components/organisms/WeAreAddact";
-import DynamicHeroBanner from "@/components/organisms/DynamicHeroBanner";
 
+import { getAboutUsHeroBanner } from "@/graphql/queries/getAboutUs";
 import { getAboutUsQuote } from "@/graphql/queries/getAboutUsQuote";
 import { getAboutUsContent } from "@/graphql/queries/getAboutUsContent";
 import { getOurVisionMission } from "@/graphql/queries/getOurVisionMission";
 import { getAboutUsCTA } from "@/graphql/queries/getAboutUsCTA";
 import { getBrandValue } from "@/graphql/queries/getBrandValue";
 import { getWeAreAddact } from "@/graphql/queries/getWeAreAddact";
-import { getBannerById } from "@/graphql/queries/getBannerById";
 
 export default async function AboutUsPage() {
     const [quoteData, aboutData, visionData, ctaData, brandValueData, weAreAddactData] = await Promise.all([
@@ -24,23 +24,20 @@ export default async function AboutUsPage() {
         getWeAreAddact(),
     ]);
 
+    const heroBanner = await getAboutUsHeroBanner();
     const quote = quoteData.aboutUs.Quote;
     const about = aboutData.aboutUs.AboutUsContent;
     const visionMission = visionData.aboutUs.OurVisionMission;
     const brandValue = brandValueData;
     const cta = ctaData;
-    const banner = await getBannerById("18");
 
     return (
         <main className="bg-white">
-            {banner && (
-                <DynamicHeroBanner
-                    title={banner.BannerTitle}
-                    description={banner.BannerDescription}
-                    imageUrl={banner.BannerImage?.url || null}
-                    imageAlt={banner.BannerImage?.alternativeText || "Banner"}
-                    linkUrl={banner.BannerLink?.href || null}
-                    showSearchbox={banner.show_searchbox || false}
+            {heroBanner && heroBanner.BannerImage && (
+                <AboutUsHeroBanner
+                    title={heroBanner.BannerTitle}
+                    description={heroBanner.BannerDescription}
+                    image={heroBanner.BannerImage}
                 />
             )}
 
