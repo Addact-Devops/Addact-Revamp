@@ -239,11 +239,11 @@ export default function Footer({ data }: FooterProps) {
 
                         {/* Milestones - shown first on mobile */}
                         {(milestonestitle?.CommonTitle?.[0]?.Title || milestonesimage?.some((i) => i.Image?.url)) && (
-                            <div className="w-full lg:col-span-6 2xl:text-left lg:text-center mb-[40px] lg:mb-0">
+                            <div className="w-full lg:col-span-6 2xl:text-left md:text-center mb-[40px] lg:mb-0">
                                 <div className="text-[16px] md:text-[22px] xl:text-[24px] font-semibold 2xl:mb-[50px] xl:mb-[20px] mb-[15px] mt-[25px] lg:mt-0">
                                     {milestonestitle?.CommonTitle?.[0]?.Title}
                                 </div>
-                                <div className="flex flex-wrap gap-[5px] lg:gap-[65px] xl:justify-center 2xl:justify-start">
+                                <div className="flex flex-wrap gap-[5px] lg:gap-[65px] md:justify-center 2xl:justify-start">
                                     {milestonesimage
                                         ?.filter((m) => m.Image?.url)
                                         .map((item, i) => (

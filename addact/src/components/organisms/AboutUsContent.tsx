@@ -32,7 +32,7 @@ const AboutUsContent = ({ subtitle, title, content, image }: Props) => {
         });
 
     return (
-        <section className="py-[100px]">
+        <section className="my-[60px] sm:my-[100px]">
             <div className="container">
                 <h4 className="text-pink-600 text-sm font-semibold uppercase mb-2">{subtitle}</h4>
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">{title}</h2>
@@ -40,9 +40,9 @@ const AboutUsContent = ({ subtitle, title, content, image }: Props) => {
                 <Image
                     src={image.url}
                     alt={image.alternativeText || "About Us Image"}
-                    width={500}
-                    height={400}
-                    className="rounded-xl object-cover w-full max-w-[500px]"
+                    width={800}
+                    height={500}
+                    className="w-full h-auto max-h-[500px] rounded-xl object-cover"
                 />
             </div>
         </section>

@@ -1,3 +1,4 @@
+import AboutUsHeroBanner from "@/components/organisms/AboutUsHeroBanner";
 import Quote from "@/components/organisms/Quote";
 import AboutUsContent from "@/components/organisms/AboutUsContent";
 import OurVisionMission from "@/components/organisms/OurVisionMission";
@@ -5,6 +6,7 @@ import GenericCTA from "@/components/organisms/GenericCTA";
 import BrandValue from "@/components/organisms/BrandValue";
 import WeAreAddact from "@/components/organisms/WeAreAddact";
 
+import { getAboutUsHeroBanner } from "@/graphql/queries/getAboutUs";
 import { getAboutUsQuote } from "@/graphql/queries/getAboutUsQuote";
 import { getAboutUsContent } from "@/graphql/queries/getAboutUsContent";
 import { getOurVisionMission } from "@/graphql/queries/getOurVisionMission";
@@ -22,6 +24,7 @@ export default async function AboutUsPage() {
         getWeAreAddact(),
     ]);
 
+    const heroBanner = await getAboutUsHeroBanner();
     const quote = quoteData.aboutUs.Quote;
     const about = aboutData.aboutUs.AboutUsContent;
     const visionMission = visionData.aboutUs.OurVisionMission;
@@ -30,6 +33,14 @@ export default async function AboutUsPage() {
 
     return (
         <main className="bg-white">
+            {heroBanner && heroBanner.BannerImage && (
+                <AboutUsHeroBanner
+                    title={heroBanner.BannerTitle}
+                    description={heroBanner.BannerDescription}
+                    image={heroBanner.BannerImage}
+                />
+            )}
+
             <Quote authorName={quote.AuthorName} authorMessage={quote.AuthorMessage} authorImage={quote.AuthorImage} />
 
             <AboutUsContent subtitle={about.SubTitle} title={about.Title} content={about.Content} image={about.Image} />
