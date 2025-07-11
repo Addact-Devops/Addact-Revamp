@@ -37,7 +37,7 @@ const OurVisionMission = ({ data }: Props) => {
     };
 
     return (
-        <section className="bg-white py-[100px]">
+        <section className="my-[60px] sm:my-[100px]">
             <div className="container">
                 {data.map((item, index) => (
                     <div key={index} className="flex flex-col gap-6 text-center md:text-left">

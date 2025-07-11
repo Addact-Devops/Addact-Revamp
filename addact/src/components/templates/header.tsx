@@ -46,7 +46,7 @@ const Header = ({ headers }: HeaderProps) => {
     }, [openDropdown]);
 
     return (
-        <header className='bg-black text-white w-full sticky top-0 z-50'>
+        <header className='bg-black text-white w-full fixed top-0 z-50'>
             <div className='container mx-auto flex items-center justify-between px-4 py-4 lg:px-0 lg:py-0'>
                 <Link href='/'>
                     <Image
