@@ -184,6 +184,72 @@ const ServiceListBySlug = gql`
                     id
                 }
             }
+            our_service {
+                ForEnterprisesBrands {
+                    GlobalCard {
+                        ... on ComponentBaseTemplatePromo {
+                            id
+                            Title
+                            Description
+                            Image {
+                                alternativeText
+                                height
+                                name
+                                url
+                                width
+                            }
+                            Link {
+                                id
+                                href
+                                label
+                                target
+                                isExternal
+                            }
+                        }
+                    }
+                    Title {
+                        ... on ComponentHeadingsH1 {
+                            id
+                            h1
+                        }
+                        ... on ComponentHeadingsH2 {
+                            id
+                            h2
+                        }
+                        ... on ComponentHeadingsH3 {
+                            id
+                            h3
+                        }
+                        ... on ComponentHeadingsH4 {
+                            id
+                            h5
+                        }
+                        ... on ComponentHeadingsH5 {
+                            id
+                            h5
+                        }
+                        ... on ComponentHeadingsH6 {
+                            id
+                            h6
+                        }
+                    }
+                }
+                team_feature {
+                    Description
+                    Cards {
+                        Description
+                        Title
+                        id
+                        Link {
+                            id
+                            href
+                            label
+                            target
+                            isExternal
+                        }
+                    }
+                }
+            }
         }
     }
 `;
@@ -237,35 +303,7 @@ export interface ServiceList {
             h2: string;
         }[];
     };
-    cta2: {
-        CTADescription: {
-            type: string;
-            children: {
-                text: string;
-                type: string;
-            }[];
-        }[];
-        CTAImage: {
-            Image: {
-                alternativeText: string | null;
-                height: number;
-                name: string;
-                url: string;
-                width: number;
-            };
-        }[];
-        CTALink: {
-            href: string;
-            id: string;
-            isExternal: boolean;
-            label: string;
-            target: string;
-        }[];
-        Title: {
-            id: string;
-            h2: string;
-        }[];
-    };
+    cta2: CTA2;
     why_addact: {
         Title: {
             id: string;
@@ -304,6 +342,86 @@ export interface ServiceList {
             Description: string;
         }[];
     };
+    our_service: OurServiceWithTabs;
+}
+
+export interface OurServiceWithTabs {
+    ForEnterprisesBrands: {
+        GlobalCard: {
+            id: string;
+            Title: string;
+            Description: string;
+            Image: {
+                alternativeText: string | null;
+                height: number;
+                name: string;
+                url: string;
+                width: number;
+            };
+            Link: {
+                id: string;
+                href: string;
+                label: string;
+                target: string;
+                isExternal: boolean;
+            };
+        }[];
+        Title: {
+            id: string;
+            h2: string;
+        }[];
+    };
+    ReferenceTitle: string;
+    team_feature: {
+        documentId: string;
+        ReferenceTitle: string;
+        Description: string;
+        Cards: {
+            Description: string;
+            Title: string;
+            id: string;
+            Link: {
+                id: string;
+                href: string;
+                label: string;
+                target: string;
+                isExternal: boolean;
+            };
+        }[];
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
+    };
+}
+
+export interface CTA2 {
+    CTADescription: {
+        type: string;
+        children: {
+            text: string;
+            type: string;
+        }[];
+    }[];
+    CTAImage: {
+        Image: {
+            alternativeText: string | null;
+            height: number;
+            name: string;
+            url: string;
+            width: number;
+        };
+    }[];
+    CTALink: {
+        href: string;
+        id: string;
+        isExternal: boolean;
+        label: string;
+        target: string;
+    }[];
+    Title: {
+        id: string;
+        h2: string;
+    }[];
 }
 
 // Fetch function

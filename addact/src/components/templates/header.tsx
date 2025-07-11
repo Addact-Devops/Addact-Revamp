@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
@@ -21,6 +21,29 @@ const Header = ({ headers }: HeaderProps) => {
     const handleDropdownToggle = (title: string) => {
         setOpenDropdown((prev) => (prev === title ? null : title));
     };
+
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    // Close dropdown on outside click
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target as Node) &&
+                !(event.target as HTMLElement).closest("[data-dropdown-button]")
+            ) {
+                setOpenDropdown(null);
+            }
+        }
+
+        if (openDropdown) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [openDropdown]);
 
     return (
         <header className='bg-black text-white w-full sticky top-0 z-50'>
@@ -45,6 +68,7 @@ const Header = ({ headers }: HeaderProps) => {
                                 <div className='relative flex flex-col items-center'>
                                     <button
                                         onClick={() => handleDropdownToggle(item.ReferenceTitle)}
+                                        data-dropdown-button
                                         className={`flex items-center gap-1 text-lg py-[46px] font-medium hover:text-blue-500 focus:outline-none transition-colors duration-200 cursor-pointer`}
                                     >
                                         {item.ReferenceTitle}
@@ -56,7 +80,10 @@ const Header = ({ headers }: HeaderProps) => {
 
                                 {/* Only render dropdown once, positioned at far-left */}
                                 {isActive && (
-                                    <div className='absolute left-0 top-[112px] mt-2 bg-black border border-gray-700 p-4 shadow-lg flex gap-8 w-[610px] z-40'>
+                                    <div
+                                        ref={dropdownRef}
+                                        className='absolute left-0 top-[112px] mt-2 bg-black border border-gray-700 p-4 shadow-lg flex gap-8 w-[610px] z-40'
+                                    >
                                         <div className='w-1/2 relative'>
                                             <Image
                                                 src={item.SubNavImage.url}
