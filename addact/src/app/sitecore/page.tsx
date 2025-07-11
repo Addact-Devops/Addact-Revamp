@@ -7,6 +7,8 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import { notFound } from "next/navigation";
 import FAQ from "@/components/organisms/FAQ";
+import CtaBanner2 from "@/components/molecules/CtaBanner2";
+import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 
 export default async function SitecorePage() {
     const service = "sitecore";
@@ -28,10 +30,12 @@ export default async function SitecorePage() {
                 backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
             />
             <OurPartners />
+            <OurServicesWithTabs data={data.our_service} />
             <div className='bg-lime-400'>
                 <h1>Industries we serve</h1>
             </div>
             <WhyAddact data={data.why_addact} />
+            <CtaBanner2 data={data.cta2} />
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
