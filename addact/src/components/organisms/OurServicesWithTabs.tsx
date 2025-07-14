@@ -24,27 +24,25 @@ const OurServicesWithTabs = ({ data }: Props) => {
                     </h2>
                     <div className='w-full text-white mt-24'>
                         {/* Tab Buttons */}
-                        <div className='flex justify-center gap-4 mb-16'>
-                            <button
-                                onClick={() => setActiveTab("ForEnterprisesBrands")}
-                                className={`px-6 py-3 rounded border ${
-                                    activeTab === "ForEnterprisesBrands"
-                                        ? "bg-blue-600 text-white"
-                                        : "border-gray-600 text-gray-300"
-                                }`}
-                            >
-                                For Enterprises & Brands
-                            </button>
-                            <button
-                                onClick={() => setActiveTab("team_feature")}
-                                className={`px-6 py-3 rounded border ${
-                                    activeTab === "team_feature"
-                                        ? "bg-blue-600 text-white"
-                                        : "border-gray-600 text-gray-300"
-                                }`}
-                            >
-                                For Agencies & Tech Teams
-                            </button>
+                        <div className='max-w-[526px] p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-16'>
+                            <div className='flex justify-center gap-1'>
+                                <button
+                                    onClick={() => setActiveTab("ForEnterprisesBrands")}
+                                    className={`px-6 py-3 rounded-xl cursor-pointer ${
+                                        activeTab === "ForEnterprisesBrands" ? "bg-blue-600 text-white" : ""
+                                    }`}
+                                >
+                                    For Enterprises & Brands
+                                </button>
+                                <button
+                                    onClick={() => setActiveTab("team_feature")}
+                                    className={`px-6 py-3 rounded-xl cursor-pointer ${
+                                        activeTab === "team_feature" ? "bg-blue-600 text-white" : ""
+                                    }`}
+                                >
+                                    For Agencies & Tech Teams
+                                </button>
+                            </div>
                         </div>
 
                         {/* Content Area */}
@@ -58,7 +56,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                         <h3 className='font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6'>
                                             {card.Title}
                                         </h3>
-                                        <p className='font-montserrat font-normal text-[20px] leading-[34px] text-gray-400'>
+                                        <p className='font-montserrat font-normal text-[20px] leading-[34px]'>
                                             <RichText html={card.Description} />
                                         </p>
                                     </div>
@@ -69,7 +67,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                         {activeTab === "team_feature" && (
                             <div>
                                 {data?.team_feature?.Description && (
-                                    <p className='text-center max-w-3xl mx-auto text-sm text-gray-300 mb-8'>
+                                    <p className='text-center max-w-3xl mx-auto text-sm text-gray-300 mb-14'>
                                         {data.team_feature.Description}
                                     </p>
                                 )}
@@ -83,7 +81,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                 <h3 className='font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6'>
                                                     {card.Title}
                                                 </h3>
-                                                <p className='font-montserrat font-normal text-[18px] leading-[30px] text-gray-400'>
+                                                <p className='font-montserrat font-normal text-[18px] leading-[30px]'>
                                                     <RichText html={card.Description} />
                                                 </p>
                                             </div>
@@ -93,7 +91,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                     href={card.Link.href}
                                                     target={card.Link.isExternal ? "_blank" : "_self"}
                                                     rel={card.Link.isExternal ? "noopener noreferrer" : ""}
-                                                    className='mt-8 inline-flex items-center justify-center gap-[20px] w-[174px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-montserrat font-semibold text-[18px] leading-[28px] text-white hover:text-blue-500 transition'
+                                                    className='mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition'
                                                 >
                                                     {card.Link.label}
                                                     <ArrowRight width={30} height={30} />
