@@ -39,29 +39,30 @@ const GenericCTA: React.FC<CTAProps> = ({ title, description, image, link }) => 
     const headingText = title && title.length > 0 ? getHeadingValue(title[0]) : "";
     const descriptionText = description?.[0]?.children?.[0]?.text || "";
 
+    const sectionMinHeight = "450px"; // same value reused
+
     return (
         <section
             className="relative w-full bg-cover bg-center bg-no-repeat"
             style={{
                 backgroundImage: image?.url ? `url(${image.url})` : "none",
-                minHeight: "450px",
+                minHeight: sectionMinHeight,
             }}
         >
-            {/* Content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 flex items-center h-full">
-                <div className="max-w-xl text-left text-white">
-                    {headingText && (
-                        <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-4">{headingText}</h2>
-                    )}
+            {/* Content wrapper with same minHeight */}
+            <div className="relative container flex py-[30px]" style={{ minHeight: sectionMinHeight }}>
+                <div className="flex flex-col w-full justify-end lg:justify-center text-white max-w-xl text-left">
+                    {headingText && <h2 className="mb-[15px]">{headingText}</h2>}
 
-                    {descriptionText && <p className="text-lg lg:text-xl mb-6">{descriptionText}</p>}
+                    {descriptionText && <p className="mb-[15px]">{descriptionText}</p>}
 
                     {link && (
                         <a
                             href={link.href}
                             target={link.target || "_self"}
                             rel={link.isExternal ? "noopener noreferrer" : undefined}
-                            className="inline-block bg-[#E05357] hover:bg-[#c24449] text-white px-6 py-3 text-base font-semibold rounded-lg transition"
+                            style={{ width: "fit-content" }}
+                            className="text-[15px] bg-[#e97777] hover:bg-[#b75f5f] text-white text-base font-[600] rounded-lg transition h-[41px] inline-flex items-center justify-center px-[16px] mt-[20px]"
                         >
                             {link.label}
                         </a>

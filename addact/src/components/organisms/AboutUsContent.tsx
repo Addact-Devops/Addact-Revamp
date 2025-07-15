@@ -23,7 +23,7 @@ const AboutUsContent = ({ subtitle, title, content, image }: Props) => {
         content?.map((block, i) => {
             if (block.type === "paragraph") {
                 return (
-                    <p key={i} className="text-gray-700 text-base leading-relaxed mb-4">
+                    <p key={i} className="text-[#000]">
                         {block.children.map((child) => child.text)}
                     </p>
                 );
@@ -34,15 +34,15 @@ const AboutUsContent = ({ subtitle, title, content, image }: Props) => {
     return (
         <section className="my-[60px] sm:my-[100px]">
             <div className="container">
-                <h4 className="text-pink-600 text-sm font-semibold uppercase mb-2">{subtitle}</h4>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">{title}</h2>
+                <p className="text-[#e97777] text-[17px] mb-[15px] leading-[26px]">{subtitle}</p>
+                <h3 className="text-[#000] font-[400] 2xl:mb-[40px] mb-[30px]">{title}</h3>
                 {renderContent()}
                 <Image
                     src={image.url}
                     alt={image.alternativeText || "About Us Image"}
                     width={800}
                     height={500}
-                    className="w-full h-auto max-h-[500px] rounded-xl object-cover"
+                    className="w-full h-auto max-h-[500px] rounded-xl object-cover lg:mt-[50px] mt-[30px]"
                 />
             </div>
         </section>
