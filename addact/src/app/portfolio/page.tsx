@@ -12,16 +12,23 @@ const CaseStudyListing = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchBlogs = async () => {
+        const fetchCaseStudy = async () => {
             const data = await getAllCaseStudyData();
             setCaseStudyBanner(data.caseStudy);
             setCaseStudyListing(data.addactCaseStudies);
             setLoading(false);
         };
-        fetchBlogs();
+        fetchCaseStudy();
     }, []);
 
-    if (loading) return <p className='p-6'>Loading...</p>;
+    if (loading) {
+        return (
+            <div className='flex justify-center items-center min-h-[50vh]'>
+                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
+            </div>
+        );
+    }
+
     if (!caseStudyListing) return <p className='p-6 text-red-600'>Case-Study List not found.</p>;
 
     return (
