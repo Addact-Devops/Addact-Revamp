@@ -32,7 +32,6 @@ export default function BlogHeroBanner({
         const fetchData = async () => {
             try {
                 const data = await getAllBlogs();
-                console.log("Fetched blog data:", data);
 
                 const banner = data.blogs?.blogBanner?.Banner?.[0]; // ✅ FIXED
 
@@ -85,37 +84,37 @@ export default function BlogHeroBanner({
 
     return (
         <section
-            className="relative bg-cover bg-center bg-no-repeat text-white min-h-[538px] flex flex-col justify-between pt-[80px]"
+            className='relative bg-cover bg-center bg-no-repeat text-white min-h-[538px] flex flex-col justify-between pt-[80px]'
             style={{ backgroundImage: bgImageUrl ? `url(${bgImageUrl})` : "none" }}
         >
-            <div className="container text-center pt-[80px]">
-                <h1 className="text-[42px] md:text-[60px] font-bold mb-[20px] leading-[1.2]">{title}</h1>
-                <p className="!text-[18px] !md:text-[20px] max-w-[800px] mx-auto mb-[40px] font-medium">
+            <div className='container text-center pt-[80px]'>
+                <h1 className='text-[42px] md:text-[60px] font-bold mb-[20px] leading-[1.2]'>{title}</h1>
+                <p className='!text-[18px] !md:text-[20px] max-w-[800px] mx-auto mb-[40px] font-medium'>
                     {description}
                 </p>
 
-                <div className="flex max-w-[500px] mx-auto rounded-full overflow-hidden shadow-md bg-white">
-                    <span className="text-[#e97777] pl-[15px] pr-[5px] flex items-center">
+                <div className='flex max-w-[500px] mx-auto rounded-full overflow-hidden shadow-md bg-white'>
+                    <span className='text-[#e97777] pl-[15px] pr-[5px] flex items-center'>
                         <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
+                            xmlns='http://www.w3.org/2000/svg'
+                            fill='none'
+                            viewBox='0 0 24 24'
                             strokeWidth={2.2}
-                            stroke="currentColor"
-                            className="w-5 h-5 font-bold text-[#e97777]"
+                            stroke='currentColor'
+                            className='w-5 h-5 font-bold text-[#e97777]'
                         >
                             <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M15.75 15.75L19.5 19.5M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z"
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                                d='M15.75 15.75L19.5 19.5M10.5 18a7.5 7.5 0 100-15 7.5 7.5 0 000 15z'
                             />
                         </svg>
                     </span>
 
                     <input
-                        type="text"
-                        placeholder="Search blogs"
-                        className="flex-1 text-black outline-none bg-transparent text-md font-medium py-[15px]"
+                        type='text'
+                        placeholder='Search blogs'
+                        className='flex-1 text-black outline-none bg-transparent text-md font-medium py-[15px]'
                         value={localSearch}
                         onChange={(e) => {
                             setLocalSearch(e.target.value);
@@ -127,7 +126,7 @@ export default function BlogHeroBanner({
                     />
 
                     <button
-                        className="bg-[#e97777] hover:bg-[#e56d6d] text-white text-md font-semibold px-5 py-[15px] cursor-pointer"
+                        className='bg-[#e97777] hover:bg-[#e56d6d] text-white text-md font-semibold px-5 py-[15px] cursor-pointer'
                         onClick={handleURLSearch}
                     >
                         Search
@@ -135,8 +134,8 @@ export default function BlogHeroBanner({
                 </div>
             </div>
 
-            <div className="container overflow-x-auto mt-[30px]">
-                <div className="flex flex-nowrap justify-center min-w-max gap-[20px] text-[16px] font-medium px-4">
+            <div className='container overflow-x-auto mt-[30px]'>
+                <div className='flex flex-nowrap justify-center min-w-max gap-[20px] text-[16px] font-medium px-4'>
                     {["All Blogs", ...categories].map((cat, idx) => (
                         <span
                             key={idx}
