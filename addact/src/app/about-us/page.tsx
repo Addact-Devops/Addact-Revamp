@@ -1,4 +1,4 @@
-import AboutUsHeroBanner from "@/components/organisms/AboutUsHeroBanner";
+import HeroBanner from "@/components/organisms/HeroBanner";
 import Quote from "@/components/organisms/Quote";
 import AboutUsContent from "@/components/organisms/AboutUsContent";
 import OurVisionMission from "@/components/organisms/OurVisionMission";
@@ -6,25 +6,29 @@ import GenericCTA from "@/components/organisms/GenericCTA";
 import BrandValue from "@/components/organisms/BrandValue";
 import WeAreAddact from "@/components/organisms/WeAreAddact";
 
-import { getAboutUsHeroBanner } from "@/graphql/queries/getAboutUs";
-import { getAboutUsQuote } from "@/graphql/queries/getAboutUsQuote";
-import { getAboutUsContent } from "@/graphql/queries/getAboutUsContent";
-import { getOurVisionMission } from "@/graphql/queries/getOurVisionMission";
-import { getAboutUsCTA } from "@/graphql/queries/getAboutUsCTA";
-import { getBrandValue } from "@/graphql/queries/getBrandValue";
-import { getWeAreAddact } from "@/graphql/queries/getWeAreAddact";
+import {
+    getAboutUsHeroBanner,
+    getAboutUsQuote,
+    getAboutUsContent,
+    getOurVisionMission,
+    getAboutUsCTA,
+    getBrandValue,
+    getWeAreAddact,
+} from "@/graphql/queries/getAboutUs";
 
 export default async function AboutUsPage() {
-    const [quoteData, aboutData, visionData, ctaData, brandValueData, weAreAddactData] = await Promise.all([
-        getAboutUsQuote(),
-        getAboutUsContent(),
-        getOurVisionMission(),
-        getAboutUsCTA(),
-        getBrandValue(),
-        getWeAreAddact(),
-    ]);
+    const [heroBannerData, quoteData, aboutData, visionData, ctaData, brandValueData, weAreAddactData] =
+        await Promise.all([
+            getAboutUsHeroBanner(),
+            getAboutUsQuote(),
+            getAboutUsContent(),
+            getOurVisionMission(),
+            getAboutUsCTA(),
+            getBrandValue(),
+            getWeAreAddact(),
+        ]);
 
-    const heroBanner = await getAboutUsHeroBanner();
+    const banner = heroBannerData;
     const quote = quoteData.aboutUs.Quote;
     const about = aboutData.aboutUs.AboutUsContent;
     const visionMission = visionData.aboutUs.OurVisionMission;
@@ -32,14 +36,13 @@ export default async function AboutUsPage() {
     const cta = ctaData;
 
     return (
-        <main className="bg-white">
-            {heroBanner && heroBanner.BannerImage && (
-                <AboutUsHeroBanner
-                    title={heroBanner.BannerTitle}
-                    description={heroBanner.BannerDescription}
-                    image={heroBanner.BannerImage}
-                />
-            )}
+        <main className="bg-[#f4f4f4]">
+            <HeroBanner
+                title={banner?.BannerTitle || ""}
+                description={banner?.BannerDescription || ""}
+                backgroundImageUrl={banner?.BannerImage?.url || ""}
+                showAnchorLinks={true} // Enables anchor links at bottom like Overview, Vision etc.
+            />
 
             <Quote authorName={quote.AuthorName} authorMessage={quote.AuthorMessage} authorImage={quote.AuthorImage} />
 

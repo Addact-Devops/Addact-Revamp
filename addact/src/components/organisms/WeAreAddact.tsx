@@ -74,45 +74,57 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
     };
 
     return (
-        <section ref={sectionRef} className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-                <div className="flex flex-col md:flex-row items-center gap-10">
-                    {/* Left Side Image */}
-                    <div className="w-full md:w-1/2">
+        <section ref={sectionRef} className="container my-[60px] sm:my-[100px] pb-[60px] sm:pb-[100px]">
+            <div className="flex flex-col md:flex-row items-center sm:gap-[60px] lg:gap-[120px]">
+                {/* Desktop Image (left side) */}
+                <div className="w-full md:w-1/2 hidden md:block">
+                    <img
+                        src={image.url}
+                        alt={image.alternativeText || "We Are Addact"}
+                        width={image.width}
+                        height={image.height}
+                        className="rounded-2xl w-full h-auto object-cover"
+                    />
+                </div>
+
+                {/* Right Side Content */}
+                <div className="w-full md:w-1/2">
+                    <p className="text-[#e97777] text-[17px] leading-[30px] font-medium sm:mb-[15px] mb-[10px] block">
+                        {subtitle}
+                    </p>
+
+                    <h2 className="text-black mb-[20px] !font-normal">{title}</h2>
+
+                    {/* Mobile Image (after title) */}
+                    <div className="block md:hidden mb-[20px]">
                         <img
                             src={image.url}
                             alt={image.alternativeText || "We Are Addact"}
                             width={image.width}
                             height={image.height}
-                            className="rounded-2xl w-full h-auto object-cover"
+                            className="rounded-2xl w-full h-auto object-cover max-h-[250px]"
                         />
                     </div>
 
-                    {/* Right Side Content */}
-                    <div className="w-full md:w-1/2">
-                        <p className="text-[#E15D64] text-sm font-semibold mb-2">{subtitle}</p>
-                        <h2 className="text-4xl font-bold text-black mb-4">{title}</h2>
+                    <div className="text-base text-black leading-relaxed mb-8">
+                        {content?.map((block, index) => (
+                            <p key={index}>
+                                {block.children?.map((child, childIndex) => (
+                                    <span key={childIndex}>{child.text}</span>
+                                ))}
+                            </p>
+                        ))}
+                    </div>
 
-                        <div className="text-base text-black leading-relaxed space-y-4 mb-8">
-                            {content?.map((block, index) => (
-                                <p key={index}>
-                                    {block.children?.map((child, childIndex) => (
-                                        <span key={childIndex}>{child.text}</span>
-                                    ))}
+                    <div className="flex flex-col sm:flex-row gap-8 mt-4 text-center sm:text-left">
+                        {numberContent.map((item, index) => (
+                            <div key={index}>
+                                <h3 className="font-semibold text-[#E15D64] mb-1">{counts[index]}+</h3>
+                                <p className="text-sm text-black leading-snug whitespace-pre-line sm:max-w-[65%]">
+                                    {item.Content}
                                 </p>
-                            ))}
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-8 mt-4">
-                            {numberContent.map((item, index) => (
-                                <div key={index}>
-                                    <h3 className="text-4xl font-semibold text-[#E15D64] mb-1">{counts[index]}+</h3>
-                                    <p className="text-sm text-black leading-snug whitespace-pre-line">
-                                        {item.Content}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
