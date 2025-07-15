@@ -21,7 +21,6 @@ const WhoWeAre = () => {
             setData(res);
         })();
     }, []);
-    console.log("data?.whoAreWes[0]?.Title[0]?.Description", data?.whoAreWes[0]?.Title[0]?.Description);
     const cleanedText = useMemo(() => {
         const html = data?.whoAreWes[0]?.Title[0]?.Description || "";
         return html
@@ -30,7 +29,6 @@ const WhoWeAre = () => {
             .replace(/\s+/g, " ")
             .trim();
     }, [data]);
-    console.log("🚀 ~ RawText123 ~ RawText123:", cleanedText);
     const wordArray = RawText1?.trim().split(" ");
     // useEffect(() => {
     //     const Text = data?.whoAreWes[0]?.Title[0]?.Description?.replace(/<[^>]+>/g, "") // remove HTML tags
@@ -41,7 +39,6 @@ const WhoWeAre = () => {
     // }, [data]);
     useEffect(() => {
         if (!containerRef.current || !textRef.current) return;
-        console.log("window.innerHeight", window.innerHeight);
         const ctx = gsap.context(() => {
             const words = gsap.utils.toArray<HTMLElement>(".word");
 

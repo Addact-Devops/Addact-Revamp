@@ -9,7 +9,6 @@ const CaseStudyDetail = () => {
 
     const [caseStudy, setCaseStudy] = useState<CaseStudyBySlugResponse["addactCaseStudies"][number]>();
     const [loading, setLoading] = useState(true);
-    console.log("🚀 ~ CaseStudyDetail ~ caseStudy:", caseStudy);
 
     useEffect(() => {
         if (typeof slug === "string") {
