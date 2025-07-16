@@ -8,6 +8,7 @@ import OurInsights from "@/components/organisms/OurInsights";
 import { notFound } from "next/navigation";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
+import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 
 export default async function strapiPage() {
     const service = "strapi";
@@ -27,6 +28,7 @@ export default async function strapiPage() {
                 backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
             />
             <OurPartners />
+            <OurServicesWithTabs data={data.our_service} />
             {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
             <OurProcess />
