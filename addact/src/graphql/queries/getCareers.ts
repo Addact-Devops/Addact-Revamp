@@ -47,7 +47,7 @@ const query = gql`
                     }
                     ... on ComponentHeadingsH4 {
                         id
-                        h4
+                        h5
                     }
                     ... on ComponentHeadingsH5 {
                         id
