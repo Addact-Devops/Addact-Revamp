@@ -115,6 +115,8 @@ const CaseStudyDetail = () => {
                                         value={formData.phone}
                                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                         placeholder='Phone Number*'
+                                        pattern='[0-9]{10,15}'
+                                        title='Please enter a valid phone number (10–15 digits only)'
                                         className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
                                     />
 
