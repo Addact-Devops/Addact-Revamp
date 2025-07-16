@@ -20,12 +20,14 @@ const WhyAddact = ({ data }: IProps) => {
                                 <div key={service.id} className='relative'>
                                     <div className='text-white p-7'>
                                         <div className='w-10 lg:w-14 lg:h-14 2xl:w-20 h-10 2xl:h-20 rounded-sm mb-4'>
-                                            <Image
-                                                src={service.Image.url}
-                                                alt={service.Image.alternativeText ?? ""}
-                                                width={service.Image.width}
-                                                height={service.Image.height}
-                                            />
+                                            {service?.Image?.url && (
+                                                <Image
+                                                    src={service?.Image?.url}
+                                                    alt={service.Image.alternativeText ?? ""}
+                                                    width={service.Image.width}
+                                                    height={service.Image.height}
+                                                />
+                                            )}
                                         </div>
                                         <h3 className='text-lg lg:text-3xl my-7'>{service.Title}</h3>
                                         <p className='text-base 2xl:text-xl text-white'>

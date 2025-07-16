@@ -9,11 +9,11 @@ import { notFound } from "next/navigation";
 import FAQ from "@/components/organisms/FAQ";
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 
 export default async function SitecorePage() {
     const service = "sitecore";
     const data = await getServiceListBySlug(service);
-    console.log("🚀 ~ SitecorePage ~ data:", data);
     if (!data) return notFound();
 
     const bannerData = data.Banner?.Banner?.[0];
@@ -31,9 +31,8 @@ export default async function SitecorePage() {
             />
             <OurPartners />
             <OurServicesWithTabs data={data.our_service} />
-            <div className='bg-lime-400'>
-                <h1>Industries we serve</h1>
-            </div>
+            {/* <IndustriesWeServe /> */}
+            {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
             <CtaBanner2 data={data.cta2} />
             <OurProcess />

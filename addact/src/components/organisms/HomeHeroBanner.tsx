@@ -1,20 +1,25 @@
-"use client";
-
 import Link from "next/link";
-import Image from "next/image";
 import { BANNER } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
-import bg from "../../../public/homeBG.png";
+import VerticalLines from "../molecules/VerticalLines";
 
 interface IProps {
     data: BANNER;
 }
 
 const HomeHeroBanner = ({ data }: IProps) => {
+    const src = data?.Banner[0]?.BannerImage?.url ?? "#";
     return (
-        <section className='relative w-full h-screen flex items-center justify-center overflow-hidden'>
-            <Image src={bg} alt='Sitecore XM Cloud Banner' fill className='object-cover object-center z-0' priority />
-
+        <section className='relative w-full h-screen flex items-center justify-center overflow-hidden mt-[120px]'>
+            <video className='absolute top-0 left-0 w-full h-full object-cover z-0' autoPlay muted loop playsInline>
+                <source src={src} type='video/mp4' />
+                Your browser does not support the video tag.
+            </video>
+            <div className='absolute inset-0 z-10 pointer-events-none'>
+                <div className='relative w-full h-full'>
+                    <VerticalLines />
+                </div>
+            </div>
             <div className='relative z-20 max-w-[1234px] w-full'>
                 <div className='text-white px-10 xl:px-0'>
                     <h1 className='text-4xl sm:text-5xl lg:!text-[110px] !font-bold uppercase !leading-[47px] lg:!leading-[95px] mb-5 lg:mb-14'>
@@ -69,18 +74,18 @@ const HomeHeroBanner = ({ data }: IProps) => {
                                             <path
                                                 d='M48.1016 19.7668L68.3349 40.0002L48.1016 60.2335'
                                                 stroke='white'
-                                                stroke-width='3'
-                                                stroke-miterlimit='10'
-                                                stroke-linecap='round'
-                                                stroke-linejoin='round'
+                                                strokeWidth='3'
+                                                strokeMiterlimit='10'
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
                                             />
                                             <path
                                                 d='M11.666 40H67.766'
                                                 stroke='white'
-                                                stroke-width='3'
-                                                stroke-miterlimit='10'
-                                                stroke-linecap='round'
-                                                stroke-linejoin='round'
+                                                strokeWidth='3'
+                                                strokeMiterlimit='10'
+                                                strokeLinecap='round'
+                                                strokeLinejoin='round'
                                             />
                                         </svg>
                                     </div>

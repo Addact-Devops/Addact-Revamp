@@ -47,7 +47,7 @@ h2 {
 
 h2 {
     font-family: $font-secondary;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 h3 {
@@ -113,6 +113,14 @@ p {
     &.large {
         font-size: pxToRem(34);
         line-height: lineHeightRatio(54, 34);
+    }
+}
+
+.text-15 {
+    font-size: 15px;
+
+    p {
+        font-size: 15px;
     }
 }
 

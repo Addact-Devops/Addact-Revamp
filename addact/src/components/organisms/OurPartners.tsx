@@ -40,22 +40,24 @@ export default function OurPartners() {
     };
 
     return (
-        <section className="partners my-[60px] sm:my-[100px] border-t border-b border-[#2E2E2E]">
-            <div className="container">
-                <h2 className="text-center text-white mb-[80px]">{renderTitle()}</h2>
+        <section className='partners py-[60px] sm:py-[100px] border-t border-b border-[#2E2E2E]'>
+            <div className='container'>
+                <h2 className='text-center text-white mb-[80px]'>{renderTitle()}</h2>
             </div>
 
-            <div className="overflow-hidden relative w-full py-4">
-                <div className="partners__marquee-content flex gap-[80px] animate-marquee w-fit">
+            <div className='overflow-hidden relative w-full py-4'>
+                <div className='partners__marquee-content flex gap-[80px] animate-marquee w-fit'>
                     {partnerData?.Image?.map((item, index) => (
-                        <div key={index} className="min-w-[160px] flex items-center justify-center">
-                            <Image
-                                src={item.Image.url}
-                                alt={item.Image.alternativeText || `Partner Logo ${index + 1}`}
-                                width={164}
-                                height={64}
-                                className="max-w-full w-full h-[64px] object-contain"
-                            />
+                        <div key={index} className='min-w-[160px] flex items-center justify-center'>
+                            {item?.Image?.url && (
+                                <Image
+                                    src={item?.Image?.url}
+                                    alt={item.Image.alternativeText || `Partner Logo ${index + 1}`}
+                                    width={164}
+                                    height={64}
+                                    className='max-w-full w-full h-[64px] object-contain'
+                                />
+                            )}
                         </div>
                     ))}
                 </div>
