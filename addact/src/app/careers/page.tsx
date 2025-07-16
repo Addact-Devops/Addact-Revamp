@@ -14,7 +14,7 @@ export default async function CareersPage() {
     const positions = careers.positions ?? []; // ✅ Get positions from response
 
     return (
-        <main>
+        <main className="bg-[#f4f4f4]  pb-[60px] sm:pb-[100px]">
             {banner && (
                 <HeroBanner
                     title={banner.BannerTitle || ""}

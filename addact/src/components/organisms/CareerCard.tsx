@@ -2,6 +2,7 @@
 
 import React from "react";
 
+// Inline types
 type HeadingBlock =
     | { id: string; h1?: string }
     | { id: string; h2?: string }
@@ -13,13 +14,13 @@ type HeadingBlock =
 
 type GlobalCardItem = {
     id: string;
-    Title: string | null;
-    Description: string | null;
-    Image: {
+    Title?: string | null;
+    Description?: string | null;
+    Image?: {
         url: string;
         alternativeText?: string | null;
     } | null;
-    Link: {
+    Link?: {
         href: string;
     } | null;
 };
@@ -34,15 +35,15 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
     type TagName = (typeof allowedTags)[number];
 
     return (
-        <section className="py-16 bg-white">
-            <div className="container mx-auto px-4">
+        <section>
+            <div className="container mx-auto my-[60px] sm:my-[100px]">
                 {/* Section Titles */}
                 {title.map((block) => {
                     if ("Richtext" in block && block.Richtext) {
                         return (
-                            <div
+                            <p
                                 key={block.id}
-                                className="mb-2 text-center text-sm text-rose-400 font-medium"
+                                className="text-[#e97777] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]"
                                 dangerouslySetInnerHTML={{ __html: block.Richtext }}
                             />
                         );
@@ -56,26 +57,32 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                         tagName,
                         {
                             key: block.id,
-                            className: "text-center text-4xl font-semibold text-black mb-10",
+                            className:
+                                "text-[#000] !font-[400] 2xl:mb-[40px] md:mb-[30px] text-center !text-[35px] md:!text-[45px] ",
                         },
                         content
                     );
                 })}
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-12 sm:gap-y-10">
                     {cards
                         .filter((card) => card.Title)
                         .map((card) => (
-                            <div key={card.id} className="flex flex-col">
+                            <div
+                                key={card.id}
+                                className="flex flex-col pt-[50px] 2xl:pt-[80px] px-[10px] md:px-[0] text-center md:text-left"
+                            >
                                 {/* Title + Icon */}
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="text-xl font-semibold text-black">{card.Title}</span>
+                                <div className="relative mb-[15px] ">
+                                    <div className="text-[22px] sm:text-[18px] 2xl:text-[22px] font-semibold text-black inline">
+                                        {card.Title}
+                                    </div>
                                     {card.Image?.url && (
                                         <img
                                             src={card.Image.url}
                                             alt={card.Image.alternativeText || ""}
-                                            className="w-5 h-5"
+                                            className="inline ml-[10px]"
                                         />
                                     )}
                                 </div>
@@ -83,7 +90,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                                 {/* Description */}
                                 {card.Description && (
                                     <div
-                                        className="text-base text-zinc-700 leading-relaxed"
+                                        className="text-base text-[#000] leading-relaxed text-15"
                                         dangerouslySetInnerHTML={{ __html: card.Description }}
                                     />
                                 )}

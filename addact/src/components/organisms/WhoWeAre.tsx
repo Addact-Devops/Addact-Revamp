@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "@/styles/components/whoweare.scss";
 import { getWhoAreWe, WhoAreWeResponse } from "@/graphql/queries/whoAreWe";
 import gsap from "gsap";
@@ -21,14 +21,14 @@ const WhoWeAre = () => {
             setData(res);
         })();
     }, []);
-    const cleanedText = useMemo(() => {
-        const html = data?.whoAreWes[0]?.Title[0]?.Description || "";
-        return html
-            .replace(/<[^>]+>/g, "")
-            .replace(/&nbsp;/g, " ")
-            .replace(/\s+/g, " ")
-            .trim();
-    }, [data]);
+    // const cleanedText = useMemo(() => {
+    //     const html = data?.whoAreWes[0]?.Title[0]?.Description || "";
+    //     return html
+    //         .replace(/<[^>]+>/g, "")
+    //         .replace(/&nbsp;/g, " ")
+    //         .replace(/\s+/g, " ")
+    //         .trim();
+    // }, [data]);
     const wordArray = RawText1?.trim().split(" ");
     // useEffect(() => {
     //     const Text = data?.whoAreWes[0]?.Title[0]?.Description?.replace(/<[^>]+>/g, "") // remove HTML tags
@@ -164,10 +164,10 @@ const WhoWeAre = () => {
     }, [data]);
     return (
         <>
-            <section className='who-we-are gap my-24 sm:my-32 md:my-40 lg:my-60' ref={containerRef}>
-                <div className='container'>
-                    <div className='flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap'>
-                        <h2 className='w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10'>
+            <section className="who-we-are gap my-24 sm:my-32 md:my-40 lg:my-60" ref={containerRef}>
+                <div className="container">
+                    <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap">
+                        <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10">
                             {data?.whoAreWes[0].Title[0].Title}
                         </h2>
 
@@ -176,14 +176,14 @@ const WhoWeAre = () => {
                         {/* <RichText html={data?.whoAreWes[0]?.Title[0]?.Description || ""} /> */}
                         {/* </div> */}
 
-                        <div className='relative overflow-hidden w-full text-left  large'>
-                            <div className='sticky top-0 flex items-center justify-center px-4'>
+                        <div className="relative overflow-hidden w-full text-left  large">
+                            <div className="sticky top-0 flex items-center justify-center px-4">
                                 <div
                                     ref={textRef}
-                                    className='max-w-4xl text-base  leading-relaxed flex flex-wrap gap-x-1'
+                                    className="max-w-4xl text-base  leading-relaxed flex flex-wrap gap-x-1"
                                 >
                                     {wordArray.map((word, idx) => (
-                                        <span key={idx} className='word inline-block whitespace-nowrap opacity-0'>
+                                        <span key={idx} className="word inline-block whitespace-nowrap opacity-0">
                                             {word}
                                         </span>
                                     ))}
@@ -194,22 +194,22 @@ const WhoWeAre = () => {
 
                     <div
                         ref={counterSectionRef}
-                        className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border border-white/15 mt-24 overflow-hidden'
+                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border border-white/15 mt-24 overflow-hidden"
                     >
                         {data?.whoAreWes[0].Counter.map((item, index) => (
                             <div
                                 key={item.id}
-                                className='text-center p-[60px] border-r border-white/15 last:border-r-0'
+                                className="text-center p-[60px] border-r border-white/15 last:border-r-0"
                             >
                                 <h2
-                                    className='text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left'
+                                    className="text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left"
                                     ref={(el) => {
                                         numberRefs.current[index] = el;
                                     }}
                                 >
                                     0+
                                 </h2>
-                                <div className='text-2xl text-left font-normal leading-[1.75]'>{item.CounterTitle}</div>
+                                <div className="text-2xl text-left font-normal leading-[1.75]">{item.CounterTitle}</div>
                             </div>
                         ))}
                     </div>

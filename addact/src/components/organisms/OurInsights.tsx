@@ -6,8 +6,63 @@ import Link from "next/link";
 import { RightArrowUpIcon } from "../atom/icons";
 import { useEffect, useState } from "react";
 
+// --- Types from expected GraphQL structure ---
+type ImageType = {
+    url: string;
+    name?: string | null;
+    width?: number | null;
+    height?: number | null;
+    alternativeText?: string | null;
+};
+
+type BlogBanner = {
+    PublishDate: string;
+    BannerImage?: ImageType;
+    BannerDescription?: string;
+    ReadNow?: {
+        href?: string;
+    };
+};
+
+type Blog = {
+    Slug?: string;
+    createdAt: string;
+    BlogBanner?: BlogBanner[];
+    HeadingSection?: {
+        PageTitle?: string;
+    }[];
+};
+
+type CaseStudy = {
+    HeroBanner?: {
+        BannerTitle?: string;
+        BannerDescription?: string;
+        PublishDate?: string;
+        ReadNow?: {
+            href: string;
+        };
+        BannerImage?: ImageType;
+    }[];
+    Slug?: string;
+    createdAt?: string; // 👈 this line resolves the error
+};
+
+type CardItem = {
+    type: "Blog" | "Case study";
+    title?: string;
+    date: string;
+    image?: ImageType;
+    description?: string;
+    link?: string;
+};
+
+type OurInsightsData = {
+    addactBlogs: Blog[];
+    addactCaseStudies: CaseStudy[];
+};
+
 export default function OurInsights() {
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<OurInsightsData | null>(null);
 
     useEffect(() => {
         (async () => {
@@ -21,29 +76,28 @@ export default function OurInsights() {
     const sortedBlogs = [...data.addactBlogs].sort(
         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
-    console.log("🚀 ~ OurInsights ~ sortedBlogs:", sortedBlogs);
 
     const sortedCaseStudies = [...data.addactCaseStudies].sort(
         (a, b) =>
-            new Date(b.HeroBanner?.[0]?.PublishDate).getTime() - new Date(a.HeroBanner?.[0]?.PublishDate).getTime()
+            new Date(b.HeroBanner?.[0]?.PublishDate || "").getTime() -
+            new Date(a.HeroBanner?.[0]?.PublishDate || "").getTime()
     );
-    console.log("🚀 ~ OurInsights ~ sortedCaseStudies:", sortedCaseStudies);
 
     const blog1 = sortedBlogs[0];
     const blog2 = sortedBlogs[1];
     const caseStudy = sortedCaseStudies[0];
 
-    const items = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
-    console.log("items", items);
-    return (
-        <div className='my-28 lg:my-48 xl:my-60'>
-            <div className='container mx-auto px-4'>
-                <h2 className='border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10'>Our Insights</h2>
+    const items: CardItem[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
 
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10 sm:mt-14 lg:mt-24'>
+    return (
+        <div className="my-28 lg:my-48 xl:my-60">
+            <div className="container mx-auto px-4">
+                <h2 className="border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10">Our Insights</h2>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10 sm:mt-14 lg:mt-24">
                     <InsightCard item={items[0]} big />
 
-                    <div className='flex flex-col gap-4'>
+                    <div className="flex flex-col gap-4">
                         <InsightCard item={items[1]} />
                         <InsightCard item={items[2]} />
                     </div>
@@ -53,12 +107,12 @@ export default function OurInsights() {
     );
 }
 
-function mapBlogToCard(blog: any) {
+function mapBlogToCard(blog: Blog): CardItem {
     const banner = blog.BlogBanner?.[0];
     return {
         type: "Blog",
         title: blog.HeadingSection?.[0]?.PageTitle,
-        date: new Date(banner?.PublishDate).toLocaleDateString("en-US", {
+        date: new Date(banner?.PublishDate || "").toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -69,12 +123,12 @@ function mapBlogToCard(blog: any) {
     };
 }
 
-function mapCaseStudyToCard(cs: any) {
+function mapCaseStudyToCard(cs: CaseStudy): CardItem {
     const banner = cs.HeroBanner?.[0];
     return {
         type: "Case study",
         title: banner?.BannerTitle,
-        date: new Date(banner?.PublishDate).toLocaleDateString("en-US", {
+        date: new Date(banner?.PublishDate || "").toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
             day: "numeric",
@@ -85,7 +139,7 @@ function mapCaseStudyToCard(cs: any) {
     };
 }
 
-function InsightCard({ item, big = false }: { item: any; big?: boolean }) {
+function InsightCard({ item, big = false }: { item: CardItem; big?: boolean }) {
     return (
         <div
             className={`border border-gray-700 p-7 relative ${
@@ -102,25 +156,25 @@ function InsightCard({ item, big = false }: { item: any; big?: boolean }) {
                 {item.image?.url && (
                     <Image
                         src={item.image.url}
-                        alt={item.image.alternativeText || item.image.name}
-                        width={item.image.width}
-                        height={item.image.height}
-                        className='w-full h-full object-cover rounded'
+                        alt={item.image.alternativeText || item.image.name || "Insight"}
+                        width={item.image.width || 500}
+                        height={item.image.height || 300}
+                        className="w-full h-full object-cover rounded"
                     />
                 )}
             </div>
 
-            <div className='flex flex-col flex-1 justify-center'>
-                <span className='px-5 py-2 bg-[#FFFFFF33] border border-blue-500 text-white rounded-lg w-fit text-sm mb-2 font-medium'>
+            <div className="flex flex-col flex-1 justify-center">
+                <span className="px-5 py-2 bg-[#FFFFFF33] border border-blue-500 text-white rounded-lg w-fit text-sm mb-2 font-medium">
                     {item.type}
                 </span>
-                <h4 className='md:!text-3xl font-medium mb-4 leading-tight line-clamp-2'>{item.title}</h4>
-                <p className='text-base text-white mb-4'>{item.date}</p>
+                <h4 className="md:!text-3xl font-medium mb-4 leading-tight line-clamp-2">{item.title}</h4>
+                <p className="text-base text-white mb-4">{item.date}</p>
             </div>
-            <div className='mt-auto self-end'>
-                <Link href={item.link} target='_blank'>
-                    <div className='group w-14 h-14 bg-blue-600 text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16'>
-                        <RightArrowUpIcon className='transition-transform duration-300 group-hover:scale-110' />
+            <div className="mt-auto self-end">
+                <Link href={item.link || "#"} target="_blank">
+                    <div className="group w-14 h-14 bg-blue-600 text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16">
+                        <RightArrowUpIcon className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
                 </Link>
             </div>

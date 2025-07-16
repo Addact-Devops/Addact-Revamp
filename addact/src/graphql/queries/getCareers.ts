@@ -47,7 +47,7 @@ const query = gql`
                     }
                     ... on ComponentHeadingsH4 {
                         id
-                        h5
+                        h4
                     }
                     ... on ComponentHeadingsH5 {
                         id
@@ -76,6 +76,7 @@ const query = gql`
                             width
                             height
                             name
+                            alternativeText
                         }
                         Link {
                             id
@@ -140,6 +141,76 @@ const query = gql`
     }
 `;
 
+// Match inline component types exactly
+type HeadingBlock =
+    | { id: string; h1?: string }
+    | { id: string; h2?: string }
+    | { id: string; h3?: string }
+    | { id: string; h4?: string }
+    | { id: string; h5?: string }
+    | { id: string; h6?: string }
+    | { id: string; Richtext?: string };
+
+type GlobalCardItem = {
+    id: string;
+    Title?: string | null;
+    Description?: string | null;
+    Image?: {
+        url: string;
+        width?: number;
+        height?: number;
+        name?: string;
+        alternativeText?: string | null;
+    } | null;
+    Link?: {
+        href: string;
+    } | null;
+};
+
+type PositionType = {
+    EventTitle: string;
+    CardInfo: {
+        AerrowIcon?: {
+            url: string;
+            name?: string;
+            width?: number;
+            height?: number;
+            alternativeText?: string;
+        };
+        HoverIcon?: {
+            url: string;
+            name?: string;
+            width?: number;
+            height?: number;
+            alternativeText?: string;
+        };
+        Icon?: {
+            url: string;
+            name?: string;
+            width?: number;
+            height?: number;
+            alternativeText?: string;
+        };
+        LogoLink?: {
+            id: string;
+            href: string;
+            label: string;
+            target: string;
+            isExternal: boolean;
+        };
+        LogoTitle?: string;
+        TitleIcon?: {
+            Icon: {
+                url: string;
+                name?: string;
+                width?: number;
+                height?: number;
+                alternativeText?: string;
+            };
+        }[];
+    }[];
+};
+
 type CareersDataResponse = {
     careers: {
         PageHeading?: {
@@ -161,10 +232,10 @@ type CareersDataResponse = {
             }[];
         };
         Careercard?: {
-            Title: any[];
-            GlobalCard: any[];
+            Title: HeadingBlock[];
+            GlobalCard: GlobalCardItem[];
         };
-        positions?: any[];
+        positions?: PositionType[];
     };
 };
 
