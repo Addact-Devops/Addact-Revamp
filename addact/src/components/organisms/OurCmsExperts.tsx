@@ -54,16 +54,14 @@ const OurCmsExperts = () => {
                                     href={service?.Links?.href}
                                     target={service?.Links?.target}
                                 >
-                                    {service?.Icons?.url ?? (
-                                        <Image
-                                            src={service?.Icons?.url}
-                                            alt={service?.Icons?.alternativeText || "Service Icon"}
-                                            width={service?.Icons?.width}
-                                            height={service?.Icons?.height}
-                                            className='w-[113px] md:w-[310px]'
-                                            unoptimized={false}
-                                        />
-                                    )}
+                                    <Image
+                                        src={service?.Icons?.url}
+                                        alt={service?.Icons?.alternativeText || "Service Icon"}
+                                        width={service?.Icons?.width}
+                                        height={service?.Icons?.height}
+                                        className='w-[113px] md:w-[310px]'
+                                        unoptimized={false}
+                                    />
                                 </Link>
                             );
                         })}
