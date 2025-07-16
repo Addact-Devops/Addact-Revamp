@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation"; // ✅ new import
 
 type HeroBannerProps = {
     title: string;
@@ -15,6 +16,8 @@ type HeroBannerProps = {
 };
 
 const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchorLinks = false }: HeroBannerProps) => {
+    const pathname = usePathname(); // ✅ get current path
+
     return (
         <section className="relative text-white overflow-hidden">
             {/* Background Image */}
@@ -32,18 +35,15 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
             {/* Content */}
             <div className="relative container min-h-[550px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
                 <div className="text-left max-w-[95%]">
-                    {/* Title */}
                     <h1 className="text-white mb-[10px] md:mb-[15px] font-semibold text-[45px] leading-[55px] md:text-[60px] md:leading-[63px]">
                         {title}
                     </h1>
 
-                    {/* Description */}
                     <div
                         className="text-white text-[15px] leading-[25px] lg:text-[17px] lg:leading-[30px] font-normal mt-0 lg:max-w-[50%]"
                         dangerouslySetInnerHTML={{ __html: description }}
                     />
 
-                    {/* Optional Button */}
                     {button?.label && button?.url && (
                         <div className="mt-10">
                             <Link
@@ -56,13 +56,23 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                     )}
                 </div>
 
-                {/* Optional Anchor Links */}
+                {/* Conditional Anchor Links based on URL path */}
                 {showAnchorLinks && (
                     <div className="container absolute bottom-[14px] left-0 hidden lg:flex flex-wrap gap-[50px] justify-start text-white text-[16px] sm:text-base font-medium custom-links">
-                        <a href="#overview">Overview</a>
-                        <a href="#vision-mission">Vision & Mission</a>
-                        <a href="#brand-values">Brand Values</a>
-                        <a href="#who-we-are">Who are we</a>
+                        {pathname === "/careers" ? (
+                            <>
+                                <a href="#perks">Perks</a>
+                                <a href="#open-positions">Open positions</a>
+                                <a href="#life-at-addxp">Life at Addxp</a>
+                            </>
+                        ) : pathname === "/about-us" ? (
+                            <>
+                                <a href="#overview">Overview</a>
+                                <a href="#vision-mission">Vision & Mission</a>
+                                <a href="#brand-values">Brand Values</a>
+                                <a href="#who-we-are">Who are we</a>
+                            </>
+                        ) : null}
 
                         <style jsx>{`
                             .custom-links a {
