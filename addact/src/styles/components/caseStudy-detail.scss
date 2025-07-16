@@ -43,7 +43,6 @@
 
     h2 {
         margin-bottom: 60px;
-        font-weight: 600;
         &:not(:first-child) {
             margin-top: 70px;
 
@@ -136,5 +135,11 @@
 
     .table {
         overflow: scroll;
+    }
+    a {
+        text-decoration: underline;
+        &:hover {
+            color: $blue;
+        }
     }
 }
