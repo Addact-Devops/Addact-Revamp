@@ -80,11 +80,11 @@ const CaseStudyDetail = () => {
                             <BlogContentRenderer blocks={caseStudy.CaseStudyContent} />
                         </div>
 
-                        <div className='ml-36'>
+                        <div className='lg:ml-36'>
                             <div className='sticky top-[140px] w-full'>
                                 <form
                                     onSubmit={handleFormSubmit}
-                                    className='space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md max-w-sm w-full'
+                                    className='space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md lg:max-w-sm w-full'
                                 >
                                     <h2 className='text-2xl font-semibold leading-tight mb-4'>
                                         Get your free copy now!
