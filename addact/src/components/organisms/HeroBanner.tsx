@@ -19,7 +19,7 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
     const pathname = usePathname(); // ✅ get current path
 
     return (
-        <section className="relative text-white overflow-hidden">
+        <section className="relative text-white overflow-hidden md:mt-[120px]">
             {/* Background Image */}
             <Image
                 src={backgroundImageUrl}

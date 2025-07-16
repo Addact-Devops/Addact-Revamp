@@ -13,7 +13,6 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 export default async function SitecorePage() {
     const service = "sitecore";
     const data = await getServiceListBySlug(service);
-    console.log("🚀 ~ SitecorePage ~ data:", data);
     if (!data) return notFound();
 
     const bannerData = data.Banner?.Banner?.[0];
