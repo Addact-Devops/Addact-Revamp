@@ -105,7 +105,9 @@ const Header = ({ headers }: HeaderProps) => {
                                 {isActive && (
                                     <div
                                         ref={dropdownRef}
-                                        className='absolute left-0 top-[112px] mt-2 bg-black border border-gray-700 p-4 shadow-lg flex gap-8 w-[610px] z-40'
+                                        className={`absolute left-0 mt-2 bg-black border border-gray-700 p-4 shadow-lg flex gap-8 w-[610px] z-40 ${
+                                            scrolled ? "top-[76px] " : "top-[112px] "
+                                        }`}
                                     >
                                         <div className='w-1/2 relative'>
                                             <Image

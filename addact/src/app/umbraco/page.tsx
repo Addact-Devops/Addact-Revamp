@@ -6,6 +6,9 @@ import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import { notFound } from "next/navigation";
+import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
+import FAQ from "@/components/organisms/FAQ";
+import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 
 export default async function umbracoPage() {
     const service = "umbraco";
@@ -25,16 +28,13 @@ export default async function umbracoPage() {
                 backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
             />
             <OurPartners />
-            <div className='bg-lime-400'>
-                <h1>Industries we serve</h1>
-            </div>
+            <OurServicesWithTabs data={data.our_service} />
+            {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
-            <div className='bg-lime-400'>
-                <h1>FAQ</h1>
-            </div>
+            <FAQ data={data.faq} />
         </main>
     );
 }
