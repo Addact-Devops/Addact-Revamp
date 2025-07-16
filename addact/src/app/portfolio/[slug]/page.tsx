@@ -41,17 +41,13 @@ const CaseStudyDetail = () => {
     const formTitle = caseStudy.FormTitle.CommonTitle[0];
     const pdf = caseStudy.CaseStudyPDF;
 
-    const handleFormSubmit = (e: React.FormEvent) => {
+    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
-        // if (!captchaToken) {
-        //     alert("Please complete the captcha.");
-        //     return;
-        // }
 
         const link = document.createElement("a");
         link.href = pdf.url;
-        link.download = pdf.name;
+        link.setAttribute("download", pdf.name || "file.pdf");
+        link.setAttribute("target", "_blank");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
