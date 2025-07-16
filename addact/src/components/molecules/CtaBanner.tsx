@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const CtaBanner = ({ data }: IProps) => {
-    const backgroundImage = `url(${data.CTAImage[0].Image.url})`;
+    const backgroundImage = `url(${data?.CTAImage[0].Image?.url})`;
 
     const cta = data.CTALink[0];
     const href = cta.href;

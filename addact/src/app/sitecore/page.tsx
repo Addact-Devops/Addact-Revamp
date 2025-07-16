@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import FAQ from "@/components/organisms/FAQ";
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 
 export default async function SitecorePage() {
     const service = "sitecore";
@@ -30,9 +31,8 @@ export default async function SitecorePage() {
             />
             <OurPartners />
             <OurServicesWithTabs data={data.our_service} />
-            <div className='bg-lime-400'>
-                <h1>Industries we serve</h1>
-            </div>
+            {/* <IndustriesWeServe /> */}
+            {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
             <CtaBanner2 data={data.cta2} />
             <OurProcess />
