@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-// import ReCAPTCHA from "react-google-recaptcha";
+import ReCAPTCHA from "react-google-recaptcha";
 import { CaseStudyBySlugResponse, getCaseStudyBySlug } from "@/graphql/queries/getCaseStudyBySlug";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../../styles/components/caseStudy-detail.scss";
@@ -12,9 +12,10 @@ const CaseStudyDetail = () => {
     const { slug } = useParams();
     const [caseStudy, setCaseStudy] = useState<CaseStudyBySlugResponse["addactCaseStudies"][number]>();
     const [loading, setLoading] = useState(true);
+    const [submitting, setSubmitting] = useState(false);
 
     const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
-    // const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
     useEffect(() => {
         if (typeof slug === "string") {
@@ -41,8 +42,35 @@ const CaseStudyDetail = () => {
     const formTitle = caseStudy.FormTitle.CommonTitle[0];
     const pdf = caseStudy.CaseStudyPDF;
 
-    const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!captchaToken) {
+            alert("Please complete the captcha.");
+            return;
+        }
+
+        setSubmitting(true);
+
+        try {
+            const response = await fetch("/api/submit-form", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                console.log("Submitted successfully:", result);
+            } else {
+                console.error("Submission failed:", result.message);
+            }
+        } catch (error) {
+            console.error("Error submitting form:", error);
+        } finally {
+            setSubmitting(false);
+        }
 
         const link = document.createElement("a");
         link.href = pdf.url;
@@ -120,17 +148,24 @@ const CaseStudyDetail = () => {
                                         className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
                                     />
 
-                                    {/* <ReCAPTCHA
+                                    <ReCAPTCHA
                                         sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                                         onChange={(token: string | null) => setCaptchaToken(token)}
-                                        className='mx-auto'
-                                    /> */}
+                                        className='mx-auto w-full'
+                                    />
 
                                     <button
                                         type='submit'
                                         className='w-full bg-[#f16565] cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-[#e45555] transition'
                                     >
-                                        Download
+                                        {submitting ? (
+                                            <span className='flex justify-center items-center gap-2'>
+                                                <span className='w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin'></span>
+                                                Processing...
+                                            </span>
+                                        ) : (
+                                            "Download"
+                                        )}
                                     </button>
                                 </form>
                             </div>
