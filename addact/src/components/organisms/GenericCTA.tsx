@@ -62,7 +62,7 @@ const GenericCTA: React.FC<CTAProps> = ({ title, description, image, link }) => 
                             target={link.target || "_self"}
                             rel={link.isExternal ? "noopener noreferrer" : undefined}
                             style={{ width: "fit-content" }}
-                            className="text-[15px] bg-[#e97777] hover:bg-[#b75f5f] text-white text-base font-[600] rounded-lg transition h-[41px] inline-flex items-center justify-center px-[16px] mt-[20px]"
+                            className="text-[15px] bg-[#3C4CFF] hover:bg-[#000000] text-white text-base font-[600] rounded-lg transition h-[41px] inline-flex items-center justify-center px-[16px] mt-[20px]"
                         >
                             {link.label}
                         </a>
