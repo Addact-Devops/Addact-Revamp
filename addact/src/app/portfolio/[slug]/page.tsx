@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 // import ReCAPTCHA from "react-google-recaptcha";
 import { CaseStudyBySlugResponse, getCaseStudyBySlug } from "@/graphql/queries/getCaseStudyBySlug";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
-import "../../../styles/components/blogdetail-wrapper.scss";
+import "../../../styles/components/caseStudy-detail.scss";
 
 const CaseStudyDetail = () => {
     const { slug } = useParams();
@@ -56,7 +56,7 @@ const CaseStudyDetail = () => {
     return (
         <div className='flex flex-col pt-[120px]'>
             <section className='container relative w-full text-white overflow-hidden'>
-                <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-6 p-6 md:p-12 mx-auto'>
+                <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24'>
                     <div>
                         <p className='text-sm text-red-400'>{hero.PublishDate}</p>
                         <h1 className='text-3xl md:text-5xl font-bold mt-2'>{hero.BannerTitle}</h1>
@@ -73,9 +73,9 @@ const CaseStudyDetail = () => {
                 </div>
             </section>
 
-            <section className='bg-[#f4f4f4] blogdetail-wrapper'>
+            <section className='bg-[#f4f4f4] caseStudy-wrapper'>
                 <div className='container'>
-                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto p-6 md:p-12 mt-16  text-black'>
+                    <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-16 text-black'>
                         <div>
                             <BlogContentRenderer blocks={caseStudy.CaseStudyContent} />
                         </div>
