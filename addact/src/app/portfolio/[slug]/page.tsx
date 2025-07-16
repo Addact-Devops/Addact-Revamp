@@ -73,7 +73,7 @@ const CaseStudyDetail = () => {
                 </div>
             </section>
 
-            <section className='bg-[#f4f4f4] caseStudy-wrapper'>
+            <section className='bg-[#f4f4f4] caseStudy-wrapper pb-20'>
                 <div className='container'>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-16 text-black'>
                         <div>
@@ -115,6 +115,8 @@ const CaseStudyDetail = () => {
                                         value={formData.phone}
                                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                         placeholder='Phone Number*'
+                                        pattern='[0-9]{10,15}'
+                                        title='Please enter a valid phone number (10–15 digits only)'
                                         className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
                                     />
 
@@ -126,7 +128,7 @@ const CaseStudyDetail = () => {
 
                                     <button
                                         type='submit'
-                                        className='w-full bg-[#f16565] text-white font-semibold py-2 rounded-lg hover:bg-[#e45555] transition'
+                                        className='w-full bg-[#f16565] cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-[#e45555] transition'
                                     >
                                         Download
                                     </button>
