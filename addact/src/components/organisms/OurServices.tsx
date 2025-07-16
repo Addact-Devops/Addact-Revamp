@@ -25,12 +25,14 @@ const OurServices = ({ data }: IProps) => {
                                     href={service.Link.href}
                                     target={service.Link.target}
                                 >
-                                    <Image
-                                        src={service.Image.url}
-                                        alt={service.Image.alternativeText || "Service Image"}
-                                        width={service.Image.width}
-                                        height={service.Image.height}
-                                    />
+                                    {service?.Image?.url && (
+                                        <Image
+                                            src={service?.Image?.url}
+                                            alt={service.Image.alternativeText || "Service Image"}
+                                            width={service.Image.width}
+                                            height={service.Image.height}
+                                        />
+                                    )}
 
                                     <h3 className='text-lg lg:text-3xl my-7'>{service.Title}</h3>
                                     <RichText html={service.Description} />

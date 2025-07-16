@@ -49,13 +49,15 @@ export default function OurPartners() {
                 <div className='partners__marquee-content flex gap-[80px] animate-marquee w-fit'>
                     {partnerData?.Image?.map((item, index) => (
                         <div key={index} className='min-w-[160px] flex items-center justify-center'>
-                            <Image
-                                src={item.Image.url}
-                                alt={item.Image.alternativeText || `Partner Logo ${index + 1}`}
-                                width={164}
-                                height={64}
-                                className='max-w-full w-full h-[64px] object-contain'
-                            />
+                            {item?.Image?.url && (
+                                <Image
+                                    src={item?.Image?.url}
+                                    alt={item.Image.alternativeText || `Partner Logo ${index + 1}`}
+                                    width={164}
+                                    height={64}
+                                    className='max-w-full w-full h-[64px] object-contain'
+                                />
+                            )}
                         </div>
                     ))}
                 </div>

@@ -23,7 +23,16 @@ const Header = ({ headers }: HeaderProps) => {
     };
 
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const [scrolled, setScrolled] = useState(false);
 
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 120);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
     // Close dropdown on outside click
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
@@ -46,16 +55,28 @@ const Header = ({ headers }: HeaderProps) => {
     }, [openDropdown]);
 
     return (
-        <header className='bg-black text-white w-full fixed top-0 z-50'>
-            <div className='container mx-auto flex items-center justify-between px-4 py-4 lg:px-0 lg:py-0'>
+        <header
+            className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+                scrolled ? "bg-transparent" : "bg-black"
+            }`}
+        >
+            <div
+                className={`mx-auto w-full flex items-center justify-between px-4 py-4 lg:px-0 lg:py-0 transition-all duration-300 ${
+                    scrolled
+                        ? "container bg-black/50 backdrop-blur-md border border-white/10 px-4 py-2 lg:px-6 lg:py-2 mt-3"
+                        : "container px-4 py-4 lg:px-0 lg:py-0"
+                }`}
+            >
                 <Link href='/'>
-                    <Image
-                        src={headerData?.HeaderLogo?.url}
-                        alt={headerData?.HeaderLogo?.alternativeText || "Company Logo"}
-                        className='w-[100px] h-[13px] lg:w-[220px] lg:h-[27px]'
-                        width={headerData?.HeaderLogo?.width}
-                        height={headerData?.HeaderLogo?.height}
-                    />
+                    {headerData?.HeaderLogo?.url ? (
+                        <Image
+                            src={headerData?.HeaderLogo?.url}
+                            alt={headerData?.HeaderLogo?.alternativeText || "Company Logo"}
+                            className='w-[100px] h-[13px] lg:w-[220px] lg:h-[27px]'
+                            width={headerData?.HeaderLogo?.width}
+                            height={headerData?.HeaderLogo?.height}
+                        />
+                    ) : null}
                 </Link>
 
                 {/* Desktop Nav */}
@@ -69,7 +90,9 @@ const Header = ({ headers }: HeaderProps) => {
                                     <button
                                         onClick={() => handleDropdownToggle(item.ReferenceTitle)}
                                         data-dropdown-button
-                                        className={`flex items-center gap-1 text-lg py-[46px] font-medium hover:text-blue-500 focus:outline-none transition-colors duration-200 cursor-pointer`}
+                                        className={`flex items-center gap-1 text-lg font-medium hover:text-blue-500 focus:outline-none transition-colors duration-200 cursor-pointer ${
+                                            scrolled ? "py-[24px]" : "py-[46px]"
+                                        }`}
                                     >
                                         {item.ReferenceTitle}
                                         {isActive ? <ChevronUp size={16} /> : <ChevronDown size={16} />}

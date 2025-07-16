@@ -6,60 +6,61 @@ import Link from "next/link";
 import { RightArrowUpIcon } from "../atom/icons";
 import { useEffect, useState } from "react";
 
-// --- Types from expected GraphQL structure ---
-type ImageType = {
-    url: string;
-    name?: string | null;
-    width?: number | null;
-    height?: number | null;
-    alternativeText?: string | null;
-};
-
-type BlogBanner = {
-    PublishDate: string;
-    BannerImage?: ImageType;
+export interface BlogBanner {
+    PublishDate?: string;
+    BannerTitle?: string;
     BannerDescription?: string;
-    ReadNow?: {
-        href?: string;
+    BannerImage?: {
+        url: string;
+        width: number;
+        height: number;
+        name: string;
+        alternativeText?: string | null;
     };
-};
+    ReadNow?: {
+        href: string;
+        label: string;
+        target: string;
+        isExternal: boolean;
+    };
+}
 
-type Blog = {
-    Slug?: string;
+export interface Blog {
+    Slug: string;
     createdAt: string;
+    HeadingSection?: { PageTitle?: string }[];
     BlogBanner?: BlogBanner[];
-    HeadingSection?: {
-        PageTitle?: string;
-    }[];
-};
+}
 
-type CaseStudy = {
-    HeroBanner?: {
-        BannerTitle?: string;
-        BannerDescription?: string;
-        PublishDate?: string;
-        ReadNow?: {
-            href: string;
-        };
-        BannerImage?: ImageType;
-    }[];
+export interface CaseStudy {
     Slug?: string;
-    createdAt?: string; // 👈 this line resolves the error
-};
+    HeroBanner?: BlogBanner[];
+}
 
-type CardItem = {
-    type: "Blog" | "Case study";
-    title?: string;
-    date: string;
-    image?: ImageType;
-    description?: string;
-    link?: string;
-};
-
-type OurInsightsData = {
+interface OurInsightsData {
     addactBlogs: Blog[];
     addactCaseStudies: CaseStudy[];
-};
+}
+
+interface InsightCardData {
+    type: "Blog" | "Case study";
+    title: string;
+    date: string;
+    image?: {
+        url: string;
+        width: number;
+        height: number;
+        name: string;
+        alternativeText?: string | null;
+    };
+    description: string;
+    link: string;
+}
+
+interface InsightCardProps {
+    item: InsightCardData;
+    big?: boolean;
+}
 
 export default function OurInsights() {
     const [data, setData] = useState<OurInsightsData | null>(null);
@@ -87,17 +88,16 @@ export default function OurInsights() {
     const blog2 = sortedBlogs[1];
     const caseStudy = sortedCaseStudies[0];
 
-    const items: CardItem[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
+    const items: InsightCardData[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
 
     return (
-        <div className="my-28 lg:my-48 xl:my-60">
-            <div className="container mx-auto px-4">
-                <h2 className="border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10">Our Insights</h2>
+        <div className='my-28 lg:my-48 xl:my-60'>
+            <div className='container mx-auto px-4'>
+                <h2 className='border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10'>Our Insights</h2>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10 sm:mt-14 lg:mt-24">
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10 sm:mt-14 lg:mt-24'>
                     <InsightCard item={items[0]} big />
-
-                    <div className="flex flex-col gap-4">
+                    <div className='flex flex-col gap-4'>
                         <InsightCard item={items[1]} />
                         <InsightCard item={items[2]} />
                     </div>
@@ -107,39 +107,43 @@ export default function OurInsights() {
     );
 }
 
-function mapBlogToCard(blog: Blog): CardItem {
+function mapBlogToCard(blog: Blog): InsightCardData {
     const banner = blog.BlogBanner?.[0];
     return {
         type: "Blog",
-        title: blog.HeadingSection?.[0]?.PageTitle,
-        date: new Date(banner?.PublishDate || "").toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        }),
+        title: blog.HeadingSection?.[0]?.PageTitle ?? "Untitled",
+        date: banner?.PublishDate
+            ? new Date(banner.PublishDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+              })
+            : "Unknown Date",
         image: banner?.BannerImage,
-        description: banner?.BannerDescription,
-        link: banner?.ReadNow?.href || blog.Slug,
+        description: banner?.BannerDescription ?? "",
+        link: "/blog" + blog.Slug || "/blog" + banner?.ReadNow?.href,
     };
 }
 
-function mapCaseStudyToCard(cs: CaseStudy): CardItem {
+function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
     const banner = cs.HeroBanner?.[0];
     return {
         type: "Case study",
-        title: banner?.BannerTitle,
-        date: new Date(banner?.PublishDate || "").toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-        }),
+        title: banner?.BannerTitle ?? "Untitled",
+        date: banner?.PublishDate
+            ? new Date(banner.PublishDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+              })
+            : "Unknown Date",
         image: banner?.BannerImage,
-        description: banner?.BannerDescription,
-        link: banner?.ReadNow?.href,
+        description: banner?.BannerDescription ?? "",
+        link: "/portfolio" + banner?.ReadNow?.href || "portfolio" + cs.Slug,
     };
 }
 
-function InsightCard({ item, big = false }: { item: CardItem; big?: boolean }) {
+function InsightCard({ item, big = false }: InsightCardProps) {
     return (
         <div
             className={`border border-gray-700 p-7 relative ${
@@ -155,26 +159,27 @@ function InsightCard({ item, big = false }: { item: CardItem; big?: boolean }) {
             >
                 {item.image?.url && (
                     <Image
-                        src={item.image.url}
-                        alt={item.image.alternativeText || item.image.name || "Insight"}
-                        width={item.image.width || 500}
-                        height={item.image.height || 300}
-                        className="w-full h-full object-cover rounded"
+                        src={item.image?.url}
+                        alt={item.image.alternativeText || item.image.name}
+                        width={item.image.width}
+                        height={item.image.height}
+                        className='w-full h-full object-cover rounded'
                     />
                 )}
             </div>
 
-            <div className="flex flex-col flex-1 justify-center">
-                <span className="px-5 py-2 bg-[#FFFFFF33] border border-blue-500 text-white rounded-lg w-fit text-sm mb-2 font-medium">
+            <div className='flex flex-col flex-1 justify-center'>
+                <span className='px-5 py-2 bg-[#FFFFFF33] border border-blue-500 text-white rounded-lg w-fit text-sm mb-2 font-medium'>
                     {item.type}
                 </span>
-                <h4 className="md:!text-3xl font-medium mb-4 leading-tight line-clamp-2">{item.title}</h4>
-                <p className="text-base text-white mb-4">{item.date}</p>
+                <h4 className='md:!text-3xl font-medium mb-4 leading-tight line-clamp-2'>{item.title}</h4>
+                <p className='text-base text-white mb-4'>{item.date}</p>
             </div>
-            <div className="mt-auto self-end">
-                <Link href={item.link || "#"} target="_blank">
-                    <div className="group w-14 h-14 bg-blue-600 text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16">
-                        <RightArrowUpIcon className="transition-transform duration-300 group-hover:scale-110" />
+
+            <div className='mt-auto self-end'>
+                <Link href={item?.link} target='_blank'>
+                    <div className='group w-14 h-14 bg-blue-600 text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16'>
+                        <RightArrowUpIcon className='transition-transform duration-300 group-hover:scale-110' />
                     </div>
                 </Link>
             </div>

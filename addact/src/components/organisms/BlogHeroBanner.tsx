@@ -84,7 +84,7 @@ export default function BlogHeroBanner({
 
     return (
         <section
-            className='relative bg-cover bg-center bg-no-repeat text-white min-h-[538px] flex flex-col justify-between pt-[80px]'
+            className='relative bg-cover bg-center md:mt-[120px] bg-no-repeat text-white min-h-[538px] flex flex-col justify-between pt-[80px]'
             style={{ backgroundImage: bgImageUrl ? `url(${bgImageUrl})` : "none" }}
         >
             <div className='container text-center pt-[80px]'>
