@@ -6,6 +6,8 @@ import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import { notFound } from "next/navigation";
+import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
+import FAQ from "@/components/organisms/FAQ";
 
 export default async function contentfulPage() {
     const service = "contentful";
@@ -25,16 +27,12 @@ export default async function contentfulPage() {
                 backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
             />
             <OurPartners />
-            <div className='bg-lime-400'>
-                <h1>Industries we serve</h1>
-            </div>
+            {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
-            <div className='bg-lime-400'>
-                <h1>FAQ</h1>
-            </div>
+            <FAQ data={data.faq} />
         </main>
     );
 }
