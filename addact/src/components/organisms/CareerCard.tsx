@@ -43,7 +43,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                         return (
                             <p
                                 key={block.id}
-                                className="text-[#e97777] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]"
+                                className="text-[#3C4CFF] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]"
                                 dangerouslySetInnerHTML={{ __html: block.Richtext }}
                             />
                         );
