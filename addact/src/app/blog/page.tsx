@@ -149,7 +149,7 @@ function BlogListContent() {
                             <Link key={blog.Slug} href={blogLink} className="group">
                                 <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
                                     {imageUrl && (
-                                        <div className="rounded-xl overflow-hidden mb-4">
+                                        <div className="relative rounded-xl overflow-hidden mb-4">
                                             <Image
                                                 src={imageUrl}
                                                 alt={
@@ -161,6 +161,7 @@ function BlogListContent() {
                                                 height={400}
                                                 className="w-full object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
                                             />
+                                            <div className="absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         </div>
                                     )}
 
