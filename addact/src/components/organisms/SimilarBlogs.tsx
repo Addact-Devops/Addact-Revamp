@@ -80,7 +80,7 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
                         : null;
 
                     const readLink = blog.ReadNow?.href;
-                    const target = blog.ReadNow?.target || "_self";
+                    const target = blog.ReadNow?.isExternal ? "_blank" : "_self";
                     const rel = blog.ReadNow?.isExternal ? "noopener noreferrer" : undefined;
 
                     // Ensure minimum required fields exist

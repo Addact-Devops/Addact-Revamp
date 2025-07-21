@@ -23,7 +23,7 @@ const OurServices = ({ data }: IProps) => {
                                     className='bg-[#1C1C1C] border border-transparent text-white p-7 hover:border-[#3c4cff]'
                                     key={service.id}
                                     href={service.Link.href}
-                                    target={service.Link.target}
+                                    target={service.Link?.isExternal ? "_blank" : "_self"}
                                 >
                                     {service?.Image?.url && (
                                         <Image
