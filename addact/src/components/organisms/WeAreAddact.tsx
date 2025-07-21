@@ -89,7 +89,7 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
 
                 {/* Right Side Content */}
                 <div className="w-full md:w-1/2">
-                    <p className="text-[#e97777] text-[17px] leading-[30px] font-medium sm:mb-[15px] mb-[10px] block">
+                    <p className="text-[#3C4CFF] text-[17px] leading-[30px] font-medium sm:mb-[15px] mb-[10px] block">
                         {subtitle}
                     </p>
 
@@ -119,7 +119,7 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
                     <div className="flex flex-col sm:flex-row gap-8 mt-4 text-center sm:text-left">
                         {numberContent.map((item, index) => (
                             <div key={index}>
-                                <h3 className="font-semibold text-[#E15D64] mb-1">{counts[index]}+</h3>
+                                <h3 className="font-semibold text-[#3c4cff] mb-1">{counts[index]}+</h3>
                                 <p className="text-sm text-black leading-snug whitespace-pre-line sm:max-w-[65%]">
                                     {item.Content}
                                 </p>

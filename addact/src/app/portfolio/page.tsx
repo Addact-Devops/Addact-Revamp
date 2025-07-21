@@ -90,7 +90,7 @@ const CaseStudyListing = () => {
                             <div className='mt-4'>
                                 <Link
                                     href={`/portfolio${item.Slug}`}
-                                    className='inline-block bg-[#E97777] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#b75f5f] transition'
+                                    className='inline-block bg-[#3C4CFF] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#000000] transition'
                                 >
                                     Know More
                                 </Link>
