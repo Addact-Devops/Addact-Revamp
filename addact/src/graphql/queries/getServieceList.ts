@@ -409,12 +409,15 @@ export interface OurServiceWithTabs {
                 url: string;
                 width: number;
             };
-            Link: {
+            Link?: {
                 id: string;
                 href: string;
                 label: string;
                 target: string;
                 isExternal: boolean;
+            };
+            sub_service_page?: {
+                Slug: string;
             };
         }[];
         Title: {
