@@ -29,6 +29,7 @@ const ServiceListBySlug = gql`
             }
             cta {
                 CTADescription
+                pageReference
                 CTAImage {
                     ... on ComponentSharedImage {
                         Image {
@@ -78,6 +79,7 @@ const ServiceListBySlug = gql`
             }
             cta2 {
                 CTADescription
+                pageReference
                 CTAImage {
                     ... on ComponentSharedImage {
                         Image {
@@ -205,6 +207,9 @@ const ServiceListBySlug = gql`
                                 target
                                 isExternal
                             }
+                            sub_service_page {
+                                Slug
+                            }
                         }
                     }
                     Title {
@@ -249,6 +254,30 @@ const ServiceListBySlug = gql`
                         }
                     }
                 }
+            }
+            contact_us {
+                Form {
+                    ... on ComponentBaseTemplatePromo {
+                        id
+                        Title
+                        Description
+                        Image {
+                            alternativeText
+                            height
+                            name
+                            url
+                            width
+                        }
+                        Link {
+                            id
+                            href
+                            label
+                            target
+                            isExternal
+                        }
+                    }
+                }
+                pageReference
             }
         }
     }
@@ -343,8 +372,30 @@ export interface ServiceList {
         }[];
     };
     our_service: OurServiceWithTabs;
+    contact_us: CONTACTUS;
 }
-
+export interface CONTACTUS {
+    pageReference: string;
+    Form: {
+        id: string;
+        Title: string;
+        Description: string;
+        Image: {
+            alternativeText: string | null;
+            height: number;
+            name: string;
+            url: string;
+            width: number;
+        };
+        Link: {
+            id: string;
+            href: string;
+            label: string;
+            target: string;
+            isExternal: boolean;
+        } | null;
+    }[];
+}
 export interface OurServiceWithTabs {
     ForEnterprisesBrands: {
         GlobalCard: {

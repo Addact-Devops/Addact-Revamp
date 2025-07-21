@@ -10,6 +10,8 @@ import FAQ from "@/components/organisms/FAQ";
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
+import CtaBanner from "@/components/molecules/CtaBanner";
+import ContactUs from "@/components/organisms/ContactUs";
 
 export default async function SitecorePage() {
     const service = "sitecore";
@@ -31,7 +33,6 @@ export default async function SitecorePage() {
             />
             <OurPartners />
             <OurServicesWithTabs data={data.our_service} />
-            {/* <IndustriesWeServe /> */}
             {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
             <CtaBanner2 data={data.cta2} />
@@ -39,6 +40,8 @@ export default async function SitecorePage() {
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
+            <CtaBanner data={data.cta} />
+            <ContactUs data={data.contact_us} />
         </main>
     );
 }
