@@ -25,7 +25,7 @@ const BrandValue: React.FC<BrandValueProps> = ({ title, subtitle, content, image
             <div className="bg-black rounded-xl p-[30px] sm:px-[60px] sm:py-[70px] lg:flex items-center justify-between">
                 {/* Left Text Content */}
                 <div className="text-white lg:w-1/2 space-y-4 mb-10 lg:mb-0">
-                    <p className="text-[#EE7174] font-medium">{subtitle}</p>
+                    <p className="text-[#3c4cff] font-medium">{subtitle}</p>
                     <h2 className="mb-[30px] !font-normal">{title}</h2>
                     <p className="text-lg leading-relaxed">{paragraph}</p>
                 </div>

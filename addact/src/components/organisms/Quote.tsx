@@ -34,12 +34,12 @@ export default function Quote({ authorImage, authorMessage, authorName }: QuoteP
                         </div>
 
                         {/* Quote Text */}
-                        <p className="!text-[18px] !sm:text-[25px] !md:text-[30px] font-bold text-black leading-[1.6] px-[60px] relative z-10">
+                        <div className="text-[18px] sm:text-[25px] 2xl:text-[30px] font-bold text-black leading-[1.6] px-[60px] relative z-10">
                             {authorMessage}
-                        </p>
+                        </div>
 
                         {/* Author */}
-                        <p className="mt-[20px] text-[#e97777] font-medium text-[20px] px-[60px] relative z-10">
+                        <p className="mt-[20px] text-[#3C4CFF] font-medium text-[20px] px-[60px] relative z-10">
                             {authorName}
                         </p>
 

@@ -8,6 +8,10 @@
     @return math.div($lineHeightPx, $fontSizePx);
 }
 
+button {
+    cursor: pointer;
+}
+
 h1,
 h2 {
     font-size: pxToRem(60);

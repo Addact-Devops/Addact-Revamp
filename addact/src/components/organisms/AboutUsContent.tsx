@@ -34,7 +34,7 @@ const AboutUsContent = ({ subtitle, title, content, image }: Props) => {
     return (
         <section className="my-[60px] sm:my-[100px]">
             <div className="container">
-                <p className="text-[#e97777] text-[17px] mb-[15px] leading-[26px]">{subtitle}</p>
+                <p className="text-[#3C4CFF] text-[17px] mb-[15px] leading-[26px]">{subtitle}</p>
                 <h3 className="text-[#000] font-[400] 2xl:mb-[40px] mb-[30px]">{title}</h3>
                 {renderContent()}
                 <Image

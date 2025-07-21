@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllCaseStudyData, IAllCaseStudy } from "@/graphql/queries/getAllCaseStudy";
-import HeroBanner from "@/components/organisms/HeroBanner";
+import RichText from "@/components/atom/richText";
 
 const CaseStudyListing = () => {
     const [caseStudyBanner, setCaseStudyBanner] = useState<IAllCaseStudy["caseStudy"]>();
@@ -21,8 +21,6 @@ const CaseStudyListing = () => {
         fetchCaseStudy();
     }, []);
 
-    const bannerData = caseStudyBanner?.CaseStudyBanner?.Banner?.[0];
-
     if (loading) {
         return (
             <div className='flex justify-center items-center min-h-[50vh]'>
@@ -34,33 +32,27 @@ const CaseStudyListing = () => {
     if (!caseStudyListing) return <p className='p-6 text-red-600'>Case-Study List not found.</p>;
 
     return (
-        <div>
+        <div className='pt-[120px]'>
             {/* Banner Section */}
             {caseStudyBanner && (
-                // <div className='relative w-full h-[400px] md:h-[500px] flex items-center justify-center text-white'>
-                //     <Image
-                //         src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url}
-                //         alt={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.alternativeText}
-                //         layout='fill'
-                //         objectFit='cover'
-                //         priority
-                //         className='absolute inset-0 z-0'
-                //     />
-                //     <div className='relative container z-10 px-4'>
-                //         <h1 className='!text-5xl md:text-5xl font-bold mb-4 max-w-2xl leading-16'>
-                //             {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
-                //         </h1>
-                //         <div className='mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl'>
-                //             <RichText html={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription} />
-                //         </div>
-                //     </div>
-                // </div>
-
-                <HeroBanner
-                    title={bannerData?.BannerTitle ?? ""}
-                    description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
-                    backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-                />
+                <div className='relative w-full h-[400px] md:h-[500px] flex items-center justify-center text-white'>
+                    <Image
+                        src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url}
+                        alt={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.alternativeText}
+                        layout='fill'
+                        objectFit='cover'
+                        priority
+                        className='absolute inset-0 z-0'
+                    />
+                    <div className='relative container z-10 px-4'>
+                        <h1 className='!text-5xl md:text-5xl font-bold mb-4 max-w-2xl leading-16'>
+                            {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
+                        </h1>
+                        <div className='mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl'>
+                            <RichText html={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription} />
+                        </div>
+                    </div>
+                </div>
             )}
 
             {/* Listing Section */}
@@ -98,7 +90,7 @@ const CaseStudyListing = () => {
                             <div className='mt-4'>
                                 <Link
                                     href={`/portfolio${item.Slug}`}
-                                    className='inline-block bg-[#E97777] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#b75f5f] transition'
+                                    className='inline-block bg-[#3C4CFF] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#000000] transition'
                                 >
                                     Know More
                                 </Link>

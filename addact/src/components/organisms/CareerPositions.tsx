@@ -52,7 +52,7 @@ export default function CareerPositions({ positions }: Props) {
         <section className="container mx-auto my-[60px] sm:my-[100px]">
             {/* Subtitle and Title */}
             <div className="mb-[100px]">
-                <p className="text-[#e97777] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]">
+                <p className="text-[#3C4CFF] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]">
                     Exciting Career Paths
                 </p>
                 <h2 className="text-[#000] !font-[400] 2xl:mb-[40px] md:mb-[30px] text-center !text-[35px] md:!text-[45px]">
@@ -61,7 +61,7 @@ export default function CareerPositions({ positions }: Props) {
             </div>
 
             {/* Tabs - aligned left */}
-            <div className="flex mb-[60px] gap-[50px] border-b-[2px] border-b-[#e97777]">
+            <div className="flex mb-[60px] gap-[50px] border-b-[2px] border-b-[#3C4CFF]">
                 {allTabs.map((tab) => (
                     <button
                         key={tab}
@@ -69,7 +69,7 @@ export default function CareerPositions({ positions }: Props) {
                         className={`relative pb-[15px] transition-all text-[20px]
                             ${
                                 activeTab === tab
-                                    ? "text-black font-[500] after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[5px] after:w-full after:bg-[#d45c5c] after:rounded-t-[10px]"
+                                    ? "text-black font-[500] after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[5px] after:w-full after:bg-[#3c4cff] after:rounded-t-[10px]"
                                     : "text-black font-[500]"
                             }
                         `}
@@ -86,7 +86,7 @@ export default function CareerPositions({ positions }: Props) {
                         key={idx}
                         href={card.LogoLink?.href || "#"}
                         target={card.LogoLink?.isExternal ? "_blank" : "_self"}
-                        className="bg-white px-[30px] py-[32px] rounded-xl relative text-left group transition-all border border-transparent hover:border-[#d45c5c]"
+                        className="bg-white px-[30px] py-[32px] rounded-xl relative text-left group transition-all border border-transparent hover:border-[#3c4cff]"
                     >
                         {/* Top-right background icon */}
                         {card.Icon?.url && (
@@ -141,7 +141,7 @@ export default function CareerPositions({ positions }: Props) {
             {/* Bottom line */}
             <div className="text-center mt-[70px] text-sm font-[500] text-[#717171]">
                 Get to know us better !{" "}
-                <Link href="/about" className="text-[#e97777] font-semibold">
+                <Link href="/about" className="text-[#3C4CFF] font-semibold">
                     CLICK HERE
                 </Link>
             </div>

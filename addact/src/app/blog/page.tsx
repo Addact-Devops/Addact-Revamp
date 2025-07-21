@@ -95,8 +95,17 @@ function BlogListContent() {
     const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
     const goToPage = (page: number) => {
+        const params = new URLSearchParams();
+
+        if (searchText.trim()) params.set("query", searchText.trim());
+        if (selectedCategory && selectedCategory !== "All Blogs") {
+            params.set("category", selectedCategory);
+        }
+
+        params.set("page", String(page));
+
         setCurrentPage(page);
-        router.push(`?page=${page}`, { scroll: false });
+        router.push(`?${params.toString()}`, { scroll: false });
     };
 
     return (
@@ -155,7 +164,7 @@ function BlogListContent() {
                                         </div>
                                     )}
 
-                                    <div className="inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#e97777] bg-[hsla(0,72%,69%,0.2)] my-[15px] font-medium">
+                                    <div className="inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium">
                                         {category}
                                     </div>
 
@@ -163,7 +172,7 @@ function BlogListContent() {
                                         {title}
                                     </h2>
 
-                                    <p className="text-[#e97777] font-bold">{author}</p>
+                                    <p className="text-[#3C4CFF] font-bold">{author}</p>
                                 </div>
                             </Link>
                         );
@@ -186,7 +195,7 @@ function BlogListContent() {
                                 <button
                                     key={page}
                                     className={`px-3 py-2 rounded ${
-                                        page === currentPage ? "bg-[#e97777]" : "bg-gray-700"
+                                        page === currentPage ? "bg-[#3C4CFF]" : "bg-gray-700"
                                     }`}
                                     onClick={() => goToPage(page)}
                                 >
@@ -199,7 +208,7 @@ function BlogListContent() {
                                 {currentPage < totalPages - 2 && <span className="px-2">...</span>}
                                 <button
                                     className={`px-3 py-2 rounded ${
-                                        currentPage === totalPages ? "bg-[#e97777]" : "bg-gray-700"
+                                        currentPage === totalPages ? "bg-[#3C4CFF]" : "bg-gray-700"
                                     }`}
                                     onClick={() => goToPage(totalPages)}
                                 >

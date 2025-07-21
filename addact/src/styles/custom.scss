@@ -14,6 +14,25 @@ body {
     color: $white;
 }
 
+/* Progress bar style scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    height: 1px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #3c4cff;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.custom-scrollbar {
+    scrollbar-color: #3c4cff transparent; /* Firefox */
+    scrollbar-width: thin; /* Firefox */
+}
+
 .bg-dark {
     background-color: $primary-color;
 }
@@ -142,6 +161,6 @@ footer {
         text-align: left;
         font: normal normal 600 17px / 35px Poppins;
         letter-spacing: 0;
-        color: #e97777;
+        color: #3c4cff;
     }
 }
