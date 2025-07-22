@@ -1,3 +1,5 @@
+// src/graphql/queries/getCareers.ts
+
 import { gql, GraphQLClient } from "graphql-request";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
@@ -92,6 +94,10 @@ const query = gql`
                     }
                 }
             }
+            PositionsTitle {
+                Title
+                Description
+            }
             positions {
                 EventTitle
                 CardInfo {
@@ -133,6 +139,7 @@ const query = gql`
                                 height
                                 alternativeText
                             }
+                            Title
                         }
                     }
                 }
@@ -141,74 +148,57 @@ const query = gql`
     }
 `;
 
-// Match inline component types exactly
-type HeadingBlock =
-    | { id: string; h1?: string }
-    | { id: string; h2?: string }
-    | { id: string; h3?: string }
-    | { id: string; h4?: string }
-    | { id: string; h5?: string }
-    | { id: string; h6?: string }
-    | { id: string; Richtext?: string };
-
-type GlobalCardItem = {
-    id: string;
-    Title?: string | null;
-    Description?: string | null;
-    Image?: {
-        url: string;
-        width?: number;
-        height?: number;
-        name?: string;
-        alternativeText?: string | null;
-    } | null;
-    Link?: {
-        href: string;
-    } | null;
+export type ImageType = {
+    url: string;
+    name?: string;
+    width?: number;
+    height?: number;
+    alternativeText?: string;
 };
 
-type PositionType = {
-    EventTitle: string;
-    CardInfo: {
-        AerrowIcon?: {
-            url: string;
-            name?: string;
-            width?: number;
-            height?: number;
-            alternativeText?: string;
-        };
-        HoverIcon?: {
-            url: string;
-            name?: string;
-            width?: number;
-            height?: number;
-            alternativeText?: string;
-        };
-        Icon?: {
-            url: string;
-            name?: string;
-            width?: number;
-            height?: number;
-            alternativeText?: string;
-        };
-        LogoLink?: {
-            id: string;
-            href: string;
-            label: string;
-            target: string;
-            isExternal: boolean;
-        };
-        LogoTitle?: string;
-        TitleIcon?: {
-            Icon: {
-                url: string;
-                name?: string;
-                width?: number;
-                height?: number;
-                alternativeText?: string;
-            };
-        }[];
+export type TitleBlock =
+    | { id: string; h1: string }
+    | { id: string; h2: string }
+    | { id: string; h3: string }
+    | { id: string; h4?: string; h5?: string; h6?: string }
+    | { id: string; Richtext: string };
+
+export type CardPromo = {
+    id: string;
+    Title?: string;
+    Description?: string;
+    Image?: ImageType;
+    Link?: {
+        id: string;
+        href: string;
+        label: string;
+        target: string;
+        isExternal: boolean;
+    };
+};
+
+export type CardInfoType = {
+    AerrowIcon?: ImageType;
+    HoverIcon?: ImageType;
+    Icon?: ImageType;
+    LogoLink?: {
+        id: string;
+        href: string;
+        label: string;
+        target: string;
+        isExternal: boolean;
+    };
+    LogoTitle?: string;
+    TitleIcon?: {
+        Title?: string;
+        Icon: ImageType;
     }[];
+};
+
+export type PositionType = {
+    id: string;
+    EventTitle: string;
+    CardInfo: CardInfoType[];
 };
 
 type CareersDataResponse = {
@@ -222,24 +212,30 @@ type CareersDataResponse = {
                 BannerTitle?: string;
                 BannerDescription?: string;
                 show_searchbox?: boolean;
-                BannerImage: {
-                    url: string;
-                    name?: string;
-                    width?: number;
-                    height?: number;
-                    alternativeText?: string;
-                };
+                BannerImage: ImageType;
             }[];
         };
         Careercard?: {
-            Title: HeadingBlock[];
-            GlobalCard: GlobalCardItem[];
+            Title: TitleBlock[];
+            GlobalCard: CardPromo[];
         };
-        positions?: PositionType[];
+        PositionsTitle?: {
+            Title?: string;
+            Description?: string;
+        };
+        positions?: Omit<PositionType, "id">[];
     };
 };
 
-export const getCareersData = async (): Promise<CareersDataResponse["careers"]> => {
+export const getCareersData = async (): Promise<CareersDataResponse["careers"] & { positions: PositionType[] }> => {
     const res = await client.request<CareersDataResponse>(query);
-    return res.careers;
+    const positionsWithId = res.careers.positions?.map((p, index) => ({
+        ...p,
+        id: String(index),
+    })) as PositionType[];
+
+    return {
+        ...res.careers,
+        positions: positionsWithId,
+    };
 };

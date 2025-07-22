@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { Heading, Image, Link } from "./getHomePage";
 
 const ServiceListBySlug = gql`
     query ServiceLists($filters: ServiceListFiltersInput) {
@@ -29,6 +30,7 @@ const ServiceListBySlug = gql`
             }
             cta {
                 CTADescription
+                pageReference
                 CTAImage {
                     ... on ComponentSharedImage {
                         Image {
@@ -78,6 +80,7 @@ const ServiceListBySlug = gql`
             }
             cta2 {
                 CTADescription
+                pageReference
                 CTAImage {
                     ... on ComponentSharedImage {
                         Image {
@@ -205,6 +208,9 @@ const ServiceListBySlug = gql`
                                 target
                                 isExternal
                             }
+                            sub_service_page {
+                                Slug
+                            }
                         }
                     }
                     Title {
@@ -250,6 +256,30 @@ const ServiceListBySlug = gql`
                     }
                 }
             }
+            contact_us {
+                Form {
+                    ... on ComponentBaseTemplatePromo {
+                        id
+                        Title
+                        Description
+                        Image {
+                            alternativeText
+                            height
+                            name
+                            url
+                            width
+                        }
+                        Link {
+                            id
+                            href
+                            label
+                            target
+                            isExternal
+                        }
+                    }
+                }
+                pageReference
+            }
         }
     }
 `;
@@ -281,7 +311,7 @@ export interface ServiceList {
         }[];
     };
     cta: {
-        CTADescription: string | null;
+        CTADescription?: string | null;
         CTAImage: {
             Image: {
                 alternativeText: string | null;
@@ -298,89 +328,78 @@ export interface ServiceList {
             label: string;
             target: string;
         }[];
-        Title: {
-            id: string;
-            h2: string;
-        }[];
+        Title: Heading[];
     };
     cta2: CTA2;
-    why_addact: {
-        Title: {
-            id: string;
-            h1?: string;
-            h2?: string;
-            h3?: string;
-            h5?: string;
-            h6?: string;
-        }[];
-        GlobalCard: {
-            id: string;
-            Title: string;
-            Description: string;
-            Image: {
-                alternativeText: string | null;
-                height: number;
-                name: string;
-                url: string;
-                width: number;
-            };
-            Link: {
-                id: string;
-                href: string;
-                label: string;
-                target: string;
-                isExternal: boolean;
-            } | null;
-        }[];
-        pageReference: string;
-    };
+    why_addact: WhyAddact;
     faq: {
         Title: string;
         FAQ: {
-            id: string;
+            id?: string;
             Title: string;
             Description: string;
         }[];
     };
-    our_service: OurServiceWithTabs;
+    our_service: OurServiceData;
+    contact_us: CONTACTUS;
 }
+export interface CONTACTUS {
+    pageReference: string;
+    Form: {
+        id: string;
+        Title: string;
+        Description: string;
+        Image: Image;
+        Link: Link;
+    }[];
+}
+export interface OurServiceData {
+    Titeldescription?: {
+        Description: string;
+        Title: string;
+    }[];
 
-export interface OurServiceWithTabs {
     ForEnterprisesBrands: {
         GlobalCard: {
             id: string;
             Title: string;
             Description: string;
-            Image: {
+            Image?: {
                 alternativeText: string | null;
                 height: number;
                 name: string;
                 url: string;
                 width: number;
             };
-            Link: {
+            Link?: {
                 id: string;
                 href: string;
                 label: string;
                 target: string;
                 isExternal: boolean;
             };
+            sub_service_page?: {
+                Slug: string;
+            };
         }[];
+
         Title: {
-            id: string;
+            id?: string; // optional to support both with and without id
             h2: string;
         }[];
     };
+
     ReferenceTitle: string;
+
     team_feature: {
-        documentId: string;
-        ReferenceTitle: string;
+        documentId?: string;
+        ReferenceTitle?: string; // optional, not in first version
         Description: string;
         Cards: {
-            Description: string;
-            Title: string;
             id: string;
-            Link: {
+            Title: string;
+            Description: string;
+            Link?: {
                 id: string;
                 href: string;
                 label: string;
@@ -388,10 +407,44 @@ export interface OurServiceWithTabs {
                 isExternal: boolean;
             };
         }[];
-        createdAt: string;
-        updatedAt: string;
-        publishedAt: string;
+        createdAt?: string;
+        updatedAt?: string;
+        publishedAt?: string;
     };
+}
+
+export interface WhyAddact {
+    Title: {
+        id?: string;
+        h1?: string;
+        h2?: string;
+        h3?: string;
+        h4?: string;
+        h5?: string;
+        h6?: string;
+    }[];
+
+    GlobalCard: {
+        id?: string;
+        Title: string;
+        Description: string;
+        Image: {
+            alternativeText: string | null;
+            height: number;
+            name: string;
+            url: string;
+            width: number;
+        };
+        Link?: {
+            id: string;
+            href: string;
+            label: string;
+            target: string;
+            isExternal: boolean;
+        } | null;
+    }[];
+
+    pageReference?: string;
 }
 
 export interface CTA2 {

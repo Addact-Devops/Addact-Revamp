@@ -230,7 +230,7 @@ export interface Link {
 }
 
 export interface Heading {
-    id: string;
+    id?: string;
     h1?: string;
     h2?: string;
     h3?: string;
@@ -243,10 +243,10 @@ export interface CTA {
     Title: Heading[];
     CTAImage: {
         Image: Image;
-        id: string;
+        id?: string;
     }[];
     CTALink: Link[];
-    pageReference: string;
+    pageReference?: string;
 }
 
 export interface BANNER {
@@ -284,16 +284,16 @@ export interface CONTACTUS {
 
 export interface Whyaddact {
     Title: Heading[];
-    pageReference: string;
+    pageReference?: string;
     GlobalCard: GlobalCard2[];
 }
 
 export interface GlobalCard2 {
-    id: string;
+    id?: string;
     Title: string;
     Description: string;
     Image: Image;
-    Link: Link | null;
+    Link?: Link | null;
 }
 
 export interface Faq {
@@ -301,7 +301,7 @@ export interface Faq {
     FAQ: {
         Description: string;
         Title: string;
-        id: string;
+        id?: string;
     }[];
 }
 

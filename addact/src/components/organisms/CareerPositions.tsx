@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import DOMPurify from "isomorphic-dompurify";
 
 // Inline types
 type ImageType = {
@@ -10,6 +11,11 @@ type ImageType = {
     width?: number;
     height?: number;
     alternativeText?: string;
+};
+
+type TitleBlock = {
+    Title?: string;
+    Description?: string;
 };
 
 type CardInfoType = {
@@ -24,19 +30,29 @@ type CardInfoType = {
         isExternal: boolean;
     };
     LogoTitle?: string;
-    TitleIcon?: { Icon: ImageType }[];
+    TitleIcon?: {
+        Title?: string;
+        Icon: ImageType;
+    }[];
 };
 
 type PositionType = {
+    id: string;
     EventTitle: string;
     CardInfo: CardInfoType[];
 };
 
 type Props = {
     positions: PositionType[];
+    positionsTitle?: TitleBlock[];
 };
 
-export default function CareerPositions({ positions }: Props) {
+// Utility to remove HTML tags safely
+const stripTags = (html: string) => {
+    return DOMPurify.sanitize(html, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+};
+
+export default function CareerPositions({ positions, positionsTitle }: Props) {
     const [activeTab, setActiveTab] = useState("All Positions");
 
     const allTabs = ["All Positions", ...positions.map((p) => p.EventTitle).filter((t) => t !== "All positions")];
@@ -50,17 +66,25 @@ export default function CareerPositions({ positions }: Props) {
 
     return (
         <section className="container mx-auto my-[60px] sm:my-[100px]">
-            {/* Subtitle and Title */}
-            <div className="mb-[100px]">
-                <p className="text-[#3C4CFF] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]">
-                    Exciting Career Paths
-                </p>
-                <h2 className="text-[#000] !font-[400] 2xl:mb-[40px] md:mb-[30px] text-center !text-[35px] md:!text-[45px]">
-                    Build your future with us!
-                </h2>
+            {/* Subtitle and Title from props */}
+            <div className="mb-[100px] text-center">
+                {positionsTitle?.map((item, index) => (
+                    <div key={index}>
+                        {item.Title && (
+                            <p className="text-[#3C4CFF] mb-[10px] md:mb-[15px] leading-[26px] font-[500]">
+                                {stripTags(item.Title)}
+                            </p>
+                        )}
+                        {item.Description && (
+                            <h2 className="text-[#000] !font-[400] 2xl:mb-[40px] md:mb-[30px] !text-[35px] md:!text-[45px]">
+                                {stripTags(item.Description)}
+                            </h2>
+                        )}
+                    </div>
+                ))}
             </div>
 
-            {/* Tabs - aligned left */}
+            {/* Tabs */}
             <div className="flex mb-[60px] gap-[50px] border-b-[2px] border-b-[#3C4CFF]">
                 {allTabs.map((tab) => (
                     <button
@@ -104,24 +128,19 @@ export default function CareerPositions({ positions }: Props) {
 
                         {/* Job Info Rows */}
                         <div className="space-y-4 text-sm text-gray-700">
-                            {card.TitleIcon?.[0]?.Icon && (
-                                <div className="flex items-center gap-[10px] text-[22px]">
-                                    <Image src={card.TitleIcon[0].Icon.url} alt="experience" width={25} height={25} />
-                                    <span>2 - 5 Years</span>
+                            {card.TitleIcon?.map((item, index) => (
+                                <div key={index} className="flex items-center gap-[10px] text-[22px]">
+                                    {item.Icon?.url && (
+                                        <Image
+                                            src={item.Icon.url}
+                                            alt={item.Icon.alternativeText || `icon-${index}`}
+                                            width={25}
+                                            height={25}
+                                        />
+                                    )}
+                                    <span>{item.Title?.trim() || "—"}</span>
                                 </div>
-                            )}
-                            {card.TitleIcon?.[1]?.Icon && (
-                                <div className="flex items-center gap-[10px] text-[22px]">
-                                    <Image src={card.TitleIcon[1].Icon.url} alt="location" width={25} height={25} />
-                                    <span>Ahmedabad, Gujarat</span>
-                                </div>
-                            )}
-                            {card.TitleIcon?.[2]?.Icon && (
-                                <div className="flex items-center gap-[10px] text-[22px]">
-                                    <Image src={card.TitleIcon[2].Icon.url} alt="job type" width={25} height={25} />
-                                    <span>Full Time</span>
-                                </div>
-                            )}
+                            ))}
                         </div>
 
                         {/* Bottom-right arrow icon */}

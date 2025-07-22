@@ -12,7 +12,7 @@ const CtaBanner2 = ({ data }: IProps) => {
     const cta = data.CTALink[0];
     const href = cta.href;
     const label = cta.label;
-    const target = cta.target === "_blank" ? "_blank" : undefined;
+    const target = cta?.isExternal ? "_blank" : "_self";
 
     return (
         <section data-ref='cta-banner2'>

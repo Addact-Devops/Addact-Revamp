@@ -1,15 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { OurServiceWithTabs } from "@/graphql/queries/getServieceList";
+import { OurServiceData } from "@/graphql/queries/getServieceList";
 import RichText from "../atom/richText";
+import { RightArrowUpIcon } from "../atom/icons";
 
 interface Props {
-    data: OurServiceWithTabs;
+    data: OurServiceData;
 }
 
 const OurServicesWithTabs = ({ data }: Props) => {
+    const pathname = usePathname();
+    const currentPath = pathname.replace(/\/$/, "");
+
     const [activeTab, setActiveTab] = useState<"ForEnterprisesBrands" | "team_feature">("ForEnterprisesBrands");
 
     const enterprisesCards = data?.ForEnterprisesBrands?.GlobalCard ?? [];
@@ -51,7 +57,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                 {enterprisesCards.map((card) => (
                                     <div
                                         key={card.id}
-                                        className='bg-[#1C1C1C] border-l-[5px] border-[#3C4CFF] p-10 sm:p-8 xs:p-6'
+                                        className='group bg-[#1C1C1C] border-l-[5px] border-[#3C4CFF] p-10 sm:p-8 xs:p-6 relative'
                                     >
                                         <h3 className='font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6'>
                                             {card.Title}
@@ -59,6 +65,18 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                         <p className='font-montserrat font-normal text-[20px] leading-[34px]'>
                                             <RichText html={card.Description} />
                                         </p>
+
+                                        {/* Hover content */}
+                                        <div className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0'>
+                                            <Link
+                                                href={`${currentPath}/${card?.sub_service_page?.Slug}`}
+                                                target='_blank'
+                                            >
+                                                <div className='w-14 h-14 bg-blue-600 text-white flex items-center justify-center'>
+                                                    <RightArrowUpIcon />
+                                                </div>
+                                            </Link>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

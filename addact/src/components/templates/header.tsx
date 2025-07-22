@@ -132,7 +132,10 @@ const Header = ({ headers }: HeaderProps) => {
                                                     key={child.id}
                                                     className='hover:text-blue-400 cursor-pointer text-lg font-medium leading-7 mb-4'
                                                 >
-                                                    <Link href={child.href} target={child.target}>
+                                                    <Link
+                                                        href={child.href}
+                                                        target={child?.isExternal ? "_blank" : "_self"}
+                                                    >
                                                         {child.label}
                                                     </Link>
                                                 </li>
@@ -149,6 +152,7 @@ const Header = ({ headers }: HeaderProps) => {
                         className={`ml-4 bg-blue-600 px-4 py-2 rounded text-white lg:py-4 lg:px-7 ${
                             pathname === headerData?.contact_us[0]?.href ? "border-b-2 border-white" : ""
                         }`}
+                        target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
                     >
                         {headerData?.contact_us[0]?.label}
                     </Link>
@@ -158,6 +162,7 @@ const Header = ({ headers }: HeaderProps) => {
                 <div className='lg:hidden flex items-center space-x-4'>
                     <Link
                         href={headerData?.contact_us[0]?.href}
+                        target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
                         className='bg-blue-600 mr- px-4 py-2 rounded text-white text-sm'
                     >
                         {headerData?.contact_us[0]?.label}
@@ -184,6 +189,7 @@ const Header = ({ headers }: HeaderProps) => {
                         <div className='flex items-center space-x-4'>
                             <Link
                                 href={headerData?.contact_us[0]?.href}
+                                target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
                                 className='bg-blue-600 text-sm px-4 py-2 rounded font-medium hover:bg-blue-500'
                             >
                                 {headerData?.contact_us[0]?.label}
@@ -216,7 +222,10 @@ const Header = ({ headers }: HeaderProps) => {
                                         <ul className='px-4 pb-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm bg-black'>
                                             {item.SubNavLink.map((child) => (
                                                 <li key={child.id} className='hover:text-blue-400 cursor-pointer py-1'>
-                                                    <Link href={child.href} target={child.target}>
+                                                    <Link
+                                                        href={child.href}
+                                                        target={child.isExternal ? "_blank" : "_self"}
+                                                    >
                                                         {child.label}
                                                     </Link>
                                                 </li>
