@@ -56,7 +56,7 @@ export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[]
                             key={block.id || index}
                             href={block.href}
                             label={block.label}
-                            target={block.target}
+                            target={block.isExternal ? "_blank" : "_self"}
                             isExternal={block.isExternal}
                         />
                     );

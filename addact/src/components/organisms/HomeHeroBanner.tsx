@@ -33,6 +33,7 @@ const HomeHeroBanner = ({ data }: IProps) => {
 
                         <Link
                             href={data?.Banner?.[0]?.BannerLink.href}
+                            target={data?.Banner?.[0]?.BannerLink?.isExternal ? "_blank" : "_self"}
                             className='inline-block group relative shrink-0'
                         >
                             <div className='relative w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-full bg-[#3C4CFF] overflow-visible float-right'>

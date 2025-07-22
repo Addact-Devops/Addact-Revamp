@@ -55,7 +55,11 @@ export default async function IndustriesWeServe() {
                                 className='bg-[#1C1C1C] text-center px-6 py-8 border border-[#2D2D2D] hover:border-[#3c4cff] transition-colors duration-300'
                             >
                                 {hasLink ? (
-                                    <Link href={link.href} target={link.target} className='block'>
+                                    <Link
+                                        href={link.href}
+                                        target={link?.isExternal ? "_blank" : "_self"}
+                                        className='block'
+                                    >
                                         {content}
                                     </Link>
                                 ) : (
