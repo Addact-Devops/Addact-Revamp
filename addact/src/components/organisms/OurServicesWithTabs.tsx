@@ -62,9 +62,9 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                         <h3 className='font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6'>
                                             {card.Title}
                                         </h3>
-                                        <p className='font-montserrat font-normal text-[20px] leading-[34px]'>
+                                        <div className='font-montserrat font-normal text-[20px] leading-[34px]'>
                                             <RichText html={card.Description} />
-                                        </p>
+                                        </div>
 
                                         {/* Hover content */}
                                         <div className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0'>
@@ -99,9 +99,9 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                 <h3 className='font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6'>
                                                     {card.Title}
                                                 </h3>
-                                                <p className='font-montserrat font-normal text-[18px] leading-[30px]'>
+                                                <div className='font-montserrat font-normal text-[18px] leading-[30px]'>
                                                     <RichText html={card.Description} />
-                                                </p>
+                                                </div>
                                             </div>
 
                                             {card.Link?.href && (

@@ -7,16 +7,20 @@ import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
-// import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
-// import CtaBanner from "@/components/molecules/CtaBanner";
 
-export default async function SiteDetailPage({ params }: { params: { slug: string } }) {
+interface PageProps {
+    params: {
+        slug: string;
+    };
+}
+
+export default async function SiteDetailPage({ params }: PageProps) {
     const { slug } = params;
+
     const data = await getServiceDetailBySlug(slug);
-    console.log("🚀 ~ SiteDetailPage ~ data:", data);
     if (!data) return notFound();
 
     const bannerData = data.HeroBanner;
