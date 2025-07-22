@@ -1,12 +1,35 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RichText from "../atom/richText";
 import { getIndustriesWeServe, IndustriesResponse } from "@/graphql/queries/getIndustries";
 
-export default async function IndustriesWeServe() {
-    const results: IndustriesResponse = await getIndustriesWeServe();
-    const data = results?.industriesWeServes?.[0];
+export default function IndustriesWeServe() {
+    const [data, setData] = useState<IndustriesResponse["industriesWeServes"][0] | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        getIndustriesWeServe()
+            .then((res) => {
+                const firstItem = res.industriesWeServes?.[0];
+                setData(firstItem || null);
+            })
+            .catch((err) => {
+                console.error("Failed to load Industries data:", err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading)
+        return (
+            <div className='flex justify-center items-center min-h-[50vh]'>
+                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
+            </div>
+        );
     if (!data) return null;
 
     const { TitleDescription, Industries } = data;

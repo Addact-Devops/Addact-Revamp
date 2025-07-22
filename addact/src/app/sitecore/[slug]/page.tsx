@@ -1,5 +1,11 @@
-import { notFound } from "next/navigation";
-import { getServiceDetailBySlug } from "@/graphql/queries/getServieceDetail";
+"use client";
+
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import { useParams } from "next/navigation";
+
+import { getServiceDetailBySlug, SubServicePage } from "@/graphql/queries/getServieceDetail";
+
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";
 import OurPartners from "@/components/organisms/OurPartners";
@@ -8,20 +14,37 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
-import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 
-interface PageProps {
-    params: {
-        slug: string;
-    };
-}
+const IndustriesWeServe = dynamic(() => import("@/components/organisms/IndustriesWeServe"), { ssr: false });
 
-export default async function SiteDetailPage({ params }: PageProps) {
-    const { slug } = params;
+const SiteDetailPage = () => {
+    const params = useParams();
+    const slug = typeof params?.slug === "string" ? params.slug : Array.isArray(params?.slug) ? params.slug[0] : "";
 
-    const data = await getServiceDetailBySlug(slug);
-    if (!data) return notFound();
+    const [data, setData] = useState<SubServicePage | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (slug) {
+            getServiceDetailBySlug(slug)
+                .then((res) => {
+                    setData(res);
+                })
+                .catch((err) => {
+                    console.error("Error fetching service detail:", err);
+                })
+                .finally(() => setLoading(false));
+        }
+    }, [slug]);
+
+    if (loading) {
+        return <div className='text-white p-8'>Loading...</div>;
+    }
+
+    if (!data) {
+        return <div className='text-white p-8'>Page Not Found</div>;
+    }
 
     const bannerData = data.HeroBanner;
 
@@ -38,14 +61,15 @@ export default async function SiteDetailPage({ params }: PageProps) {
             />
             <OurPartners />
             <OurServicesWithTabs data={data.our_service} />
-            {await IndustriesWeServe()}
+            <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
             <ServiceCtaBanner2 data={data.cta2} />
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
-            {/* <ServiceCtaBanner data={data.cta} /> */}
         </main>
     );
-}
+};
+
+export default SiteDetailPage;
