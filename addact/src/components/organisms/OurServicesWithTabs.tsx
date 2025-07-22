@@ -22,7 +22,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
     const teamFeatureCards = data?.team_feature?.Cards ?? [];
 
     return (
-        <section className='pt-24 sm:pt-32 md:pt-40 lg:pt-60 mb-24 sm:mb-32 md:mb-40 lg:mb-60'>
+        <section className='pt-24 sm:pt-32 md:pt-40 lg:pt-60'>
             <div className='container'>
                 <div className='flex flex-col'>
                     <h2 className='border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10'>
