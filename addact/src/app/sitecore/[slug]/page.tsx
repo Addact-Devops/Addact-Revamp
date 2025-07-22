@@ -11,14 +11,15 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 
-type Params = {
+interface PageProps {
     params: {
         slug: string;
     };
-};
+}
 
-export default async function SiteDetailPage({ params }: Params) {
+export default async function SiteDetailPage({ params }: PageProps) {
     const { slug } = params;
+
     const data = await getServiceDetailBySlug(slug);
     if (!data) return notFound();
 
