@@ -7,10 +7,10 @@ import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
-import CtaBanner2 from "@/components/molecules/CtaBanner2";
+// import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
-import CtaBanner from "@/components/molecules/CtaBanner";
+// import CtaBanner from "@/components/molecules/CtaBanner";
 
 export default async function SiteDetailPage() {
     const service = "sitecore";
@@ -34,12 +34,12 @@ export default async function SiteDetailPage() {
             <OurServicesWithTabs data={data.our_service} />
             {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
-            <CtaBanner2 data={data.cta2} />
+            {/* <CtaBanner2 data={data.cta2} /> */}
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
-            <CtaBanner data={data.cta} />
+            {/* <CtaBanner data={data.cta} /> */}
         </main>
     );
 }
