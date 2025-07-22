@@ -185,12 +185,7 @@ export interface SubServicePage {
     };
     our_service: OurServiceData;
     why_addact: WhyAddact;
-    cta2: {
-        CtaDescription: string;
-        CtaImage: Image;
-        CtaLink: Link;
-        CtaTitle: string;
-    };
+    cta2: CTA2;
     cta: null;
     faq: {
         Title: string;
@@ -200,6 +195,13 @@ export interface SubServicePage {
             Description: string;
         }[];
     };
+}
+
+export interface CTA2 {
+    CtaDescription: string;
+    CtaImage: Image;
+    CtaLink: Link;
+    CtaTitle: string;
 }
 
 export interface WhyAddact {

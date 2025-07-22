@@ -10,11 +10,13 @@ import FAQ from "@/components/organisms/FAQ";
 // import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
+import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 // import CtaBanner from "@/components/molecules/CtaBanner";
 
-export default async function SiteDetailPage() {
-    const service = "sitecore";
-    const data = await getServiceDetailBySlug(service);
+export default async function SiteDetailPage({ params }: { params: { slug: string } }) {
+    const { slug } = params;
+    const data = await getServiceDetailBySlug(slug);
+    console.log("🚀 ~ SiteDetailPage ~ data:", data);
     if (!data) return notFound();
 
     const bannerData = data.HeroBanner;
@@ -34,12 +36,12 @@ export default async function SiteDetailPage() {
             <OurServicesWithTabs data={data.our_service} />
             {await IndustriesWeServe()}
             <WhyAddact data={data.why_addact} />
-            {/* <CtaBanner2 data={data.cta2} /> */}
+            <ServiceCtaBanner2 data={data.cta2} />
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
-            {/* <CtaBanner data={data.cta} /> */}
+            {/* <ServiceCtaBanner data={data.cta} /> */}
         </main>
     );
 }
