@@ -45,9 +45,7 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
     const flattenedBlogs =
         similarBlogs
             ?.flatMap((item) => (Array.isArray(item?.BlogBanner) ? item.BlogBanner : []))
-            ?.filter(
-                (b) => b?.BannerTitle && b?.BannerImage?.url && b?.ReadNow?.href // You can customize which fields are "required"
-            )
+            ?.filter((b) => b?.BannerTitle && b?.BannerImage?.url && b?.ReadNow?.href)
             ?.slice(0, 2) || [];
 
     if (flattenedBlogs.length === 0) return null;
@@ -56,11 +54,11 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
     const sectionDescription = similarstorytitle?.CommonTitle?.Description?.trim();
 
     return (
-        <div className='mt-[80px]'>
-            {sectionTitle && <h2 className='text-[32px] font-bold text-[#5865F2] mb-[10px]'>{sectionTitle}</h2>}
-            {sectionDescription && <p className='text-[#555] text-[18px] mb-[40px]'>{sectionDescription}</p>}
+        <div className="mt-[80px]">
+            {sectionTitle && <h2 className="text-[32px] font-bold text-[#5865F2] mb-[10px]">{sectionTitle}</h2>}
+            {sectionDescription && <p className="text-[#555] text-[18px] mb-[40px]">{sectionDescription}</p>}
 
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-[40px]'>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-[40px]">
                 {flattenedBlogs.map((blog, index) => {
                     const title = blog.BannerTitle?.trim();
                     const category = blog.blogcategory?.Category?.CategoryTitle?.trim();
@@ -83,12 +81,11 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
                     const target = blog.ReadNow?.isExternal ? "_blank" : "_self";
                     const rel = blog.ReadNow?.isExternal ? "noopener noreferrer" : undefined;
 
-                    // Ensure minimum required fields exist
                     if (!readLink || !imageUrl || !title) return null;
 
                     return (
-                        <a key={index} href={readLink} target={target} rel={rel} className='group block'>
-                            <div className='overflow-hidden rounded-[16px]'>
+                        <a key={index} href={readLink} target={target} rel={rel} className="group block !no-underline">
+                            <div className="relative rounded-[16px] overflow-hidden">
                                 <Image
                                     src={imageUrl}
                                     alt={
@@ -98,28 +95,29 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
                                     }
                                     width={800}
                                     height={500}
-                                    className='w-full h-[250px] object-cover group-hover:scale-105 transition-transform duration-300'
+                                    className="!w-[100%] !h-[auto] object-cover group-hover:scale-105 transition-transform duration-300 !m-0"
                                 />
+                                <div className="absolute top-0 left-0 w-full h-full bg-[#3c4cff66] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             </div>
 
-                            <div className='mt-[20px]'>
+                            <div className="mt-[20px]">
                                 {category && (
-                                    <span className='inline-block text-[14px] px-[12px] py-[4px] bg-[#EEF0FF] text-[#5865F2] rounded-full mb-[10px]'>
+                                    <span className="inline-block text-[14px] px-[12px] py-[4px] bg-[#EEF0FF] text-[#5865F2] rounded-full mb-[10px]">
                                         {category}
                                     </span>
                                 )}
 
                                 {title && (
-                                    <h3 className='text-[22px] font-semibold text-[#1E1E1E] mb-[12px] leading-snug'>
+                                    <h3 className="text-[22px] font-semibold text-[#1E1E1E] mb-[12px] leading-snug">
                                         {title}
                                     </h3>
                                 )}
 
                                 {(publishDate || author) && (
-                                    <div className='text-[#666] text-[14px]'>
+                                    <div className="text-[#666] text-[14px]">
                                         {publishDate && <span>{publishDate}</span>}
-                                        {publishDate && author && <span className='mx-2'>•</span>}
-                                        {author && <span className='text-[#5865F2]'>{author}</span>}
+                                        {publishDate && author && <span className="mx-2">•</span>}
+                                        {author && <span className="text-[#5865F2]">{author}</span>}
                                     </div>
                                 )}
                             </div>
