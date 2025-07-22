@@ -4,12 +4,12 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { OurServiceWithTabs } from "@/graphql/queries/getServieceList";
+import { OurServiceData } from "@/graphql/queries/getServieceList";
 import RichText from "../atom/richText";
 import { RightArrowUpIcon } from "../atom/icons";
 
 interface Props {
-    data: OurServiceWithTabs;
+    data: OurServiceData;
 }
 
 const OurServicesWithTabs = ({ data }: Props) => {

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getServiceListBySlug } from "@/graphql/queries/getServieceList";
+import { getServiceDetailBySlug } from "@/graphql/queries/getServieceDetail";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";
 import OurPartners from "@/components/organisms/OurPartners";
@@ -11,14 +11,13 @@ import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import CtaBanner from "@/components/molecules/CtaBanner";
-import ContactUs from "@/components/organisms/ContactUs";
 
-export default async function SitecorePage() {
+export default async function SiteDetailPage() {
     const service = "sitecore";
-    const data = await getServiceListBySlug(service);
+    const data = await getServiceDetailBySlug(service);
     if (!data) return notFound();
 
-    const bannerData = data.Banner?.Banner?.[0];
+    const bannerData = data.HeroBanner;
 
     return (
         <main className='bg-dark'>
@@ -41,7 +40,6 @@ export default async function SitecorePage() {
             <OurInsights />
             <FAQ data={data.faq} />
             <CtaBanner data={data.cta} />
-            <ContactUs data={data.contact_us} />
         </main>
     );
 }
