@@ -33,7 +33,7 @@ export default async function SitecorePage() {
             />
             <OurPartners />
             <OurServicesWithTabs data={data.our_service} />
-            {await IndustriesWeServe()}
+            <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
             <CtaBanner2 data={data.cta2} />
             <OurProcess />

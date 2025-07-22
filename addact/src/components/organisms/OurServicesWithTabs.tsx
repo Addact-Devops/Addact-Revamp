@@ -22,7 +22,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
     const teamFeatureCards = data?.team_feature?.Cards ?? [];
 
     return (
-        <section className='pt-24 sm:pt-32 md:pt-40 lg:pt-60 mb-24 sm:mb-32 md:mb-40 lg:mb-60'>
+        <section className='pt-24 sm:pt-32 md:pt-40 lg:pt-60'>
             <div className='container'>
                 <div className='flex flex-col'>
                     <h2 className='border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10'>
@@ -62,21 +62,23 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                         <h3 className='font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6'>
                                             {card.Title}
                                         </h3>
-                                        <p className='font-montserrat font-normal text-[20px] leading-[34px]'>
+                                        <div className='font-montserrat font-normal text-[20px] leading-[34px]'>
                                             <RichText html={card.Description} />
-                                        </p>
+                                        </div>
 
                                         {/* Hover content */}
-                                        <div className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0'>
-                                            <Link
-                                                href={`${currentPath}/${card?.sub_service_page?.Slug}`}
-                                                target='_blank'
-                                            >
-                                                <div className='w-14 h-14 bg-blue-600 text-white flex items-center justify-center'>
-                                                    <RightArrowUpIcon />
-                                                </div>
-                                            </Link>
-                                        </div>
+                                        {card?.sub_service_page?.Slug && (
+                                            <div className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0'>
+                                                <Link
+                                                    href={`${currentPath}${card?.sub_service_page?.Slug}`}
+                                                    target='_blank'
+                                                >
+                                                    <div className='w-14 h-14 bg-blue-600 text-white flex items-center justify-center'>
+                                                        <RightArrowUpIcon />
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -99,9 +101,9 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                 <h3 className='font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6'>
                                                     {card.Title}
                                                 </h3>
-                                                <p className='font-montserrat font-normal text-[18px] leading-[30px]'>
+                                                <div className='font-montserrat font-normal text-[18px] leading-[30px]'>
                                                     <RichText html={card.Description} />
-                                                </p>
+                                                </div>
                                             </div>
 
                                             {card.Link?.href && (

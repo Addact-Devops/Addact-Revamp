@@ -30,9 +30,9 @@ const WhyAddact = ({ data }: IProps) => {
                                             )}
                                         </div>
                                         <h3 className='text-lg lg:text-3xl my-7'>{service.Title}</h3>
-                                        <p className='text-base 2xl:text-xl text-white'>
+                                        <div className='text-base 2xl:text-xl text-white'>
                                             <RichText html={service.Description.replace(/^<p>|<\/p>$/g, "")} />
-                                        </p>
+                                        </div>
                                     </div>
                                     {(index + 1) % 3 !== 0 && (
                                         <div className='absolute top-1/4 right-0 h-3/4 w-[1px] bg-white opacity-40'></div>

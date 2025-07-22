@@ -29,7 +29,7 @@ export default async function kenticoPage() {
             />
             <OurPartners />
             <OurServicesWithTabs data={data.our_service} />
-            {await IndustriesWeServe()}
+            <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
             <OurProcess />
             <ClientTestimonials />
