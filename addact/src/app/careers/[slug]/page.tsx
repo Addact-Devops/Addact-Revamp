@@ -10,7 +10,6 @@ import HeroBanner from "@/components/organisms/HeroBanner";
 const CareerDetail = () => {
     const { slug } = useParams();
     const [careerDetailData, setCareerDetailData] = useState<CareerDetailResponse["careerDetails"][number]>();
-    console.log("🚀 ~ CareerDetail ~ careerDetailData:", careerDetailData);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

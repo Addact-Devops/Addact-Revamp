@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 
 export default async function SitecorePage() {
     const data = await getEventListPageData();
-    console.log("🚀 ~ SitecorePage ~ data:", data);
     if (!data) return notFound();
 
     const banner = data.event.EventBanner.Banner[0];
