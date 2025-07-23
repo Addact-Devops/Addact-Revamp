@@ -73,6 +73,13 @@ const ServiceDetailBySlug = gql`
                         Description
                         Title
                         id
+                        Link {
+                            id
+                            href
+                            label
+                            target
+                            isExternal
+                        }
                     }
                     Description
                 }
