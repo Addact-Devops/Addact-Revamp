@@ -53,12 +53,12 @@ export default function EventCard({ title, date, location, description, imageUrl
                     <h3 className='!font-bold text-white !text-3xl mb-6'>{title}</h3>
 
                     <div className='flex font-medium items-center gap-2 text-base text-white'>
-                        <CalendarDays size={18} className='text-purple-600' />
+                        <CalendarDays size={18} className='text-blue-600' />
                         <span>{date}</span>
                     </div>
 
                     <div className='flex font-medium items-center gap-2 text-base text-white mb-6'>
-                        <MapPin size={18} className='text-purple-600' />
+                        <MapPin size={18} className='text-blue-600' />
                         <span>{location}</span>
                     </div>
 
@@ -68,7 +68,7 @@ export default function EventCard({ title, date, location, description, imageUrl
                 <div className='mt-4'>
                     <Link
                         href={href}
-                        className='inline-flex items-center px-6 py-3 bg-indigo-600 font-medium text-white !text-base rounded-full hover:bg-indigo-700 transition'
+                        className='inline-flex items-center px-6 py-3 bg-blue-600 font-medium text-white !text-base rounded-full hover:bg-indigo-700 transition'
                     >
                         Explore <ArrowRight size={16} className='ml-2' />
                     </Link>
