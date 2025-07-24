@@ -55,73 +55,67 @@ const WebinarDetails = () => {
                 </div>
             </section>
 
-            <section className='bg-[#f4f4f4] caseStudy-wrapper pb-20'>
+            <section className='bg-[#f4f4f4] pb-20'>
                 <div className='container'>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-24 text-black'>
-                        <div className='lg:ml-36'>
+                        <div className='lg:mr-36'>
                             <div className='sticky top-[140px] w-full'>
-                                {/* <form
-                                    onSubmit={handleFormSubmit}
-                                    className='space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md lg:max-w-sm w-full'
-                                >
-                                    <h2 className='text-2xl font-semibold leading-tight mb-4'>
-                                        Get your free copy now!
-                                    </h2>
-                                    <p className='text-gray-600 mb-6'>{formTitle?.Description}</p>
+                                <div className='space-y-10'>
+                                    {/* Speaker Section */}
+                                    <div>
+                                        <h2 className='text-3xl font-extrabold mb-6'>Speaker</h2>
+                                        {webinarDetailData.addactWebinars[0].Speakers.map((speaker, index) => (
+                                            <div key={index} className='flex items-center gap-4 mb-4'>
+                                                <Image
+                                                    src={speaker.Author.AuthorImage.url}
+                                                    alt={speaker.Author.AuthorImage.name}
+                                                    width={80}
+                                                    height={80}
+                                                    className='rounded-lg bg-[#e3e5ff] p-1 object-cover'
+                                                />
+                                                <div>
+                                                    <p className='text-lg font-semibold text-black leading-tight'>
+                                                        {speaker.Author.AuthorName.split("-")[0].trim()}
+                                                    </p>
+                                                    <p className='text-sm text-[#5a57ff] mt-1'>
+                                                        {speaker.Author.designation.DesignationTitle}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
 
-                                    <input
-                                        type='text'
-                                        required
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        placeholder='Full Name*'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <input
-                                        type='email'
-                                        required
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        placeholder='Business Email*'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <input
-                                        type='tel'
-                                        required
-                                        value={formData.phone}
-                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                        placeholder='Phone Number*'
-                                        pattern='[0-9]{10,15}'
-                                        title='Please enter a valid phone number (10–15 digits only)'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <ReCAPTCHA
-                                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                                        onChange={(token: string | null) => setCaptchaToken(token)}
-                                        className='mx-auto w-full'
-                                    />
-
-                                    <button
-                                        type='submit'
-                                        className='w-full bg-[#f16565] cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-[#e45555] transition'
-                                    >
-                                        {submitting ? (
-                                            <span className='flex justify-center items-center gap-2'>
-                                                <span className='w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin'></span>
-                                                Processing...
-                                            </span>
-                                        ) : (
-                                            "Download"
-                                        )}
-                                    </button>
-                                </form> */}
+                                    {/* Host Section */}
+                                    <div>
+                                        <h2 className='text-3xl font-extrabold mb-6'>Host</h2>
+                                        <div className='flex items-center gap-4'>
+                                            <Image
+                                                src={webinarDetailData.addactWebinars[0].Host.Author.AuthorImage.url}
+                                                alt={webinarDetailData.addactWebinars[0].Host.Author.AuthorImage.name}
+                                                width={80}
+                                                height={80}
+                                                className='rounded-lg bg-[#e3e5ff] p-1 object-cover'
+                                            />
+                                            <div>
+                                                <p className='text-lg font-semibold text-black leading-tight'>
+                                                    {webinarDetailData.addactWebinars[0].Host.Author.AuthorName.split(
+                                                        "-"
+                                                    )[0].trim()}
+                                                </p>
+                                                <p className='text-sm text-[#5a57ff] mt-1'>
+                                                    {
+                                                        webinarDetailData.addactWebinars[0].Host.Author.designation
+                                                            .DesignationTitle
+                                                    }
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div>
+                        <div className='caseStudy-wrapper'>
                             <BlogContentRenderer blocks={webinarDetailData.addactWebinars[0].WebinarContent} />
                         </div>
                     </div>
