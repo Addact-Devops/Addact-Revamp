@@ -63,22 +63,22 @@ const WebinarDetails = () => {
                                 <div className='space-y-10'>
                                     {/* Speaker Section */}
                                     <div>
-                                        <h2 className='text-3xl font-extrabold mb-6'>Speaker</h2>
-                                        {webinarDetailData.addactWebinars[0].Speakers.map((speaker, index) => (
+                                        <h2 className='!text-5xl !font-extrabold mb-6'>Speaker</h2>
+                                        {webinarDetailData?.addactWebinars[0]?.Speakers.map((speaker, index) => (
                                             <div key={index} className='flex items-center gap-4 mb-4'>
                                                 <Image
-                                                    src={speaker.Author.AuthorImage.url}
-                                                    alt={speaker.Author.AuthorImage.name}
+                                                    src={speaker?.Author?.AuthorImage?.url}
+                                                    alt={speaker?.Author?.AuthorImage?.name}
                                                     width={80}
                                                     height={80}
-                                                    className='rounded-lg bg-[#e3e5ff] p-1 object-cover'
+                                                    className='rounded-lg p-1 object-cover'
                                                 />
                                                 <div>
-                                                    <p className='text-lg font-semibold text-black leading-tight'>
-                                                        {speaker.Author.AuthorName.split("-")[0].trim()}
+                                                    <p className='!text-2xl !font-extrabold text-black leading-tight'>
+                                                        {speaker?.Author?.AuthorName.split("-")[0].trim()}
                                                     </p>
-                                                    <p className='text-sm text-[#5a57ff] mt-1'>
-                                                        {speaker.Author.designation.DesignationTitle}
+                                                    <p className='!text-sm text-blue-600 mt-1'>
+                                                        {speaker?.Author?.designation?.DesignationTitle}
                                                     </p>
                                                 </div>
                                             </div>
@@ -87,29 +87,26 @@ const WebinarDetails = () => {
 
                                     {/* Host Section */}
                                     <div>
-                                        <h2 className='text-3xl font-extrabold mb-6'>Host</h2>
-                                        <div className='flex items-center gap-4'>
-                                            <Image
-                                                src={webinarDetailData.addactWebinars[0].Host.Author.AuthorImage.url}
-                                                alt={webinarDetailData.addactWebinars[0].Host.Author.AuthorImage.name}
-                                                width={80}
-                                                height={80}
-                                                className='rounded-lg bg-[#e3e5ff] p-1 object-cover'
-                                            />
-                                            <div>
-                                                <p className='text-lg font-semibold text-black leading-tight'>
-                                                    {webinarDetailData.addactWebinars[0].Host.Author.AuthorName.split(
-                                                        "-"
-                                                    )[0].trim()}
-                                                </p>
-                                                <p className='text-sm text-[#5a57ff] mt-1'>
-                                                    {
-                                                        webinarDetailData.addactWebinars[0].Host.Author.designation
-                                                            .DesignationTitle
-                                                    }
-                                                </p>
+                                        <h2 className='!text-5xl !font-extrabold mb-6'>Host</h2>
+                                        {webinarDetailData?.addactWebinars[0]?.Host.map((host, index) => (
+                                            <div key={index} className='flex items-center gap-4'>
+                                                <Image
+                                                    src={host?.Author?.AuthorImage.url}
+                                                    alt={host?.Author?.AuthorImage.name}
+                                                    width={80}
+                                                    height={80}
+                                                    className='rounded-lg p-1 object-cover'
+                                                />
+                                                <div>
+                                                    <p className='!text-2xl !font-extrabold text-black leading-tight'>
+                                                        {host?.Author?.AuthorName.split("-")[0].trim()}
+                                                    </p>
+                                                    <p className='!text-sm text-blue-600 mt-1'>
+                                                        {host?.Author?.designation?.DesignationTitle}
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
                             </div>

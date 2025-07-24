@@ -138,7 +138,7 @@ export interface WebinarDetailResponse {
                     DesignationTitle: string;
                 };
             };
-        };
+        }[];
     }[];
 }
 
