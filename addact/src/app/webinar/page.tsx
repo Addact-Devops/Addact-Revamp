@@ -1,13 +1,13 @@
 import EventCard from "@/components/molecules/EventCard";
 import HeroBanner from "@/components/organisms/HeroBanner";
-import { getEventListPageData } from "@/graphql/queries/getEventList";
+import { getWebinarListData } from "@/graphql/queries/getWebinarList";
 import { notFound } from "next/navigation";
 
 export default async function SitecorePage() {
-    const data = await getEventListPageData();
+    const data = await getWebinarListData();
     if (!data) return notFound();
 
-    const banner = data.event.EventBanner.Banner[0];
+    const banner = data.webinar.HeroBanner.Banner[0];
 
     return (
         <div>
@@ -17,20 +17,19 @@ export default async function SitecorePage() {
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
             <div className='pt-24'>
-                {data.addactsEvents.map((event, index: number) => {
-                    const banner = event.EventBanner[0];
+                {data.addactWebinars.map((event, index: number) => {
+                    const banner = event.HeroBanner[0];
                     return (
                         <EventCard
                             key={index}
-                            pageType='Event'
+                            pageType='Webinar'
                             title={banner.BannerTitle}
                             date={new Date(banner.PublishDate).toLocaleDateString("en-GB", {
                                 day: "2-digit",
                                 month: "short",
                                 year: "numeric",
                             })}
-                            location={banner.eventLocation}
-                            description={event.EventSummary}
+                            description={banner.BannerDescription}
                             imageUrl={banner.BannerImage.url}
                             slug={event.Slug}
                         />

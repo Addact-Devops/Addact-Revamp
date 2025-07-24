@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { Image } from "@/types/common";
+import { Heading, Image } from "@/types/common";
 
 const GET_EVENT_DETAIL_PAGE = gql`
     query AddactsEvents($filters: AddactEventsFiltersInput) {
@@ -97,12 +97,7 @@ export interface EventDetailResponse {
             PublishDate: string;
             eventLocation: string;
         }[];
-        EventContent: {
-            id: string;
-            h2?: string;
-            Richtext?: string;
-            Image?: Image;
-        }[];
+        EventContent: Heading[];
         HeadingSection: {
             PageTitle: string;
         }[];

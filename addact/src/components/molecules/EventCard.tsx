@@ -8,13 +8,14 @@ import Link from "next/link";
 type EventCardProps = {
     title: string;
     date: string;
-    location: string;
+    location?: string;
     description: string;
     imageUrl: string;
     slug: string;
+    pageType: string;
 };
 
-export default function EventCard({ title, date, location, description, imageUrl, slug }: EventCardProps) {
+export default function EventCard({ title, date, location, description, imageUrl, slug, pageType }: EventCardProps) {
     const pathname = usePathname(); // e.g. “/event”
     const base = pathname.replace(/\/$/, ""); // strip trailing “/”
     const cleanSlug = slug.replace(/^\//, ""); // strip leading “/”
@@ -29,11 +30,11 @@ export default function EventCard({ title, date, location, description, imageUrl
         eventDate.getMonth() === today.getMonth() &&
         eventDate.getDate() === today.getDate();
 
-    let status = "Upcoming Event";
+    let status = `Upcoming ${pageType}`;
     if (eventDate < today && !isSameDay) {
-        status = "Past Event";
+        status = `Past ${pageType}`;
     } else if (isSameDay) {
-        status = "Ongoing Event";
+        status = `Ongoing ${pageType}`;
     }
 
     return (
@@ -57,10 +58,12 @@ export default function EventCard({ title, date, location, description, imageUrl
                         <span>{date}</span>
                     </div>
 
-                    <div className='flex font-medium items-center gap-2 text-base text-white mb-6'>
-                        <MapPin size={18} className='text-blue-600' />
-                        <span>{location}</span>
-                    </div>
+                    {location && (
+                        <div className='flex font-medium items-center gap-2 text-base text-white mb-6'>
+                            <MapPin size={18} className='text-blue-600' />
+                            <span>{location}</span>
+                        </div>
+                    )}
 
                     <p className='!text-base font-light line-clamp-4 text-white mb-4'>{description}</p>
                 </div>
