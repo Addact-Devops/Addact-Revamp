@@ -4,19 +4,19 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
-import { EventDetailResponse, getEventDetailBySlug } from "@/graphql/queries/getEventDetail";
 import "../../../styles/components/caseStudy-detail.scss";
+import { getWebinarDetailBySlug, WebinarDetailResponse } from "@/graphql/queries/getWebinarDetail";
 
-const EventDetails = () => {
+const WebinarDetails = () => {
     const { slug } = useParams();
-    const [eventDetailData, setEventDetailData] = useState<EventDetailResponse>();
+    const [webinarDetailData, setWebinarDetailData] = useState<WebinarDetailResponse>();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (typeof slug === "string") {
             const fetchData = async () => {
-                const result = await getEventDetailBySlug(slug);
-                setEventDetailData(result);
+                const result = await getWebinarDetailBySlug(slug);
+                setWebinarDetailData(result);
                 setLoading(false);
             };
             fetchData();
@@ -31,26 +31,24 @@ const EventDetails = () => {
         );
     }
 
-    if (!eventDetailData) return <p className='p-6 text-red-600'>Event Details not found.</p>;
+    if (!webinarDetailData) return <p className='p-6 text-red-600'>Event Details not found.</p>;
 
-    const eventData = eventDetailData?.addactsEvents[0];
+    const webinarData = webinarDetailData.addactWebinars[0].HeroBanner[0];
 
     return (
         <div className='flex flex-col pt-[120px]'>
             <section className='container relative w-full text-white overflow-hidden'>
                 <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24'>
                     <div>
-                        <p className='text-sm text-red-400'>{eventData.EventBanner[0].PublishDate}</p>
-                        <h1 className='!text-3xl md:!text-5xl !font-bold mt-2'>
-                            {eventData.EventBanner[0].BannerTitle}
-                        </h1>
+                        <p className='text-sm text-red-400'>{webinarData.PublishDate}</p>
+                        <h1 className='!text-3xl md:!text-5xl !font-bold mt-2'>{webinarData.BannerTitle}</h1>
                     </div>
                     <div className='relative aspect-[16/9] md:aspect-auto w-full md:h-auto'>
                         <Image
-                            src={eventData.EventBanner[0].BannerImage.url}
-                            alt={eventData.EventBanner[0].BannerImage.name}
-                            width={eventData.EventBanner[0].BannerImage.width}
-                            height={eventData.EventBanner[0].BannerImage.height}
+                            src={webinarData.BannerImage.url}
+                            alt={webinarData.BannerImage.name}
+                            width={webinarData.BannerImage.width}
+                            height={webinarData.BannerImage.height}
                             className='object-cover rounded-lg'
                         />
                     </div>
@@ -124,7 +122,7 @@ const EventDetails = () => {
                         </div>
 
                         <div>
-                            <BlogContentRenderer blocks={eventData?.EventContent} />
+                            <BlogContentRenderer blocks={webinarDetailData.addactWebinars[0].WebinarContent} />
                         </div>
                     </div>
                 </div>
@@ -133,4 +131,4 @@ const EventDetails = () => {
     );
 };
 
-export default EventDetails;
+export default WebinarDetails;
