@@ -2,11 +2,12 @@ import { gql } from "graphql-request";
 import client from "../client";
 import { Heading, Image } from "@/types/common";
 
-const GET_EVENT_DETAIL_PAGE = gql`
-    query AddactsEvents($filters: AddactEventsFiltersInput) {
-        addactsEvents(filters: $filters) {
-            EventBanner {
+const GET_WEBINAR_DETAIL_PAGE = gql`
+    query AddactWebinars($filters: AddactWebinarFiltersInput) {
+        addactWebinars(filters: $filters) {
+            HeroBanner {
                 ... on ComponentBlogHeroBannerBlogHeroBanner {
+                    BannerTitle
                     BannerDescription
                     BannerImage {
                         alternativeText
@@ -15,12 +16,16 @@ const GET_EVENT_DETAIL_PAGE = gql`
                         url
                         width
                     }
-                    BannerTitle
                     PublishDate
-                    eventLocation
+                    ReadNow {
+                        id
+                        href
+                        label
+                        isExternal
+                    }
                 }
             }
-            EventContent {
+            WebinarContent {
                 ... on ComponentHeadingsH1 {
                     id
                     h1
@@ -63,24 +68,37 @@ const GET_EVENT_DETAIL_PAGE = gql`
                     id
                     href
                     label
+                    target
                     isExternal
                 }
             }
-            HeadingSection {
-                ... on ComponentBaseTemplateCommonSection {
-                    PageTitle
+            Speakers {
+                Author {
+                    AuthorImage {
+                        alternativeText
+                        height
+                        name
+                        url
+                        width
+                    }
+                    AuthorName
+                    designation {
+                        DesignationTitle
+                    }
                 }
             }
-            contact_us_card {
-                ButtonLabel
-                CompanyName
-                EmailLabel
-                NameLable
-                RequirementsLabel
-                Form {
-                    ... on ComponentBaseTemplatePromo {
-                        Title
-                        Description
+            Host {
+                Author {
+                    AuthorImage {
+                        alternativeText
+                        height
+                        name
+                        url
+                        width
+                    }
+                    AuthorName
+                    designation {
+                        DesignationTitle
                     }
                 }
             }
@@ -88,35 +106,44 @@ const GET_EVENT_DETAIL_PAGE = gql`
     }
 `;
 
-export interface EventDetailResponse {
-    addactsEvents: {
-        EventBanner: {
+export interface WebinarDetailResponse {
+    addactWebinars: {
+        HeroBanner: {
+            BannerTitle: string;
             BannerDescription: string;
             BannerImage: Image;
-            BannerTitle: string;
             PublishDate: string;
-            eventLocation: string;
+            ReadNow: {
+                id: string;
+                href: string;
+                label: string;
+                isExternal: boolean;
+            };
         }[];
-        EventContent: Heading[];
-        HeadingSection: {
-            PageTitle: string;
+        WebinarContent: Heading[];
+        Speakers: {
+            Author: {
+                AuthorImage: Image;
+                AuthorName: string;
+                designation: {
+                    DesignationTitle: string;
+                };
+            };
         }[];
-        contact_us_card: {
-            ButtonLabel: string;
-            CompanyName: string;
-            EmailLabel: string;
-            NameLable: string;
-            RequirementsLabel: string;
-            Form: {
-                Title: string;
-                Description: string;
-            }[];
+        Host: {
+            Author: {
+                AuthorImage: Image;
+                AuthorName: string;
+                designation: {
+                    DesignationTitle: string;
+                };
+            };
         };
     }[];
 }
 
-export async function getEventDetailBySlug(slug: string): Promise<EventDetailResponse> {
-    const data = await client.request<EventDetailResponse>(GET_EVENT_DETAIL_PAGE, {
+export async function getWebinarDetailBySlug(slug: string): Promise<WebinarDetailResponse> {
+    const data = await client.request<WebinarDetailResponse>(GET_WEBINAR_DETAIL_PAGE, {
         filters: {
             Slug: {
                 eq: `/${slug}`,
