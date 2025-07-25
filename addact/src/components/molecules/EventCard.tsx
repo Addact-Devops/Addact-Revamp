@@ -7,34 +7,46 @@ import Link from "next/link";
 
 type EventCardProps = {
     title: string;
-    date: string;
+    date?: string;
     location?: string;
     description: string;
     imageUrl: string;
     slug: string;
-    pageType: string;
+    pageType?: string;
+    linkText?: string; // NEW
 };
 
-export default function EventCard({ title, date, location, description, imageUrl, slug, pageType }: EventCardProps) {
+export default function EventCard({
+    title,
+    date,
+    location,
+    description,
+    imageUrl,
+    slug,
+    pageType,
+    linkText = "Explore",
+}: EventCardProps) {
     const pathname = usePathname(); // e.g. “/event”
     const base = pathname.replace(/\/$/, ""); // strip trailing “/”
     const cleanSlug = slug.replace(/^\//, ""); // strip leading “/”
     const href = `${base}/${cleanSlug}`;
 
-    const eventDate = new Date(date);
-    const today = new Date();
+    let status = null;
+    if (date && pageType) {
+        const eventDate = new Date(date);
+        const today = new Date();
+        const isSameDay =
+            eventDate.getFullYear() === today.getFullYear() &&
+            eventDate.getMonth() === today.getMonth() &&
+            eventDate.getDate() === today.getDate();
 
-    // Normalize to ignore time portion
-    const isSameDay =
-        eventDate.getFullYear() === today.getFullYear() &&
-        eventDate.getMonth() === today.getMonth() &&
-        eventDate.getDate() === today.getDate();
-
-    let status = `Upcoming ${pageType}`;
-    if (eventDate < today && !isSameDay) {
-        status = `Past ${pageType}`;
-    } else if (isSameDay) {
-        status = `Ongoing ${pageType}`;
+        if (eventDate < today && !isSameDay) {
+            status = `Past ${pageType}`;
+        } else if (isSameDay) {
+            status = `Ongoing ${pageType}`;
+        } else {
+            status = `Upcoming ${pageType}`;
+        }
     }
 
     return (
@@ -47,16 +59,20 @@ export default function EventCard({ title, date, location, description, imageUrl
             {/* Content */}
             <div className='md:w-2/3 px-3 py-2 w-full flex flex-col justify-between'>
                 <div className='space-y-2'>
-                    <span className='bg-gray-200 text-sm px-3 py-1 mb-4 rounded-md inline-block w-max font-bold text-black'>
-                        {status}
-                    </span>
+                    {status && (
+                        <span className='bg-gray-200 text-sm px-3 py-1 mb-4 rounded-md inline-block w-max font-bold text-black'>
+                            {status}
+                        </span>
+                    )}
 
                     <h3 className='!font-bold text-white !text-3xl mb-6'>{title}</h3>
 
-                    <div className='flex font-medium items-center gap-2 text-base text-white'>
-                        <CalendarDays size={18} className='text-blue-600' />
-                        <span>{date}</span>
-                    </div>
+                    {date && (
+                        <div className='flex font-medium items-center gap-2 text-base text-white'>
+                            <CalendarDays size={18} className='text-blue-600' />
+                            <span>{date}</span>
+                        </div>
+                    )}
 
                     {location && (
                         <div className='flex font-medium items-center gap-2 text-base text-white mb-6'>
@@ -73,7 +89,7 @@ export default function EventCard({ title, date, location, description, imageUrl
                         href={href}
                         className='inline-flex items-center px-6 py-3 bg-blue-600 font-medium text-white !text-base rounded-full hover:bg-indigo-700 transition'
                     >
-                        Explore <ArrowRight size={16} className='ml-2' />
+                        {linkText} <ArrowRight size={16} className='ml-2' />
                     </Link>
                 </div>
             </div>
