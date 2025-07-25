@@ -1,13 +1,12 @@
-import EventCard from "@/components/molecules/EventCard";
-import HeroBanner from "@/components/organisms/HeroBanner";
-import { getEventListPageData } from "@/graphql/queries/getEventList";
 import { notFound } from "next/navigation";
+import HeroBanner from "@/components/organisms/HeroBanner";
+import { getPressReleaseData } from "@/graphql/queries/getPressRelease";
 
-export default async function EventsPage() {
-    const data = await getEventListPageData();
+export default async function PressRelease() {
+    const data = await getPressReleaseData();
     if (!data) return notFound();
 
-    const banner = data.event.EventBanner.Banner[0];
+    const banner = data.pressRelease.HeroBanner.Banner[0];
 
     return (
         <div>
@@ -16,7 +15,7 @@ export default async function EventsPage() {
                 description={banner.BannerDescription || ""}
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
-            <div className='pt-24'>
+            {/* <div className='pt-24'>
                 {data.addactsEvents.map((event, index: number) => {
                     const banner = event.EventBanner[0];
                     return (
@@ -36,7 +35,7 @@ export default async function EventsPage() {
                         />
                     );
                 })}
-            </div>
+            </div> */}
         </div>
     );
 }
