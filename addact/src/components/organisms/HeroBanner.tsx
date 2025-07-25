@@ -19,7 +19,7 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
     const pathname = usePathname(); // ✅ get current path
 
     return (
-        <section className="relative text-white overflow-hidden md:mt-[120px]">
+        <section className="relative text-white overflow-hidden">
             {/* Background Image */}
             <Image
                 src={backgroundImageUrl}
@@ -35,7 +35,7 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
             {/* Content */}
             <div className="relative container min-h-[550px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
                 <div className="text-left max-w-[95%]">
-                    <h1 className="text-white mb-[10px] md:mb-[15px] font-semibold text-[45px] leading-[55px] md:text-[60px] md:leading-[63px]">
+                    <h1 className="text-white mb-[10px] md:mb-[15px] !font-semibold !text-[45px] leading-[55px] !md:text-[60px] !md:leading-[63px] lg:max-w-[60%]">
                         {title}
                     </h1>
 
@@ -48,7 +48,7 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                         <div className="mt-10">
                             <Link
                                 href={button.url}
-                                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-7 py-4 rounded-md font-medium transition text-lg"
+                                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-[10px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]"
                             >
                                 {button.label}
                             </Link>
@@ -71,6 +71,12 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                                 <a href="#vision-mission">Vision & Mission</a>
                                 <a href="#brand-values">Brand Values</a>
                                 <a href="#who-we-are">Who are we</a>
+                            </>
+                        ) : pathname === "/contact-us" ? (
+                            <>
+                                <a href="#weekday-component">Availability</a>
+                                <a href="#maps-component">Our offices</a>
+                                <a href="#contact-page-form">Get in touch</a>
                             </>
                         ) : null}
 

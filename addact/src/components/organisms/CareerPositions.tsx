@@ -160,7 +160,7 @@ export default function CareerPositions({ positions, positionsTitle }: Props) {
             {/* Bottom line */}
             <div className="text-center mt-[70px] text-sm font-[500] text-[#717171]">
                 Get to know us better !{" "}
-                <Link href="/about" className="text-[#3C4CFF] font-semibold">
+                <Link href="/about-us" className="text-[#3C4CFF] font-semibold">
                     CLICK HERE
                 </Link>
             </div>
