@@ -8,7 +8,7 @@ import { getEventStatus } from "@/utils/getEventStatus";
 
 type EventCardProps = {
     title: string;
-    date: string;
+    date?: string;
     location?: string;
     description: string;
     imageUrl: string;
@@ -32,7 +32,7 @@ export default function EventCard({
     const cleanSlug = slug.replace(/^\//, ""); // strip leading “/”
     const href = `${base}/${cleanSlug}`;
 
-    const status = getEventStatus(date, pageType);
+    const status = date ? getEventStatus(date, pageType) : null;
 
     return (
         <div className='container flex flex-col md:flex-row gap-6 mb-24 rounded-2xl shadow-md overflow-hidden'>
