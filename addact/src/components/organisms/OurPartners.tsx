@@ -46,8 +46,8 @@ export default function OurPartners() {
             </div>
 
             <div className='overflow-hidden relative w-full py-4'>
-                <div className='partners__marquee-content flex gap-[80px] animate-marquee w-fit'>
-                    {partnerData?.Image?.map((item, index) => (
+                <div className='partners__marquee-content flex gap-[80px] w-fit'>
+                    {[...(partnerData?.Image || []), ...(partnerData?.Image || [])].map((item, index) => (
                         <div key={index} className='min-w-[160px] flex items-center justify-center'>
                             {item?.Image?.url && (
                                 <Image
