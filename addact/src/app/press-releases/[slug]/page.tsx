@@ -5,11 +5,13 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import { getPressReleaseDetailBySlug, PressReleaseDetailResponse } from "@/graphql/queries/getPressReleaseDetail";
+import { getRecentPressRelease, RecentPressRelease } from "@/graphql/queries/getRecentPressRelease";
 import "../../../styles/components/caseStudy-detail.scss";
 
 const PressReleaseDetails = () => {
     const { slug } = useParams();
     const [pressReleaseData, setPressReleaseData] = useState<PressReleaseDetailResponse>();
+    const [recentPressReleaseData, setRecentPressReleaseData] = useState<RecentPressRelease>();
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -17,6 +19,11 @@ const PressReleaseDetails = () => {
             const fetchData = async () => {
                 const result = await getPressReleaseDetailBySlug(slug);
                 setPressReleaseData(result);
+                const res = await getRecentPressRelease({
+                    pagination: { limit: 3 },
+                    sort: ["publishedAt:desc"],
+                });
+                setRecentPressReleaseData(res);
                 setLoading(false);
             };
             fetchData();
@@ -56,14 +63,69 @@ const PressReleaseDetails = () => {
                 </div>
             </section>
 
-            <section className='bg-[#f4f4f4] caseStudy-wrapper pb-20'>
+            <section className='bg-[#f4f4f4] pb-20'>
                 <div className='container'>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-24 text-black'>
-                        <div className='lg:ml-36'>
-                            <div className='sticky top-[140px] w-full'>TEST</div>
+                        <div className='lg:mr-36'>
+                            <div className='sticky top-[140px] w-full'>
+                                <div className='border border-blue-600 rounded-lg py-4 px-6'>
+                                    <h2 className='!text-2xl !font-extrabold !mb-4'>Recent Press Releases</h2>
+                                    <div className='space-y-6'>
+                                        {recentPressReleaseData?.addactPressReleases.map((item, index) => (
+                                            <div key={index} className='flex gap-4'>
+                                                <div className='relative flex-shrink-0'>
+                                                    <Image
+                                                        src={item.HeroBanner[0].BannerImage.url}
+                                                        alt={
+                                                            item.HeroBanner[0].BannerImage.alternativeText ||
+                                                            "Banner image"
+                                                        }
+                                                        width={120}
+                                                        height={80}
+                                                        className='object-cover rounded-md'
+                                                    />
+                                                </div>
+                                                <h5 className='!text-[15px] !font-medium leading-snug !m-0'>
+                                                    <a href={item.slug} className='!no-underline'>
+                                                        {item.HeroBanner[0].BannerTitle}
+                                                    </a>
+                                                </h5>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Social Icons Section */}
+                                <div className='bg-[#202020] text-white mt-6 rounded-lg p-10'>
+                                    <p className='!text-2xl !font-extrabold mb-6 text-center'>
+                                        Share it with your friends
+                                    </p>
+                                    <div className='flex gap-6 text-white text-xl justify-center'>
+                                        {pressReleaseData?.addactPressReleases[0].social_icons.map((icon, index) => (
+                                            <a
+                                                key={index}
+                                                href={icon.SocialIcon[0].Links.href}
+                                                target='_blank'
+                                                rel='noopener noreferrer'
+                                                className='hover:opacity-80 transition font-bold'
+                                            >
+                                                <Image
+                                                    src={icon.SocialIcon[0].Icons.url}
+                                                    alt={
+                                                        icon.SocialIcon[0].Icons.alternativeText ||
+                                                        icon.SocialIcon[0].Title
+                                                    }
+                                                    width={30}
+                                                    height={32}
+                                                />
+                                            </a>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div>
+                        <div className='caseStudy-wrapper'>
                             <BlogContentRenderer blocks={eventData?.PressContent} />
                         </div>
                     </div>
