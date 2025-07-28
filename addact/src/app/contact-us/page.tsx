@@ -10,7 +10,7 @@ export default async function ContactUsPage() {
     const bannerData = contactus?.banner?.Banner?.[0];
 
     return (
-        <main className="bg-[#ffffff]">
+        <main className="bg-[#f4f4f4]">
             {bannerData?.BannerTitle && bannerData?.BannerDescription && bannerData?.BannerImage?.url ? (
                 <HeroBanner
                     title={bannerData.BannerTitle}

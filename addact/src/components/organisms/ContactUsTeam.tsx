@@ -1,6 +1,5 @@
-// components/ContactUsTeam.tsx
 import Image from "next/image";
-import { RichTextBlock } from "@/graphql/queries/getContactUs"; // Use shared type
+import { RichTextBlock } from "@/graphql/queries/getContactUs";
 
 type ImageType = {
     url: string;
@@ -30,8 +29,8 @@ const ContactUsTeam = ({
     ContactUsAvailability,
 }: ContactUsTeamProps) => {
     return (
-        <section className="py-10 md:py-16 bg-white">
-            <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+        <section className="my-[60px] lg:my-[100px]" id="weekday-component">
+            <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 items-center text-center md:text-left">
                 {/* Left Image */}
                 <div>
                     <Image
@@ -39,18 +38,18 @@ const ContactUsTeam = ({
                         alt={AddactTeamImage.alternativeText || "Team Image"}
                         width={AddactTeamImage.width}
                         height={AddactTeamImage.height}
-                        className="w-full h-auto object-contain rounded-xl"
+                        className="w-full h-auto rounded-2xl object-cover"
                     />
                 </div>
 
                 {/* Right Content */}
                 <div>
-                    <h4 className="text-red-600 text-lg font-semibold mb-2">{TitleLine1}</h4>
-                    <h2 className="text-3xl font-bold text-gray-800 mb-4">{TitleLine2}</h2>
+                    <h2 className="text-[#155dfc] mb-[5px]">{TitleLine1}</h2>
+                    <h2 className="text-[#000000] mb-[15px]">{TitleLine2}</h2>
 
-                    {/* Descriptions - rich text */}
+                    {/* Descriptions */}
                     {Descriptions?.map((block, index) => (
-                        <p className="text-gray-700 mb-4" key={index}>
+                        <p key={index} className="text-base text-[#111111] mb-4">
                             {block.children.map((child, idx) => (
                                 <span key={idx}>{child.text}</span>
                             ))}
@@ -59,24 +58,24 @@ const ContactUsTeam = ({
 
                     {/* Availability */}
                     {ContactUsAvailability?.length > 0 && (
-                        <div className="mt-6">
-                            <h5 className="text-lg font-semibold text-gray-700 mb-2">Availability:</h5>
-                            <ul className="text-gray-600 space-y-1">
-                                {ContactUsAvailability.map((item, idx) => (
-                                    <li key={idx}>
-                                        <span className="font-medium">{item.Days}:</span>{" "}
-                                        <span
-                                            className={
-                                                item.Availability.toLowerCase() === "online"
-                                                    ? "text-blue-600 font-semibold"
-                                                    : ""
-                                            }
-                                        >
-                                            {item.Availability}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
+                        <div className="mt-[35px] flex flex-col gap-[20px]">
+                            {ContactUsAvailability.map((item, idx) => (
+                                <div
+                                    key={idx}
+                                    className="flex text-[25px] md:text-[35px] font-[600] gap-[60px] m-auto md:m-[0]"
+                                >
+                                    <span className="text-black">{item.Days}</span>
+                                    <span
+                                        className={
+                                            item.Availability.toLowerCase() === "online"
+                                                ? "text-[#155dfc]"
+                                                : "text-black"
+                                        }
+                                    >
+                                        {item.Availability}
+                                    </span>
+                                </div>
+                            ))}
                         </div>
                     )}
                 </div>
