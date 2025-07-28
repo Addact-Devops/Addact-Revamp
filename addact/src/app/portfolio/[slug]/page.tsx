@@ -3,19 +3,15 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import ReCAPTCHA from "react-google-recaptcha";
 import { CaseStudyBySlugResponse, getCaseStudyBySlug } from "@/graphql/queries/getCaseStudyBySlug";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
+import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
 
 const CaseStudyDetail = () => {
     const { slug } = useParams();
     const [caseStudy, setCaseStudy] = useState<CaseStudyBySlugResponse["addactCaseStudies"][number]>();
     const [loading, setLoading] = useState(true);
-    const [submitting, setSubmitting] = useState(false);
-
-    const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
-    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
     useEffect(() => {
         if (typeof slug === "string") {
@@ -41,45 +37,6 @@ const CaseStudyDetail = () => {
     const hero = caseStudy.HeroBanner[0];
     const formTitle = caseStudy.FormTitle.CommonTitle[0];
     const pdf = caseStudy.CaseStudyPDF;
-
-    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        if (!captchaToken) {
-            alert("Please complete the captcha.");
-            return;
-        }
-
-        setSubmitting(true);
-
-        try {
-            const response = await fetch("/api/submit-form", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                console.log("Submitted successfully:", result);
-            } else {
-                console.error("Submission failed:", result.message);
-            }
-        } catch (error) {
-            console.error("Error submitting form:", error);
-        } finally {
-            setSubmitting(false);
-        }
-
-        const link = document.createElement("a");
-        link.href = pdf.url;
-        link.setAttribute("download", pdf.name || "file.pdf");
-        link.setAttribute("target", "_blank");
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
 
     return (
         <div className='flex flex-col pt-[120px]'>
@@ -110,64 +67,13 @@ const CaseStudyDetail = () => {
 
                         <div className='lg:ml-36'>
                             <div className='sticky top-[140px] w-full'>
-                                <form
-                                    onSubmit={handleFormSubmit}
-                                    className='space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md lg:max-w-sm w-full'
-                                >
-                                    <h2 className='text-2xl font-semibold leading-tight mb-4'>
-                                        Get your free copy now!
-                                    </h2>
-                                    <p className='text-gray-600 mb-6'>{formTitle?.Description}</p>
-
-                                    <input
-                                        type='text'
-                                        required
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        placeholder='Full Name*'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <input
-                                        type='email'
-                                        required
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        placeholder='Business Email*'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <input
-                                        type='tel'
-                                        required
-                                        value={formData.phone}
-                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                        placeholder='Phone Number*'
-                                        pattern='[0-9]{10,15}'
-                                        title='Please enter a valid phone number (10–15 digits only)'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <ReCAPTCHA
-                                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                                        onChange={(token: string | null) => setCaptchaToken(token)}
-                                        className='mx-auto w-full'
-                                    />
-
-                                    <button
-                                        type='submit'
-                                        className='w-full bg-[#f16565] cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-[#e45555] transition'
-                                    >
-                                        {submitting ? (
-                                            <span className='flex justify-center items-center gap-2'>
-                                                <span className='w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin'></span>
-                                                Processing...
-                                            </span>
-                                        ) : (
-                                            "Download"
-                                        )}
-                                    </button>
-                                </form>
+                                <DownloadForm
+                                    title='Get your free copy now!'
+                                    description={formTitle?.Description}
+                                    pdfUrl={pdf.url}
+                                    pdfName={pdf.name}
+                                    submitUrl='/api/submit-form'
+                                />
                             </div>
                         </div>
                     </div>
