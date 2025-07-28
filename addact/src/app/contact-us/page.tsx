@@ -1,8 +1,8 @@
 import HeroBanner from "@/components/organisms/HeroBanner";
 import { getContactUsData } from "@/graphql/queries/getContactUs";
-import ContactUsTeam from "@/components/organisms/ContactUsTeam";
-import ContactUsAddress from "@/components/organisms/ContactUsAddress";
 import ContactUsForm from "@/components/organisms/ContactUsForm";
+import ContactUsTeam from "@/components/organisms/ContactUsTeam";
+import ContactUsAddress from "@/components/organisms/ContactUsAddress"; // ✅ Import added
 
 export default async function ContactUsPage() {
     const data = await getContactUsData();
@@ -32,24 +32,11 @@ export default async function ContactUsPage() {
                 AddactTeamImage={contactus.AddactTeamImage}
                 TitleLine1={contactus.TitleLine1}
                 TitleLine2={contactus.TitleLine2}
-                Descriptions={
-                    Array.isArray(contactus.Descriptions)
-                        ? contactus.Descriptions.map((desc: string) => ({
-                              type: "paragraph",
-                              children: [{ text: desc }],
-                          }))
-                        : null
-                }
+                Descriptions={contactus.Descriptions}
                 ContactUsAvailability={contactus.ContactUsAvailability}
             />
 
-            <ContactUsAddress
-                OfficeCountry={contactus.AddressContent.OfficeCountry}
-                OfficeCity={contactus.AddressContent.OfficeCity}
-                Address={contactus.AddressContent.Address}
-                ContactUsEmailPhone={contactus.AddressContent.ContactUsEmailPhone}
-                iframeHTML={contactus.AddressContent.MapIframe}
-            />
+            <ContactUsAddress addressContent={contactus.AddressContent} />
 
             <ContactUsForm
                 ContactUsFormBlock={{

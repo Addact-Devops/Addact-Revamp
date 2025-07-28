@@ -1,62 +1,39 @@
 "use client";
 
-import React from "react";
+import { ContactUsResponse } from "@/graphql/queries/getContactUs";
+import parse from "html-react-parser";
 
-type ContactUsAddressProps = {
-    OfficeCountry: string;
-    OfficeCity: string;
-    Address: string;
-    ContactUsEmailPhone: {
-        Label: string;
-        Link: string;
-    }[];
-    iframeHTML?: string; // expected to be a plain HTML string
+type Props = {
+    addressContent: ContactUsResponse["contactus"]["AddressContent"];
 };
 
-const ContactUsAddress = ({
-    OfficeCountry,
-    OfficeCity,
-    Address,
-    ContactUsEmailPhone,
-    iframeHTML,
-}: ContactUsAddressProps) => {
+export default function ContactUsAddress({ addressContent }: Props) {
+    const { OfficeCountry, OfficeCity, Address, ContactUsEmailPhone, MapIframe } = addressContent;
+
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 py-12 px-4 md:px-16">
+            {/* Left Side Content */}
             <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-black">Address</h4>
-                <p className="text-gray-700">{Address}</p>
-
-                <h4 className="text-lg font-semibold text-black mt-6">Location</h4>
-                <p className="text-gray-700">
-                    {OfficeCity}, {OfficeCountry}
-                </p>
-
-                <h4 className="text-lg font-semibold text-black mt-6">Contact</h4>
-                <ul className="text-gray-700 space-y-2">
-                    {ContactUsEmailPhone?.map((item, index) => (
-                        <li key={index}>
-                            <a
-                                href={item.Link}
-                                className="hover:text-red-600 underline"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                {item.Label}
-                            </a>
-                        </li>
+                <h3 className="text-xl font-semibold text-gray-900">{OfficeCountry}</h3>
+                <p className="text-gray-700 font-medium">{OfficeCity}</p>
+                <p className="text-gray-600">{Address}</p>
+                <div className="space-y-2 pt-4">
+                    {ContactUsEmailPhone.map((item, index) => (
+                        <a key={index} href={item.Link} className="block text-red-600 font-medium hover:underline">
+                            {item.Label}
+                        </a>
                     ))}
-                </ul>
+                </div>
             </div>
 
-            <div className="w-full h-[300px] lg:h-full">
-                {iframeHTML ? (
-                    <div className="w-full h-full" dangerouslySetInnerHTML={{ __html: iframeHTML }} />
-                ) : (
-                    <p className="text-gray-500">No map provided</p>
+            {/* Right Side Iframe */}
+            <div className="border-2 border-red-600 overflow-hidden rounded-xl">
+                {MapIframe && MapIframe.length > 0 && MapIframe[0].children.length > 0 && (
+                    <div className="w-full h-full [&>iframe]:w-full [&>iframe]:h-[450px]">
+                        {parse(MapIframe[0].children[0].text)}
+                    </div>
                 )}
             </div>
         </div>
     );
-};
-
-export default ContactUsAddress;
+}

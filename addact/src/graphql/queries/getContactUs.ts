@@ -72,6 +72,14 @@ export interface ImageType {
     height: number;
 }
 
+export interface RichTextBlock {
+    type: string;
+    children: {
+        text: string;
+        type?: string;
+    }[];
+}
+
 export interface ContactUsResponse {
     contactus: {
         PageHeading: {
@@ -92,7 +100,7 @@ export interface ContactUsResponse {
         AddactTeamImage: ImageType;
         TitleLine1: string;
         TitleLine2: string;
-        Descriptions: string[];
+        Descriptions: RichTextBlock[];
         ContactUsAvailability: {
             Days: string;
             Availability: string;
@@ -105,7 +113,7 @@ export interface ContactUsResponse {
                 Label: string;
                 Link: string;
             }[];
-            MapIframe: string; // ✅ BACK TO STRING
+            MapIframe: RichTextBlock[];
         };
         ContactUsFormBlock: {
             LeftTitle: string;
