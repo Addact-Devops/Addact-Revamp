@@ -4,10 +4,11 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { getEventStatus } from "@/utils/getEventStatus";
 
 type EventCardProps = {
     title: string;
-    date?: string;
+    date: string;
     location?: string;
     description: string;
     imageUrl: string;
@@ -31,23 +32,7 @@ export default function EventCard({
     const cleanSlug = slug.replace(/^\//, ""); // strip leading “/”
     const href = `${base}/${cleanSlug}`;
 
-    let status = null;
-    if (date && pageType) {
-        const eventDate = new Date(date);
-        const today = new Date();
-        const isSameDay =
-            eventDate.getFullYear() === today.getFullYear() &&
-            eventDate.getMonth() === today.getMonth() &&
-            eventDate.getDate() === today.getDate();
-
-        if (eventDate < today && !isSameDay) {
-            status = `Past ${pageType}`;
-        } else if (isSameDay) {
-            status = `Ongoing ${pageType}`;
-        } else {
-            status = `Upcoming ${pageType}`;
-        }
-    }
+    const status = getEventStatus(date, pageType);
 
     return (
         <div className='container flex flex-col md:flex-row gap-6 mb-24 rounded-2xl shadow-md overflow-hidden'>
