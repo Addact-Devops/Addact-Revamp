@@ -6,9 +6,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 type DownloadFormProps = {
     title: string;
     description?: string;
-    pdfUrl: string;
+    pdfUrl?: string;
+    redirectUrl?: string;
     submitUrl: string;
     pdfName?: string;
+    sheetName: string;
     className?: string;
 };
 
@@ -18,6 +20,8 @@ const DownloadForm = ({
     pdfUrl,
     pdfName = "file.pdf",
     submitUrl,
+    sheetName,
+    redirectUrl,
     className = "",
 }: DownloadFormProps) => {
     const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
@@ -38,7 +42,10 @@ const DownloadForm = ({
             const response = await fetch(submitUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    sheetName,
+                }),
             });
 
             const result = await response.json();
@@ -48,15 +55,19 @@ const DownloadForm = ({
                 return;
             }
 
-            console.log("Submitted successfully:", result);
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
 
-            const link = document.createElement("a");
-            link.href = pdfUrl;
-            link.setAttribute("download", pdfName);
-            link.setAttribute("target", "_blank");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            if (pdfUrl) {
+                const link = document.createElement("a");
+                link.href = pdfUrl;
+                link.setAttribute("download", pdfName);
+                link.setAttribute("target", "_blank");
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         } catch (error) {
             console.error("Error submitting form:", error);
         } finally {

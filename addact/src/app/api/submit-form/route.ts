@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
+        const { name, email, phone, sheetName } = body;
 
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
@@ -23,11 +24,11 @@ export async function POST(req: NextRequest) {
 
         await sheets.spreadsheets.values.append({
             spreadsheetId,
-            range: "Sheet1",
+            range: sheetName,
             valueInputOption: "RAW",
             insertDataOption: "INSERT_ROWS",
             requestBody: {
-                values: [[body.name, body.email, body.phone, new Date().toISOString()]],
+                values: [[name, email, phone, new Date().toISOString()]],
             },
         });
 

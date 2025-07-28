@@ -73,6 +73,7 @@ const CaseStudyDetail = () => {
                                     pdfUrl={pdf.url}
                                     pdfName={pdf.name}
                                     submitUrl='/api/submit-form'
+                                    sheetName='Sheet1'
                                 />
                             </div>
                         </div>

@@ -44,9 +44,14 @@ const BrandGuidelinesPage = () => {
             <section className='bg-[#f4f4f4] caseStudy-wrapper pb-20'>
                 <div className='container'>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto pt-24 text-black'>
-                        <div className='lg:ml-36'>
+                        <div className='lg:mr-36'>
                             <div className='sticky top-[140px] w-full'>
-                                <DownloadForm title={formTitle} pdfUrl={pdf.url} submitUrl='/api/submit-form' />
+                                <DownloadForm
+                                    title={formTitle}
+                                    pdfUrl={pdf.url}
+                                    submitUrl='/api/submit-form'
+                                    sheetName='Brand-Guidelines'
+                                />
                             </div>
                         </div>
 
