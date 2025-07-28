@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../../styles/components/caseStudy-detail.scss";
 import { getWebinarDetailBySlug, WebinarDetailResponse } from "@/graphql/queries/getWebinarDetail";
+import { ArrowRight, CalendarDays } from "lucide-react";
 
 const WebinarDetails = () => {
     const { slug } = useParams();
@@ -40,8 +41,50 @@ const WebinarDetails = () => {
             <section className='container relative w-full text-white overflow-hidden'>
                 <div className='grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24'>
                     <div>
-                        <p className='text-sm text-red-400'>{webinarData.PublishDate}</p>
+                        {(() => {
+                            const date = webinarDetailData.addactWebinars[0].HeroBanner[0].PublishDate;
+                            const eventDate = new Date(date);
+                            const today = new Date();
+                            const isSameDay =
+                                eventDate.getFullYear() === today.getFullYear() &&
+                                eventDate.getMonth() === today.getMonth() &&
+                                eventDate.getDate() === today.getDate();
+
+                            let status = "";
+                            if (eventDate < today && !isSameDay) {
+                                status = "Past Webinar";
+                            } else if (isSameDay) {
+                                status = "Ongoing Webinar";
+                            } else {
+                                status = "Upcoming Webinar";
+                            }
+
+                            return (
+                                <span className='inline-block px-3 py-1 text-sm text-white bg-white/10 border border-white/20 rounded mb-3'>
+                                    {status}
+                                </span>
+                            );
+                        })()}
                         <h1 className='!text-3xl md:!text-5xl !font-bold mt-2'>{webinarData.BannerTitle}</h1>
+                        <p className='text-lg text-white/80 mb-6'>
+                            {webinarDetailData.addactWebinars[0].HeroBanner[0].BannerDescription}!
+                        </p>
+                        <div className='flex items-center gap-2 mb-6'>
+                            <CalendarDays size={20} />
+                            <p className='text-base font-medium'>
+                                {new Date(
+                                    webinarDetailData.addactWebinars[0].HeroBanner[0].PublishDate
+                                ).toLocaleDateString("en-US", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                })}
+                            </p>
+                        </div>
+                        <button className='flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors'>
+                            Watch Now
+                            <ArrowRight size={18} />
+                        </button>
                     </div>
                     <div className='relative aspect-[16/9] md:aspect-auto w-full md:h-auto'>
                         <Image
