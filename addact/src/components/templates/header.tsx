@@ -54,6 +54,13 @@ const Header = ({ headers }: HeaderProps) => {
         };
     }, [openDropdown]);
 
+    useEffect(() => {
+        // This runs whenever the route/path changes
+        setOpenDropdown(null); // Close desktop dropdown
+        setOpenMobileDropdown(null); // Collapse any open mobile submenu
+        setMobileMenuOpen(false); // Close full mobile menu
+    }, [pathname]);
+
     return (
         <header
             className={`fixed top-0 w-full z-50 transition-all duration-300 ${
@@ -149,9 +156,7 @@ const Header = ({ headers }: HeaderProps) => {
 
                     <Link
                         href={headerData?.contact_us[0]?.href}
-                        className={`ml-4 bg-blue-600 px-4 py-2 rounded text-white lg:py-4 lg:px-7 ${
-                            pathname === headerData?.contact_us[0]?.href ? "border-b-2 border-white" : ""
-                        }`}
+                        className='ml-4 bg-blue-600 px-4 py-2 rounded text-white lg:py-4 lg:px-7'
                         target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
                     >
                         {headerData?.contact_us[0]?.label}

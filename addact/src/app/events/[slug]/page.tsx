@@ -2,15 +2,18 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import { EventDetailResponse, getEventDetailBySlug } from "@/graphql/queries/getEventDetail";
 import { getEventStatus } from "@/utils/getEventStatus";
+import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
 
 const EventDetails = () => {
     const { slug } = useParams();
+    const pathname = usePathname();
+
     const [eventDetailData, setEventDetailData] = useState<EventDetailResponse>();
     const [loading, setLoading] = useState(true);
 
@@ -37,6 +40,8 @@ const EventDetails = () => {
 
     const eventData = eventDetailData?.addactsEvents[0];
     const status = getEventStatus(eventData.EventBanner[0].PublishDate, "Event");
+    const formTitle = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Title;
+    const formDescription = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Description;
 
     return (
         <div className='flex flex-col pt-[120px]'>
@@ -89,66 +94,15 @@ const EventDetails = () => {
             <section className='bg-[#f4f4f4] caseStudy-wrapper pb-20'>
                 <div className='container'>
                     <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-24 text-black'>
-                        <div className='lg:ml-36'>
+                        <div className='lg:mr-36'>
                             <div className='sticky top-[140px] w-full'>
-                                {/* <form
-                                    onSubmit={handleFormSubmit}
-                                    className='space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md lg:max-w-sm w-full'
-                                >
-                                    <h2 className='text-2xl font-semibold leading-tight mb-4'>
-                                        Get your free copy now!
-                                    </h2>
-                                    <p className='text-gray-600 mb-6'>{formTitle?.Description}</p>
-
-                                    <input
-                                        type='text'
-                                        required
-                                        value={formData.name}
-                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                        placeholder='Full Name*'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <input
-                                        type='email'
-                                        required
-                                        value={formData.email}
-                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                        placeholder='Business Email*'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <input
-                                        type='tel'
-                                        required
-                                        value={formData.phone}
-                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                        placeholder='Phone Number*'
-                                        pattern='[0-9]{10,15}'
-                                        title='Please enter a valid phone number (10–15 digits only)'
-                                        className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
-                                    />
-
-                                    <ReCAPTCHA
-                                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                                        onChange={(token: string | null) => setCaptchaToken(token)}
-                                        className='mx-auto w-full'
-                                    />
-
-                                    <button
-                                        type='submit'
-                                        className='w-full bg-[#f16565] cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-[#e45555] transition'
-                                    >
-                                        {submitting ? (
-                                            <span className='flex justify-center items-center gap-2'>
-                                                <span className='w-4 h-4 border-2 border-t-transparent border-white rounded-full animate-spin'></span>
-                                                Processing...
-                                            </span>
-                                        ) : (
-                                            "Download"
-                                        )}
-                                    </button>
-                                </form> */}
+                                <DownloadForm
+                                    title={formTitle}
+                                    description={formDescription}
+                                    submitUrl='/api/submit-form'
+                                    sheetName='Sheet1'
+                                    redirectUrl={`${pathname}/event-form-thank-you`}
+                                />
                             </div>
                         </div>
 
