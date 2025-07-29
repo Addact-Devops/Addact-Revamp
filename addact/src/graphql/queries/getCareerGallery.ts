@@ -21,7 +21,7 @@ const query = gql`
 
         galleryCategories {
             Name
-            Images {
+            Images(pagination: { limit: -1 }) {
                 Image {
                     url
                     alternativeText
