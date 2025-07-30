@@ -37,6 +37,7 @@ const CaseStudyDetail = () => {
     const hero = caseStudy.HeroBanner[0];
     const formTitle = caseStudy.FormTitle.CommonTitle[0];
     const pdf = caseStudy.CaseStudyPDF;
+    const formFields = caseStudy.FormFields;
 
     return (
         <div className='flex flex-col pt-[120px]'>
@@ -74,6 +75,10 @@ const CaseStudyDetail = () => {
                                     pdfName={pdf.name}
                                     submitUrl='/api/submit-form'
                                     sheetName='Sheet1'
+                                    NameLabel={formFields?.NameLable}
+                                    EmailLabel={formFields?.EmailLabel}
+                                    PhoneLabel={formFields?.PhoneLabel}
+                                    ButtonLabel={formFields?.ButtonLabel}
                                 />
                             </div>
                         </div>

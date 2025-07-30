@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
+import RichText from "../atom/richText";
 
 type DownloadFormProps = {
     title: string;
@@ -12,6 +13,10 @@ type DownloadFormProps = {
     pdfName?: string;
     sheetName: string;
     className?: string;
+    NameLabel: string;
+    EmailLabel: string;
+    PhoneLabel: string;
+    ButtonLabel: string;
 };
 
 const DownloadForm = ({
@@ -23,6 +28,10 @@ const DownloadForm = ({
     sheetName,
     redirectUrl,
     className = "",
+    NameLabel,
+    EmailLabel,
+    PhoneLabel,
+    ButtonLabel,
 }: DownloadFormProps) => {
     const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -81,14 +90,18 @@ const DownloadForm = ({
             className={`space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md lg:max-w-sm w-full ${className}`}
         >
             <h2 className='text-2xl font-semibold leading-tight mb-2'>{title}</h2>
-            {description && <p className='text-gray-600 mb-4'>{description}</p>}
+            {description && (
+                <div className='text-gray-600 mb-4'>
+                    <RichText html={description} />{" "}
+                </div>
+            )}
 
             <input
                 type='text'
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder='Full Name*'
+                placeholder={NameLabel || "Full Name*"}
                 className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
             />
 
@@ -97,7 +110,7 @@ const DownloadForm = ({
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder='Business Email*'
+                placeholder={EmailLabel || "Business Email*"}
                 className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
             />
 
@@ -106,7 +119,7 @@ const DownloadForm = ({
                 required
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                placeholder='Phone Number*'
+                placeholder={PhoneLabel || "Phone Number*"}
                 pattern='[0-9]{10,15}'
                 title='Please enter a valid phone number (10–15 digits only)'
                 className='w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400'
@@ -128,7 +141,7 @@ const DownloadForm = ({
                         Processing...
                     </span>
                 ) : (
-                    "Download"
+                    ButtonLabel || "Download"
                 )}
             </button>
         </form>
