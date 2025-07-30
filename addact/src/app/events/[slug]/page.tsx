@@ -42,6 +42,7 @@ const EventDetails = () => {
     const status = getEventStatus(eventData.EventBanner[0].PublishDate, "Event");
     const formTitle = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Title;
     const formDescription = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Description;
+    const formFields = eventDetailData.addactsEvents[0].contact_us_card;
 
     return (
         <div className='flex flex-col pt-[120px]'>
@@ -102,6 +103,11 @@ const EventDetails = () => {
                                     submitUrl='/api/submit-form'
                                     sheetName='Sheet1'
                                     redirectUrl={`${pathname}/event-form-thank-you`}
+                                    NameLabel={formFields?.NameLable}
+                                    EmailLabel={formFields?.EmailLabel}
+                                    PhoneLabel={formFields?.PhoneLabel}
+                                    ButtonLabel={formFields?.ButtonLabel}
+                                    RecipientEmails={formFields.RecipientEmails}
                                 />
                             </div>
                         </div>

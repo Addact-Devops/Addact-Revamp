@@ -33,6 +33,7 @@ const BrandGuidelinesPage = () => {
     const banner = brandGuideline.brandGuideline.HeroBanner.Banner[0];
     const formTitle = brandGuideline.brandGuideline.FromTitle;
     const pdf = brandGuideline.brandGuideline.GuidelinePDF;
+    const formFields = brandGuideline.brandGuideline.FormFileds;
 
     return (
         <div>
@@ -51,6 +52,11 @@ const BrandGuidelinesPage = () => {
                                     pdfUrl={pdf.url}
                                     submitUrl='/api/submit-form'
                                     sheetName='Brand-Guidelines'
+                                    NameLabel={formFields?.NameLable}
+                                    EmailLabel={formFields?.EmailLabel}
+                                    PhoneLabel={formFields?.PhoneLabel}
+                                    ButtonLabel={formFields?.ButtonLabel}
+                                    RecipientEmails={formFields.RecipientEmails}
                                 />
                             </div>
                         </div>
