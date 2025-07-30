@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllCaseStudyData, IAllCaseStudy } from "@/graphql/queries/getAllCaseStudy";
 import RichText from "@/components/atom/richText";
+import Loader from "@/components/atom/loader";
 
 const CaseStudyListing = () => {
     const [caseStudyBanner, setCaseStudyBanner] = useState<IAllCaseStudy["caseStudy"]>();
@@ -22,11 +23,7 @@ const CaseStudyListing = () => {
     }, []);
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!caseStudyListing) return <p className='p-6 text-red-600'>Case-Study List not found.</p>;

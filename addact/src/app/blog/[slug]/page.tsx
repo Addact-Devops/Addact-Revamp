@@ -9,6 +9,7 @@ import AuthorCard from "@/components/organisms/AuthorCard";
 import BlogContactCard from "@/components/organisms/BlogContactCard";
 import BlogDetailBanner from "@/components/organisms/BlogDetailBanner";
 import SimilarBlog from "@/components/organisms/SimilarBlogs";
+import Loader from "@/components/atom/loader";
 
 export default function BlogPage() {
     const { slug } = useParams();
@@ -35,22 +36,18 @@ export default function BlogPage() {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div className="flex justify-center items-center min-h-[50vh]">
-                <div className="w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin"></div>
-            </div>
-        );
+        return <Loader />;
     }
 
-    if (!blog) return <p className="p-6 text-red-600">Blog not found.</p>;
+    if (!blog) return <p className='p-6 text-red-600'>Blog not found.</p>;
 
     return (
-        <main className="blogdetail-wrapper bg-white">
+        <main className='blogdetail-wrapper bg-white'>
             {blog?.BlogBanner?.[0] && <BlogDetailBanner banner={blog.BlogBanner[0]} />}
 
-            <div className="container !mt-[70px] !mb-[70px]">
-                <div className="flex gap-[100px] max-[1400px]:gap-[50px] relative">
-                    <div className="w-[70%] max-[1300px]:w-[64%] max-[1200px]:w-[62%] max-[1120px]:w-[60%] max-[1101px]:w-[100%]">
+            <div className='container !mt-[70px] !mb-[70px]'>
+                <div className='flex gap-[100px] max-[1400px]:gap-[50px] relative'>
+                    <div className='w-[70%] max-[1300px]:w-[64%] max-[1200px]:w-[62%] max-[1120px]:w-[60%] max-[1101px]:w-[100%]'>
                         {Array.isArray(blog.BlogContent) ? (
                             <BlogContentRenderer blocks={blog.BlogContent} />
                         ) : (
@@ -61,7 +58,7 @@ export default function BlogPage() {
                     </div>
 
                     {windowWidth > 1100 && (
-                        <div className="w-[30%] sticky top-[120px] self-start z-[20]">
+                        <div className='w-[30%] sticky top-[120px] self-start z-[20]'>
                             <BlogContactCard card={blog.contactCard?.ContactCard?.[0]} />
                         </div>
                     )}
@@ -71,7 +68,7 @@ export default function BlogPage() {
             </div>
 
             {Array.isArray(blog?.socialicons) && blog.socialicons.length > 0 && windowWidth >= 992 && (
-                <div className="flex flex-col gap-[15px] fixed top-1/2 left-5 -translate-y-1/2 z-50">
+                <div className='flex flex-col gap-[15px] fixed top-1/2 left-5 -translate-y-1/2 z-50'>
                     {blog.socialicons.flatMap((item, i: number) => {
                         const icons = item?.SocialIcon ?? [];
 
@@ -110,18 +107,18 @@ export default function BlogPage() {
                                         href={link.href}
                                         target={link.target === "blank" ? "_blank" : link.target}
                                         rel={link.isExternal ? "noopener noreferrer" : undefined}
-                                        className="group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden"
+                                        className='group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden'
                                     >
                                         <img
                                             src={iconUrl}
                                             alt={icon.Icons?.alternativeText || icon.Title || ""}
-                                            className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
+                                            className='w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300'
                                         />
 
                                         <img
                                             src={hoverUrl}
                                             alt={icon.HoverIcon?.alternativeText || icon.Title || ""}
-                                            className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                            className='w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
                                         />
                                     </a>
                                 );

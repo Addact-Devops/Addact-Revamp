@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import RichText from "../atom/richText";
 import { getIndustriesWeServe, IndustriesResponse } from "@/graphql/queries/getIndustries";
+import Loader from "../atom/loader";
 
 export default function IndustriesWeServe() {
     const [data, setData] = useState<IndustriesResponse["industriesWeServes"][0] | null>(null);
@@ -24,12 +25,10 @@ export default function IndustriesWeServe() {
             });
     }, []);
 
-    if (loading)
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+    if (loading) {
+        return <Loader />;
+    }
+
     if (!data) return null;
 
     const { TitleDescription, Industries } = data;

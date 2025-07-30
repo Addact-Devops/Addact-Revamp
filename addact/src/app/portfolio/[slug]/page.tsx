@@ -7,6 +7,7 @@ import { CaseStudyBySlugResponse, getCaseStudyBySlug } from "@/graphql/queries/g
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
+import Loader from "@/components/atom/loader";
 
 const CaseStudyDetail = () => {
     const { slug } = useParams();
@@ -25,11 +26,7 @@ const CaseStudyDetail = () => {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!caseStudy) return <p className='p-6 text-red-600'>Case Study not found.</p>;
@@ -37,6 +34,7 @@ const CaseStudyDetail = () => {
     const hero = caseStudy.HeroBanner[0];
     const formTitle = caseStudy.FormTitle.CommonTitle[0];
     const pdf = caseStudy.CaseStudyPDF;
+    const formFields = caseStudy.FormFields;
 
     return (
         <div className='flex flex-col pt-[120px]'>
@@ -74,6 +72,11 @@ const CaseStudyDetail = () => {
                                     pdfName={pdf.name}
                                     submitUrl='/api/submit-form'
                                     sheetName='Sheet1'
+                                    NameLabel={formFields?.NameLable}
+                                    EmailLabel={formFields?.EmailLabel}
+                                    PhoneLabel={formFields?.PhoneLabel}
+                                    ButtonLabel={formFields?.ButtonLabel}
+                                    RecipientEmails={formFields?.RecipientEmails}
                                 />
                             </div>
                         </div>
