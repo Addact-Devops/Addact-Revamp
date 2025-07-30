@@ -48,14 +48,15 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        const recipientList = [
-            email, // user who submitted the form
-            ...RecipientEmails.split(",").map((e: string) => e.trim()), // other recipients
-        ];
+        const recipientList = RecipientEmails
+            ? RecipientEmails.split(",")
+                  .map((email: string) => email.trim())
+                  .filter(Boolean)
+            : [];
 
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
-            to: recipientList,
+            to: [email, ...recipientList],
             subject: "Thanks for Your Submission!",
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">

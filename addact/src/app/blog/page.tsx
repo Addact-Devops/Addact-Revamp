@@ -6,6 +6,7 @@ import Image from "next/image";
 import { getAllBlogs } from "@/graphql/queries/getAllBlog";
 import BlogHeroBanner from "@/components/organisms/BlogHeroBanner";
 import { useSearchParams, useRouter } from "next/navigation";
+import Loader from "@/components/atom/loader";
 
 type BlogType = {
     Slug: string;
@@ -111,11 +112,7 @@ function BlogListContent() {
     };
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     return (
