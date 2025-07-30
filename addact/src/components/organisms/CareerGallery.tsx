@@ -88,12 +88,12 @@ const CareerGallery = () => {
     ).sort((a, b) => b - a);
 
     return (
-        <section className="container">
+        <section className="container mt-[60px] md:mt-[100px]" id="life-at-addxp">
             <div className="text-[20px] text-[#3C4CFF] mb-[10px] md:mb-[23px] leading-[26px] font-[600] text-center">
                 {subtitle}
             </div>
 
-            <div className="text-[#000] font-[900] 2xl:mb-[60px] md:mb-[40px] text-[38px] xl:text-[70px] 2xl:text-[100px] text-center uppercase">
+            <div className="text-[#000] font-[900] 2xl:mb-[60px] md:mb-[40px] text-[33px] xl:text-[70px] 2xl:text-[100px] text-center uppercase">
                 {title}
             </div>
 
@@ -127,89 +127,91 @@ const CareerGallery = () => {
                     <div className="flex flex-col gap-4 md:flex-row md:justify-between items-center mb-[40px] mt-[40px] md:mt-0">
                         {/* Mobile Combined Filters + Arrows */}
                         <div className="md:hidden flex items-center justify-between w-full gap-2">
-                            {/* Category Dropdown */}
-                            <div className="relative w-1/2">
-                                <select
-                                    className="appearance-none border border-white rounded-[50px] px-4 py-2 pr-10 text-sm text-white font-semibold bg-[#3C4CFF] w-full"
-                                    value={activeCategory}
-                                    onChange={(e) => setActiveCategory(e.target.value)}
-                                    onClick={() => setIsCategoryOpen((prev) => !prev)}
-                                    onBlur={() => setTimeout(() => setIsCategoryOpen(false), 150)}
-                                >
-                                    <option value="Addact" className="bg-[white] text-[#3C4CFF]">
-                                        Addact
-                                    </option>
-                                    {categories.map((cat, idx) => (
-                                        <option key={idx} value={cat.Name} className="text-[#3C4CFF] bg-white">
-                                            {cat.Name}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div
-                                    className={`pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-white transition-transform duration-200 ${
-                                        isCategoryOpen ? "rotate-180" : ""
-                                    }`}
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
+                            <div className="flex gap-[8px]">
+                                {/* Category Dropdown */}
+                                <div className="relative w-1/2">
+                                    <select
+                                        className="appearance-none border border-white rounded-[50px] px-4 py-2 pr-10 text-[12px] text-white font-semibold bg-[#3C4CFF] w-full"
+                                        value={activeCategory}
+                                        onChange={(e) => setActiveCategory(e.target.value)}
+                                        onClick={() => setIsCategoryOpen((prev) => !prev)}
+                                        onBlur={() => setTimeout(() => setIsCategoryOpen(false), 150)}
                                     >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                    </svg>
-                                </div>
-                            </div>
-
-                            {/* Year Dropdown */}
-                            <div className="relative w-1/2">
-                                <select
-                                    className="appearance-none border border-blue-600 rounded-[50px] px-4 py-2 pr-10 text-sm text-white font-semibold bg-[#3C4CFF] w-full"
-                                    value={selectedYear}
-                                    onChange={(e) => setSelectedYear(e.target.value)}
-                                    onClick={() => setIsOpen((prev) => !prev)}
-                                    onBlur={() => setTimeout(() => setIsOpen(false), 150)}
-                                >
-                                    <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value="All">
-                                        All
-                                    </option>
-                                    {allYears.map((year, idx) => (
-                                        <option
-                                            key={idx}
-                                            value={String(year)}
-                                            style={{ backgroundColor: "white", color: "#3C4CFF" }}
+                                        <option value="Addact" className="bg-[white] text-[#3C4CFF]">
+                                            Addact
+                                        </option>
+                                        {categories.map((cat, idx) => (
+                                            <option key={idx} value={cat.Name} className="text-[#3C4CFF] bg-white">
+                                                {cat.Name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div
+                                        className={`pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-white transition-transform duration-200 ${
+                                            isCategoryOpen ? "rotate-180" : ""
+                                        }`}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            strokeWidth={2}
                                         >
-                                            {year}
-                                        </option>
-                                    ))}
-                                </select>
-                                <div
-                                    className={`pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-white transition-transform duration-200 ${
-                                        isOpen ? "rotate-180" : ""
-                                    }`}
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="16"
-                                        height="16"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                        strokeWidth={2}
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
+                                </div>
+
+                                {/* Year Dropdown */}
+                                <div className="relative w-1/2">
+                                    <select
+                                        className="appearance-none border border-blue-600 rounded-[50px] px-4 py-2 pr-10 text-[12px] md:text-[20px] text-white font-semibold bg-[#3C4CFF] w-full"
+                                        value={selectedYear}
+                                        onChange={(e) => setSelectedYear(e.target.value)}
+                                        onClick={() => setIsOpen((prev) => !prev)}
+                                        onBlur={() => setTimeout(() => setIsOpen(false), 150)}
                                     >
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                                    </svg>
+                                        <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value="All">
+                                            All
+                                        </option>
+                                        {allYears.map((year, idx) => (
+                                            <option
+                                                key={idx}
+                                                value={String(year)}
+                                                style={{ backgroundColor: "white", color: "#3C4CFF" }}
+                                            >
+                                                {year}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div
+                                        className={`pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-white transition-transform duration-200 ${
+                                            isOpen ? "rotate-180" : ""
+                                        }`}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            strokeWidth={2}
+                                        >
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                                        </svg>
+                                    </div>
                                 </div>
                             </div>
 
                             {/* Arrows */}
-                            <div className="flex gap-2">
+                            <div className="flex gap-[8px] xl:gap-[12px]">
                                 <button
                                     onClick={() => sliderRef.current?.slickPrev()}
-                                    className="w-9 h-9 border border-blue-600 rounded-full flex items-center justify-center text-blue-600"
+                                    className="w-[30px] xl:w-[48px] h-[30px] xl:h-[48px] border border-blue-600 rounded-full flex items-center justify-center text-blue-600 p-[11px] xl:p-0"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -227,7 +229,7 @@ const CareerGallery = () => {
                                 </button>
                                 <button
                                     onClick={() => sliderRef.current?.slickNext()}
-                                    className="w-9 h-9 border border-blue-600 rounded-full flex items-center justify-center text-blue-600"
+                                    className="w-[30px] xl:w-[48px] h-[30px] xl:h-[48px] border border-blue-600 rounded-full flex items-center justify-center text-blue-600 p-[11px] xl:p-0"
                                 >
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
