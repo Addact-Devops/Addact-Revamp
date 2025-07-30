@@ -107,6 +107,7 @@ const EventDetails = () => {
                                     EmailLabel={formFields?.EmailLabel}
                                     PhoneLabel={formFields?.PhoneLabel}
                                     ButtonLabel={formFields?.ButtonLabel}
+                                    RecipientEmails={formFields.RecipientEmails}
                                 />
                             </div>
                         </div>

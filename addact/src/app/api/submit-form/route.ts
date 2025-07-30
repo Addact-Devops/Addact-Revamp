@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { name, email, phone, sheetName } = body;
+        const { name, email, phone, sheetName, RecipientEmails } = body;
 
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
@@ -48,9 +48,14 @@ export async function POST(req: NextRequest) {
             },
         });
 
+        const recipientList = [
+            email, // user who submitted the form
+            ...RecipientEmails.split(",").map((e: string) => e.trim()), // other recipients
+        ];
+
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
-            to: [email, "divyesh@addact.net"],
+            to: recipientList,
             subject: "Thanks for Your Submission!",
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">

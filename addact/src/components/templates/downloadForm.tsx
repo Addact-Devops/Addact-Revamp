@@ -17,6 +17,7 @@ type DownloadFormProps = {
     EmailLabel: string;
     PhoneLabel: string;
     ButtonLabel: string;
+    RecipientEmails: string;
 };
 
 const DownloadForm = ({
@@ -32,6 +33,7 @@ const DownloadForm = ({
     EmailLabel,
     PhoneLabel,
     ButtonLabel,
+    RecipientEmails,
 }: DownloadFormProps) => {
     const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -54,6 +56,7 @@ const DownloadForm = ({
                 body: JSON.stringify({
                     ...formData,
                     sheetName,
+                    RecipientEmails,
                 }),
             });
 
