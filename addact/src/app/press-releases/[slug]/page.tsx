@@ -7,6 +7,7 @@ import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import { getPressReleaseDetailBySlug, PressReleaseDetailResponse } from "@/graphql/queries/getPressReleaseDetail";
 import { getRecentPressRelease, RecentPressRelease } from "@/graphql/queries/getRecentPressRelease";
 import "../../../styles/components/caseStudy-detail.scss";
+import Loader from "@/components/atom/loader";
 
 const PressReleaseDetails = () => {
     const { slug } = useParams();
@@ -31,11 +32,7 @@ const PressReleaseDetails = () => {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!pressReleaseData) return <p className='p-6 text-red-600'>Press Release Details not found.</p>;

@@ -8,6 +8,7 @@ import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import { getWebinarDetailBySlug, WebinarDetailResponse } from "@/graphql/queries/getWebinarDetail";
 import { getEventStatus } from "@/utils/getEventStatus";
 import "../../../styles/components/caseStudy-detail.scss";
+import Loader from "@/components/atom/loader";
 
 const WebinarDetails = () => {
     const { slug } = useParams();
@@ -26,11 +27,7 @@ const WebinarDetails = () => {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!webinarDetailData) return <p className='p-6 text-red-600'>Event Details not found.</p>;

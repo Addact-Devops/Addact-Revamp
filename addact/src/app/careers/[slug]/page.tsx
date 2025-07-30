@@ -6,6 +6,7 @@ import { CareerDetailResponse, getCareerDetailsData } from "@/graphql/queries/ge
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../../styles/components/caseStudy-detail.scss";
 import HeroBanner from "@/components/organisms/HeroBanner";
+import Loader from "@/components/atom/loader";
 
 const CareerDetail = () => {
     const { slug } = useParams();
@@ -26,11 +27,7 @@ const CareerDetail = () => {
     const bannerData = careerDetailData?.Banner?.[0];
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!careerDetailData) return <p className='p-6 text-red-600'>Career Details not found.</p>;
