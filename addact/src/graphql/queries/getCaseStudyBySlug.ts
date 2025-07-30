@@ -112,6 +112,13 @@ const GET_CASE_STUDY_BY_SLUG = gql`
                 name
                 height
             }
+            FormFields {
+                NameLable
+                EmailLabel
+                PhoneLabel
+                ButtonLabel
+                RecipientEmails
+            }
         }
     }
 `;
@@ -154,6 +161,13 @@ export type CaseStudyBySlugResponse = {
             width: string;
             name: string;
             height: string;
+        };
+        FormFields: {
+            NameLable: string;
+            EmailLabel: string;
+            PhoneLabel: string;
+            ButtonLabel: string;
+            RecipientEmails: string;
         };
     }[];
 };

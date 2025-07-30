@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
     try {
@@ -9,6 +10,10 @@ export async function POST(req: NextRequest) {
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
         const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+
+        const smtpHost = process.env.SMTP_HOST;
+        const smtpUser = process.env.SMTP_USER;
+        const smtpPass = process.env.SMTP_PASS;
 
         if (!clientEmail || !privateKey || !spreadsheetId) {
             return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
@@ -30,6 +35,36 @@ export async function POST(req: NextRequest) {
             requestBody: {
                 values: [[name, email, phone, new Date().toISOString()]],
             },
+        });
+
+        // Send Email
+        const transporter = nodemailer.createTransport({
+            host: smtpHost,
+            port: 587,
+            secure: false,
+            auth: {
+                user: smtpUser,
+                pass: smtpPass,
+            },
+        });
+
+        await transporter.sendMail({
+            from: `"Addact Technologies" <info@addact.net>`,
+            to: [email, "divyesh@addact.net"],
+            subject: "Thanks for Your Submission!",
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
+                    <h2 style="color: #1470af;">Thank you, ${name}!</h2>
+                    <p>We’ve received your submission with the following details:</p>
+                    <ul>
+                        <li><strong>Name:</strong> ${name}</li>
+                        <li><strong>Email:</strong> ${email}</li>
+                        <li><strong>Phone:</strong> ${phone}</li>
+                    </ul>
+                    <p>We'll get back to you shortly.</p>
+                    <p style="margin-top: 30px; font-size: 12px; color: #888;">© ${new Date().getFullYear()} Addact Technologies. All rights reserved.</p>
+                </div>
+            `,
         });
 
         return NextResponse.json({ message: "Success" });
