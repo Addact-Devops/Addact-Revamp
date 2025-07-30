@@ -6,6 +6,7 @@ import Image from "next/image";
 import { getAllBlogs } from "@/graphql/queries/getAllBlog";
 import BlogHeroBanner from "@/components/organisms/BlogHeroBanner";
 import { useSearchParams, useRouter } from "next/navigation";
+import Loader from "@/components/atom/loader";
 
 type BlogType = {
     Slug: string;
@@ -111,11 +112,7 @@ function BlogListContent() {
     };
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     return (
@@ -127,10 +124,10 @@ function BlogListContent() {
                 setSelectedCategory={setSelectedCategory}
             />
 
-            <div className='container'>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]'>
+            <div className="container">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
                     {currentBlogs.length === 0 && (
-                        <p className='text-white !text-[35px] font-semibold col-span-full text-center'>
+                        <p className="text-white !text-[35px] font-semibold col-span-full text-center">
                             {searchText.trim()
                                 ? `No blogs found for "${searchText}"`
                                 : selectedCategory !== "All Blogs"
@@ -156,10 +153,10 @@ function BlogListContent() {
                         const category = typeof rawCategory === "string" ? rawCategory.trim() : "General";
 
                         return (
-                            <Link key={blog.Slug} href={blogLink} className='group'>
-                                <div className='bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer'>
+                            <Link key={blog.Slug} href={blogLink} className="group">
+                                <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
                                     {imageUrl && (
-                                        <div className='relative rounded-xl overflow-hidden mb-4'>
+                                        <div className="relative rounded-xl overflow-hidden mb-4">
                                             <Image
                                                 src={imageUrl}
                                                 alt={
@@ -169,21 +166,21 @@ function BlogListContent() {
                                                 }
                                                 width={600}
                                                 height={400}
-                                                className='w-full object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105'
+                                                className="w-full object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
                                             />
-                                            <div className='absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+                                            <div className="absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         </div>
                                     )}
 
-                                    <div className='inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium'>
+                                    <div className="inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium">
                                         {category}
                                     </div>
 
-                                    <h2 className='text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]'>
+                                    <h2 className="text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]">
                                         {title}
                                     </h2>
 
-                                    <p className='text-[#3C4CFF] font-bold'>{author}</p>
+                                    <p className="text-[#3C4CFF] font-bold">{author}</p>
                                 </div>
                             </Link>
                         );
@@ -191,9 +188,9 @@ function BlogListContent() {
                 </div>
 
                 {totalPages > 1 && (
-                    <div className='flex justify-center items-center gap-2 mt-10 flex-wrap text-white'>
+                    <div className="flex justify-center items-center gap-2 mt-10 flex-wrap text-white mb-[60px] md:mb-[100px]">
                         <button
-                            className='px-3 py-2 bg-gray-800 rounded disabled:opacity-50'
+                            className="px-3 py-2 bg-gray-800 rounded disabled:opacity-50"
                             onClick={() => goToPage(Math.max(currentPage - 1, 1))}
                             disabled={currentPage === 1}
                         >
@@ -216,7 +213,7 @@ function BlogListContent() {
 
                         {currentPage < totalPages - 1 && (
                             <>
-                                {currentPage < totalPages - 2 && <span className='px-2'>...</span>}
+                                {currentPage < totalPages - 2 && <span className="px-2">...</span>}
                                 <button
                                     className={`px-3 py-2 rounded ${
                                         currentPage === totalPages ? "bg-[#3C4CFF]" : "bg-gray-700"
@@ -229,7 +226,7 @@ function BlogListContent() {
                         )}
 
                         <button
-                            className='px-3 py-2 bg-gray-800 rounded disabled:opacity-50'
+                            className="px-3 py-2 bg-gray-800 rounded disabled:opacity-50"
                             onClick={() => goToPage(Math.min(currentPage + 1, totalPages))}
                             disabled={currentPage === totalPages}
                         >
@@ -244,8 +241,8 @@ function BlogListContent() {
 
 export default function BlogListPage() {
     return (
-        <main className='bg-[#0E0D0D]'>
-            <Suspense fallback={<div className='text-white text-center py-10'>Loading...</div>}>
+        <main className="bg-[#0E0D0D]">
+            <Suspense fallback={<div className="text-white text-center py-10">Loading...</div>}>
                 <BlogListContent />
             </Suspense>
         </main>

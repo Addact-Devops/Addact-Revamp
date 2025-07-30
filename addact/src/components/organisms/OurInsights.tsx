@@ -177,7 +177,7 @@ function InsightCard({ item, big = false }: InsightCardProps) {
             </div>
 
             <div className='mt-auto self-end'>
-                <Link href={item?.link} target='_blank'>
+                <Link href={item?.link} target='_self'>
                     <div className='group w-14 h-14 bg-blue-600 text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16'>
                         <RightArrowUpIcon className='transition-transform duration-300 group-hover:scale-110' />
                     </div>

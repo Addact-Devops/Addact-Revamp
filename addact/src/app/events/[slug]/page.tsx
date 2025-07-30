@@ -9,6 +9,7 @@ import { EventDetailResponse, getEventDetailBySlug } from "@/graphql/queries/get
 import { getEventStatus } from "@/utils/getEventStatus";
 import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
+import Loader from "@/components/atom/loader";
 
 const EventDetails = () => {
     const { slug } = useParams();
@@ -29,11 +30,7 @@ const EventDetails = () => {
     }, [slug]);
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!eventDetailData) return <p className='p-6 text-red-600'>Event Details not found.</p>;
@@ -42,6 +39,7 @@ const EventDetails = () => {
     const status = getEventStatus(eventData.EventBanner[0].PublishDate, "Event");
     const formTitle = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Title;
     const formDescription = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Description;
+    const formFields = eventDetailData.addactsEvents[0].contact_us_card;
 
     return (
         <div className='flex flex-col pt-[120px]'>
@@ -102,6 +100,11 @@ const EventDetails = () => {
                                     submitUrl='/api/submit-form'
                                     sheetName='Sheet1'
                                     redirectUrl={`${pathname}/event-form-thank-you`}
+                                    NameLabel={formFields?.NameLable}
+                                    EmailLabel={formFields?.EmailLabel}
+                                    PhoneLabel={formFields?.PhoneLabel}
+                                    ButtonLabel={formFields?.ButtonLabel}
+                                    RecipientEmails={formFields?.RecipientEmails}
                                 />
                             </div>
                         </div>

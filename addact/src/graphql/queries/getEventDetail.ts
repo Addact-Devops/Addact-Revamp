@@ -77,6 +77,8 @@ const GET_EVENT_DETAIL_PAGE = gql`
                 EmailLabel
                 NameLable
                 RequirementsLabel
+                RecipientEmails
+                PhoneLabel
                 Form {
                     ... on ComponentBaseTemplatePromo {
                         Title
@@ -107,6 +109,8 @@ export interface EventDetailResponse {
             EmailLabel: string;
             NameLable: string;
             RequirementsLabel: string;
+            RecipientEmails: string;
+            PhoneLabel: string;
             Form: {
                 Title: string;
                 Description: string;

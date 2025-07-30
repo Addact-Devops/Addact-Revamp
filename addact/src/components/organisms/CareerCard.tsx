@@ -35,7 +35,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
     type TagName = (typeof allowedTags)[number];
 
     return (
-        <section>
+        <section id="perks">
             <div className="container mx-auto my-[60px] sm:my-[100px]">
                 {/* Section Titles */}
                 {title.map((block) => {
@@ -75,14 +75,14 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                             >
                                 {/* Title + Icon */}
                                 <div className="relative mb-[15px] ">
-                                    <div className="text-[22px] sm:text-[18px] 2xl:text-[22px] font-semibold text-black inline">
+                                    <div className="sm:text-[18px] xl:text-[22px] 2xl:text-[22px] font-semibold text-black inline">
                                         {card.Title}
                                     </div>
                                     {card.Image?.url && (
                                         <img
                                             src={card.Image.url}
                                             alt={card.Image.alternativeText || ""}
-                                            className="inline ml-[10px]"
+                                            className="inline ml-[10px] w-[20px] md:w-[25px]"
                                         />
                                     )}
                                 </div>

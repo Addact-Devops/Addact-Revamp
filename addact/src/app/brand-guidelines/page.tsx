@@ -6,6 +6,7 @@ import { BrandGuidelinesResponse, getBrandGuidelines } from "@/graphql/queries/g
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../styles/components/caseStudy-detail.scss";
 import DownloadForm from "@/components/templates/downloadForm";
+import Loader from "@/components/atom/loader";
 
 const BrandGuidelinesPage = () => {
     const [brandGuideline, setBrandGuideline] = useState<BrandGuidelinesResponse>();
@@ -21,11 +22,7 @@ const BrandGuidelinesPage = () => {
     }, []);
 
     if (loading) {
-        return (
-            <div className='flex justify-center items-center min-h-[50vh]'>
-                <div className='w-12 h-12 border-4 border-t-transparent border-red-500 rounded-full animate-spin'></div>
-            </div>
-        );
+        return <Loader />;
     }
 
     if (!brandGuideline) return <p className='p-6 text-red-600'>Brand Guidelines not found.</p>;
@@ -33,6 +30,7 @@ const BrandGuidelinesPage = () => {
     const banner = brandGuideline.brandGuideline.HeroBanner.Banner[0];
     const formTitle = brandGuideline.brandGuideline.FromTitle;
     const pdf = brandGuideline.brandGuideline.GuidelinePDF;
+    const formFields = brandGuideline.brandGuideline.FormFileds;
 
     return (
         <div>
@@ -51,6 +49,11 @@ const BrandGuidelinesPage = () => {
                                     pdfUrl={pdf.url}
                                     submitUrl='/api/submit-form'
                                     sheetName='Brand-Guidelines'
+                                    NameLabel={formFields?.NameLable}
+                                    EmailLabel={formFields?.EmailLabel}
+                                    PhoneLabel={formFields?.PhoneLabel}
+                                    ButtonLabel={formFields?.ButtonLabel}
+                                    RecipientEmails={formFields?.RecipientEmails}
                                 />
                             </div>
                         </div>
