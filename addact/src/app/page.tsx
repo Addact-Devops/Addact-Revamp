@@ -11,6 +11,7 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import ContactUs from "@/components/organisms/ContactUs";
 import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
+import GlobeAnimation from "@/components/organisms/GlobeAnimation";
 
 export default async function HomePage() {
     const homeResponse = await getHOmePageData();
@@ -28,6 +29,7 @@ export default async function HomePage() {
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
+            <GlobeAnimation data={homeData?.GlobeAnimation} />
             <ContactUs data={homeData?.contactus} />
         </main>
     );
