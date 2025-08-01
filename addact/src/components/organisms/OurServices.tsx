@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import RichText from "../atom/richText";
 import { OURSERVICES } from "@/graphql/queries/getHomePage";
@@ -19,11 +18,9 @@ const OurServices = ({ data }: IProps) => {
                     <section>
                         <div className='mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6  mt-10 sm:mt-14 lg:mt-24'>
                             {data.GlobalCard.map((service) => (
-                                <Link
+                                <div
                                     className='bg-[#1C1C1C] border border-transparent text-white p-7 hover:border-[#3c4cff]'
                                     key={service.id}
-                                    href={service.Link.href}
-                                    target={service.Link?.isExternal ? "_blank" : "_self"}
                                 >
                                     {service?.Image?.url && (
                                         <Image
@@ -36,7 +33,7 @@ const OurServices = ({ data }: IProps) => {
 
                                     <h3 className='text-lg lg:text-3xl my-7'>{service.Title}</h3>
                                     <RichText html={service.Description} />
-                                </Link>
+                                </div>
                             ))}
                         </div>
                     </section>
