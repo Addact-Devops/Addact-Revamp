@@ -208,6 +208,17 @@ const GET_HOME_PAGE = gql`
                     }
                 }
             }
+            GlobeAnimation {
+                Title
+                Locations
+                Video {
+                    alternativeText
+                    url
+                    name
+                    width
+                    height
+                }
+            }
         }
     }
 `;
@@ -304,7 +315,11 @@ export interface Faq {
         id?: string;
     }[];
 }
-
+export interface GloabeAnimation {
+    Title: string;
+    Locations: string;
+    Video: Image;
+}
 // Main interface
 export interface HomeItems {
     documentId: string;
@@ -318,6 +333,7 @@ export interface HomeItems {
     contactus: CONTACTUS;
     whyaddact: Whyaddact;
     faq: Faq;
+    GlobeAnimation: GloabeAnimation;
 }
 
 export interface HomeResponse {

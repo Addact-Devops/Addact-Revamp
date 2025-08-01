@@ -70,7 +70,7 @@ export default function ContactUsForm({ ContactUsFormBlock }: ContactUsFormProps
 
     return (
         <section
-            className="container !px-0 md:px-[25px] pb-[60px] lg:pb-[100px] mt-[60px] lg:mt-[100px]"
+            className="container !px-0 md:!px-[25px] pb-[60px] lg:pb-[100px] mt-[60px] lg:mt-[100px]"
             id="contact-page-form"
         >
             <div className="flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-md">

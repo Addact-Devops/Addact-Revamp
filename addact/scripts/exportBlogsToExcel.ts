@@ -1,7 +1,7 @@
 import ExcelJS from "exceljs";
 import { gql, request } from "graphql-request";
 
-const GRAPHQL_ENDPOINT = "https://uatcms.addact.net/graphql";
+const GRAPHQL_ENDPOINT = "https://uatcms.addact.net:9443/graphql";
 const SITE_BASE_URL = "https://addact-revamp.vercel.app/blog"; // Adjust your base URL if needed
 
 const GET_ALL_BLOGS = gql`

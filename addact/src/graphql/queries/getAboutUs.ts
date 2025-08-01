@@ -109,7 +109,7 @@ export type AboutUsContentData = {
         AboutUsContent: {
             SubTitle: string;
             Title: string;
-            Content: ParagraphBlock[];
+            Description: string;
             Image: {
                 url: string;
                 alternativeText?: string | null;
@@ -124,7 +124,7 @@ const aboutContentQuery = gql`
             AboutUsContent {
                 SubTitle
                 Title
-                Content
+                Description
                 Image {
                     url
                     alternativeText
