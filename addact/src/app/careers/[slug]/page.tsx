@@ -30,7 +30,7 @@ const CareerDetail = () => {
         return <Loader />;
     }
 
-    if (!careerDetailData) return <p className='p-6 text-red-600'>Career Details not found.</p>;
+    if (!careerDetailData) return <p className='p-6 text-red-600 mt-32'>Career Details not found.</p>;
 
     return (
         <div>

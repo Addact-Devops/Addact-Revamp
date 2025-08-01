@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { Image, Link } from "@/types/common";
 
 const GET_CAREER_DETAIL = gql`
     query careerDetailBySlug($filters: CareerDetailFiltersInput) {
@@ -79,42 +80,9 @@ const GET_CAREER_DETAIL = gql`
 
             Slug
             ReferenceTitle
-            upload_form {
-                Email
-                FirstName
-                HyperLink
-                LastName
-                LeftSideContent {
-                    id
-                    Titel
-                    Description
-                    Iamge {
-                        alternativeText
-                        height
-                        name
-                        url
-                        width
-                    }
-                }
-                PhoneNumber
-                RefranceTitle
-                ResumePath
-                RightHeadContent {
-                    Description
+            careers_form {
+                LeftInsights {
                     Title
-                    id
-                }
-                RightHeadUploadResume {
-                    Description
-                    Title
-                    UploadResume {
-                        alternativeText
-                        url
-                        name
-                    }
-                    id
-                }
-                RightSideContent {
                     Description
                     Image {
                         alternativeText
@@ -123,29 +91,35 @@ const GET_CAREER_DETAIL = gql`
                         url
                         width
                     }
-                    Titel
-                    id
+                }
+                FormFields {
+                    Form {
+                        ... on ComponentBaseTemplatePromo {
+                            Title
+                            Description
+                            Image {
+                                alternativeText
+                                height
+                                name
+                                url
+                                width
+                            }
+                            Link {
+                                label
+                            }
+                        }
+                    }
+                    NameLable
+                    EmailLabel
+                    PhoneLabel
+                    GeneralText
+                    RecipientEmails
+                    ButtonLabel
                 }
             }
         }
     }
 `;
-
-export interface Image {
-    alternativeText: string;
-    height: number;
-    name: string;
-    url: string;
-    width: number;
-}
-
-export interface Link {
-    id: string;
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-}
 
 export interface CareerDetailResponse {
     careerDetails: {
@@ -167,6 +141,27 @@ export interface CareerDetailResponse {
         }[];
         Slug: string;
         ReferenceTitle: string;
+        careers_form: {
+            LeftInsights: {
+                Title: string;
+                Description: string;
+                Image: Image;
+            };
+            FormFields: {
+                Form: {
+                    Title: string;
+                    Description: string;
+                    Image?: Image;
+                    Link?: Link;
+                }[];
+                NameLable: string;
+                EmailLabel: string;
+                PhoneLabel: string;
+                GeneralText: string;
+                RecipientEmails: string;
+                ButtonLabel: string;
+            };
+        };
     }[];
 }
 

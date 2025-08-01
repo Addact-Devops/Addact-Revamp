@@ -30,7 +30,7 @@ const WebinarDetails = () => {
         return <Loader />;
     }
 
-    if (!webinarDetailData) return <p className='p-6 text-red-600'>Event Details not found.</p>;
+    if (!webinarDetailData) return <p className='p-6 text-red-600 mt-32'>Event Details not found.</p>;
 
     const webinarData = webinarDetailData.addactWebinars[0].HeroBanner[0];
     const status = getEventStatus(webinarDetailData.addactWebinars[0].HeroBanner[0].PublishDate, "Webinar");

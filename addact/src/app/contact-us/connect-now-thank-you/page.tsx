@@ -6,13 +6,12 @@ import { getThankYouPageBySlug, ThankYouPageResponse } from "@/graphql/queries/g
 import Loader from "@/components/atom/loader";
 import RichText from "@/components/atom/richText";
 
-const EventThankYou = () => {
+const ConnectNowThankYou = () => {
     const router = useRouter();
 
     const [thankYouData, setThankYouData] = useState<ThankYouPageResponse>();
     const [loading, setLoading] = useState(true);
-
-    const pageName = "event-form-thank-you";
+    const pageName = "connect-now-thank-you";
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +28,7 @@ const EventThankYou = () => {
     }
 
     const { AnimationVideo } = thankYouData.thankyouPages[0];
-    const content = thankYouData.thankyouPages[0].Content;
+    const content = thankYouData.thankyouPages[0].Content[0];
 
     return (
         <div className='bg-white pt-[120px]'>
@@ -37,16 +36,16 @@ const EventThankYou = () => {
                 {/* Left Text Section */}
                 <div className='text-center md:text-left w-full'>
                     <h1 className='!text-4xl md:!text-6xl !font-extrabold text-gray-900 leading-tight mb-6'>
-                        {content[0].h1}
+                        {content.h1}
                     </h1>
-                    <div className='prose:!text-lg md:prose:!text-xl text-gray-700 mb-6'>
-                        {content[1].Richtext && <RichText html={content[1].Richtext} />}
+                    <div className='!text-lg md:!text-xl text-gray-700 mb-6'>
+                        {content.Richtext && <RichText html={content.Richtext} />}
                     </div>
                     <button
                         onClick={() => router.back()}
                         className='inline-block bg-[#6366f1] hover:bg-[#4f46e5] text-white font-semibold text-sm px-6 py-3 rounded-full transition'
                     >
-                        {content[2].label}
+                        {content.label}
                     </button>
                 </div>
 
@@ -73,4 +72,4 @@ const EventThankYou = () => {
     );
 };
 
-export default EventThankYou;
+export default ConnectNowThankYou;
