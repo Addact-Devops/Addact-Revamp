@@ -6,13 +6,12 @@ import { getThankYouPageBySlug, ThankYouPageResponse } from "@/graphql/queries/g
 import Loader from "@/components/atom/loader";
 import RichText from "@/components/atom/richText";
 
-const EventThankYou = () => {
+const ConnectNowThankYou = () => {
     const router = useRouter();
 
     const [thankYouData, setThankYouData] = useState<ThankYouPageResponse>();
     const [loading, setLoading] = useState(true);
-
-    const pageName = "event-form-thank-you";
+    const pageName = "connect-now-thank-you";
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,7 +38,7 @@ const EventThankYou = () => {
                     <h1 className='!text-4xl md:!text-6xl !font-extrabold text-gray-900 leading-tight mb-6'>
                         {content[0].h1}
                     </h1>
-                    <div className='prose:!text-lg md:prose:!text-xl text-gray-700 mb-6'>
+                    <div className='!text-lg md:!text-xl text-gray-700 mb-6'>
                         {content[1].Richtext && <RichText html={content[1].Richtext} />}
                     </div>
                     <button
@@ -73,4 +72,4 @@ const EventThankYou = () => {
     );
 };
 
-export default EventThankYou;
+export default ConnectNowThankYou;

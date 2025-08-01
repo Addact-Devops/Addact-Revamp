@@ -39,7 +39,7 @@ export default function BlogPage() {
         return <Loader />;
     }
 
-    if (!blog) return <p className='p-6 text-red-600'>Blog not found.</p>;
+    if (!blog) return <p className='p-6 text-red-600 mt-32'>Blog not found.</p>;
 
     return (
         <main className='blogdetail-wrapper bg-white'>

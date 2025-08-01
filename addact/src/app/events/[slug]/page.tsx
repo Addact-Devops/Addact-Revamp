@@ -33,7 +33,7 @@ const EventDetails = () => {
         return <Loader />;
     }
 
-    if (!eventDetailData) return <p className='p-6 text-red-600'>Event Details not found.</p>;
+    if (!eventDetailData) return <p className='p-6 text-red-600 mt-32'>Event Details not found.</p>;
 
     const eventData = eventDetailData?.addactsEvents[0];
     const status = getEventStatus(eventData.EventBanner[0].PublishDate, "Event");

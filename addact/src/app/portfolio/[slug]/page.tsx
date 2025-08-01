@@ -29,7 +29,7 @@ const CaseStudyDetail = () => {
         return <Loader />;
     }
 
-    if (!caseStudy) return <p className='p-6 text-red-600'>Case Study not found.</p>;
+    if (!caseStudy) return <p className='p-6 text-red-600 mt-32'>Case Study not found.</p>;
 
     const hero = caseStudy.HeroBanner[0];
     const formTitle = caseStudy.FormTitle.CommonTitle[0];

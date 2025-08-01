@@ -136,7 +136,7 @@ const DownloadForm = ({
 
             <button
                 type='submit'
-                className='w-full bg-[#f16565] cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-[#e45555] transition'
+                className='w-full bg-blue-600 cursor-pointer text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition'
             >
                 {submitting ? (
                     <span className='flex justify-center items-center gap-2'>
