@@ -118,6 +118,9 @@ p {
         font-size: pxToRem(34);
         line-height: lineHeightRatio(54, 34);
     }
+    &:not(:last-of-type) {
+        margin-bottom: 15px;
+    }
 }
 
 .text-15 {
