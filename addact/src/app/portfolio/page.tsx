@@ -26,7 +26,7 @@ const CaseStudyListing = () => {
         return <Loader />;
     }
 
-    if (!caseStudyListing) return <p className='p-6 text-red-600'>Case-Study List not found.</p>;
+    if (!caseStudyListing) return <p className='p-6 text-red-600 mt-32'>Case-Study List not found.</p>;
 
     return (
         <div className='pt-[120px]'>

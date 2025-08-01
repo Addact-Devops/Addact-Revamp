@@ -35,7 +35,7 @@ const PressReleaseDetails = () => {
         return <Loader />;
     }
 
-    if (!pressReleaseData) return <p className='p-6 text-red-600'>Press Release Details not found.</p>;
+    if (!pressReleaseData) return <p className='p-6 text-red-600 mt-32'>Press Release Details not found.</p>;
 
     const eventData = pressReleaseData.addactPressReleases[0];
 

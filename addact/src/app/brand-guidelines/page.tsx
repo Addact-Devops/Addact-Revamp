@@ -25,7 +25,7 @@ const BrandGuidelinesPage = () => {
         return <Loader />;
     }
 
-    if (!brandGuideline) return <p className='p-6 text-red-600'>Brand Guidelines not found.</p>;
+    if (!brandGuideline) return <p className='p-6 text-red-600 mt-32'>Brand Guidelines not found.</p>;
 
     const banner = brandGuideline.brandGuideline.HeroBanner.Banner[0];
     const formTitle = brandGuideline.brandGuideline.FromTitle;
