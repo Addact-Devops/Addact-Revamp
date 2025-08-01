@@ -28,7 +28,7 @@ const ConnectNowThankYou = () => {
     }
 
     const { AnimationVideo } = thankYouData.thankyouPages[0];
-    const content = thankYouData.thankyouPages[0].Content[0];
+    const content = thankYouData.thankyouPages[0].Content;
 
     return (
         <div className='bg-white pt-[120px]'>
@@ -36,16 +36,16 @@ const ConnectNowThankYou = () => {
                 {/* Left Text Section */}
                 <div className='text-center md:text-left w-full'>
                     <h1 className='!text-4xl md:!text-6xl !font-extrabold text-gray-900 leading-tight mb-6'>
-                        {content.h1}
+                        {content[0].h1}
                     </h1>
                     <div className='!text-lg md:!text-xl text-gray-700 mb-6'>
-                        {content.Richtext && <RichText html={content.Richtext} />}
+                        {content[1].Richtext && <RichText html={content[1].Richtext} />}
                     </div>
                     <button
                         onClick={() => router.back()}
                         className='inline-block bg-[#6366f1] hover:bg-[#4f46e5] text-white font-semibold text-sm px-6 py-3 rounded-full transition'
                     >
-                        {content.label}
+                        {content[2].label}
                     </button>
                 </div>
 
