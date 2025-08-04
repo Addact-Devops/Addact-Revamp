@@ -41,7 +41,7 @@ const CaseStudyDetail = () => {
             <section className="container relative w-full text-white overflow-hidden">
                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24">
                     <div>
-                        <p className="text-sm text-[#155dfc]">{hero.PublishDate}</p>
+                        <p className="text-sm text-[#155dfc] !font-medium">{hero.PublishDate}</p>
                         <h1 className="text-3xl md:text-5xl font-bold mt-2">{hero.BannerTitle}</h1>
                     </div>
                     <div className="relative aspect-[16/9] md:aspect-auto w-full h-60 md:h-auto">
@@ -77,6 +77,7 @@ const CaseStudyDetail = () => {
                                     PhoneLabel={formFields?.PhoneLabel}
                                     ButtonLabel={formFields?.ButtonLabel}
                                     RecipientEmails={formFields?.RecipientEmails}
+                                    pageTitle={`Case-Study-Details ${slug}`}
                                 />
                             </div>
                         </div>

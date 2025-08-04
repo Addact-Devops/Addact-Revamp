@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { CareerDetailResponse, getCareerDetailsData } from "@/graphql/queries/getCareerDetails";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../../styles/components/caseStudy-detail.scss";
@@ -10,6 +10,7 @@ import Loader from "@/components/atom/loader";
 
 const CareerDetail = () => {
     const { slug } = useParams();
+    const pathname = usePathname();
     const [careerDetailData, setCareerDetailData] = useState<CareerDetailResponse["careerDetails"][number]>();
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState({
@@ -20,6 +21,7 @@ const CareerDetail = () => {
     });
     const [resumeFile, setResumeFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const redirectUrl = `${pathname}/thank-you-career`;
 
     useEffect(() => {
         if (typeof slug === "string") {
@@ -43,28 +45,33 @@ const CareerDetail = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append("fullName", form.fullName);
-        formData.append("email", form.email);
-        formData.append("phone", form.phone);
-        formData.append("hyperlink", form.hyperlink);
-
-        if (resumeFile) {
-            formData.append("resume", resumeFile);
-        }
+        // if (resumeFile) {
+        //     formData.append("resume", resumeFile);
+        //     console.log("in");
+        // }
 
         try {
             const res = await fetch("/api/submit-career-form", {
                 method: "POST",
-                body: formData,
+                body: JSON.stringify({
+                    ...form,
+                    name: form.fullName,
+                    sheetName: "Sheet1",
+                    RecipientEmails: careerDetailData.careers_form.FormFields.RecipientEmails,
+                    pageTitle: "Careers",
+                }),
             });
 
+            const result = await res.json();
+
             if (res.ok) {
-                alert("Form submitted successfully!");
                 setForm({ fullName: "", email: "", phone: "", hyperlink: "" });
                 setResumeFile(null);
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
             } else {
-                alert("Submission failed.");
+                alert(result.error || "Submission failed.");
             }
         } catch (err) {
             console.error(err);
@@ -91,7 +98,7 @@ const CareerDetail = () => {
                     <div className='caseStudy-wrapper mt-16 text-black'>
                         <BlogContentRenderer blocks={careerDetailData.JobDescription} />
                     </div>
-                    <section id='form' className='bg-[#f4f4f4] py-10'>
+                    <section id='form' className='bg-[#f4f4f4] py-10 scroll-mt-20 md:scroll-mt-32'>
                         <div className='max-w-[1200px] mx-auto bg-white rounded-[20px] overflow-hidden flex flex-col md:flex-row shadow-lg'>
                             {/* Left Image Block */}
                             <div

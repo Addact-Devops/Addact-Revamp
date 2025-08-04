@@ -18,6 +18,7 @@ type DownloadFormProps = {
     PhoneLabel: string;
     ButtonLabel: string;
     RecipientEmails: string;
+    pageTitle: string;
 };
 
 const DownloadForm = ({
@@ -34,6 +35,7 @@ const DownloadForm = ({
     PhoneLabel,
     ButtonLabel,
     RecipientEmails,
+    pageTitle,
 }: DownloadFormProps) => {
     const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -57,6 +59,7 @@ const DownloadForm = ({
                     ...formData,
                     sheetName,
                     RecipientEmails,
+                    pageTitle,
                 }),
             });
 
