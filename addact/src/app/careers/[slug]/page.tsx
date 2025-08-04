@@ -98,7 +98,7 @@ const CareerDetail = () => {
                     <div className='caseStudy-wrapper mt-16 text-black'>
                         <BlogContentRenderer blocks={careerDetailData.JobDescription} />
                     </div>
-                    <section id='form' className='bg-[#f4f4f4] py-10'>
+                    <section id='form' className='bg-[#f4f4f4] py-10 scroll-mt-20 md:scroll-mt-32'>
                         <div className='max-w-[1200px] mx-auto bg-white rounded-[20px] overflow-hidden flex flex-col md:flex-row shadow-lg'>
                             {/* Left Image Block */}
                             <div
