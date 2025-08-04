@@ -1,4 +1,3 @@
-// graphql/queries/getAllBlog.ts
 import { gql } from "graphql-request";
 import client from "../client";
 
