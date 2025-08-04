@@ -48,12 +48,13 @@ const BrandGuidelinesPage = () => {
                                     title={formTitle}
                                     pdfUrl={pdf.url}
                                     submitUrl='/api/submit-form'
-                                    sheetName='Brand-Guidelines'
+                                    sheetName='Sheet1'
                                     NameLabel={formFields?.NameLable}
                                     EmailLabel={formFields?.EmailLabel}
                                     PhoneLabel={formFields?.PhoneLabel}
                                     ButtonLabel={formFields?.ButtonLabel}
                                     RecipientEmails={formFields?.RecipientEmails}
+                                    pageTitle='Brand-Guidelines'
                                 />
                             </div>
                         </div>

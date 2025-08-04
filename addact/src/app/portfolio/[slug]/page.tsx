@@ -77,6 +77,7 @@ const CaseStudyDetail = () => {
                                     PhoneLabel={formFields?.PhoneLabel}
                                     ButtonLabel={formFields?.ButtonLabel}
                                     RecipientEmails={formFields?.RecipientEmails}
+                                    pageTitle={`Case-Study-Details ${slug}`}
                                 />
                             </div>
                         </div>
