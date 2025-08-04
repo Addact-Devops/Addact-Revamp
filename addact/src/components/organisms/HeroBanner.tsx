@@ -18,6 +18,16 @@ type HeroBannerProps = {
 const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchorLinks = false }: HeroBannerProps) => {
     const pathname = usePathname(); // ✅ get current path
 
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+        e.preventDefault();
+        const el = document.getElementById(id);
+        if (el) {
+            const yOffset = -130; // Adjust for sticky header height
+            const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+        }
+    };
+
     return (
         <section className='relative text-white overflow-hidden'>
             {/* Background Image */}
@@ -73,22 +83,42 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                     <div className='container absolute bottom-[14px] left-0 hidden lg:flex flex-wrap gap-[50px] justify-start text-white text-[16px] sm:text-base font-medium custom-links'>
                         {pathname === "/careers" ? (
                             <>
-                                <a href='#perks'>Perks</a>
-                                <a href='#open-positions'>Open positions</a>
-                                <a href='#life-at-addxp'>Life at Addxp</a>
+                                <a href='#perks' onClick={(e) => handleScroll(e, "perks")}>
+                                    Perks
+                                </a>
+                                <a href='#open-positions' onClick={(e) => handleScroll(e, "open-positions")}>
+                                    Open positions
+                                </a>
+                                <a href='#life-at-addxp' onClick={(e) => handleScroll(e, "life-at-addxp")}>
+                                    Life at Addxp
+                                </a>
                             </>
                         ) : pathname === "/about-us" ? (
                             <>
-                                <a href='#overview'>Overview</a>
-                                <a href='#vision-mission'>Vision & Mission</a>
-                                <a href='#brand-values'>Brand Values</a>
-                                <a href='#who-we-are'>Who are we</a>
+                                <a href='#overview' onClick={(e) => handleScroll(e, "overview")}>
+                                    Overview
+                                </a>
+                                <a href='#vision-mission' onClick={(e) => handleScroll(e, "vision-mission")}>
+                                    Vision & Mission
+                                </a>
+                                <a href='#brand-values' onClick={(e) => handleScroll(e, "brand-values")}>
+                                    Brand Values
+                                </a>
+                                <a href='#who-we-are' onClick={(e) => handleScroll(e, "who-we-are")}>
+                                    Who are we
+                                </a>
                             </>
                         ) : pathname === "/contact-us" ? (
                             <>
-                                <a href='#weekday-component'>Availability</a>
-                                <a href='#maps-component'>Our offices</a>
-                                <a href='#contact-page-form'>Get in touch</a>
+                                <a href='#weekday-component' onClick={(e) => handleScroll(e, "weekday-component")}>
+                                    Availability
+                                </a>
+                                <a href='#maps-component' onClick={(e) => handleScroll(e, "maps-component")}>
+                                    Our offices
+                                </a>
+                                <a href='#contact-page-form' onClick={(e) => handleScroll(e, "contact-page-form")}>
+                                    Get in touch
+                                </a>
                             </>
                         ) : null}
 
