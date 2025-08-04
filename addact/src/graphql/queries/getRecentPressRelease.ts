@@ -28,7 +28,7 @@ export interface RecentPressRelease {
             BannerTitle: string;
             BannerImage: Image;
         }[];
-        slug: string;
+        Slug: string;
     }[];
 }
 
