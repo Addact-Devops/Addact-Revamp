@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { CareerDetailResponse, getCareerDetailsData } from "@/graphql/queries/getCareerDetails";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../../styles/components/caseStudy-detail.scss";
@@ -10,6 +10,7 @@ import Loader from "@/components/atom/loader";
 
 const CareerDetail = () => {
     const { slug } = useParams();
+    const pathname = usePathname();
     const [careerDetailData, setCareerDetailData] = useState<CareerDetailResponse["careerDetails"][number]>();
     const [loading, setLoading] = useState(true);
     const [form, setForm] = useState({
@@ -20,6 +21,7 @@ const CareerDetail = () => {
     });
     const [resumeFile, setResumeFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const redirectUrl = `${pathname}/thank-you-career`;
 
     useEffect(() => {
         if (typeof slug === "string") {
@@ -63,9 +65,11 @@ const CareerDetail = () => {
             const result = await res.json();
 
             if (res.ok) {
-                alert(result.message || "Form submitted successfully!");
                 setForm({ fullName: "", email: "", phone: "", hyperlink: "" });
                 setResumeFile(null);
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
             } else {
                 alert(result.error || "Submission failed.");
             }
