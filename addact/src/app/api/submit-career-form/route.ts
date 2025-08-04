@@ -5,7 +5,7 @@ import nodemailer from "nodemailer";
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
-        const { name, email, phone, sheetName, RecipientEmails, pageTitle } = body;
+        const { name, email, phone, sheetName, RecipientEmails, hyperlink, pageTitle } = body;
 
         const ip =
             req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
             valueInputOption: "RAW",
             insertDataOption: "INSERT_ROWS",
             requestBody: {
-                values: [[name, email, phone, , pageTitle, new Date().toISOString(), ip]],
+                values: [[name, email, phone, hyperlink, pageTitle, new Date().toISOString(), ip]],
             },
         });
 
@@ -69,6 +69,7 @@ export async function POST(req: NextRequest) {
                         <li><strong>Name:</strong> ${name}</li>
                         <li><strong>Email:</strong> ${email}</li>
                         <li><strong>Phone:</strong> ${phone}</li>
+                        <li><strong>Hyperlink:</strong> ${hyperlink}</li>
                     </ul>
                     <p>We'll get back to you shortly.</p>
                     <p style="margin-top: 30px; font-size: 12px; color: #888;">© ${new Date().getFullYear()} Addact Technologies. All rights reserved.</p>

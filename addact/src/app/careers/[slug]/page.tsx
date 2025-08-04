@@ -43,28 +43,31 @@ const CareerDetail = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append("fullName", form.fullName);
-        formData.append("email", form.email);
-        formData.append("phone", form.phone);
-        formData.append("hyperlink", form.hyperlink);
-
-        if (resumeFile) {
-            formData.append("resume", resumeFile);
-        }
+        // if (resumeFile) {
+        //     formData.append("resume", resumeFile);
+        //     console.log("in");
+        // }
 
         try {
             const res = await fetch("/api/submit-career-form", {
                 method: "POST",
-                body: formData,
+                body: JSON.stringify({
+                    ...form,
+                    name: form.fullName,
+                    sheetName: "Sheet1",
+                    RecipientEmails: careerDetailData.careers_form.FormFields.RecipientEmails,
+                    pageTitle: "Careers",
+                }),
             });
 
+            const result = await res.json();
+
             if (res.ok) {
-                alert("Form submitted successfully!");
+                alert(result.message || "Form submitted successfully!");
                 setForm({ fullName: "", email: "", phone: "", hyperlink: "" });
                 setResumeFile(null);
             } else {
-                alert("Submission failed.");
+                alert(result.error || "Submission failed.");
             }
         } catch (err) {
             console.error(err);
