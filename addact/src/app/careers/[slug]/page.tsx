@@ -41,40 +41,41 @@ const CareerDetail = () => {
     }
 
     if (!careerDetailData) return <p className='p-6 text-red-600 mt-32'>Career Details not found.</p>;
+    const pageTitle = pathname.split("/").filter(Boolean).pop();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // if (resumeFile) {
-        //     formData.append("resume", resumeFile);
-        //     console.log("in");
-        // }
+        const formData = new FormData();
+        formData.append("name", form.fullName);
+        formData.append("email", form.email);
+        formData.append("phone", form.phone);
+        formData.append("hyperlink", form.hyperlink);
+        formData.append("sheetName", "Sheet1");
+        formData.append("RecipientEmails", careerDetailData.careers_form.FormFields.RecipientEmails);
+        formData.append("pageTitle", `"${pageTitle}"`);
+
+        if (resumeFile) {
+            formData.append("resume", resumeFile);
+        }
 
         try {
             const res = await fetch("/api/submit-career-form", {
                 method: "POST",
-                body: JSON.stringify({
-                    ...form,
-                    name: form.fullName,
-                    sheetName: "Sheet1",
-                    RecipientEmails: careerDetailData.careers_form.FormFields.RecipientEmails,
-                    pageTitle: "Careers",
-                }),
+                body: formData,
             });
-
-            const result = await res.json();
-
+            const text = await res.text();
+            const result = JSON.parse(text);
             if (res.ok) {
                 setForm({ fullName: "", email: "", phone: "", hyperlink: "" });
                 setResumeFile(null);
-                if (redirectUrl) {
-                    window.location.href = redirectUrl;
-                }
+
+                window.location.href = redirectUrl;
             } else {
                 alert(result.error || "Submission failed.");
             }
         } catch (err) {
-            console.error(err);
+            console.error("Failed to submit form:", err);
             alert("Something went wrong.");
         }
     };
@@ -211,7 +212,7 @@ const CareerDetail = () => {
                                         />
                                     </div>
                                     <input
-                                        type='url'
+                                        type='text'
                                         placeholder={careerDetailData.careers_form.FormFields.GeneralText}
                                         className='w-full border border-gray-300 rounded-md px-4 py-2 text-black placeholder-gray-500'
                                         value={form.hyperlink}
