@@ -5,11 +5,28 @@ const GET_BLOG_BY_SLUG = gql`
     query GetBlogBySlug($filters: AddactBlogFiltersInput) {
         addactBlogs(filters: $filters) {
             Slug
+
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
+
             HeadingSection {
                 ... on ComponentBaseTemplateCommonSection {
                     PageTitle
                 }
             }
+
             BlogBanner {
                 ... on ComponentBlogHeroBannerBlogHeroBanner {
                     BannerTitle
@@ -41,6 +58,7 @@ const GET_BLOG_BY_SLUG = gql`
                     }
                 }
             }
+
             BlogContent {
                 ... on ComponentHeadingsH6 {
                     id
@@ -92,6 +110,7 @@ const GET_BLOG_BY_SLUG = gql`
                     message
                 }
             }
+
             author {
                 Author {
                     AuthorName
@@ -108,6 +127,7 @@ const GET_BLOG_BY_SLUG = gql`
                     }
                 }
             }
+
             similarstorytitle {
                 CommonTitle {
                     ... on ComponentBaseTemplateTitleWithDescription {
@@ -116,6 +136,7 @@ const GET_BLOG_BY_SLUG = gql`
                     }
                 }
             }
+
             similarBlogs {
                 BlogBanner {
                     ... on ComponentBlogHeroBannerBlogHeroBanner {
@@ -148,6 +169,7 @@ const GET_BLOG_BY_SLUG = gql`
                     }
                 }
             }
+
             socialicons {
                 SocialIcon {
                     ... on ComponentBaseTemplateLinkImage {
@@ -177,6 +199,7 @@ const GET_BLOG_BY_SLUG = gql`
                     }
                 }
             }
+
             contactCard {
                 documentId
                 pageReference
@@ -216,7 +239,24 @@ const GET_BLOG_BY_SLUG = gql`
 export type BlogBySlugResponse = {
     addactBlogs: {
         Slug: string;
+
+        SEO?: {
+            metaTitle?: string;
+            metaDescription?: string;
+            ogTitle?: string;
+            ogDescription?: string;
+            ogImage?: {
+                url?: string;
+            };
+            metaRobots?: string;
+            twitterCardTitle?: string;
+            canonicalURL?: string;
+            structuredData?: any;
+            languageTag?: string;
+        } | null;
+
         HeadingSection?: { PageTitle?: string }[];
+
         BlogBanner?: {
             BannerTitle?: string;
             BannerDescription?: string;
@@ -238,6 +278,7 @@ export type BlogBySlugResponse = {
             author?: { Author?: { AuthorName?: string } };
             blogcategory?: { Category?: { CategoryTitle?: string } };
         }[];
+
         BlogContent?: {
             id?: string;
             Richtext?: string;
@@ -259,6 +300,7 @@ export type BlogBySlugResponse = {
                 width?: number;
             };
         }[];
+
         author?: {
             Author?: {
                 AuthorName?: string;
@@ -273,12 +315,14 @@ export type BlogBySlugResponse = {
                 designation?: { DesignationTitle?: string };
             };
         };
+
         similarstorytitle?: {
             CommonTitle?: {
                 Title?: string;
                 Description?: string;
             };
         };
+
         similarBlogs?: {
             BlogBanner?: {
                 BannerTitle?: string;
@@ -309,6 +353,7 @@ export type BlogBySlugResponse = {
                 };
             }[];
         }[];
+
         socialicons?: {
             SocialIcon?: {
                 Title?: string;
@@ -336,6 +381,7 @@ export type BlogBySlugResponse = {
                 };
             }[];
         };
+
         contactCard?: {
             documentId?: string;
             pageReference?: string;
