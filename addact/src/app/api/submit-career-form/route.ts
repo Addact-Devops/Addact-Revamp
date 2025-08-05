@@ -24,8 +24,7 @@ export async function POST(req: NextRequest) {
 
         const file = formData.get("resume") as File | null;
 
-        // const arrayBuffer = file ? await file.arrayBuffer() : null;
-        const base64String = file ? await file.text() : null;
+        const arrayBuffer = file ? await file.arrayBuffer() : null;
 
         const ip =
             req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
@@ -42,36 +41,32 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
         }
 
-        const auth = new google.auth.JWT({
-            email: clientEmail,
-            key: privateKey,
-            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-        });
+        // const auth = new google.auth.JWT({
+        //     email: clientEmail,
+        //     key: privateKey,
+        //     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+        // });
 
-        const sheets = google.sheets({ version: "v4", auth });
+        // const sheets = google.sheets({ version: "v4", auth });
 
-        await sheets.spreadsheets.values.append({
-            spreadsheetId,
-            range: sheetName,
-            valueInputOption: "RAW",
-            insertDataOption: "INSERT_ROWS",
-            requestBody: {
-                values: [[name, email, phone, hyperlink, pageTitle, new Date().toISOString(), ip]],
-            },
-        });
+        // await sheets.spreadsheets.values.append({
+        //     spreadsheetId,
+        //     range: sheetName,
+        //     valueInputOption: "RAW",
+        //     insertDataOption: "INSERT_ROWS",
+        //     requestBody: {
+        //         values: [[name, email, phone, hyperlink, pageTitle, new Date().toISOString(), ip]],
+        //     },
+        // });
 
         // Send Email
         const transporter = nodemailer.createTransport({
             host: smtpHost,
             port: 587,
             secure: false,
-            requireTLS: true,
             auth: {
                 user: smtpUser,
                 pass: smtpPass,
-            },
-            tls: {
-                rejectUnauthorized: false,
             },
         });
 
@@ -84,7 +79,7 @@ export async function POST(req: NextRequest) {
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
             to: recipientList,
-            subject: `New Application Submission from ${name}`,
+            subject: `New Application Submission from ${name} `,
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
                     <h2 style="color: #1470af;">New Application Received for ${pageTitle}</h2>
@@ -99,15 +94,15 @@ export async function POST(req: NextRequest) {
                             timeZone: "Asia/Kolkata",
                         })}</li>
                     </ul>
-                    <p style="margin-top: 20px;">Resume is attached below.</p>
+                    <p style="margin-top: 20px;">Resume attached below if provided.</p>
                 </div>
             `,
             attachments:
-                file && base64String
+                file && arrayBuffer
                     ? [
                           {
                               filename: file.name,
-                              content: Buffer.from(base64String.split(",").pop() || "", "base64"),
+                              content: Buffer.from(arrayBuffer),
                           },
                       ]
                     : [],
@@ -119,7 +114,7 @@ export async function POST(req: NextRequest) {
             html: `
     <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
       <h2 style="color: #1470af;">Thank you, ${name}!</h2>
-      <p>We've received your application. Our team will review it and get back to you soon.</p>
+      <p>We’ve received your application. Our team will review it and get back to you soon.</p>
       <p>Meanwhile, feel free to explore more about us at <a href="https://addact.net" target="_blank">Addact Technologies</a>.</p>
       <p style="margin-top: 30px; font-size: 12px; color: #888;">© ${new Date().getFullYear()} Addact Technologies. All rights reserved.</p>
     </div>
