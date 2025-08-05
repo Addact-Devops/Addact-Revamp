@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+// import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         const email = formData.get("email") as string;
         const phone = formData.get("phone") as string;
         const hyperlink = formData.get("hyperlink") as string;
-        const sheetName = formData.get("sheetName") as string;
+        // const sheetName = formData.get("sheetName") as string;
         const RecipientEmails = formData.get("RecipientEmails") as string;
         const pageTitle = formData.get("pageTitle") as string;
 
@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
 
         const arrayBuffer = file ? await file.arrayBuffer() : null;
 
-        const ip =
-            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
+        // const ip =
+        //     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
 
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
