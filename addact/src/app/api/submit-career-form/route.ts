@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+// import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         const email = formData.get("email") as string;
         const phone = formData.get("phone") as string;
         const hyperlink = formData.get("hyperlink") as string;
-        const sheetName = formData.get("sheetName") as string;
+        // const sheetName = formData.get("sheetName") as string;
         const RecipientEmails = formData.get("RecipientEmails") as string;
         const pageTitle = formData.get("pageTitle") as string;
 
@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
 
         const arrayBuffer = file ? await file.arrayBuffer() : null;
 
-        const ip =
-            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
+        // const ip =
+        //     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
 
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
@@ -41,23 +41,23 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
         }
 
-        const auth = new google.auth.JWT({
-            email: clientEmail,
-            key: privateKey,
-            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-        });
+        // const auth = new google.auth.JWT({
+        //     email: clientEmail,
+        //     key: privateKey,
+        //     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+        // });
 
-        const sheets = google.sheets({ version: "v4", auth });
+        // const sheets = google.sheets({ version: "v4", auth });
 
-        await sheets.spreadsheets.values.append({
-            spreadsheetId,
-            range: sheetName,
-            valueInputOption: "RAW",
-            insertDataOption: "INSERT_ROWS",
-            requestBody: {
-                values: [[name, email, phone, hyperlink, pageTitle, new Date().toISOString(), ip]],
-            },
-        });
+        // await sheets.spreadsheets.values.append({
+        //     spreadsheetId,
+        //     range: sheetName,
+        //     valueInputOption: "RAW",
+        //     insertDataOption: "INSERT_ROWS",
+        //     requestBody: {
+        //         values: [[name, email, phone, hyperlink, pageTitle, new Date().toISOString(), ip]],
+        //     },
+        // });
 
         // Send Email
         const transporter = nodemailer.createTransport({
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
             to: recipientList,
-            subject: `New Application Submission from ${name}`,
+            subject: `New Application Submission from ${name} `,
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
                     <h2 style="color: #1470af;">New Application Received for ${pageTitle}</h2>
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
                             timeZone: "Asia/Kolkata",
                         })}</li>
                     </ul>
-                    <p style="margin-top: 20px;">Resume is attached below.</p>
+                    <p style="margin-top: 20px;">Resume attached below if provided.</p>
                 </div>
             `,
             attachments:
@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
             html: `
     <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
       <h2 style="color: #1470af;">Thank you, ${name}!</h2>
-      <p>We've received your application. Our team will review it and get back to you soon.</p>
+      <p>We’ve received your application. Our team will review it and get back to you soon.</p>
       <p>Meanwhile, feel free to explore more about us at <a href="https://addact.net" target="_blank">Addact Technologies</a>.</p>
       <p style="margin-top: 30px; font-size: 12px; color: #888;">© ${new Date().getFullYear()} Addact Technologies. All rights reserved.</p>
     </div>
