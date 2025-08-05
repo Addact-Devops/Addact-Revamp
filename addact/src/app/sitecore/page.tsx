@@ -12,6 +12,11 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import ContactUs from "@/components/organisms/ContactUs";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("serviceLists", "/sitecore");
+}
 
 export default async function SitecorePage() {
     const service = "sitecore";
@@ -21,7 +26,7 @@ export default async function SitecorePage() {
     const bannerData = data.Banner?.Banner?.[0];
 
     return (
-        <main className='bg-dark'>
+        <main className="bg-dark">
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}

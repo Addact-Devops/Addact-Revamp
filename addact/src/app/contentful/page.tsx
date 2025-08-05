@@ -1,3 +1,5 @@
+// src/app/services/contentful/page.tsx
+
 import { getServiceListBySlug } from "@/graphql/queries/getServieceList";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";
@@ -9,15 +11,21 @@ import { notFound } from "next/navigation";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
-export default async function contentfulPage() {
+export async function generateMetadata() {
+    return generatePageMetadata("serviceLists", "/contentful");
+}
+
+export default async function ContentfulPage() {
     const service = "contentful";
     const data = await getServiceListBySlug(service);
     if (!data) return notFound();
+
     const bannerData = data.Banner?.Banner?.[0];
 
     return (
-        <main className='bg-dark'>
+        <main className="bg-dark">
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}

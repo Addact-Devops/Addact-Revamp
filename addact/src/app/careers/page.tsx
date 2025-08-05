@@ -4,6 +4,12 @@ import CareerPositions from "@/components/organisms/CareerPositions";
 import CareerGallery from "@/components/organisms/CareerGallery";
 import { getCareersData } from "@/graphql/queries/getCareers";
 
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("careers");
+}
+
 export default async function CareersPage() {
     const careers = await getCareersData();
 

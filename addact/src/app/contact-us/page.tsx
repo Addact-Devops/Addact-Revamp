@@ -4,6 +4,11 @@ import ContactUsForm from "@/components/organisms/ContactUsForm";
 import ContactUsTeam from "@/components/organisms/ContactUsTeam";
 import ContactUsAddress from "@/components/organisms/ContactUsAddress"; // ✅ Import added
 
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("contactus");
+}
 export default async function ContactUsPage() {
     const data = await getContactUsData();
     const contactus = data.contactus;
