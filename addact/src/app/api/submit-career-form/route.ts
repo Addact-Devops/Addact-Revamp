@@ -24,7 +24,8 @@ export async function POST(req: NextRequest) {
 
         const file = formData.get("resume") as File | null;
 
-        const arrayBuffer = file ? await file.arrayBuffer() : null;
+        // const arrayBuffer = file ? await file.arrayBuffer() : null;
+        const base64String = file ? await file.text() : null;
 
         const ip =
             req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
@@ -62,14 +63,16 @@ export async function POST(req: NextRequest) {
         // Send Email
         const transporter = nodemailer.createTransport({
             host: smtpHost,
-            port: 465,
-            secure: true,
+            port: 587,
+            secure: false,
+            requireTLS: true,
             auth: {
                 user: smtpUser,
                 pass: smtpPass,
             },
-            logger: true,
-            debug: true,
+            tls: {
+                rejectUnauthorized: false,
+            },
         });
 
         const recipientList = RecipientEmails
@@ -100,11 +103,11 @@ export async function POST(req: NextRequest) {
                 </div>
             `,
             attachments:
-                file && arrayBuffer
+                file && base64String
                     ? [
                           {
                               filename: file.name,
-                              content: Buffer.from(arrayBuffer),
+                              content: Buffer.from(base64String.split(",").pop() || "", "base64"),
                           },
                       ]
                     : [],
