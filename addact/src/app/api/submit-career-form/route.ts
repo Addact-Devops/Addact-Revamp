@@ -62,12 +62,14 @@ export async function POST(req: NextRequest) {
         // Send Email
         const transporter = nodemailer.createTransport({
             host: smtpHost,
-            port: 587,
-            secure: false,
+            port: 465,
+            secure: true,
             auth: {
                 user: smtpUser,
                 pass: smtpPass,
             },
+            logger: true,
+            debug: true,
         });
 
         const recipientList = RecipientEmails

@@ -67,8 +67,6 @@ const CareerDetail = () => {
             });
             const text = await res.text();
             const result = JSON.parse(text);
-            console.log('text', text);
-            console.log("result", result);
             if (res.ok) {
                 setForm({ fullName: "", email: "", phone: "", hyperlink: "" });
                 setResumeFile(null);
