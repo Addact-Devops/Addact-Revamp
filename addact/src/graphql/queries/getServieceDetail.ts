@@ -197,6 +197,19 @@ const ServiceDetailBySlug = gql`
                     }
                 }
                 pageReference
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
             }
         }
     }
@@ -208,6 +221,20 @@ export interface ServiceDetailResponse {
 
 export interface SubServicePage {
     ReferenceTitle: string;
+    SEO?: {
+        metaTitle?: string;
+        metaDescription?: string;
+        ogTitle?: string;
+        ogDescription?: string;
+        ogImage?: {
+            url?: string;
+        };
+        metaRobots?: string;
+        twitterCardTitle?: string;
+        canonicalURL?: string;
+        structuredData?: any;
+        languageTag?: string;
+    } | null;
     HeroBanner: {
         BannerTitle: string;
         BannerDescription: string;
@@ -237,6 +264,20 @@ export interface CONTACTUS {
         Image: Image;
         Link: Link;
     }[];
+    SEO?: {
+        metaTitle?: string;
+        metaDescription?: string;
+        ogTitle?: string;
+        ogDescription?: string;
+        ogImage?: {
+            url?: string;
+        };
+        metaRobots?: string;
+        twitterCardTitle?: string;
+        canonicalURL?: string;
+        structuredData?: any;
+        languageTag?: string;
+    } | null;
 }
 export interface CTA2 {
     CtaDescription: string;
@@ -278,7 +319,7 @@ export interface OurServiceData {
         }[];
 
         Title: {
-            id?: string; // optional to support both with and without id
+            id?: string;
             h2: string;
         }[];
     };
@@ -287,7 +328,7 @@ export interface OurServiceData {
 
     team_feature: {
         documentId?: string;
-        ReferenceTitle?: string; // optional, not in first version
+        ReferenceTitle?: string;
         Description: string;
         Cards: {
             id: string;

@@ -1,77 +1,58 @@
-"use client";
+// src/app/[slug]/page.tsx
 
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
-import { useParams } from "next/navigation";
+import { getServiceDetailBySlug } from "@/graphql/queries/getServieceDetail";
+import { SubServicePage } from "@/graphql/queries/getServieceDetail";
+import { notFound } from "next/navigation";
+import SiteDetailClient from "./SiteDetailClient";
 
-import { getServiceDetailBySlug, SubServicePage } from "@/graphql/queries/getServieceDetail";
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+    const data: SubServicePage | null = await getServiceDetailBySlug(params.slug);
 
-import HeroBanner from "@/components/organisms/HeroBanner";
-import WhyAddact from "@/components/organisms/WhyAddact";
-import OurPartners from "@/components/organisms/OurPartners";
-import OurProcess from "@/components/organisms/OurProcess";
-import ClientTestimonials from "@/components/organisms/ClientTestimonials";
-import OurInsights from "@/components/organisms/OurInsights";
-import FAQ from "@/components/organisms/FAQ";
-import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
-import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
-import ContactUs from "@/components/organisms/ContactUs";
+    if (!data || !data.SEO) return {};
 
-const IndustriesWeServe = dynamic(() => import("@/components/organisms/IndustriesWeServe"), { ssr: false });
+    const {
+        metaTitle,
+        metaDescription,
+        ogTitle,
+        ogDescription,
+        ogImage,
+        metaRobots,
+        twitterCardTitle,
+        canonicalURL,
+        structuredData,
+        languageTag,
+    } = data.SEO;
 
-const SiteDetailPage = () => {
-    const params = useParams();
-    const slug = typeof params?.slug === "string" ? params.slug : Array.isArray(params?.slug) ? params.slug[0] : "";
+    return {
+        title: metaTitle,
+        description: metaDescription,
+        alternates: {
+            canonical: canonicalURL || undefined,
+        },
+        openGraph: {
+            title: ogTitle || metaTitle,
+            description: ogDescription || metaDescription,
+            images: ogImage?.url ? [{ url: ogImage.url }] : [],
+        },
+        twitter: {
+            title: twitterCardTitle || metaTitle,
+        },
+        robots: metaRobots || undefined,
+        metadataBase: new URL("https://www.addact.net"),
+        ...(structuredData && {
+            other: {
+                structuredData: JSON.stringify(structuredData),
+            },
+        }),
+    };
+}
 
-    const [data, setData] = useState<SubServicePage | null>(null);
-    const [loading, setLoading] = useState(true);
+const SiteDetailPage = async ({ params }: { params: { slug: string } }) => {
+    const data: SubServicePage | null = await getServiceDetailBySlug(params.slug);
 
-    useEffect(() => {
-        if (slug) {
-            getServiceDetailBySlug(slug)
-                .then((res) => {
-                    setData(res);
-                })
-                .catch((err) => {
-                    console.error("Error fetching service detail:", err);
-                })
-                .finally(() => setLoading(false));
-        }
-    }, [slug]);
+    if (!data) return notFound();
 
-    if (loading) {
-        return <div className='text-white p-8'>Loading...</div>;
-    }
-
-    if (!data) {
-        return <div className='text-white p-8'>Page Not Found</div>;
-    }
-
-    const bannerData = data.HeroBanner;
-
-    return (
-        <main className='bg-dark'>
-            <HeroBanner
-                title={bannerData?.BannerTitle ?? ""}
-                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
-                button={{
-                    label: bannerData?.BannerLink?.label ?? "",
-                    url: bannerData?.BannerLink?.href ?? "",
-                }}
-                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-            />
-            <OurPartners />
-            <OurServicesWithTabs data={data.our_service} />
-            <IndustriesWeServe />
-            <WhyAddact data={data.why_addact} />
-            <ServiceCtaBanner2 data={data.cta2} />
-            <OurProcess />
-            <ClientTestimonials />
-            <OurInsights />
-            <FAQ data={data.faq} />
-            <ContactUs data={data.contact_us} />
-        </main>
-    );
+    return <SiteDetailClient data={data} />;
 };
 
 export default SiteDetailPage;

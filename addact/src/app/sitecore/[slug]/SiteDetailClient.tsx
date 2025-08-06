@@ -14,6 +14,7 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 
 import { SubServicePage } from "@/graphql/queries/getServieceDetail";
+import ContactUs from "@/components/organisms/ContactUs";
 
 const IndustriesWeServe = dynamic(() => import("@/components/organisms/IndustriesWeServe"), { ssr: false });
 
@@ -40,6 +41,7 @@ export default function SiteDetailClient({ data }: { data: SubServicePage }) {
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
+            <ContactUs data={data.contact_us} />
         </main>
     );
 }
