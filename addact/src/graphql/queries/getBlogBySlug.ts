@@ -320,7 +320,7 @@ export type BlogBySlugResponse = {
             CommonTitle?: {
                 Title?: string;
                 Description?: string;
-            };
+            }[];
         };
 
         similarBlogs?: {
