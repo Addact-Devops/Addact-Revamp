@@ -197,6 +197,7 @@ const ServiceDetailBySlug = gql`
                     }
                 }
                 pageReference
+            }
             SEO {
                 metaTitle
                 metaDescription
@@ -264,20 +265,6 @@ export interface CONTACTUS {
         Image: Image;
         Link: Link;
     }[];
-    SEO?: {
-        metaTitle?: string;
-        metaDescription?: string;
-        ogTitle?: string;
-        ogDescription?: string;
-        ogImage?: {
-            url?: string;
-        };
-        metaRobots?: string;
-        twitterCardTitle?: string;
-        canonicalURL?: string;
-        structuredData?: any;
-        languageTag?: string;
-    } | null;
 }
 export interface CTA2 {
     CtaDescription: string;
