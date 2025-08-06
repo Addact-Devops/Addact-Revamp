@@ -9,6 +9,9 @@ import { notFound } from "next/navigation";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import CtaBanner2 from "@/components/molecules/CtaBanner2";
+import CtaBanner from "@/components/molecules/CtaBanner";
+import ContactUs from "@/components/organisms/ContactUs";
 
 export default async function strapiPage() {
     const service = "strapi";
@@ -31,10 +34,13 @@ export default async function strapiPage() {
             <OurServicesWithTabs data={data.our_service} />
             <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
+            <CtaBanner2 data={data.cta2} />
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
+            <CtaBanner data={data.cta} />
+            <ContactUs data={data.contact_us} />
         </main>
     );
 }
