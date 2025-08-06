@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { RightArrowUpIcon } from "../atom/icons";
 
 type SimilarBlogProps = {
     similarBlogs?: {
@@ -35,7 +37,7 @@ type SimilarBlogProps = {
         CommonTitle?: {
             Title?: string;
             Description?: string;
-        };
+        }[];
     };
 };
 
@@ -46,19 +48,20 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
         similarBlogs
             ?.flatMap((item) => (Array.isArray(item?.BlogBanner) ? item.BlogBanner : []))
             ?.filter((b) => b?.BannerTitle && b?.BannerImage?.url && b?.ReadNow?.href)
-            ?.slice(0, 2) || [];
+            ?.slice(0, 3) || [];
 
     if (flattenedBlogs.length === 0) return null;
 
-    const sectionTitle = similarstorytitle?.CommonTitle?.Title?.trim();
-    const sectionDescription = similarstorytitle?.CommonTitle?.Description?.trim();
+    const sectionTitle = similarstorytitle?.CommonTitle?.[0]?.Title?.trim() || "";
 
     return (
-        <div className="mt-[80px]">
-            {sectionTitle && <h2 className="text-[32px] font-bold text-[#5865F2] mb-[10px]">{sectionTitle}</h2>}
-            {sectionDescription && <p className="text-[#555] text-[18px] mb-[40px]">{sectionDescription}</p>}
+        <div className='py-[80px]'>
+            <div className='mb-4 relative inline-block'>
+                <h2 className='text-[32px] font-bold text-black'>{sectionTitle}</h2>
+                <div className='w-[160px] h-[5px] bg-[#5865F2] mt-[40px] rounded'></div>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[40px]">
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[24px] mt-[80px]'>
                 {flattenedBlogs.map((blog, index) => {
                     const title = blog.BannerTitle?.trim();
                     const category = blog.blogcategory?.Category?.CategoryTitle?.trim();
@@ -69,7 +72,6 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
                               year: "numeric",
                           })
                         : null;
-                    const author = blog.author?.Author?.AuthorName?.trim();
 
                     const imageUrl = blog.BannerImage?.url
                         ? blog.BannerImage.url.startsWith("http")
@@ -78,50 +80,43 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
                         : null;
 
                     const readLink = blog.ReadNow?.href;
-                    const target = blog.ReadNow?.isExternal ? "_blank" : "_self";
-                    const rel = blog.ReadNow?.isExternal ? "noopener noreferrer" : undefined;
 
                     if (!readLink || !imageUrl || !title) return null;
 
                     return (
-                        <a key={index} href={readLink} target={target} rel={rel} className="group block !no-underline">
-                            <div className="relative rounded-[16px] overflow-hidden">
-                                <Image
-                                    src={imageUrl}
-                                    alt={
-                                        blog.BannerImage?.alternativeText?.trim() ||
-                                        blog.BannerImage?.name?.trim() ||
-                                        "Blog Image"
-                                    }
-                                    width={800}
-                                    height={500}
-                                    className="!w-[100%] !h-[auto] object-cover group-hover:scale-105 transition-transform duration-300 !m-0"
-                                />
-                                <div className="absolute top-0 left-0 w-full h-full bg-[#3c4cff66] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        <div key={index} className={`border border-[#3c4cff59] p-7 relative flex flex-col h-full`}>
+                            <div className={`bg-gray-300 overflow-hidden w-full mb-7 max-h-[350px]`}>
+                                {imageUrl && (
+                                    <Image
+                                        src={imageUrl}
+                                        alt={blog.BannerImage?.alternativeText || blog.BannerImage?.name || ""}
+                                        width={blog.BannerImage?.width}
+                                        height={blog.BannerImage?.height}
+                                        className=' object-cover'
+                                    />
+                                )}
                             </div>
 
-                            <div className="mt-[20px]">
+                            <div className='flex flex-col flex-1 justify-start'>
                                 {category && (
-                                    <span className="inline-block text-[14px] px-[12px] py-[4px] bg-[#EEF0FF] text-[#5865F2] rounded-full mb-[10px]">
+                                    <span className='px-5 py-2 border border-[#3c4cff59] text-[#3C4CFF] rounded-lg w-fit text-sm mb-2 font-medium'>
                                         {category}
                                     </span>
                                 )}
-
-                                {title && (
-                                    <h3 className="text-[22px] font-semibold text-[#1E1E1E] mb-[12px] leading-snug">
-                                        {title}
-                                    </h3>
-                                )}
-
-                                {(publishDate || author) && (
-                                    <div className="text-[#666] text-[14px]">
-                                        {publishDate && <span>{publishDate}</span>}
-                                        {publishDate && author && <span className="mx-2">•</span>}
-                                        {author && <span className="text-[#5865F2]">{author}</span>}
-                                    </div>
-                                )}
+                                <h4 className='md:!text-3xl text-black font-medium mb-4 leading-tight line-clamp-3'>
+                                    {title}
+                                </h4>
+                                <p className='text-base text-black'>{publishDate}</p>
                             </div>
-                        </a>
+
+                            <div className='mt-auto self-end'>
+                                <Link href={blog.ReadNow!.href!} target='_self'>
+                                    <div className='group w-14 h-14 bg-blue-600 text-black flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16'>
+                                        <RightArrowUpIcon className='transition-transform duration-300 group-hover:scale-110' />
+                                    </div>
+                                </Link>
+                            </div>
+                        </div>
                     );
                 })}
             </div>
