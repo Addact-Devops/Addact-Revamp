@@ -42,11 +42,11 @@ export default function BlogPage() {
     if (!blog) return <p className='p-6 text-red-600 mt-32'>Blog not found.</p>;
 
     return (
-        <main className='blogdetail-wrapper bg-white'>
+        <main className='bg-white'>
             {blog?.BlogBanner?.[0] && <BlogDetailBanner banner={blog.BlogBanner[0]} />}
 
-            <div className='container !mt-[70px] !mb-[70px]'>
-                <div className='flex gap-[100px] max-[1400px]:gap-[50px] relative'>
+            <div className='container !mt-[70px] !pb-[70px]'>
+                <div className='blogdetail-wrapper flex gap-[100px] max-[1400px]:gap-[50px] relative'>
                     <div className='w-[70%] max-[1300px]:w-[64%] max-[1200px]:w-[62%] max-[1120px]:w-[60%] max-[1101px]:w-[100%]'>
                         {Array.isArray(blog.BlogContent) ? (
                             <BlogContentRenderer blocks={blog.BlogContent} />
@@ -64,7 +64,7 @@ export default function BlogPage() {
                     )}
                 </div>
 
-                <SimilarBlog similarBlogs={blog?.similarBlogs} />
+                <SimilarBlog similarBlogs={blog?.similarBlogs} similarstorytitle={blog?.similarstorytitle} />
             </div>
 
             {Array.isArray(blog?.socialicons) && blog.socialicons.length > 0 && windowWidth >= 992 && (
