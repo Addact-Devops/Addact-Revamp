@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 import RichText from "@/components/atom/richText";
-import Loader from "@/components/atom/loader";
 
 type Props = {
     thankYouData: {
@@ -62,7 +61,9 @@ export default function ConnectNowThankYouClient({ thankYouData }: Props) {
                 {structuredData && (
                     <script
                         type="application/ld+json"
-                        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+                        dangerouslySetInnerHTML={{
+                            __html: JSON.stringify(structuredData),
+                        }}
                     />
                 )}
             </Head>
