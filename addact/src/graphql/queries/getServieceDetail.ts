@@ -174,6 +174,30 @@ const ServiceDetailBySlug = gql`
                     Description
                 }
             }
+            contact_us {
+                Form {
+                    ... on ComponentBaseTemplatePromo {
+                        id
+                        Title
+                        Description
+                        Image {
+                            alternativeText
+                            height
+                            name
+                            url
+                            width
+                        }
+                        Link {
+                            id
+                            href
+                            label
+                            target
+                            isExternal
+                        }
+                    }
+                }
+                pageReference
+            }
         }
     }
 `;
@@ -202,8 +226,18 @@ export interface SubServicePage {
             Description: string;
         }[];
     };
+    contact_us: CONTACTUS;
 }
-
+export interface CONTACTUS {
+    pageReference: string;
+    Form: {
+        id: string;
+        Title: string;
+        Description: string;
+        Image: Image;
+        Link: Link;
+    }[];
+}
 export interface CTA2 {
     CtaDescription: string;
     CtaImage: Image;

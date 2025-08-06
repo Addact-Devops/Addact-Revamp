@@ -27,7 +27,8 @@
     "react-slick": "^0.30.3",
     "sass": "^1.89.2",
     "slick-carousel": "^1.8.1",
-    "tailwind-scrollbar": "^4.0.2"
+    "tailwind-scrollbar": "^4.0.2",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
