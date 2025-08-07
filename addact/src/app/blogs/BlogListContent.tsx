@@ -9,7 +9,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Loader from "@/components/atom/loader";
 
 type Props = {
-    data?: any;
+    data?: unknown;
 };
 
 type BlogType = {
@@ -39,7 +39,7 @@ type BlogType = {
     }[];
 };
 
-export default function BlogListContent({ data }: Props) {
+export default function BlogListContent({}: Props) {
     const [addactBlogs, setAddactBlogs] = useState<BlogType[]>([]);
     const [filteredBlogs, setFilteredBlogs] = useState<BlogType[]>([]);
     const [searchText, setSearchText] = useState("");
@@ -148,7 +148,7 @@ export default function BlogListContent({ data }: Props) {
                             : "";
 
                         const title = banner.BannerTitle?.trim() || "Untitled";
-                        const blogLink = `/blog${blog.Slug}`;
+                        const blogLink = `/blogs${blog.Slug}`;
                         const rawAuthor = banner.author?.Author?.AuthorName;
                         const rawCategory = banner.blogcategory?.Category?.CategoryTitle;
                         const author = typeof rawAuthor === "string" ? rawAuthor.trim() : "Addxp Technologies";

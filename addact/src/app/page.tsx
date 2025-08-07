@@ -1,4 +1,5 @@
 import { getHOmePageData } from "@/graphql/queries/getHomePage";
+import { fetchSinglePage } from "@/utils/fetchSinglePage";
 
 import OurPartners from "@/components/organisms/OurPartners";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
@@ -13,24 +14,48 @@ import ContactUs from "@/components/organisms/ContactUs";
 import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
 import GlobeAnimation from "@/components/organisms/GlobeAnimation";
 
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("home");
+}
+
 export default async function HomePage() {
-    const homeResponse = await getHOmePageData();
+    const [homeResponse, seoData] = await Promise.all([
+        getHOmePageData(),
+        fetchSinglePage("home"), // ✅ fetch SEO.structuredData
+    ]);
+
     const homeData = homeResponse?.home;
+    const structuredData = seoData?.SEO?.structuredData;
 
     return (
-        <main className='bg-dark'>
-            <HomeHeroBanner data={homeData?.banner} />
-            <OurPartners />
-            <WhoWeAre />
-            <OurServices data={homeData?.ourservices} />
-            <OurCmsExperts />
-            <WhyAddact data={homeData?.whyaddact} />
-            <CtaBanner data={homeData?.cta} />
-            <OurProcess />
-            <ClientTestimonials />
-            <OurInsights />
-            <GlobeAnimation data={homeData?.GlobeAnimation} />
-            <ContactUs data={homeData?.contactus} />
-        </main>
+        <>
+            {/* ✅ Inject structured data */}
+            {structuredData && (
+                <script
+                    type="application/ld+json"
+                    suppressHydrationWarning
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(structuredData),
+                    }}
+                />
+            )}
+
+            <main className="bg-dark">
+                <HomeHeroBanner data={homeData?.banner} />
+                <OurPartners />
+                <WhoWeAre />
+                <OurServices data={homeData?.ourservices} />
+                <OurCmsExperts />
+                <WhyAddact data={homeData?.whyaddact} />
+                <CtaBanner data={homeData?.cta} />
+                <OurProcess />
+                <ClientTestimonials />
+                <OurInsights />
+                <GlobeAnimation data={homeData?.GlobeAnimation} />
+                <ContactUs data={homeData?.contactus} />
+            </main>
+        </>
     );
 }

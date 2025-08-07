@@ -11,7 +11,7 @@ type SEOData = {
     canonicalURL?: string;
     metaRobots?: string;
     twitterCardTitle?: string;
-    structuredData?: Record<string, any>;
+    structuredData?: Record<string, unknown>;
     languageTag?: string;
     ogTitle?: string;
     ogDescription?: string;

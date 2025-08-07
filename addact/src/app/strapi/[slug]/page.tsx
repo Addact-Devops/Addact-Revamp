@@ -20,7 +20,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         twitterCardTitle,
         canonicalURL,
         structuredData,
-        languageTag,
     } = data.SEO;
 
     return {

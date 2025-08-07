@@ -6,7 +6,11 @@ import RichText from "@/components/atom/richText";
 
 type Props = {
     thankYouData: {
-        Content: any[];
+        Content: {
+            h1?: string;
+            Richtext?: string;
+            label?: string;
+        }[];
         AnimationVideo?: {
             alternativeText?: string;
             name?: string;
@@ -21,7 +25,7 @@ type Props = {
             metaRobots?: string;
             twitterCardTitle?: string;
             canonicalURL?: string;
-            structuredData?: any;
+            structuredData?: Record<string, unknown>;
             languageTag?: string;
         } | null;
     };

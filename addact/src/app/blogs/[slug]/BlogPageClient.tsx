@@ -8,7 +8,6 @@ import AuthorCard from "@/components/organisms/AuthorCard";
 import BlogContactCard from "@/components/organisms/BlogContactCard";
 import BlogDetailBanner from "@/components/organisms/BlogDetailBanner";
 import SimilarBlog from "@/components/organisms/SimilarBlogs";
-import Loader from "@/components/atom/loader";
 
 type BlogPageClientProps = {
     blog: BlogBySlugResponse["addactBlogs"][number] | null;

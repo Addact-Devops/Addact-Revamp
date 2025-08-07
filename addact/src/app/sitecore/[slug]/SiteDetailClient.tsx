@@ -1,7 +1,6 @@
 // src/app/sitecore/[slug]/SiteDetailClient.tsx
 "use client";
 
-import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";

@@ -251,7 +251,7 @@ export type BlogBySlugResponse = {
             metaRobots?: string;
             twitterCardTitle?: string;
             canonicalURL?: string;
-            structuredData?: any;
+            structuredData?: Record<string, unknown>; // ✅ fixed: replaced `any` with valid type
             languageTag?: string;
         } | null;
 

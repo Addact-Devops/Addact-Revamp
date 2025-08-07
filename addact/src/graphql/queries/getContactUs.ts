@@ -145,7 +145,7 @@ export interface ContactUsResponse {
             metaRobots?: string;
             twitterCardTitle?: string;
             canonicalURL?: string;
-            structuredData?: any;
+            structuredData?: Record<string, unknown>;
             languageTag?: string;
         } | null;
     };

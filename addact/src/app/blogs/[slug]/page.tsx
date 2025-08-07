@@ -1,11 +1,17 @@
-// app/blog/[slug]/page.tsx
+// app/blogs/[slug]/page.tsx
 
 import { getBlogBySlug } from "@/graphql/queries/getBlogBySlug";
 import BlogPageClient from "./BlogPageClient";
 import { Metadata } from "next";
-import Script from "next/script"; // ✅ for injecting structured data
+import Script from "next/script";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+type Props = {
+    params: {
+        slug: string;
+    };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const blog = await getBlogBySlug(params.slug);
     const seo = blog?.SEO;
     if (!seo) return { title: "Blog" };
@@ -36,13 +42,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: Props) {
     const blog = await getBlogBySlug(params.slug);
     const structuredData = blog?.SEO?.structuredData;
 
     return (
         <>
-            {/* ✅ Inject structured data in <head> */}
             {structuredData && (
                 <Script id="structured-data" type="application/ld+json">
                     {JSON.stringify(structuredData)}
