@@ -9,10 +9,14 @@ import { notFound } from "next/navigation";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import ContactUs from "@/components/organisms/ContactUs";
 
+export async function generateMetadata() {
+    return generatePageMetadata("serviceLists", "/umbraco");
+}
 export default async function umbracoPage() {
     const service = "umbraco";
     const data = await getServiceListBySlug(service);
@@ -20,7 +24,7 @@ export default async function umbracoPage() {
     const bannerData = data.Banner?.Banner?.[0];
 
     return (
-        <main className='bg-dark'>
+        <main className="bg-dark">
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}

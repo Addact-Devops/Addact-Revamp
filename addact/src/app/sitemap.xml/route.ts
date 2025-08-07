@@ -36,7 +36,7 @@ export async function GET() {
     const staticUrls = [
         "",
         "about-us",
-        "blog",
+        "blogs",
         "brand-guidelines",
         "careers",
         "contact-us",

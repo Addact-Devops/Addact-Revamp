@@ -4,6 +4,11 @@ import { getAllStaticRoutes } from "@/utils/getStaticRoutes";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import { getSitemapBanner } from "@/graphql/queries/getSitemap";
 import { Globe2 } from "lucide-react";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("sitemap");
+}
 
 export default async function SitemapPage() {
     const pages = getAllStaticRoutes();

@@ -40,6 +40,12 @@ const GET_WEBINAR_LIST_PAGE = gql`
                         width
                     }
                     PublishDate
+                    ReadNow {
+                        id
+                        href
+                        label
+                        isExternal
+                    }
                 }
             }
             WebinarSummary
@@ -54,6 +60,12 @@ export interface WebinarListResponse {
                 BannerTitle: string;
                 BannerDescription: string;
                 BannerImage: Image;
+                ReadNow: {
+                    id: string;
+                    href: string;
+                    label: string;
+                    isExternal: boolean;
+                };
             }[];
         };
         PageHeading: {
@@ -69,6 +81,12 @@ export interface WebinarListResponse {
             BannerDescription: string;
             BannerImage: Image;
             PublishDate: string;
+            ReadNow: {
+                id: string;
+                href: string;
+                label: string;
+                isExternal: boolean;
+            };
         }[];
         WebinarSummary: string;
     }[];

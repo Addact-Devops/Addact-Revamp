@@ -61,6 +61,20 @@ export const GET_CONTACT_US = gql`
                 RightTitle
                 RightDescription
             }
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
         }
     }
 `;
@@ -122,6 +136,18 @@ export interface ContactUsResponse {
             RightTitle: string;
             RightDescription: string;
         };
+        SEO?: {
+            metaTitle?: string;
+            metaDescription?: string;
+            ogTitle?: string;
+            ogDescription?: string;
+            ogImage?: { url?: string };
+            metaRobots?: string;
+            twitterCardTitle?: string;
+            canonicalURL?: string;
+            structuredData?: Record<string, unknown>;
+            languageTag?: string;
+        } | null;
     };
 }
 

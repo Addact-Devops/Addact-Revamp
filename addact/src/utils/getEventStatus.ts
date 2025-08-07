@@ -1,5 +1,5 @@
-export function getEventStatus(dateString: string, label = "Event"): string {
-    if (!dateString) return "";
+export function getEventStatus(dateString: string | null | undefined, label = "Event"): string {
+    if (!dateString) return `Past ${label}`;
 
     const eventDate = new Date(dateString);
     const today = new Date();

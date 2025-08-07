@@ -2,6 +2,11 @@
 
 import { getTermsConditions } from "@/graphql/queries/getTermsConditions";
 import parse from "html-react-parser";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("termsConditions");
+}
 
 export default async function TermsConditionsPage() {
     const data = await getTermsConditions();

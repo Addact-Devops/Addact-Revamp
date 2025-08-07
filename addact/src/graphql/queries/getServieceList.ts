@@ -6,6 +6,20 @@ const ServiceListBySlug = gql`
     query ServiceLists($filters: ServiceListFiltersInput) {
         serviceLists(filters: $filters) {
             ReferenceTitle
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
             Banner {
                 Banner {
                     ... on ComponentBannerBanner {

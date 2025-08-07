@@ -1,5 +1,9 @@
-import { notFound } from "next/navigation";
-import { getServiceListBySlug } from "@/graphql/queries/getServieceList";
+"use client";
+
+import { SubServicePage } from "@/graphql/queries/getServieceDetail";
+
+import dynamic from "next/dynamic";
+
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";
 import OurPartners from "@/components/organisms/OurPartners";
@@ -7,23 +11,18 @@ import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
-import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
-import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
-import CtaBanner from "@/components/molecules/CtaBanner";
+import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 import ContactUs from "@/components/organisms/ContactUs";
-import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
-export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/sitecore");
-}
+const IndustriesWeServe = dynamic(() => import("@/components/organisms/IndustriesWeServe"), { ssr: false });
 
-export default async function SitecorePage() {
-    const service = "sitecore";
-    const data = await getServiceListBySlug(service);
-    if (!data) return notFound();
+type SiteDetailClientProps = {
+    data: SubServicePage;
+};
 
-    const bannerData = data.Banner?.Banner?.[0];
+const SiteDetailClient = ({ data }: SiteDetailClientProps) => {
+    const bannerData = data.HeroBanner;
 
     return (
         <main className="bg-dark">
@@ -40,13 +39,14 @@ export default async function SitecorePage() {
             <OurServicesWithTabs data={data.our_service} />
             <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
-            <CtaBanner2 data={data.cta2} />
+            <ServiceCtaBanner2 data={data.cta2} />
             <OurProcess />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
-            <CtaBanner data={data.cta} />
             <ContactUs data={data.contact_us} />
         </main>
     );
-}
+};
+
+export default SiteDetailClient;

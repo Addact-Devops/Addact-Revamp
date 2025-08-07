@@ -2,6 +2,11 @@
 
 import { getPrivacyPolicy } from "@/graphql/queries/getPrivacyPolicy";
 import parse from "html-react-parser";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("privacyPolicy");
+}
 
 export default async function PrivacyPolicyPage() {
     const data = await getPrivacyPolicy();
