@@ -14,7 +14,7 @@ type EventCardProps = {
     imageUrl: string;
     slug: string;
     pageType?: string;
-    linkText?: string; // NEW
+    linkText?: string;
 };
 
 export default function EventCard({
@@ -30,9 +30,10 @@ export default function EventCard({
     const pathname = usePathname(); // e.g. “/event”
     const base = pathname.replace(/\/$/, ""); // strip trailing “/”
     const cleanSlug = slug.replace(/^\//, ""); // strip leading “/”
-    const href = `${base}/${cleanSlug}`;
 
-    const status = date ? getEventStatus(date, pageType) : null;
+    const href = slug.startsWith("http") ? slug : `${base}/${cleanSlug}`;
+
+    const status = getEventStatus(date, pageType);
 
     return (
         <div className='container flex flex-col md:flex-row gap-6 mb-24 rounded-2xl shadow-md overflow-hidden'>
@@ -72,6 +73,8 @@ export default function EventCard({
                 <div className='mt-4'>
                     <Link
                         href={href}
+                        target={slug.startsWith("http") ? "_blank" : undefined}
+                        rel={slug.startsWith("http") ? "noopener noreferrer" : undefined}
                         className='inline-flex items-center px-6 py-3 bg-blue-600 font-medium text-white !text-base rounded-full hover:bg-indigo-700 transition'
                     >
                         {linkText} <ArrowRight size={16} className='ml-2' />

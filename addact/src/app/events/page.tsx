@@ -21,19 +21,23 @@ export default async function EventsPage() {
                 description={banner.BannerDescription || ""}
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
-            <div className="pt-24">
+            <div className='pt-24'>
                 {data.addactsEvents.map((event, index: number) => {
                     const banner = event.EventBanner[0];
+                    const formattedDate = banner.PublishDate
+                        ? new Date(banner.PublishDate).toLocaleDateString("en-GB", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                          })
+                        : undefined;
+
                     return (
                         <EventCard
                             key={index}
-                            pageType="Event"
+                            pageType='Event'
                             title={banner.BannerTitle}
-                            date={new Date(banner.PublishDate).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                            })}
+                            date={formattedDate}
                             location={banner.eventLocation}
                             description={event.EventSummary}
                             imageUrl={banner.BannerImage.url}

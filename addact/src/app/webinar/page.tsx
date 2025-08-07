@@ -21,19 +21,23 @@ export default async function SitecorePage() {
                 description={banner.BannerDescription || ""}
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
-            <div className="pt-24">
+            <div className='pt-24'>
                 {data.addactWebinars.map((event, index: number) => {
                     const banner = event.HeroBanner[0];
+                    const formattedDate = banner.PublishDate
+                        ? new Date(banner.PublishDate).toLocaleDateString("en-GB", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                          })
+                        : undefined;
+
                     return (
                         <EventCard
                             key={index}
-                            pageType="Webinar"
+                            pageType='Webinar'
                             title={banner.BannerTitle}
-                            date={new Date(banner.PublishDate).toLocaleDateString("en-GB", {
-                                day: "2-digit",
-                                month: "short",
-                                year: "numeric",
-                            })}
+                            date={formattedDate}
                             description={banner.BannerDescription}
                             imageUrl={banner.BannerImage.url}
                             slug={event.Slug}

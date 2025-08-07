@@ -9,6 +9,7 @@ import { getWebinarDetailBySlug, WebinarDetailResponse } from "@/graphql/queries
 import { getEventStatus } from "@/utils/getEventStatus";
 import "../../../styles/components/caseStudy-detail.scss";
 import Loader from "@/components/atom/loader";
+import Link from "next/link";
 
 const WebinarDetails = () => {
     const { slug } = useParams();
@@ -59,10 +60,13 @@ const WebinarDetails = () => {
                                 })}
                             </p>
                         </div>
-                        <button className='flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors'>
+                        <Link
+                            href={webinarDetailData.addactWebinars[0].HeroBanner[0].ReadNow.href}
+                            className='flex items-center gap-2 w-44 bg-blue-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors'
+                        >
                             Watch Now
                             <ArrowRight size={18} />
-                        </button>
+                        </Link>
                     </div>
                     <div className='relative aspect-[16/9] md:aspect-auto w-full md:h-auto'>
                         <Image
