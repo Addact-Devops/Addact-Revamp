@@ -10,6 +10,7 @@ import { getEventStatus } from "@/utils/getEventStatus";
 import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
 import Loader from "@/components/atom/loader";
+import Link from "next/link";
 
 const EventDetails = () => {
     const { slug } = useParams();
@@ -72,10 +73,13 @@ const EventDetails = () => {
                             </div>
                         </div>
 
-                        <button className='flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors'>
+                        <Link
+                            href={`/contact-us`}
+                            className='flex items-center gap-2 bg-blue-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors'
+                        >
                             Let’s talk
                             <ArrowRight size={18} />
-                        </button>
+                        </Link>
                     </div>
 
                     <div className='relative aspect-[16/9] md:aspect-auto w-full md:h-auto'>
