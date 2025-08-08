@@ -1,0 +1,171 @@
+@import "base/variables";
+@import "base/mixins";
+@import "base/typography";
+@import "base/functions";
+
+// Optional reset
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $font-main;
+    background-color: $primary-color;
+    color: $white;
+}
+
+/* Progress bar style scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    height: 1px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #3c4cff;
+    border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.custom-scrollbar {
+    scrollbar-color: #3c4cff transparent; /* Firefox */
+    scrollbar-width: thin; /* Firefox */
+}
+
+.bg-dark {
+    background-color: $primary-color;
+}
+
+.container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+
+    @media (min-width: 1400px) {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    @media (max-width: 1299px) {
+        width: calc(100% - 5%);
+        max-width: 100%;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    @media (max-width: 991px) {
+        width: 100%;
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+    @media (min-width: 1920px) {
+        max-width: 1600px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.gap {
+    margin: 240px auto;
+}
+
+footer {
+    .custom-html-content {
+        p,
+        a {
+            @media (max-width: 1200px) {
+                font-size: 16px !important;
+            }
+        }
+    }
+
+    .footer-richtext {
+        a {
+            display: block;
+            margin-top: 10px;
+        }
+
+        p,
+        a {
+            font-size: 14px !important;
+            font-weight: 400;
+        }
+    }
+}
+
+@media (max-width: 1023px) {
+    .slick-slider {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .slick-slide {
+        padding-left: 0 !important;
+    }
+
+    .slick-slide > div {
+        padding-left: 6%;
+        padding-right: 6%;
+    }
+}
+
+@media (max-width: 575px) {
+    .slick-slide > div {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+.company-policy {
+    padding: 200px 0 100px;
+
+    @media (max-width: 991px) {
+        padding: 150px 0 60px;
+    }
+
+    h1 {
+        font-size: 45px;
+        line-height: 60px;
+        font-family: var(--font-poppins);
+        color: #000;
+        font-weight: 400;
+        margin: 0;
+        margin-bottom: 60px;
+
+        @media (max-width: 991px) {
+            margin-bottom: 50px;
+        }
+    }
+
+    .privacy-title,
+    h3 {
+        font-size: 25px;
+        line-height: 35px;
+        font-weight: 700;
+        margin: 40px 0 30px;
+    }
+
+    p {
+        font-size: 17px;
+        line-height: 35px;
+        margin-bottom: 30px;
+        font-weight: 400;
+
+        @media (max-width: 991px) {
+            font-size: 15px;
+            line-height: 25px;
+            margin-bottom: 15px;
+        }
+    }
+
+    .link {
+        text-align: left;
+        font: normal normal 600 17px / 35px Poppins;
+        letter-spacing: 0;
+        color: #3c4cff;
+    }
+}

@@ -1,7 +1,13 @@
-import type { NextConfig } from "next";
+const redirects = require("./redirects");
 
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    images: {
+        domains: ["d3l7d9gtq0bnch.cloudfront.net"],
+    },
+    async redirects() {
+        return redirects;
+    },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
