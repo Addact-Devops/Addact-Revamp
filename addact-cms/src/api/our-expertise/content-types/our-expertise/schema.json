@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "our_expertises",
+  "info": {
+    "singularName": "our-expertise",
+    "pluralName": "our-expertises",
+    "displayName": "OurExpertise"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageReference": {
+      "type": "string"
+    },
+    "ExpertiseTitle": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.title-with-description"
+      ]
+    },
+    "CMS": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.image",
+        "shared.link",
+        "base-template.link-image"
+      ]
+    }
+  }
+}

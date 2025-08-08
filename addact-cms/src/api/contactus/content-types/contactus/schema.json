@@ -1,0 +1,64 @@
+{
+  "kind": "singleType",
+  "collectionName": "contactuses",
+  "info": {
+    "singularName": "contactus",
+    "pluralName": "contactuses",
+    "displayName": "contactus"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "PageHeading": {
+      "type": "component",
+      "component": "base-template.base-heading",
+      "repeatable": false
+    },
+    "banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "AddactTeamImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "TitleLine1": {
+      "type": "text"
+    },
+    "TitleLine2": {
+      "type": "text"
+    },
+    "Descriptions": {
+      "type": "blocks"
+    },
+    "ContactUsAvailability": {
+      "type": "component",
+      "component": "addact-component.contact-us-days-online-offline",
+      "repeatable": true
+    },
+    "AddressContent": {
+      "type": "component",
+      "component": "addact-component.contact-us-address",
+      "repeatable": false
+    },
+    "ContactUsFormBlock": {
+      "type": "component",
+      "component": "addact-component.contact-form-block",
+      "repeatable": false
+    }
+  }
+}

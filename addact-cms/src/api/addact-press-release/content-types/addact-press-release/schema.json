@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addact_press_releases",
+  "info": {
+    "singularName": "addact-press-release",
+    "pluralName": "addact-press-releases",
+    "displayName": "AddactPressRelease"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "string",
+      "required": true
+    },
+    "HeroBanner": {
+      "type": "dynamiczone",
+      "components": [
+        "blog-hero-banner.blog-hero-banner"
+      ]
+    },
+    "PressReleaseSummary": {
+      "type": "text"
+    },
+    "PressContent": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.link",
+        "shared.image",
+        "headings.h1",
+        "headings.h2",
+        "headings.h3",
+        "headings.h4",
+        "headings.h5",
+        "headings.h6",
+        "base-template.richtext"
+      ]
+    },
+    "social_icons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::social-icon.social-icon"
+    }
+  }
+}

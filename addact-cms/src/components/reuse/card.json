@@ -1,0 +1,57 @@
+{
+  "collectionName": "components_reuse_cards",
+  "info": {
+    "displayName": "Card",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "LogoTitle": {
+      "type": "string"
+    },
+    "LogoLink": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.link"
+    },
+    "Icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "HoverIcon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "AerrowIcon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "TitleIcon": {
+      "displayName": "TitleIcon",
+      "type": "component",
+      "repeatable": true,
+      "component": "title-icon.title-icon"
+    }
+  }
+}

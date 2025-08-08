@@ -42,6 +42,9 @@
       "type": "component",
       "component": "shared.link",
       "repeatable": false
+    },
+    "eventLocation": {
+      "type": "string"
     }
   },
   "config": {}

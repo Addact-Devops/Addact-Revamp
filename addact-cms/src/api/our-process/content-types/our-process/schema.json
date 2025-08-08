@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "our_processes",
+  "info": {
+    "singularName": "our-process",
+    "pluralName": "our-processes",
+    "displayName": "OurProcess"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageReference": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h6",
+        "headings.h5",
+        "headings.h4",
+        "headings.h3",
+        "headings.h2",
+        "headings.h1"
+      ]
+    },
+    "ProcessData": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.title-with-description"
+      ]
+    }
+  }
+}

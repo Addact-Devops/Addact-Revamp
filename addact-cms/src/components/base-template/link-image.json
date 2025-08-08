@@ -1,0 +1,57 @@
+{
+  "collectionName": "components_base_template_link_images",
+  "info": {
+    "displayName": "LinkImage",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Links": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "Icons": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "HoverIcon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "ClassName": {
+      "type": "enumeration",
+      "enum": [
+        "facebook-icon",
+        "instagram-icon",
+        "twitter-icon",
+        "linkedin-icon",
+        "social-open",
+        "social-close",
+        "sitecore-bg",
+        "umbraco-bg",
+        "strapi-bg",
+        "kentico-bg",
+        "contentstack-bg",
+        "contentful-bg"
+      ]
+    }
+  }
+}

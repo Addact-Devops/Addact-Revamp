@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_banner_event_banners",
+  "info": {
+    "displayName": "EventBanner"
+  },
+  "options": {},
+  "attributes": {
+    "HeroBanner": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "EventType": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

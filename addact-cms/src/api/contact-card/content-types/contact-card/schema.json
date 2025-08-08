@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_cards",
+  "info": {
+    "singularName": "contact-card",
+    "pluralName": "contact-cards",
+    "displayName": "ContactCard"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageReference": {
+      "type": "string"
+    },
+    "ContactCard": {
+      "type": "dynamiczone",
+      "components": [
+        "card.card"
+      ]
+    }
+  }
+}

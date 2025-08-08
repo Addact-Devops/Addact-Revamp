@@ -1,0 +1,65 @@
+{
+  "kind": "singleType",
+  "collectionName": "brand_guidelines",
+  "info": {
+    "singularName": "brand-guideline",
+    "pluralName": "brand-guidelines",
+    "displayName": "brand-guideline"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "string",
+      "required": true
+    },
+    "HeroBanner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "Content": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h1",
+        "headings.h2",
+        "headings.h3",
+        "headings.h4",
+        "headings.h5",
+        "headings.h6",
+        "base-template.richtext",
+        "shared.image",
+        "shared.link"
+      ]
+    },
+    "GuidelinePDF": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "FormFileds": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    },
+    "FromTitle": {
+      "type": "string"
+    }
+  }
+}

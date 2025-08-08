@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_contact_us_component_title_sub_titel_and_images",
+  "info": {
+    "displayName": "Title SubTitel And Image"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "titel": {
+      "type": "text"
+    },
+    "description": {
+      "type": "text"
+    },
+    "subTitel": {
+      "type": "text"
+    },
+    "dayStatus": {
+      "type": "component",
+      "component": "contact-us-component.day-status",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,64 +1,56 @@
 {
   "collectionName": "components_shared_seos",
   "info": {
-    "displayName": "seo",
-    "icon": "search",
-    "description": ""
+    "displayName": "seo"
   },
   "options": {},
   "attributes": {
     "metaTitle": {
-      "required": true,
-      "type": "string"
+      "type": "text"
     },
     "metaDescription": {
-      "type": "string",
-      "required": true
+      "type": "text"
     },
-    "metaImage": {
+    "ogTitle": {
+      "type": "text"
+    },
+    "ogDescription": {
+      "type": "text"
+    },
+    "ogImage": {
       "type": "media",
       "multiple": false,
-      "required": false,
       "allowedTypes": [
         "images",
         "files",
-        "videos"
+        "videos",
+        "audios"
       ]
     },
-    "metaSocial": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.meta-social"
-    },
-    "keywords": {
-      "type": "text",
-      "regex": "[^,]+"
-    },
     "metaRobots": {
-      "type": "string",
-      "regex": "[^,]+"
+      "type": "enumeration",
+      "enum": [
+        "index",
+        "follow",
+        "noindex",
+        "nofollow"
+      ]
     },
-    "metaViewport": {
-      "type": "string"
+    "twitterCardTitle": {
+      "type": "text"
     },
     "canonicalURL": {
-      "type": "string"
-    },
-    "h1": {
-      "type": "string"
-    },
-    "SEOCard": {
-      "type": "component",
-      "repeatable": false,
-      "component": "shared.s-eo-card"
-    },
-    "Sitename": {
-      "type": "string"
+      "type": "text"
     },
     "structuredData": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.structured-data"
+      "type": "json"
+    },
+    "languageTag": {
+      "type": "enumeration",
+      "enum": [
+        "en"
+      ]
     }
-  }
+  },
+  "config": {}
 }

@@ -8,14 +8,6 @@
   "attributes": {
     "PageTitle": {
       "type": "string"
-    },
-    "Slug": {
-      "type": "string"
-    },
-    "BlogTag": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::blog-category.blog-category"
     }
   },
   "config": {}

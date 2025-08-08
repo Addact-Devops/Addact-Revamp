@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_banner_banners",
+  "info": {
+    "displayName": "Banner",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "BannerTitle": {
+      "type": "string"
+    },
+    "BannerDescription": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "BannerImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "BannerLink": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "show_searchbox": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "config": {}
+}

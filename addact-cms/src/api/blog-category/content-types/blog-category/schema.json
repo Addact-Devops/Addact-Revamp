@@ -15,6 +15,9 @@
       "type": "component",
       "component": "base-template.title-tag",
       "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string"
     }
   }
 }

@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_addact_component_galleries",
+  "info": {
+    "displayName": "GalleryImageItem"
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files"
+      ]
+    },
+    "Year": {
+      "type": "integer"
+    }
+  },
+  "config": {}
+}

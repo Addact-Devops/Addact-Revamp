@@ -20,9 +20,12 @@
     },
     "target": {
       "type": "enumeration",
-      "default": "_blank",
+      "default": "_self",
       "enum": [
-        "_blank"
+        "_self",
+        "_blank",
+        "_parent",
+        "_top"
       ]
     },
     "isExternal": {

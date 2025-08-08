@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_heading_section_h5s",
+  "info": {
+    "displayName": "h5"
+  },
+  "options": {},
+  "attributes": {
+    "h5": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

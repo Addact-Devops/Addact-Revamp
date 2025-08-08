@@ -20,6 +20,16 @@
       "type": "component",
       "component": "shared.link",
       "repeatable": false
+    },
+    "BgImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   },
   "config": {}

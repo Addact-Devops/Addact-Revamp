@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "thank_yous",
+  "info": {
+    "singularName": "thank-you",
+    "pluralName": "thank-yous",
+    "displayName": "thank-you "
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "PageHeading": {
+      "type": "component",
+      "component": "base-template.base-heading",
+      "repeatable": false
+    }
+  }
+}

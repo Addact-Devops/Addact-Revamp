@@ -6,10 +6,13 @@
   },
   "options": {},
   "attributes": {
+    "Title": {
+      "type": "string"
+    },
     "LinkIcons": {
       "type": "component",
-      "repeatable": true,
-      "component": "shared.link"
+      "component": "shared.link",
+      "repeatable": true
     },
     "Icons": {
       "type": "media",

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_heading_section_h4s",
+  "info": {
+    "displayName": "h4"
+  },
+  "options": {},
+  "attributes": {
+    "h5": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

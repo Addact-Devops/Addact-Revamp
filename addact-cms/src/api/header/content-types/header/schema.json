@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "headers",
+  "info": {
+    "singularName": "header",
+    "pluralName": "headers",
+    "displayName": "Header"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "HeaderLogo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "main_navigations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::header-sub-nav.header-sub-nav"
+    },
+    "contact_us": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.link"
+      ]
+    }
+  }
+}

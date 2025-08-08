@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "industries_we_serves",
+  "info": {
+    "singularName": "industries-we-serve",
+    "pluralName": "industries-we-serves",
+    "displayName": "IndustriesWeServe"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "TitleDescription": {
+      "type": "component",
+      "component": "base-template.title-with-description",
+      "repeatable": false
+    },
+    "Industries": {
+      "type": "component",
+      "component": "shared.link-icons",
+      "repeatable": true
+    }
+  }
+}

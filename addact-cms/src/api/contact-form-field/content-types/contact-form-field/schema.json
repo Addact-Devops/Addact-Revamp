@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contact_form_fields",
+  "info": {
+    "singularName": "contact-form-field",
+    "pluralName": "contact-form-fields",
+    "displayName": "ContactUsFormField"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fullName": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "requirements": {
+      "type": "blocks"
+    },
+    "submittedAt": {
+      "type": "datetime"
+    }
+  }
+}

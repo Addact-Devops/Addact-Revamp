@@ -15,6 +15,9 @@
       "type": "component",
       "component": "author.author",
       "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string"
     }
   }
 }

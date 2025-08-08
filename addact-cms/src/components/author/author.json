@@ -17,13 +17,6 @@
         "preset": "defaultHtml"
       }
     },
-    "Designation": {
-      "type": "enumeration",
-      "enum": [
-        "CEO",
-        "CTO"
-      ]
-    },
     "AuthorImage": {
       "type": "media",
       "multiple": false,
@@ -33,6 +26,11 @@
         "videos",
         "audios"
       ]
+    },
+    "designation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author-designation.author-designation"
     }
   },
   "config": {}

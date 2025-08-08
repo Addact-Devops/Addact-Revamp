@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "who_are_wes",
+  "info": {
+    "singularName": "who-are-we",
+    "pluralName": "who-are-wes",
+    "displayName": "WhoAreWe"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageReference": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.title-with-description"
+      ]
+    },
+    "Counter": {
+      "type": "dynamiczone",
+      "components": [
+        "counter.counter"
+      ]
+    }
+  }
+}

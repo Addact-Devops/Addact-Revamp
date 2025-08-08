@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "header_sub_navs",
+  "info": {
+    "singularName": "header-sub-nav",
+    "pluralName": "header-sub-navs",
+    "displayName": "HeaderSubNav"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "Parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::header-navigation.header-navigation"
+    },
+    "SubNavImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "SubNavLink": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.link"
+      ]
+    }
+  }
+}

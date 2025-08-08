@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_features",
+  "info": {
+    "singularName": "team-feature",
+    "pluralName": "team-features",
+    "displayName": "TeamFeature"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "text"
+    },
+    "Cards": {
+      "type": "component",
+      "component": "base-template.title-with-description",
+      "repeatable": true
+    }
+  }
+}
