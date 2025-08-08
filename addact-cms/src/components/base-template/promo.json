@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_base_template_promos",
+  "info": {
+    "displayName": "Promo",
+    "icon": "book"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Link": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "sub_service_page": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::sub-service-page.sub-service-page"
+    }
+  },
+  "config": {}
+}

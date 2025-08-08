@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "footer_links",
+  "info": {
+    "singularName": "footer-link",
+    "pluralName": "footer-links",
+    "displayName": "FooterLink"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "NavLink": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.title",
+        "shared.link"
+      ]
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "services",
+  "info": {
+    "singularName": "service",
+    "pluralName": "services",
+    "displayName": "OurServices-ServiceList"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "Titeldescription": {
+      "type": "component",
+      "component": "base-template.title-with-description",
+      "repeatable": true
+    },
+    "ForEnterprisesBrands": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "team_feature": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::team-feature.team-feature"
+    }
+  }
+}

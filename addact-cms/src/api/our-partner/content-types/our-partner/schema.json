@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "our_partners",
+  "info": {
+    "singularName": "our-partner",
+    "pluralName": "our-partners",
+    "displayName": "OurPartner"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ComponentName": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h6",
+        "headings.h5",
+        "headings.h4",
+        "headings.h3",
+        "headings.h2",
+        "headings.h1"
+      ]
+    },
+    "Image": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.image"
+      ]
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "common_titles",
+  "info": {
+    "singularName": "common-title",
+    "pluralName": "common-titles",
+    "displayName": "CommonTitle"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "CommonTitle": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.title-with-description"
+      ]
+    },
+    "Slug": {
+      "type": "string",
+      "unique": true
+    }
+  }
+}

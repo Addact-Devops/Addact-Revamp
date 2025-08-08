@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_base_template_titles",
+  "info": {
+    "displayName": "Title",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addacts_events",
+  "info": {
+    "singularName": "addact-events",
+    "pluralName": "addacts-events",
+    "displayName": "AddactEvents"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "string",
+      "required": true
+    },
+    "EventBanner": {
+      "type": "dynamiczone",
+      "components": [
+        "blog-hero-banner.blog-hero-banner"
+      ]
+    },
+    "HeadingSection": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.common-section"
+      ]
+    },
+    "EventSummary": {
+      "type": "text"
+    },
+    "EventContent": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h1",
+        "headings.h2",
+        "headings.h3",
+        "headings.h4",
+        "headings.h5",
+        "headings.h6",
+        "base-template.richtext",
+        "shared.image",
+        "shared.link"
+      ]
+    },
+    "contact_us_card": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    }
+  }
+}

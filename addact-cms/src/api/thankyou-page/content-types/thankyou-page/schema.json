@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "thankyou_pages",
+  "info": {
+    "singularName": "thankyou-page",
+    "pluralName": "thankyou-pages",
+    "displayName": "ThankyouPage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.richtext",
+        "shared.link",
+        "headings.h1",
+        "headings.h2",
+        "headings.h3",
+        "headings.h4",
+        "headings.h5",
+        "headings.h6"
+      ]
+    },
+    "AnimationVideo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

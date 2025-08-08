@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_addact_component_gallery_titles",
+  "info": {
+    "displayName": "GalleryTitles"
+  },
+  "options": {},
+  "attributes": {
+    "SubTitle": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "text",
+      "required": true
+    }
+  },
+  "config": {}
+}

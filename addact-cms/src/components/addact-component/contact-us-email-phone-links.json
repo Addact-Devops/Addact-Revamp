@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_addact_component_contact_us_email_phone_links",
+  "info": {
+    "displayName": "ContactUSEmailPhoneLinks"
+  },
+  "options": {},
+  "attributes": {
+    "Label": {
+      "type": "string"
+    },
+    "Link": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

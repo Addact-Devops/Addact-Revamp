@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_addact_component_contact_us_days_online_offline_s",
+  "info": {
+    "displayName": "ContactUsDays(Online/Offline)"
+  },
+  "options": {},
+  "attributes": {
+    "Days": {
+      "type": "string"
+    },
+    "Availability": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

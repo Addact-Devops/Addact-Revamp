@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_base_template_title_tags",
+  "info": {
+    "displayName": "TitleTag",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "CategoryTitle": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

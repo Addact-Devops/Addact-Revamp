@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "author_designations",
+  "info": {
+    "singularName": "author-designation",
+    "pluralName": "author-designations",
+    "displayName": "AuthorDesignation"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "DesignationTitle": {
+      "type": "string"
+    }
+  }
+}

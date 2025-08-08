@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_addact_component_we_are_addacts",
+  "info": {
+    "displayName": "We Are Addact"
+  },
+  "options": {},
+  "attributes": {
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "SubTitle": {
+      "type": "text"
+    },
+    "Title": {
+      "type": "text"
+    },
+    "Content": {
+      "type": "blocks"
+    },
+    "NumberContent": {
+      "type": "component",
+      "component": "shared.number-value-counter",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

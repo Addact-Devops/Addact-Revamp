@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_contact_us_component_office_locations",
+  "info": {
+    "displayName": "office-location"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "address": {
+      "type": "blocks"
+    },
+    "email": {
+      "type": "email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "map_iframe": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

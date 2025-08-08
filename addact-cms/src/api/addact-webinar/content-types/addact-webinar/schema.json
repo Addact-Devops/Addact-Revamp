@@ -1,0 +1,61 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addact_webinars",
+  "info": {
+    "singularName": "addact-webinar",
+    "pluralName": "addact-webinars",
+    "displayName": "AddactWebinar"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "string",
+      "required": true
+    },
+    "HeroBanner": {
+      "type": "dynamiczone",
+      "components": [
+        "blog-hero-banner.blog-hero-banner"
+      ]
+    },
+    "WebinarSummary": {
+      "type": "text"
+    },
+    "WebinarContent": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h1",
+        "headings.h2",
+        "headings.h3",
+        "headings.h4",
+        "headings.h5",
+        "headings.h6",
+        "base-template.richtext",
+        "shared.image",
+        "shared.link"
+      ]
+    },
+    "Speakers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::author.author"
+    },
+    "Host": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::author.author"
+    }
+  }
+}

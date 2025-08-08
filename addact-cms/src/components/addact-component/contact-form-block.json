@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_addact_component_contact_form_blocks",
+  "info": {
+    "displayName": "ContactFormBlock"
+  },
+  "options": {},
+  "attributes": {
+    "LeftTitle": {
+      "type": "string"
+    },
+    "LeftDescription": {
+      "type": "blocks"
+    },
+    "LeftBackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "RightTitle": {
+      "type": "string"
+    },
+    "RightDescription": {
+      "type": "blocks"
+    }
+  },
+  "config": {}
+}

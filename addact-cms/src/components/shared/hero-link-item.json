@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_hero_link_items",
+  "info": {
+    "displayName": "HeroLinkItem"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "scrollId": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

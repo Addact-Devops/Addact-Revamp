@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_title_icon_title_icons",
+  "info": {
+    "displayName": "TitleIcon"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Icon": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

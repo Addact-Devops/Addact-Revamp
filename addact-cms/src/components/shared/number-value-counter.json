@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_number_value_counters",
+  "info": {
+    "displayName": "Number Value Counter"
+  },
+  "options": {},
+  "attributes": {
+    "Number": {
+      "type": "string"
+    },
+    "Content": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_heading_section_h2s",
+  "info": {
+    "displayName": "h2"
+  },
+  "options": {},
+  "attributes": {
+    "h2": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

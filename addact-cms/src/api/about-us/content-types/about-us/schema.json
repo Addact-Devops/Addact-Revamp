@@ -1,0 +1,60 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_uses",
+  "info": {
+    "singularName": "about-us",
+    "pluralName": "about-uses",
+    "displayName": "about-us"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "PageHeading": {
+      "type": "component",
+      "component": "base-template.base-heading",
+      "repeatable": false
+    },
+    "HeroBanner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "Quote": {
+      "type": "component",
+      "component": "addact-component.quote",
+      "repeatable": false
+    },
+    "AboutUsContent": {
+      "type": "component",
+      "component": "addact-component.aboutus-content",
+      "repeatable": false
+    },
+    "OurVisionMission": {
+      "type": "component",
+      "component": "addact-component.vision-mission",
+      "repeatable": true
+    },
+    "aboutUsCTA": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cta.cta"
+    },
+    "BrandValue": {
+      "type": "component",
+      "component": "addact-component.aboutus-content",
+      "repeatable": false
+    },
+    "WeAreAddact": {
+      "type": "component",
+      "component": "addact-component.we-are-addact",
+      "repeatable": false
+    }
+  }
+}

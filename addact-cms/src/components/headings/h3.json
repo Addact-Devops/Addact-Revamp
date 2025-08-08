@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_heading_section_h3s",
+  "info": {
+    "displayName": "h3"
+  },
+  "options": {},
+  "attributes": {
+    "h3": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}
