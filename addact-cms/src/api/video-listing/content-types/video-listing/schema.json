@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "video_listings",
+  "info": {
+    "singularName": "video-listing",
+    "pluralName": "video-listings",
+    "displayName": "VideoListing"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "PageHeading": {
+      "type": "component",
+      "component": "base-template.base-heading",
+      "repeatable": false
+    },
+    "banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "VideoList": {
+      "type": "component",
+      "component": "addact-component.video-block",
+      "repeatable": true
+    }
+  }
+}

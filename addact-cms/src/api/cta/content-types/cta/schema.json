@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ctas",
+  "info": {
+    "singularName": "cta",
+    "pluralName": "ctas",
+    "displayName": "CTA"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "text"
+    },
+    "pageReference": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h6",
+        "headings.h5",
+        "headings.h4",
+        "headings.h3",
+        "headings.h2",
+        "headings.h1"
+      ]
+    },
+    "CTADescription": {
+      "type": "blocks"
+    },
+    "CTAImage": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.image"
+      ]
+    },
+    "CTALink": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.link"
+      ]
+    }
+  }
+}

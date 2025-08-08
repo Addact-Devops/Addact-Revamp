@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "weekday_infos",
+  "info": {
+    "singularName": "weekday-info",
+    "pluralName": "weekday-infos",
+    "displayName": "weekday-info"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "TitelDescription": {
+      "type": "component",
+      "component": "base-template.title-with-description",
+      "repeatable": true
+    },
+    "image": {
+      "type": "component",
+      "component": "shared.image",
+      "repeatable": true
+    },
+    "weekdays": {
+      "type": "component",
+      "component": "contact-us-component.day-status",
+      "repeatable": true
+    }
+  }
+}

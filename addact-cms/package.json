@@ -1,0 +1,46 @@
+{
+  "name": "addact-cms",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Strapi application",
+  "scripts": {
+    "build": "strapi build",
+    "console": "strapi console",
+    "deploy": "strapi deploy",
+    "dev": "strapi develop",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+  },
+  "dependencies": {
+    "@_sh/strapi-plugin-ckeditor": "^6.0.2",
+    "@strapi/plugin-cloud": "5.16.0",
+    "@strapi/plugin-graphql": "^5.16.0",
+    "@strapi/plugin-users-permissions": "5.16.0",
+    "@strapi/provider-upload-aws-s3": "^5.15.0",
+    "@strapi/strapi": "5.16.0",
+    "mysql2": "3.9.8",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "strapi-5-sitemap-plugin": "^1.0.7",
+    "styled-components": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.8",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
+  },
+  "strapi": {
+    "uuid": "a0cc4a58-d412-42d5-a9f4-345f95feb7b6",
+    "installId": "34edbd2f513c27a2eadf23425aeddfacadf4bedd0b69ea35692808a0d0d2b032"
+  }
+}

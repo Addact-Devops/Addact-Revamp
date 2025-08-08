@@ -1,0 +1,89 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sub_service_pages",
+  "info": {
+    "singularName": "sub-service-page",
+    "pluralName": "sub-service-pages",
+    "displayName": "SubServicePage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "string",
+      "required": true
+    },
+    "HeroBanner": {
+      "type": "component",
+      "component": "banner.banner",
+      "repeatable": false
+    },
+    "service_list": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::service-list.service-list",
+      "inversedBy": "sub_services"
+    },
+    "our_partner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-partner.our-partner"
+    },
+    "our_service": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::service.service"
+    },
+    "why_addact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.cta",
+      "repeatable": false
+    },
+    "cta2": {
+      "type": "component",
+      "component": "shared.cta",
+      "repeatable": false
+    },
+    "faq": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::faq.faq"
+    },
+    "our_process": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-process.our-process"
+    },
+    "client_testimonial": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::client-testimonial.client-testimonial"
+    },
+    "contact_us": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    },
+    "industries_we_serve": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::industries-we-serve.industries-we-serve"
+    }
+  }
+}

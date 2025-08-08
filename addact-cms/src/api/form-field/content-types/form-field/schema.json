@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "form_fields",
+  "info": {
+    "singularName": "form-field",
+    "pluralName": "form-fields",
+    "displayName": "FormField"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageReference": {
+      "type": "string"
+    },
+    "Form": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.promo"
+      ]
+    },
+    "NameLable": {
+      "type": "string"
+    },
+    "CompanyName": {
+      "type": "string"
+    },
+    "RequirementsLabel": {
+      "type": "string"
+    },
+    "ButtonLabel": {
+      "type": "string"
+    },
+    "EmailLabel": {
+      "type": "string"
+    },
+    "RecipientEmails": {
+      "type": "text"
+    },
+    "PhoneLabel": {
+      "type": "string"
+    },
+    "GeneralText": {
+      "type": "string"
+    }
+  }
+}

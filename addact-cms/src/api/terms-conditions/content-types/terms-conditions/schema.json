@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "terms_condition",
+  "info": {
+    "singularName": "terms-conditions",
+    "pluralName": "terms-condition",
+    "displayName": "terms conditions"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "PageHeading": {
+      "type": "component",
+      "component": "base-template.base-heading",
+      "repeatable": false
+    },
+    "BodyContent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
+    }
+  }
+}

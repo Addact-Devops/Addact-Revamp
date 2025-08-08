@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_counter_counters",
+  "info": {
+    "displayName": "Counter",
+    "icon": "globe"
+  },
+  "options": {},
+  "attributes": {
+    "CounterTitle": {
+      "type": "string"
+    },
+    "NumberCount": {
+      "type": "biginteger"
+    }
+  },
+  "config": {}
+}

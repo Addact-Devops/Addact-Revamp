@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_addact_component_contact_us_addresses",
+  "info": {
+    "displayName": "ContactUSAddress"
+  },
+  "options": {},
+  "attributes": {
+    "OfficeCountry": {
+      "type": "string"
+    },
+    "OfficeCity": {
+      "type": "string"
+    },
+    "Address": {
+      "type": "text"
+    },
+    "ContactUsEmailPhone": {
+      "type": "component",
+      "component": "addact-component.contact-us-email-phone-links",
+      "repeatable": true
+    },
+    "MapIframe": {
+      "type": "blocks"
+    }
+  },
+  "config": {}
+}

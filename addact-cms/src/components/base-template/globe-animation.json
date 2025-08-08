@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_base_template_globe_animations",
+  "info": {
+    "displayName": "GlobeAnimation",
+    "icon": "magic"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Locations": {
+      "type": "text"
+    },
+    "Video": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

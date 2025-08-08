@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_shared_ctas",
+  "info": {
+    "displayName": "CTA Card"
+  },
+  "options": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "CtaTitle": {
+      "type": "string"
+    },
+    "CtaDescription": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "CtaImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "CtaLink": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_author_authors",
+  "info": {
+    "displayName": "Author",
+    "icon": "walk"
+  },
+  "options": {},
+  "attributes": {
+    "AuthorName": {
+      "type": "string",
+      "unique": true
+    },
+    "AuthorDescription": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "AuthorImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "designation": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author-designation.author-designation"
+    }
+  },
+  "config": {}
+}

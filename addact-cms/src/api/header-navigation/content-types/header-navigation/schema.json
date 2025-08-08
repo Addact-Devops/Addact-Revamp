@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "header_navigations",
+  "info": {
+    "singularName": "header-navigation",
+    "pluralName": "header-navigations",
+    "displayName": "HeaderNavigation"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "HeaderNavLink": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.title"
+      ]
+    }
+  }
+}

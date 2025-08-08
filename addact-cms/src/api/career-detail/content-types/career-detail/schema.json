@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "career_details",
+  "info": {
+    "singularName": "career-detail",
+    "pluralName": "career-details",
+    "displayName": "Career-Detail"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "string"
+    },
+    "PageHeading": {
+      "type": "component",
+      "component": "base-template.base-heading",
+      "repeatable": true
+    },
+    "Banner": {
+      "type": "dynamiczone",
+      "components": [
+        "banner.banner"
+      ]
+    },
+    "JobDescription": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h6",
+        "headings.h5",
+        "headings.h4",
+        "headings.h3",
+        "headings.h2",
+        "headings.h1",
+        "base-template.richtext",
+        "shared.link",
+        "shared.image"
+      ]
+    },
+    "careers_form": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::careers-form.careers-form"
+    }
+  }
+}

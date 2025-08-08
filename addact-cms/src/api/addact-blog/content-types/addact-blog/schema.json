@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addact_blogs",
+  "info": {
+    "singularName": "addact-blog",
+    "pluralName": "addact-blogs",
+    "displayName": "AddactBlog"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "HeadingSection": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.common-section"
+      ]
+    },
+    "BlogBanner": {
+      "type": "dynamiczone",
+      "components": [
+        "blog-hero-banner.blog-hero-banner"
+      ]
+    },
+    "BlogContent": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h6",
+        "headings.h5",
+        "headings.h4",
+        "headings.h3",
+        "headings.h2",
+        "headings.h1",
+        "shared.image",
+        "shared.link",
+        "base-template.richtext"
+      ]
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::author.author"
+    },
+    "similarBlogs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::addact-blog.addact-blog"
+    },
+    "socialicons": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::social-icon.social-icon"
+    },
+    "Slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "similarstorytitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
+    },
+    "blog_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::blog-category.blog-category"
+    },
+    "contactCard": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::contact-card.contact-card"
+    }
+  }
+}

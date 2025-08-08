@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_heading_section_h6s",
+  "info": {
+    "displayName": "h6"
+  },
+  "options": {},
+  "attributes": {
+    "h6": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

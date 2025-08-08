@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_addact_component_vision_missions",
+  "info": {
+    "displayName": "VisionMission"
+  },
+  "options": {},
+  "attributes": {
+    "SubTitle": {
+      "type": "text"
+    },
+    "Title": {
+      "type": "text"
+    },
+    "Description": {
+      "type": "blocks"
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

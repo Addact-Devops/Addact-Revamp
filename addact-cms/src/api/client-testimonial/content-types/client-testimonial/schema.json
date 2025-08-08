@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "client_testimonials",
+  "info": {
+    "singularName": "client-testimonial",
+    "pluralName": "client-testimonials",
+    "displayName": "ClientTestimonial"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Item": {
+      "type": "component",
+      "component": "addact-component.client-testimonial-items",
+      "repeatable": true
+    }
+  }
+}

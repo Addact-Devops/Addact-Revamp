@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_contact_us_component_day_statuses",
+  "info": {
+    "displayName": "day-status"
+  },
+  "options": {},
+  "attributes": {
+    "day_range": {
+      "type": "string"
+    },
+    "activeStatus": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

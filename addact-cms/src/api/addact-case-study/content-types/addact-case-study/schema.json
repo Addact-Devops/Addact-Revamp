@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addact_case_studies",
+  "info": {
+    "singularName": "addact-case-study",
+    "pluralName": "addact-case-studies",
+    "displayName": "AddactCaseStudy"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "HeadingSection": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.common-section"
+      ]
+    },
+    "HeroBanner": {
+      "type": "dynamiczone",
+      "components": [
+        "blog-hero-banner.blog-hero-banner"
+      ]
+    },
+    "caseStudySummary": {
+      "type": "text"
+    },
+    "CaseStudyContent": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h6",
+        "headings.h5",
+        "headings.h4",
+        "headings.h3",
+        "headings.h2",
+        "headings.h1",
+        "shared.link",
+        "shared.image",
+        "base-template.richtext"
+      ]
+    },
+    "Slug": {
+      "type": "string",
+      "required": true
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "CaseStudyPDF": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "FormTitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
+    },
+    "FormFields": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    }
+  }
+}

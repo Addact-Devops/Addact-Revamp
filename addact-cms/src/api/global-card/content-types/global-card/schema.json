@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "global_cards",
+  "info": {
+    "singularName": "global-card",
+    "pluralName": "global-cards",
+    "displayName": "GlobalCard"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "pageReference": {
+      "type": "string"
+    },
+    "GlobalCard": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.promo"
+      ]
+    },
+    "Title": {
+      "type": "dynamiczone",
+      "components": [
+        "headings.h1",
+        "headings.h2",
+        "headings.h3",
+        "headings.h4",
+        "headings.h5",
+        "headings.h6",
+        "base-template.richtext"
+      ]
+    }
+  }
+}

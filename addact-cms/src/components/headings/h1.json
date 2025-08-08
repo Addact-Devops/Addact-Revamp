@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_heading_section_h1s",
+  "info": {
+    "displayName": "h1",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "h1": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

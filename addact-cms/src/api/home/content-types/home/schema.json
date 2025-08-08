@@ -1,0 +1,76 @@
+{
+  "kind": "singleType",
+  "collectionName": "homes",
+  "info": {
+    "singularName": "home",
+    "pluralName": "homes",
+    "displayName": "home"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "PageHeading": {
+      "type": "dynamiczone",
+      "components": [
+        "base-template.base-heading"
+      ]
+    },
+    "ourpartner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-partner.our-partner"
+    },
+    "cta": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cta.cta"
+    },
+    "ourprocess": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-process.our-process"
+    },
+    "ourexpertise": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-expertise.our-expertise"
+    },
+    "banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "ourservices": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "whyaddact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "whoarewe": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::who-are-we.who-are-we"
+    },
+    "contactus": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    },
+    "GlobeAnimation": {
+      "type": "component",
+      "component": "base-template.globe-animation",
+      "repeatable": false
+    }
+  }
+}

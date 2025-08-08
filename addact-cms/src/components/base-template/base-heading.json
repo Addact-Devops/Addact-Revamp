@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_base_template_base_headings",
+  "info": {
+    "displayName": "BaseHeading",
+    "icon": "apps"
+  },
+  "options": {},
+  "attributes": {
+    "PageTitle": {
+      "type": "string"
+    },
+    "Slug": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

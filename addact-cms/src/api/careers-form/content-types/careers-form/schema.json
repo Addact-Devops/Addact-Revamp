@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "careers_forms",
+  "info": {
+    "singularName": "careers-form",
+    "pluralName": "careers-forms",
+    "displayName": "CareersForm"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "LeftInsights": {
+      "type": "component",
+      "component": "base-template.promo",
+      "repeatable": false
+    },
+    "FormFields": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    }
+  }
+}
