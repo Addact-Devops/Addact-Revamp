@@ -2,9 +2,10 @@
 import { Metadata } from "next";
 import { getServiceDetailBySlug } from "@/graphql/queries/getServieceDetail";
 import SiteDetailClient from "./SiteDetailClient";
-
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+type Params = Promise<{ slug: string }>;
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+    const { slug } = await params;
+    // const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
     const data = await getServiceDetailBySlug(slug);
 
     if (!data || !data.SEO) return {};
@@ -51,12 +52,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-    const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
+export default async function Page({ params }: { params: Params }) {
+    const { slug } = await params;
+    // const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
     const data = await getServiceDetailBySlug(slug);
 
     if (!data) {
-        return <div className="text-white p-8">Page Not Found</div>;
+        return <div className='text-white p-8'>Page Not Found</div>;
     }
 
     return <SiteDetailClient data={data} />;
