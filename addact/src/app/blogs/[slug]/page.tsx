@@ -4,15 +4,13 @@ import { getBlogBySlug } from "@/graphql/queries/getBlogBySlug";
 import BlogPageClient from "./BlogPageClient";
 import { Metadata } from "next";
 import Script from "next/script";
+import { Suspense } from "react";
 
-type Props = {
-    params: {
-        slug: string;
-    };
-};
+type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const blog = await getBlogBySlug(params.slug);
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+    const { slug } = await params;
+    const blog = await getBlogBySlug(slug);
     const seo = blog?.SEO;
     if (!seo) return { title: "Blog" };
 
@@ -42,19 +40,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
 }
 
-export default async function Page({ params }: Props) {
-    const blog = await getBlogBySlug(params.slug);
+export default async function Page({ params }: { params: Params }) {
+    const { slug } = await params;
+    const blog = await getBlogBySlug(slug);
     const structuredData = blog?.SEO?.structuredData;
 
     return (
         <>
             {structuredData && (
-                <Script id="structured-data" type="application/ld+json">
+                <Script id='structured-data' type='application/ld+json'>
                     {JSON.stringify(structuredData)}
                 </Script>
             )}
-
-            <BlogPageClient blog={blog} />
+            <Suspense fallback={<div>Loading blogs...</div>}>
+                <BlogPageClient blog={blog} />
+            </Suspense>
         </>
     );
 }

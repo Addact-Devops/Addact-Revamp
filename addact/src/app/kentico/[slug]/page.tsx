@@ -4,9 +4,10 @@ import { getServiceDetailBySlug } from "@/graphql/queries/getServieceDetail";
 import { SubServicePage } from "@/graphql/queries/getServieceDetail";
 import { notFound } from "next/navigation";
 import SiteDetailClient from "./SiteDetailClient";
-
-export async function generateMetadata({ params }: { params: { slug: string } }) {
-    const data: SubServicePage | null = await getServiceDetailBySlug(params.slug);
+type Params = Promise<{ slug: string }>;
+export async function generateMetadata({ params }: { params: Params }) {
+    const { slug } = await params;
+    const data: SubServicePage | null = await getServiceDetailBySlug(slug);
 
     if (!data || !data.SEO) return {};
 
@@ -46,8 +47,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     };
 }
 
-const SiteDetailPage = async ({ params }: { params: { slug: string } }) => {
-    const data: SubServicePage | null = await getServiceDetailBySlug(params.slug);
+const SiteDetailPage = async ({ params }: { params: Params }) => {
+    const { slug } = await params;
+    const data: SubServicePage | null = await getServiceDetailBySlug(slug);
 
     if (!data) return notFound();
 
