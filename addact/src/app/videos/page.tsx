@@ -1,6 +1,11 @@
 import HeroBanner from "@/components/organisms/HeroBanner";
 import VideoList from "@/components/organisms/VideoList";
 import { getVideosPageData } from "@/graphql/queries/getVideos";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("videoListing");
+}
 
 export default async function VideosPage() {
     const data = await getVideosPageData();

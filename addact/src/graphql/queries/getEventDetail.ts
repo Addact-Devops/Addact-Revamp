@@ -86,6 +86,20 @@ const GET_EVENT_DETAIL_PAGE = gql`
                     }
                 }
             }
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
         }
     }
 `;
@@ -116,6 +130,18 @@ export interface EventDetailResponse {
                 Description: string;
             }[];
         };
+        SEO?: {
+            metaTitle?: string;
+            metaDescription?: string;
+            ogTitle?: string;
+            ogDescription?: string;
+            ogImage?: { url?: string };
+            metaRobots?: string;
+            twitterCardTitle?: string;
+            canonicalURL?: string;
+            structuredData?: Record<string, unknown>;
+            languageTag?: string;
+        } | null;
     }[];
 }
 

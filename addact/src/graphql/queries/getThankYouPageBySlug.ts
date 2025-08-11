@@ -6,6 +6,20 @@ const GET_THANK_YOU_PAGE = gql`
         thankyouPages(filters: $filters) {
             ReferenceTitle
             Slug
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
             Content {
                 ... on ComponentBaseTemplateRichtext {
                     id
@@ -62,6 +76,18 @@ export interface ThankYouPageResponse {
             name: string;
             url: string;
         };
+        SEO?: {
+            metaTitle?: string;
+            metaDescription?: string;
+            ogTitle?: string;
+            ogDescription?: string;
+            ogImage?: { url?: string };
+            metaRobots?: string;
+            twitterCardTitle?: string;
+            canonicalURL?: string;
+            structuredData?: Record<string, unknown>;
+            languageTag?: string;
+        } | null;
     }[];
 }
 
@@ -83,5 +109,6 @@ export async function getThankYouPageBySlug(slug: string): Promise<ThankYouPageR
             },
         },
     });
+
     return data;
 }

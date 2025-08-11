@@ -2,6 +2,11 @@ import { notFound } from "next/navigation";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import { getPressReleaseData } from "@/graphql/queries/getPressRelease";
 import EventCard from "@/components/molecules/EventCard";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
+
+export async function generateMetadata() {
+    return generatePageMetadata("pressRelease");
+}
 
 export default async function PressRelease() {
     const data = await getPressReleaseData();
@@ -16,13 +21,13 @@ export default async function PressRelease() {
                 description={banner.BannerDescription || ""}
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
-            <div className='pt-24'>
+            <div className="pt-24">
                 {data.addactPressReleases.map((event, index: number) => {
                     const banner = event.HeroBanner[0];
                     return (
                         <EventCard
                             key={index}
-                            pageType='Event'
+                            pageType="Event"
                             title={banner.BannerTitle}
                             description={event.PressReleaseSummary}
                             imageUrl={banner.BannerImage.url}
