@@ -55,13 +55,13 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
     const sectionTitle = similarstorytitle?.CommonTitle?.[0]?.Title?.trim() || "";
 
     return (
-        <div className='py-[80px]'>
-            <div className='mb-4 relative inline-block'>
-                <h2 className='text-[32px] font-bold text-black'>{sectionTitle}</h2>
-                <div className='w-[160px] h-[5px] bg-[#5865F2] mt-[40px] rounded'></div>
+        <div className="py-[80px]">
+            <div className="mb-4 relative inline-block">
+                <h2 className="text-[32px] font-bold text-black">{sectionTitle}</h2>
+                <div className="w-[160px] h-[5px] bg-[#5865F2] mt-[40px] rounded"></div>
             </div>
 
-            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[24px] mt-[80px]'>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[24px] mt-[80px]">
                 {flattenedBlogs.map((blog, index) => {
                     const title = blog.BannerTitle?.trim();
                     const category = blog.blogcategory?.Category?.CategoryTitle?.trim();
@@ -92,27 +92,27 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
                                         alt={blog.BannerImage?.alternativeText || blog.BannerImage?.name || ""}
                                         width={blog.BannerImage?.width}
                                         height={blog.BannerImage?.height}
-                                        className=' object-cover'
+                                        className=" object-cover"
                                     />
                                 )}
                             </div>
 
-                            <div className='flex flex-col flex-1 justify-start'>
+                            <div className="flex flex-col flex-1 justify-start">
                                 {category && (
-                                    <span className='px-5 py-2 border border-[#3c4cff59] text-[#3C4CFF] rounded-lg w-fit text-sm mb-2 font-medium'>
+                                    <span className="px-5 py-2 border border-[#3c4cff59] text-[#3C4CFF] rounded-lg w-fit text-sm mb-2 font-medium">
                                         {category}
                                     </span>
                                 )}
-                                <h4 className='md:!text-3xl text-black font-medium mb-4 leading-tight line-clamp-3'>
+                                <h4 className="md:!text-3xl text-black font-medium mb-4 leading-tight line-clamp-3">
                                     {title}
                                 </h4>
-                                <p className='text-base text-black'>{publishDate}</p>
+                                <p className="text-base text-black">{publishDate}</p>
                             </div>
 
-                            <div className='mt-auto self-end'>
-                                <Link href={`/blogs${blog.ReadNow!.href!}`} target='_self'>
-                                    <div className='group w-14 h-14 bg-blue-600 text-black flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16'>
-                                        <RightArrowUpIcon className='transition-transform duration-300 group-hover:scale-110' />
+                            <div className="mt-auto self-end">
+                                <Link href={`/blogs${blog.ReadNow!.href!}`} target="_self">
+                                    <div className="group w-14 h-14 bg-blue-600 text-black flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16">
+                                        <RightArrowUpIcon className="transition-transform duration-300 group-hover:scale-110" />
                                     </div>
                                 </Link>
                             </div>

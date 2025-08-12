@@ -1,5 +1,3 @@
-// src/app/privacy-policy/page.tsx
-
 import { getPrivacyPolicy } from "@/graphql/queries/getPrivacyPolicy";
 import parse from "html-react-parser";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";

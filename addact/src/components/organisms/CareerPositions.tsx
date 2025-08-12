@@ -118,39 +118,41 @@ export default function CareerPositions({ positions, positionsTitle }: Props) {
                             />
                         )}
 
-                        <div className="p-[20px] md:p-[30px]">
-                            {/* Job Title */}
-                            <h5 className="!font-[600] mb-[16px] md:mb-[20px] text-[#0F0F0F] !text-[18px] !md:text-[30px]">
-                                {card.LogoTitle}
-                            </h5>
+                        <div className="flex flex-col justify-between h-full">
+                            <div className="p-[20px] md:p-[30px]">
+                                {/* Job Title */}
+                                <h5 className="!font-[600] mb-[16px] md:mb-[20px] text-[#0F0F0F] !text-[18px] !md:text-[30px]">
+                                    {card.LogoTitle}
+                                </h5>
 
-                            {/* Info Rows */}
-                            <div className="space-y-[16px] text-[14px] md:text-[18px] font-[500] mb-[5px] text-[#0F0F0F]">
-                                {card.TitleIcon?.map((item, index) => (
-                                    <div key={index} className="flex items-center gap-[8px] md:gap-[20px]">
-                                        {item.Icon?.url && (
-                                            <Image
-                                                src={item.Icon.url}
-                                                alt={item.Icon.alternativeText || `icon-${index}`}
-                                                width={20}
-                                                height={20}
-                                                className="!w-[16px] md:w-[20px] !h-[16px] md:h-[20px]"
-                                            />
-                                        )}
-                                        <span>{item.Title}</span>
-                                    </div>
-                                ))}
+                                {/* Info Rows */}
+                                <div className="space-y-[16px] text-[14px] md:text-[18px] font-[500] mb-[5px] text-[#0F0F0F]">
+                                    {card.TitleIcon?.map((item, index) => (
+                                        <div key={index} className="flex items-center gap-[8px] md:gap-[20px]">
+                                            {item.Icon?.url && (
+                                                <Image
+                                                    src={item.Icon.url}
+                                                    alt={item.Icon.alternativeText || `icon-${index}`}
+                                                    width={20}
+                                                    height={20}
+                                                    className="!w-[16px] md:w-[20px] !h-[16px] md:h-[20px]"
+                                                />
+                                            )}
+                                            <span>{item.Title}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
 
-                        {/* Apply Now Button */}
-                        <Link
-                            href={card.LogoLink?.href || "#"}
-                            target={card.LogoLink?.isExternal ? "_blank" : "_self"}
-                            className="block text-center text-white text-[14px] md:text-[18px] font-[600] bg-[#3C4CFF] md:px-4 py-[8px] md:py-[16px] w-full"
-                        >
-                            Apply Now
-                        </Link>
+                            {/* Apply Now Button */}
+                            <Link
+                                href={card.LogoLink?.href || "#"}
+                                target={card.LogoLink?.isExternal ? "_blank" : "_self"}
+                                className="block text-center text-white text-[14px] md:text-[18px] font-[600] bg-[#3C4CFF] md:px-4 py-[8px] md:py-[16px] w-full"
+                            >
+                                Apply Now
+                            </Link>
+                        </div>
 
                         {/* Bottom-right Arrow Icon */}
                         {card.AerrowIcon?.url && (

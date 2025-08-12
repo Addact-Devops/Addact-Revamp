@@ -1,10 +1,10 @@
-// src/app/[slug]/page.tsx
-
 import { getServiceDetailBySlug } from "@/graphql/queries/getServieceDetail";
 import { SubServicePage } from "@/graphql/queries/getServieceDetail";
 import { notFound } from "next/navigation";
 import SiteDetailClient from "./SiteDetailClient";
+
 type Params = Promise<{ slug: string }>;
+
 export async function generateMetadata({ params }: { params: Params }) {
     const { slug } = await params;
     const data: SubServicePage | null = await getServiceDetailBySlug(slug);

@@ -40,5 +40,17 @@ export default async function ConnectNowThankYouPage() {
         return <p className="p-6 text-red-600 mt-32">Thank You Page not found.</p>;
     }
 
-    return <ConnectNowThankYouClient thankYouData={page} />;
+    return (
+        <>
+            {page.SEO?.structuredData && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(page.SEO.structuredData),
+                    }}
+                />
+            )}
+            <ConnectNowThankYouClient thankYouData={page} />
+        </>
+    );
 }
