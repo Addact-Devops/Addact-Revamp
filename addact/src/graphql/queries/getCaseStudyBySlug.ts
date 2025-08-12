@@ -4,6 +4,20 @@ import client from "../client";
 const GET_CASE_STUDY_BY_SLUG = gql`
     query AddactCaseStudies($filters: AddactCaseStudyFiltersInput) {
         addactCaseStudies(filters: $filters) {
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
             Slug
             HeadingSection {
                 ... on ComponentBaseTemplateCommonSection {
@@ -125,6 +139,18 @@ const GET_CASE_STUDY_BY_SLUG = gql`
 
 export type CaseStudyBySlugResponse = {
     addactCaseStudies: {
+        SEO: {
+            metaTitle: string | null;
+            metaDescription: string | null;
+            ogTitle: string | null;
+            ogDescription: string | null;
+            ogImage: { url: string | null } | null;
+            metaRobots: string | null;
+            twitterCardTitle: string | null;
+            canonicalURL: string | null;
+            structuredData: Record<string, unknown> | null;
+            languageTag: string | null;
+        } | null;
         Slug: string;
         HeadingSection: {
             PageTitle: string;
