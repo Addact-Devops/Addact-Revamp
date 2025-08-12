@@ -117,6 +117,22 @@ const GET_CAREER_DETAIL = gql`
                     ButtonLabel
                 }
             }
+
+            # ✅ Added SEO fields exactly as per your requirement
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
         }
     }
 `;
@@ -161,6 +177,21 @@ export interface CareerDetailResponse {
                 RecipientEmails: string;
                 ButtonLabel: string;
             };
+        };
+
+        SEO: {
+            metaTitle: string;
+            metaDescription: string;
+            ogTitle: string;
+            ogDescription: string;
+            ogImage: {
+                url: string;
+            };
+            metaRobots: string;
+            twitterCardTitle: string;
+            canonicalURL: string;
+            structuredData: string;
+            languageTag: string;
         };
     }[];
 }

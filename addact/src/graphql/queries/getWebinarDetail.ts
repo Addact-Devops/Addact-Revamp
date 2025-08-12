@@ -5,6 +5,20 @@ import { Heading, Image } from "@/types/common";
 const GET_WEBINAR_DETAIL_PAGE = gql`
     query AddactWebinars($filters: AddactWebinarFiltersInput) {
         addactWebinars(filters: $filters) {
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
             HeroBanner {
                 ... on ComponentBlogHeroBannerBlogHeroBanner {
                     BannerTitle
@@ -108,6 +122,18 @@ const GET_WEBINAR_DETAIL_PAGE = gql`
 
 export interface WebinarDetailResponse {
     addactWebinars: {
+        SEO?: {
+            metaTitle?: string;
+            metaDescription?: string;
+            ogTitle?: string;
+            ogDescription?: string;
+            ogImage?: { url: string };
+            metaRobots?: string;
+            twitterCardTitle?: string;
+            canonicalURL?: string;
+            structuredData?: string;
+            languageTag?: string;
+        };
         HeroBanner: {
             BannerTitle: string;
             BannerDescription: string;

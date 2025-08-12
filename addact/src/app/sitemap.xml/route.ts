@@ -58,7 +58,10 @@ export async function GET() {
 
     // Blogs
     const blogData = await getAllBlogs();
-    const blogUrls = blogData.addactBlogs.map((b) => b.Slug?.replace(/^\//, "")).filter(Boolean);
+    const blogUrls = blogData.addactBlogs
+        .map((b) => b.Slug?.replace(/^\//, ""))
+        .filter(Boolean)
+        .map((slug) => `blogs/${slug}`);
 
     // Case Studies
     const caseStudyData = await getAllCaseStudyData();

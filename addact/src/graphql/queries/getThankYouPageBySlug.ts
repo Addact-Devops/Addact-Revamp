@@ -102,10 +102,13 @@ export interface Content {
 }
 
 export async function getThankYouPageBySlug(slug: string): Promise<ThankYouPageResponse> {
+    // Ensure slug starts with leading slash because data has leading slash in Slug field
+    const cleanSlug = slug.startsWith("/") ? slug : `/${slug}`;
+
     const data = await client.request<ThankYouPageResponse>(GET_THANK_YOU_PAGE, {
         filters: {
             Slug: {
-                eq: `/${slug}`,
+                eq: cleanSlug,
             },
         },
     });

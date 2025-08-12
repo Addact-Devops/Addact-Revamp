@@ -5,6 +5,20 @@ import { Heading, Image, Link } from "@/types/common";
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
     query AddactPressReleases($filters: AddactPressReleaseFiltersInput) {
         addactPressReleases(filters: $filters) {
+            SEO {
+                metaTitle
+                metaDescription
+                ogTitle
+                ogDescription
+                ogImage {
+                    url
+                }
+                metaRobots
+                twitterCardTitle
+                canonicalURL
+                structuredData
+                languageTag
+            }
             HeroBanner {
                 ... on ComponentBlogHeroBannerBlogHeroBanner {
                     BannerTitle
@@ -97,6 +111,18 @@ const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
 
 export interface PressReleaseDetailResponse {
     addactPressReleases: {
+        SEO: {
+            metaTitle: string | null;
+            metaDescription: string | null;
+            ogTitle: string | null;
+            ogDescription: string | null;
+            ogImage: { url: string | null } | null;
+            metaRobots: string | null;
+            twitterCardTitle: string | null;
+            canonicalURL: string | null;
+            structuredData: Record<string, unknown> | null;
+            languageTag: string | null;
+        } | null;
         HeroBanner: {
             BannerTitle: string;
             BannerDescription: string;
