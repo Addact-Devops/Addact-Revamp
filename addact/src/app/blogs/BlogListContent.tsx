@@ -1,16 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getAllBlogs } from "@/graphql/queries/getAllBlog";
 import BlogHeroBanner from "@/components/organisms/BlogHeroBanner";
-import { useSearchParams, useRouter } from "next/navigation";
 import Loader from "@/components/atom/loader";
 
-type Props = {
-    data?: unknown;
-};
+type Props = { data?: unknown };
 
 type BlogType = {
     Slug: string;
@@ -27,14 +24,10 @@ type BlogType = {
         };
         PublishDate?: string;
         author?: {
-            Author?: {
-                AuthorName?: string;
-            };
+            Author?: { AuthorName?: string };
         };
         blogcategory?: {
-            Category?: {
-                CategoryTitle?: string;
-            };
+            Category?: { CategoryTitle?: string };
         };
     }[];
 };
@@ -45,13 +38,9 @@ export default function BlogListContent({}: Props) {
     const [searchText, setSearchText] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("All Blogs");
     const [loading, setLoading] = useState(true);
+    const [visibleCount, setVisibleCount] = useState(12); // initially load 12 blogs
 
-    const searchParams = useSearchParams();
-    const router = useRouter();
-
-    const blogsPerPage = 12;
-    const pageParam = parseInt(searchParams.get("page") || "1", 10);
-    const [currentPage, setCurrentPage] = useState(pageParam);
+    const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const fetchBlogs = async () => {
@@ -62,16 +51,7 @@ export default function BlogListContent({}: Props) {
         fetchBlogs();
     }, []);
 
-    useEffect(() => {
-        const query = searchParams.get("query")?.trim() || "";
-        const categoryParam = searchParams.get("category")?.trim() || "All Blogs";
-        const pageParam = parseInt(searchParams.get("page") || "1", 10);
-
-        if (query !== searchText) setSearchText(query);
-        if (categoryParam !== selectedCategory) setSelectedCategory(categoryParam);
-        if (!isNaN(pageParam)) setCurrentPage(pageParam);
-    }, [searchParams, searchText, selectedCategory]);
-
+    // Filter blogs based on search/category
     useEffect(() => {
         const query = searchText.toLowerCase();
         let filtered = addactBlogs.filter((blog) => {
@@ -93,29 +73,32 @@ export default function BlogListContent({}: Props) {
         }
 
         setFilteredBlogs(filtered);
-        setCurrentPage(1);
+        setVisibleCount(12); // reset visible count when filters change
     }, [searchText, selectedCategory, addactBlogs]);
 
-    const totalPages = Math.ceil(filteredBlogs.length / blogsPerPage);
-    const indexOfLastBlog = currentPage * blogsPerPage;
-    const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-    const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
+    // Infinite scroll using IntersectionObserver
+    useEffect(() => {
+        if (!loadMoreRef.current) return;
 
-    const goToPage = (page: number) => {
-        const params = new URLSearchParams();
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setVisibleCount((prev) => {
+                        if (prev >= filteredBlogs.length) return prev; // stop when all blogs loaded
+                        return prev + 6; // load next 6 blogs
+                    });
+                }
+            },
+            { threshold: 1 }
+        );
 
-        if (searchText.trim()) params.set("query", searchText.trim());
-        if (selectedCategory && selectedCategory !== "All Blogs") {
-            params.set("category", selectedCategory);
-        }
-
-        params.set("page", String(page));
-
-        setCurrentPage(page);
-        router.push(`?${params.toString()}`, { scroll: false });
-    };
+        observer.observe(loadMoreRef.current);
+        return () => observer.disconnect();
+    }, [filteredBlogs.length]);
 
     if (loading) return <Loader />;
+
+    const currentBlogs = filteredBlogs.slice(0, visibleCount);
 
     return (
         <>
@@ -126,10 +109,10 @@ export default function BlogListContent({}: Props) {
                 setSelectedCategory={setSelectedCategory}
             />
 
-            <div className="container">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
+            <div className='container'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]'>
                     {currentBlogs.length === 0 && (
-                        <p className="text-white !text-[35px] font-semibold col-span-full text-center">
+                        <p className='text-white !text-[35px] font-semibold col-span-full text-center'>
                             {searchText.trim()
                                 ? `No blogs found for "${searchText}"`
                                 : selectedCategory !== "All Blogs"
@@ -137,6 +120,7 @@ export default function BlogListContent({}: Props) {
                                 : "No blogs found"}
                         </p>
                     )}
+
                     {currentBlogs.map((blog) => {
                         const banner = blog.BlogBanner?.[0];
                         if (!banner) return null;
@@ -155,10 +139,10 @@ export default function BlogListContent({}: Props) {
                         const category = typeof rawCategory === "string" ? rawCategory.trim() : "General";
 
                         return (
-                            <Link key={blog.Slug} href={blogLink} className="group">
-                                <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
+                            <Link key={blog.Slug} href={blogLink} className='group'>
+                                <div className='bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer'>
                                     {imageUrl && (
-                                        <div className="relative h-[350px] rounded-xl overflow-hidden mb-4">
+                                        <div className='relative h-[350px] rounded-xl overflow-hidden mb-4'>
                                             <Image
                                                 src={imageUrl}
                                                 alt={
@@ -167,72 +151,31 @@ export default function BlogListContent({}: Props) {
                                                     "Blog Image"
                                                 }
                                                 fill
-                                                className="object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
+                                                className='object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105'
                                             />
-                                            <div className="absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                            <div className='absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
                                         </div>
                                     )}
 
-                                    <div className="inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium">
+                                    <div className='inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium'>
                                         {category}
                                     </div>
 
-                                    <h2 className="text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]">
+                                    <h2 className='text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]'>
                                         {title}
                                     </h2>
 
-                                    <p className="text-[#3C4CFF] font-bold">{author}</p>
+                                    <p className='text-[#3C4CFF] font-bold'>{author}</p>
                                 </div>
                             </Link>
                         );
                     })}
                 </div>
 
-                {totalPages > 1 && (
-                    <div className="flex justify-center items-center gap-2 mt-10 flex-wrap text-white mb-[60px] md:mb-[100px]">
-                        <button
-                            className="px-3 py-2 bg-gray-800 rounded disabled:opacity-50"
-                            onClick={() => goToPage(Math.max(currentPage - 1, 1))}
-                            disabled={currentPage === 1}
-                        >
-                            Previous
-                        </button>
-
-                        {Array.from({ length: 3 }, (_, i) => currentPage - 1 + i)
-                            .filter((page) => page >= 1 && page <= totalPages)
-                            .map((page) => (
-                                <button
-                                    key={page}
-                                    className={`px-3 py-2 rounded ${
-                                        page === currentPage ? "bg-[#3C4CFF]" : "bg-gray-700"
-                                    }`}
-                                    onClick={() => goToPage(page)}
-                                >
-                                    {page}
-                                </button>
-                            ))}
-
-                        {currentPage < totalPages - 1 && (
-                            <>
-                                {currentPage < totalPages - 2 && <span className="px-2">...</span>}
-                                <button
-                                    className={`px-3 py-2 rounded ${
-                                        currentPage === totalPages ? "bg-[#3C4CFF]" : "bg-gray-700"
-                                    }`}
-                                    onClick={() => goToPage(totalPages)}
-                                >
-                                    {totalPages}
-                                </button>
-                            </>
-                        )}
-
-                        <button
-                            className="px-3 py-2 bg-gray-800 rounded disabled:opacity-50"
-                            onClick={() => goToPage(Math.min(currentPage + 1, totalPages))}
-                            disabled={currentPage === totalPages}
-                        >
-                            Next
-                        </button>
+                {/* Loader trigger for infinite scroll */}
+                {visibleCount < filteredBlogs.length && (
+                    <div ref={loadMoreRef} className='h-10 flex justify-center items-center mt-8'>
+                        <span className='text-gray-400'>Loading more blogs...</span>
                     </div>
                 )}
             </div>
