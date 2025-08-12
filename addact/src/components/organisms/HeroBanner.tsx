@@ -101,9 +101,9 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                                 <a href='#vision-mission' onClick={(e) => handleScroll(e, "vision-mission")}>
                                     Vision & Mission
                                 </a>
-                                <a href='#brand-values' onClick={(e) => handleScroll(e, "brand-values")}>
+                                {/* <a href='#brand-values' onClick={(e) => handleScroll(e, "brand-values")}>
                                     Brand Values
-                                </a>
+                                </a> */}
                                 <a href='#who-we-are' onClick={(e) => handleScroll(e, "who-we-are")}>
                                     Who are we
                                 </a>

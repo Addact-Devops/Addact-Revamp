@@ -89,7 +89,6 @@ export default function OurInsights() {
     const caseStudy = sortedCaseStudies[0];
 
     const items: InsightCardData[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
-    console.log("🚀 ~ OurInsights ~ items:", items);
 
     return (
         <div className='my-28 lg:my-48 xl:my-60'>
@@ -128,7 +127,6 @@ function mapBlogToCard(blog: Blog): InsightCardData {
 
 function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
     const banner = cs.HeroBanner?.[0];
-    console.log("🚀 ~ mapCaseStudyToCard ~ cs:", cs);
     return {
         type: "Case study",
         title: banner?.BannerTitle ?? "Untitled",
