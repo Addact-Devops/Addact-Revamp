@@ -89,6 +89,7 @@ export default function OurInsights() {
     const caseStudy = sortedCaseStudies[0];
 
     const items: InsightCardData[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
+    console.log("🚀 ~ OurInsights ~ items:", items);
 
     return (
         <div className='my-28 lg:my-48 xl:my-60'>
@@ -121,12 +122,13 @@ function mapBlogToCard(blog: Blog): InsightCardData {
             : "Unknown Date",
         image: banner?.BannerImage,
         description: banner?.BannerDescription ?? "",
-        link: "/blog" + blog.Slug || "/blog" + banner?.ReadNow?.href,
+        link: "/blogs" + blog.Slug || "/blogs" + banner?.ReadNow?.href,
     };
 }
 
 function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
     const banner = cs.HeroBanner?.[0];
+    console.log("🚀 ~ mapCaseStudyToCard ~ cs:", cs);
     return {
         type: "Case study",
         title: banner?.BannerTitle ?? "Untitled",
@@ -139,7 +141,7 @@ function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
             : "Unknown Date",
         image: banner?.BannerImage,
         description: banner?.BannerDescription ?? "",
-        link: "/portfolio" + banner?.ReadNow?.href || "portfolio" + cs.Slug,
+        link: "/portfolio" + cs.Slug,
     };
 }
 
