@@ -121,7 +121,7 @@ function mapBlogToCard(blog: Blog): InsightCardData {
             : "Unknown Date",
         image: banner?.BannerImage,
         description: banner?.BannerDescription ?? "",
-        link: "/blog" + blog.Slug || "/blog" + banner?.ReadNow?.href,
+        link: "/blogs" + blog.Slug || "/blogs" + banner?.ReadNow?.href,
     };
 }
 
@@ -139,7 +139,7 @@ function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
             : "Unknown Date",
         image: banner?.BannerImage,
         description: banner?.BannerDescription ?? "",
-        link: "/portfolio" + banner?.ReadNow?.href || "portfolio" + cs.Slug,
+        link: "/portfolio" + cs.Slug,
     };
 }
 
