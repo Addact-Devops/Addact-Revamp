@@ -17,7 +17,7 @@ export default async function ContactUsPage() {
 
     return (
         <>
-            <main className="bg-[#f4f4f4]">
+            <main className='bg-[#f4f4f4]'>
                 {bannerData?.BannerTitle && bannerData?.BannerDescription && bannerData?.BannerImage?.url ? (
                     <HeroBanner
                         title={bannerData.BannerTitle}
@@ -42,8 +42,7 @@ export default async function ContactUsPage() {
                     Descriptions={contactus.Descriptions}
                     ContactUsAvailability={contactus.ContactUsAvailability}
                 />
-
-                <ContactUsAddress addressContent={contactus.AddressContent} />
+                {contactus.AddressContent ? <ContactUsAddress addressContent={contactus.AddressContent} /> : ""}
 
                 <ContactUsForm
                     ContactUsFormBlock={{
@@ -63,7 +62,7 @@ export default async function ContactUsPage() {
             {/* ✅ Inline Structured Data */}
             {contactus?.SEO?.structuredData && (
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(contactus.SEO.structuredData),
                     }}
