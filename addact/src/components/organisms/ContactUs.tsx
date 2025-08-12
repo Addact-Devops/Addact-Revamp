@@ -3,6 +3,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import Image from "next/image";
 import { CONTACTUS } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
+import ReCAPTCHA from "react-google-recaptcha";
 
 interface IProps {
     data: CONTACTUS;
@@ -28,7 +29,7 @@ const ContactUs = ({ data }: IProps) => {
         company: "",
         message: "",
     });
-
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
     const [errors, setErrors] = useState<FormErrors>({});
     const [submitted, setSubmitted] = useState(false);
 
@@ -53,6 +54,10 @@ const ContactUs = ({ data }: IProps) => {
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
+        if (!captchaToken) {
+            alert("Please complete the captcha.");
+            return;
+        }
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
@@ -91,7 +96,7 @@ const ContactUs = ({ data }: IProps) => {
                     <div className='flex flex-col lg:flex-row items-center justify-center'>
                         <form
                             onSubmit={handleSubmit}
-                            className='space-y-6 w-full lg:w-1/2 px-6 md:px-11 py-10 md:py-20 border-t border-gray-700 h-[594px]'
+                            className='space-y-6 w-full lg:w-1/2 px-6 md:px-11 py-10 md:py-12 border-t border-gray-700 h-[594px]'
                         >
                             <div className='grid md:grid-cols-2 gap-6'>
                                 <div>
@@ -155,6 +160,11 @@ const ContactUs = ({ data }: IProps) => {
                                     placeholder='Type here...'
                                 ></textarea>
                             </div>
+                            <ReCAPTCHA
+                                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                                onChange={(token: string | null) => setCaptchaToken(token)}
+                                className='mx-auto w-full'
+                            />
                             <button
                                 type='submit'
                                 className='w-full bg-blue-600 cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
