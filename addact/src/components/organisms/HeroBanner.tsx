@@ -43,7 +43,7 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
             <div className='absolute inset-0 bg-[rgba(0,0,0,0.5)]'></div>
 
             {/* Content */}
-            <div className='relative container min-h-[550px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0'>
+            <div className='relative container mt-[68px] md:mt-[120px] min-h-[550px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0'>
                 <div className='text-left max-w-[95%]'>
                     <h1 className='text-white mb-[10px] md:mb-[15px] !font-semibold !text-[45px] leading-[55px] !md:text-[60px] !md:leading-[63px] lg:max-w-[60%]'>
                         {title}
