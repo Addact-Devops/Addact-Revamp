@@ -60,6 +60,7 @@ export const GET_CONTACT_US = gql`
                 }
                 RightTitle
                 RightDescription
+                RecipientEmails
             }
             SEO {
                 metaTitle
@@ -135,6 +136,7 @@ export interface ContactUsResponse {
             LeftBackgroundImage: ImageType;
             RightTitle: string;
             RightDescription: string;
+            RecipientEmails: string;
         };
         SEO?: {
             metaTitle?: string;
