@@ -55,6 +55,7 @@ export default async function ContactUsPage() {
                         RightDescription: Array.isArray(contactus.ContactUsFormBlock.RightDescription)
                             ? contactus.ContactUsFormBlock.RightDescription
                             : [contactus.ContactUsFormBlock.RightDescription],
+                        RecipientEmails: contactus.ContactUsFormBlock.RecipientEmails,
                     }}
                 />
             </main>
