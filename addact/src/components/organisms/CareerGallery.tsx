@@ -7,6 +7,11 @@ import { getCareerGalleryData } from "@/graphql/queries/getCareerGallery";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+// Lightbox imports
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+
 type GalleryImage = {
     url: string;
     alternativeText: string | null;
@@ -33,6 +38,10 @@ const CareerGallery = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [filteredImages, setFilteredImages] = useState<GalleryImageItem[][]>([]);
+
+    // Lightbox state
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
 
     const sliderRef = useRef<Slider>(null);
 
@@ -86,6 +95,18 @@ const CareerGallery = () => {
     const allYears = Array.from(
         new Set(categories.flatMap((cat) => cat.Images.map((img) => img.Year || currentYear)))
     ).sort((a, b) => b - a);
+
+    // Flattened images array for lightbox slides
+    const flattenedImages = filteredImages.flat();
+
+    // Lightbox slides format
+    const slides = flattenedImages.map((img) => ({ src: img.Image.url }));
+
+    // Handler to open lightbox on image click
+    const handleImageClick = (index: number) => {
+        setLightboxIndex(index);
+        setLightboxOpen(true);
+    };
 
     return (
         <section className="container mt-[60px] md:mt-[100px]" id="life-at-addxp">
@@ -334,23 +355,57 @@ const CareerGallery = () => {
                     {/* Slider */}
                     {filteredImages.length > 0 ? (
                         <Slider key={filteredImages.length} ref={sliderRef} {...settings} className="career-slider">
-                            {filteredImages.map((group, idx) => (
-                                <div key={idx}>
-                                    <div className="grid grid-cols-2 md:grid-cols-3 gap-[8px] md:gap-[12px]">
-                                        {group.map((imgObj, i) => (
-                                            <div
-                                                key={i}
-                                                className="rounded-[8px] md:rounded-[20px] overflow-hidden shadow hover:shadow-md transition"
-                                            >
-                                                <Image
-                                                    src={imgObj.Image.url}
-                                                    alt={imgObj.Image.alternativeText || ""}
-                                                    width={400}
-                                                    height={300}
-                                                    className="w-full !h-[130px] md:!h-[200px] object-cover"
-                                                />
-                                            </div>
-                                        ))}
+                            {filteredImages.map((group, groupIdx) => (
+                                <div key={groupIdx}>
+                                    <div className="grid grid-cols-6 md:grid-cols-12 gap-[8px] md:gap-[12px] md:auto-rows-[200px]">
+                                        {group.map((imgObj, i) => {
+                                            const rowIndex = Math.floor(i / 3);
+                                            const positionInRow = i % 3;
+
+                                            let colSpanClass = "";
+
+                                            // Desktop stagger pattern
+                                            if (rowIndex % 3 === 0) {
+                                                colSpanClass =
+                                                    positionInRow === 1
+                                                        ? "md:col-span-6 col-span-3"
+                                                        : "md:col-span-3 col-span-3";
+                                            } else if (rowIndex % 3 === 1) {
+                                                colSpanClass =
+                                                    positionInRow === 0
+                                                        ? "md:col-span-6 col-span-3"
+                                                        : "md:col-span-3 col-span-3";
+                                            } else {
+                                                colSpanClass =
+                                                    positionInRow === 1
+                                                        ? "md:col-span-6 col-span-3"
+                                                        : "md:col-span-3 col-span-3";
+                                            }
+
+                                            // Calculate flat index for lightbox
+                                            // flat index = sum of all previous group lengths + i
+                                            let flatIndex = 0;
+                                            for (let j = 0; j < groupIdx; j++) {
+                                                flatIndex += filteredImages[j].length;
+                                            }
+                                            flatIndex += i;
+
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className={`rounded-[8px] md:rounded-[20px] overflow-hidden shadow hover:shadow-md transition ${colSpanClass} h-[130px] md:h-auto cursor-pointer`}
+                                                    onClick={() => handleImageClick(flatIndex)}
+                                                >
+                                                    <Image
+                                                        src={imgObj.Image.url}
+                                                        alt={imgObj.Image.alternativeText || ""}
+                                                        width={800}
+                                                        height={600}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             ))}
@@ -360,6 +415,15 @@ const CareerGallery = () => {
                     )}
                 </div>
             </div>
+
+            {/* Lightbox */}
+            <Lightbox
+                open={lightboxOpen}
+                close={() => setLightboxOpen(false)}
+                slides={slides}
+                index={lightboxIndex}
+                plugins={[Zoom]}
+            />
         </section>
     );
 };
