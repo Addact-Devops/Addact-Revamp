@@ -55,23 +55,25 @@ export default function GlobeAnimation(data: InternalProps) {
     }, [currentLocationIndex, TIME_MARKS]);
 
     return (
-        <section className='flex flex-col  items-center justify-center min-h-screen bg-black text-white'>
-            <h2 className='text-lg mb-4 flex gap-1 items-center'>
-                {data.data?.Title}
-                <span className='text-blue-400 w-[300px] font-semibold transition-opacity duration-500 ease-in-out'>
-                    &nbsp;{LOCATIONS[currentLocationIndex] ?? ""}
-                </span>
-            </h2>
+        <section className="flex flex-col  items-center justify-center 2xl:min-h-screen bg-black text-white">
+            <div className="container flex flex-col items-center justify-center gap-[30px] 2xl:gap-[100px]">
+                <h2 className="!text-[28px] md:!text-5xl 2xl:!text-6xl mb-4 md:flex gap-1 items-center">
+                    {data.data?.Title}
+                    <span className="text-[#3C4CFF] w-[300px] font-semibold transition-opacity duration-500 ease-in-out">
+                        &nbsp;{LOCATIONS[currentLocationIndex] ?? ""}
+                    </span>
+                </h2>
 
-            <video
-                ref={videoRef}
-                src={data.data?.Video?.url}
-                autoPlay
-                muted
-                playsInline
-                loop
-                className='w-full max-w-3xl'
-            />
+                <video
+                    ref={videoRef}
+                    src={data.data?.Video?.url}
+                    autoPlay
+                    muted
+                    playsInline
+                    loop
+                    className="w-full max-w-3xl"
+                />
+            </div>
         </section>
     );
 }
