@@ -83,7 +83,7 @@ const ContactUs = ({ data }: IProps) => {
     };
 
     return (
-        <section className='w-full text-white py-12 px-4'>
+        <section className='w-full text-white py-[40px] md:py-[120px] px-4'>
             <div className='container mx-auto border border-gray-700 overflow-hidden !p-0'>
                 <div className='flex flex-col justify-between'>
                     <div className='flex flex-col md:flex-row md:items-center md:justify-between'>
