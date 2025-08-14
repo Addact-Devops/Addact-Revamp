@@ -200,3 +200,31 @@ footer {
         color: #3c4cff;
     }
 }
+
+.service-listing {
+    p {
+        font-size: pxToRem(17);
+
+        @media (min-width: 1300px) {
+            font-size: pxToRem(20);
+        }
+    }
+}
+
+.cms-list {
+    p {
+        font-size: pxToRem(18);
+
+        @media (min-width: 1200px) {
+            font-size: pxToRem(25);
+        }
+
+        @media (min-width: 1400px) {
+            font-size: pxToRem(28);
+        }
+
+        @media (min-width: 1920px) {
+            font-size: pxToRem(30);
+        }
+    }
+}

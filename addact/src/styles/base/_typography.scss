@@ -50,14 +50,14 @@ h2 {
 }
 
 h2 {
-    font-family: $font-secondary;
+    font-family: $font-main;
     font-weight: 400;
 }
 
 h3 {
     font-size: pxToRem(45);
     line-height: normal;
-    font-family: $font-secondary;
+    font-family: $font-main;
     font-weight: 400;
 
     @media (max-width: 1400px) {
