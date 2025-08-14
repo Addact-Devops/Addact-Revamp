@@ -29,8 +29,8 @@ const FAQ = ({ data }: IProps) => {
 
     const toggleIndex = (index: number) => {
         setOpenIndexes((prev) => {
-            if (!prev) return [index]; // fallback if prev is null
-            return prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index];
+            if (!prev) return [index];
+            return prev[0] === index ? [] : [index];
         });
     };
 
@@ -57,7 +57,7 @@ const FAQ = ({ data }: IProps) => {
                             >
                                 <button
                                     onClick={() => toggleIndex(index)}
-                                    className={`w-full flex items-start text-left transition-colors duration-200 px-0 py-6 pr-5 lg:pr-0`}
+                                    className='w-full flex items-start text-left transition-colors duration-200 px-0 py-6 pr-5 lg:pr-0'
                                 >
                                     <span className='ml-5 lg:ml-[40px] mr-5 lg:mr-[65px] mt-1 shrink-0 w-5 lg:w-[30px] h-5 lg:h-[30px] flex items-center justify-center'>
                                         {isOpen ? (
@@ -73,11 +73,17 @@ const FAQ = ({ data }: IProps) => {
                                         {faq.Title}
                                     </span>
                                 </button>
-                                {isOpen && (
+
+                                <div
+                                    className={`overflow-hidden transition-[max-height] duration-500 ease-in-out`}
+                                    style={{
+                                        maxHeight: isOpen ? "500px" : "0px",
+                                    }}
+                                >
                                     <div className='pl-[60px] lg:pl-[135px] pr-6 pb-6 text-base md:text-xl font-normal font-montserrat leading-[34px]'>
                                         <RichText html={faq.Description} />
                                     </div>
-                                )}
+                                </div>
                             </div>
                         );
                     })}
