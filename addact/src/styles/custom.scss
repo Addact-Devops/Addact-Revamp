@@ -73,6 +73,37 @@ body {
     margin: 240px auto;
 }
 
+h1.banner-title {
+    font-weight: 700;
+    margin-bottom: 40px;
+    max-width: 100%;
+    font-size: 34px;
+    line-height: 47px;
+
+    @media (min-width: 767px) {
+        font-size: 50px;
+        line-height: 70px;
+    }
+
+    @media (min-width: 1200px) {
+        font-size: 65px;
+        line-height: 90px;
+    }
+
+    @media (min-width: 1400px) {
+        font-size: 85px;
+        line-height: 80px;
+        max-width: 100%;
+    }
+
+    @media (min-width: 1920px) {
+        font-size: 100px;
+        line-height: 110px;
+        font-weight: 700;
+        margin-bottom: 60px;
+    }
+}
+
 footer {
     .custom-html-content {
         p,

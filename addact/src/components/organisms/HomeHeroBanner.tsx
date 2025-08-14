@@ -10,7 +10,7 @@ interface IProps {
 const HomeHeroBanner = ({ data }: IProps) => {
     const src = data?.Banner[0]?.BannerImage?.url ?? "#";
     return (
-        <section className="relative w-full h-screen flex items-center justify-center overflow-hidden mt-[120px]">
+        <section className="relative w-full py-[60px]  lg:py-0 lg:h-screen flex items-center justify-center overflow-hidden mt-[56px] lg:mt-[120px]">
             <video className="absolute top-0 left-0 w-full h-full object-cover z-0" autoPlay muted loop playsInline>
                 <source src={src} type="video/mp4" />
                 Your browser does not support the video tag.
@@ -20,11 +20,9 @@ const HomeHeroBanner = ({ data }: IProps) => {
                     <VerticalLines />
                 </div>
             </div>
-            <div className="relative z-20 max-w-[1234px] w-full">
+            <div className="relative z-20 md:max-w-[80%] 2xl:max-w-[1234px] w-full">
                 <div className="text-white px-10 xl:px-0">
-                    <h1 className="text-4xl sm:text-5xl lg:!text-[110px] !font-bold uppercase !leading-[47px] lg:!leading-[95px] mb-5 lg:mb-14">
-                        {data?.Banner?.[0]?.BannerTitle}
-                    </h1>
+                    <h1 className="uppercase banner-title">{data?.Banner?.[0]?.BannerTitle}</h1>
 
                     <div className="flex flex-col sm:flex-row sm:items-center lg:gap-9">
                         <div className="text-base sm:!text-base lg:!text-2xl font-medium max-w-[910px]">
