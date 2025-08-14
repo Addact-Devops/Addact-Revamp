@@ -11,7 +11,7 @@ const WhoWeAre = () => {
     const counterSectionRef = useRef<HTMLDivElement>(null);
     // Store cleaned plain text chunks (remove HTML tags)
     const RawText1 =
-        "At Addact, we’re more than just a CMS development company we are experts in crafting intelligent, personalized digital experiences. Backed by experienced and skilled CMS developers, we deliver next-gen Sitecore, Umbraco, Kentico, Strapi and more CMS development services that drive engagement, boost performance, and help brands scale faster with confidence. ";
+        "At Addact, we’re more than just a CMS development company we are experts in crafting intelligent, personalized digital experiences. Backed by experienced and skilled CMS developers, we deliver next-gen Sitecore, Umbraco, Kentico, Strapi and more CMS development services that drive engagement, boost performance, and help brands scale faster with confidence.";
 
     const containerRef = useRef<HTMLDivElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
@@ -21,22 +21,7 @@ const WhoWeAre = () => {
             setData(res);
         })();
     }, []);
-    // const cleanedText = useMemo(() => {
-    //     const html = data?.whoAreWes[0]?.Title[0]?.Description || "";
-    //     return html
-    //         .replace(/<[^>]+>/g, "")
-    //         .replace(/&nbsp;/g, " ")
-    //         .replace(/\s+/g, " ")
-    //         .trim();
-    // }, [data]);
     const wordArray = RawText1?.trim().split(" ");
-    // useEffect(() => {
-    //     const Text = data?.whoAreWes[0]?.Title[0]?.Description?.replace(/<[^>]+>/g, "") // remove HTML tags
-    //         ?.replace(/&nbsp;/g, " ") // replace HTML space entities
-    //         ?.replace(/\s+/g, " ") // normalize multiple spaces to single
-    //         ?.trim();
-    //     setRawText(Text);
-    // }, [data]);
     useEffect(() => {
         if (!containerRef.current || !textRef.current) return;
         const ctx = gsap.context(() => {
@@ -52,12 +37,12 @@ const WhoWeAre = () => {
                             start: "top 170",
                             end: () => {
                                 const wordCount = document.querySelectorAll(".word").length;
-                                const baseUnit = window.innerWidth < 768 ? 50 : 35;
+                                const baseUnit = window.innerWidth < 768 ? 50 : 70;
                                 return `+=${wordCount * baseUnit}`;
                             },
                             scrub: true,
                             pin: true,
-                            markers: false,
+                            markers: true,
                         },
                     });
 
@@ -88,36 +73,6 @@ const WhoWeAre = () => {
                     });
                 },
             });
-            // const tl = gsap.timeline({
-            //     scrollTrigger: {
-            //         trigger: containerRef.current,
-            //         start: "top 170",
-            //         //end: () => `+=${window.innerHeight} bottom`, // controls scroll area
-            //         //end: "=+3000 bottom",
-            //         end: () => {
-            //             const wordCount = document.querySelectorAll(".word").length;
-            //             const baseUnit = window.innerWidth < 768 ? 50 : 35;
-            //             return `+=${wordCount * baseUnit}`;
-            //         },
-            //         scrub: true,
-            //         pin: true,
-            //         // anticipatePin: 3,
-            //         markers: true, // set to true for debugging
-            //     },
-            // });
-
-            // words.forEach((word, i) => {
-            //     tl.to(
-            //         word,
-            //         {
-            //             opacity: 1,
-            //             y: 0,
-            //             ease: "power2.out",
-            //             duration: 0.2,
-            //         },
-            //         i * 0.2 // spread word animation across scroll
-            //     );
-            // });
         }, containerRef);
 
         return () => ctx.revert();
@@ -164,23 +119,21 @@ const WhoWeAre = () => {
     }, [data]);
     return (
         <>
-            <section className="who-we-are gap my-24 sm:my-32 md:my-40 lg:my-60" ref={containerRef}>
+            <section
+                className="who-we-are gap my-24 sm:my-32 md:my-40 lg:my-60 !mx-h-[100%] !h-[100%]"
+                ref={containerRef}
+            >
                 <div className="container">
-                    <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap">
-                        <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10">
+                    <div className="flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap">
+                        <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl !pb-4 xl:!pb-10">
                             {data?.whoAreWes[0].Title[0].Title}
                         </h2>
 
-                        {/* <div className='w-full text-left text-lg large'> */}
-                        {/* <p className='text-lg large inline'>{data?.whoAreWes[0].Title[0].Description}</p> */}
-                        {/* <RichText html={data?.whoAreWes[0]?.Title[0]?.Description || ""} /> */}
-                        {/* </div> */}
-
                         <div className="relative overflow-hidden w-full text-left  large">
-                            <div className="sticky top-0 flex items-center justify-center px-4">
+                            <div className="sticky top-0 flex items-center justify-center">
                                 <div
                                     ref={textRef}
-                                    className="max-w-4xl text-base  leading-relaxed flex flex-wrap gap-x-1"
+                                    className="lg:text-[22px] 2xl:text-[34px]  leading-relaxed flex flex-wrap gap-x-[10px]"
                                 >
                                     {wordArray.map((word, idx) => (
                                         <span key={idx} className="word inline-block whitespace-nowrap opacity-0">
