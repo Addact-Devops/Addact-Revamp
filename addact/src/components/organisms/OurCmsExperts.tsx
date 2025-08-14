@@ -22,19 +22,19 @@ const OurCmsExperts = () => {
     }
 
     return (
-        <section className='my-24 sm:my-32 md:my-40 lg:my-60'>
-            <div className='container'>
-                <div className='flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center'>
-                    <h2 className='w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl xl:!text-6xl !pb-4 xl:!pb-10'>
+        <section className="my-24 sm:my-32 md:my-40 lg:my-60 cms-list">
+            <div className="container">
+                <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
+                    <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl 2xl:!text-6xl !pb-4 xl:!pb-10">
                         {data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title}
                     </h2>
 
-                    <div className='w-full text-left'>
+                    <div className="w-full text-left">
                         <RichText html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description} />
                     </div>
                 </div>
                 <section>
-                    <div className='mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 lg:mt-24'>
+                    <div className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 lg:mt-24">
                         {data.ourExpertises[0].CMS.map((service) => {
                             const hoverColorMap: Record<string, string> = {
                                 Sitecore: "hover:bg-[#EE3524]",
@@ -59,7 +59,7 @@ const OurCmsExperts = () => {
                                         alt={service?.Icons?.alternativeText || "Service Icon"}
                                         width={service?.Icons?.width}
                                         height={service?.Icons?.height}
-                                        className='w-[113px] md:w-[310px]'
+                                        className="w-[113px] md:w-[310px]"
                                         unoptimized={false}
                                     />
                                 </Link>
