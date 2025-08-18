@@ -37,9 +37,9 @@ const FAQ = ({ data }: IProps) => {
     if (openIndexes === null) return null;
 
     return (
-        <div className="my-28 lg:my-48 xl:my-60">
+        <section className="my-[100px] xl:my-[150px] 2xl:my-[200px]">
             <div className="container mx-auto px-4">
-                <h2 className="border-after !text-[28px] md:!text-5xl 2xl:!text-6xl !pb-4 xl:!pb-10">
+                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                     {data.Title?.split("Asked")[0]}
                     <br className="block" />
                     {"Asked " + data.Title?.split("Asked")[1]}
@@ -89,7 +89,7 @@ const FAQ = ({ data }: IProps) => {
                     })}
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

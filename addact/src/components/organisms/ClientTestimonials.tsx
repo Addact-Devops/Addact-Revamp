@@ -68,7 +68,7 @@ export default function ClientTestimonials() {
     };
 
     return (
-        <section className="bg-[#0F0F0F] text-white">
+        <section className="bg-[#0F0F0F] text-white my-[100px] xl:my-[150px] 2xl:my-[200px]">
             <div className="container">
                 <div className="grid grid-cols-1 lg:grid-cols-3 items-start">
                     {/* Title & Arrows */}
@@ -81,7 +81,7 @@ export default function ClientTestimonials() {
                             <button
                                 aria-label="Previous"
                                 onClick={() => sliderRef.current?.slickPrev()}
-                                className="2xl:w-[70px] 2xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
+                                className="2xl:w-[70px] 2xl:h-[70px] w-[45px] h-[45px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ export default function ClientTestimonials() {
                             <button
                                 aria-label="Next"
                                 onClick={() => sliderRef.current?.slickNext()}
-                                className="2xl:w-[70px] 2xl:h-[70px] w-[55px] h-[55px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
+                                className="2xl:w-[70px] 2xl:h-[70px] w-[45px] h-[45px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -137,9 +137,9 @@ export default function ClientTestimonials() {
                                         key={index}
                                         className={`xl:px-[12px] px-[6px] ${
                                             isFirstVisible ? "max-[1023px]:ml-[16px] lg:ml-0" : ""
-                                        }`}
+                                        } h-full`}
                                     >
-                                        <div className="bg-[#1C1C1C] xl:px-[40px] xl:py-[30px] p-[24px] h-full min-h-[240px] flex flex-col justify-between">
+                                        <div className="bg-[#1C1C1C] xl:px-[20px] xl:py-[30px] 2xl:px-[40px] 2xl:py-[30px] p-[24px] h-full min-h-[240px] flex flex-col justify-between">
                                             <div>
                                                 <div className="flex mb-[30px]">
                                                     {Array.from({
@@ -151,7 +151,7 @@ export default function ClientTestimonials() {
                                                         />
                                                     ))}
                                                 </div>
-                                                <p className="2xl:!text-[30px] lg:!text-[22px] !text-[18px] font-[400] text-white xl:mb-[30px] mb-[24px]">
+                                                <p className="2xl:!text-[30px] lg:!text-[20px] !text-[18px] font-[400] text-white xl:mb-[30px] mb-[24px]">
                                                     {testimonial.quote?.[0]?.children?.[0]?.text || ""}
                                                 </p>
                                             </div>

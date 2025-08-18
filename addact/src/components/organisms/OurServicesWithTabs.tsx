@@ -8,6 +8,11 @@ import { OurServiceData } from "@/graphql/queries/getServieceList";
 import RichText from "../atom/richText";
 import { RightArrowUpIcon } from "../atom/icons";
 
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { MdPadding } from "react-icons/md";
+
 interface Props {
     data: OurServiceData;
 }
@@ -21,29 +26,82 @@ const OurServicesWithTabs = ({ data }: Props) => {
     const enterprisesCards = data?.ForEnterprisesBrands?.GlobalCard ?? [];
     const teamFeatureCards = data?.team_feature?.Cards ?? [];
 
+    // track current slide for indicator
+    const [currentSlide, setCurrentSlide] = useState(0);
+
+    // ---- Slider settings ----
+    const enterprisesSliderSettings = {
+        dots: false,
+        arrows: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        beforeChange: (_: number, newIndex: number) => setCurrentSlide(newIndex),
+    };
+
+    const teamSliderSettings = {
+        dots: false,
+        arrows: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        beforeChange: (_: number, newIndex: number) => setCurrentSlide(newIndex),
+    };
+
+    // group cards → 2 items per slide (stacked vertically)
+    const chunkArray = (arr: any[], size: number) => {
+        const result = [];
+        for (let i = 0; i < arr.length; i += size) {
+            result.push(arr.slice(i, i + size));
+        }
+        return result;
+    };
+
+    // indicator width & position
+    const getIndicatorStyle = (totalSlides: number) => {
+        const segmentWidth = 100 / totalSlides;
+        return {
+            width: `${segmentWidth}%`,
+            left: `${currentSlide * segmentWidth}%`,
+        };
+    };
+
     return (
-        <section className="pt-24 sm:pt-32 md:pt-40 lg:pt-60">
+        <section className="my-[100px] xl:my-[150px] 2xl:my-[200px]">
             <div className="container">
                 <div className="flex flex-col">
-                    <h2 className="border-after !text-[28px] md:!text-5xl 2xl:!text-6xl !pb-4 xl:!pb-10">
+                    <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%]">
                         {data.ForEnterprisesBrands.Title[0].h2}
                     </h2>
+
                     <div className="w-full text-white mt-24">
                         {/* Tab Buttons */}
-                        <div className="max-w-[526px] p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-16">
+                        <div className="max-w-[526px] p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-[25px] md:mb-16">
                             <div className="flex justify-center gap-1">
                                 <button
-                                    onClick={() => setActiveTab("ForEnterprisesBrands")}
-                                    className={`px-6 py-3 rounded-xl cursor-pointer ${
-                                        activeTab === "ForEnterprisesBrands" ? "bg-blue-600 text-white" : ""
+                                    onClick={() => {
+                                        setActiveTab("ForEnterprisesBrands");
+                                        setCurrentSlide(0);
+                                    }}
+                                    className={`px-[15px] py-[12px] md:px-6 md:py-3 rounded-xl cursor-pointer font-semibold  text-[15px] md:text-[18px] ${
+                                        activeTab === "ForEnterprisesBrands"
+                                            ? "bg-[#3c4cff] text-white  text-[15px] md:text-[18px]"
+                                            : ""
                                     }`}
                                 >
                                     For Enterprises & Brands
                                 </button>
                                 <button
-                                    onClick={() => setActiveTab("team_feature")}
-                                    className={`px-6 py-3 rounded-xl cursor-pointer ${
-                                        activeTab === "team_feature" ? "bg-blue-600 text-white" : ""
+                                    onClick={() => {
+                                        setActiveTab("team_feature");
+                                        setCurrentSlide(0);
+                                    }}
+                                    className={`px-[15px] py-[12px] md:px-6 md:py-3 rounded-xl cursor-pointer font-semibold text-[15px] md:text-[18px] ${
+                                        activeTab === "team_feature"
+                                            ? "bg-blue-600 text-white text-[15px] md:text-[18px]"
+                                            : ""
                                     }`}
                                 >
                                     For Agencies & Tech Teams
@@ -51,76 +109,100 @@ const OurServicesWithTabs = ({ data }: Props) => {
                             </div>
                         </div>
 
-                        {/* Content Area */}
+                        {/* Enterprises Tab */}
                         {activeTab === "ForEnterprisesBrands" && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {enterprisesCards.map((card) => (
-                                    <div
-                                        key={card.id}
-                                        className="group bg-[#1C1C1C] border-l-[5px] border-[#3C4CFF] p-10 sm:p-8 xs:p-6 relative"
-                                    >
-                                        <h3 className="font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6">
-                                            {card.Title}
-                                        </h3>
-                                        <div className="font-montserrat font-normal text-[20px] leading-[34px]">
-                                            <RichText html={card.Description} />
-                                        </div>
-
-                                        {/* Hover content */}
-                                        {card?.sub_service_page?.Slug && (
-                                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0">
-                                                <Link
-                                                    href={`${currentPath}${card?.sub_service_page?.Slug}`}
-                                                    target={card.Link?.isExternal ? "_blank" : "_self"}
-                                                >
-                                                    <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center">
-                                                        <RightArrowUpIcon />
-                                                    </div>
-                                                </Link>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-
-                        {activeTab === "team_feature" && (
-                            <div>
-                                {data?.team_feature?.Description && (
-                                    <p className="text-center max-w-3xl mx-auto text-sm text-gray-300 mb-14">
-                                        {data.team_feature.Description}
-                                    </p>
-                                )}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    {teamFeatureCards.map((card) => (
+                            <>
+                                {/* Desktop */}
+                                <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {enterprisesCards.map((card) => (
                                         <div
                                             key={card.id}
-                                            className="bg-[#1C1C1C] p-10 sm:p-8 xs:p-6 rounded-none border border-[#FFFFFF33] flex flex-col justify-between"
+                                            className="group md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:p-8 p-[20px]"
                                         >
-                                            <div>
-                                                <h3 className="font-montserrat font-normal text-[30px] leading-[48px] text-white mb-6">
-                                                    {card.Title}
-                                                </h3>
-                                                <div className="font-montserrat font-normal text-[18px] leading-[30px]">
-                                                    <RichText html={card.Description} />
-                                                </div>
-                                            </div>
-
-                                            {card.Link?.href && (
-                                                <a
-                                                    href={card.Link.href}
-                                                    target={card.Link.isExternal ? "_blank" : "_self"}
-                                                    rel={card.Link.isExternal ? "noopener noreferrer" : ""}
-                                                    className="mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition"
-                                                >
-                                                    {card.Link.label}
-                                                    <ArrowRight width={30} height={30} />
-                                                </a>
-                                            )}
+                                            <h3 className="text-white !text-[20px] md:!text-[30px] mb-6">
+                                                {card.Title}
+                                            </h3>
+                                            <RichText html={card.Description} />
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+
+                                {/* Mobile Slider → 2 stacked per slide */}
+                                <div className="md:hidden">
+                                    <Slider {...enterprisesSliderSettings}>
+                                        {chunkArray(enterprisesCards, 2).map((group, idx) => (
+                                            <div key={idx} className="space-y-[16px]">
+                                                {group.map((card) => (
+                                                    <div
+                                                        key={card.id}
+                                                        className="bg-[#1C1C1C] border-l-[3px] border-[#3C4CFF] p-[16px]"
+                                                    >
+                                                        <h3 className="text-white !text-[20px] md:!text-[30px] mb-3">
+                                                            {card.Title}
+                                                        </h3>
+                                                        <RichText html={card.Description} />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </Slider>
+
+                                    {/* Indicator line */}
+                                    <div className="relative mt-[40px] h-[1px] bg-gray-600">
+                                        <div
+                                            className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
+                                            style={getIndicatorStyle(Math.ceil(enterprisesCards.length / 2))}
+                                        />
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        {/* Agencies Tab */}
+                        {activeTab === "team_feature" && (
+                            <>
+                                {data?.team_feature?.Description && (
+                                    <p className="text-center max-w-3xl mx-auto text-sm text-gray-300 mb-14 hidden md:block">
+                                        {data.team_feature.Description}
+                                    </p>
+                                )}
+
+                                {/* Desktop */}
+                                <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {teamFeatureCards.map((card) => (
+                                        <div key={card.id} className="bg-[#1C1C1C] p-[20px] border border-[#FFFFFF33]">
+                                            <h3 className="text-white !text-[20px] md:!text-[30px] mb-6">
+                                                {card.Title}
+                                            </h3>
+                                            <RichText html={card.Description} />
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Mobile Slider → 1 per slide */}
+                                <div className="md:hidden no-space">
+                                    <Slider {...teamSliderSettings}>
+                                        {teamFeatureCards.map((card) => (
+                                            <div key={card.id}>
+                                                <div className="bg-[#1C1C1C] p-[16px] border border-[#FFFFFF33]">
+                                                    <h3 className="text-white !text-[20px] md:!text-[30px] mb-3">
+                                                        {card.Title}
+                                                    </h3>
+                                                    <RichText html={card.Description} />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </Slider>
+
+                                    {/* Indicator line */}
+                                    <div className="relative mt-[40px] h-[1px] bg-gray-600">
+                                        <div
+                                            className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
+                                            style={getIndicatorStyle(teamFeatureCards.length)}
+                                        />
+                                    </div>
+                                </div>
+                            </>
                         )}
                     </div>
                 </div>
