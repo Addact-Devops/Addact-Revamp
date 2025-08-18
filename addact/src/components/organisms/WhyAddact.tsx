@@ -24,7 +24,7 @@ const WhyAddact = ({ data }: IProps) => {
                     </h2>
 
                     {/* Mobile Accordion */}
-                    <div className="block sm:hidden mt-8 -mx-6">
+                    <div className="block sm:hidden mt-8 -mx-6 bg-[#1c1c1c]">
                         {data?.GlobalCard.slice(0, 6).map((service, index) => (
                             <div
                                 key={service.id}

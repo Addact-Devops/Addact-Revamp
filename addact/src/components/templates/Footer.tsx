@@ -243,7 +243,7 @@ export default function Footer({ data }: FooterProps) {
                                     <div className="text-[16px] md:text-[22px] xl:text-[24px] font-semibold 2xl:mb-[50px] xl:mb-[20px] mb-[15px] mt-[25px] lg:mt-0">
                                         {milestonestitle?.CommonTitle?.[0]?.Title}
                                     </div>
-                                    <div className="flex flex-wrap gap-[5px] 2xl:gap-[65px] lg:gap-[40px] md:justify-center 2xl:justify-start">
+                                    <div className="flex flex-wrap gap-[14px] 2xl:gap-[65px] lg:gap-[40px] md:justify-center 2xl:justify-start">
                                         {milestonesimage
                                             ?.filter((m) => m.Image?.url)
                                             .map((item, i) => (
@@ -254,7 +254,7 @@ export default function Footer({ data }: FooterProps) {
                                                     width={item.Image!.width || 100}
                                                     height={item.Image!.height || 100}
                                                     className="
-                                                    max-w-[60px]
+                                                    max-w-[50px]
                                                     sm:max-w-[70px]
                                                     lg:max-w-[90px]
                                                     xl:max-w-[100px]

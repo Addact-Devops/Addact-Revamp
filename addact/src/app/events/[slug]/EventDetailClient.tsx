@@ -107,8 +107,10 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
             </section>
             <section className="bg-[#f4f4f4] caseStudy-wrapper pb-20">
                 <div className="container">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-24 text-black">
-                        <div className="lg:mr-36">
+                    {/* Desktop = 30/70, Mobile = stacked */}
+                    <div className="grid grid-cols-1 lg:grid-cols-10 gap-10 mx-auto mt-[40px] lg:mt-24 text-black">
+                        {/* Left column (form → order 2 on mobile, order 1 on desktop) */}
+                        <div className="order-2 lg:order-1 lg:col-span-3">
                             <div className="sticky top-[140px] w-full">
                                 <DownloadForm
                                     title={formTitle}
@@ -126,7 +128,8 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
                             </div>
                         </div>
 
-                        <div>
+                        {/* Right column (content → order 1 on mobile, order 2 on desktop) */}
+                        <div className="order-1 lg:order-2 lg:col-span-7">
                             <BlogContentRenderer blocks={eventData?.EventContent} />
                         </div>
                     </div>
