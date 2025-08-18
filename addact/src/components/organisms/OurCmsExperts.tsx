@@ -22,10 +22,10 @@ const OurCmsExperts = () => {
     }
 
     return (
-        <section className="my-24 sm:my-32 md:my-40 lg:my-60 cms-list">
+        <section className="my-[100px] xl:my-[150px] 2xl:my-[200px] cms-list">
             <div className="container">
                 <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-                    <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-5xl 2xl:!text-6xl !pb-4 xl:!pb-10">
+                    <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                         {data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title}
                     </h2>
 
@@ -34,7 +34,7 @@ const OurCmsExperts = () => {
                     </div>
                 </div>
                 <section>
-                    <div className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 lg:mt-24">
+                    <div className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 2xl:mt-24">
                         {data.ourExpertises[0].CMS.map((service) => {
                             const hoverColorMap: Record<string, string> = {
                                 Sitecore: "hover:bg-[#EE3524]",
@@ -49,7 +49,7 @@ const OurCmsExperts = () => {
 
                             return (
                                 <Link
-                                    className={`bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-20 md:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
+                                    className={`bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
                                     key={service?.id}
                                     href={service?.Links?.href}
                                     target={service?.Links?.isExternal ? "_blank" : "_self"}

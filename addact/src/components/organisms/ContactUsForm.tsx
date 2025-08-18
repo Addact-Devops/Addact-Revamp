@@ -136,74 +136,76 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
 
     return (
         <section
-            className='container !px-0 md:!px-[25px] pb-[60px] lg:pb-[100px] mt-[60px] lg:mt-[100px]'
-            id='contact-page-form'
+            className="container !px-0 md:!px-[25px] pb-[60px] lg:pb-[100px] mt-[60px] lg:mt-[100px]"
+            id="contact-page-form"
         >
-            <div className='flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-md'>
+            <div className="flex flex-col md:flex-row rounded-3xl overflow-hidden shadow-md">
                 {/* Left Side */}
-                <div className='relative w-full md:w-[35%] min-h-[300px] sm:min-h-[400px] md:min-h-[unset]'>
-                    <div className='absolute inset-0'>
+                <div className="relative w-full md:w-[35%] min-h-[300px] sm:min-h-[400px] md:min-h-[unset]">
+                    <div className="absolute inset-0">
                         <Image
                             src={LeftBackgroundImage.url}
                             alt={LeftBackgroundImage.alternativeText || ""}
                             fill
                             priority
-                            className='object-cover w-full h-full'
+                            className="object-cover w-full h-full"
                         />
                     </div>
-                    <div className='absolute inset-0 z-10 p-6 sm:p-8 flex flex-col justify-end'>
-                        <h2 className='text-white text-xl sm:text-2xl md:text-3xl font-semibold mb-4'>{LeftTitle}</h2>
+                    <div className="absolute inset-0 z-10 p-6 sm:p-8 flex flex-col justify-end">
+                        <h2 className="text-white !text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold mb-4">
+                            {LeftTitle}
+                        </h2>
                         {renderRichText(LeftDescription, true)}
                     </div>
                 </div>
 
                 {/* Right Side */}
-                <div className='w-full md:w-[65%] px-6 sm:px-[50px] xl:px-[110px] py-8 md:py-[40px] bg-white'>
-                    <h2 className='text-[#000000] text-xl sm:text-2xl md:text-3xl font-semibold mb-[10px]'>
+                <div className="w-full md:w-[65%] px-6 sm:px-[50px] xl:px-[110px] py-8 md:py-[40px] bg-white">
+                    <h2 className="text-[#000000] !text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold mb-[10px]">
                         {RightTitle}
                     </h2>
-                    <div className='mb-[50px]'>{renderRichText(RightDescription)}</div>
+                    <div className="mb-[50px]">{renderRichText(RightDescription)}</div>
 
-                    <form className='space-y-10' onSubmit={handleSubmit}>
+                    <form className="space-y-10" onSubmit={handleSubmit}>
                         {/* Row 1 */}
-                        <div className='flex flex-col md:flex-row gap-[40px]'>
+                        <div className="flex flex-col md:flex-row gap-[40px]">
                             {/* Full Name */}
-                            <div className='relative w-full'>
+                            <div className="relative w-full">
                                 <input
-                                    type='text'
-                                    id='fullName'
+                                    type="text"
+                                    id="fullName"
                                     value={formData.fullName}
                                     onChange={handleChange}
-                                    placeholder=' '
-                                    className='peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]'
+                                    placeholder=" "
+                                    className="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]"
                                     required
                                 />
                                 <label
-                                    htmlFor='fullName'
-                                    className='absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
+                                    htmlFor="fullName"
+                                    className="absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
                                     peer-placeholder-shown:top-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-base peer-placeholder-shown:text-black 
-                                    peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]'
+                                    peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]"
                                 >
                                     Full Name*
                                 </label>
                             </div>
 
                             {/* Business Email */}
-                            <div className='relative w-full'>
+                            <div className="relative w-full">
                                 <input
-                                    type='email'
-                                    id='email'
+                                    type="email"
+                                    id="email"
                                     value={formData.email}
                                     onChange={handleChange}
-                                    placeholder=' '
-                                    className='peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]'
+                                    placeholder=" "
+                                    className="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]"
                                     required
                                 />
                                 <label
-                                    htmlFor='email'
-                                    className='absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
+                                    htmlFor="email"
+                                    className="absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
                                     peer-placeholder-shown:top-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-base peer-placeholder-shown:text-black 
-                                    peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]'
+                                    peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]"
                                 >
                                     Business Email*
                                 </label>
@@ -211,41 +213,41 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
                         </div>
 
                         {/* Company Name */}
-                        <div className='relative'>
+                        <div className="relative">
                             <input
-                                type='text'
-                                id='companyName'
+                                type="text"
+                                id="companyName"
                                 value={formData.companyName}
                                 onChange={handleChange}
-                                placeholder=' '
-                                className='peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]'
+                                placeholder=" "
+                                className="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]"
                                 required
                             />
                             <label
-                                htmlFor='companyName'
-                                className='absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
+                                htmlFor="companyName"
+                                className="absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
                                 peer-placeholder-shown:top-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-base peer-placeholder-shown:text-black 
-                                peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]'
+                                peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]"
                             >
                                 Company Name*
                             </label>
                         </div>
 
                         {/* Requirements */}
-                        <div className='relative'>
+                        <div className="relative">
                             <textarea
-                                id='requirements'
+                                id="requirements"
                                 value={formData.requirements}
                                 onChange={handleChange}
-                                placeholder=' '
+                                placeholder=" "
                                 rows={4}
-                                className='peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]'
+                                className="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-md text-black placeholder-transparent focus:outline-none focus:border-[#155dfc]"
                             />
                             <label
-                                htmlFor='requirements'
-                                className='absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
+                                htmlFor="requirements"
+                                className="absolute left-3 -top-3.5 bg-white px-1 mb-[5px] text-gray-500 text-sm transition-all duration-200 transform scale-90 origin-left
                                 peer-placeholder-shown:top-4 peer-placeholder-shown:scale-100 peer-placeholder-shown:text-base peer-placeholder-shown:text-black 
-                                peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]'
+                                peer-focus:-top-3.5 peer-focus:scale-90 peer-focus:text-sm peer-focus:text-[#155dfc]"
                             >
                                 Describe Your Requirements (Optional)
                             </label>
@@ -254,14 +256,14 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
                         <ReCAPTCHA
                             sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                             onChange={(token: string | null) => setCaptchaToken(token)}
-                            className='mx-auto w-full'
+                            className="mx-auto w-full"
                         />
 
                         {/* Submit */}
                         <button
-                            type='submit'
+                            type="submit"
                             disabled={formLoading}
-                            className='inline-block bg-blue-600 hover:bg-blue-700 text-white px-[20px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]'
+                            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-[20px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]"
                         >
                             {formLoading ? "Submitting..." : "Submit"}
                         </button>

@@ -68,7 +68,7 @@ const CaseStudyListing = () => {
 
                         <div className="flex flex-col justify-between pt-6 md:pt-0 md:pl-9 w-full md:w-2/3">
                             <div>
-                                <h2 className="!text-2xl md:!text-4xl !font-bold mb-5 leading-9 md:leading-12">
+                                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-bold mb-5 leading-9 md:leading-12">
                                     {item.HeroBanner[0].BannerTitle}
                                 </h2>
                                 <p className="text-lg text-gray-400 mb-2.5">

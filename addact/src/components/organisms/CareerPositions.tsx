@@ -72,7 +72,7 @@ export default function CareerPositions({ positions, positionsTitle }: Props) {
                         )}
                         {item.Description && (
                             <>
-                                <h2 className="!text-[28px] md:text-[40px] font-semibold text-black leading-tight">
+                                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold text-black leading-tight">
                                     {stripTags(item.Description)}
                                 </h2>
                                 <div className="w-[67px] md:w-[160px] h-[3px] md:h-[5px] bg-[#3C4CFF] mt-[26px] md:mt-[40px]" />

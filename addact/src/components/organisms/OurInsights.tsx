@@ -91,9 +91,11 @@ export default function OurInsights() {
     const items: InsightCardData[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
 
     return (
-        <div className="my-28 lg:my-48 xl:my-60">
+        <section className="my-[100px] xl:mt-[150px] 2xl:mt-[200px] mb-[100px]">
             <div className="container mx-auto px-4">
-                <h2 className="border-after !text-[28px] md:!text-5xl 2xl:!text-6xl !pb-4 xl:!pb-10">Our Insights</h2>
+                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
+                    Our Insights
+                </h2>
 
                 <div className="grid gap-6 mt-10 sm:mt-14 lg:mt-24 grid-cols-1 md:grid-cols-2 lg:grid-cols-[45%_55%] 2xl:grid-cols-[40.67%_59.33%]">
                     <InsightCard item={items[0]} big />
@@ -105,7 +107,7 @@ export default function OurInsights() {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
@@ -154,9 +156,7 @@ function InsightCard({ item, big = false }: InsightCardProps) {
         >
             <div
                 className={`bg-gray-300 rounded overflow-hidden ${
-                    big
-                        ? "w-full mb-7 max-h-[350px]"
-                        : "w-full max-w-full lg:max-w-[280px] aspect-[320/244] max-h-[244px]"
+                    big ? "w-full mb-7" : "w-full xl:max-w-[250px] 2xl:max-w-[320px]"
                 }`}
             >
                 {item.image?.url && (
@@ -174,7 +174,7 @@ function InsightCard({ item, big = false }: InsightCardProps) {
                 <span className="px-5 py-2 bg-[#3C4CFF] md:bg-[#3f4040] border border-blue-500 text-white rounded-lg w-fit text-[12px] md:text-[14px] font-medium mb-[12px] md:mb-[20px]">
                     {item.type}
                 </span>
-                <h4 className="!text-[18px] !leading-[30px] md:!text-3xl font-medium mb-4 md:leading-tight line-clamp-2">
+                <h4 className="!text-[18px] !leading-[30px] md:!text-[22px] 2xl:!text-3xl font-medium mb-4 md:leading-tight line-clamp-3">
                     {item.title}
                 </h4>
                 <p className="!text-[12px] md:text-[16px] text-white mb-4">{item.date}</p>
