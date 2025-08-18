@@ -69,7 +69,9 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
                                 <div className="space-y-10">
                                     {/* Speaker Section */}
                                     <div>
-                                        <h2 className="!text-5xl !font-extrabold mb-6">Speaker</h2>
+                                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6">
+                                            Speaker
+                                        </h2>
                                         {webinarDetailData?.addactWebinars[0]?.Speakers.map((speaker, index) => (
                                             <div key={index} className="flex items-center gap-4 mb-4">
                                                 <Image
@@ -93,7 +95,9 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
 
                                     {/* Host Section */}
                                     <div>
-                                        <h2 className="!text-5xl !font-extrabold mb-6">Host</h2>
+                                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6">
+                                            Host
+                                        </h2>
                                         {webinarDetailData?.addactWebinars[0]?.Host.map((host, index) => (
                                             <div key={index} className="flex items-center gap-4">
                                                 <Image

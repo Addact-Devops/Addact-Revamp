@@ -92,14 +92,9 @@ export default function OurProcess() {
     };
 
     return (
-        <section className="container" ref={containerRef}>
-            <div
-                className="
-                mt-[240px] mb-[240px] max-1600:mt-[100px] max-1600:mb-[100px]
-                max-1500:mt-[80px] max-1500:mb-[80px]
-            "
-            >
-                <h2 className="border-after">{getTitle()}</h2>
+        <section className="container my-[100px] xl:my-[150px] 2xl:my-[200px]" ref={containerRef}>
+            <div>
+                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px]">{getTitle()}</h2>
 
                 <div className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]">
                     {/* Background gray line */}
