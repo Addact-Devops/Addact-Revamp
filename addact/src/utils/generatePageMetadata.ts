@@ -25,9 +25,6 @@ export async function generatePageMetadata(
 
     const seo = seoData?.SEO;
 
-    console.log("🧠 Final SEO from Strapi:", JSON.stringify(seo, null, 2));
-    console.log("💡 canonicalURL:", seo?.canonicalURL);
-
     const fullCanonicalURL = seo?.canonicalURL?.startsWith("http")
         ? seo.canonicalURL
         : `https://addact-revamp.vercel.app/${slugOrFallbackTitle || ""}`; // replace with your real domain

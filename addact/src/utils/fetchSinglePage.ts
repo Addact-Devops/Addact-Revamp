@@ -58,7 +58,6 @@ export const fetchSinglePage = async <T extends string>(type: T, slug?: string):
             const response: Response<T> = await client.request(query, variables);
             const items = response[type];
             const matched = Array.isArray(items) ? items[0] || {} : {};
-            console.log("✅ [COLLECTION] Matched SEO (serviceLists):", matched);
             return matched;
         }
 
@@ -95,7 +94,6 @@ export const fetchSinglePage = async <T extends string>(type: T, slug?: string):
             const response: Response<T> = await client.request(query, variables);
             const items = response[type];
             const matched = Array.isArray(items) ? items[0] || {} : {};
-            console.log("✅ [COLLECTION] Matched SEO (addactBlogs):", matched);
             return matched;
         }
 
