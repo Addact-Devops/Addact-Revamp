@@ -202,6 +202,8 @@ const ServiceListBySlug = gql`
                 }
             }
             our_service {
+                FirstTabDisplayName
+                SecondTabDisplayName
                 ForEnterprisesBrands {
                     GlobalCard {
                         ... on ComponentBaseTemplatePromo {
@@ -372,6 +374,9 @@ export interface OurServiceData {
         Description: string;
         Title: string;
     }[];
+
+    FirstTabDisplayName: string;
+    SecondTabDisplayName: string;
 
     ForEnterprisesBrands: {
         GlobalCard: {
