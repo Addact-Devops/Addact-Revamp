@@ -55,9 +55,9 @@ export default function GlobeAnimation(data: InternalProps) {
     }, [currentLocationIndex, TIME_MARKS]);
 
     return (
-        <section className="flex flex-col  items-center justify-center 2xl:min-h-screen bg-black text-white">
+        <section className="md:flex flex-col justify-centerbg-black text-white bg-black pt-[100px] mb-[50px] hidden">
             <div className="container flex flex-col items-center justify-center gap-[30px] 2xl:gap-[100px]">
-                <h2 className="!text-[28px] md:!text-5xl 2xl:!text-6xl mb-4 md:flex gap-1 items-center">
+                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] mb-4 md:flex gap-1 items-center">
                     {data.data?.Title}
                     <span className="text-[#3C4CFF] w-[300px] font-semibold transition-opacity duration-500 ease-in-out">
                         &nbsp;{LOCATIONS[currentLocationIndex] ?? ""}

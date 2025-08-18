@@ -20,7 +20,7 @@ export async function generateMetadata() {
 }
 
 export default async function strapiPage() {
-    const service = "strapi";
+    const service = "contentstack";
     const data = await getServiceListBySlug(service);
     if (!data) return notFound();
     const bannerData = data.Banner?.Banner?.[0];

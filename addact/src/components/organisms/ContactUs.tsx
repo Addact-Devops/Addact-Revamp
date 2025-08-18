@@ -83,12 +83,14 @@ const ContactUs = ({ data }: IProps) => {
     };
 
     return (
-        <section className="w-full text-white py-12 px-4">
+        <section className="w-full text-white md:py-12 md:pb-0 pb-[100px] px-4">
             <div className="container mx-auto border border-gray-700 overflow-hidden !p-0">
                 <div className="flex flex-col justify-between">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0">
-                        <div className="md:w-1/3 border-r border-gray-700 px-5 md:px-12 2xl:px-16 py-5 md:py-12 2xl:py-28">
-                            <h2 className="text-3xl md:text-5xl font-semibold leading-tight">{data.Form[0].Title}</h2>
+                        <div className="md:w-1/3 border-r border-gray-700 px-5 md:px-12 2xl:px-16 py-5 md:py-12 2xl:py-20">
+                            <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold leading-tight">
+                                {data.Form[0].Title}
+                            </h2>
                             <div className="h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-blue-600 mt-2 mb-4"></div>
                         </div>
                         <RichText html={data.Form[0].Description} />
