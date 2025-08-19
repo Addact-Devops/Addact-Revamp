@@ -85,17 +85,17 @@ const WhoWeAre = () => {
     return (
         <>
             <section
-                className="who-we-are my-[100px] xl:my-[150px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
+                className='who-we-are my-[100px] xl:my-[150px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]'
                 ref={containerRef}
             >
-                <div className="container">
-                    <div className="flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap">
-                        <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
+                <div className='container'>
+                    <div className='flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap'>
+                        <h2 className='w-full lg:w-[50%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10'>
                             {data?.whoAreWes[0].Title[0].Title}
                         </h2>
 
-                        <div className="relative overflow-hidden w-full text-left  large">
-                            <div className="sticky top-0 flex items-center justify-center">
+                        <div className='relative overflow-hidden w-full text-left  large'>
+                            <div className='sticky top-0 flex items-center justify-center'>
                                 <div
                                     className={
                                         "flex flex-wrap gap-x-[10px] [&_p]:lg:!text-[22px] [&_p]:2xl:!text-[34px] [&_p]:!leading-relaxed"
@@ -109,7 +109,7 @@ const WhoWeAre = () => {
 
                     <div
                         ref={counterSectionRef}
-                        className="grid grid-cols-2 md:grid-cols-4 border border-white/15 border-b-0 md:border-b mt-20 2xl:mt-24 overflow-hidden"
+                        className='grid grid-cols-2 md:grid-cols-4 border border-white/15 border-b-0 md:border-b mt-20 2xl:mt-24 overflow-hidden'
                     >
                         {data?.whoAreWes[0].Counter.map((item, index) => {
                             const isSecondInRowMobile = (index + 1) % 2 === 0;
@@ -130,14 +130,14 @@ const WhoWeAre = () => {
                 `}
                                 >
                                     <h2
-                                        className="text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left"
+                                        className='text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left'
                                         ref={(el) => {
                                             numberRefs.current[index] = el;
                                         }}
                                     >
                                         {`0${counterSuffixes[index] || ""}`}
                                     </h2>
-                                    <div className="text-[14px] md:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%]">
+                                    <div className='text-[14px] md:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%]'>
                                         {item.CounterTitle}
                                     </div>
                                 </div>
