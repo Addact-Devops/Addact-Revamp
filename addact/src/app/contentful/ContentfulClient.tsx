@@ -9,6 +9,7 @@ import OurInsights from "@/components/organisms/OurInsights";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import ContactUs from "@/components/organisms/ContactUs";
 
 // ✅ Import correct types from GraphQL
 import type { Faq, Whyaddact } from "@/graphql/queries/getHomePage";
@@ -34,6 +35,7 @@ type ContentfulClientProps = {
         our_service?: OurServiceData;
         why_addact?: Whyaddact;
         faq?: Faq;
+        contact_us?: any;
     };
 };
 
@@ -59,6 +61,7 @@ export default function ContentfulClient({ data }: ContentfulClientProps) {
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq!} />
+            <ContactUs data={data.contact_us} />
         </main>
     );
 }
