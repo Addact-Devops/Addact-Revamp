@@ -23,17 +23,8 @@ const Header = ({ headers }: HeaderProps) => {
     };
 
     const dropdownRef = useRef<HTMLDivElement>(null);
-    const [scrolled, setScrolled] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 120);
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-    // Close dropdown on outside click
+    // close dropdown on outside click
     useEffect(() => {
         function handleClickOutside(event: MouseEvent) {
             if (
@@ -56,24 +47,14 @@ const Header = ({ headers }: HeaderProps) => {
 
     useEffect(() => {
         // This runs whenever the route/path changes
-        setOpenDropdown(null); // Close desktop dropdown
-        setOpenMobileDropdown(null); // Collapse any open mobile submenu
-        setMobileMenuOpen(false); // Close full mobile menu
+        setOpenDropdown(null);
+        setOpenMobileDropdown(null);
+        setMobileMenuOpen(false);
     }, [pathname]);
 
     return (
-        <header
-            className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-                scrolled ? "bg-transparent" : "bg-black"
-            }`}
-        >
-            <div
-                className={`mx-auto w-full flex items-center justify-between px-4 py-4 lg:px-0 lg:py-0 transition-all duration-300 ${
-                    scrolled
-                        ? "container bg-black/50 backdrop-blur-md border border-white/10 px-4 py-2 lg:px-6 lg:py-2 mt-3"
-                        : "container px-4 py-4 lg:px-0 lg:py-0"
-                }`}
-            >
+        <header className="fixed top-0 w-full z-50 bg-[#0F0F0F]">
+            <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0">
                 <Link href="/">
                     {headerData?.HeaderLogo?.url ? (
                         <Image
@@ -87,19 +68,17 @@ const Header = ({ headers }: HeaderProps) => {
                 </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden lg:flex items-center space-x-6 relative">
+                <div className="hidden lg:flex items-center space-x-6">
                     {headerData?.main_navigations?.map((item) => {
                         const isActive = openDropdown === item.ReferenceTitle;
 
                         return (
                             <div key={item.ReferenceTitle} className="group mr-10">
-                                <div className="relative flex flex-col items-center">
+                                <div className="flex flex-col items-center">
                                     <button
                                         onClick={() => handleDropdownToggle(item.ReferenceTitle)}
                                         data-dropdown-button
-                                        className={`flex items-center gap-1 text-lg font-medium hover:text-blue-500 focus:outline-none transition-colors duration-200 cursor-pointer ${
-                                            scrolled ? "py-[24px]" : "py-[46px]"
-                                        }`}
+                                        className="flex items-center gap-1 text-lg font-medium hover:text-blue-500 focus:outline-none transition-colors duration-200 cursor-pointer py-[46px]"
                                     >
                                         {item.ReferenceTitle}
                                         {isActive ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
@@ -108,52 +87,82 @@ const Header = ({ headers }: HeaderProps) => {
                                     {isActive && <div className="absolute bottom-0 w-[45px] h-[5px] bg-white" />}
                                 </div>
 
-                                {/* Only render dropdown once, positioned at far-left */}
+                                {/* Dropdown Full Width */}
                                 {isActive && (
                                     <div
                                         ref={dropdownRef}
-                                        className={`absolute left-0 mt-2 bg-black border border-gray-700 p-4 shadow-lg flex gap-8 w-[610px] z-40 ${
-                                            scrolled ? "top-[76px] " : "top-[112px] "
-                                        }`}
+                                        className="container absolute left-0 right-0 top-full w-full bg-[#0F0F0F] text-white shadow-lg z-40 !p-0 rounded-[20px] mt-[10px]"
                                     >
-                                        <div className="w-1/2 relative">
-                                            <Image
-                                                src={item.SubNavImage.url}
-                                                alt={
-                                                    item.SubNavImage.alternativeText ||
-                                                    item.ReferenceTitle ||
-                                                    "Dropdown image"
-                                                }
-                                                width={328}
-                                                height={328}
-                                                className="object-cover w-full h-full"
-                                            />
-
-                                            <div className="absolute bottom-4 left-4 text-white text-3xl font-semibold">
-                                                {item.ReferenceTitle}
+                                        <div className="mx-auto p-[20px] md:pr-[20px] 2xl:pr-[60px] flex md:gap-[30px] 2xl:gap-[60px]">
+                                            {/* Left image */}
+                                            <div className="w-[100%] relative max-w-[375px]">
+                                                <Image
+                                                    src={item.SubNavImage.url}
+                                                    alt={
+                                                        item.SubNavImage.alternativeText ||
+                                                        item.ReferenceTitle ||
+                                                        "Dropdown image"
+                                                    }
+                                                    width={328}
+                                                    height={328}
+                                                    className="object-cover w-full h-full rounded-lg"
+                                                />
+                                                <div className="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold">
+                                                    {item.ReferenceTitle}
+                                                </div>
                                             </div>
+
+                                            {/* Right grid */}
+                                            <ul className="grid grid-cols-2 md:gap-x-[20px] 2xl:gap-x-[60px] md:gap-y-[15px] 2xl:gap-y-[30px] md:py-[20px] 2xl:py-[40px]">
+                                                {item.SubNavLink.map((child) => (
+                                                    <li key={child.id}>
+                                                        <Link
+                                                            href={child.href}
+                                                            target={child?.isExternal ? "_blank" : "_self"}
+                                                            className="block"
+                                                        >
+                                                            <div className="flex items-start gap-[15px] 2xl:gap-[24px]">
+                                                                {child.Icon?.url && (
+                                                                    <Image
+                                                                        src={child.Icon.url}
+                                                                        alt={child.Icon.alternativeText}
+                                                                        width={child.Icon.width || 24}
+                                                                        height={child.Icon.height || 24}
+                                                                        className="md:w-[70px] 2xl:w-[100px] md:h-[70px] 2xl:h-[100px]"
+                                                                    />
+                                                                )}
+                                                                <div className="flex flex-col">
+                                                                    <div className=" md:text-[20px] 2xl:text-[24px] pt-5px font-[500]">
+                                                                        {child.label}
+                                                                    </div>
+                                                                    {child.SubDisc && (
+                                                                        <span
+                                                                            className="text-[14px] mt-[8px] font-[400] block"
+                                                                            style={{
+                                                                                display: "-webkit-box",
+                                                                                WebkitLineClamp: 2,
+                                                                                WebkitBoxOrient: "vertical",
+                                                                                overflow: "hidden",
+                                                                                textOverflow: "ellipsis",
+                                                                            }}
+                                                                        >
+                                                                            {child.SubDisc}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
                                         </div>
-                                        <ul className="w-1/2 text-sm space-y-2 self-center">
-                                            {item.SubNavLink.map((child) => (
-                                                <li
-                                                    key={child.id}
-                                                    className="hover:text-blue-400 cursor-pointer text-lg font-medium leading-7 mb-4"
-                                                >
-                                                    <Link
-                                                        href={child.href}
-                                                        target={child?.isExternal ? "_blank" : "_self"}
-                                                    >
-                                                        {child.label}
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
                                     </div>
                                 )}
                             </div>
                         );
                     })}
 
+                    {/* Contact Button */}
                     <Link
                         href={headerData?.contact_us[0]?.href}
                         className="ml-4 bg-[#3C4CFF] px-4 py-2 rounded-[6px] md:rounded-[8px] text-white lg:py-4 lg:px-7 font-[600]"
@@ -213,7 +222,7 @@ const Header = ({ headers }: HeaderProps) => {
                                 <div key={item.ReferenceTitle}>
                                     <button
                                         onClick={() => setOpenMobileDropdown(isOpen ? null : item.ReferenceTitle)}
-                                        className="w-full flex justify-between items-center px-4 py-5 text-base font-medium cursor-pointer"
+                                        className="w-full flex justify-between items-center px-4 py-5 text-[16px] font-medium cursor-pointer"
                                     >
                                         {item.ReferenceTitle}
                                         <ChevronDown
@@ -224,14 +233,34 @@ const Header = ({ headers }: HeaderProps) => {
                                         />
                                     </button>
                                     {isOpen && (
-                                        <ul className="px-4 pb-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm bg-black">
+                                        <ul className="px-4 pb-4 grid grid-cols-2 gap-4 text-sm bg-black">
                                             {item.SubNavLink.map((child) => (
-                                                <li key={child.id} className="hover:text-blue-400 cursor-pointer py-1">
+                                                <li key={child.id}>
                                                     <Link
                                                         href={child.href}
                                                         target={child.isExternal ? "_blank" : "_self"}
                                                     >
-                                                        {child.label}
+                                                        <div className="flex items-center gap-3">
+                                                            {child.Icon?.url && (
+                                                                <Image
+                                                                    src={child.Icon.url}
+                                                                    alt={child.Icon.alternativeText}
+                                                                    width={child.Icon.width || 20}
+                                                                    height={child.Icon.height || 20}
+                                                                    className="w-[40px] h-[40px] mt-1"
+                                                                />
+                                                            )}
+                                                            <div className="flex flex-col">
+                                                                <span className="font-medium text-[14px]md:text-[18px]">
+                                                                    {child.label}
+                                                                </span>
+                                                                {/* {child.SubDisc && (
+                                                                    <span className="text-xs text-gray-400 mt-1">
+                                                                        {child.SubDisc}
+                                                                    </span>
+                                                                )} */}
+                                                            </div>
+                                                        </div>
                                                     </Link>
                                                 </li>
                                             ))}

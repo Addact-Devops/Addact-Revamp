@@ -27,6 +27,13 @@ const GET_HEADER = gql`
                         id
                         label
                         target
+                        SubDisc
+                        Icon {
+                            url
+                            alternativeText
+                            height
+                            width
+                        }
                     }
                 }
                 ReferenceTitle
@@ -72,6 +79,13 @@ export interface HeaderItem {
             id?: string;
             label?: string;
             target?: string;
+            SubDisc?: string;
+            Icon?: {
+                url: string;
+                alternativeText: string;
+                height: number;
+                width: number;
+            };
         }[];
         ReferenceTitle: string;
         SubNavImage: {
