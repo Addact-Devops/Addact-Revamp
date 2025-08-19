@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getOurProcess, OurProcessData } from "@/graphql/queries/getOurProcess";
+import { OurProcessData } from "@/graphql/queries/getOurProcess";
 
-export default function OurProcess() {
+export default function OurProcess(props: { data?: OurProcessData["home"]["ourprocess"] }) {
     const [data, setData] = useState<OurProcessData["home"]["ourprocess"]>();
     const containerRef = useRef<HTMLDivElement | null>(null);
     const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -17,10 +17,9 @@ export default function OurProcess() {
     // Fetch data
     useEffect(() => {
         (async () => {
-            const res = await getOurProcess();
-            setData(res.home.ourprocess);
+            setData(props.data);
         })();
-    }, []);
+    }, [props.data]);
 
     // Track active step
     useEffect(() => {
@@ -92,22 +91,22 @@ export default function OurProcess() {
     };
 
     return (
-        <section className="container my-[100px] xl:my-[150px] 2xl:my-[200px]" ref={containerRef}>
+        <section className='container my-[100px] xl:my-[150px] 2xl:my-[200px]' ref={containerRef}>
             <div>
-                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px]">{getTitle()}</h2>
+                <h2 className='border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px]'>{getTitle()}</h2>
 
-                <div className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]">
+                <div className='relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]'>
                     {/* Background gray line */}
-                    <div className="absolute left-1 md:left-1/2 transform -translate-x-1/2 top-0 w-[2px] h-full bg-gray-600 opacity-40 z-0" />
+                    <div className='absolute left-1 md:left-1/2 transform -translate-x-1/2 top-0 w-[2px] h-full bg-gray-600 opacity-40 z-0' />
 
                     {/* Active white animated line */}
                     <div
-                        className="absolute left-1 md:left-1/2 transform -translate-x-1/2 w-[2px] bg-white z-10 transition-all duration-500 ease-in-out"
+                        className='absolute left-1 md:left-1/2 transform -translate-x-1/2 w-[2px] bg-white z-10 transition-all duration-500 ease-in-out'
                         style={activeLineStyle}
                     />
 
                     {/* Steps */}
-                    <div className="w-full relative z-20">
+                    <div className='w-full relative z-20'>
                         {data?.ProcessData?.map((step, index: number) => {
                             const isLeft = index % 2 !== 0;
                             const isActive = index === activeStep;
@@ -118,36 +117,36 @@ export default function OurProcess() {
                                     ref={(el) => {
                                         stepRefs.current[index] = el;
                                     }}
-                                    className="relative flex flex-col md:flex-row justify-between items-start w-full mb-[40px] md:mb-[50px] lg:mb-[60px] xl:mb-[70px]"
+                                    className='relative flex flex-col md:flex-row justify-between items-start w-full mb-[40px] md:mb-[50px] lg:mb-[60px] xl:mb-[70px]'
                                 >
                                     {/* Left content (desktop only) */}
                                     {isLeft ? (
-                                        <div className="hidden md:block w-1/2 pr-[50px] text-left">
-                                            <p className="font-normal text-[12px] leading-[100%] mb-[18px] md:text-[24px] md:leading-[48px]">
+                                        <div className='hidden md:block w-1/2 pr-[50px] text-left'>
+                                            <p className='font-normal text-[12px] leading-[100%] mb-[18px] md:text-[24px] md:leading-[48px]'>
                                                 Step {index + 1 < 10 ? `0${index + 1}` : index + 1}
                                             </p>
-                                            <div className="font-normal text-[18px] leading-[100%] mb-[12px] md:font-medium md:text-[30px] md:leading-[48px] md:mb-[16px]">
+                                            <div className='font-normal text-[18px] leading-[100%] mb-[12px] md:font-medium md:text-[30px] md:leading-[48px] md:mb-[16px]'>
                                                 {step.Title}
                                             </div>
                                             <div
-                                                className="text-gray-300 font-normal text-[12px] leading-[19px] md:text-[20px] md:leading-[34px]"
+                                                className='text-gray-300 font-normal text-[12px] leading-[19px] md:text-[20px] md:leading-[34px]'
                                                 dangerouslySetInnerHTML={{ __html: step.Description }}
                                             />
                                         </div>
                                     ) : (
-                                        <div className="hidden md:block w-1/2" />
+                                        <div className='hidden md:block w-1/2' />
                                     )}
 
                                     {/* Mobile content */}
-                                    <div className="block md:hidden w-full pl-[25px]">
-                                        <p className="font-normal text-[12px] leading-[100%] mb-[18px]">
+                                    <div className='block md:hidden w-full pl-[25px]'>
+                                        <p className='font-normal text-[12px] leading-[100%] mb-[18px]'>
                                             Step {index + 1 < 10 ? `0${index + 1}` : index + 1}
                                         </p>
-                                        <div className="font-normal text-[18px] leading-[100%] mb-[12px]">
+                                        <div className='font-normal text-[18px] leading-[100%] mb-[12px]'>
                                             {step.Title}
                                         </div>
                                         <div
-                                            className="text-gray-300 font-normal text-[12px] leading-[19px]"
+                                            className='text-gray-300 font-normal text-[12px] leading-[19px]'
                                             dangerouslySetInnerHTML={{ __html: step.Description }}
                                         />
                                     </div>
@@ -160,20 +159,20 @@ export default function OurProcess() {
 
                                     {/* Right content (desktop) */}
                                     {!isLeft ? (
-                                        <div className="hidden md:block w-1/2 pl-[50px] text-left">
-                                            <p className="font-normal text-[12px] leading-[100%] mb-[18px] md:text-[24px] md:leading-[48px]">
+                                        <div className='hidden md:block w-1/2 pl-[50px] text-left'>
+                                            <p className='font-normal text-[12px] leading-[100%] mb-[18px] md:text-[24px] md:leading-[48px]'>
                                                 Step {index + 1 < 10 ? `0${index + 1}` : index + 1}
                                             </p>
-                                            <div className="font-normal text-[18px] leading-[100%] mb-[12px] md:font-medium md:text-[30px] md:leading-[48px] md:mb-[16px]">
+                                            <div className='font-normal text-[18px] leading-[100%] mb-[12px] md:font-medium md:text-[30px] md:leading-[48px] md:mb-[16px]'>
                                                 {step.Title}
                                             </div>
                                             <div
-                                                className="text-gray-300 font-normal text-[12px] leading-[19px] md:text-[20px] md:leading-[34px]"
+                                                className='text-gray-300 font-normal text-[12px] leading-[19px] md:text-[20px] md:leading-[34px]'
                                                 dangerouslySetInnerHTML={{ __html: step.Description }}
                                             />
                                         </div>
                                     ) : (
-                                        <div className="hidden md:block w-1/2" />
+                                        <div className='hidden md:block w-1/2' />
                                     )}
                                 </div>
                             );
