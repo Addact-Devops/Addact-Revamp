@@ -31,9 +31,9 @@ export default async function SitemapPage() {
 
                     {/* Dynamic Links */}
                     {pages
-                        .filter((path) => path !== "/")
+                        .filter((path) => path !== "/" && path.split("/").length === 2) // Keep only top-level paths
                         .map((path) => (
-                            <SitemapCard key={path} title={path.replace("/", "").replace(/-/g, " ")} href={path} />
+                            <SitemapCard key={path} title={formatTitle(path)} href={path} />
                         ))}
                 </div>
             </div>
@@ -56,4 +56,12 @@ function SitemapCard({ title, href }: SitemapCardProps) {
             <Globe2 className="w-5 h-5 text-gray-400 group-hover:text-[#fff] transition" />
         </Link>
     );
+}
+
+// Helper to format the title from the path
+function formatTitle(path: string) {
+    const cleanPath = path.replace("/", ""); // Remove leading slash
+    return cleanPath
+        .replace(/-/g, " ") // Replace dashes with spaces
+        .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
 }

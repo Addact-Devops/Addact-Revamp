@@ -109,24 +109,40 @@ const WhoWeAre = () => {
 
                     <div
                         ref={counterSectionRef}
-                        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 border border-white/15 mt-20 2xl:mt-24 overflow-hidden"
+                        className="grid grid-cols-2 md:grid-cols-4 border border-white/15 border-b-0 md:border-b mt-20 2xl:mt-24 overflow-hidden"
                     >
-                        {data?.whoAreWes[0].Counter.map((item, index) => (
-                            <div
-                                key={item.id}
-                                className="text-center p-[60px] border-r border-white/15 last:border-r-0"
-                            >
-                                <h2
-                                    className="text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left"
-                                    ref={(el) => {
-                                        numberRefs.current[index] = el;
-                                    }}
+                        {data?.whoAreWes[0].Counter.map((item, index) => {
+                            const isSecondInRowMobile = (index + 1) % 2 === 0;
+                            const isFourthInRowDesktop = (index + 1) % 4 === 0;
+                            const isLastItem = index === data.whoAreWes[0].Counter.length - 1;
+
+                            return (
+                                <div
+                                    key={item.id}
+                                    className={`
+                    text-center p-[24px] md:p-[60px] 
+                    border-b md:border-b-0 
+                    border-white/15 
+                    ${!isSecondInRowMobile ? "border-r" : ""} 
+                    ${isSecondInRowMobile ? "border-r-0" : ""} 
+                    ${isFourthInRowDesktop ? "md:border-r-0" : "md:border-r"} 
+                    ${isLastItem ? "border-r-0 md:border-r-0" : ""}
+                `}
                                 >
-                                    {`0${counterSuffixes[index] || ""}`}
-                                </h2>
-                                <div className="text-2xl text-left font-normal leading-[1.75]">{item.CounterTitle}</div>
-                            </div>
-                        ))}
+                                    <h2
+                                        className="text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left"
+                                        ref={(el) => {
+                                            numberRefs.current[index] = el;
+                                        }}
+                                    >
+                                        {`0${counterSuffixes[index] || ""}`}
+                                    </h2>
+                                    <div className="text-[14px] md:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%]">
+                                        {item.CounterTitle}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
