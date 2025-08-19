@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-// import { usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 // import Link from "next/link";
 // import { ArrowRight } from "lucide-react";
 import { OurServiceData } from "@/graphql/queries/getServieceList";
@@ -12,6 +12,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { RightArrowUpIcon } from "../atom/icons";
 // import { MdPadding } from "react-icons/md";
 
 interface Props {
@@ -26,12 +28,13 @@ interface Card {
 }
 
 const OurServicesWithTabs = ({ data }: Props) => {
-    // const pathname = usePathname();
-    // const currentPath = pathname.replace(/\/$/, "");
+    const pathname = usePathname();
+    const currentPath = pathname.replace(/\/$/, "");
 
     const [activeTab, setActiveTab] = useState<"ForEnterprisesBrands" | "team_feature">("ForEnterprisesBrands");
 
     const enterprisesCards = data?.ForEnterprisesBrands?.GlobalCard ?? [];
+    console.log("🚀 ~ OurServicesWithTabs ~ enterprisesCards:", enterprisesCards);
     const teamFeatureCards = data?.team_feature?.Cards ?? [];
 
     // track current slide for indicator
@@ -86,7 +89,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
 
                     <div className="w-full text-white mt-24">
                         {/* Tab Buttons */}
-                        <div className="max-w-[526px] p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-[25px] md:mb-16">
+                        <div className="max-w-none p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-[25px] md:mb-16">
                             <div className="flex justify-center gap-1">
                                 <button
                                     onClick={() => {
@@ -125,12 +128,24 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                     {enterprisesCards.map((card) => (
                                         <div
                                             key={card.id}
-                                            className="group md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:p-8 p-[20px]"
+                                            className="group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:p-8 p-[20px]"
                                         >
                                             <h3 className="text-white !text-[20px] md:!text-[30px] mb-6">
                                                 {card.Title}
                                             </h3>
                                             <RichText html={card.Description} />
+                                            {card?.sub_service_page?.Slug && (
+                                                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0">
+                                                    <Link
+                                                        href={`${currentPath}${card?.sub_service_page?.Slug}`}
+                                                        target={card.Link?.isExternal ? "_blank" : "_self"}
+                                                    >
+                                                        <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center">
+                                                            <RightArrowUpIcon />
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -188,7 +203,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                     href={card.Link.href}
                                                     target={card.Link.isExternal ? "_blank" : "_self"}
                                                     rel={card.Link.isExternal ? "noopener noreferrer" : ""}
-                                                    className='mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition'
+                                                    className="mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition"
                                                 >
                                                     {card.Link.label}
                                                     <ArrowRight width={30} height={30} />
@@ -213,7 +228,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                             href={card.Link.href}
                                                             target={card.Link.isExternal ? "_blank" : "_self"}
                                                             rel={card.Link.isExternal ? "noopener noreferrer" : ""}
-                                                            className='mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition'
+                                                            className="mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition"
                                                         >
                                                             {card.Link.label}
                                                             <ArrowRight width={30} height={30} />
