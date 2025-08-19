@@ -83,111 +83,111 @@ const ContactUs = ({ data }: IProps) => {
     };
 
     return (
-        <section className="w-full text-white md:py-12 md:pb-0 pb-[100px] px-4">
-            <div className="container mx-auto border border-gray-700 overflow-hidden !p-0">
-                <div className="flex flex-col justify-between">
-                    <div className="flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0">
-                        <div className="md:w-1/3 border-r border-gray-700 px-5 md:px-12 2xl:px-16 py-5 md:py-12 2xl:py-20">
-                            <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold leading-tight">
+        <section className='w-full text-white md:py-12 pb-[100px] px-4' id='contact-us'>
+            <div className='container mx-auto border border-gray-700 overflow-hidden !p-0'>
+                <div className='flex flex-col justify-between'>
+                    <div className='flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0'>
+                        <div className='md:w-1/3 border-r border-gray-700 px-5 md:px-12 2xl:px-16 py-5 md:py-12 2xl:py-20'>
+                            <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold leading-tight'>
                                 {data.Form[0].Title}
                             </h2>
-                            <div className="h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-blue-600 mt-2 mb-4"></div>
+                            <div className='h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-blue-600 mt-2 mb-4'></div>
                         </div>
                         <RichText html={data.Form[0].Description} />
                     </div>
-                    <div className="flex flex-col lg:flex-row lg:items-stretch justify-center">
+                    <div className='flex flex-col lg:flex-row lg:items-stretch justify-center'>
                         <form
                             onSubmit={handleSubmit}
-                            className="space-y-6 w-full lg:w-1/2 px-6 md:px-11 py-10 md:py-12 border-t border-gray-700 flex flex-col"
+                            className='space-y-6 w-full lg:w-1/2 px-6 md:px-11 py-10 md:py-12 border-t border-gray-700 flex flex-col'
                         >
-                            <div className="grid md:grid-cols-2 gap-6 mb-[40px]">
+                            <div className='grid md:grid-cols-2 gap-6 mb-[40px]'>
                                 <div>
-                                    <label htmlFor="name" className="block text-base md:text-xl font-semibold mb-1">
-                                        Your Name <span className="text-red-500">*</span>
+                                    <label htmlFor='name' className='block text-base md:text-xl font-semibold mb-1'>
+                                        Your Name <span className='text-red-500'>*</span>
                                     </label>
                                     <input
-                                        id="name"
-                                        name="name"
-                                        autoComplete="name"
+                                        id='name'
+                                        name='name'
+                                        autoComplete='name'
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                                        placeholder="Type your name here"
+                                        className='w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none'
+                                        placeholder='Type your name here'
                                     />
-                                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                                    {errors.name && <p className='text-red-500 text-sm mt-1'>{errors.name}</p>}
                                 </div>
                                 <div>
-                                    <label htmlFor="email" className="block text-base md:text-xl font-semibold mb-1">
-                                        Email Address <span className="text-red-500">*</span>
+                                    <label htmlFor='email' className='block text-base md:text-xl font-semibold mb-1'>
+                                        Email Address <span className='text-red-500'>*</span>
                                     </label>
                                     <input
-                                        id="email"
-                                        name="email"
-                                        autoComplete="email"
+                                        id='email'
+                                        name='email'
+                                        autoComplete='email'
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                                        placeholder="Type your email here"
+                                        className='w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none'
+                                        placeholder='Type your email here'
                                     />
-                                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                                    {errors.email && <p className='text-red-500 text-sm mt-1'>{errors.email}</p>}
                                 </div>
                             </div>
 
-                            <div className="mb-[40px]">
-                                <label htmlFor="company" className="block text-base md:text-xl font-semibold mb-1">
-                                    Company Name <span className="text-red-500">*</span>
+                            <div className='mb-[40px]'>
+                                <label htmlFor='company' className='block text-base md:text-xl font-semibold mb-1'>
+                                    Company Name <span className='text-red-500'>*</span>
                                 </label>
                                 <input
-                                    id="company"
-                                    name="company"
-                                    autoComplete="company"
+                                    id='company'
+                                    name='company'
+                                    autoComplete='company'
                                     value={formData.company}
                                     onChange={handleChange}
-                                    className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                                    placeholder="Type your company name here"
+                                    className='w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none'
+                                    placeholder='Type your company name here'
                                 />
-                                {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company}</p>}
+                                {errors.company && <p className='text-red-500 text-sm mt-1'>{errors.company}</p>}
                             </div>
 
-                            <div className="mb-[40px]">
-                                <label htmlFor="message" className="block text-base md:text-xl font-semibold mb-1">
+                            <div className='mb-[40px]'>
+                                <label htmlFor='message' className='block text-base md:text-xl font-semibold mb-1'>
                                     Describe Your Requirements
                                 </label>
                                 <textarea
-                                    id="message"
-                                    name="message"
-                                    autoComplete="message"
+                                    id='message'
+                                    name='message'
+                                    autoComplete='message'
                                     value={formData.message}
                                     onChange={handleChange}
                                     rows={4}
-                                    className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                                    placeholder="Type here..."
+                                    className='w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none'
+                                    placeholder='Type here...'
                                 ></textarea>
                             </div>
 
                             <ReCAPTCHA
                                 sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                                 onChange={(token: string | null) => setCaptchaToken(token)}
-                                className="mx-auto w-full"
+                                className='mx-auto w-full'
                             />
 
                             <button
-                                type="submit"
-                                className="w-full bg-blue-600 cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700"
+                                type='submit'
+                                className='w-full bg-blue-600 cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
                             >
                                 Contact Us
                             </button>
 
-                            {submitted && <p className="text-green-500 text-sm mt-2">Thank you for contacting us!</p>}
+                            {submitted && <p className='text-green-500 text-sm mt-2'>Thank you for contacting us!</p>}
                         </form>
 
-                        <div className="hidden lg:block w-1/2 relative">
+                        <div className='hidden lg:block w-1/2 relative'>
                             {data?.Form[0]?.Image?.url && (
                                 <Image
                                     src={data.Form[0].Image.url}
                                     alt={data.Form[0].Image.alternativeText || "Contact image"}
                                     fill
-                                    className="object-cover"
+                                    className='object-cover'
                                 />
                             )}
                         </div>
