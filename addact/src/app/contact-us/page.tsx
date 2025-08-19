@@ -31,7 +31,7 @@ export default async function ContactUsPage() {
                                   }
                                 : undefined
                         }
-                        showAnchorLinks={true}
+                        showAnchorLinks={false}
                     />
                 ) : null}
 
