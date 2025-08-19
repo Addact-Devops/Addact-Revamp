@@ -50,11 +50,11 @@ const CaseStudyListing = () => {
             )}
 
             {/* Listing Section */}
-            <div className="container mx-auto px-4 py-12 grid gap-8">
+            <div className="container mx-auto px-4 py-12 grid gap-[60px]">
                 {caseStudyListing.map((item) => (
                     <div
                         key={item.documentId}
-                        className="flex flex-col items-center md:flex-row bg-[#232630] p-5 mb-5 md:mb-14 text-white rounded-[20px] overflow-hidden shadow-lg"
+                        className="flex flex-col items-center md:flex-row bg-[#232630] p-5 text-white rounded-[20px] overflow-hidden shadow-lg"
                     >
                         <div className="relative w-full md:w-[550px] h-[200px] md:h-[300px]">
                             <Image
@@ -68,10 +68,10 @@ const CaseStudyListing = () => {
 
                         <div className="flex flex-col justify-between pt-6 md:pt-0 md:pl-9 w-full md:w-2/3">
                             <div>
-                                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-bold mb-5 leading-9 md:leading-12">
+                                <h2 className="!text-[28px] md:!text-[40px]  !font-bold mb-5 leading-9 md:leading-12">
                                     {item.HeroBanner[0].BannerTitle}
                                 </h2>
-                                <p className="text-lg text-gray-400 mb-2.5">
+                                <p className="text-lg text-white mb-2.5 border rounded max-w-none inline-block px-2 border-[#676767]">
                                     {new Date(item.HeroBanner[0].PublishDate).toLocaleDateString("en-GB", {
                                         day: "2-digit",
                                         month: "long",
@@ -84,7 +84,7 @@ const CaseStudyListing = () => {
                             <div className="mt-4">
                                 <Link
                                     href={`/portfolio${item.Slug}`}
-                                    className="inline-block bg-[#3C4CFF] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#000000] transition"
+                                    className="inline-block bg-[#3C4CFF] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#3C4CFF] transition"
                                 >
                                     Know More
                                 </Link>

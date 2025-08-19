@@ -90,7 +90,7 @@ const WhoWeAre = () => {
             >
                 <div className="container">
                     <div className="flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap">
-                        <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
+                        <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[50px] !pb-4 xl:!pb-10">
                             {data?.whoAreWes[0].Title[0].Title}
                         </h2>
 
