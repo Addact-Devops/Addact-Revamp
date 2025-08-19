@@ -126,7 +126,7 @@ export default async function Page({ params }: { params: Params }) {
     const data = await getServiceDetailBySlug(slug);
 
     if (!data) {
-        return <div className="text-white p-8">Page Not Found</div>;
+        return <div className='text-white p-8'>Page Not Found</div>;
     }
 
     return <SiteDetailClient data={data} />;

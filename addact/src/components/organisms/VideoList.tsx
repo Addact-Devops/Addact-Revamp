@@ -41,7 +41,7 @@ export default function VideoList({ videoList }: VideoListProps) {
                         return (
                             <div key={index} className='overflow-hidden'>
                                 {/* Iframe with loader */}
-                                <div className='relative w-full h-[250px] rounded-xl overflow-hidden'>
+                                <div className='relative w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden'>
                                     {loadingStates[index] && (
                                         <div className='absolute inset-0 flex items-center justify-center bg-black z-10'>
                                             <Loader />
@@ -58,7 +58,7 @@ export default function VideoList({ videoList }: VideoListProps) {
                                                     return updated;
                                                 });
                                             }}
-                                            className='w-full h-[250px] rounded-xl'
+                                            className='w-full h-[200px] md:h-[250px] rounded-xl'
                                             frameBorder='0'
                                             allowFullScreen
                                         />
@@ -66,7 +66,7 @@ export default function VideoList({ videoList }: VideoListProps) {
                                 </div>
 
                                 {/* Title */}
-                                <h2 className='text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]'>
+                                <h2 className='text-white font-semibold !text-[35px] !leading-[45px] my-[30px] [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]'>
                                     {video.Content.Title}
                                 </h2>
 
