@@ -86,6 +86,41 @@ const ServiceDetailBySlug = gql`
                     Description
                 }
             }
+            our_process {
+                Title {
+                    ... on ComponentHeadingsH1 {
+                        id
+                        h1
+                    }
+                    ... on ComponentHeadingsH2 {
+                        id
+                        h2
+                    }
+                    ... on ComponentHeadingsH3 {
+                        id
+                        h3
+                    }
+                    ... on ComponentHeadingsH4 {
+                        id
+                        h5
+                    }
+                    ... on ComponentHeadingsH5 {
+                        id
+                        h5
+                    }
+                    ... on ComponentHeadingsH6 {
+                        id
+                        h6
+                    }
+                }
+                ProcessData {
+                    ... on ComponentBaseTemplateTitleWithDescription {
+                        id
+                        Title
+                        Description
+                    }
+                }
+            }
             why_addact {
                 Title {
                     ... on ComponentHeadingsH1 {
@@ -244,6 +279,7 @@ export interface SubServicePage {
         BannerImage: Image;
         BannerLink: Link;
     };
+    our_process: OurProcessData;
     our_service: OurServiceData;
     why_addact: WhyAddact;
     cta2: CTA2;
@@ -257,6 +293,15 @@ export interface SubServicePage {
         }[];
     };
     contact_us: CONTACTUS;
+}
+
+export interface OurProcessData {
+    Title: Heading[];
+    ProcessData: {
+        id: string;
+        Title: string;
+        Description: string;
+    }[];
 }
 export interface CONTACTUS {
     pageReference: string;

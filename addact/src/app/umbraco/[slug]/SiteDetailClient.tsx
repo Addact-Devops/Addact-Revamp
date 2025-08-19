@@ -41,17 +41,17 @@ const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
     }, [slug, pageData]);
 
     if (loading) {
-        return <div className="text-white p-8">Loading...</div>;
+        return <div className='text-white p-8'>Loading...</div>;
     }
 
     if (!pageData) {
-        return <div className="text-white p-8">Page Not Found</div>;
+        return <div className='text-white p-8'>Page Not Found</div>;
     }
 
     const bannerData = pageData.HeroBanner;
 
     return (
-        <main className="bg-dark">
+        <main className='bg-dark'>
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
@@ -66,7 +66,7 @@ const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
             <IndustriesWeServe />
             <WhyAddact data={pageData.why_addact} />
             <ServiceCtaBanner2 data={pageData.cta2} />
-            <OurProcess />
+            <OurProcess data={data.our_process} />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={pageData.faq} />

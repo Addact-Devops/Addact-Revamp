@@ -21,7 +21,7 @@ const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
     const bannerData = data.HeroBanner;
 
     return (
-        <main className="bg-dark">
+        <main className='bg-dark'>
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
@@ -36,7 +36,7 @@ const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
             <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
             <ServiceCtaBanner2 data={data.cta2} />
-            <OurProcess />
+            <OurProcess data={data.our_process} />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
