@@ -11,6 +11,7 @@ import RichText from "../atom/richText";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ArrowRight } from "lucide-react";
 // import { MdPadding } from "react-icons/md";
 
 interface Props {
@@ -182,6 +183,17 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                 {card.Title}
                                             </h3>
                                             <RichText html={card.Description} />
+                                            {card.Link?.href && (
+                                                <a
+                                                    href={card.Link.href}
+                                                    target={card.Link.isExternal ? "_blank" : "_self"}
+                                                    rel={card.Link.isExternal ? "noopener noreferrer" : ""}
+                                                    className='mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition'
+                                                >
+                                                    {card.Link.label}
+                                                    <ArrowRight width={30} height={30} />
+                                                </a>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -196,6 +208,17 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                         {card.Title}
                                                     </h3>
                                                     <RichText html={card.Description} />
+                                                    {card.Link?.href && (
+                                                        <a
+                                                            href={card.Link.href}
+                                                            target={card.Link.isExternal ? "_blank" : "_self"}
+                                                            rel={card.Link.isExternal ? "noopener noreferrer" : ""}
+                                                            className='mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition'
+                                                        >
+                                                            {card.Link.label}
+                                                            <ArrowRight width={30} height={30} />
+                                                        </a>
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
