@@ -34,7 +34,7 @@ export default async function HomePage() {
             {/* ✅ Inject structured data */}
             {structuredData && (
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     suppressHydrationWarning
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(structuredData),
@@ -42,7 +42,7 @@ export default async function HomePage() {
                 />
             )}
 
-            <main className="bg-dark">
+            <main className='bg-dark'>
                 <HomeHeroBanner data={homeData?.banner} />
                 <OurPartners />
                 <WhoWeAre />
@@ -50,7 +50,7 @@ export default async function HomePage() {
                 <OurCmsExperts />
                 <WhyAddact data={homeData?.whyaddact} />
                 <CtaBanner data={homeData?.cta} />
-                <OurProcess />
+                <OurProcess data={homeData?.ourprocess} />
                 <ClientTestimonials />
                 <OurInsights />
                 <GlobeAnimation data={homeData?.GlobeAnimation} />
