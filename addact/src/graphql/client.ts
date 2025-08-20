@@ -9,7 +9,7 @@ const client = new GraphQLClient(endpoint, {
     fetch: (url, options) =>
         fetch(url, {
             ...options,
-            next: { revalidate: 300 },
+            next: { revalidate: 10 },
         }),
 });
 
