@@ -25,7 +25,7 @@ const OurCmsExperts = () => {
         <section className="my-[60px] xl:my-[150px] 2xl:my-[200px] cms-list">
             <div className="container">
                 <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-                    <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !pb-4 xl:!pb-10">
+                    <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                         {data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title}
                     </h2>
 

@@ -43,9 +43,9 @@
 //     const formFields = eventDetailData.addactsEvents[0].contact_us_card;
 
 //     return (
-//         <div className="flex flex-col pt-[120px]">
+//         <div className="flex flex-col pt-[60px] md:pt-[120px]">
 //             <section className="container relative w-full text-white overflow-hidden">
-//                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24">
+//                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-[40px] md:py-24">
 //                     <div>
 //                         <span className="inline-block px-3 py-1 text-sm text-white bg-white/10 border border-white/20 rounded mb-3">
 //                             {status}
@@ -95,7 +95,7 @@
 //             </section>
 //             <section className="bg-[#f4f4f4] caseStudy-wrapper pb-20">
 //                 <div className="container">
-//                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-24 text-black">
+//                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-[60px] xl:mt-24 text-black">
 //                         <div className="lg:mr-36">
 //                             <div className="sticky top-[140px] w-full">
 //                                 <DownloadForm

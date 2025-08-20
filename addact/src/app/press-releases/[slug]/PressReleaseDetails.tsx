@@ -42,10 +42,10 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
     const eventData = pressReleaseData.addactPressReleases[0];
 
     return (
-        <div className="flex flex-col pt-[120px]">
+        <div className="flex flex-col pt-[60px] md:pt-[120px]">
             {/* Banner */}
             <section className="container relative w-full text-white overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-[40px] md:py-24">
                     <div>
                         <h1 className="!text-3xl md:!text-5xl !font-bold mt-2">
                             {eventData.HeroBanner[0].BannerTitle}
@@ -66,7 +66,7 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
             {/* Content */}
             <section className="bg-[#f4f4f4] pb-20">
                 <div className="container">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-24 text-black">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-[60px] xl:mt-24 text-black">
                         {/* Sidebar */}
                         <div className="lg:mr-36">
                             <div className="sticky top-[140px] w-full">

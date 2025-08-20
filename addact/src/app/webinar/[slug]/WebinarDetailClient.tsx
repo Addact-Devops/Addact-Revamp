@@ -18,15 +18,15 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
     const status = getEventStatus(webinarDetailData.addactWebinars[0].HeroBanner[0].PublishDate, "Webinar");
 
     return (
-        <div className="flex flex-col pt-[120px]">
+        <div className="flex flex-col pt-[60px] md:pt-[120px]">
             <section className="container relative w-full text-white overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-[40px] md:py-24">
                     <div>
                         <span className="inline-block px-3 py-1 text-sm text-white bg-white/10 border border-white/20 rounded mb-3">
                             {status}
                         </span>
                         <h1 className="!text-3xl md:!text-5xl !font-bold mt-2">{webinarData.BannerTitle}</h1>
-                        <p className="text-lg text-white/80 mb-6">
+                        <p className="text-lg text-white/80 mb-6 mt-6">
                             {webinarDetailData.addactWebinars[0].HeroBanner[0].BannerDescription}!
                         </p>
                         <div className="flex items-center gap-2 mb-6">
@@ -63,11 +63,10 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
 
             <section className="bg-[#f4f4f4] pb-20">
                 <div className="container">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-24 text-black">
-                        <div className="lg:mr-36">
+                    <div className="mx-auto mt-[60px] xl:mt-24 text-black">
+                        {/* <div className="lg:mr-36">
                             <div className="sticky top-[140px] w-full">
                                 <div className="space-y-10">
-                                    {/* Speaker Section */}
                                     <div>
                                         <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6">
                                             Speaker
@@ -93,7 +92,6 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
                                         ))}
                                     </div>
 
-                                    {/* Host Section */}
                                     <div>
                                         <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6">
                                             Host
@@ -120,7 +118,7 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="caseStudy-wrapper">
                             <BlogContentRenderer blocks={webinarDetailData.addactWebinars[0].WebinarContent} />

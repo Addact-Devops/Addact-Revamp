@@ -55,9 +55,9 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
     const formFields = eventDetailData.addactsEvents[0].contact_us_card;
 
     return (
-        <div className="flex flex-col pt-[120px]">
+        <div className="flex flex-col pt-[60px] md:pt-[120px]">
             <section className="container relative w-full text-white overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-[40px] md:py-24">
                     <div>
                         <span className="inline-block px-3 py-1 text-sm text-white bg-white/10 border border-white/20 rounded mb-3">
                             {status}

@@ -35,9 +35,9 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
     const formFields = caseStudy.FormFields;
 
     return (
-        <div className="flex flex-col pt-[120px]">
+        <div className="flex flex-col pt-[60px] md:pt-[120px]">
             <section className="container relative w-full text-white overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-24">
+                <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-[40px] md:py-24">
                     <div>
                         <p className="text-lg text-white mb-2.5 border rounded max-w-none inline-block px-2 border-[#676767]">
                             {hero.PublishDate}

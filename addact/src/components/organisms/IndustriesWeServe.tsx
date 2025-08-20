@@ -38,7 +38,7 @@ export default function IndustriesWeServe() {
             <div className="container">
                 {/* Heading and description */}
                 <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-                    <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !pb-4 xl:!pb-10">
+                    <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                         {TitleDescription?.Title}
                     </h2>
                     <div className="w-full text-left">
