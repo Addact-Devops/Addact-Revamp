@@ -80,17 +80,17 @@ const OurServicesWithTabs = ({ data }: Props) => {
     };
 
     return (
-        <section className='my-[60px] xl:my-[150px] 2xl:my-[200px]'>
-            <div className='container'>
-                <div className='flex flex-col'>
-                    <h2 className='border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%]'>
+        <section className="my-[60px] xl:my-[150px] 2xl:my-[200px]">
+            <div className="container">
+                <div className="flex flex-col">
+                    <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%]">
                         {data.ForEnterprisesBrands.Title[0].h2}
                     </h2>
 
-                    <div className='w-full text-white mt-24'>
+                    <div className="w-full text-white mt-24">
                         {/* Tab Buttons */}
-                        <div className='max-w-none p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-[25px] md:mb-16'>
-                            <div className='flex justify-center gap-1'>
+                        <div className="max-w-none w-fit p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-[25px] md:mb-16">
+                            <div className="flex justify-center gap-1">
                                 <button
                                     onClick={() => {
                                         setActiveTab("ForEnterprisesBrands");
@@ -124,23 +124,23 @@ const OurServicesWithTabs = ({ data }: Props) => {
                         {activeTab === "ForEnterprisesBrands" && (
                             <>
                                 {/* Desktop */}
-                                <div className='hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+                                <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                     {enterprisesCards.map((card) => (
                                         <div
                                             key={card.id}
-                                            className='group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:p-8 p-[20px]'
+                                            className="group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:p-8 p-[20px]"
                                         >
-                                            <h3 className='text-white !text-[20px] md:!text-[30px] mb-6'>
+                                            <h3 className="text-white !text-[20px] md:!text-[30px] mb-6">
                                                 {card.Title}
                                             </h3>
                                             <RichText html={card.Description} />
                                             {card?.sub_service_page?.Slug && (
-                                                <div className='opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0'>
+                                                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-0 right-0">
                                                     <Link
                                                         href={`${currentPath}${card?.sub_service_page?.Slug}`}
                                                         target={card.Link?.isExternal ? "_blank" : "_self"}
                                                     >
-                                                        <div className='w-14 h-14 bg-[#3C4CFF] text-white flex items-center justify-center'>
+                                                        <div className="w-14 h-14 bg-[#3C4CFF] text-white flex items-center justify-center">
                                                             <RightArrowUpIcon />
                                                         </div>
                                                     </Link>
@@ -151,16 +151,16 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                 </div>
 
                                 {/* Mobile Slider → 2 stacked per slide */}
-                                <div className='md:hidden'>
+                                <div className="md:hidden">
                                     <Slider {...enterprisesSliderSettings}>
                                         {chunkArray<Card>(enterprisesCards, 2).map((group, idx) => (
-                                            <div key={idx} className='space-y-[16px]'>
+                                            <div key={idx} className="space-y-[16px]">
                                                 {group.map((card) => (
                                                     <div
                                                         key={card.id}
-                                                        className='bg-[#1C1C1C] border-l-[3px] border-[#3C4CFF] p-[16px]'
+                                                        className="bg-[#1C1C1C] border-l-[3px] border-[#3C4CFF] p-[16px]"
                                                     >
-                                                        <h3 className='text-white !text-[20px] md:!text-[30px] mb-3'>
+                                                        <h3 className="text-white !text-[20px] md:!text-[30px] mb-3">
                                                             {card.Title}
                                                         </h3>
                                                         <RichText html={card.Description} />
@@ -171,9 +171,9 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                     </Slider>
 
                                     {/* Indicator line */}
-                                    <div className='relative mt-[40px] h-[1px] bg-gray-600'>
+                                    <div className="relative mt-[40px] h-[1px] bg-gray-600">
                                         <div
-                                            className='absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300'
+                                            className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
                                             style={getIndicatorStyle(Math.ceil(enterprisesCards.length / 2))}
                                         />
                                     </div>
@@ -185,16 +185,16 @@ const OurServicesWithTabs = ({ data }: Props) => {
                         {activeTab === "team_feature" && (
                             <>
                                 {data?.team_feature?.Description && (
-                                    <p className='text-center max-w-3xl mx-auto text-sm text-gray-300 mb-14 hidden md:block'>
+                                    <p className="text-center max-w-3xl mx-auto text-sm text-gray-300 mb-14 hidden md:block">
                                         {data.team_feature.Description}
                                     </p>
                                 )}
 
                                 {/* Desktop */}
-                                <div className='hidden md:grid grid-cols-1 md:grid-cols-2 gap-6'>
+                                <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {teamFeatureCards.map((card) => (
-                                        <div key={card.id} className='bg-[#1C1C1C] p-[20px] border border-[#FFFFFF33]'>
-                                            <h3 className='text-white !text-[20px] md:!text-[30px] mb-6'>
+                                        <div key={card.id} className="bg-[#1C1C1C] p-[20px] border border-[#FFFFFF33]">
+                                            <h3 className="text-white !text-[20px] md:!text-[30px] mb-6">
                                                 {card.Title}
                                             </h3>
                                             <RichText html={card.Description} />
@@ -203,7 +203,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                     href={card.Link.href}
                                                     target={card.Link.isExternal ? "_blank" : "_self"}
                                                     rel={card.Link.isExternal ? "noopener noreferrer" : ""}
-                                                    className='mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition'
+                                                    className="mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition"
                                                 >
                                                     {card.Link.label}
                                                     <ArrowRight width={30} height={30} />
@@ -214,12 +214,12 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                 </div>
 
                                 {/* Mobile Slider → 1 per slide */}
-                                <div className='md:hidden no-space'>
+                                <div className="md:hidden no-space">
                                     <Slider {...teamSliderSettings}>
                                         {teamFeatureCards.map((card) => (
                                             <div key={card.id}>
-                                                <div className='bg-[#1C1C1C] p-[16px] border border-[#FFFFFF33]'>
-                                                    <h3 className='text-white !text-[20px] md:!text-[30px] mb-3'>
+                                                <div className="bg-[#1C1C1C] p-[16px] border border-[#FFFFFF33]">
+                                                    <h3 className="text-white !text-[20px] md:!text-[30px] mb-3">
                                                         {card.Title}
                                                     </h3>
                                                     <RichText html={card.Description} />
@@ -228,7 +228,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                             href={card.Link.href}
                                                             target={card.Link.isExternal ? "_blank" : "_self"}
                                                             rel={card.Link.isExternal ? "noopener noreferrer" : ""}
-                                                            className='mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition'
+                                                            className="mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white hover:bg-[#3C4CFF] hover:border-[#3C4CFF] transition"
                                                         >
                                                             {card.Link.label}
                                                             <ArrowRight width={30} height={30} />
@@ -240,9 +240,9 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                     </Slider>
 
                                     {/* Indicator line */}
-                                    <div className='relative mt-[40px] h-[1px] bg-gray-600'>
+                                    <div className="relative mt-[40px] h-[1px] bg-gray-600">
                                         <div
-                                            className='absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300'
+                                            className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
                                             style={getIndicatorStyle(teamFeatureCards.length)}
                                         />
                                     </div>
