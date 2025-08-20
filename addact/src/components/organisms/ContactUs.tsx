@@ -203,7 +203,7 @@ const ContactUs = ({ data }: IProps) => {
                             <button
                                 type='submit'
                                 disabled={formLoading}
-                                className='w-full bg-blue-600 cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
+                                className='w-full bg-[#3C4CFF] cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
                             >
                                 {formLoading ? "Submitting..." : "Contact Us"}
                             </button>
