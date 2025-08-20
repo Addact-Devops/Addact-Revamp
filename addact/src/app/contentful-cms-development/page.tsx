@@ -19,7 +19,7 @@ export async function generateMetadata() {
 }
 
 export default async function ContentfulPage() {
-    const service = "contentful";
+    const service = "contentful-cms-development";
     const data = await getServiceListBySlug(service);
     if (!data) return notFound();
 

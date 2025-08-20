@@ -42,7 +42,7 @@ export default function OurPartners() {
     return (
         <section className="partners py-[30px] md:py-[60px] border-t border-b border-[#2E2E2E]">
             <div className="container">
-                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white mb-[20px] md:mb-[80px]">
+                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white mb-[20px] md:mb-[50px] 2xl:mb-[80px]">
                     {renderTitle()}
                 </h2>
             </div>

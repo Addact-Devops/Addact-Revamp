@@ -204,6 +204,7 @@ footer {
 .service-listing {
     p {
         font-size: pxToRem(17);
+        line-height: 28px;
 
         @media (min-width: 1300px) {
             font-size: pxToRem(20);
@@ -225,6 +226,24 @@ footer {
 
         @media (min-width: 1920px) {
             font-size: pxToRem(30);
+        }
+    }
+}
+
+.career-slider {
+    .slick-slide {
+        padding: 0 6px;
+
+        @media (max-width: 767px) {
+            padding: 0;
+        }
+    }
+
+    .slick-list {
+        margin: 0 -6px;
+
+        @media (max-width: 767px) {
+            margin: 0;
         }
     }
 }

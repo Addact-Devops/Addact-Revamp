@@ -27,16 +27,15 @@ export default async function SitemapPage() {
         "/brand-guidelines",
         "/careers",
         "/contact-us",
-        "/contentful",
-        "/contentstack",
+        "/contentful-cms-development",
+        "/contentstack-cms-development",
         "/events",
-        "/kentico",
+        "/kentico-cms-development",
         "/portfolio",
         "/press-releases",
         "/privacy-policy",
-        "/sitecore",
-        "/sitemap",
-        "/strapi",
+        "/sitecore-cms-development",
+        "/strapi-cms-development",
         "/terms-of-use",
         "/umbraco",
         "/videos",
@@ -58,10 +57,10 @@ export default async function SitemapPage() {
                 />
             )}
 
-            <div className="container my-[60px] md:my-[60px]">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className='container my-[60px] md:my-[60px]'>
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
                     {/* Static Home Link */}
-                    <SitemapCard title="Home" href="/" />
+                    <SitemapCard title='Home' href='/' />
 
                     {/* Dynamic + Fallback Links */}
                     {allRoutes
@@ -84,10 +83,10 @@ function SitemapCard({ title, href }: SitemapCardProps) {
     return (
         <Link
             href={href}
-            className="group flex items-center justify-between p-5 rounded-lg border border-gray-700 hover:bg-[#155dfc] transition duration-200"
+            className='group flex items-center justify-between p-5 rounded-lg border border-gray-700 hover:bg-[#155dfc] transition duration-200'
         >
-            <span className="text-lg font-semibold capitalize group-hover:text-[#fff] transition">{title}</span>
-            <Globe2 className="w-5 h-5 text-gray-400 group-hover:text-[#fff] transition" />
+            <span className='text-lg font-semibold capitalize group-hover:text-[#fff] transition'>{title}</span>
+            <Globe2 className='w-5 h-5 text-gray-400 group-hover:text-[#fff] transition' />
         </Link>
     );
 }

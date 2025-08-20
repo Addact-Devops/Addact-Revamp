@@ -38,6 +38,7 @@ const CareerGallery = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [filteredImages, setFilteredImages] = useState<GalleryImageItem[][]>([]);
+    const [currentSlide, setCurrentSlide] = useState(0);
 
     // Lightbox state
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -52,6 +53,7 @@ const CareerGallery = () => {
         arrows: false,
         slidesToShow: 1,
         slidesToScroll: 1,
+        afterChange: (index: number) => setCurrentSlide(index),
     };
 
     const chunkArray = (array: GalleryImageItem[], size: number) => {
@@ -109,18 +111,18 @@ const CareerGallery = () => {
     };
 
     return (
-        <section className='container mt-[60px] md:mt-[100px]' id='life-at-addxp'>
-            <div className='text-[20px] text-[#3C4CFF] mb-[10px] md:mb-[23px] leading-[26px] font-[600] text-center'>
+        <section className="container mt-[60px] md:mt-[100px]" id="life-at-addxp">
+            <div className="text-[20px] text-[#3C4CFF] mb-[10px] md:mb-[23px] leading-[26px] font-[600] text-center">
                 {subtitle}
             </div>
 
-            <div className='text-[#000] font-[900] 2xl:mb-[60px] md:mb-[40px] text-[33px] xl:text-[70px] 2xl:text-[100px] text-center uppercase'>
+            <div className="text-[#000] font-[900] 2xl:mb-[60px] md:mb-[40px] text-[33px] xl:text-[70px] 2xl:text-[100px] text-center uppercase">
                 {title}
             </div>
 
-            <div className='flex flex-col md:flex-row gap-6'>
-                <aside className='md:w-1/4 w-full hidden md:block md:border-r md:border-[#3C4CFF]'>
-                    <ul className='space-y-[15px] 2xl:space-y-[40px] text-[17px] xl:text-[18px] 2xl:text-[20px] font-[500]'>
+            <div className="flex flex-col md:flex-row gap-6">
+                <aside className="md:w-1/4 w-full hidden md:block md:border-r md:border-[#3C4CFF] xl:min-w-[270px] 2xl:min-w-[400px]">
+                    <ul className="space-y-[15px] 2xl:space-y-[40px] text-[17px] xl:text-[18px] 2xl:text-[20px] font-[500]">
                         <li
                             onClick={() => setActiveCategory("Addact")}
                             className={`cursor-pointer ${
@@ -143,26 +145,26 @@ const CareerGallery = () => {
                     </ul>
                 </aside>
 
-                <div className='md:w-3/4 w-full relative'>
+                <div className="md:w-3/4 w-full relative">
                     {/* Top Filter Row */}
-                    <div className='flex flex-col gap-4 md:flex-row md:justify-between items-center mb-[40px] mt-[40px] md:mt-0'>
+                    <div className="flex flex-col gap-4 md:flex-row md:justify-between items-center mb-[40px] mt-[40px] md:mt-0">
                         {/* Mobile Combined Filters + Arrows */}
-                        <div className='md:hidden flex items-center justify-between w-full gap-2'>
-                            <div className='flex gap-[8px]'>
+                        <div className="md:hidden flex items-center justify-between w-full gap-2">
+                            <div className="flex gap-[8px]">
                                 {/* Category Dropdown */}
-                                <div className='relative w-1/2'>
+                                <div className="relative w-1/2">
                                     <select
-                                        className='appearance-none border border-white rounded-[50px] px-4 py-2 pr-10 text-[12px] text-white font-semibold bg-[#3C4CFF] w-full'
+                                        className="appearance-none border border-white rounded-[50px] px-4 py-2 pr-10 text-[12px] text-white font-semibold bg-[#3C4CFF] w-full"
                                         value={activeCategory}
                                         onChange={(e) => setActiveCategory(e.target.value)}
                                         onClick={() => setIsCategoryOpen((prev) => !prev)}
                                         onBlur={() => setTimeout(() => setIsCategoryOpen(false), 150)}
                                     >
-                                        <option value='Addact' className='bg-[white] text-[#3C4CFF]'>
+                                        <option value="Addact" className="bg-[white] text-[#3C4CFF]">
                                             Addact
                                         </option>
                                         {categories.map((cat, idx) => (
-                                            <option key={idx} value={cat.Name} className='text-[#3C4CFF] bg-white'>
+                                            <option key={idx} value={cat.Name} className="text-[#3C4CFF] bg-white">
                                                 {cat.Name}
                                             </option>
                                         ))}
@@ -173,29 +175,29 @@ const CareerGallery = () => {
                                         }`}
                                     >
                                         <svg
-                                            xmlns='http://www.w3.org/2000/svg'
-                                            width='16'
-                                            height='16'
-                                            fill='none'
-                                            viewBox='0 0 24 24'
-                                            stroke='currentColor'
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
                                             strokeWidth={2}
                                         >
-                                            <path strokeLinecap='round' strokeLinejoin='round' d='M19 9l-7 7-7-7' />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </div>
                                 </div>
 
                                 {/* Year Dropdown */}
-                                <div className='relative w-1/2'>
+                                <div className="relative w-1/2">
                                     <select
-                                        className='appearance-none border border-[#3C4CFF] rounded-[50px] px-4 py-2 pr-10 text-[12px] md:text-[20px] text-white font-semibold bg-[#3C4CFF] w-full'
+                                        className="appearance-none border border-[#3C4CFF] rounded-[50px] px-4 py-2 pr-10 text-[12px] md:text-[20px] text-white font-semibold bg-[#3C4CFF] w-full"
                                         value={selectedYear}
                                         onChange={(e) => setSelectedYear(e.target.value)}
                                         onClick={() => setIsOpen((prev) => !prev)}
                                         onBlur={() => setTimeout(() => setIsOpen(false), 150)}
                                     >
-                                        <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value='All'>
+                                        <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value="All">
                                             All
                                         </option>
                                         {allYears.map((year, idx) => (
@@ -214,72 +216,84 @@ const CareerGallery = () => {
                                         }`}
                                     >
                                         <svg
-                                            xmlns='http://www.w3.org/2000/svg'
-                                            width='16'
-                                            height='16'
-                                            fill='none'
-                                            viewBox='0 0 24 24'
-                                            stroke='currentColor'
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="16"
+                                            height="16"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
                                             strokeWidth={2}
                                         >
-                                            <path strokeLinecap='round' strokeLinejoin='round' d='M19 9l-7 7-7-7' />
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                                         </svg>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Arrows */}
-                            <div className='flex gap-[8px] xl:gap-[12px]'>
+                            <div className="flex gap-[8px] xl:gap-[12px]">
                                 <button
                                     onClick={() => sliderRef.current?.slickPrev()}
-                                    className='w-[30px] xl:w-[48px] h-[30px] xl:h-[48px] border border-[#3C4CFF] rounded-full flex items-center justify-center text-[#3C4CFF] p-[11px] xl:p-0'
+                                    disabled={currentSlide === 0}
+                                    className={`w-[30px] xl:w-[48px] h-[30px] xl:h-[48px] border rounded-full flex items-center justify-center p-[11px] xl:p-0
+            ${
+                currentSlide === 0
+                    ? "border-gray-300 text-gray-300 cursor-not-allowed"
+                    : "border-[#3C4CFF] text-[#3C4CFF]"
+            }`}
                                 >
                                     <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        width='10'
-                                        height='20'
-                                        viewBox='0 0 10 20'
-                                        fill='none'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="20"
+                                        viewBox="0 0 10 20"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                     >
-                                        <polyline points='8 2 2 10 8 18' />
+                                        <polyline points="8 2 2 10 8 18" />
                                     </svg>
                                 </button>
                                 <button
                                     onClick={() => sliderRef.current?.slickNext()}
-                                    className='w-[30px] xl:w-[48px] h-[30px] xl:h-[48px] border border-[#3C4CFF] rounded-full flex items-center justify-center text-[#3C4CFF] p-[11px] xl:p-0'
+                                    disabled={currentSlide === filteredImages.length - 1}
+                                    className={`w-[30px] xl:w-[48px] h-[30px] xl:h-[48px] border rounded-full flex items-center justify-center p-[11px] xl:p-0
+            ${
+                currentSlide === filteredImages.length - 1
+                    ? "border-gray-300 text-gray-300 cursor-not-allowed"
+                    : "border-[#3C4CFF] text-[#3C4CFF]"
+            }`}
                                 >
                                     <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        width='10'
-                                        height='20'
-                                        viewBox='0 0 10 20'
-                                        fill='none'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="20"
+                                        viewBox="0 0 10 20"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                     >
-                                        <polyline points='2 2 8 10 2 18' />
+                                        <polyline points="2 2 8 10 2 18" />
                                     </svg>
                                 </button>
                             </div>
                         </div>
 
                         {/* Desktop Year Filter + Arrows */}
-                        <div className='hidden md:flex justify-between items-center w-full'>
-                            <div className='relative w-fit'>
+                        <div className="hidden md:flex justify-between items-center w-full">
+                            <div className="relative w-fit">
                                 <select
-                                    className='appearance-none border border-[#3C4CFF] rounded-[50px] px-[10px] md:px-[20px] py-[7px] xl:py-[10px] text-[17px] xl:text-[20px] text-white font-[500] xl:font-[600] bg-[#3C4CFF] !pr-12'
+                                    className="appearance-none border border-[#3C4CFF] rounded-[50px] px-[10px] md:px-[20px] py-[7px] xl:py-[10px] text-[17px] xl:text-[20px] text-white font-[500] xl:font-[600] bg-[#3C4CFF] !pr-12"
                                     value={selectedYear}
                                     onChange={(e) => setSelectedYear(e.target.value)}
                                     onClick={() => setIsOpen((prev) => !prev)}
                                     onBlur={() => setTimeout(() => setIsOpen(false), 150)}
                                 >
-                                    <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value='All'>
+                                    <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value="All">
                                         All
                                     </option>
                                     {allYears.map((year, idx) => (
@@ -298,54 +312,66 @@ const CareerGallery = () => {
                                     }`}
                                 >
                                     <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        width='16'
-                                        height='16'
-                                        fill='none'
-                                        viewBox='0 0 24 24'
-                                        stroke='currentColor'
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
                                         strokeWidth={2}
                                     >
-                                        <path strokeLinecap='round' strokeLinejoin='round' d='M19 9l-7 7-7-7' />
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                                     </svg>
                                 </div>
                             </div>
 
-                            <div className='flex gap-3'>
+                            <div className="flex gap-3">
                                 <button
                                     onClick={() => sliderRef.current?.slickPrev()}
-                                    className='w-10 h-10 border border-[#3C4CFF] rounded-full flex items-center justify-center text-[#3C4CFF] hover:bg-[#3C4CFF] hover:text-white transition'
+                                    disabled={currentSlide === 0}
+                                    className={`w-10 h-10 border rounded-full flex items-center justify-center transition
+            ${
+                currentSlide === 0
+                    ? "border-gray-300 text-gray-300 cursor-not-allowed"
+                    : "border-[#3C4CFF] text-[#3C4CFF] hover:bg-[#3C4CFF] hover:text-white"
+            }`}
                                 >
                                     <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        width='10'
-                                        height='20'
-                                        viewBox='0 0 10 20'
-                                        fill='none'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="20"
+                                        viewBox="0 0 10 20"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                     >
-                                        <polyline points='8 2 2 10 8 18' />
+                                        <polyline points="8 2 2 10 8 18" />
                                     </svg>
                                 </button>
                                 <button
                                     onClick={() => sliderRef.current?.slickNext()}
-                                    className='w-10 h-10 border border-[#3C4CFF] rounded-full flex items-center justify-center text-[#3C4CFF] hover:bg-[#3C4CFF] hover:text-white transition'
+                                    disabled={currentSlide === filteredImages.length - 1}
+                                    className={`w-10 h-10 border rounded-full flex items-center justify-center transition
+            ${
+                currentSlide === filteredImages.length - 1
+                    ? "border-gray-300 text-gray-300 cursor-not-allowed"
+                    : "border-[#3C4CFF] text-[#3C4CFF] hover:bg-[#3C4CFF] hover:text-white"
+            }`}
                                 >
                                     <svg
-                                        xmlns='http://www.w3.org/2000/svg'
-                                        width='10'
-                                        height='20'
-                                        viewBox='0 0 10 20'
-                                        fill='none'
-                                        stroke='currentColor'
-                                        strokeWidth='2.5'
-                                        strokeLinecap='round'
-                                        strokeLinejoin='round'
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="20"
+                                        viewBox="0 0 10 20"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                     >
-                                        <polyline points='2 2 8 10 2 18' />
+                                        <polyline points="2 2 8 10 2 18" />
                                     </svg>
                                 </button>
                             </div>
@@ -354,10 +380,10 @@ const CareerGallery = () => {
 
                     {/* Slider */}
                     {filteredImages.length > 0 ? (
-                        <Slider key={filteredImages.length} ref={sliderRef} {...settings} className='career-slider'>
+                        <Slider key={filteredImages.length} ref={sliderRef} {...settings} className="career-slider">
                             {filteredImages.map((group, groupIdx) => (
                                 <div key={groupIdx}>
-                                    <div className='grid grid-cols-6 md:grid-cols-12 gap-[8px] md:gap-[12px] md:auto-rows-[200px]'>
+                                    <div className="grid grid-cols-6 md:grid-cols-12 gap-[8px] md:gap-[12px] md:auto-rows-[200px]">
                                         {group.map((imgObj, i) => {
                                             const rowIndex = Math.floor(i / 3);
                                             const positionInRow = i % 3;
@@ -401,7 +427,7 @@ const CareerGallery = () => {
                                                         alt={imgObj.Image.alternativeText || ""}
                                                         width={800}
                                                         height={600}
-                                                        className='w-full h-full object-cover'
+                                                        className="w-full h-full object-cover"
                                                     />
                                                 </div>
                                             );
@@ -411,7 +437,7 @@ const CareerGallery = () => {
                             ))}
                         </Slider>
                     ) : (
-                        <p className='text-gray-500'>No images found.</p>
+                        <p className="text-gray-500">No images found.</p>
                     )}
                 </div>
             </div>

@@ -9,18 +9,16 @@ import { notFound } from "next/navigation";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import ContactUs from "@/components/organisms/ContactUs";
 
-import { generatePageMetadata } from "@/utils/generatePageMetadata";
-
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/contentstack");
+    return generatePageMetadata("serviceLists", "/umbraco");
 }
-
-export default async function strapiPage() {
-    const service = "contentstack";
+export default async function umbracoPage() {
+    const service = "umbraco-cms-development";
     const data = await getServiceListBySlug(service);
     if (!data) return notFound();
     const bannerData = data.Banner?.Banner?.[0];

@@ -91,7 +91,7 @@ export default function OurInsights() {
     const items: InsightCardData[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
 
     return (
-        <section className="my-[60px] xl:mt-[150px] 2xl:mt-[200px] mb-[100px]">
+        <section className="my-[60px] xl:mt-[100px] 2xl:mt-[200px] mb-[100px]">
             <div className="container mx-auto px-4">
                 <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                     Our Insights
@@ -177,7 +177,9 @@ function InsightCard({ item, big = false }: InsightCardProps) {
                 <h4 className="!text-[18px] !leading-[30px] md:!text-[22px] 2xl:!text-3xl font-medium mb-4 md:leading-tight line-clamp-3">
                     {item.title}
                 </h4>
-                <p className="!text-[12px] md:text-[16px] text-white mb-4">{item.date}</p>
+                {item.date != "Unknown Date" && (
+                    <p className="!text-[12px] md:text-[16px] text-white mb-4">{item.date}</p>
+                )}
             </div>
 
             <div className="mt-auto self-end">
