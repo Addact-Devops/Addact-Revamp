@@ -120,7 +120,7 @@ const ContactUs = ({ data }: IProps) => {
                             <div className='h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-blue-600 mt-2 mb-4'></div>
                         </div>
 
-                        <div className='md:w-[70%]'>
+                        <div className='md:w-[70%] text-white px-5 pb-5 md:px-16 [&_p]:font-light [&_p]:text-base [&_p]:md:!text-3xl [&_p]:md:!leading-[54px]'>
                             <RichText html={data.Form[0].Description} />
                         </div>
                     </div>
