@@ -165,7 +165,7 @@ const Header = ({ headers }: HeaderProps) => {
                     {/* Contact Button */}
                     <Link
                         href={headerData?.contact_us[0]?.href}
-                        className='ml-4 bg-[#3C4CFF] px-4 py-2 rounded-[6px] md:rounded-[8px] text-white lg:py-4 lg:px-7 font-[600]'
+                        className='ml-4 bg-[#3C4CFF] px-4 py-2 rounded-[6px] md:rounded-[8px] text-white lg:py-4 lg:px-7 font-[600] hover:bg-[#3440CB]'
                         target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
                     >
                         {headerData?.contact_us[0]?.label}
@@ -177,7 +177,7 @@ const Header = ({ headers }: HeaderProps) => {
                     <Link
                         href={headerData?.contact_us[0]?.href}
                         target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
-                        className='bg-[#3C4CFF] mr- px-[12px] py-[3px] rounded-[6px] text-white font-[600] text-[12px] hover:bg-blue-700'
+                        className='bg-[#3C4CFF] mr- px-[12px] py-[3px] rounded-[6px] text-white font-[600] text-[12px] hover:bg-[#3440CB]'
                     >
                         {headerData?.contact_us[0]?.label}
                     </Link>
