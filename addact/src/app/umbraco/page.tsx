@@ -24,7 +24,7 @@ export default async function umbracoPage() {
     const bannerData = data.Banner?.Banner?.[0];
 
     return (
-        <main className="bg-dark">
+        <main className='bg-dark'>
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
@@ -39,7 +39,7 @@ export default async function umbracoPage() {
             <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
             <CtaBanner2 data={data.cta2} />
-            <OurProcess />
+            <OurProcess data={data.our_process} />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />

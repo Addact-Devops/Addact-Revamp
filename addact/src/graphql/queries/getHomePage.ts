@@ -61,6 +61,41 @@ const GET_HOME_PAGE = gql`
                 }
                 pageReference
             }
+            ourprocess {
+                Title {
+                    ... on ComponentHeadingsH1 {
+                        id
+                        h1
+                    }
+                    ... on ComponentHeadingsH2 {
+                        id
+                        h2
+                    }
+                    ... on ComponentHeadingsH3 {
+                        id
+                        h3
+                    }
+                    ... on ComponentHeadingsH4 {
+                        id
+                        h5
+                    }
+                    ... on ComponentHeadingsH5 {
+                        id
+                        h5
+                    }
+                    ... on ComponentHeadingsH6 {
+                        id
+                        h6
+                    }
+                }
+                ProcessData {
+                    ... on ComponentBaseTemplateTitleWithDescription {
+                        id
+                        Title
+                        Description
+                    }
+                }
+            }
             banner {
                 Banner {
                     ... on ComponentBannerBanner {
@@ -322,6 +357,15 @@ export interface GloabeAnimation {
     Locations: string;
     Video: Image;
 }
+
+export interface OurProcessData {
+    Title: Heading[];
+    ProcessData: {
+        id: string;
+        Title: string;
+        Description: string;
+    }[];
+}
 // Main interface
 export interface HomeItems {
     documentId: string;
@@ -331,6 +375,7 @@ export interface HomeItems {
     }[];
     cta: CTA;
     banner: BANNER;
+    ourprocess: OurProcessData;
     ourservices: OURSERVICES;
     contactus: CONTACTUS;
     whyaddact: Whyaddact;
