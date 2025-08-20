@@ -91,7 +91,7 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
     };
 
     return (
-        <section className="container my-[60px] xl:my-[150px] 2xl:my-[200px]" ref={containerRef}>
+        <section className="container my-[60px] xl:my-[100px] 2xl:my-[200px]" ref={containerRef}>
             <div>
                 <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                     {getTitle()}

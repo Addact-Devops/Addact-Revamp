@@ -34,7 +34,7 @@ export default function IndustriesWeServe() {
     const { TitleDescription, Industries } = data;
 
     return (
-        <section className="my-[60px] xl:my-[150px] 2xl:my-[200px]">
+        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px]">
             <div className="container">
                 {/* Heading and description */}
                 <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
