@@ -68,12 +68,23 @@ export async function POST(req: NextRequest) {
                   .filter(Boolean)
             : [];
 
-        const sendTo = [email, ...recipientList].filter(Boolean);
-
         // Send confirmation email
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
-            to: sendTo,
+            to: email,
+            subject: "Thanks for Your Submission!",
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
+                    <h2 style="color: #1470af;">Thank you, ${name}!</h2>
+                    <p>We’ve received your application. Our team will review it and get back to you soon.</p>
+                    <p>Meanwhile, feel free to explore more about us at <a href="https://addact.net" target="_blank">Addact Technologies</a>.</p>
+                    <p style="margin-top: 30px; font-size: 12px; color: #888;">© ${new Date().getFullYear()} Addact Technologies. All rights reserved.</p>
+                </div>
+            `,
+        });
+        await transporter.sendMail({
+            from: `"Addact Technologies" <info@addact.net>`,
+            to: recipientList,
             subject: "Thanks for Your Submission!",
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
