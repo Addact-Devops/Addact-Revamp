@@ -45,6 +45,12 @@ h2 {
             left: 0;
             bottom: 0;
             background-color: $blue;
+
+            @media (max-width: 767px) {
+                content: "";
+                width: 100px;
+                height: 3px;
+            }
         }
     }
 }

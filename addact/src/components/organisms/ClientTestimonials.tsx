@@ -68,7 +68,7 @@ export default function ClientTestimonials() {
     };
 
     return (
-        <section className="bg-[#0F0F0F] text-white my-[100px] xl:my-[150px] 2xl:my-[200px]">
+        <section className="bg-[#0F0F0F] text-white my-[60px] xl:my-[150px] 2xl:my-[200px]">
             <div className="container">
                 <div className="grid grid-cols-1 lg:grid-cols-3 items-start">
                     {/* Title & Arrows */}

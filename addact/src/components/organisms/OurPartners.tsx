@@ -40,15 +40,15 @@ export default function OurPartners() {
     };
 
     return (
-        <section className="partners py-[60px] sm:py-[100px] border-t border-b border-[#2E2E2E]">
+        <section className="partners py-[30px] md:py-[60px] border-t border-b border-[#2E2E2E]">
             <div className="container">
-                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white mb-[80px]">
+                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white mb-[20px] md:mb-[80px]">
                     {renderTitle()}
                 </h2>
             </div>
 
             <div className="overflow-hidden relative w-full py-4">
-                <div className="partners__marquee-content flex gap-[80px] w-fit">
+                <div className="partners__marquee-content flex gap-[40px] md:gap-[80px] w-fit">
                     {[...(partnerData?.Image || []), ...(partnerData?.Image || [])].map((item, index) => (
                         <div key={index} className="min-w-[160px] flex items-center justify-center">
                             {item?.Image?.url && (

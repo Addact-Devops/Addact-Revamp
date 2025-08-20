@@ -91,9 +91,9 @@ export default function OurInsights() {
     const items: InsightCardData[] = [mapBlogToCard(blog1), mapBlogToCard(blog2), mapCaseStudyToCard(caseStudy)];
 
     return (
-        <section className="my-[100px] xl:mt-[150px] 2xl:mt-[200px] mb-[100px]">
+        <section className="my-[60px] xl:mt-[150px] 2xl:mt-[200px] mb-[100px]">
             <div className="container mx-auto px-4">
-                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
+                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !pb-4 xl:!pb-10">
                     Our Insights
                 </h2>
 
