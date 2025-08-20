@@ -75,7 +75,7 @@
 
 //                         <Link
 //                             href={`/contact-us`}
-//                             className="flex items-center gap-2 w-44 bg-blue-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors"
+//                             className="flex items-center gap-2 w-44 bg-[#3C4CFF] text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors"
 //                         >
 //                             Let’s talk
 //                             <ArrowRight size={18} />
@@ -183,7 +183,7 @@ export default async function Page({ params }: { params: Params }) {
     return (
         <>
             {structuredData && (
-                <Script id="structured-data" type="application/ld+json">
+                <Script id='structured-data' type='application/ld+json'>
                     {JSON.stringify(structuredData)}
                 </Script>
             )}

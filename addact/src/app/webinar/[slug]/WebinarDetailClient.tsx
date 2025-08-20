@@ -43,7 +43,7 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
                         </div>
                         <Link
                             href={webinarDetailData.addactWebinars[0].HeroBanner[0].ReadNow.href}
-                            className="flex items-center gap-2 w-44 bg-blue-600 text-white font-semibold px-6 py-3 rounded-full hover:bg-blue-800 transition-colors"
+                            className="flex items-center gap-2 w-44 bg-[#3C4CFF] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#3440CB] transition-colors"
                         >
                             Watch Now
                             <ArrowRight size={18} />
@@ -68,23 +68,23 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
                             <div className="sticky top-[140px] w-full">
                                 <div className="space-y-10">
                                     <div>
-                                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6">
+                                        <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6'>
                                             Speaker
                                         </h2>
                                         {webinarDetailData?.addactWebinars[0]?.Speakers.map((speaker, index) => (
-                                            <div key={index} className="flex items-center gap-4 mb-4">
+                                            <div key={index} className='flex items-center gap-4 mb-4'>
                                                 <Image
                                                     src={speaker?.Author?.AuthorImage?.url}
                                                     alt={speaker?.Author?.AuthorImage?.name}
                                                     width={80}
                                                     height={80}
-                                                    className="rounded-lg p-1 object-cover"
+                                                    className='rounded-lg p-1 object-cover'
                                                 />
                                                 <div>
-                                                    <p className="!text-2xl !font-extrabold text-black leading-tight">
+                                                    <p className='!text-2xl !font-extrabold text-black leading-tight'>
                                                         {speaker?.Author?.AuthorName.split("-")[0].trim()}
                                                     </p>
-                                                    <p className="!text-sm text-blue-600 mt-1">
+                                                    <p className='!text-sm text-[#3C4CFF] mt-1'>
                                                         {speaker?.Author?.designation?.DesignationTitle}
                                                     </p>
                                                 </div>
@@ -93,23 +93,23 @@ export default function WebinarDetailClient({ initialData }: { initialData: Webi
                                     </div>
 
                                     <div>
-                                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6">
+                                        <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold mb-6'>
                                             Host
                                         </h2>
                                         {webinarDetailData?.addactWebinars[0]?.Host.map((host, index) => (
-                                            <div key={index} className="flex items-center gap-4">
+                                            <div key={index} className='flex items-center gap-4'>
                                                 <Image
                                                     src={host?.Author?.AuthorImage.url}
                                                     alt={host?.Author?.AuthorImage.name}
                                                     width={80}
                                                     height={80}
-                                                    className="rounded-lg p-1 object-cover"
+                                                    className='rounded-lg p-1 object-cover'
                                                 />
                                                 <div>
-                                                    <p className="!text-2xl !font-extrabold text-black leading-tight">
+                                                    <p className='!text-2xl !font-extrabold text-black leading-tight'>
                                                         {host?.Author?.AuthorName.split("-")[0].trim()}
                                                     </p>
-                                                    <p className="!text-sm text-blue-600 mt-1">
+                                                    <p className='!text-sm text-[#3C4CFF] mt-1'>
                                                         {host?.Author?.designation?.DesignationTitle}
                                                     </p>
                                                 </div>

@@ -111,7 +111,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                     }}
                                     className={`px-[15px] py-[12px] md:px-6 md:py-3 rounded-xl cursor-pointer font-semibold text-[15px] md:text-[18px] ${
                                         activeTab === "team_feature"
-                                            ? "bg-blue-600 text-white text-[15px] md:text-[18px]"
+                                            ? "bg-[#3C4CFF] text-white text-[15px] md:text-[18px]"
                                             : ""
                                     }`}
                                 >
@@ -140,7 +140,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                         href={`${currentPath}${card?.sub_service_page?.Slug}`}
                                                         target={card.Link?.isExternal ? "_blank" : "_self"}
                                                     >
-                                                        <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center">
+                                                        <div className="w-14 h-14 bg-[#3C4CFF] text-white flex items-center justify-center">
                                                             <RightArrowUpIcon />
                                                         </div>
                                                     </Link>

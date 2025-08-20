@@ -70,7 +70,7 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
                         {/* Sidebar */}
                         <div className="lg:mr-25">
                             <div className="sticky top-[140px] w-full">
-                                <div className="border border-blue-600 rounded-lg py-4 px-6">
+                                <div className="border border-[#3C4CFF] rounded-lg py-4 px-6">
                                     <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold !mb-4">
                                         Recent Press Releases
                                     </h2>

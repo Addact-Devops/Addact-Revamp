@@ -171,7 +171,7 @@ function InsightCard({ item, big = false }: InsightCardProps) {
             </div>
 
             <div className="flex flex-col flex-1 justify-center">
-                <span className="px-5 py-2 bg-[#3C4CFF] md:bg-[#3f4040] border border-blue-500 text-white rounded-lg w-fit text-[12px] md:text-[14px] font-medium mb-[12px] md:mb-[20px]">
+                <span className="px-5 py-2 bg-[#3C4CFF] md:bg-[#3f4040] border border-[#3C4CFF] text-white rounded-lg w-fit text-[12px] md:text-[14px] font-medium mb-[12px] md:mb-[20px]">
                     {item.type}
                 </span>
                 <h4 className="!text-[18px] !leading-[30px] md:!text-[22px] 2xl:!text-3xl font-medium mb-4 md:leading-tight line-clamp-3">
@@ -182,7 +182,7 @@ function InsightCard({ item, big = false }: InsightCardProps) {
 
             <div className="mt-auto self-end">
                 <Link href={item?.link} target="_self">
-                    <div className="group w-[40px] h-[40px] md:w-14 md:h-14 bg-blue-600 text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16 p-[6px] md:p-[0]">
+                    <div className="group w-[40px] h-[40px] md:w-14 md:h-14 bg-[#3C4CFF] text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16 p-[6px] md:p-[0]">
                         <RightArrowUpIcon className="transition-transform duration-300 group-hover:scale-110" />
                     </div>
                 </Link>
