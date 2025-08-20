@@ -83,13 +83,13 @@ const OurServicesWithTabs = ({ data }: Props) => {
         <section className="my-[60px] xl:my-[150px] 2xl:my-[200px]">
             <div className="container">
                 <div className="flex flex-col">
-                    <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%]">
+                    <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%]">
                         {data.ForEnterprisesBrands.Title[0].h2}
                     </h2>
 
                     <div className="w-full text-white mt-24">
                         {/* Tab Buttons */}
-                        <div className="max-w-none p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-[25px] md:mb-16">
+                        <div className="max-w-none w-fit p-[5px] mx-auto border border-[#1C1C1C] rounded-xl mb-[25px] md:mb-16">
                             <div className="flex justify-center gap-1">
                                 <button
                                     onClick={() => {
@@ -111,7 +111,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                     }}
                                     className={`px-[15px] py-[12px] md:px-6 md:py-3 rounded-xl cursor-pointer font-semibold text-[15px] md:text-[18px] ${
                                         activeTab === "team_feature"
-                                            ? "bg-blue-600 text-white text-[15px] md:text-[18px]"
+                                            ? "bg-[#3C4CFF] text-white text-[15px] md:text-[18px]"
                                             : ""
                                     }`}
                                 >
@@ -140,7 +140,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                         href={`${currentPath}${card?.sub_service_page?.Slug}`}
                                                         target={card.Link?.isExternal ? "_blank" : "_self"}
                                                     >
-                                                        <div className="w-14 h-14 bg-blue-600 text-white flex items-center justify-center">
+                                                        <div className="w-14 h-14 bg-[#3C4CFF] text-white flex items-center justify-center">
                                                             <RightArrowUpIcon />
                                                         </div>
                                                     </Link>

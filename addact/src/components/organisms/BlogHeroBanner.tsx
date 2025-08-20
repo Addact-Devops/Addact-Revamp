@@ -158,7 +158,7 @@ export default function BlogHeroBanner({
                     style={{ WebkitOverflowScrolling: "touch" }}
                 >
                     <div
-                        className="flex flex-nowrap justify-center min-w-max gap-[48px] text-[18px] font-medium px-4"
+                        className="flex flex-nowrap justify-center min-w-max gap-[20px] xl:gap-[22px] 2xl:gap-[33px] text-[16px] md:text-[18px] font-medium px-4"
                         // Optional: Add `cursor-grab active:cursor-grabbing` for feedback
                     >
                         {["All Blogs", ...categories].map((cat, idx) => (

@@ -70,6 +70,11 @@ const GET_ALL_BLOGS = gql`
                     }
                 }
             }
+            blog_category {
+                Category {
+                    CategoryTitle
+                }
+            }
         }
 
         blogCategories {
@@ -103,7 +108,7 @@ type AddactBlogsResponse = {
                 message?: string;
             }[];
         };
-    }; // ✅ blogs is an object
+    };
     addactBlogs: {
         Slug: string;
         documentId: string;
@@ -139,6 +144,11 @@ type AddactBlogsResponse = {
                 };
             };
         }[];
+        blog_category?: {
+            Category?: {
+                CategoryTitle?: string;
+            };
+        };
     }[];
     blogCategories: {
         Category: {

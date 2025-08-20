@@ -114,10 +114,10 @@ const ContactUs = ({ data }: IProps) => {
                 <div className='flex flex-col justify-between'>
                     <div className='w-full flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0'>
                         <div className='md:w-[30%] border-r border-gray-700 px-5 md:px-12 2xl:px-16 py-5 md:py-12 2xl:py-20'>
-                            <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold leading-tight'>
+                            <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold leading-tight !pb-4 xl:!pb-10'>
                                 {data.Form[0].Title}
                             </h2>
-                            <div className='h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-blue-600 mt-2 mb-4'></div>
+                            <div className='h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-[#3C4CFF] mt-2 mb-4'></div>
                         </div>
 
                         <div className='md:w-[70%] text-white px-5 pb-5 md:px-16 [&_p]:font-light [&_p]:text-base [&_p]:md:!text-3xl [&_p]:md:!leading-[54px]'>
@@ -188,7 +188,7 @@ const ContactUs = ({ data }: IProps) => {
                                     autoComplete='message'
                                     value={formData.message}
                                     onChange={handleChange}
-                                    rows={4}
+                                    rows={1}
                                     className='w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none'
                                     placeholder='Type here...'
                                 ></textarea>
@@ -203,7 +203,7 @@ const ContactUs = ({ data }: IProps) => {
                             <button
                                 type='submit'
                                 disabled={formLoading}
-                                className='w-full bg-blue-600 cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
+                                className='w-full bg-[#3C4CFF] cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-[#3440CB]'
                             >
                                 {formLoading ? "Submitting..." : "Contact Us"}
                             </button>

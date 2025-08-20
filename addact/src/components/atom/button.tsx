@@ -11,7 +11,7 @@ export default function Button({ href, label, target, isExternal }: ButtonProps)
             href={href}
             target={isExternal ? "_blank" : target}
             rel={isExternal ? "noopener noreferrer" : undefined}
-            className='inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition'
+            className='inline-block bg-[#3C4CFF] text-white px-4 py-2 rounded hover:bg-[#3440CB] transition'
         >
             {label}
         </a>
