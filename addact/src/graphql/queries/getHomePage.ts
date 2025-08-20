@@ -156,6 +156,7 @@ const GET_HOME_PAGE = gql`
                         }
                     }
                 }
+                RecipientEmails
                 pageReference
             }
             whyaddact {
@@ -284,6 +285,7 @@ export interface OURSERVICES {
 
 export interface CONTACTUS {
     pageReference: string;
+    RecipientEmails: string;
     Form: {
         id: string;
         Title: string;
