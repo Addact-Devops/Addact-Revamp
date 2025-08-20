@@ -30,6 +30,9 @@ type BlogType = {
             Category?: { CategoryTitle?: string };
         };
     }[];
+    blog_category?: {
+        Category?: { CategoryTitle?: string };
+    };
 };
 
 export default function BlogListContent({}: Props) {
@@ -60,14 +63,22 @@ export default function BlogListContent({}: Props) {
 
             const title = banner.BannerTitle?.toLowerCase() || "";
             const author = banner.author?.Author?.AuthorName?.toLowerCase() || "";
-            const category = banner.blogcategory?.Category?.CategoryTitle?.toLowerCase() || "";
+
+            // ✅ use both blogcategory (old) and blog_category (new)
+            const category =
+                banner.blogcategory?.Category?.CategoryTitle?.toLowerCase() ||
+                blog.blog_category?.Category?.CategoryTitle?.toLowerCase() ||
+                "";
 
             return title.includes(query) || author.includes(query) || category.includes(query);
         });
 
         if (selectedCategory !== "All Blogs") {
             filtered = filtered.filter((blog) => {
-                const blogCategory = blog.BlogBanner?.[0]?.blogcategory?.Category?.CategoryTitle || "";
+                const blogCategory =
+                    blog.BlogBanner?.[0]?.blogcategory?.Category?.CategoryTitle ||
+                    blog.blog_category?.Category?.CategoryTitle ||
+                    "";
                 return blogCategory.trim().toLowerCase() === selectedCategory.toLowerCase();
             });
         }
@@ -134,7 +145,11 @@ export default function BlogListContent({}: Props) {
                         const title = banner.BannerTitle?.trim() || "Untitled";
                         const blogLink = `/blogs${blog.Slug}`;
                         const rawAuthor = banner.author?.Author?.AuthorName;
-                        const rawCategory = banner.blogcategory?.Category?.CategoryTitle;
+
+                        // ✅ support both blogcategory and blog_category
+                        const rawCategory =
+                            banner.blogcategory?.Category?.CategoryTitle || blog.blog_category?.Category?.CategoryTitle;
+
                         const author = typeof rawAuthor === "string" ? rawAuthor.trim() : "Addxp Technologies";
                         const category = typeof rawCategory === "string" ? rawCategory.trim() : "General";
 

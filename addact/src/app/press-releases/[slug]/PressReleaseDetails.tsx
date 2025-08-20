@@ -68,7 +68,7 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
                 <div className="container">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-[60px] xl:mt-24 text-black">
                         {/* Sidebar */}
-                        <div className="lg:mr-36">
+                        <div className="lg:mr-25">
                             <div className="sticky top-[140px] w-full">
                                 <div className="border border-blue-600 rounded-lg py-4 px-6">
                                     <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !font-extrabold !mb-4">
