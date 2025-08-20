@@ -85,7 +85,7 @@ const WhoWeAre = () => {
     return (
         <>
             <section
-                className="who-we-are my-[60px] xl:my-[150px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
+                className="who-we-are my-[60px] xl:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
                 ref={containerRef}
             >
                 <div className="container">
@@ -120,7 +120,7 @@ const WhoWeAre = () => {
                                 <div
                                     key={item.id}
                                     className={`
-                    text-center p-[24px] md:p-[60px] 
+                    text-center p-[24px] md:p-[40px] 2xl:p-[60px] 
                     border-b md:border-b-0 
                     border-white/15 
                     ${!isSecondInRowMobile ? "border-r" : ""} 
@@ -137,7 +137,7 @@ const WhoWeAre = () => {
                                     >
                                         {`0${counterSuffixes[index] || ""}`}
                                     </h2>
-                                    <div className="text-[14px] md:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%]">
+                                    <div className="text-[14px] md:text-[20px] 2xl:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%]">
                                         {item.CounterTitle}
                                     </div>
                                 </div>

@@ -160,5 +160,10 @@ p {
             font-size: pxToRem(24);
             line-height: lineHeightRatio(40, 24);
         }
+
+        @media (max-width: 1400px) {
+            font-size: pxToRem(20);
+            line-height: lineHeightRatio(32, 20);
+        }
     }
 }

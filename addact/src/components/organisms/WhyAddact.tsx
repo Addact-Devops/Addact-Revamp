@@ -16,7 +16,7 @@ const WhyAddact = ({ data }: IProps) => {
     };
 
     return (
-        <section className="my-[60px] xl:my-[150px] 2xl:my-[200px]">
+        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px]">
             <div className="container">
                 <div className="flex flex-col">
                     <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
@@ -64,7 +64,7 @@ const WhyAddact = ({ data }: IProps) => {
                         <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 sm:mt-14 2xl:mt-24">
                             {data?.GlobalCard.slice(0, 6).map((service, index) => (
                                 <div key={service.id} className="relative">
-                                    <div className="text-white p-7">
+                                    <div className="text-white p-4 2xl:p-7">
                                         {/* Icon only for desktop */}
                                         <div className="w-10 lg:w-14 lg:h-14 2xl:w-20 h-10 2xl:h-20 rounded-sm mb-4">
                                             {service?.Image?.url && (
@@ -82,7 +82,7 @@ const WhyAddact = ({ data }: IProps) => {
                                         </div>
                                     </div>
                                     {(index + 1) % 3 !== 0 && (
-                                        <div className="absolute top-1/4 right-0 h-3/4 w-[1px] bg-white opacity-40"></div>
+                                        <div className="absolute top-1/8 right-0 h-3/4 w-[1px] bg-white opacity-40"></div>
                                     )}
                                 </div>
                             ))}
