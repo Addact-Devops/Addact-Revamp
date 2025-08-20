@@ -93,7 +93,7 @@ const DownloadForm = ({
     return (
         <form
             onSubmit={handleFormSubmit}
-            className={`space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md lg:max-w-sm w-full ${className}`}
+            className={`space-y-4 bg-[#f9f9f9] p-6 rounded-2xl shadow-md  w-full ${className}`}
         >
             <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold leading-tight mb-2">{title}</h2>
             {description && (

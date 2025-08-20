@@ -80,10 +80,10 @@ const OurServicesWithTabs = ({ data }: Props) => {
     };
 
     return (
-        <section className="my-[100px] xl:my-[150px] 2xl:my-[200px]">
+        <section className="my-[60px] xl:my-[150px] 2xl:my-[200px]">
             <div className="container">
                 <div className="flex flex-col">
-                    <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%]">
+                    <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%]">
                         {data.ForEnterprisesBrands.Title[0].h2}
                     </h2>
 

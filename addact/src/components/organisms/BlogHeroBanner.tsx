@@ -152,40 +152,42 @@ export default function BlogHeroBanner({
                 </div>
             </div>
 
-            <div
-                className="container overflow-x-auto mt-[30px] custom-scrollbar scroll-smooth"
-                style={{ WebkitOverflowScrolling: "touch" }}
-            >
+            <div className="bg-[rgba(15,15,15,0.34)] backdrop-blur-md mt-[30px] pt-[11px] border border-[#2E2E2E]">
                 <div
-                    className="flex flex-nowrap justify-center min-w-max gap-[20px] text-[16px] font-medium px-4"
-                    // Optional: Add `cursor-grab active:cursor-grabbing` for feedback
+                    className="container overflow-x-auto custom-scrollbar scroll-smooth"
+                    style={{ WebkitOverflowScrolling: "touch" }}
                 >
-                    {["All Blogs", ...categories].map((cat, idx) => (
-                        <span
-                            key={idx}
-                            className={`cursor-pointer whitespace-nowrap transition duration-200 ${
-                                selectedCategory === cat
-                                    ? "text-white border-b-2 border-[#3C4CFF] pb-[2px]"
-                                    : "text-white hover:text-[#3C4CFF]"
-                            }`}
-                            onClick={() => {
-                                setSelectedCategory(cat);
-                                const url = new URL(window.location.href);
-                                if (cat === "All Blogs") {
-                                    url.searchParams.delete("category");
-                                } else {
-                                    url.searchParams.set("category", cat);
-                                }
-                                if (localSearch.trim()) {
-                                    url.searchParams.set("query", localSearch.trim());
-                                }
-                                url.searchParams.set("page", "1");
-                                window.history.pushState({}, "", url.toString());
-                            }}
-                        >
-                            {cat}
-                        </span>
-                    ))}
+                    <div
+                        className="flex flex-nowrap justify-center min-w-max gap-[48px] text-[18px] font-medium px-4"
+                        // Optional: Add `cursor-grab active:cursor-grabbing` for feedback
+                    >
+                        {["All Blogs", ...categories].map((cat, idx) => (
+                            <span
+                                key={idx}
+                                className={`cursor-pointer whitespace-nowrap transition duration-200 ${
+                                    selectedCategory === cat
+                                        ? "text-white opacity-100 border-b-3 border-[#3C4CFF] pb-[8px]"
+                                        : "text-white opacity-70 hover:text-[#3C4CFF]"
+                                }`}
+                                onClick={() => {
+                                    setSelectedCategory(cat);
+                                    const url = new URL(window.location.href);
+                                    if (cat === "All Blogs") {
+                                        url.searchParams.delete("category");
+                                    } else {
+                                        url.searchParams.set("category", cat);
+                                    }
+                                    if (localSearch.trim()) {
+                                        url.searchParams.set("query", localSearch.trim());
+                                    }
+                                    url.searchParams.set("page", "1");
+                                    window.history.pushState({}, "", url.toString());
+                                }}
+                            >
+                                {cat}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

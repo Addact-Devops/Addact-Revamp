@@ -91,7 +91,7 @@ const Header = ({ headers }: HeaderProps) => {
                                 {isActive && (
                                     <div
                                         ref={dropdownRef}
-                                        className="container absolute left-0 right-0 top-full w-full bg-[#0F0F0F] text-white shadow-lg z-40 !p-0 rounded-[20px] mt-[10px]"
+                                        className="container absolute left-0 right-0 top-full w-full bg-[#0F0F0F] text-white shadow-lg z-40 !p-0 rounded-[20px] mt-[10px] border border-[#3C4CFF80]"
                                     >
                                         <div className="mx-auto p-[20px] md:pr-[20px] 2xl:pr-[60px] flex md:gap-[30px] 2xl:gap-[60px]">
                                             {/* Left image */}

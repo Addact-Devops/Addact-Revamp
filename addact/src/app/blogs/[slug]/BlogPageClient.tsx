@@ -58,7 +58,7 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
 
             {/* ✅ Fixed Social Icons (Desktop only) */}
             {Array.isArray(blog?.socialicons) && blog.socialicons.length > 0 && windowWidth >= 992 && (
-                <div className="flex flex-col gap-[15px] fixed top-1/2 left-5 -translate-y-1/2 z-50">
+                <div className="flex flex-col gap-[15px] fixed top-1/2 left-[5px] 2xl:left-[5%] -translate-y-1/2 z-[3]">
                     {blog.socialicons.flatMap((item, i: number) => {
                         const icons = item?.SocialIcon ?? [];
 

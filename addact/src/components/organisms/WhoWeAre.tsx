@@ -85,7 +85,7 @@ const WhoWeAre = () => {
     return (
         <>
             <section
-                className="who-we-are my-[100px] xl:my-[150px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
+                className="who-we-are my-[60px] xl:my-[150px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
                 ref={containerRef}
             >
                 <div className="container">
@@ -109,7 +109,7 @@ const WhoWeAre = () => {
 
                     <div
                         ref={counterSectionRef}
-                        className="grid grid-cols-2 md:grid-cols-4 border border-white/15 border-b-0 md:border-b mt-20 2xl:mt-24 overflow-hidden"
+                        className="grid grid-cols-2 md:grid-cols-4 border border-white/15 border-b-0 md:border-b mt-[30px] md:mt-20 2xl:mt-24 overflow-hidden"
                     >
                         {data?.whoAreWes[0].Counter.map((item, index) => {
                             const isSecondInRowMobile = (index + 1) % 2 === 0;

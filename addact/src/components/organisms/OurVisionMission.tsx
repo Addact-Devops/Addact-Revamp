@@ -37,7 +37,7 @@ const OurVisionMission = ({ data }: Props) => {
     };
 
     return (
-        <section className="my-[60px] sm:my-[100px]" id="vision-mission">
+        <section className="my-[60px] sm:my-[60px]" id="vision-mission">
             <div className="container">
                 <div className="bg-white px-[20px] lg:px-[100px] py-[15px] lg:py-[60px] rounded-2xl flex flex-col gap-[60px]">
                     {data.map((item, index) => {

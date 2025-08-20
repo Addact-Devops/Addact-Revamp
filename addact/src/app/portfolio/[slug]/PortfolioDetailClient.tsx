@@ -58,12 +58,12 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
 
             <section className="bg-[#f4f4f4] caseStudy-wrapper pb-20">
                 <div className="container">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-16 text-black">
+                    <div className="grid grid-cols-1 lg:grid-cols-[70%_30%] gap-8 mx-auto mt-16 text-black">
                         <div>
                             <BlogContentRenderer blocks={caseStudy.CaseStudyContent} />
                         </div>
 
-                        <div className="lg:ml-36">
+                        <div className="lg:ml-[30px]">
                             <div className="sticky top-[140px] w-full">
                                 <DownloadForm
                                     title="Get your free copy now!"
