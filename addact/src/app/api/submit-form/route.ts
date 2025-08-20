@@ -39,14 +39,14 @@ export async function POST(req: NextRequest) {
         const sheets = google.sheets({ version: "v4", auth });
 
         const rowValues = [
-            name, // Column A
-            email, // Column B
-            phone || "", // Column C (phone)
-            companyName || "", // Column D (companyName)
-            requirements || "", // Column E (requirements)
-            pageTitle || "", // Column F (pageTitle, optional)
-            new Date().toISOString(), // Column G (timestamp)
-            ip, // Column H (IP address)
+            name,
+            email,
+            companyName || "",
+            requirements || "",
+            phone || "",
+            pageTitle || "",
+            new Date().toISOString(),
+            ip,
         ];
 
         await sheets.spreadsheets.values.append({

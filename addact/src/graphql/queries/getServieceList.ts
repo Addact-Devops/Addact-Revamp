@@ -295,6 +295,7 @@ const ServiceListBySlug = gql`
                     }
                 }
                 pageReference
+                RecipientEmails
             }
         }
     }
@@ -361,6 +362,7 @@ export interface ServiceList {
 }
 export interface CONTACTUS {
     pageReference: string;
+    RecipientEmails: string;
     Form: {
         id: string;
         Title: string;

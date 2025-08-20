@@ -234,6 +234,7 @@ const ServiceDetailBySlug = gql`
                     }
                 }
                 pageReference
+                RecipientEmails
             }
             SEO {
                 metaTitle
@@ -305,6 +306,7 @@ export interface OurProcessData {
 }
 export interface CONTACTUS {
     pageReference: string;
+    RecipientEmails: string;
     Form: {
         id: string;
         Title: string;
