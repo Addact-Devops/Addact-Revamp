@@ -40,18 +40,18 @@ export async function GET() {
         "brand-guidelines",
         "careers",
         "contact-us",
-        "contentful",
-        "contentstack",
+        "contentful-cms-development",
+        "contentstack-cms-development",
         "events",
-        "kentico",
+        "kentico-cms-development",
         "portfolio",
         "press-releases",
         "privacy-policy",
-        "sitecore",
-        "strapi",
+        "sitecore-cms-development",
+        "strapi-cms-development",
         "terms-of-use",
         "sitemap",
-        "umbraco",
+        "umbraco-cms-development",
         "videos",
         "webinar",
     ];
@@ -89,7 +89,14 @@ export async function GET() {
     // Sub-Service Pages – use mapping based on slug name
     const subServiceData = await client.request<{ subServicePages: { Slug: string }[] }>(GET_ALL_SUB_SERVICE_SLUGS);
 
-    const platformKeywords = ["sitecore", "kentico", "strapi", "umbraco", "contentful", "contentstack"];
+    const platformKeywords = [
+        "sitecore-cms-development",
+        "kentico-cms-development",
+        "strapi-cms-development",
+        "umbraco-cms-development",
+        "contentful-cms-development",
+        "contentstack-cms-development",
+    ];
 
     const subServiceUrls = subServiceData.subServicePages
         .map((s) => s.Slug?.replace(/^\//, "").trim())

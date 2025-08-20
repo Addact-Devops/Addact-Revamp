@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { getServiceListBySlug } from "@/graphql/queries/getServieceList";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";
@@ -5,23 +6,23 @@ import OurPartners from "@/components/organisms/OurPartners";
 import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
-import { notFound } from "next/navigation";
-import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
+import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
+import CtaBanner from "@/components/molecules/CtaBanner";
+import ContactUs from "@/components/organisms/ContactUs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/kentico");
+    return generatePageMetadata("serviceLists", "/sitecore");
 }
-import CtaBanner2 from "@/components/molecules/CtaBanner2";
-import CtaBanner from "@/components/molecules/CtaBanner";
-import ContactUs from "@/components/organisms/ContactUs";
 
-export default async function kenticoPage() {
-    const service = "kentico";
+export default async function SitecorePage() {
+    const service = "sitecore-cms-development";
     const data = await getServiceListBySlug(service);
     if (!data) return notFound();
+
     const bannerData = data.Banner?.Banner?.[0];
 
     return (
