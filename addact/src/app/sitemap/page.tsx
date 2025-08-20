@@ -15,7 +15,7 @@ export default async function SitemapPage() {
 
     try {
         pages = getAllStaticRoutes();
-    } catch (e) {
+    } catch {
         console.warn("getAllStaticRoutes failed, using fallback list");
     }
 
