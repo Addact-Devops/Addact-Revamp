@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
         const companyName = body.companyName || "";
         const description = body.description || "";
         const pageTitle = body.pageTitle || "";
-        const recipientEmails = body.RecipientEmails || "";
+        const recipientEmails = body.recipientEmails || "";
 
         const ip =
             req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
