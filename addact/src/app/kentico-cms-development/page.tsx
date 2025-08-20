@@ -12,14 +12,14 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/strapi");
+    return generatePageMetadata("serviceLists", "/kentico");
 }
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import ContactUs from "@/components/organisms/ContactUs";
 
-export default async function strapiPage() {
-    const service = "strapi";
+export default async function kenticoPage() {
+    const service = "kentico-cms-development";
     const data = await getServiceListBySlug(service);
     if (!data) return notFound();
     const bannerData = data.Banner?.Banner?.[0];
