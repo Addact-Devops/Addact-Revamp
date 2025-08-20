@@ -40,17 +40,17 @@ const SiteDetailPage = () => {
     }, [slug]);
 
     if (loading) {
-        return <div className="text-white p-8">Loading...</div>;
+        return <div className='text-white p-8'>Loading...</div>;
     }
 
     if (!data) {
-        return <div className="text-white p-8">Page Not Found</div>;
+        return <div className='text-white p-8'>Page Not Found</div>;
     }
 
     const bannerData = data.HeroBanner;
 
     return (
-        <main className="bg-dark">
+        <main className='bg-dark'>
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
@@ -65,7 +65,7 @@ const SiteDetailPage = () => {
             <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
             <ServiceCtaBanner2 data={data.cta2} />
-            <OurProcess />
+            <OurProcess data={data.our_process} />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />

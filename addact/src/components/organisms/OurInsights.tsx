@@ -177,7 +177,9 @@ function InsightCard({ item, big = false }: InsightCardProps) {
                 <h4 className="!text-[18px] !leading-[30px] md:!text-[22px] 2xl:!text-3xl font-medium mb-4 md:leading-tight line-clamp-3">
                     {item.title}
                 </h4>
-                <p className="!text-[12px] md:text-[16px] text-white mb-4">{item.date}</p>
+                {item.date != "Unknown Date" && (
+                    <p className="!text-[12px] md:text-[16px] text-white mb-4">{item.date}</p>
+                )}
             </div>
 
             <div className="mt-auto self-end">

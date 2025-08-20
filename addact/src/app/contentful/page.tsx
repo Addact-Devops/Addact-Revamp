@@ -41,7 +41,7 @@ export default async function ContentfulPage() {
             <IndustriesWeServe />
             <WhyAddact data={data.why_addact} />
             <CtaBanner2 data={data.cta2} />
-            <OurProcess />
+            <OurProcess data={data.our_process} />
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
