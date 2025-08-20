@@ -74,7 +74,7 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
     };
 
     return (
-        <section ref={sectionRef} className="container my-[60px] sm:my-[100px] pb-[60px] sm:pb-[100px]" id="who-we-are">
+        <section ref={sectionRef} className="container my-[60px] sm:my-[60px] pb-[60px] sm:pb-[100px]" id="who-we-are">
             <div className="flex flex-col md:flex-row items-center sm:gap-[60px] lg:gap-[120px]">
                 <div className="w-full md:w-1/2 hidden md:block">
                     <img

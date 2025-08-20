@@ -11,7 +11,7 @@ type QuoteProps = {
 
 export default function Quote({ authorImage, authorMessage, authorName }: QuoteProps) {
     return (
-        <section className="my-[60px] sm:my-[100px]">
+        <section className="my-[60px] sm:my-[60px]">
             <div className="container">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative">
                     {/* Image - full width of grid column */}

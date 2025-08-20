@@ -116,7 +116,7 @@ export default function Footer({ data }: FooterProps) {
             </div>
 
             {/* Main Footer starts here */}
-            <footer className="relative bg-[#0F0F0F] text-white lg:py-[60px] py-[40px] border-t border-b border-white/15">
+            <footer className="relative bg-[#0F0F0F] text-white lg:py-[60px] py-[40px] border-t border-b border-white/15 z-[4]">
                 <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
                     <div className="relative w-full h-full">
                         <VerticalLines />

@@ -36,7 +36,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
 
     return (
         <section id="perks">
-            <div className="container mx-auto my-[60px] sm:my-[100px]">
+            <div className="container mx-auto my-[60px] sm:my-[60px]">
                 {/* Section Titles */}
                 {title.map((block) => {
                     if ("Richtext" in block && block.Richtext) {
