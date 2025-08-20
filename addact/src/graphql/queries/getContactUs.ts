@@ -86,6 +86,7 @@ export const GET_CONTACT_US = gql`
                     }
                 }
                 pageReference
+                RecipientEmails
             }
             SEO {
                 metaTitle
@@ -181,6 +182,7 @@ export interface ContactUsResponse {
 
 export interface CONTACTUS {
     pageReference: string;
+    RecipientEmails: string;
     Form: {
         id: string;
         Title: string;

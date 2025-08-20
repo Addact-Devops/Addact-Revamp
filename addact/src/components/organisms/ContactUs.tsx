@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CONTACTUS } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
 import ReCAPTCHA from "react-google-recaptcha";
+import { usePathname } from "next/navigation";
 
 interface IProps {
     data: CONTACTUS;
@@ -23,6 +24,7 @@ export interface FormErrors {
 }
 
 const ContactUs = ({ data }: IProps) => {
+    const pathname = usePathname();
     const [formData, setFormData] = useState<ContactFormData>({
         name: "",
         email: "",
@@ -31,7 +33,9 @@ const ContactUs = ({ data }: IProps) => {
     });
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
     const [errors, setErrors] = useState<FormErrors>({});
-    const [submitted, setSubmitted] = useState(false);
+    const [formLoading, setFormLoading] = useState(false);
+
+    const redirectUrl = "/contact-us/connect-now-thank-you";
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -65,20 +69,42 @@ const ContactUs = ({ data }: IProps) => {
         }
         setErrors({});
 
+        setFormLoading(true);
+
         try {
+            let pageTitle = "";
+            if (pathname === "/") {
+                pageTitle = "Home Page";
+            } else if (pathname === "/contact-us") {
+                pageTitle = "Contact Us";
+            } else {
+                pageTitle = pathname.replace("/", "").replace("-", " ");
+                pageTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1);
+            }
+            const payload = {
+                name: formData.name,
+                email: formData.email,
+                companyName: formData.company,
+                description: formData.message,
+                pageTitle,
+                recipientEmails: data.RecipientEmails,
+            };
+
             const res = await fetch("/api/contact", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(payload),
             });
             if (res.ok) {
-                setSubmitted(true);
                 setFormData({ name: "", email: "", company: "", message: "" });
+                window.location.href = redirectUrl;
             }
         } catch (err) {
             console.error("Submission error", err);
+        } finally {
+            setFormLoading(false);
         }
     };
 
@@ -176,12 +202,11 @@ const ContactUs = ({ data }: IProps) => {
 
                             <button
                                 type='submit'
+                                disabled={formLoading}
                                 className='w-full bg-blue-600 cursor-pointer text-base md:text-lg font-semibold text-white py-3 rounded hover:bg-blue-700'
                             >
-                                Contact Us
+                                {formLoading ? "Submitting..." : "Contact Us"}
                             </button>
-
-                            {submitted && <p className='text-green-500 text-sm mt-2'>Thank you for contacting us!</p>}
                         </form>
 
                         <div className='hidden lg:block w-1/2 relative'>
