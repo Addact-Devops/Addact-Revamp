@@ -62,14 +62,14 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                                         const targetId = button.url.replace("#", "");
                                         document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
                                     }}
-                                    className='inline-block bg-blue-600 hover:bg-blue-700 text-white px-[10px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]'
+                                    className='inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]'
                                 >
                                     {button.label}
                                 </button>
                             ) : (
                                 <Link
                                     href={button.url}
-                                    className='inline-block bg-blue-600 hover:bg-blue-700 text-white px-[10px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]'
+                                    className='inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]'
                                 >
                                     {button.label}
                                 </Link>

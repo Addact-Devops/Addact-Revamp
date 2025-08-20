@@ -35,15 +35,15 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
     type TagName = (typeof allowedTags)[number];
 
     return (
-        <section id="perks">
-            <div className="container mx-auto my-[60px] sm:my-[60px]">
+        <section id='perks'>
+            <div className='container mx-auto my-[60px] sm:my-[60px]'>
                 {/* Section Titles */}
                 {title.map((block) => {
                     if ("Richtext" in block && block.Richtext) {
                         return (
                             <p
                                 key={block.id}
-                                className="text-[#3C4CFF] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]"
+                                className='text-[#3C4CFF] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]'
                                 dangerouslySetInnerHTML={{ __html: block.Richtext }}
                             />
                         );
@@ -65,24 +65,24 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                 })}
 
                 {/* Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-12 sm:gap-y-10">
+                <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:gap-x-12 sm:gap-y-10'>
                     {cards
                         .filter((card) => card.Title)
                         .map((card) => (
                             <div
                                 key={card.id}
-                                className="flex flex-col pt-[50px] 2xl:pt-[80px] px-[10px] md:px-[0] text-center md:text-left"
+                                className='flex flex-col pt-[50px] 2xl:pt-[80px] px-[10px] md:px-[0] text-center md:text-left'
                             >
                                 {/* Title + Icon */}
-                                <div className="relative mb-[15px] ">
-                                    <div className="sm:text-[18px] xl:text-[22px] 2xl:text-[22px] font-semibold text-black inline">
+                                <div className='relative mb-[15px] '>
+                                    <div className='sm:text-[18px] xl:text-[22px] 2xl:text-[22px] font-semibold text-black inline'>
                                         {card.Title}
                                     </div>
                                     {card.Image?.url && (
                                         <img
                                             src={card.Image.url}
                                             alt={card.Image.alternativeText || ""}
-                                            className="inline ml-[10px] w-[20px] md:w-[25px]"
+                                            className='inline ml-[10px] w-[20px] md:w-[25px]'
                                         />
                                     )}
                                 </div>
@@ -90,14 +90,14 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                                 {/* Description */}
                                 {card.Description && (
                                     <div
-                                        className="text-base text-[#000] leading-relaxed text-15"
+                                        className='text-base text-[#000] leading-relaxed text-15'
                                         dangerouslySetInnerHTML={{ __html: card.Description }}
                                     />
                                 )}
 
                                 {/* Optional Link */}
                                 {card.Link?.href && (
-                                    <a href={card.Link.href} className="text-blue-600 underline mt-2 block">
+                                    <a href={card.Link.href} className='text-[#3C4CFF] underline mt-2 block'>
                                         Learn more
                                     </a>
                                 )}

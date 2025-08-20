@@ -44,7 +44,7 @@
 //                     </div>
 //                     <button
 //                         onClick={() => router.back()}
-//                         className="inline-block bg-[#6366f1] hover:bg-[#4f46e5] text-white font-semibold text-sm px-6 py-3 rounded-full transition"
+//                         className="inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white font-semibold text-sm px-6 py-3 rounded-full transition"
 //                     >
 //                         {content[2].label}
 //                     </button>
@@ -125,7 +125,7 @@ export default async function EventFormThankYouPage() {
     const page = data?.thankyouPages?.[0];
 
     if (!page) {
-        return <p className="p-6 text-red-600 mt-32">Thank You Page not found.</p>;
+        return <p className='p-6 text-red-600 mt-32'>Thank You Page not found.</p>;
     }
 
     // Cast structuredData to JsonValue to satisfy the client component type
@@ -146,7 +146,7 @@ export default async function EventFormThankYouPage() {
         <>
             {typedPage.SEO?.structuredData && (
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(typedPage.SEO.structuredData) }}
                 />
             )}
