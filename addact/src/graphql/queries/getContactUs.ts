@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client"; // Adjust path if needed
+import { Image, Link } from "@/types/common";
 
 export const GET_CONTACT_US = gql`
     query Contactus {
@@ -60,6 +61,31 @@ export const GET_CONTACT_US = gql`
                 }
                 RightTitle
                 RightDescription
+                RecipientEmails
+            }
+            contactus {
+                Form {
+                    ... on ComponentBaseTemplatePromo {
+                        id
+                        Title
+                        Description
+                        Image {
+                            alternativeText
+                            height
+                            name
+                            url
+                            width
+                        }
+                        Link {
+                            id
+                            href
+                            label
+                            target
+                            isExternal
+                        }
+                    }
+                }
+                pageReference
                 RecipientEmails
             }
             SEO {
@@ -138,6 +164,7 @@ export interface ContactUsResponse {
             RightDescription: string;
             RecipientEmails: string;
         };
+        contactus: CONTACTUS;
         SEO?: {
             metaTitle?: string;
             metaDescription?: string;
@@ -151,6 +178,18 @@ export interface ContactUsResponse {
             languageTag?: string;
         } | null;
     };
+}
+
+export interface CONTACTUS {
+    pageReference: string;
+    RecipientEmails: string;
+    Form: {
+        id: string;
+        Title: string;
+        Description: string;
+        Image: Image;
+        Link: Link;
+    }[];
 }
 
 export async function getContactUsData(): Promise<ContactUsResponse> {
