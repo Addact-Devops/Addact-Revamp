@@ -37,6 +37,10 @@ h2 {
         padding-bottom: 40px;
         height: fit-content;
 
+        @media (max-width: 767px) {
+            padding-bottom: 20px;
+        }
+
         &::after {
             content: "";
             position: absolute;
@@ -48,7 +52,7 @@ h2 {
 
             @media (max-width: 767px) {
                 content: "";
-                width: 100px;
+                width: 80px;
                 height: 3px;
             }
         }
@@ -147,5 +151,14 @@ p {
     a {
         display: block;
         margin-top: 15px;
+    }
+}
+
+.hero-subtext {
+    p {
+        @media (min-width: 1400px) {
+            font-size: pxToRem(24);
+            line-height: lineHeightRatio(40, 24);
+        }
     }
 }

@@ -11,7 +11,41 @@ export async function generateMetadata() {
 }
 
 export default async function SitemapPage() {
-    const pages = getAllStaticRoutes();
+    let pages: string[] = [];
+
+    try {
+        pages = getAllStaticRoutes();
+    } catch {
+        console.warn("getAllStaticRoutes failed, using fallback list");
+    }
+
+    // Full fallback list taken from your HTML inspect output
+    const fallbackRoutes: string[] = [
+        "/", // Home (kept for completeness; your UI already renders Home statically)
+        "/about-us",
+        "/blogs",
+        "/brand-guidelines",
+        "/careers",
+        "/contact-us",
+        "/contentful",
+        "/contentstack",
+        "/events",
+        "/kentico",
+        "/portfolio",
+        "/press-releases",
+        "/privacy-policy",
+        "/sitecore",
+        "/sitemap",
+        "/strapi",
+        "/terms-of-use",
+        "/umbraco",
+        "/videos",
+        "/webinar",
+    ];
+
+    // Merge FS routes + fallback, de-duplicate and keep order
+    const allRoutes = Array.from(new Set([...pages, ...fallbackRoutes]));
+
     const banner = await getSitemapBanner();
 
     return (
@@ -29,8 +63,8 @@ export default async function SitemapPage() {
                     {/* Static Home Link */}
                     <SitemapCard title="Home" href="/" />
 
-                    {/* Dynamic Links */}
-                    {pages
+                    {/* Dynamic + Fallback Links */}
+                    {allRoutes
                         .filter((path) => path !== "/" && path.split("/").length === 2) // Keep only top-level paths
                         .map((path) => (
                             <SitemapCard key={path} title={formatTitle(path)} href={path} />

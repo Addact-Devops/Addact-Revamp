@@ -44,8 +44,8 @@ const BrandGuidelinesPageClient = () => {
             />
             <section className="bg-[#f4f4f4] caseStudy-wrapper pb-20">
                 <div className="container">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto pt-24 text-black">
-                        <div className="lg:mr-36">
+                    <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-8 mx-auto pt-[60px] lg:pt-24 text-black">
+                        <div className="lg:mr-[20px]">
                             <div className="sticky top-[140px] w-full">
                                 <DownloadForm
                                     title={formTitle}
@@ -61,7 +61,7 @@ const BrandGuidelinesPageClient = () => {
                                 />
                             </div>
                         </div>
-                        <div>
+                        <div className="lg:pl-[40px]">
                             <BlogContentRenderer blocks={brandGuideline.brandGuideline.Content} />
                         </div>
                     </div>

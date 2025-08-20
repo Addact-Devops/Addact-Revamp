@@ -25,7 +25,7 @@ const HomeHeroBanner = ({ data }: IProps) => {
                     <h1 className="uppercase banner-title">{data?.Banner?.[0]?.BannerTitle}</h1>
 
                     <div className="flex flex-col sm:flex-row sm:items-center lg:gap-9">
-                        <div className="text-base sm:!text-base lg:!text-2xl font-medium max-w-[910px]">
+                        <div className="text-base sm:!text-base lg:!text-2xl font-medium max-w-[910px] hero-subtext">
                             <RichText html={data?.Banner?.[0]?.BannerDescription} />
                         </div>
 

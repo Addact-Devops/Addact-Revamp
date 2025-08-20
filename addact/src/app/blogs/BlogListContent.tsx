@@ -30,6 +30,9 @@ type BlogType = {
             Category?: { CategoryTitle?: string };
         };
     }[];
+    blog_category?: {
+        Category?: { CategoryTitle?: string };
+    };
 };
 
 export default function BlogListContent({}: Props) {
@@ -60,14 +63,22 @@ export default function BlogListContent({}: Props) {
 
             const title = banner.BannerTitle?.toLowerCase() || "";
             const author = banner.author?.Author?.AuthorName?.toLowerCase() || "";
-            const category = banner.blogcategory?.Category?.CategoryTitle?.toLowerCase() || "";
+
+            // ✅ use both blogcategory (old) and blog_category (new)
+            const category =
+                banner.blogcategory?.Category?.CategoryTitle?.toLowerCase() ||
+                blog.blog_category?.Category?.CategoryTitle?.toLowerCase() ||
+                "";
 
             return title.includes(query) || author.includes(query) || category.includes(query);
         });
 
         if (selectedCategory !== "All Blogs") {
             filtered = filtered.filter((blog) => {
-                const blogCategory = blog.BlogBanner?.[0]?.blogcategory?.Category?.CategoryTitle || "";
+                const blogCategory =
+                    blog.BlogBanner?.[0]?.blogcategory?.Category?.CategoryTitle ||
+                    blog.blog_category?.Category?.CategoryTitle ||
+                    "";
                 return blogCategory.trim().toLowerCase() === selectedCategory.toLowerCase();
             });
         }
@@ -109,10 +120,10 @@ export default function BlogListContent({}: Props) {
                 setSelectedCategory={setSelectedCategory}
             />
 
-            <div className='container'>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]'>
+            <div className="container">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
                     {currentBlogs.length === 0 && (
-                        <p className='text-white !text-[35px] font-semibold col-span-full text-center'>
+                        <p className="text-white !text-[35px] font-semibold col-span-full text-center">
                             {searchText.trim()
                                 ? `No blogs found for "${searchText}"`
                                 : selectedCategory !== "All Blogs"
@@ -134,15 +145,19 @@ export default function BlogListContent({}: Props) {
                         const title = banner.BannerTitle?.trim() || "Untitled";
                         const blogLink = `/blogs${blog.Slug}`;
                         const rawAuthor = banner.author?.Author?.AuthorName;
-                        const rawCategory = banner.blogcategory?.Category?.CategoryTitle;
+
+                        // ✅ support both blogcategory and blog_category
+                        const rawCategory =
+                            banner.blogcategory?.Category?.CategoryTitle || blog.blog_category?.Category?.CategoryTitle;
+
                         const author = typeof rawAuthor === "string" ? rawAuthor.trim() : "Addxp Technologies";
                         const category = typeof rawCategory === "string" ? rawCategory.trim() : "General";
 
                         return (
-                            <Link key={blog.Slug} href={blogLink} className='group'>
-                                <div className='bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer'>
+                            <Link key={blog.Slug} href={blogLink} className="group">
+                                <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
                                     {imageUrl && (
-                                        <div className='relative h-[350px] rounded-xl overflow-hidden mb-4'>
+                                        <div className="relative h-[350px] rounded-xl overflow-hidden mb-4">
                                             <Image
                                                 src={imageUrl}
                                                 alt={
@@ -151,21 +166,21 @@ export default function BlogListContent({}: Props) {
                                                     "Blog Image"
                                                 }
                                                 fill
-                                                className='object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105'
+                                                className="object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
                                             />
-                                            <div className='absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
+                                            <div className="absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         </div>
                                     )}
 
-                                    <div className='inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium'>
+                                    <div className="inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium">
                                         {category}
                                     </div>
 
-                                    <h2 className='text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]'>
+                                    <h2 className="text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]">
                                         {title}
                                     </h2>
 
-                                    <p className='text-[#3C4CFF] font-bold'>{author}</p>
+                                    <p className="text-[#3C4CFF] font-bold">{author}</p>
                                 </div>
                             </Link>
                         );
@@ -174,8 +189,8 @@ export default function BlogListContent({}: Props) {
 
                 {/* Loader trigger for infinite scroll */}
                 {visibleCount < filteredBlogs.length && (
-                    <div ref={loadMoreRef} className='h-10 flex justify-center items-center mt-8'>
-                        <span className='text-gray-400'>Loading more blogs...</span>
+                    <div ref={loadMoreRef} className="h-10 flex justify-center items-center mt-8">
+                        <span className="text-gray-400">Loading more blogs...</span>
                     </div>
                 )}
             </div>
