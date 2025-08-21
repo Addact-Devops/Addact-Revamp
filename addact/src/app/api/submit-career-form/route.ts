@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
             valueInputOption: "RAW",
             insertDataOption: "INSERT_ROWS",
             requestBody: {
-                values: [[name, email, , , phone, hyperlink, pageTitle, formatDateTime(now), ip]],
+                values: [[name, email, , hyperlink, phone, pageTitle, formatDateTime(now), ip]],
             },
         });
 
