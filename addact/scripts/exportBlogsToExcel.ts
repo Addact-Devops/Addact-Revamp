@@ -2,7 +2,7 @@ import ExcelJS from "exceljs";
 import { gql, request } from "graphql-request";
 
 const GRAPHQL_ENDPOINT = "https://uatcms.addact.net:9443/graphql";
-const SITE_BASE_URL = "https://addact.net/"; // Adjust your base URL if needed
+const SITE_BASE_URL = "https://addact.net/blogs"; // Adjust your base URL if needed
 
 const GET_ALL_BLOGS = gql`
     query AddactBlogs($page: Int, $pageSize: Int) {
