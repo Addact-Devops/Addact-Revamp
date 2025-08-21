@@ -1,6 +1,7 @@
-import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
+import { google } from "googleapis";
 import nodemailer from "nodemailer";
+import { formatDateTime } from "@/utils/dateFormatter";
 
 export async function POST(req: NextRequest) {
     try {
@@ -34,7 +35,8 @@ export async function POST(req: NextRequest) {
 
         const sheets = google.sheets({ version: "v4", auth });
 
-        const rowValues = [name, email, companyName, description, , pageTitle, new Date().toISOString(), ip];
+        const now = new Date();
+        const rowValues = [name, email, companyName, description, , pageTitle, formatDateTime(now), ip];
 
         await sheets.spreadsheets.values.append({
             spreadsheetId,
@@ -71,36 +73,122 @@ export async function POST(req: NextRequest) {
         // Send confirmation email
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
-            to: email,
-            subject: "Thanks for Your Submission!",
+            to: recipientList,
+            subject: "Addact - Business Inquiry",
             html: `
-                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                    <h2 style="color: #1470af;">Thank you, ${name}!</h2>
-                    <p>We’ve received your application. Our team will review it and get back to you soon.</p>
-                    <p>Meanwhile, feel free to explore more about us at <a href="https://addact.net" target="_blank">Addact Technologies</a>.</p>
-                    <p style="margin-top: 30px; font-size: 12px; color: #888;">© ${new Date().getFullYear()} Addact Technologies. All rights reserved.</p>
-                </div>
+                <html>
+                    <head>
+                        <title>Addact - Business Inquiry</title>
+                        <style>
+                            table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            background-color: #F6F7FF;
+                            }
+                            th {
+                            border-right: 1px solid #0000001a;
+                            text-align: left;
+                            }
+                            th, td {
+                            padding: 15px;
+                            }
+                            td {
+                            text-align: left;
+                            }
+                            img{
+                            width: 100%;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
+                            <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+                                <tr>
+                                    <th align="left">Name</th>
+                                    <td>${name}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Email</th>
+                                    <td>${email}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Company Name</th>
+                                    <td>${companyName}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Requirements</th>
+                                    <td>${description}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </body>
+                </html>
             `,
         });
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
-            to: recipientList,
-            subject: "Thanks for Your Submission!",
+            to: email,
+            subject: "Addact - Thank You for Your Inquiry",
             html: `
-                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                    <h2 style="color: #1470af;">Thank you, ${name}!</h2>
-                    <p>We’ve received your submission with the following details:</p>
-                    <ul>
-                        <li><strong>Name:</strong> ${name}</li>
-                        <li><strong>Email:</strong> ${email}</li>
-                        <li><strong>Company Name:</strong> ${companyName}</li>
-                        ${description ? `<li><strong>Description:</strong> ${description}</li>` : ""}
-                    </ul>
-                    <p>We'll get back to you shortly.</p>
-                    <p style="margin-top: 30px; font-size: 12px; color: #888;">
-                        © ${new Date().getFullYear()} Addact Technologies. All rights reserved.
-                    </p>
-                </div>
+                <html>
+                    <head>
+                        <title>Addact - Thank You for Your Inquiry</title>
+                        <style>
+                            table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            background-color: #F6F7FF;
+                            }
+                            th {
+                            border-right: 1px solid #0000001a;
+                            text-align: left;
+                            }
+                            th, td {
+                            padding: 15px;
+                            }
+                            td {
+                            text-align: left;
+                            }
+                            img{
+                            width: 100%;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
+                            <img src="https://dfr7gdtg8j0s1.cloudfront.net/src/images/email-banner.png" alt="email-banner"/>                
+                            <h2 style="color: #1470af;">Dear ${name}!</h2>
+                            <p>We have received your message and will get back to you shortly.</p>
+                            <p>Here is the information you submitted:</p>
+                            <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+                                <tr>
+                                    <th align="left">Name</th>
+                                    <td>${name}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Email</th>
+                                    <td>${email}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Company Name</th>
+                                    <td>${companyName}</td>
+                                </tr>
+                                ${
+                                    description
+                                        ? `<tr>
+                                        <th align="left">Description</th>
+                                        <td>${description}</td>
+                                    </tr>`
+                                        : ""
+                                }
+                            </table>
+                            <br/>
+                            <span>Regards,</span>
+                            <br/>
+                            <span>Team Addact Technologies</span>
+                        </div>
+                    </body>
+                </html>
             `,
         });
 

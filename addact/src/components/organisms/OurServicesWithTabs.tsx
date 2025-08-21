@@ -22,9 +22,26 @@ interface Props {
 
 // ✅ Card type for array items
 interface Card {
-    id: string | number;
+    id: string;
     Title: string;
     Description: string;
+    Image?: {
+        alternativeText: string | null;
+        height: number;
+        name: string;
+        url: string;
+        width: number;
+    };
+    Link?: {
+        id: string;
+        href: string;
+        label: string;
+        target: string;
+        isExternal: boolean;
+    };
+    sub_service_page?: {
+        Slug: string;
+    };
 }
 
 const OurServicesWithTabs = ({ data }: Props) => {
@@ -34,7 +51,6 @@ const OurServicesWithTabs = ({ data }: Props) => {
     const [activeTab, setActiveTab] = useState<"ForEnterprisesBrands" | "team_feature">("ForEnterprisesBrands");
 
     const enterprisesCards = data?.ForEnterprisesBrands?.GlobalCard ?? [];
-    console.log("🚀 ~ OurServicesWithTabs ~ enterprisesCards:", enterprisesCards);
     const teamFeatureCards = data?.team_feature?.Cards ?? [];
 
     // track current slide for indicator
@@ -158,12 +174,24 @@ const OurServicesWithTabs = ({ data }: Props) => {
                                                 {group.map((card) => (
                                                     <div
                                                         key={card.id}
-                                                        className='bg-[#1C1C1C] border-l-[3px] border-[#3C4CFF] p-[16px]'
+                                                        className='relative group bg-[#1C1C1C] pb-15 border-l-[3px] border-[#3C4CFF] p-[16px]'
                                                     >
                                                         <h3 className='text-white !text-[20px] md:!text-[30px] mb-3'>
                                                             {card.Title}
                                                         </h3>
                                                         <RichText html={card.Description} />
+                                                        {card?.sub_service_page?.Slug && (
+                                                            <div className='absolute bottom-0 right-0'>
+                                                                <Link
+                                                                    href={`${currentPath}${card?.sub_service_page?.Slug}`}
+                                                                    target={card.Link?.isExternal ? "_blank" : "_self"}
+                                                                >
+                                                                    <div className='w-14 h-14 bg-[#3C4CFF] text-white flex items-center justify-center'>
+                                                                        <RightArrowUpIcon />
+                                                                    </div>
+                                                                </Link>
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 ))}
                                             </div>
