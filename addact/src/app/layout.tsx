@@ -7,6 +7,7 @@ import { getHeaderData } from "@/graphql/queries/header";
 import Footer from "@/components/templates/Footer";
 import { getFooterData } from "@/graphql/queries/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import ScrollToTop from "@/components/atom/scrollToTop";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -47,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                         style={{ display: "none", visibility: "hidden" }}
                     ></iframe>
                 </noscript>
-
+                <ScrollToTop />
                 <Header headers={HeaderData} />
                 {children}
                 <Footer data={footerData} />
