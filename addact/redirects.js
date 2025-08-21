@@ -1,7 +1,7 @@
 module.exports = [
     {
         source: "/test",
-        destination: "https://www.addact.net/",
+        destination: "/",
         permanent: true,
     },
 ];
