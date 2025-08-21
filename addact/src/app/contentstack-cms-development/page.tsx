@@ -16,7 +16,7 @@ import ContactUs from "@/components/organisms/ContactUs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/contentstack");
+    return generatePageMetadata("serviceLists", "/contentstack-cms-development");
 }
 
 export default async function strapiPage() {
