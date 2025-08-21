@@ -1600,11 +1600,6 @@ module.exports = [
     "permanent": true
   },
   {
-    "source": "/terms-of-use",
-    "destination": "/ ",
-    "permanent": true
-  },
-  {
     "source": "/sitemap ",
     "destination": "/sitemap ",
     "permanent": true
