@@ -51,7 +51,7 @@ module.exports = [
   },
   {
     "source": "/how-to-migrate-from-a-legacy-cms-to-sitecore-challenges-&-solutions",
-    "destination": "/blogs/how-to-migrate-from-a-legacy-cms-to-sitecore-challenges-&-solutions",
+    "destination": "/blogs/how-to-migrate-from-a-legacy-cms-to-sitecore-challenges-and-solutions",
     "permanent": true
   },
   {
@@ -1081,7 +1081,7 @@ module.exports = [
   },
   {
     "source": "/increase-customer-loyalty-&-trust-using-sitecore-cdp",
-    "destination": "/blogs/increase-customer-loyalty-&-trust-using-sitecore-cdp",
+    "destination": "/blogs/increase-customer-loyalty-and-trust-using-sitecore-cdp",
     "permanent": true
   },
   {
@@ -1617,6 +1617,36 @@ module.exports = [
   {
     "source": "/addact-next-chapter-reveal",
     "destination": "/blogs/addact-next-chapter-reveal",
+    "permanent": true
+  },
+  {
+    "source": "/fresher-software-developer-dot-net",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/work",
+    "destination": "/portfolio",
+    "permanent": true
+  },
+  {
+    "source": "/addact-next-chapter-reveal",
+    "destination": "/blogs/addact-next-chapter-reveal",
+    "permanent": true
+  },
+  {
+    "source": "/increase-customer-loyalty-&-trust-using-sitecore-cdp",
+    "destination": "/blogs/increase-customer-loyalty-and-trust-using-sitecore-cdp",
+    "permanent": true
+  },
+  {
+    "source": "/project-cost-estimator",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/role-of-sitecore-cdp-customer-experience-management",
+    "destination": "/blogs/role-of-sitecore-cdp-customer-experience-management",
     "permanent": true
   }
 ];

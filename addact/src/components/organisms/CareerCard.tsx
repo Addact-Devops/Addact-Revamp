@@ -75,16 +75,17 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                             >
                                 {/* Title + Icon */}
                                 <div className="relative mb-[15px] ">
-                                    <div className="sm:text-[18px] xl:text-[22px] 2xl:text-[22px] font-semibold text-black inline lowercase md:uppercase">
-                                        {card.Title}
-                                    </div>
                                     {card.Image?.url && (
                                         <img
                                             src={card.Image.url}
                                             alt={card.Image.alternativeText || ""}
-                                            className="inline ml-[10px] w-[20px] md:w-[25px]"
+                                            className="inline mr-[10px] w-[20px] md:w-[25px]"
                                         />
                                     )}
+
+                                    <div className="sm:text-[18px] xl:text-[22px] 2xl:text-[22px] font-semibold text-black inline lowercase md:uppercase">
+                                        {card.Title}
+                                    </div>
                                 </div>
 
                                 {/* Description */}
