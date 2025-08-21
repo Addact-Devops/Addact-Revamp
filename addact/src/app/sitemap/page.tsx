@@ -57,7 +57,7 @@ export default async function SitemapPage() {
                 />
             )}
 
-            <div className="container my-[60px] md:my-[60px]">
+            <div className="container my-[60px] xl:my-[100px] 2xl:my-[200px]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {/* Static Home Link */}
                     <SitemapCard title="Home" href="/" />
