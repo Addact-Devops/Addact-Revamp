@@ -46,7 +46,7 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
 
                     {/* ✅ Contact Card (Sticky on desktop) */}
                     {windowWidth > 1100 && (
-                        <div className="w-[30%] sticky top-[120px] self-start z-[20]">
+                        <div className="w-[30%] sticky top-[140px] self-start z-[20]">
                             <BlogContactCard card={blog.contactCard?.ContactCard?.[0]} />
                         </div>
                     )}

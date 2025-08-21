@@ -27,7 +27,7 @@ export async function generatePageMetadata(
 
     const fullCanonicalURL = seo?.canonicalURL?.startsWith("http")
         ? seo.canonicalURL
-        : `https://addact-revamp.vercel.app/${slugOrFallbackTitle || ""}`; // replace with your real domain
+        : `https://addact.net/${slugOrFallbackTitle || ""}`; // replace with your real domain
 
     return {
         title: seo?.metaTitle || fallbackTitle,

@@ -31,7 +31,7 @@ const GET_ALL_SUB_SERVICE_SLUGS = gql`
 `;
 
 export async function GET() {
-    const baseUrl = "https://addact-revamp.vercel.app/";
+    const baseUrl = "https://addact.net/";
 
     const staticUrls = [
         "",
