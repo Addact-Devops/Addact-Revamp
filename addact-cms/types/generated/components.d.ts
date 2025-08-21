@@ -47,6 +47,7 @@ export interface AddactComponentContactFormBlock
     >;
     LeftDescription: Schema.Attribute.Blocks;
     LeftTitle: Schema.Attribute.String;
+    RecipientEmails: Schema.Attribute.Text;
     RightDescription: Schema.Attribute.Blocks;
     RightTitle: Schema.Attribute.String;
   };
@@ -528,7 +529,7 @@ export interface CounterCounter extends Struct.ComponentSchema {
   };
   attributes: {
     CounterTitle: Schema.Attribute.String;
-    NumberCount: Schema.Attribute.BigInteger;
+    NumberCount: Schema.Attribute.Decimal;
   };
 }
 
@@ -666,8 +667,10 @@ export interface SharedLink extends Struct.ComponentSchema {
         maxLength: 500000;
       }> &
       Schema.Attribute.DefaultTo<'/'>;
+    Icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     isExternal: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     label: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Read Now'>;
+    SubDisc: Schema.Attribute.Text;
     target: Schema.Attribute.Enumeration<
       ['_self', '_blank', '_parent', '_top']
     > &

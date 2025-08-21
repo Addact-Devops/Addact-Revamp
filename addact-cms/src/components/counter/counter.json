@@ -10,7 +10,7 @@
       "type": "string"
     },
     "NumberCount": {
-      "type": "biginteger"
+      "type": "decimal"
     }
   },
   "config": {}
