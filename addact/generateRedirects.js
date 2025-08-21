@@ -10,7 +10,7 @@ const data = xlsx.utils.sheet_to_json(sheet);
 const redirects = data.map((row) => ({
     source: row.source,
     destination: row.destination,
-    permanent: true,
+    permanent: row.permanent === "true" ? true : false,
 }));
 
 const output = `module.exports = ${JSON.stringify(redirects, null, 2)};\n`;
