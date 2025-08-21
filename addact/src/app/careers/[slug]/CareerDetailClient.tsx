@@ -24,6 +24,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
     });
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
     const [resumeFile, setResumeFile] = useState<File | null>(null);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const fileInputRef = useRef<HTMLInputElement>(null);
     const redirectUrl = `${pathname}/thank-you-career`;
 
@@ -32,12 +33,49 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
     const bannerData = data?.Banner?.[0];
     const pageTitle = pathname.split("/").filter(Boolean).pop();
 
+    const validateForm = () => {
+        const newErrors: { [key: string]: string } = {};
+
+        // Name required
+        if (!form.fullName.trim()) {
+            newErrors.fullName = "Full name is required.";
+        }
+
+        // Email regex validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!form.email.trim()) {
+            newErrors.email = "Email is required.";
+        } else if (!emailRegex.test(form.email)) {
+            newErrors.email = "Please enter a valid email.";
+        }
+
+        // Indian phone regex (10 digits, optional +91 or 0 prefix)
+        const phoneRegex = /^(?:\+91|0)?[6-9]\d{9}$/;
+        if (!form.phone.trim()) {
+            newErrors.phone = "Phone number is required.";
+        } else if (!phoneRegex.test(form.phone)) {
+            newErrors.phone = "Please enter a valid Indian mobile number.";
+        }
+
+        // Resume required
+        if (!resumeFile) {
+            newErrors.resume = "Please upload your resume.";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
         if (!captchaToken) {
-            alert("Please complete the captcha.");
+            setErrors({ captcha: "Please complete the captcha." });
             return;
         }
+
+        if (!validateForm()) return;
+
         setFromLoading(true);
         const formData = new FormData();
         formData.append("name", form.fullName);
@@ -118,7 +156,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                 </div>
 
                                 {/* Right Form Block */}
-                                <div className='w-full md:w-2/3 pt-8 pr-14 pb-14 pl-28 bg-[#f9f9f9]'>
+                                <div className='w-full md:w-2/3 pt-8 pr-4 md:pr-14 pb-14 pl-4 md:pl-28 bg-[#f9f9f9]'>
                                     <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold text-black leading-snug mb-3'>
                                         {data.careers_form.FormFields.Form[0]?.Title}
                                     </h2>
@@ -156,7 +194,6 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                                 {data.careers_form.FormFields.Form[1]?.Link?.label || "Upload Resume"}
                                             </button>
                                             <input
-                                                required
                                                 ref={fileInputRef}
                                                 type='file'
                                                 accept='.pdf,.doc,.docx'
@@ -164,6 +201,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                                 onChange={(e) => {
                                                     if (e.target.files?.[0]) {
                                                         setResumeFile(e.target.files[0]);
+                                                        setErrors((prev) => ({ ...prev, resume: "" }));
                                                     }
                                                 }}
                                             />
@@ -172,37 +210,55 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                                     {resumeFile.name}
                                                 </p>
                                             )}
+                                            {errors.resume && (
+                                                <p className='text-red-600 text-sm mt-2'>{errors.resume}</p>
+                                            )}
                                         </div>
                                     </div>
 
                                     {/* Actual Form */}
                                     <form className='space-y-4' onSubmit={handleSubmit}>
-                                        <input
-                                            type='text'
-                                            placeholder={data.careers_form.FormFields.NameLable}
-                                            className='w-full border border-gray-300 rounded-md px-4 py-2 text-black placeholder-gray-500'
-                                            value={form.fullName}
-                                            onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-                                            required
-                                        />
-                                        <div className='flex flex-col md:flex-row gap-4'>
+                                        <div>
                                             <input
-                                                type='email'
-                                                placeholder={data.careers_form.FormFields.EmailLabel}
+                                                type='text'
+                                                placeholder={data.careers_form.FormFields.NameLable}
                                                 className='w-full border border-gray-300 rounded-md px-4 py-2 text-black placeholder-gray-500'
-                                                value={form.email}
-                                                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                                                required
+                                                value={form.fullName}
+                                                onChange={(e) => setForm({ ...form, fullName: e.target.value })}
                                             />
-                                            <input
-                                                type='tel'
-                                                placeholder={data.careers_form.FormFields.PhoneLabel}
-                                                className='w-full border border-gray-300 rounded-md px-4 py-2 text-black placeholder-gray-500'
-                                                value={form.phone}
-                                                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                                                required
-                                            />
+                                            {errors.fullName && (
+                                                <p className='text-red-600 text-sm mt-1'>{errors.fullName}</p>
+                                            )}
                                         </div>
+
+                                        <div className='flex flex-col md:flex-row gap-4'>
+                                            <div className='w-full'>
+                                                <input
+                                                    type='email'
+                                                    placeholder={data.careers_form.FormFields.EmailLabel}
+                                                    className='w-full border border-gray-300 rounded-md px-4 py-2 text-black placeholder-gray-500'
+                                                    value={form.email}
+                                                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                                                />
+                                                {errors.email && (
+                                                    <p className='text-red-600 text-sm mt-1'>{errors.email}</p>
+                                                )}
+                                            </div>
+
+                                            <div className='w-full'>
+                                                <input
+                                                    type='tel'
+                                                    placeholder={data.careers_form.FormFields.PhoneLabel}
+                                                    className='w-full border border-gray-300 rounded-md px-4 py-2 text-black placeholder-gray-500'
+                                                    value={form.phone}
+                                                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                                                />
+                                                {errors.phone && (
+                                                    <p className='text-red-600 text-sm mt-1'>{errors.phone}</p>
+                                                )}
+                                            </div>
+                                        </div>
+
                                         <input
                                             type='text'
                                             placeholder={data.careers_form.FormFields.GeneralText}
@@ -210,11 +266,19 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                             value={form.hyperlink}
                                             onChange={(e) => setForm({ ...form, hyperlink: e.target.value })}
                                         />
-                                        <ReCAPTCHA
-                                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                                            onChange={(token: string | null) => setCaptchaToken(token)}
-                                            className='mx-auto w-full'
-                                        />
+
+                                        <div className='flex justify-start w-full overflow-hidden'>
+                                            <div className='scale-90 origin-top sm:scale-100'>
+                                                <ReCAPTCHA
+                                                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                                                    onChange={(token: string | null) => setCaptchaToken(token)}
+                                                />
+                                            </div>
+                                        </div>
+                                        {errors.captcha && (
+                                            <p className='text-red-600 text-sm mt-2'>{errors.captcha}</p>
+                                        )}
+
                                         <button
                                             type='submit'
                                             className='bg-[#3C4CFF] text-white px-6 py-2 rounded-md hover:bg-[#3440CB] shadow-sm mt-4'
