@@ -88,79 +88,76 @@ const Header = ({ headers }: HeaderProps) => {
                                 </div>
 
                                 {/* Dropdown Full Width */}
-                                {/* Dropdown Full Width */}
-                                <div
-                                    ref={dropdownRef}
-                                    className={`
-    container absolute left-0 right-0 top-full w-full bg-[#0F0F0F] text-white shadow-lg z-40 !p-0 rounded-[20px] mt-[10px] border border-[#3C4CFF80]
-    transform transition-all duration-500 ease-out
-    ${isActive ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"}
-  `}
-                                >
-                                    <div className="mx-auto p-[20px] md:pr-[20px] 2xl:pr-[60px] flex md:gap-[30px] 2xl:gap-[60px] items-center">
-                                        {/* Left image */}
-                                        <div className="w-[100%] relative md:max-w-[320px] 2xl:max-w-[375px]">
-                                            <Image
-                                                src={item.SubNavImage.url}
-                                                alt={
-                                                    item.SubNavImage.alternativeText ||
-                                                    item.ReferenceTitle ||
-                                                    "Dropdown image"
-                                                }
-                                                width={328}
-                                                height={328}
-                                                className="object-cover w-full h-full rounded-lg"
-                                            />
-                                            <div className="absolute inset-0 flex items-start justify-center text-white text-2xl font-semibold pt-[45px]">
-                                                {item.ReferenceTitle}
+                                {isActive && (
+                                    <div
+                                        ref={dropdownRef}
+                                        className="container absolute left-0 right-0 top-full w-full bg-[#0F0F0F] text-white shadow-lg z-40 !p-0 rounded-[20px] mt-[10px] border border-[#3C4CFF80]"
+                                    >
+                                        <div className="mx-auto p-[20px] md:pr-[20px] 2xl:pr-[60px] flex md:gap-[30px] 2xl:gap-[60px] items-center">
+                                            {/* Left image */}
+                                            <div className="w-[100%] relative md:max-w-[320px] 2xl:max-w-[375px]">
+                                                <Image
+                                                    src={item.SubNavImage.url}
+                                                    alt={
+                                                        item.SubNavImage.alternativeText ||
+                                                        item.ReferenceTitle ||
+                                                        "Dropdown image"
+                                                    }
+                                                    width={328}
+                                                    height={328}
+                                                    className="object-cover w-full h-full rounded-lg"
+                                                />
+                                                <div className="absolute inset-0 flex items-start justify-center text-white text-2xl font-semibold pt-[45px]">
+                                                    {item.ReferenceTitle}
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        {/* Right grid */}
-                                        <ul className="grid grid-cols-2 md:gap-x-[25px] xl:gap-x-[40px] 2xl:gap-x-[60px] md:gap-y-[25px] xl:gap-y-[40px] 2xl:gap-y-[50px] xl:py-0 2xl:py-[40px] h-fit">
-                                            {item.SubNavLink.map((child) => (
-                                                <li key={child.id}>
-                                                    <Link
-                                                        href={child.href}
-                                                        target={child?.isExternal ? "_blank" : "_self"}
-                                                        className="block"
-                                                    >
-                                                        <div className="flex items-start gap-[15px] 2xl:gap-[24px]">
-                                                            {child.Icon?.url && (
-                                                                <Image
-                                                                    src={child.Icon.url}
-                                                                    alt={child.Icon.alternativeText}
-                                                                    width={child.Icon.width || 24}
-                                                                    height={child.Icon.height || 24}
-                                                                    className="md:w-[70px] 2xl:w-[100px] md:h-[70px] 2xl:h-[100px]"
-                                                                />
-                                                            )}
-                                                            <div className="flex flex-col">
-                                                                <div className="md:text-[20px] 2xl:text-[24px] pt-5px font-[500]">
-                                                                    {child.label}
-                                                                </div>
-                                                                {child.SubDisc && (
-                                                                    <span
-                                                                        className="text-[14px] 2xl:text-[16px] mt-[8px] font-[400] block"
-                                                                        style={{
-                                                                            display: "-webkit-box",
-                                                                            WebkitLineClamp: 4,
-                                                                            WebkitBoxOrient: "vertical",
-                                                                            overflow: "hidden",
-                                                                            textOverflow: "ellipsis",
-                                                                        }}
-                                                                    >
-                                                                        {child.SubDisc}
-                                                                    </span>
+                                            {/* Right grid */}
+                                            <ul className="grid grid-cols-2 md:gap-x-[25px] xl:gap-x-[40px] 2xl:gap-x-[60px] md:gap-y-[25px] xl:gap-y-[40px] 2xl:gap-y-[50px] xl:py-0 2xl:py-[40px] h-fit">
+                                                {item.SubNavLink.map((child) => (
+                                                    <li key={child.id}>
+                                                        <Link
+                                                            href={child.href}
+                                                            target={child?.isExternal ? "_blank" : "_self"}
+                                                            className="block"
+                                                        >
+                                                            <div className="flex items-start gap-[15px] 2xl:gap-[24px]">
+                                                                {child.Icon?.url && (
+                                                                    <Image
+                                                                        src={child.Icon.url}
+                                                                        alt={child.Icon.alternativeText}
+                                                                        width={child.Icon.width || 24}
+                                                                        height={child.Icon.height || 24}
+                                                                        className="md:w-[70px] 2xl:w-[100px] md:h-[70px] 2xl:h-[100px]"
+                                                                    />
                                                                 )}
+                                                                <div className="flex flex-col">
+                                                                    <div className=" md:text-[20px] 2xl:text-[24px] pt-5px font-[500]">
+                                                                        {child.label}
+                                                                    </div>
+                                                                    {child.SubDisc && (
+                                                                        <span
+                                                                            className="text-[14px] 2xl:text-[16px] mt-[8px] font-[400] block"
+                                                                            style={{
+                                                                                display: "-webkit-box",
+                                                                                WebkitLineClamp: 4,
+                                                                                WebkitBoxOrient: "vertical",
+                                                                                overflow: "hidden",
+                                                                                textOverflow: "ellipsis",
+                                                                            }}
+                                                                        >
+                                                                            {child.SubDisc}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         );
                     })}
