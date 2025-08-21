@@ -1480,46 +1480,6 @@ module.exports = [
     "permanent": true
   },
   {
-    "source": "/portfolio/sitecore-ordercloud-implementation",
-    "destination": "/portfolio/sitecore-ordercloud-implementation",
-    "permanent": true
-  },
-  {
-    "source": "/portfolio/sitecore-upgradation",
-    "destination": "/portfolio/sitecore-upgradation",
-    "permanent": true
-  },
-  {
-    "source": "/portfolio/content-hub-implementation",
-    "destination": "/portfolio/content-hub-implementation",
-    "permanent": true
-  },
-  {
-    "source": "/portfolio/sitecore-upgradation-casestudy-2",
-    "destination": "/portfolio/sitecore-upgradation-casestudy-2",
-    "permanent": true
-  },
-  {
-    "source": "/portfolio/sitecore-upgrade-version-9-0-2-to-10-2",
-    "destination": "/portfolio/sitecore-upgrade-version-9-0-2-to-10-2",
-    "permanent": true
-  },
-  {
-    "source": "/portfolio/sitecore-upgrade-version-8-1-to-10-1",
-    "destination": "/portfolio/sitecore-upgrade-version-8-1-to-10-1",
-    "permanent": true
-  },
-  {
-    "source": "/portfolio/assembling-sitecore-10-12-next-js-10-0-3-and-react-17-0-1",
-    "destination": "/portfolio/assembling-sitecore-10-12-next-js-10-0-3-and-react-17-0-1",
-    "permanent": true
-  },
-  {
-    "source": "/portfolio/modernizing-a-legacy-site-with-sitecore-xm-cloud",
-    "destination": "/portfolio/Modernizing-a-Legacy-Site-with-Sitecore-XM-Cloud",
-    "permanent": true
-  },
-  {
     "source": "/news/press-releases/addact-team-members-win-sitecore-most-valued-professional-award",
     "destination": "/press-releases/addact-team-members-win-sitecore-most-valued-professional-award",
     "permanent": true
