@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
-    query AddactBlogs($page: Int, $pageSize: Int) {
+    query AddactBlogs($page: Int, $pageSize: Int, $sort: [String]) {
         blogs {
             PageHeading {
                 id
@@ -31,7 +31,7 @@ const GET_ALL_BLOGS = gql`
             }
         }
 
-        addactBlogs(pagination: { page: $page, pageSize: $pageSize }) {
+        addactBlogs(pagination: { page: $page, pageSize: $pageSize }, sort: $sort) {
             Slug
             documentId
             HeadingSection {
@@ -160,6 +160,7 @@ type AddactBlogsResponse = {
 export async function getAllBlogs(): Promise<AddactBlogsResponse> {
     const pageSize = 50;
     let page = 1;
+    const sort = ["id:desc"];
     const allBlogs: AddactBlogsResponse["addactBlogs"] = [];
     let blogMeta: Omit<AddactBlogsResponse, "addactBlogs"> | null = null;
 
@@ -167,6 +168,7 @@ export async function getAllBlogs(): Promise<AddactBlogsResponse> {
         const data = await client.request<AddactBlogsResponse>(GET_ALL_BLOGS, {
             page,
             pageSize,
+            sort,
         });
 
         if (page === 1) {
