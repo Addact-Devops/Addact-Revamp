@@ -142,12 +142,13 @@ export default function Footer({ data }: FooterProps) {
                         {/* Logo and Slogan */}
                         <div className='col-span-12 lg:col-span-3 flex flex-col justify-start'>
                             {Logo?.Image?.url && (
-                                <Image
-                                    src={Logo.Image.url}
-                                    alt={Logo.Image.alternativeText || ""}
-                                    width={380}
-                                    height={47}
-                                    className='
+                                <Link href='/' className='cursor-pointer'>
+                                    <Image
+                                        src={Logo.Image.url}
+                                        alt={Logo.Image.alternativeText || ""}
+                                        width={380}
+                                        height={47}
+                                        className='
                                     mb-[10px]
                                     sm:mb-[15px]
                                     lg:mb-[20px]
@@ -156,8 +157,9 @@ export default function Footer({ data }: FooterProps) {
                                     lg:w-[200px]
                                     xl:w-[320px]
                                     2xl:w-[380px] 2xl:h-[47px]
-                                '
-                                />
+                                    '
+                                    />
+                                </Link>
                             )}
                             {SiteSlog && (
                                 <p
