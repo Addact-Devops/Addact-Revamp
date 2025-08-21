@@ -1,6 +1,7 @@
-// import { google } from "googleapis";
 import { NextRequest, NextResponse } from "next/server";
+import { google } from "googleapis";
 import nodemailer from "nodemailer";
+import { formatDateTime } from "@/utils/dateFormatter";
 
 export const config = {
     api: {
@@ -10,15 +11,12 @@ export const config = {
 
 export async function POST(req: NextRequest) {
     try {
-        // const body = await req.json();
-        // const { name, email, phone, sheetName, RecipientEmails, hyperlink, pageTitle } = body;
-
         const formData = await req.formData();
         const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const phone = formData.get("phone") as string;
         const hyperlink = formData.get("hyperlink") as string;
-        // const sheetName = formData.get("sheetName") as string;
+        const sheetName = formData.get("sheetName") as string;
         const RecipientEmails = formData.get("RecipientEmails") as string;
         const pageTitle = formData.get("pageTitle") as string;
 
@@ -26,8 +24,8 @@ export async function POST(req: NextRequest) {
 
         const arrayBuffer = file ? await file.arrayBuffer() : null;
 
-        // const ip =
-        //     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
+        const ip =
+            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
 
         const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
         const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
@@ -41,23 +39,24 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
         }
 
-        // const auth = new google.auth.JWT({
-        //     email: clientEmail,
-        //     key: privateKey,
-        //     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-        // });
+        const auth = new google.auth.JWT({
+            email: clientEmail,
+            key: privateKey,
+            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+        });
 
-        // const sheets = google.sheets({ version: "v4", auth });
+        const sheets = google.sheets({ version: "v4", auth });
 
-        // await sheets.spreadsheets.values.append({
-        //     spreadsheetId,
-        //     range: sheetName,
-        //     valueInputOption: "RAW",
-        //     insertDataOption: "INSERT_ROWS",
-        //     requestBody: {
-        //         values: [[name, email, phone, hyperlink, pageTitle, new Date().toISOString(), ip]],
-        //     },
-        // });
+        const now = new Date();
+        await sheets.spreadsheets.values.append({
+            spreadsheetId,
+            range: sheetName,
+            valueInputOption: "RAW",
+            insertDataOption: "INSERT_ROWS",
+            requestBody: {
+                values: [[name, email, , , phone, hyperlink, pageTitle, formatDateTime(now), ip]],
+            },
+        });
 
         // Send Email
         const transporter = nodemailer.createTransport({
@@ -79,24 +78,65 @@ export async function POST(req: NextRequest) {
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
             to: recipientList,
-            subject: `New Application Submission from ${name} `,
+            subject: `Addact - Business Inquiry ${name} `,
             html: `
-                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                    <h2 style="color: #1470af;">New Application Received for ${pageTitle}</h2>
-                    <p><strong>Candidate Details:</strong></p>
-                    <ul>
-                        <li><strong>Name:</strong> ${name}</li>
-                        <li><strong>Email:</strong> ${email}</li>
-                        <li><strong>Phone:</strong> ${phone}</li>
-                        <li><strong>Portfolio / Hyperlink:</strong> ${hyperlink || "N/A"}</li>
-                        <li><strong>Applied for:</strong> ${pageTitle}</li>
-                        <li><strong>Submitted At:</strong> ${new Date().toLocaleString("en-IN", {
-                            timeZone: "Asia/Kolkata",
-                        })}</li>
-                    </ul>
-                    <p style="margin-top: 20px;">Resume attached below if provided.</p>
-                </div>
-            `,
+           <html>
+                <head>
+                    <title>Addact - Thank You for Your Submission.</title>
+                    <style>
+                        table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        background-color: #F6F7FF;
+                        }
+                        th {
+                        border-right: 1px solid #0000001a;
+                        text-align: left;
+                        }
+                        th, td {
+                        padding: 15px;
+                        }
+                        td {
+                        text-align: left;
+                        }
+                        img{
+                        width: 100%;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
+                        <h2 style="color: #1470af; margin-top: 0;">New Application Received for ${pageTitle}</h2>
+                        <p style="font-size: 14px; margin-bottom: 10px;"><strong>Candidate Details:</strong></p>
+                        <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%; font-size: 14px;">
+                            <tr>
+                                <th align="left" style="background: #f5f5f5; width: 30%;">Name</th>
+                                <td>${name}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Email</th>
+                                <td>${email}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Phone</th>
+                                <td>${phone}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Portfolio / Hyperlink</th>
+                                <td>${hyperlink || "N/A"}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Applied For</th>
+                                <td>${pageTitle}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Submitted At</th>
+                                <td>${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </body>
+            </html>`,
             attachments:
                 file && arrayBuffer
                     ? [
@@ -112,13 +152,70 @@ export async function POST(req: NextRequest) {
             to: email,
             subject: "Thanks for Your Submission!",
             html: `
-    <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-      <h2 style="color: #1470af;">Thank you, ${name}!</h2>
-      <p>We’ve received your application. Our team will review it and get back to you soon.</p>
-      <p>Meanwhile, feel free to explore more about us at <a href="https://addact.net" target="_blank">Addact Technologies</a>.</p>
-      <p style="margin-top: 30px; font-size: 12px; color: #888;">© ${new Date().getFullYear()} Addact Technologies. All rights reserved.</p>
-    </div>
-  `,
+                <html>
+                    <head>
+                        <title>Addact - Thank You for Your Submission.</title>
+                        <style>
+                            table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            background-color: #F6F7FF;
+                            }
+                            th {
+                            border-right: 1px solid #0000001a;
+                            text-align: left;
+                            }
+                            th, td {
+                            padding: 15px;
+                            }
+                            td {
+                            text-align: left;
+                            }
+                            img{
+                            width: 100%;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
+                            <img src="https://dfr7gdtg8j0s1.cloudfront.net/src/images/email-banner.png" alt="email-banner"/>                
+                            <p style="margin-top: 40px;">Dear ${name},</p>
+                            <p>We have received your message and will get back to you shortly.</p>
+                            <p>Here is the information you submitted:</p>
+                            <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%;">
+                                <tr>
+                                    <th align="left">Name</th>
+                                    <td>${name}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Email</th>
+                                    <td>${email}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Phone</th>
+                                    <td>${phone}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Portfolio / Hyperlink</th>
+                                    <td>${hyperlink || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Applied for</th>
+                                    <td>${pageTitle}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Submitted At</th>
+                                    <td>${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <span>Regards,</span>
+                            <br/>
+                            <span>Team Addact Technologies</span>
+                        </div>
+                    </body>
+                </html>
+            `,
         });
 
         return NextResponse.json({ message: "Success" });
