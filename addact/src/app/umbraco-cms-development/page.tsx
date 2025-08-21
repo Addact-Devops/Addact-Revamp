@@ -15,7 +15,7 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 import ContactUs from "@/components/organisms/ContactUs";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/umbraco");
+    return generatePageMetadata("serviceLists", "/umbraco-cms-development");
 }
 export default async function umbracoPage() {
     const service = "umbraco-cms-development";

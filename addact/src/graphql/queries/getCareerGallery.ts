@@ -19,7 +19,7 @@ const query = gql`
             }
         }
 
-        galleryCategories {
+        galleryCategories(pagination: { limit: -1 }) {
             Name
             Images(pagination: { limit: -1 }) {
                 Image {
