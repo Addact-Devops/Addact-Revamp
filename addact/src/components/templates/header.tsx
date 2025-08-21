@@ -60,7 +60,7 @@ const Header = ({ headers }: HeaderProps) => {
                         <Image
                             src={headerData?.HeaderLogo?.url}
                             alt={headerData?.HeaderLogo?.alternativeText || "Company Logo"}
-                            className="w-[100px] h-[13px] lg:w-[160px] lg:h-[20px] xl:w-[220px] xl:h-[27px]"
+                            className="w-[130px] h-[16px] lg:w-[160px] lg:h-[20px] xl:w-[220px] xl:h-[27px]"
                             width={headerData?.HeaderLogo?.width}
                             height={headerData?.HeaderLogo?.height}
                         />
@@ -177,7 +177,7 @@ const Header = ({ headers }: HeaderProps) => {
                     <Link
                         href={headerData?.contact_us[0]?.href}
                         target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
-                        className="bg-[#3C4CFF] mr- px-[12px] py-[3px] rounded-[6px] text-white font-[600] text-[12px] hover:bg-[#3440CB]"
+                        className="bg-[#3C4CFF] px-[15px] py-[3px] rounded-[6px] text-white font-[600] text-[14px] hover:bg-[#3440CB]"
                     >
                         {headerData?.contact_us[0]?.label}
                     </Link>
@@ -196,7 +196,7 @@ const Header = ({ headers }: HeaderProps) => {
                             <Image
                                 src={headerData?.HeaderLogo?.url}
                                 alt={headerData?.HeaderLogo?.alternativeText || "Company Logo"}
-                                width={100}
+                                width={130}
                                 height={30}
                             />
                         </Link>
@@ -204,7 +204,7 @@ const Header = ({ headers }: HeaderProps) => {
                             <Link
                                 href={headerData?.contact_us[0]?.href}
                                 target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
-                                className="bg-[#3C4CFF] mr- px-[12px] py-[3px] rounded-[6px] text-white font-[600] text-[12px]"
+                                className="bg-[#3C4CFF] px-[15px] py-[3px] rounded-[6px] text-white font-[600] text-[14px] hover:bg-[#3440CB]"
                             >
                                 {headerData?.contact_us[0]?.label}
                             </Link>
@@ -247,11 +247,11 @@ const Header = ({ headers }: HeaderProps) => {
                                                                     alt={child.Icon.alternativeText}
                                                                     width={child.Icon.width || 20}
                                                                     height={child.Icon.height || 20}
-                                                                    className="w-[40px] h-[40px] mt-1"
+                                                                    className="w-[40px] h-[40px]"
                                                                 />
                                                             )}
                                                             <div className="flex flex-col">
-                                                                <span className="font-medium text-[14px]md:text-[18px]">
+                                                                <span className="font-medium text-[16px] md:text-[18px]">
                                                                     {child.label}
                                                                 </span>
                                                                 {/* {child.SubDisc && (

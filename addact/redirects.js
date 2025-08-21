@@ -1496,52 +1496,52 @@ module.exports = [
   },
   {
     "source": "/services/sitecore-module-development",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/services/sitecore-content-hub-development",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/services/sitecore-cdp",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/services/sitecore-send",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/services/sitecore-cmp-and-mrm",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/ordercloud",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/services/sitecore-discover",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/services/sitecore-devops-azure-aws",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/ui-ux-sitecore-sxa",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/sitecore-digital-marketing",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
@@ -1551,7 +1551,7 @@ module.exports = [
   },
   {
     "source": "/b2b-technology-partner",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
@@ -1571,37 +1571,32 @@ module.exports = [
   },
   {
     "source": "/business-development-manager-hire",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/business-development-lead-generator-specialist-hire",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/content-writer",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/sitecore-developer",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/dot-net-developer",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
     "source": "/umbracoco-developer",
-    "destination": "/ ",
-    "permanent": true
-  },
-  {
-    "source": "/terms-of-use",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {
@@ -1611,7 +1606,7 @@ module.exports = [
   },
   {
     "source": "/fresher-software-developer-dot-net",
-    "destination": "/ ",
+    "destination": "/",
     "permanent": true
   },
   {

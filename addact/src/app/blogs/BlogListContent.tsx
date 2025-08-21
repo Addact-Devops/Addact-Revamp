@@ -150,7 +150,7 @@ export default function BlogListContent({}: Props) {
                         const rawCategory =
                             banner.blogcategory?.Category?.CategoryTitle || blog.blog_category?.Category?.CategoryTitle;
 
-                        const author = typeof rawAuthor === "string" ? rawAuthor.trim() : "Addxp Technologies";
+                        const author = typeof rawAuthor === "string" ? rawAuthor.trim() : "Addact Technologies";
                         const category = typeof rawCategory === "string" ? rawCategory.trim() : "General";
 
                         return (
