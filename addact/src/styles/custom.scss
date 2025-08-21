@@ -247,3 +247,40 @@ footer {
         }
     }
 }
+
+.blogitem-h {
+    height: 320px;
+
+    @media (max-width: 1535px) {
+        height: 255px;
+    }
+
+    @media (max-width: 1260px) {
+        height: 220px;
+    }
+
+    @media (max-width: 1120px) {
+        height: 200px;
+    }
+
+    @media (max-width: 1080px) {
+        height: 150px;
+    }
+
+    @media (max-width: 767px) {
+        height: 195px;
+
+        img {
+            height: 100% !important;
+            width: 100% !important;
+        }
+    }
+}
+
+.blogdetail-wrapper {
+    .blogdetail-container {
+        @media (min-width: 1000px) and (max-width: 1400px) {
+            padding: 0 50px;
+        }
+    }
+}
