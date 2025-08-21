@@ -62,7 +62,7 @@ export default function CareerPositions({ positions, positionsTitle }: Props) {
     };
 
     return (
-        <section className="container my-[60px] md:my-[60px]" id="open-positions">
+        <section className="container my-[60px] xl:my-[100px] 2xl:my-[200px]" id="open-positions">
             {/* Title Section */}
             <div className="mb-[26px] md:mb-[60px]">
                 {positionsTitle?.map((item, index) => (

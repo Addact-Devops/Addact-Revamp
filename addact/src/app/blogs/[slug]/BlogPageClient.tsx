@@ -30,7 +30,7 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
             {/* ✅ Blog Banner */}
             {blog?.BlogBanner?.[0] && <BlogDetailBanner banner={blog.BlogBanner[0]} />}
 
-            <div className="container !mt-[70px] !mb-[70px]">
+            <div className="container !mt-[70px] !mb-[70px] blogdetail-container">
                 <div className="flex gap-[100px] max-[1400px]:gap-[50px] relative">
                     <div className="w-[70%] max-[1300px]:w-[64%] max-[1200px]:w-[62%] max-[1120px]:w-[60%] max-[1101px]:w-[100%]">
                         {/* ✅ Blog Content */}
@@ -58,7 +58,7 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
 
             {/* ✅ Fixed Social Icons (Desktop only) */}
             {Array.isArray(blog?.socialicons) && blog.socialicons.length > 0 && windowWidth >= 992 && (
-                <div className="flex flex-col gap-[15px] fixed top-1/2 left-[5px] 2xl:left-[5%] -translate-y-1/2 z-[3]">
+                <div className="flex flex-col gap-[15px] fixed top-1/2 left-[5px] 2xl:left-[1%] -translate-y-1/2 z-[3]">
                     {blog.socialicons.flatMap((item, i: number) => {
                         const icons = item?.SocialIcon ?? [];
 

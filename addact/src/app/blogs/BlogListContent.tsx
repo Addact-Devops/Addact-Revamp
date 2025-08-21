@@ -121,7 +121,7 @@ export default function BlogListContent({}: Props) {
             />
 
             <div className="container">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
                     {currentBlogs.length === 0 && (
                         <p className="text-white !text-[35px] font-semibold col-span-full text-center">
                             {searchText.trim()
@@ -157,7 +157,7 @@ export default function BlogListContent({}: Props) {
                             <Link key={blog.Slug} href={blogLink} className="group">
                                 <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
                                     {imageUrl && (
-                                        <div className="relative h-[350px] rounded-xl overflow-hidden mb-4">
+                                        <div className="relative blogitem-h rounded-xl overflow-hidden mb-4">
                                             <Image
                                                 src={imageUrl}
                                                 alt={
@@ -176,7 +176,7 @@ export default function BlogListContent({}: Props) {
                                         {category}
                                     </div>
 
-                                    <h2 className="text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]">
+                                    <h2 className="text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[25px] [@media(max-width:1299px)]:!leading-[34px]">
                                         {title}
                                     </h2>
 
