@@ -15,7 +15,7 @@ import ContactUs from "@/components/organisms/ContactUs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/contentful");
+    return generatePageMetadata("serviceLists", "/contentful-cms-development");
 }
 
 export default async function ContentfulPage() {

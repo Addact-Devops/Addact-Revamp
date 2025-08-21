@@ -12,7 +12,7 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/strapi");
+    return generatePageMetadata("serviceLists", "/strapi-cms-development");
 }
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
