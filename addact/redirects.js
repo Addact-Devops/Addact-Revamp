@@ -1618,5 +1618,10 @@ module.exports = [
     "source": "/work",
     "destination": "/portfolio",
     "permanent": true
+  },
+  {
+    "source": "/addact-next-chapter-reveal",
+    "destination": "/blogs/addact-next-chapter-reveal",
+    "permanent": true
   }
 ];
