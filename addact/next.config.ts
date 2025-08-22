@@ -24,7 +24,20 @@ const nextConfig = {
                     },
                     {
                         key: "Content-Security-Policy",
-                        value: "default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:; frame-ancestors 'none';",
+                        value: `default-src 'self';
+                                script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com;
+                                style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+                                font-src 'self' https://fonts.gstatic.com;
+                                img-src 'self' data: https:;
+                                connect-src 'self' https://www.google-analytics.com https://api.example.com;
+                                frame-src 'self' https://www.youtube.com https://player.vimeo.com;
+                                object-src 'none';
+                                base-uri 'self';
+                                form-action 'self';
+                                frame-ancestors 'none';
+                                upgrade-insecure-requests;`
+                            .replace(/\s{2,}/g, " ")
+                            .trim(),
                     },
                     {
                         key: "X-Frame-Options",
