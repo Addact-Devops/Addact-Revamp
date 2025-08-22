@@ -144,7 +144,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                         backgroundImage: `url(${data.careers_form.LeftInsights.Image.url})`,
                                     }}
                                 >
-                                    <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !text-white !font-semibold leading-tight mb-6">
+                                    <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[50px] !text-white !font-semibold leading-tight mb-6">
                                         {data.careers_form.LeftInsights.Title}
                                     </h2>
                                     <div

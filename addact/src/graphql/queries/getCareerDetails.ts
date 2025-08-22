@@ -116,6 +116,9 @@ const GET_CAREER_DETAIL = gql`
                     RecipientEmails
                     ButtonLabel
                 }
+                fieldName {
+                    Title
+                }
             }
 
             # ✅ Added SEO fields exactly as per your requirement
@@ -177,6 +180,12 @@ export interface CareerDetailResponse {
                 RecipientEmails: string;
                 ButtonLabel: string;
             };
+
+            fieldName: [
+                {
+                    Title: string;
+                }
+            ];
         };
 
         SEO: {
