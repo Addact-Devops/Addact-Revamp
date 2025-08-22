@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
                     </head>
                     <body>
                         <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                            <img src="https://dfr7gdtg8j0s1.cloudfront.net/src/images/email-banner.png" alt="email-banner"/>                
+                            <img src="https://d3l7d9gtq0bnch.cloudfront.net/Thank_You_Addact_6f33411529.jpg" alt="email-banner"/>                
                             <h2 style="color: #1470af;">Dear ${name}!</h2>
                             <p>We have received your message and will get back to you shortly.</p>
                             <p>Here is the information you submitted:</p>
