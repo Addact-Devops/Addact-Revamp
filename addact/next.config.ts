@@ -25,33 +25,47 @@ const nextConfig = {
                     {
                         key: "Content-Security-Policy",
                         value: `
-      default-src 'self';
-  script-src 'self' 'unsafe-inline'
-    https://www.googletagmanager.com
-    https://www.google-analytics.com
-    https://www.google.com
-    https://www.gstatic.com
-    https://code.tidio.co;
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: https: https://cms.addct.net https://cms.addct.net/graphql;
-  font-src 'self' https://fonts.gstatic.com https://code.tidio.co;
-  connect-src 'self'
-    https://cms.addact.net
-    https://www.google.com
-    https://www.gstatic.com
-    https://www.google-analytics.com
-    https://www.googletagmanager.com;
-  media-src 'self' https://cms.addct.net https://cms.addct.net/graphql https://www.google.com https://www.gstatic.com https://d3l7d9gtq0bnch.cloudfront.net;
-  frame-src 'self'
-    https://www.google.com
-    https://www.gstatic.com
-    https://www.googletagmanager.com;
-  object-src 'none';
-  base-uri 'self';
-  form-action 'self';
-  frame-ancestors 'none';
-  upgrade-insecure-requests;
-`
+    default-src 'self';
+    script-src 'self' 'unsafe-inline'
+      https://www.googletagmanager.com
+      https://www.google-analytics.com
+      https://www.google.com
+      https://www.gstatic.com
+      https://code.tidio.co
+      https://www.clarity.ms;
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    img-src 'self' data: https:
+      https://cms.addact.net
+      https://cms.addact.net/graphql;
+    font-src 'self' https://fonts.gstatic.com https://code.tidio.co;
+    connect-src 'self'
+      https://cms.addact.net
+      https://www.google.com
+      https://www.gstatic.com
+      https://www.google-analytics.com
+      https://analytics.google.com
+      https://region1.google-analytics.com
+      https://stats.g.doubleclick.net
+      https://code.tidio.co
+      https://www.clarity.ms;
+    media-src 'self'
+      https://cms.addact.net
+      https://cms.addact.net/graphql
+      https://www.google.com
+      https://www.gstatic.com
+      https://d3l7d9gtq0bnch.cloudfront.net
+      https://code.tidio.co;
+    frame-src 'self'
+      https://www.google.com
+      https://www.gstatic.com
+      https://www.googletagmanager.com
+      https://code.tidio.co;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+    frame-ancestors 'none';
+    upgrade-insecure-requests;
+  `
                             .replace(/\s{2,}/g, " ")
                             .trim(),
                     },
