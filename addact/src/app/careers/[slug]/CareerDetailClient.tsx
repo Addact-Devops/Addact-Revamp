@@ -7,7 +7,6 @@ import { CareerDetailResponse } from "@/graphql/queries/getCareerDetails";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../../styles/components/caseStudy-detail.scss";
 import HeroBanner from "@/components/organisms/HeroBanner";
-import Loader from "@/components/atom/loader";
 import { CareerFormState, CareerFormErrors, validateCareerForm } from "@/utils/validateCareerForm";
 
 interface CareerDetailClientProps {
@@ -371,7 +370,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                         disabled={formLoading || !captchaToken}
                                         className='bg-[#3C4CFF] text-white px-6 py-2 rounded-md hover:bg-[#3440CB] shadow-sm mt-4 disabled:!cursor-not-allowed disabled:opacity-50 transition-all duration-200'
                                     >
-                                        {formLoading ? <Loader /> : data.careers_form.FormFields.ButtonLabel}
+                                        {formLoading ? "Submitting..." : data.careers_form.FormFields.ButtonLabel}
                                     </button>
                                 </form>
                             </div>
