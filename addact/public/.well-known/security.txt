@@ -1,0 +1,4 @@
+Contact: mailto:info@addact.net
+Preferred-Languages: en
+Canonical: https://addact.net/.well-known/security.txt
+Policy: https://addact.net/privacy-policy
