@@ -40,8 +40,7 @@ const nextConfig = {
               https://region1.google-analytics.com
               https://stats.g.doubleclick.net
               https://code.tidio.co
-              https://www.clarity.ms
-              https://scripts.clarity.ms
+              https://*.clarity.ms
               wss://socket.tidio.co;
             media-src 'self'
               https://cms.addact.net
