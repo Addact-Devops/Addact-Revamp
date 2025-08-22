@@ -26,9 +26,20 @@ const nextConfig = {
               https://www.google.com
               https://www.gstatic.com
               https://code.tidio.co
-              https://www.clarity.ms
-              https://scripts.clarity.ms;
+              https://scripts.clarity.ms
+              https://www.clarity.ms;
+            script-src-elem 'self' 'unsafe-inline'
+              https://www.googletagmanager.com
+              https://www.google-analytics.com
+              https://www.google.com
+              https://www.gstatic.com
+              https://code.tidio.co
+              https://scripts.clarity.ms
+              https://www.clarity.ms;
+            script-src-attr 'self' 'unsafe-inline';
             style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+            style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;
+            style-src-attr 'self' 'unsafe-inline';
             img-src 'self' data: https:;
             font-src 'self' https://fonts.gstatic.com https://code.tidio.co;
             connect-src 'self'
@@ -41,7 +52,8 @@ const nextConfig = {
               https://stats.g.doubleclick.net
               https://code.tidio.co
               https://*.clarity.ms
-              wss://socket.tidio.co;
+              wss://socket.tidio.co
+              wss:;
             media-src 'self'
               https://cms.addact.net
               https://d3l7d9gtq0bnch.cloudfront.net
@@ -61,7 +73,6 @@ const nextConfig = {
                             .trim(),
                     },
                     { key: "X-Frame-Options", value: "DENY" },
-                    { key: "X-XSS-Protection", value: "1; mode=block" },
                 ],
             },
         ];
