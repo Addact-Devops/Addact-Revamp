@@ -181,11 +181,9 @@ export interface CareerDetailResponse {
                 ButtonLabel: string;
             };
 
-            fieldName: [
-                {
-                    Title: string;
-                }
-            ];
+            fieldName: {
+                Title: string;
+            }[];
         };
 
         SEO: {
