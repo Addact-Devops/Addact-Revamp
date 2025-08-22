@@ -24,7 +24,35 @@ const nextConfig = {
                     },
                     {
                         key: "Content-Security-Policy",
-                        value: "default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:; frame-ancestors 'none';",
+                        value: `
+      default-src 'self';
+      script-src 'self' 'unsafe-inline'
+        https://www.googletagmanager.com
+        https://www.google-analytics.com
+        https://www.google.com
+        https://www.gstatic.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      img-src 'self' data: https: https://cms.addct.net;
+      font-src 'self' https://fonts.gstatic.com;
+      connect-src 'self'
+        https://cms.addct.net
+        https://www.google.com
+        https://www.gstatic.com
+        https://www.google-analytics.com
+        https://www.googletagmanager.com;
+      media-src 'self' https://cms.addct.net https://www.google.com https://www.gstatic.com;
+      frame-src 'self'
+        https://www.google.com
+        https://www.gstatic.com
+        https://www.googletagmanager.com;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      frame-ancestors 'none';
+      upgrade-insecure-requests;
+    `
+                            .replace(/\s{2,}/g, " ")
+                            .trim(),
                     },
                     {
                         key: "X-Frame-Options",
