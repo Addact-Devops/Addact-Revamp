@@ -70,6 +70,7 @@
 
     h2 {
         margin-bottom: 50px;
+        font-size: pxToRem(44);
 
         &:not(:first-child) {
             margin-top: 50px;
