@@ -46,7 +46,6 @@ const Header = ({ headers }: HeaderProps) => {
     }, [openDropdown]);
 
     useEffect(() => {
-        // This runs whenever the route/path changes
         setOpenDropdown(null);
         setOpenMobileDropdown(null);
         setMobileMenuOpen(false);
@@ -187,6 +186,24 @@ const Header = ({ headers }: HeaderProps) => {
                 </div>
             </div>
 
+            {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
+            {pathname !== "/project-cost-estimators" && (
+                <div className="bg-[#3C4CFF]">
+                    <div className="container text-white justify-center items-center py-2 lg:py-3 hidden md:flex">
+                        <span className="text-[16px] 2xl:text-[20px] font-[400]">
+                            Need An Accurate Estimate For Your Sitecore XM Cloud Migration Project? Kickstart Your
+                            Journey Here!
+                        </span>
+                        <Link
+                            href="/project-cost-estimators"
+                            className="ml-[24px] hover:bg-white text-white px-[20px] py-[12px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-[250px] xl:w-auto text-center"
+                        >
+                            Get My Estimation
+                        </Link>
+                    </div>
+                </div>
+            )}
+
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div className="lg:hidden fixed inset-0 z-50 bg-black text-white overflow-auto">
@@ -254,11 +271,6 @@ const Header = ({ headers }: HeaderProps) => {
                                                                 <span className="font-medium text-[16px] md:text-[18px]">
                                                                     {child.label}
                                                                 </span>
-                                                                {/* {child.SubDisc && (
-                                                                    <span className="text-xs text-gray-400 mt-1">
-                                                                        {child.SubDisc}
-                                                                    </span>
-                                                                )} */}
                                                             </div>
                                                         </div>
                                                     </Link>

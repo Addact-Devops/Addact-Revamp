@@ -20,7 +20,7 @@ const nextConfig = {
                         key: "Content-Security-Policy",
                         value: `
             default-src 'self';
-            script-src 'self' 'unsafe-inline'
+            script-src 'self' 'unsafe-inline' 'unsafe-eval'
               https://www.googletagmanager.com
               https://www.google-analytics.com
               https://www.google.com
@@ -28,7 +28,7 @@ const nextConfig = {
               https://code.tidio.co
               https://scripts.clarity.ms
               https://www.clarity.ms;
-            script-src-elem 'self' 'unsafe-inline'
+            script-src-elem 'self' 'unsafe-inline' 'unsafe-eval'
               https://www.googletagmanager.com
               https://www.google-analytics.com
               https://www.google.com

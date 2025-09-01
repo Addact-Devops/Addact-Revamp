@@ -88,7 +88,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Script
                     id="tidio"
                     src="https://code.tidio.co/alwcrztooa3ur96b7luzlflxidei5qnd.js"
-                    strategy="beforeInteractive"
+                    strategy="afterInteractive"
                 />
             </body>
         </html>
