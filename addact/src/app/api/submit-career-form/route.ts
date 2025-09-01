@@ -15,6 +15,12 @@ export async function POST(req: NextRequest) {
         const name = formData.get("name") as string;
         const email = formData.get("email") as string;
         const phone = formData.get("phone") as string;
+        const currentCTC = formData.get("currentCTC") as string;
+        const expectedCTC = formData.get("expectedCTC") as string;
+        const experience = formData.get("experience") as string;
+        const cityName = formData.get("cityName") as string;
+        const linkedInProfile = formData.get("linkedInProfile") as string;
+        const remarks = formData.get("remarks") as string;
         const hyperlink = formData.get("hyperlink") as string;
         const sheetName = formData.get("sheetName") as string;
         const RecipientEmails = formData.get("RecipientEmails") as string;
@@ -54,7 +60,23 @@ export async function POST(req: NextRequest) {
             valueInputOption: "RAW",
             insertDataOption: "INSERT_ROWS",
             requestBody: {
-                values: [[name, email, , hyperlink, phone, pageTitle, formatDateTime(now), ip]],
+                values: [
+                    [
+                        name,
+                        email,
+                        phone,
+                        currentCTC,
+                        expectedCTC,
+                        experience,
+                        cityName,
+                        linkedInProfile,
+                        hyperlink,
+                        remarks,
+                        pageTitle,
+                        formatDateTime(now),
+                        ip,
+                    ],
+                ],
             },
         });
 
@@ -78,7 +100,7 @@ export async function POST(req: NextRequest) {
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
             to: recipientList,
-            subject: `Addact - Business Inquiry ${name} `,
+            subject: `Application for ${pageTitle} `,
             html: `
            <html>
                 <head>
@@ -122,7 +144,31 @@ export async function POST(req: NextRequest) {
                                 <td>${phone}</td>
                             </tr>
                             <tr>
-                                <th align="left" style="background: #f5f5f5;">Portfolio / Hyperlink</th>
+                                <th align="left" style="background: #f5f5f5;">Current CTC</th>
+                                <td>${currentCTC}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Expected CTC</th>
+                                <td>${expectedCTC}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Experience</th>
+                                <td>${experience}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">City</th>
+                                <td>${cityName}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">LinkedIn Profile</th>
+                                <td>${linkedInProfile || "N/A"}</td>
+                            </tr>
+                            <tr>
+                                <th align="left" style="background: #f5f5f5;">Remarks</th>
+                                <td>${remarks || "N/A"}</td>
+                            </tr>
+                            <tr>
+                                <th align="left">Portfolio Link</th>
                                 <td>${hyperlink || "N/A"}</td>
                             </tr>
                             <tr>
@@ -131,7 +177,7 @@ export async function POST(req: NextRequest) {
                             </tr>
                             <tr>
                                 <th align="left" style="background: #f5f5f5;">Submitted At</th>
-                                <td>${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
+                                <td>${formatDateTime(new Date())}</td>
                             </tr>
                         </table>
                     </div>
@@ -154,7 +200,7 @@ export async function POST(req: NextRequest) {
             html: `
                 <html>
                     <head>
-                        <title>Addact - Thank You for Your Submission.</title>
+                        <title>Addact - Career Form Submission.</title>
                         <style>
                             table {
                             width: 100%;
@@ -178,7 +224,7 @@ export async function POST(req: NextRequest) {
                     </head>
                     <body>
                         <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                            <img src="https://dfr7gdtg8j0s1.cloudfront.net/src/images/email-banner.png" alt="email-banner"/>                
+                            <img src="https://d3l7d9gtq0bnch.cloudfront.net/Thank_You_Addact_6f33411529.jpg" alt="email-banner"/>                
                             <p style="margin-top: 40px;">Dear ${name},</p>
                             <p>We have received your message and will get back to you shortly.</p>
                             <p>Here is the information you submitted:</p>
@@ -196,16 +242,36 @@ export async function POST(req: NextRequest) {
                                     <td>${phone}</td>
                                 </tr>
                                 <tr>
-                                    <th align="left">Portfolio / Hyperlink</th>
+                                    <th align="left" style="background: #f5f5f5;">Current CTC</th>
+                                    <td>${currentCTC}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left" style="background: #f5f5f5;">Expected CTC</th>
+                                    <td>${expectedCTC}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left" style="background: #f5f5f5;">Experience</th>
+                                    <td>${experience}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left" style="background: #f5f5f5;">City</th>
+                                    <td>${cityName}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left" style="background: #f5f5f5;">LinkedIn Profile</th>
+                                    <td>${linkedInProfile || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left" style="background: #f5f5f5;">Remarks</th>
+                                    <td>${remarks || "N/A"}</td>
+                                </tr>
+                                <tr>
+                                    <th align="left">Portfolio Link</th>
                                     <td>${hyperlink || "N/A"}</td>
                                 </tr>
                                 <tr>
-                                    <th align="left">Applied for</th>
-                                    <td>${pageTitle}</td>
-                                </tr>
-                                <tr>
                                     <th align="left">Submitted At</th>
-                                    <td>${new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}</td>
+                                    <td>${formatDateTime(new Date())}</td>
                                 </tr>
                             </table>
                             <br/>
