@@ -686,11 +686,11 @@ const CostEstimatorForm = () => {
             { label: "Migration Timeline", value: timelineOptions[timelineIndex] },
         ];
 
-        let ipData: any = {};
+        let ipData: Record<string, unknown> = {};
         try {
             const ipRes = await fetch("https://ipapi.co/json/");
             ipData = await ipRes.json();
-        } catch (err) {
+        } catch (err: unknown) {
             console.error("IP lookup failed", err);
         }
 
@@ -713,7 +713,7 @@ const CostEstimatorForm = () => {
             } else {
                 alert("❌ Failed to send email: " + (result.error || "Unknown error"));
             }
-        } catch (err) {
+        } catch {
             alert("❌ Something went wrong!");
         } finally {
             setIsSubmitting(false); // 🔹 Stop loading
@@ -752,7 +752,7 @@ const CostEstimatorForm = () => {
             } else {
                 alert("❌ Failed to send email: " + (result.error || "Unknown error"));
             }
-        } catch (err) {
+        } catch {
             alert("❌ Something went wrong!");
         } finally {
             setIsExpertSubmitting(false);
