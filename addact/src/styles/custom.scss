@@ -284,3 +284,68 @@ footer {
         }
     }
 }
+
+.title-head {
+    p {
+        font-size: pxToRem(78);
+        line-height: lineHeightRatio(100, 78);
+
+        @media (max-width: 1535px) {
+            font-size: pxToRem(50);
+            line-height: lineHeightRatio(70, 50);
+        }
+
+        @media (max-width: 1279px) {
+            font-size: pxToRem(45);
+            line-height: lineHeightRatio(55, 45);
+        }
+
+        @media (max-width: 767px) {
+            font-size: pxToRem(33);
+            line-height: lineHeightRatio(55, 33);
+        }
+    }
+}
+
+.subtext {
+    p {
+        font-size: pxToRem(22);
+        line-height: lineHeightRatio(40, 22);
+        color: $primary-color;
+
+        @media (max-width: 1279px) {
+            font-size: pxToRem(18);
+            line-height: lineHeightRatio(26, 18);
+        }
+    }
+}
+
+@keyframes draw {
+    from {
+        stroke-dasharray: 0, 200;
+        stroke-dashoffset: 0;
+    }
+    to {
+        stroke-dasharray: 200, 200;
+        stroke-dashoffset: 0;
+    }
+}
+
+.animate-draw {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: draw 8s ease forwards;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fadein {
+    animation: fadein 4s ease forwards;
+}
