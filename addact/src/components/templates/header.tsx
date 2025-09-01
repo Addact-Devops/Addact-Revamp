@@ -53,7 +53,7 @@ const Header = ({ headers }: HeaderProps) => {
 
     return (
         <header className="fixed top-0 w-full z-50 bg-[#0F0F0F]">
-            <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0">
+            <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative">
                 <Link href="/">
                     {headerData?.HeaderLogo?.url ? (
                         <Image
