@@ -122,7 +122,7 @@ export const fetchSinglePage = async <T extends string>(type: T, slug?: string):
         const rawData = response[type];
         const data: PageData = Array.isArray(rawData) ? rawData[0] || {} : rawData;
 
-        console.log("✅ [SINGLE] Fetched SEO:", data);
+        // console.log("✅ [SINGLE] Fetched SEO:", data);
         return data;
     } catch (error) {
         console.error("❌ Error fetching page data:", error);
