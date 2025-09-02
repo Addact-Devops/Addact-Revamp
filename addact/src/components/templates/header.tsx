@@ -23,7 +23,10 @@ const Header = ({ headers }: HeaderProps) => {
         pathname.startsWith("/sitecore-cms-development/") ||
         (lowerPath.startsWith("/blogs") && lowerPath.includes("sitecore")) ||
         (lowerPath.startsWith("/portfolio") && lowerPath.includes("sitecore")) ||
-        (lowerPath.startsWith("/events") && lowerPath.includes("sitecore"));
+        (lowerPath.startsWith("/events") && lowerPath.includes("sitecore")) ||
+        (lowerPath.startsWith("/press-releases") && lowerPath.includes("sitecore")) || // ✅ new generic rule
+        lowerPath === "/blogs/switch-on-rebuild-index-on-docker" ||
+        lowerPath.startsWith("/sitecore");
 
     const handleDropdownToggle = (title: string) => {
         setOpenDropdown((prev) => (prev === title ? null : title));
@@ -196,7 +199,7 @@ const Header = ({ headers }: HeaderProps) => {
 
             {showBanner && (
                 <div className="bg-[#3C4CFF]">
-                    <div className="container text-white justify-center items-center py-2 lg:py-3 hidden lg:flex">
+                    <div className="container text-white justify-center items-center py-2 lg:py-3 hidden md:flex">
                         <span className="text-[16px] 2xl:text-[20px] font-[400]">
                             Need An Accurate Estimate For Your Sitecore XM Cloud Migration Project? Kickstart Your
                             Journey Here!
