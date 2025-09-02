@@ -62,7 +62,9 @@ const nextConfig = {
               https://www.google.com
               https://www.gstatic.com
               https://www.googletagmanager.com
-              https://code.tidio.co;
+              https://code.tidio.co
+              https://www.youtube.com
+              https://www.youtube-nocookie.com;
             object-src 'none';
             base-uri 'self';
             form-action 'self';
@@ -72,8 +74,8 @@ const nextConfig = {
                             .replace(/\s{2,}/g, " ")
                             .trim(),
                     },
-                    { key: "X-Frame-Options", value: "DENY" },
-                    { key: "X-XSS-Protection", value: "1; mode=block" },
+                  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+                  { key: "X-XSS-Protection", value: "1; mode=block" },
                 ],
             },
         ];
