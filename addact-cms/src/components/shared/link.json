@@ -31,6 +31,19 @@
     "isExternal": {
       "type": "boolean",
       "default": false
+    },
+    "SubDisc": {
+      "type": "text"
+    },
+    "Icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

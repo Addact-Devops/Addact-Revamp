@@ -34,6 +34,14 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::team-feature.team-feature"
+    },
+    "FirstTabDisplayName": {
+      "type": "string",
+      "default": "For Enterprises & Brands"
+    },
+    "SecondTabDisplayName": {
+      "type": "string",
+      "default": "For Agencies & Tech Teams"
     }
   }
 }

@@ -1287,6 +1287,10 @@ export interface ApiContactusContactus extends Struct.SingleTypeSchema {
       false
     >;
     banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    contactus: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::form-field.form-field'
+    >;
     ContactUsAvailability: Schema.Attribute.Component<
       'addact-component.contact-us-days-online-offline',
       true
@@ -2205,6 +2209,8 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    FirstTabDisplayName: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'For Enterprises & Brands'>;
     ForEnterprisesBrands: Schema.Attribute.Relation<
       'oneToOne',
       'api::global-card.global-card'
@@ -2217,6 +2223,8 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     ReferenceTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    SecondTabDisplayName: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'For Agencies & Tech Teams'>;
     SEO: Schema.Attribute.Component<'shared.seo', false>;
     team_feature: Schema.Attribute.Relation<
       'oneToOne',
