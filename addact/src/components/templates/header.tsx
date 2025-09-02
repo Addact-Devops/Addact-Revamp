@@ -17,6 +17,13 @@ const Header = ({ headers }: HeaderProps) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
+    const lowerPath = pathname.toLowerCase();
+    const showBanner =
+        pathname === "/sitecore-cms-development" ||
+        pathname.startsWith("/sitecore-cms-development/") ||
+        (lowerPath.startsWith("/blogs") && lowerPath.includes("sitecore")) ||
+        (lowerPath.startsWith("/portfolio") && lowerPath.includes("sitecore")) ||
+        (lowerPath.startsWith("/events") && lowerPath.includes("sitecore"));
 
     const handleDropdownToggle = (title: string) => {
         setOpenDropdown((prev) => (prev === title ? null : title));
@@ -185,11 +192,11 @@ const Header = ({ headers }: HeaderProps) => {
                     </button>
                 </div>
             </div>
-
             {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
-            {pathname !== "/project-cost-estimators" && (
+
+            {showBanner && (
                 <div className="bg-[#3C4CFF]">
-                    <div className="container text-white justify-center items-center py-2 lg:py-3 hidden md:flex">
+                    <div className="container text-white justify-center items-center py-2 lg:py-3 hidden lg:flex">
                         <span className="text-[16px] 2xl:text-[20px] font-[400]">
                             Need An Accurate Estimate For Your Sitecore XM Cloud Migration Project? Kickstart Your
                             Journey Here!
@@ -203,7 +210,6 @@ const Header = ({ headers }: HeaderProps) => {
                     </div>
                 </div>
             )}
-
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div className="lg:hidden fixed inset-0 z-50 bg-black text-white overflow-auto">
