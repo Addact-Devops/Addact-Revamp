@@ -19,9 +19,9 @@ const IndustriesWeServe = dynamic(() => import("@/components/organisms/Industrie
 
 export default function SiteDetailClient({ data }: { data: SubServicePage }) {
     const bannerData = data.HeroBanner;
-
+    console.log(data.our_process);
     return (
-        <main className='bg-dark'>
+        <main className="bg-dark">
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
