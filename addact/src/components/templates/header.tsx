@@ -17,6 +17,28 @@ const Header = ({ headers }: HeaderProps) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
+    const [bannerVisible, setBannerVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > lastScrollY) {
+                // scrolling down → hide
+                setBannerVisible(false);
+            } else {
+                // scrolling up → show
+                setBannerVisible(true);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [lastScrollY]);
+
     const lowerPath = pathname.toLowerCase();
     const showBanner =
         pathname === "/sitecore-cms-development" ||
@@ -24,8 +46,9 @@ const Header = ({ headers }: HeaderProps) => {
         (lowerPath.startsWith("/blogs") && lowerPath.includes("sitecore")) ||
         (lowerPath.startsWith("/portfolio") && lowerPath.includes("sitecore")) ||
         (lowerPath.startsWith("/events") && lowerPath.includes("sitecore")) ||
-        (lowerPath.startsWith("/press-releases") && lowerPath.includes("sitecore")) || // ✅ new generic rule
+        (lowerPath.startsWith("/press-releases") && lowerPath.includes("sitecore")) ||
         lowerPath === "/blogs/switch-on-rebuild-index-on-docker" ||
+        lowerPath === "/blogs/computed-solr-index-fields" ||
         lowerPath.startsWith("/sitecore");
 
     const handleDropdownToggle = (title: string) => {
@@ -198,7 +221,11 @@ const Header = ({ headers }: HeaderProps) => {
             {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
 
             {showBanner && (
-                <div className="bg-[#3C4CFF]">
+                <div
+                    className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${
+                        bannerVisible ? "max-h-[80px]" : "max-h-0"
+                    }`}
+                >
                     <div className="container text-white justify-center items-center py-2 lg:py-3 hidden md:flex">
                         <span className="text-[16px] 2xl:text-[20px] font-[400]">
                             Need An Accurate Estimate For Your Sitecore XM Cloud Migration Project? Kickstart Your
@@ -213,6 +240,7 @@ const Header = ({ headers }: HeaderProps) => {
                     </div>
                 </div>
             )}
+
             {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div className="lg:hidden fixed inset-0 z-50 bg-black text-white overflow-auto">
