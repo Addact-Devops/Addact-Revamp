@@ -137,7 +137,7 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                                 height: 5px;
                                 background: #3c4cff;
                                 border-radius: 10px 10px 0 0;
-                                z-index: 10000;
+                                z-index: 3;
                                 opacity: 0;
                                 transition: opacity 0.3s ease;
                             }
