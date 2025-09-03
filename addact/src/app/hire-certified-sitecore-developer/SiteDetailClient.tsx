@@ -1049,12 +1049,12 @@ export default function SiteDetailClient() {
                                     </div>
                                     <div className="mt-[30px] md:mt-0">
                                         <div className="2xl:text-[24px] xl:text-[20px] text-[20px] font-semibold  mb-[5px] md:mb-6">
-                                            INDIA
+                                            United States
                                         </div>
                                         <div className="custom-html-content">
                                             <p>
-                                                914 Sankalp Square 3B, Sindhu Bhavan Marg, Ahmedabad, Gujarat - 380059{" "}
-                                                <a href="tel:919427722717">+91 94277 22717</a>
+                                                Suite 602, 7332, Southwest fwy, Houston, Texas{" "}
+                                                <a href="tel:18324491520">+1 832-449-1520</a>
                                             </p>
                                         </div>
                                     </div>

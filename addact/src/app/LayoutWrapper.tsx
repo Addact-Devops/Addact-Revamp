@@ -19,7 +19,7 @@ function LayoutWrapper({
     footerData: FooterProps["data"]; // type-safe!
 }) {
     const pathname = usePathname();
-    const hideHeaderFooter = pathname === "/sitecore-marketing-page";
+    const hideHeaderFooter = pathname === "/hire-certified-sitecore-developer";
 
     return (
         <>
