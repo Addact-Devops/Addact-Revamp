@@ -64,7 +64,13 @@ export async function POST(req: NextRequest) {
 
         // Build recipient list (dynamic + static Ravi & Gunjan)
 
-        const finalRecipients = ["ravi@addact.net", "gunjan@addact.net"];
+        const finalRecipients = [
+            "maulik@addact.net",
+            "gunjan@addact.net",
+            "jayesh@addact.net",
+            "nimesh@addact.net",
+            "mitesh@addact.net",
+        ];
 
         // Send confirmation email to Addact team
         await transporter.sendMail({
