@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import OurPartners from "@/components/organisms/OurPartners";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
+import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
@@ -1029,6 +1031,55 @@ export default function SiteDetailClient() {
                                 <p className="text-[12px] sm:text-[14px] lg:text-[16px] xl:text-[20px] 2xl:text-[24px] font-normal text-white">
                                     We add Values!
                                 </p>
+
+                                {/* Social Media Section */}
+                                <div className="mt-[40px] md:mt-[60px]">
+                                    <div className="2xl:text-[24px] xl:text-[20px] text-[20px] font-semibold mb-[15px] md:mb-6">
+                                        Social Media
+                                    </div>
+                                    <div className="flex gap-[15px] lg:gap-[25px]">
+                                        <a
+                                            href="https://www.linkedin.com/company/addact-technologies/posts/?feedView=all&viewAsMember=true"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="transition md:hover:scale-115"
+                                        >
+                                            <FaLinkedin size={22} />
+                                        </a>
+                                        <a
+                                            href="https://www.facebook.com/addacttech/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="transition md:hover:scale-115"
+                                        >
+                                            <FaFacebook size={22} />
+                                        </a>
+                                        <a
+                                            href="https://www.instagram.com/addacttechnologies/"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="transition md:hover:scale-115"
+                                        >
+                                            <FaInstagram size={22} />
+                                        </a>
+                                        <a
+                                            href="https://x.com/AddactTech"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="transition md:hover:scale-115"
+                                        >
+                                            <FaXTwitter size={22} />
+                                        </a>
+                                        <a
+                                            href="https://www.youtube.com/channel/UCAedA8rF1OKn18CZt__U4sA"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="transition md:hover:scale-115"
+                                        >
+                                            <FaYoutube size={22} />
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
 
                             {/* Footer links */}
@@ -1041,8 +1092,8 @@ export default function SiteDetailClient() {
                                         </div>
                                         <div className="custom-html-content">
                                             <p>
-                                                <a href="mailto:info@addact.net" className="!mt-0">
-                                                    info@addact.net
+                                                <a href="mailto:marketing@addact.net" className="!mt-0">
+                                                    marketing@addact.net
                                                 </a>
                                             </p>
                                         </div>
@@ -1057,6 +1108,64 @@ export default function SiteDetailClient() {
                                                 <a href="tel:18324491520">+1 832-449-1520</a>
                                             </p>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div className="relative mt-[40px] md:mt-[60px]">
+                                    <div className="text-[16px] md:text-[22px] xl:text-[24px] font-semibold 2xl:mb-[30px] xl:mb-[20px] mb-[15px] mt-[25px] lg:mt-0">
+                                        Certified Success &amp; milestones
+                                    </div>
+                                    <div className="flex gap-[14px] 2xl:gap-[65px] lg:gap-[40px] md:justify-center lg:justify-start">
+                                        <img
+                                            alt=""
+                                            loading="lazy"
+                                            width="78"
+                                            height="103"
+                                            decoding="async"
+                                            className="max-w-[50px] sm:max-w-[70px] lg:max-w-[90px] xl:max-w-[100px] h-auto object-contain"
+                                            style={{ color: "transparent" }}
+                                            src="https://d3l7d9gtq0bnch.cloudfront.net/image_2_0651ebc9ae.png"
+                                        />
+                                        <img
+                                            alt=""
+                                            loading="lazy"
+                                            width="127"
+                                            height="60"
+                                            decoding="async"
+                                            className="max-w-[50px] sm:max-w-[70px] lg:max-w-[90px] xl:max-w-[100px] h-auto object-contain"
+                                            style={{ color: "transparent" }}
+                                            src="https://d3l7d9gtq0bnch.cloudfront.net/image_1_66a12d1746.png"
+                                        />
+                                        <img
+                                            alt=""
+                                            loading="lazy"
+                                            width="102"
+                                            height="103"
+                                            decoding="async"
+                                            className="max-w-[50px] sm:max-w-[70px] lg:max-w-[90px] xl:max-w-[100px] h-auto object-contain"
+                                            style={{ color: "transparent" }}
+                                            src="https://d3l7d9gtq0bnch.cloudfront.net/image_3_eeba2a3094.png"
+                                        />
+                                        <img
+                                            alt=""
+                                            loading="lazy"
+                                            width="106"
+                                            height="103"
+                                            decoding="async"
+                                            className="max-w-[50px] sm:max-w-[70px] lg:max-w-[90px] xl:max-w-[100px] h-auto object-contain"
+                                            style={{ color: "transparent" }}
+                                            src="https://d3l7d9gtq0bnch.cloudfront.net/image_4_afeee802ce.png"
+                                        />
+                                        <img
+                                            alt=""
+                                            loading="lazy"
+                                            width="115"
+                                            height="103"
+                                            decoding="async"
+                                            className="max-w-[50px] sm:max-w-[70px] lg:max-w-[90px] xl:max-w-[100px] h-auto object-contain"
+                                            style={{ color: "transparent" }}
+                                            src="https://d3l7d9gtq0bnch.cloudfront.net/image_5_a8748917bb.png"
+                                        />
                                     </div>
                                 </div>
                             </div>

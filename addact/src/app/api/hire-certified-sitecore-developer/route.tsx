@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
 
         const finalRecipients = [
             "maulik@addact.net",
+            "pauras@addact.net",
             "gunjan@addact.net",
             "jayesh@addact.net",
             "nimesh@addact.net",
@@ -74,7 +75,7 @@ export async function POST(req: NextRequest) {
 
         // Send confirmation email to Addact team
         await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
+            from: `"Addact Technologies" <marketing@addact.net>`,
             to: finalRecipients,
             subject: "Addact - Business Inquiry",
             html: `
@@ -130,7 +131,7 @@ export async function POST(req: NextRequest) {
 
         // Send thank-you email to user
         await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
+            from: `"Addact Technologies" <marketing@addact.net>`,
             to: email,
             subject: "Addact - Thank You for Your Inquiry",
             html: `
