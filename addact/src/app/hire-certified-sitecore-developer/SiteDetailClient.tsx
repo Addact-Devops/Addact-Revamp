@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import OurPartners from "@/components/organisms/OurPartners";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
-import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 import { useEffect, useState } from "react";
