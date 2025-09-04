@@ -64,24 +64,17 @@ export async function POST(req: NextRequest) {
 
         // Build recipient list (dynamic + static Ravi & Gunjan)
 
-        const finalRecipients = [
-            "maulik@addact.net",
-            "pauras@addact.net",
-            "gunjan@addact.net",
-            "jayesh@addact.net",
-            "nimesh@addact.net",
-            "mitesh@addact.net",
-        ];
+        const finalRecipients = ["maulik@addact.net", "pauras@addact.net", "gunjan@addact.net", "jayesh@addact.net"];
 
         // Send confirmation email to Addact team
         await transporter.sendMail({
             from: `"Addact Technologies" <marketing@addact.net>`,
             to: finalRecipients,
-            subject: "Addact - Business Inquiry",
+            subject: "Addact - Hire Certified Sitecore Developer",
             html: `
                 <html>
                     <head>
-                        <title>Addact - Business Inquiry</title>
+                        <title>Addact - Hire Certified Sitecore Developer</title>
                         <style>
                             table {
                             width: 100%;
