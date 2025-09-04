@@ -3,8 +3,7 @@
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import OurPartners from "@/components/organisms/OurPartners";
-import ClientTestimonials from "@/components/organisms/ClientTestimonials";
-import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube, FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 import { useEffect, useState } from "react";
@@ -905,7 +904,6 @@ export default function SiteDetailClient() {
 
                 <StaticOurProcess />
 
-                <ClientTestimonials />
                 <StaticOurInsights />
                 <section className="my-[60px] xl:my-[100px] 2xl:my-[200px]">
                     <div className="container mx-auto px-4">
@@ -961,6 +959,31 @@ export default function SiteDetailClient() {
                 </section>
 
                 <StaticContactUs />
+
+                <a
+                    href="https://wa.me/18324491520"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="fixed bottom-[15px] md:bottom-[30px] right-[15px] md:right-[30px] bg-[#25D366] text-white p-2 md:p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 z-50 whatsapp-pulse"
+                    aria-label="Chat on WhatsApp"
+                >
+                    <FaWhatsapp size={28} />
+
+                    <style jsx>{`
+                        @keyframes pulseZoom {
+                            0%,
+                            100% {
+                                transform: scale(1);
+                            }
+                            50% {
+                                transform: scale(1.08);
+                            }
+                        }
+                        .whatsapp-pulse {
+                            animation: pulseZoom 1.8s infinite ease-in-out;
+                        }
+                    `}</style>
+                </a>
 
                 <footer className="relative bg-[#0F0F0F] text-white lg:py-[60px] py-[40px] border-t border-b border-white/15 z-[4]">
                     {/* Background vertical lines */}
