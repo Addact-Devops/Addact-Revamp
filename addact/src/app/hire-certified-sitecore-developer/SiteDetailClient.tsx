@@ -137,11 +137,11 @@ export default function SiteDetailClient() {
                     <div className="relative container mt-[68px] md:mt-[120px] min-h-[550px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
                         <div className="text-left max-w-[95%]">
                             <h1 className="text-white mb-[10px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] lg:max-w-[60%]">
-                                Hire Sitecore Developer for Smarter Workflows{" "}
+                                Hire Certified Sitecore Developers On-Demand{" "}
                             </h1>
                             <div className="text-white text-[15px] leading-[25px] lg:text-[17px] lg:leading-[30px] font-normal mt-0 lg:max-w-[50%]">
-                                Hire Sitecore developers who bring platform expertise, agility, and strategic value to
-                                every digital experience.&nbsp;
+                                Trusted Sitecore developers from the USA who combine platform expertise and agility to
+                                enhance your digital experiences.
                             </div>
                             <div className="mt-10">
                                 <button

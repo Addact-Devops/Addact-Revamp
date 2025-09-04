@@ -8,6 +8,7 @@ import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import "../../../styles/components/caseStudy-detail.scss";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import { CareerFormState, CareerFormErrors, validateCareerForm } from "@/utils/validateCareerForm";
+import Loader from "@/components/atom/loader";
 
 interface CareerDetailClientProps {
     data: CareerDetailResponse["careerDetails"][number] | undefined;
@@ -32,6 +33,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
     const [errors, setErrors] = useState<CareerFormErrors>({});
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
     const [resumeFile, setResumeFile] = useState<File | null>(null);
+    const [resumeLoading, setResumeLoading] = useState(false);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const redirectUrl = `${pathname}/thank-you-career`;
@@ -45,6 +47,54 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleResumeUpload = async (file: File) => {
+        setResumeLoading(true);
+        try {
+            setForm({
+                fullName: "",
+                email: "",
+                phone: "",
+                currentCTC: "",
+                expectedCTC: "",
+                experience: "",
+                cityName: "",
+                linkedInProfile: "",
+                remarks: "",
+                hyperlink: "",
+            });
+
+            const aiFormData = new FormData();
+            aiFormData.append("file", file);
+
+            const res = await fetch("/api/parse-resume", {
+                method: "POST",
+                body: aiFormData,
+            });
+
+            if (!res.ok) {
+                throw new Error("Failed to parse resume");
+            }
+
+            const parsed = await res.json();
+
+            // 🔹 Update the form state with AI-extracted fields
+            setForm((prev) => ({
+                ...prev,
+                fullName: parsed.extracted.fullName || prev.fullName,
+                email: parsed.extracted.email || prev.email,
+                phone: parsed.extracted.phone || prev.phone,
+                experience: parsed.extracted.yearsOfExperience || prev.experience,
+                cityName: parsed.extracted.city || prev.cityName,
+                linkedInProfile: parsed.extracted.linkedin || prev.linkedInProfile,
+                hyperlink: parsed.extracted.portfolio || prev.hyperlink,
+            }));
+            setResumeLoading(false);
+        } catch (err) {
+            console.error("AI file upload failed:", err);
+            setResumeLoading(false);
+        }
     };
 
     /** Handle submit */
@@ -196,7 +246,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                             onClick={() => fileInputRef.current?.click()}
                                             className='bg-[#3C4CFF] text-white text-sm px-5 py-2 rounded-md hover:bg-[#3440CB] transition-all duration-200'
                                         >
-                                            {data.careers_form.FormFields.Form[1]?.Link?.label || "Upload Resume*"}
+                                            {data.careers_form.FormFields.Form[1]?.Link?.label || "Apply with Resume*"}
                                         </button>
                                         <input
                                             ref={fileInputRef}
@@ -205,8 +255,10 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                             className='hidden'
                                             onChange={(e) => {
                                                 if (e.target.files?.[0]) {
-                                                    setResumeFile(e.target.files[0]);
+                                                    const file = e.target.files[0];
+                                                    setResumeFile(file);
                                                     setErrors((prev) => ({ ...prev, resume: "" }));
+                                                    handleResumeUpload(file);
                                                 }
                                             }}
                                         />
@@ -220,7 +272,12 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                                 </div>
 
                                 {/* Actual Form */}
-                                <form className='space-y-4' onSubmit={handleSubmit}>
+                                <form className='space-y-4 relative' onSubmit={handleSubmit}>
+                                    {resumeLoading && (
+                                        <div className='absolute top-0 right-0 w-full h-full z-10 bg-[#ffffffa3] flex items-center justify-center transition-opacity duration-300'>
+                                            <Loader />
+                                        </div>
+                                    )}
                                     <div>
                                         <input
                                             type='text'

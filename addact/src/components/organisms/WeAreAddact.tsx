@@ -74,38 +74,38 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
     };
 
     return (
-        <section ref={sectionRef} className='container mt-[60px] sm:mt-[60px] pb-[60px] sm:pb-[100px]' id='who-we-are'>
-            <div className='flex flex-col md:flex-row items-center sm:gap-[60px] lg:gap-[120px]'>
-                <div className='w-full md:w-1/2 hidden md:block'>
+        <section ref={sectionRef} className="container mt-[60px] sm:mt-[60px] pb-[60px] sm:pb-[100px]" id="who-we-are">
+            <div className="flex flex-col md:flex-row items-center sm:gap-[60px] lg:gap-[120px]">
+                <div className="w-full md:w-1/2 hidden md:block">
                     <img
                         src={image.url}
                         alt={image.alternativeText || "We Are Addact"}
                         width={image.width}
                         height={image.height}
-                        className='rounded-2xl w-full h-auto object-cover'
+                        className="rounded-2xl w-full h-auto object-cover"
                     />
                 </div>
 
-                <div className='w-full md:w-1/2'>
-                    <p className='text-[#3C4CFF] text-[17px] leading-[30px] font-medium sm:mb-[15px] mb-[10px] block'>
+                <div className="w-full md:w-1/2">
+                    <p className="text-[#3C4CFF] text-[17px] leading-[30px] font-medium sm:mb-[15px] mb-[10px] block">
                         {subtitle}
                     </p>
 
-                    <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-black mb-[20px] !font-normal'>
+                    <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-black mb-[20px] !font-normal">
                         {title}
                     </h2>
 
-                    <div className='block md:hidden mb-[20px]'>
+                    <div className="block md:hidden mb-[20px]">
                         <img
                             src={image.url}
                             alt={image.alternativeText || "We Are Addact"}
                             width={image.width}
                             height={image.height}
-                            className='rounded-2xl w-full h-auto object-cover max-h-[250px]'
+                            className="rounded-2xl w-full h-auto object-cover max-h-[250px]"
                         />
                     </div>
 
-                    <div className='text-base text-black leading-relaxed mb-8'>
+                    <div className="text-base text-black leading-relaxed mb-8">
                         {content?.map((block, index) => (
                             <p key={index}>
                                 {block.children?.map((child, childIndex) => (
@@ -116,11 +116,11 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
                     </div>
 
                     {numberContent.length > 0 && (
-                        <div className='flex flex-col sm:flex-row gap-8 mt-4 text-center sm:text-left'>
+                        <div className="flex flex-col sm:flex-row gap-8 mt-4 text-center sm:text-left">
                             {numberContent.map((item, index) => (
                                 <div key={index}>
-                                    <h3 className='font-semibold text-[#3c4cff] mb-1'>{counts[index]}+</h3>
-                                    <p className='text-sm text-black leading-snug whitespace-pre-line sm:max-w-[65%]'>
+                                    <h3 className="font-semibold text-[#3c4cff] mb-1">{counts[index]}+</h3>
+                                    <p className="text-sm text-black leading-snug whitespace-pre-line sm:max-w-[65%]">
                                         {item.Content}
                                     </p>
                                 </div>
