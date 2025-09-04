@@ -62,8 +62,6 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        // Build recipient list (dynamic + static Ravi & Gunjan)
-
         const finalRecipients = ["maulik@addact.net", "pauras@addact.net", "gunjan@addact.net", "jayesh@addact.net"];
 
         // Send confirmation email to Addact team
