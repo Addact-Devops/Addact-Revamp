@@ -1,0 +1,46 @@
+# Addact Technologies
+> Offer AI-driven CMS development, migration, upgrade, and support services tailored to business needs.  
+> Addact Technologies is a trusted digital partner provides service in enterprise CMS development and AI-backed digital transformation. We help global enterprises and agencies with strategy, implementation, integration, upgrades, and managed services across platforms like Sitecore, Umbraco, Kentico, Strapi, and Contentstack.
+
+[Addact Technologies](https://addact.net/): Your partner for AI-driven CMS development, and scalable digital transformation.
+
+Last Updated: Wed, 03 Sep 2025 12:15:00 GMT
+
+## Services
+- [Sitecore CMS Development](https://addact.net/sitecore-cms-development): AI-powered Sitecore CMS development, consulting, integration, support, and upgrades.
+- [Hire Umbraco Developer](https://www.addact.net/umbraco-cms-development/hire-umbraco-developer): Geared for high-performance digital platforms—custom web, uSkinned themes, headless architecture, Umbraco upgrades, cloud hosting, and integrations. :contentReference[oaicite:0]{index=0}
+- [Hire Kentico Developer](https://www.addact.net/kentico-cms-development/hire-kentico-developer): Secure, scalable Kentico CMS development, performance optimization, managed services, migrations, maintenance, and integrations. :contentReference[oaicite:1]{index=1}
+- [Hire Strapi Developer](https://www.addact.net/strapi-cms-development/hire-strapi-developer): Flexible, API-driven Strapi solutions—custom dev, plugin creation, API integration, migration, support, maintenance, and performance optimization. :contentReference[oaicite:2]{index=2}
+- [Contentful Development Services](https://www.addact.net/contentful-cms-development): API-first Contentful solutions—development, migration, managed services, upgrades, support, and CMS integrations. :contentReference[oaicite:3]{index=3}
+- [Hire Sitecore Developers](https://addact.net/sitecore-cms-development/hire-sitecore-developer)
+- [Strapi CMS Development Services](https://addact.net/strapi-development-services)
+- [Contentstack Development Services](https://addact.net/contentstack-development)
+- [Umbraco Development Services](https://addact.net/umbraco-development): Build scalable, flexible digital solutions with Umbraco CMS consulting, development, and support.
+- [Kentico Development Services](https://addact.net/kentico-development): Enterprise-level Kentico development, migration, and optimization for high-performing websites.
+- [Strapi Development Services](https://addact.net/strapi-development): Headless CMS expertise with Strapi development, customization, and migration services.
+- [Contentstack Development](https://addact.net/contentstack-development): Build modern digital experiences with Contentstack headless CMS services.
+
+
+## USP
+- AI-driven CMS Development
+- Enterprise-grade Integration & Migration
+- Cloud & Headless CMS Implementation
+- Custom Module & Extension Development
+- 24/7 Managed Support & Maintenance
+
+## Industries
+- Healthcare
+- Finance & Banking
+- Retail & eCommerce
+- Education
+- Manufacturing
+- Agencies & Enterprises
+
+## Resources
+- [Blogs](https://addact.net/blog): Insights, trends, and guides on CMS development and digital experience.
+- [Case Studies](https://addact.net/case-studies): Explore our client success stories and implementation journeys.
+- [Whitepapers](https://addact.net/resources/whitepapers): Download expert research and digital transformation playbooks.
+
+## Contact
+- [Contact Us](https://addact.net/contact): Connect with our team for consultation, development, and support needs.
+- Email: info@addact.net
