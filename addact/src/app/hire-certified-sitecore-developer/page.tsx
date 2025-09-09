@@ -1,3 +1,4 @@
+// app/hire-certified-sitecore-developer/page.tsx
 import SiteDetailClient from "./SiteDetailClient";
 import Script from "next/script";
 
