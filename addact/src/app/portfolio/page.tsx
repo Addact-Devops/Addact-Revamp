@@ -3,7 +3,7 @@ import CaseStudyListing from "./CaseStudyListing"; // Direct import (MUST be a c
 
 // ✅ Server-side SEO
 export async function generateMetadata() {
-    return generatePageMetadata("event");
+    return generatePageMetadata("caseStudy");
 }
 
 export default function PortfolioPage() {
