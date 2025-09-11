@@ -349,3 +349,14 @@ footer {
 .animate-fadein {
     animation: fadein 4s ease forwards;
 }
+
+.recaptcha-wrapper {
+    transform: scale(0.9);
+    transform-origin: 0 0;
+    width: 100%;
+    display: flex;
+
+    @media (max-width: 400px) {
+        transform: scale(0.85);
+    }
+}

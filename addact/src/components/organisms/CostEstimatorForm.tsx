@@ -488,7 +488,7 @@ const CostEstimatorForm = () => {
                 hasSubsites && subsiteCount !== ""
                     ? `sub-websites: ${subsiteCount} `
                     : hasSubsites
-                    ? "Sub-websites"
+                    ? "Sub-websites:"
                     : "No sub-websites";
 
             items.push({ id: `${String(id++).padStart(2, "0")}.`, text: subsiteText });
@@ -1032,7 +1032,7 @@ const CostEstimatorForm = () => {
                             {/* Slide 2 Q1 */}
                             <div className="mb-[30px] lg:mb-[40px] 2xl:mb-[60px]">
                                 <div className="flex gap-[20px] justify-between">
-                                    <QTitle num={1}>Do you have sub-websites that need to be migrated?</QTitle>
+                                    <QTitle num={5}>Do you have sub-websites that need to be migrated?</QTitle>
                                     <ToggleLeftLabel
                                         checked={hasSubsites}
                                         onChange={(v) => {
@@ -1079,7 +1079,7 @@ const CostEstimatorForm = () => {
 
                             {/* Slide 2 Q2 */}
                             <div className="mb-[40px] 2xl:mb-[60px] md:flex gap-[20px]">
-                                <QTitle num={2}>
+                                <QTitle num={6}>
                                     How many languages does your website currently support?{" "}
                                     <span className="text-red-500">*</span>
                                 </QTitle>
@@ -1105,7 +1105,7 @@ const CostEstimatorForm = () => {
                             {/* Slide 2 Q3 */}
                             <div className="mb-[30px] lg:mb-[40px] 2xl:mb-[60px]">
                                 <div className="flex gap-[20px] items-baseline">
-                                    <QTitle num={3}>Do you use any custom modules/pipelines or integrations?</QTitle>
+                                    <QTitle num={7}>Do you use any custom modules/pipelines or integrations?</QTitle>
                                     <ToggleLeftLabel
                                         checked={hasCustom}
                                         onChange={(v) => {
@@ -1200,7 +1200,7 @@ const CostEstimatorForm = () => {
                         <>
                             {/* Slide 3 Q1 */}
                             <div className="mb-[40px] 2xl:mb-[60px] md:flex gap-[20px]">
-                                <QTitle num={1}>
+                                <QTitle num={8}>
                                     Who is your hosting provider for the new frontend environment?{" "}
                                     <span className="text-red-500">*</span>
                                 </QTitle>
@@ -1294,7 +1294,7 @@ const CostEstimatorForm = () => {
 
                             {/* Slide 3 Q2 */}
                             <div className="mb-[40px] 2xl:mb-[60px] flex gap-[20px] items-start">
-                                <QTitle num={2}>
+                                <QTitle num={9}>
                                     Do you currently use or plan to set up personalization rules in Sitecore?
                                 </QTitle>
                                 <ToggleLeftLabel
@@ -1313,7 +1313,7 @@ const CostEstimatorForm = () => {
 
                             {/* Slide 3 Q3 */}
                             <div className="mb-[60px] flex items-start gap-[10px] 2xl:gap-[20px]">
-                                <QTitle num={3}>
+                                <QTitle num={10}>
                                     Does your website need to comply with accessibility standards (e.g., WCAG 2.1) or
                                     other regulations (e.g., GDPR)?
                                 </QTitle>
@@ -1333,7 +1333,7 @@ const CostEstimatorForm = () => {
 
                             {/* Slide 3 Q4 - Timeline */}
                             <div className="mb-[30px] lg:mb-[40px] 2xl:mb-[60px]">
-                                <QTitle num={4}>
+                                <QTitle num={11}>
                                     What is your desired migration timeline? <span className="text-red-500">*</span>
                                 </QTitle>
                                 <div className="flex items-center gap-[10px] md:gap-4 mt-[15px] md:mt-[20px] 2xl:mt-[40px] flex-wrap">
@@ -1403,7 +1403,7 @@ const CostEstimatorForm = () => {
 
                             {/* Slide 3 Q5 - Email */}
                             <div className="mb-[60px] flex items-start gap-[10px] 2xl:gap-[20px] justify-between">
-                                <QTitle num={5}>
+                                <QTitle num={12}>
                                     Your Email Address <span className="text-red-500">*</span>
                                 </QTitle>
                                 <div>
