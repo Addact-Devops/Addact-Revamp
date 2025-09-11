@@ -200,11 +200,15 @@ export default function StaticContactUs() {
                             </div>
 
                             {/* ReCAPTCHA */}
-                            <ReCAPTCHA
-                                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                                onChange={(token: string | null) => setCaptchaToken(token)}
-                                className="mx-auto w-full"
-                            />
+                            <div className="flex justify-center">
+                                <div className="recaptcha-wrapper">
+                                    <ReCAPTCHA
+                                        sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                                        onChange={(token: string | null) => setCaptchaToken(token)}
+                                        size="normal"
+                                    />
+                                </div>
+                            </div>
 
                             {/* Submit */}
                             <button
