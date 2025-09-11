@@ -136,6 +136,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     as="font"
                     type="font/woff2"
                 />
+
+                {/* ✅ Google site verification */}
+                <meta name="google-site-verification" content="YqKQYm1Ppyy0SPQ6Fs2swuVEI9kcjqLNc1Ovys8rQlA" />
             </head>
             <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                 <noscript>
