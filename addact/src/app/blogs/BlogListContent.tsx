@@ -209,32 +209,41 @@ import Loader from "@/components/atom/loader";
 
 type Props = { data?: unknown };
 
+type BannerType = {
+    BannerTitle?: string;
+    BannerDescription?: string;
+    BannerImage?: {
+        url: string;
+        width?: number;
+        height?: number;
+        name?: string;
+        alternativeText?: string;
+    };
+    PublishDate?: string;
+    author?: {
+        Author?: { AuthorName?: string };
+    };
+    blogcategory?: {
+        Category?: { CategoryTitle?: string };
+    };
+};
+
 type BlogType = {
     Slug: string;
-    documentId: string;
-    BlogBanner?: {
-        BannerTitle?: string;
-        BannerDescription?: string;
-        BannerImage?: {
-            url: string;
-            width: number;
-            height: number;
-            name: string;
-            alternativeText?: string;
-        };
-        PublishDate?: string;
-        author?: {
-            Author?: { AuthorName?: string };
-        };
-        blogcategory?: {
-            Category?: { CategoryTitle?: string };
-        };
-    }[];
+    documentId?: string;
+    BlogBanner?: BannerType[];
     blog_category?: {
         Category?: { CategoryTitle?: string };
     };
-    // other possible fields (createdAt / updatedAt) might exist on the object
-    [k: string]: any;
+
+    // optional top-level date fields (no `any` needed)
+    PublishDate?: string;
+    publishDate?: string;
+    updatedAt?: string;
+    createdAt?: string;
+
+    // allow other fields but keep typed
+    [k: string]: unknown;
 };
 
 export default function BlogListContent({}: Props) {
@@ -247,22 +256,22 @@ export default function BlogListContent({}: Props) {
 
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-    // Helper: get a numeric timestamp for sorting. Tries several possible fields and falls back to 0.
+    // Helper: extract publish date safely (no any)
     const getBlogDate = (blog: BlogType): number => {
-        const banner = blog.BlogBanner?.[0] as any;
+        const banner: BannerType | undefined = blog.BlogBanner?.[0];
+
         const candidates: (string | undefined)[] = [
             banner?.PublishDate,
-            banner?.publishDate,
-            banner?.BannerDate,
             blog.PublishDate,
             blog.publishDate,
             blog.updatedAt,
             blog.createdAt,
         ];
+
         for (const c of candidates) {
             if (typeof c === "string" && c.trim()) {
-                const t = Date.parse(c);
-                if (!isNaN(t)) return t;
+                const parsed = Date.parse(c);
+                if (!isNaN(parsed)) return parsed;
             }
         }
         return 0;
@@ -270,16 +279,21 @@ export default function BlogListContent({}: Props) {
 
     useEffect(() => {
         const fetchBlogs = async () => {
-            const data = await getAllBlogs();
-            const blogs = (data?.addactBlogs as BlogType[]) || [];
+            try {
+                const data = await getAllBlogs();
+                const blogs = (data && (data as { addactBlogs?: BlogType[] }).addactBlogs) || [];
 
-            // Sort descending by date (newest first)
-            const sorted = blogs.slice().sort((a, b) => getBlogDate(b) - getBlogDate(a));
+                // Sort descending by date (newest first)
+                const sorted = blogs.slice().sort((a, b) => getBlogDate(b) - getBlogDate(a));
 
-            setAddactBlogs(sorted);
-            // Optionally set filteredBlogs initially (so page doesn't flash empty before filter effect runs)
-            setFilteredBlogs(sorted);
-            setLoading(false);
+                setAddactBlogs(sorted);
+                setFilteredBlogs(sorted);
+            } catch {
+                setAddactBlogs([]);
+                setFilteredBlogs([]);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchBlogs();
     }, []);
