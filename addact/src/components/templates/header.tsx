@@ -50,6 +50,7 @@ const Header = ({ headers }: HeaderProps) => {
         lowerPath === "/blogs/switch-on-rebuild-index-on-docker" ||
         lowerPath === "/blogs/computed-solr-index-fields" ||
         lowerPath === "/blogs/content-crisis-ends-here" ||
+        lowerPath === "/blogs/switch-on-rebuild-index-on-docker" ||
         lowerPath.startsWith("/sitecore");
 
     const handleDropdownToggle = (title: string) => {
