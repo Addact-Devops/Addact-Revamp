@@ -23,16 +23,16 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    if (!blog) return <p className="p-6 text-red-600 mt-32">Blog not found.</p>;
+    if (!blog) return <p className='p-6 text-red-600 mt-32'>Blog not found.</p>;
 
     return (
-        <main className="blogdetail-wrapper bg-white">
+        <main className='blogdetail-wrapper bg-white'>
             {/* ✅ Blog Banner */}
             {blog?.BlogBanner?.[0] && <BlogDetailBanner banner={blog.BlogBanner[0]} />}
 
-            <div className="container !mt-[70px] !mb-[70px] blogdetail-container">
-                <div className="flex gap-[100px] max-[1400px]:gap-[50px] relative">
-                    <div className="w-[70%] max-[1300px]:w-[64%] max-[1200px]:w-[62%] max-[1120px]:w-[60%] max-[1101px]:w-[100%]">
+            <div className='container !mt-[70px] !mb-[70px] blogdetail-container'>
+                <div className='flex gap-[100px] max-[1400px]:gap-[50px] relative'>
+                    <div className='w-[70%] max-[1300px]:w-[64%] max-[1200px]:w-[62%] max-[1120px]:w-[60%] max-[1101px]:w-[100%]'>
                         {/* ✅ Blog Content */}
                         {Array.isArray(blog.BlogContent) ? (
                             <BlogContentRenderer blocks={blog.BlogContent} />
@@ -46,19 +46,19 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
 
                     {/* ✅ Contact Card (Sticky on desktop) */}
                     {windowWidth > 1100 && (
-                        <div className="w-[30%] sticky top-[140px] self-start z-[20]">
+                        <div className='w-[30%] sticky top-[140px] self-start z-[20]'>
                             <BlogContactCard card={blog.contactCard?.ContactCard?.[0]} />
                         </div>
                     )}
                 </div>
 
                 {/* ✅ Similar Blogs */}
-                <SimilarBlog similarBlogs={blog?.similarBlogs} />
+                <SimilarBlog similarBlogs={blog?.similarBlogs} similarstorytitle={blog?.similarstorytitle} />
             </div>
 
             {/* ✅ Fixed Social Icons (Desktop only) */}
             {Array.isArray(blog?.socialicons) && blog.socialicons.length > 0 && windowWidth >= 992 && (
-                <div className="flex flex-col gap-[15px] fixed top-1/2 left-[5px] 2xl:left-[1%] -translate-y-1/2 z-[3]">
+                <div className='flex flex-col gap-[15px] fixed top-1/2 left-[5px] 2xl:left-[1%] -translate-y-1/2 z-[3]'>
                     {blog.socialicons.flatMap((item, i: number) => {
                         const icons = item?.SocialIcon ?? [];
 
@@ -97,17 +97,17 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
                                         href={link.href}
                                         target={link.target === "blank" ? "_blank" : link.target}
                                         rel={link.isExternal ? "noopener noreferrer" : undefined}
-                                        className="group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden"
+                                        className='group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden'
                                     >
                                         <img
                                             src={iconUrl}
                                             alt={icon.Icons?.alternativeText || icon.Title || ""}
-                                            className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
+                                            className='w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300'
                                         />
                                         <img
                                             src={hoverUrl}
                                             alt={icon.HoverIcon?.alternativeText || icon.Title || ""}
-                                            className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                            className='w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
                                         />
                                     </a>
                                 );
