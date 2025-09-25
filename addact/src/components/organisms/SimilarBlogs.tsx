@@ -57,7 +57,9 @@ export default function SimilarBlog({ similarBlogs, similarstorytitle }: Similar
     return (
         <div className='py-[80px]'>
             <div className='mb-4 relative inline-block'>
-                <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-bold text-black'>{sectionTitle}</h2>
+                <h2 className='!text-[28px] md:!text-[40px] 2xl:!text-[60px] font-bold text-black !mb-10'>
+                    {sectionTitle}
+                </h2>
                 <div className='w-[160px] h-[5px] bg-[#5865F2] mt-[40px] rounded'></div>
             </div>
 
