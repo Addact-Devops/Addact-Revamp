@@ -46,6 +46,11 @@
     h2 {
         margin-bottom: 60px;
         font-size: pxToRem(44);
+
+        @media (max-width: 1500px) {
+            font-size: pxToRem(36);
+        }
+
         &:not(:first-child) {
             margin-top: 70px;
 
