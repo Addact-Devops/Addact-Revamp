@@ -53,10 +53,12 @@ export default function AuthorCard({ author }: { author: Author }) {
                 </div>
 
                 <div>
-                    <p className="!text-[#5865F2] !mb-[15px] !mt-0 !text-[25px] max-[991px]:!text-[20px] font-bold">
+                    <p className="!text-[#5865F2] !mb-[15px] !mt-0 !text-[25px] max-[1320px]:!text-[21px] max-[991px]:!text-[20px] font-bold">
                         {AuthorName}
                     </p>
-                    <p className="!text-[25px] max-[991px]:!text-[20px] font-bold">{designationText}</p>
+                    <p className="!text-[25px] max-[1320px]:!text-[21px] max-[991px]:!text-[20px] font-bold">
+                        {designationText}
+                    </p>
                 </div>
             </div>
 
