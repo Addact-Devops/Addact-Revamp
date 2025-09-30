@@ -97,10 +97,18 @@
 
     ul {
         list-style-type: disc;
+
+        li {
+            word-wrap: break-word;
+        }
     }
 
     ol {
         list-style-type: number;
+
+        li {
+            word-wrap: break-word;
+        }
     }
 
     pre {
