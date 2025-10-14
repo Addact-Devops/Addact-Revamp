@@ -50,7 +50,9 @@ const Header = ({ headers }: HeaderProps) => {
         lowerPath === "/blogs/switch-on-rebuild-index-on-docker" ||
         lowerPath === "/blogs/computed-solr-index-fields" ||
         lowerPath === "/blogs/content-crisis-ends-here" ||
-        lowerPath === "/blogs/switch-on-rebuild-index-on-docker" ||
+        lowerPath === "/blogs/how-to-change-the-workflow-in-existing-items-using-the-powershell-script" ||
+        lowerPath === "/blogs/importance-of-a-b-testing" ||
+        lowerPath === "/blogs/offshore-vs-onshore-dedicated-developer-teams-how-to-choose" ||
         lowerPath.startsWith("/sitecore");
 
     const handleDropdownToggle = (title: string) => {
