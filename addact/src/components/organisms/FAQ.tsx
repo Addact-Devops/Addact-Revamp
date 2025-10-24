@@ -37,15 +37,14 @@ const FAQ = ({ data }: IProps) => {
     if (openIndexes === null) return null;
 
     return (
-        <section className='my-[60px] xl:my-[100px] 2xl:my-[200px]'>
-            <div className='container mx-auto px-4'>
-                <h2 className='border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10'>
+        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px]">
+            <div className="container mx-auto px-4">
+                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                     {data.Title?.split("Asked")[0]}
-                    <br className='block' />
-                    {"Asked " + data.Title?.split("Asked")[1]}
+                    <br className="block" />
                 </h2>
 
-                <div className='border border-gray-700 mt-12 lg:mt-24'>
+                <div className="border border-gray-700 mt-12 lg:mt-24">
                     {data.FAQ.map((faq, index) => {
                         const isOpen = openIndexes.includes(index);
                         return (
@@ -57,9 +56,9 @@ const FAQ = ({ data }: IProps) => {
                             >
                                 <button
                                     onClick={() => toggleIndex(index)}
-                                    className='w-full flex items-start text-left transition-colors duration-200 px-0 py-6 pr-5 lg:pr-0'
+                                    className="w-full flex items-start text-left transition-colors duration-200 px-0 py-6 pr-5 lg:pr-0"
                                 >
-                                    <span className='ml-5 lg:ml-[40px] mr-5 lg:mr-[65px] mt-1 shrink-0 w-5 lg:w-[30px] h-5 lg:h-[30px] flex items-center justify-center'>
+                                    <span className="ml-5 lg:ml-[40px] mr-5 lg:mr-[65px] mt-1 shrink-0 w-5 lg:w-[30px] h-5 lg:h-[30px] flex items-center justify-center">
                                         {isOpen ? (
                                             <Minus size={30} strokeWidth={2.5} />
                                         ) : (
@@ -67,7 +66,7 @@ const FAQ = ({ data }: IProps) => {
                                         )}
                                     </span>
                                     <span
-                                        className='font-montserrat text-lg md:text-2xl font-semibold leading-none'
+                                        className="font-montserrat text-lg md:text-2xl font-semibold leading-none"
                                         style={{ lineHeight: "100%" }}
                                     >
                                         {faq.Title}
@@ -80,7 +79,7 @@ const FAQ = ({ data }: IProps) => {
                                         maxHeight: isOpen ? "500px" : "0px",
                                     }}
                                 >
-                                    <div className='pl-[60px] lg:pl-[135px] pr-6 pb-6 text-base md:text-xl font-normal font-montserrat leading-[34px]'>
+                                    <div className="pl-[60px] lg:pl-[135px] pr-6 pb-6 text-base md:text-xl font-normal font-montserrat leading-[34px]">
                                         <RichText html={faq.Description} />
                                     </div>
                                 </div>

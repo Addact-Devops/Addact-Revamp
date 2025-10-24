@@ -30,14 +30,25 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
 
     return (
         <section className="relative text-white overflow-hidden">
-            {/* Background Image */}
-            <Image
-                src={backgroundImageUrl}
-                alt={title || "Hero Image"}
-                fill
-                className="object-cover object-center z-0"
-                priority
-            />
+            {/* ✅ Background Image or Video */}
+            {backgroundImageUrl?.match(/\.(mp4|webm)$/i) ? (
+                <video
+                    src={backgroundImageUrl}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                />
+            ) : (
+                <Image
+                    src={backgroundImageUrl}
+                    alt={title || "Hero Image"}
+                    fill
+                    className="object-cover object-center z-0"
+                    priority
+                />
+            )}
 
             {/* Overlay */}
             <div className="absolute bg-[rgba(0,0,0,0.5)]"></div>

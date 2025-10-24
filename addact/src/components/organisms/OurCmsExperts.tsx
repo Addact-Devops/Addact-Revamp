@@ -6,7 +6,21 @@ import { CMSResponse, getCMSExpertiseData } from "@/graphql/queries/getCmsExpert
 import Image from "../atom/image";
 import RichText from "../atom/richText";
 
-const OurCmsExperts = () => {
+/* ✅ optional props to override with industry data (includes required fields) */
+type OverrideItem = {
+    id?: string;
+    Title?: string;
+    Links?: { id?: string; href?: string; label?: string; isExternal?: boolean; target?: string } | null;
+    Icons?: { url?: string; alternativeText?: string; width?: number; height?: number; name?: string } | null;
+    ClassName?: string;
+};
+type OurCmsExpertsProps = {
+    title?: string;
+    descriptionHtml?: string; // optional if you add it later
+    items?: OverrideItem[];
+};
+
+const OurCmsExperts = (/* ✅ ADDED */ props: OurCmsExpertsProps) => {
     const [data, setData] = useState<CMSResponse | null>(null);
 
     useEffect(() => {
@@ -14,8 +28,55 @@ const OurCmsExperts = () => {
             const response = await getCMSExpertiseData();
             setData(response);
         }
-        fetchData();
+        // ✅ FETCH ONLY if no industry overrides were provided
+        const hasOverrides = !!(props?.title || (props?.items && props.items.length));
+        if (!hasOverrides) {
+            fetchData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    /* ✅ If industry overrides provided, build a CMSResponse-shaped object and set it */
+    useEffect(() => {
+        if (props?.title || (props?.items && props.items.length)) {
+            const synthetic: CMSResponse = {
+                // @ts-ignore: we’re constructing the same shape used by the component
+                ourExpertises: [
+                    {
+                        ExpertiseTitle: [
+                            {
+                                Title: props.title ?? "",
+                                Description: props.descriptionHtml ?? "",
+                            },
+                        ],
+                        CMS: (props.items ?? []).map((s, idx) => ({
+                            id: s.id ?? String(idx),
+                            Title: s.Title ?? "",
+                            Links: {
+                                id: s.Links?.id ?? String(idx),
+                                href: s.Links?.href ?? "#",
+                                label: s.Links?.label ?? s.Title ?? "Learn more",
+                                target: s.Links?.target ?? (s.Links?.isExternal ? "blank" : "self"),
+                                isExternal: s.Links?.isExternal ?? s.Links?.target === "blank",
+                            },
+                            Icons: s.Icons
+                                ? {
+                                      url: s.Icons.url ?? "",
+                                      alternativeText: s.Icons.alternativeText ?? "Service Icon",
+                                      width: s.Icons.width ?? 113,
+                                      height: s.Icons.height ?? 64,
+                                      name: s.Icons.name ?? s.Title ?? "icon",
+                                  }
+                                : { url: "", alternativeText: "Service Icon", width: 113, height: 64, name: "icon" },
+                            ClassName: s.ClassName ?? "",
+                        })),
+                    },
+                ],
+            };
+            setData(synthetic);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props?.title, props?.descriptionHtml, JSON.stringify(props?.items || [])]);
 
     if (!data) {
         return null;

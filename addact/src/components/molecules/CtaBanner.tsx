@@ -22,7 +22,7 @@ const CtaBanner = ({ data }: IProps) => {
             >
                 <div className="container">
                     <div className="py-24">
-                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] w-[312px] md:w-[412px] lg:w-[750px] 2xl:leading-[85px]">
+                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] w-[312px] md:w-[412px] lg:w-[650px] 2xl:leading-[85px]">
                             {data.Title[0].h2}
                         </h2>
                         <Link href={href} target={target}>
