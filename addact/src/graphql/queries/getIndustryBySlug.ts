@@ -4,7 +4,7 @@ import client from "../client";
 
 /**
  * Main detail query — filtered by slug.
- * Now includes `faq` (permissions resolved on your side).
+ * Now includes `faq`, `ContactUs`, and newly added `ProjectHighlights`.
  */
 const GET_INDUSTRY_BY_SLUG = gql`
     query GetIndustryBySlug($slug: String!) {
@@ -134,8 +134,6 @@ const GET_INDUSTRY_BY_SLUG = gql`
                 }
             }
 
-            ProjectHighlightTitle
-
             global_card {
                 Title {
                     ... on ComponentHeadingsH1 {
@@ -241,6 +239,26 @@ const GET_INDUSTRY_BY_SLUG = gql`
                 EmailLabel
                 RecipientEmails
             }
+
+            # ✅ Newly added component block
+            ProjectHighlights {
+                Title
+                addact_case_studies {
+                    Slug
+                    HeroBanner {
+                        ... on ComponentBlogHeroBannerBlogHeroBanner {
+                            BannerTitle
+                            PublishDate
+                            BannerImage {
+                                url
+                                alternativeText
+                                width
+                                height
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 `;
@@ -339,8 +357,6 @@ export type IndustryDetail = {
         }> | null;
     } | null;
 
-    ProjectHighlightTitle?: string | null;
-
     global_card?: {
         Title?: Array<
             | { id?: string; h1?: string }
@@ -365,7 +381,7 @@ export type IndustryDetail = {
     client_testimonial?: {
         Title?: string | null;
         Item?: Array<{
-            quote?: unknown; // slate/rich structure
+            quote?: unknown;
             author_name?: string | null;
             author_position?: string | null;
             rating?: string | null;
@@ -410,6 +426,24 @@ export type IndustryDetail = {
         ButtonLabel?: string | null;
         EmailLabel?: string | null;
         RecipientEmails?: string | null;
+    } | null;
+
+    /** ✅ New type for ProjectHighlights */
+    ProjectHighlights?: {
+        Title?: string | null;
+        addact_case_studies?: Array<{
+            Slug?: string | null;
+            HeroBanner?: Array<{
+                BannerTitle?: string | null;
+                PublishDate?: string | null;
+                BannerImage?: {
+                    url?: string | null;
+                    alternativeText?: string | null;
+                    width?: number | null;
+                    height?: number | null;
+                } | null;
+            }> | null;
+        }> | null;
     } | null;
 };
 

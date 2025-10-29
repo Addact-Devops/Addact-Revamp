@@ -5,17 +5,17 @@ import Script from "next/script";
 import { getIndustryBySlug } from "@/graphql/queries/getIndustryBySlug";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import OurPartners from "@/components/organisms/OurPartners";
-import OurCmsExperts from "@/components/organisms/OurCmsExperts";
-import WhyAddact from "@/components/organisms/WhyAddact";
+import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import FAQ from "@/components/organisms/FAQ";
-import ContactUs from "@/components/organisms/ContactUs"; // ✅ ADDED
+import ContactUs from "@/components/organisms/ContactUs";
 
 // ✅ import the exact types your OurPartners component expects
 import type { PartnerTitle, PartnerImage } from "@/graphql/queries/getOurPartners";
 import IndustryChallenges from "@/components/organisms/IndustryChallenges";
-import IndustrySolutions from "@/components/organisms/IndustrySolutions";
+import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
 import IndustryCaseStudies from "@/components/organisms/IndustryCaseStudies";
+import WhyAddact from "@/components/organisms/WhyAddactWithAnimation";
 
 type Params = Promise<{ slug: string }>;
 
@@ -146,9 +146,7 @@ export default async function Page({ params }: { params: Params }) {
           }
         : null;
 
-    // =========================
     // ✅ ContactUs (industry variant is `ContactUs`) – adapt to home contact_us shape
-    // =========================
     const contactRaw = industry?.ContactUs ?? null;
     const contactAdapted = contactRaw
         ? {
@@ -174,6 +172,10 @@ export default async function Page({ params }: { params: Params }) {
               RecipientEmails: contactRaw.RecipientEmails ?? "",
           }
         : null;
+
+    // ✅ Project Highlights items directly from industry query (new)
+    const projectHighlightItems = industry?.ProjectHighlights?.addact_case_studies ?? [];
+    const projectHighlightsTitle = industry?.ProjectHighlights?.Title ?? "Project Highlights";
 
     return (
         <>
@@ -204,12 +206,14 @@ export default async function Page({ params }: { params: Params }) {
 
                 {industry?.OurChallenges && <IndustryChallenges data={industry.OurChallenges} />}
 
-                {industry?.OurSolutions && <IndustrySolutions data={industry.OurSolutions} />}
+                {industry?.OurSolutions && <IndustrySolutionsWithAnimation data={industry.OurSolutions} />}
 
                 {/* ✅ CMS Experts from this industry */}
-                <OurCmsExperts title={cmsTitle} items={cmsItems} />
+                <OurCmsExpertsWithAnimation title={cmsTitle} items={cmsItems} />
 
-                {industry?.ProjectHighlightTitle && <IndustryCaseStudies title={industry.ProjectHighlightTitle} />}
+                {!!projectHighlightItems.length && (
+                    <IndustryCaseStudies title={projectHighlightsTitle} items={projectHighlightItems as any} />
+                )}
 
                 {/* ✅ Why Addact from this industry */}
                 {whyAddactData && <WhyAddact data={whyAddactData} />}

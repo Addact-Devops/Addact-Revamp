@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,20 +11,44 @@ type SolutionCard = {
     Description?: string | null; // HTML
 };
 
-type IndustrySolutionsData = {
+type IndustrySolutionsWithAnimationData = {
     Title?: string | null;
     SolutionsCards?: SolutionCard[] | null;
 };
 
 type Props = {
-    data?: IndustrySolutionsData | null;
+    data?: IndustrySolutionsWithAnimationData | null;
 };
 
-const IndustrySolutions: React.FC<Props> = ({ data }) => {
+const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
     const cards = Array.isArray(data?.SolutionsCards) ? data!.SolutionsCards! : [];
 
-    // mobile slider state
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [animate, setAnimate] = useState(false);
+    const sectionRef = useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        const el = sectionRef.current;
+        if (!el) return;
+
+        if (!("IntersectionObserver" in window)) {
+            setAnimate(true);
+            return;
+        }
+
+        const obs = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setAnimate(true);
+                    obs.disconnect();
+                }
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+        );
+
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
 
     const sliderSettings = {
         dots: false,
@@ -48,20 +72,34 @@ const IndustrySolutions: React.FC<Props> = ({ data }) => {
     };
 
     return (
-        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px] solutionscards-wrapper">
+        <section
+            ref={sectionRef}
+            className="my-[60px] xl:my-[100px] 2xl:my-[200px] solutionscards-wrapper overflow-hidden"
+        >
             <div className="container">
                 <div className="flex flex-col">
-                    {/* Title (same size treatment as reference) */}
+                    {/* Title */}
                     <h2 className="border-after !text-[36px] xl:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10 xl:max-w-[60%] 2xl:max-w-[50%] mb-6 sm:mb-8 md:mb-14 2xl:mb-24">
                         {data?.Title ?? "Our Solutions"}
                     </h2>
 
-                    {/* Desktop grid – 3 columns, same card UI */}
-                    <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Desktop grid with sequential opacity reveal */}
+                    <div className="desktop-grid hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {cards.map((card, idx) => (
                             <div
                                 key={idx}
-                                className="group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px]"
+                                className={`group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px] ${
+                                    animate ? "show" : ""
+                                }`}
+                                style={
+                                    animate
+                                        ? {
+                                              transition: "opacity 500ms ease-out",
+                                              transitionDelay: `${idx * 180}ms`, // ⚡ faster reveal
+                                              willChange: "opacity",
+                                          }
+                                        : undefined
+                                }
                             >
                                 <h3 className="text-white !text-[20px] md:!text-[27px] 2xl:!text-[30px] mb-[30px]">
                                     {card?.Title ?? ""}
@@ -71,7 +109,7 @@ const IndustrySolutions: React.FC<Props> = ({ data }) => {
                         ))}
                     </div>
 
-                    {/* Mobile slider – 2 stacked per slide (same pattern) */}
+                    {/* Mobile slider unchanged */}
                     <div className="md:hidden">
                         <Slider {...sliderSettings}>
                             {chunkArray<SolutionCard>(cards, 2).map((group, i) => (
@@ -91,7 +129,7 @@ const IndustrySolutions: React.FC<Props> = ({ data }) => {
                             ))}
                         </Slider>
 
-                        {/* Tiny progress indicator like reference */}
+                        {/* Tiny progress indicator */}
                         <div className="relative mt-[40px] h-[1px] bg-gray-600">
                             <div
                                 className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
@@ -101,8 +139,26 @@ const IndustrySolutions: React.FC<Props> = ({ data }) => {
                     </div>
                 </div>
             </div>
+
+            {/* Scoped animation style */}
+            <style jsx global>{`
+                .solutionscards-wrapper .desktop-grid .group {
+                    opacity: 0;
+                }
+                .solutionscards-wrapper .desktop-grid .group.show {
+                    opacity: 1;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    .solutionscards-wrapper .desktop-grid .group,
+                    .solutionscards-wrapper .desktop-grid .group.show {
+                        transition: none !important;
+                        opacity: 1 !important;
+                    }
+                }
+            `}</style>
         </section>
     );
 };
 
-export default IndustrySolutions;
+export default IndustrySolutionsWithAnimation;

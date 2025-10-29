@@ -32,9 +32,9 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
             <div className="container">
                 <div className="flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap">
                     {/* Left: Sticky title */}
-                    <div className="w-full lg:w-[35%]">
+                    <div className="w-full lg:w-[40%]  2xl:w-[35%]">
                         <div className="lg:sticky lg:top-[120px]">
-                            <h2 className="!text-white !text-[36px] md:!text-[48px] 2xl:!text-[64px] leading-tight">
+                            <h2 className="!text-white !text-[36px] xl:!text-[38px] 2xl:!text-[64px] leading-tight">
                                 {data?.Title ?? "Our Challenges"}
                             </h2>
                             <div className="w-[160px] h-[6px] bg-[#3C4CFF] mt-6 rounded" />
@@ -42,7 +42,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                     </div>
 
                     {/* Right: Scrolling list */}
-                    <div className="w-full lg:w-[65%]">
+                    <div className="w-full lg:w-[60%] 2xl:w-[65%]">
                         <div className="flex flex-col gap-[80px] md:gap-[100px] 2xl:gap-[120px]">
                             {items.map((item, idx) => {
                                 const displayNum = pad2(item?.Number ?? idx + 1);
@@ -50,9 +50,8 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                                     <article key={`${displayNum}-${idx}`} className="relative">
                                         {/* Big outlined number */}
                                         <div
-                                            className="pointer-events-none select-none  tracking-tight lg:mb-[40px]"
+                                            className="pointer-events-none select-none  tracking-tight lg:mb-[20px] 2xl:mb-[40px] lg:text-[130px] 2xl:text-[200px]"
                                             style={{
-                                                fontSize: "200px",
                                                 fontWeight: 900,
                                                 WebkitTextStrokeWidth: "2px",
                                                 WebkitTextStrokeColor: "rgba(255, 255, 255, 0.7)",
@@ -66,11 +65,11 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                                             {displayNum}
                                         </div>
 
-                                        <h3 className="text-white !font-bold !text-[28px] md:!text-[42px] 2xl:!text-[48px] mb-[15px] lg:mb-[40px]">
+                                        <h3 className="text-white !font-bold !text-[28px] md:!text-[30px] 2xl:!text-[48px] mb-[15px] md:mb-[15px] 2xl:mb-[40px]">
                                             {(item?.Title ?? "").trim()}
                                         </h3>
 
-                                        <div className="text-white text-[12px] md:text-[22px] lg:text-[30px] leading-[28px] md:leading-[45] lg:leading-[54px]">
+                                        <div className="text-white text-[12px] md:text-[22px] lg:text-[24px] 2xl:text-[30px] leading-[28px] md:leading-[40px] 2xl:leading-[54px]">
                                             {(item?.Content ?? "").split("\n").map((line, i) => (
                                                 <div key={i}>{line.trim()}</div>
                                             ))}

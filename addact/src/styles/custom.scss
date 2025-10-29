@@ -366,7 +366,11 @@ footer {
 }
 
 .solutionscards-wrapper p {
-    font-size: 20px !important;
+    font-size: 18px !important;
+
+    @media (min-width: 1600px) {
+        font-size: 20px !important;
+    }
 }
 
 .item-slider-wrapper {
@@ -383,5 +387,11 @@ footer {
     .slick-dots li button:before {
         width: 10px;
         height: 10px;
+    }
+}
+
+.item-slider-wrapper {
+    .slick-list {
+        overflow: visible;
     }
 }
