@@ -364,6 +364,10 @@ footer {
 .industry-detail-page .bg-cover {
     padding-top: 150px;
 
+    @media (max-width: 1600px) {
+        padding-top: 95px;
+    }
+
     @media (max-width: 767px) {
         padding-top: 0;
     }
@@ -420,5 +424,13 @@ footer {
             padding: 0;
             margin-right: 20px;
         }
+    }
+}
+
+.custom-stroke {
+    -webkit-text-stroke-width: 2px;
+
+    @media (max-width: 767px) {
+        -webkit-text-stroke-width: 1px;
     }
 }
