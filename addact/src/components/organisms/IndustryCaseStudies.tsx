@@ -1,11 +1,9 @@
 "use client";
 
 import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
-// @ts-expect-error — CSS has no TS types
 import "slick-carousel/slick/slick.css";
-// @ts-expect-error — CSS has no TS types
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import Slider, { Settings } from "react-slick";
 import Link from "next/link";
 import Image from "next/image";
 import { RightArrowUpIcon } from "../atom/icons";
@@ -40,10 +38,11 @@ const formatDate = (iso?: string | null) => {
 };
 
 const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) => {
-    if (!items || items.length === 0) return null;
+    // ❌ was: early return here — this caused hooks to be “conditional”
+    // if (!items || items.length === 0) return null;
 
     const sortedLimited = useMemo(() => {
-        const sorted = [...items].sort((a, b) => {
+        const sorted = [...(items ?? [])].sort((a, b) => {
             const da = a?.HeroBanner?.[0]?.PublishDate || "";
             const db = b?.HeroBanner?.[0]?.PublishDate || "";
             return (new Date(db).getTime() || 0) - (new Date(da).getTime() || 0);
@@ -51,12 +50,12 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
         return sorted.slice(0, limit);
     }, [items, limit]);
 
+    // ===================== DESKTOP (lg+) slider state/logic =====================
     const sliderRef = useRef<Slider | null>(null);
 
-    // Swipe guard (block second-last -> last only)
     const [currentIndex, setCurrentIndex] = useState(0);
     const seeMoreIndex = sortedLimited.length;
-    const secondLast = seeMoreIndex - 1;
+    const secondLast = Math.max(seeMoreIndex - 1, 0);
 
     const startXRef = useRef<number | null>(null);
     const draggingRef = useRef(false);
@@ -107,8 +106,7 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
         startXRef.current = null;
     }, []);
 
-    // === Alignment with .container (uses your SCSS exactly) ===
-    // We align the slider content to: container.left + computed padding-left
+    // Align slider content’s left edge with container’s content start
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [padLeft, setPadLeft] = useState<number>(0);
 
@@ -118,22 +116,20 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
             if (!el) return;
             const rect = el.getBoundingClientRect();
             const cs = window.getComputedStyle(el);
-            const pl = parseFloat(cs.paddingLeft || "0"); // honors 16/30/25/50/20 per your SCSS
-            // content start (title start) from viewport left:
+            const pl = parseFloat(cs.paddingLeft || "0");
             const contentStart = Math.max(0, Math.round(rect.left + pl));
             setPadLeft(contentStart);
         };
-
         compute();
         window.addEventListener("resize", compute);
-        const t = setTimeout(compute, 100); // handle late font/layout shifts
+        const t = setTimeout(compute, 100);
         return () => {
             window.removeEventListener("resize", compute);
             clearTimeout(t);
         };
     }, []);
 
-    const settings = useMemo(
+    const settings: Settings = useMemo(
         () => ({
             dots: true,
             arrows: false,
@@ -157,119 +153,147 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
             },
             appendDots: (dots: React.ReactNode) => <ul style={{ marginTop: "24px" }}>{dots}</ul>,
             responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: { slidesToShow: 1, centerMode: true, centerPadding: "0", slidesToScroll: 1 },
-                },
-                {
-                    breakpoint: 640,
-                    settings: { slidesToShow: 1, centerMode: false, centerPadding: "0", slidesToScroll: 1 },
-                },
+                { breakpoint: 1024, settings: { centerMode: true, centerPadding: "0", slidesToScroll: 1 } },
+                { breakpoint: 640, settings: { centerMode: false, centerPadding: "0", slidesToScroll: 1 } },
             ],
         }),
         [seeMoreIndex, secondLast]
     );
 
+    // Reusable card
+    const Card: React.FC<{ item: CaseItem }> = ({ item }) => {
+        const hero = item?.HeroBanner?.[0];
+        const img = hero?.BannerImage;
+        const dateText = formatDate(hero?.PublishDate);
+        const theTitle = hero?.BannerTitle || "";
+        const slug = item?.Slug || "";
+        const href = `/portfolio${slug?.startsWith("/") ? slug : `/${slug}`}`;
+
+        return (
+            <article className="group border border-[#ffffff33] overflow-hidden relative h-full lg:flex min-h-[100%] lg:min-h-[300px]">
+                <div className="lg:flex p-[10px] pb-[20px] lg:p-[30px] gap-[30px] items-center w-full">
+                    {img?.url ? (
+                        <div className="relative w-[100%] min-h-[171px] h-[100%] lg:w-[320px] lg:min-w-[320px] lg:h-[244px] 2xl:w-[320px] 2xl:min-w-[320px] self-center">
+                            <Image
+                                src={img.url}
+                                alt={img.alternativeText ?? theTitle}
+                                fill
+                                className="object-cover object-center"
+                            />
+                        </div>
+                    ) : (
+                        <div className="relative w-[100%] min-h-[171px] h-[100%] lg:w-[270px] lg:min-w-[270px] lg:h-[200px] 2xl:w-[320px] 2xl:min-w-[320px] 2xl:h-[244px] bg-[#222] self-center" />
+                    )}
+
+                    <div>
+                        <div className="text-[12px] md:text-[14px] leading-[24px] px-[12px] lg:px-[20px] py-[8px] rounded-md bg-[#3F3F40] text-white border-1 border-[#3C4CFF] lg:mb-[20px] mb-[12px] w-fit mt-[15px] lg:mt-0">
+                            Case study
+                        </div>
+
+                        <h3
+                            className="text-white !text-[18px] md:!text-[22px] 2xl:!text-[30px] !leading-[30px] lg:!leading-[38px] 2xl:!leading-[48px] mb-[16px] font-[500] line-clamp-2"
+                            style={{
+                                display: "-webkit-box",
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: "vertical",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                            }}
+                        >
+                            {theTitle}
+                        </h3>
+
+                        {dateText && (
+                            <div className="text-white text-[12px] md:text-[16px] leading-[18px]">{dateText}</div>
+                        )}
+                    </div>
+                </div>
+
+                <Link
+                    href={href}
+                    className="absolute bottom-0 right-0 w-[40px] h-[40px] lg:w-14 lg:h-14 bg-[#3C4CFF] text-white flex items-center justify-center"
+                >
+                    <RightArrowUpIcon />
+                </Link>
+            </article>
+        );
+    };
+
+    const hasItems = sortedLimited.length > 0;
+
     return (
-        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px] item-slider-wrapper">
-            <div className="overflow-hidden pb-[55px]">
+        <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] item-slider-wrapper">
+            <div className="overflow-hidden lg:pb-[55px]">
                 <div className="max-w-[1920px] m-auto">
                     <div className="container" ref={containerRef}>
-                        <h2 className="border-after !text-[36px] xl:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10 xl:max-w-[60%] 2xl:max-w-[50%] mb-6 sm:mb-8 md:mb-14 2xl:mb-24">
+                        <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10 xl:max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
                             {title ?? "Project Highlights"}
                         </h2>
                     </div>
 
-                    {/* Full-bleed wrapper; inner padding equals container content start */}
-                    <div
-                        className="relative left-1/2 right-1/2 w-screen -translate-x-1/2"
-                        onTouchStartCapture={onTouchStartCapture}
-                        onTouchMoveCapture={onTouchMoveCapture}
-                        onTouchEndCapture={onTouchEndCapture}
-                        onMouseDownCapture={onMouseDownCapture}
-                        onMouseMoveCapture={onMouseMoveCapture}
-                        onMouseUpCapture={onMouseUpCapture}
-                        onMouseLeave={onMouseUpCapture}
-                    >
-                        <div style={{ paddingLeft: padLeft }}>
-                            <Slider ref={sliderRef} {...(settings as any)}>
-                                {sortedLimited.map((cs, idx) => {
-                                    const hero = cs?.HeroBanner?.[0];
-                                    const img = hero?.BannerImage;
-                                    const dateText = formatDate(hero?.PublishDate);
-                                    const theTitle = hero?.BannerTitle || "";
-                                    const slug = cs?.Slug || "";
-                                    const href = `/portfolio${slug?.startsWith("/") ? slug : `/${slug}`}`;
-
-                                    return (
-                                        <div key={`${slug || idx}`} className="px-[12px] h-full">
-                                            <article className="group border border-[#ffffff33] overflow-hidden relative h-full flex min-h-[260px] md:min-h-[300px] 2xl:min-h-[340px]">
-                                                <div className="flex p-[10px] md:p-[30px] gap-[30px] items-stretch w-full">
-                                                    {img?.url ? (
-                                                        <div className="relative w-[270px] min-w-[270px] h-[200px] 2xl:w-[320px] 2xl:min-w-[320px] 2xl:h-[244px] self-center">
-                                                            <Image
-                                                                src={img.url}
-                                                                alt={img.alternativeText ?? theTitle}
-                                                                fill
-                                                                className="object-cover object-center"
-                                                            />
-                                                        </div>
-                                                    ) : (
-                                                        <div className="w-[270px] min-w-[270px] h-[200px] 2xl:w-[320px] 2xl:min-w-[320px] 2xl:h-[244px] bg-[#222] self-center" />
-                                                    )}
-
-                                                    <div>
-                                                        <div className="text-[12px] md:text-[14px] leading-[24px] px-[20px] py-[8px] rounded-md bg-[#3F3F40] text-white border-1 border-[#3C4CFF] mb-[20px] w-fit">
-                                                            Case study
-                                                        </div>
-
-                                                        <h3
-                                                            className="text-white !text-[18px] md:!text-[22px] 2xl:!text-[30px] !leading-[38px] 2xl:!leading-[48px] mb-[16px] font-[500] line-clamp-2"
-                                                            style={{
-                                                                display: "-webkit-box",
-                                                                WebkitLineClamp: 2,
-                                                                WebkitBoxOrient: "vertical",
-                                                                overflow: "hidden",
-                                                                textOverflow: "ellipsis",
-                                                            }}
-                                                        >
-                                                            {theTitle}
-                                                        </h3>
-
-                                                        {dateText && (
-                                                            <div className="text-white text-[13px] md:text-[16px] leading-[18px]">
-                                                                {dateText}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-
-                                                <Link
-                                                    href={href}
-                                                    className="absolute bottom-0 right-0 w-14 h-14 bg-[#3C4CFF] text-white flex items-center justify-center"
-                                                >
-                                                    <RightArrowUpIcon />
-                                                </Link>
-                                            </article>
+                    {/* =================== MOBILE/TABLET (< lg): GRID (no slider) =================== */}
+                    <div className="container lg:hidden">
+                        {hasItems ? (
+                            <>
+                                <div className="grid grid-cols-1 min-[576px]:grid-cols-2 gap-4">
+                                    {sortedLimited.map((cs, idx) => (
+                                        <div key={(cs?.Slug ?? idx) + "-grid"} className="h-full">
+                                            <Card item={cs} />
                                         </div>
-                                    );
-                                })}
-
-                                {/* See More tile — still rendered, but never reachable as current */}
-                                <div className="px-[12px] h-full">
-                                    <div className="h-full">
-                                        <Link
-                                            href="/portfolio"
-                                            className="h-full w-full max-w-[382px] hover:bg-[#3C4CFF] transition-colors text-white text-[22px] md:text-[28px] 2xl:text-[30px] font-[500] flex items-center justify-center mdmin-h-[260px] md:min-h-[300px] 2xl:min-h-[340px]"
-                                            style={{ border: "1px solid rgb(255 255 255 / 20%)" }}
-                                        >
-                                            See More
-                                        </Link>
-                                    </div>
+                                    ))}
                                 </div>
-                            </Slider>
-                        </div>
+
+                                {/* See More button */}
+                                <div className="mt-[40px] flex justify-center">
+                                    <Link
+                                        href="/portfolio"
+                                        className="px-6 py-3 border border-white/20 text-white hover:bg-[#3C4CFF] transition-colors"
+                                    >
+                                        See More
+                                    </Link>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="text-white/60">No case studies yet.</div>
+                        )}
                     </div>
+
+                    {/* =================== DESKTOP (lg+): SLIDER =================== */}
+                    {hasItems && (
+                        <div
+                            className="hidden lg:block relative left-1/2 right-1/2 w-screen -translate-x-1/2"
+                            onTouchStartCapture={onTouchStartCapture}
+                            onTouchMoveCapture={onTouchMoveCapture}
+                            onTouchEndCapture={onTouchEndCapture}
+                            onMouseDownCapture={onMouseDownCapture}
+                            onMouseMoveCapture={onMouseMoveCapture}
+                            onMouseUpCapture={onMouseUpCapture}
+                            onMouseLeave={onMouseUpCapture}
+                        >
+                            <div style={{ paddingLeft: padLeft }}>
+                                <Slider ref={sliderRef} {...settings}>
+                                    {sortedLimited.map((cs, idx) => (
+                                        <div key={`${cs?.Slug || idx}`} className="px-[12px] h-full">
+                                            <Card item={cs} />
+                                        </div>
+                                    ))}
+
+                                    {/* See More tile — still rendered, but never reachable as current */}
+                                    <div className="px-[12px] h-full">
+                                        <div className="h-full">
+                                            <Link
+                                                href="/portfolio"
+                                                className="h-full w-full max-w-[382px] hover:bg-[#3C4CFF] transition-colors text-white text-[22px] md:text-[28px] 2xl:text-[30px] font-[500] flex items-center justify-center mdmin-h-[260px] md:min-h-[300px] 2xl:min-h-[300px]"
+                                                style={{ border: "1px solid rgb(255 255 255 / 20%)" }}
+                                            >
+                                                See More
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </Slider>
+                            </div>
+                        </div>
+                    )}
 
                     <style jsx global>{`
                         .slick-dots li button:before {

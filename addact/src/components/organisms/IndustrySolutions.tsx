@@ -48,11 +48,11 @@ const IndustrySolutions: React.FC<Props> = ({ data }) => {
     };
 
     return (
-        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px] solutionscards-wrapper">
+        <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] solutionscards-wrapper">
             <div className="container">
                 <div className="flex flex-col">
                     {/* Title (same size treatment as reference) */}
-                    <h2 className="border-after !text-[36px] xl:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10 xl:max-w-[60%] 2xl:max-w-[50%] mb-6 sm:mb-8 md:mb-14 2xl:mb-24">
+                    <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10 xl:max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
                         {data?.Title ?? "Our Solutions"}
                     </h2>
 

@@ -139,8 +139,8 @@ footer {
     }
 
     .slick-slide > div {
-        padding-left: 6%;
-        padding-right: 6%;
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
@@ -362,7 +362,11 @@ footer {
 }
 
 .industry-detail-page .bg-cover {
-    padding-top: 100px;
+    padding-top: 150px;
+
+    @media (max-width: 767px) {
+        padding-top: 0;
+    }
 }
 
 .solutionscards-wrapper p {
@@ -370,6 +374,11 @@ footer {
 
     @media (min-width: 1600px) {
         font-size: 20px !important;
+    }
+
+    @media (max-width: 767px) {
+        font-size: 12px !important;
+        line-height: 20px !important;
     }
 }
 
@@ -393,5 +402,23 @@ footer {
 .item-slider-wrapper {
     .slick-list {
         overflow: visible;
+    }
+}
+
+.textimonials-slider,
+.solutionscards-wrapper {
+    .slick-slide > div {
+        @media (max-width: 767px) {
+            padding: 0;
+        }
+    }
+}
+
+.solutionscards-wrapper {
+    .slick-slide > div {
+        @media (max-width: 767px) {
+            padding: 0;
+            margin-right: 20px;
+        }
     }
 }

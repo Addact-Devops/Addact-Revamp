@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import RichText from "../atom/richText";
 
-/** ✅ (Optional) industry variant type kept for reference; not required for the prop anymore */
+/** Shared shapes */
 type HeadingBlock = {
     id?: string;
     h1?: string;
@@ -14,26 +14,39 @@ type HeadingBlock = {
     Richtext?: string;
 };
 
-type IndustryWhyAddact = {
-    Title?: HeadingBlock[] | null;
-    GlobalCard?: Array<{
-        id?: string;
-        Title?: string | null;
-        Description?: string | null;
-        Image?: {
-            url?: string | null;
-            alternativeText?: string | null;
-            width?: number | null;
-            height?: number | null;
-        } | null;
-    }> | null;
+type CardImage = {
+    url?: string | null;
+    alternativeText?: string | null;
+    width?: number | null;
+    height?: number | null;
 };
 
-/** ⬇️ Loosened prop type to avoid TS mismatch between home & industry shapes */
+type CardItem = {
+    id?: string;
+    Title?: string | null;
+    Description?: string | null;
+    Image?: CardImage | null;
+};
+
+type DataLike = {
+    Title?: HeadingBlock[] | null;
+    GlobalCard?: CardItem[] | null;
+};
+
+/** Prop type: accept home/industry-like shape */
 interface IProps {
-    // Using `any` here unblocks strict differences (nullability, missing fields) between the two sources
-    data: any; // Whyaddact | IndustryWhyAddact | null | undefined;
+    data?: DataLike | null;
 }
+
+const getHeading = (titleBlocks?: HeadingBlock[] | null): string => {
+    const first = Array.isArray(titleBlocks) ? titleBlocks[0] : undefined;
+    return first?.h2 ?? first?.h1 ?? first?.h3 ?? first?.h5 ?? first?.h6 ?? "";
+};
+
+const getCards = (data?: DataLike | null): CardItem[] => {
+    const raw = data?.GlobalCard;
+    return Array.isArray(raw) ? raw : [];
+};
 
 const WhyAddactWithAnimation = ({ data }: IProps) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -44,20 +57,9 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
-    /** ✅ Safely compute heading from any h1/h2/h3/h5/h6 (fallback to empty string) */
-    const titleArray = (data as any)?.Title as HeadingBlock[] | null | undefined;
-    const firstTitleBlock = Array.isArray(titleArray) ? titleArray[0] : null;
-    const heading: string =
-        firstTitleBlock?.h2 ??
-        firstTitleBlock?.h1 ??
-        firstTitleBlock?.h3 ??
-        firstTitleBlock?.h5 ??
-        firstTitleBlock?.h6 ??
-        "";
-
-    /** ✅ Normalize cards array (handles null/undefined) */
-    const cardsRaw = (data as any)?.GlobalCard as any[] | null | undefined;
-    const cards = Array.isArray(cardsRaw) ? cardsRaw : [];
+    /** Heading & cards (works for both shapes) */
+    const heading = getHeading(data?.Title);
+    const cards = getCards(data);
 
     // ▶️ Start the slide-in animation when this section enters the viewport
     useEffect(() => {
@@ -83,7 +85,7 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
     return (
         <section
             ref={sectionRef}
-            className={`my-[60px] xl:my-[100px] 2xl:my-[200px] whyaddact-anim ${play ? "play" : ""}`}
+            className={`my-[80px] lg:my-[100px] 2xl:my-[200px] whyaddact-anim ${play ? "play" : ""}`}
         >
             <div className="container">
                 <div className="flex flex-col">
@@ -91,9 +93,9 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
                         {heading}
                     </h2>
 
-                    {/* Mobile Accordion (unchanged) */}
+                    {/* Mobile Accordion */}
                     <div className="block sm:hidden mt-8 -mx-6 bg-[#1c1c1c]">
-                        {cards.slice(0, 6).map((service: any, index: number) => (
+                        {cards.slice(0, 6).map((service: CardItem, index: number) => (
                             <div
                                 key={service?.id ?? index}
                                 className={`${index === 0 ? "border-t" : ""} border-b border-gray-700`}
@@ -102,7 +104,7 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
                                     onClick={() => toggleAccordion(index)}
                                     className="flex justify-between items-center w-full py-4 px-6 text-left text-white"
                                 >
-                                    <span className="text-lg font-[400] md:font-semibold">{service?.Title}</span>
+                                    <span className="text-lg font-[400] md:font-semibold">{service?.Title ?? ""}</span>
                                     <svg
                                         className={`w-5 h-5 transform transition-transform duration-300 ${
                                             openIndex === index ? "rotate-180" : ""
@@ -117,7 +119,6 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
                                 </button>
                                 {openIndex === index && (
                                     <div className="pb-4 px-6">
-                                        {/* Icon removed in mobile */}
                                         <div className="text-[16px] text-white">
                                             <RichText
                                                 html={(service?.Description ?? "")
@@ -133,8 +134,8 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
 
                     {/* Desktop Grid */}
                     <section className="hidden sm:block">
-                        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 sm:mt-14 2xl:mt-24">
-                            {cards.slice(0, 6).map((service: any, index: number) => (
+                        <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 sm:mt-14 2xl:mt-24">
+                            {cards.slice(0, 6).map((service: CardItem, index: number) => (
                                 <div key={service?.id ?? index} className="relative">
                                     <div className="text-white p-4 2xl:p-7 overflow-hidden">
                                         {/* Icon only for desktop (no animation on icon) */}
@@ -151,7 +152,7 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
 
                                         {/* 🔥 Animate ONLY these two elements */}
                                         <h3 className="slide-x !text-[25px] 2xl:!text-3xl my-[30px]">
-                                            {service?.Title}
+                                            {service?.Title ?? ""}
                                         </h3>
 
                                         <div className="slide-x text-[18px] 2xl:text-[20px] text-white">
@@ -163,8 +164,15 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
                                         </div>
                                     </div>
 
+                                    {/* ✅ Responsive dividers:
+                      - Below lg (sm–md): 2 columns => divider on first column only
+                      - lg and up: 3 columns => divider on columns 1 & 2
+                  */}
+                                    {(index + 1) % 2 !== 0 && (
+                                        <div className="absolute top-1/8 right-0 h-3/4 w-[1px] bg-white opacity-40 lg:hidden"></div>
+                                    )}
                                     {(index + 1) % 3 !== 0 && (
-                                        <div className="absolute top-1/8 right-0 h-3/4 w-[1px] bg-white opacity-40"></div>
+                                        <div className="absolute top-1/8 right-0 h-3/4 w-[1px] bg-white opacity-40 hidden lg:block"></div>
                                     )}
                                 </div>
                             ))}

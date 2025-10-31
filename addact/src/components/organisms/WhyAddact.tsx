@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Whyaddact } from "@/graphql/queries/getHomePage";
+import type { Whyaddact } from "@/graphql/queries/getHomePage"; // use type-only import
 import RichText from "../atom/richText";
 
-/** ✅ (Optional) industry variant type kept for reference; not required for the prop anymore */
+/** ✅ (Optional) industry variant type kept for reference; now used in the prop union */
 type HeadingBlock = {
     id?: string;
     h1?: string;
@@ -15,26 +15,44 @@ type HeadingBlock = {
     Richtext?: string;
 };
 
-type IndustryWhyAddact = {
-    Title?: HeadingBlock[] | null;
-    GlobalCard?: Array<{
-        id?: string;
-        Title?: string | null;
-        Description?: string | null;
-        Image?: {
-            url?: string | null;
-            alternativeText?: string | null;
-            width?: number | null;
-            height?: number | null;
-        } | null;
-    }> | null;
+type CardImage = {
+    url?: string | null;
+    alternativeText?: string | null;
+    width?: number | null;
+    height?: number | null;
 };
 
-/** ⬇️ Loosened prop type to avoid TS mismatch between home & industry shapes */
+type CardItem = {
+    id?: string;
+    Title?: string | null;
+    Description?: string | null;
+    Image?: CardImage | null;
+};
+
+type IndustryWhyAddact = {
+    Title?: HeadingBlock[] | null;
+    GlobalCard?: CardItem[] | null;
+};
+
+/** ⬇️ Prop type: accept either home or industry shape (or null/undefined) */
 interface IProps {
-    // Using `any` here unblocks strict differences (nullability, missing fields) between the two sources
-    data: any; // Whyaddact | IndustryWhyAddact | null | undefined;
+    data?: Whyaddact | IndustryWhyAddact | null;
 }
+
+const getHeading = (titleBlocks?: HeadingBlock[] | null): string => {
+    const first = Array.isArray(titleBlocks) ? titleBlocks[0] : undefined;
+    return first?.h2 ?? first?.h1 ?? first?.h3 ?? first?.h5 ?? first?.h6 ?? "";
+};
+
+const getCards = (maybeCards: unknown): CardItem[] => {
+    const arr = maybeCards as { GlobalCard?: CardItem[] | null } | { cards?: CardItem[] } | null | undefined as
+        | { GlobalCard?: CardItem[] | null }
+        | null
+        | undefined;
+
+    const raw = arr?.GlobalCard;
+    return Array.isArray(raw) ? raw : [];
+};
 
 const WhyAddact = ({ data }: IProps) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -43,23 +61,16 @@ const WhyAddact = ({ data }: IProps) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
-    /** ✅ Safely compute heading from any h1/h2/h3/h5/h6 (fallback to empty string) */
-    const titleArray = (data as any)?.Title as HeadingBlock[] | null | undefined;
-    const firstTitleBlock = Array.isArray(titleArray) ? titleArray[0] : null;
-    const heading: string =
-        firstTitleBlock?.h2 ??
-        firstTitleBlock?.h1 ??
-        firstTitleBlock?.h3 ??
-        firstTitleBlock?.h5 ??
-        firstTitleBlock?.h6 ??
-        "";
+    // ✅ Title (works for both shapes)
+    const heading = getHeading(
+        (data as IndustryWhyAddact | undefined)?.Title ?? (data as Whyaddact | undefined)?.Title
+    );
 
-    /** ✅ Normalize cards array (handles null/undefined) */
-    const cardsRaw = (data as any)?.GlobalCard as any[] | null | undefined;
-    const cards = Array.isArray(cardsRaw) ? cardsRaw : [];
+    // ✅ Cards (works for both shapes)
+    const cards = getCards(data as { GlobalCard?: CardItem[] | null } | null);
 
     return (
-        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px]">
+        <section className="my-[80px] lg:my-[100px] 2xl:my-[200px]">
             <div className="container">
                 <div className="flex flex-col">
                     <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
@@ -68,7 +79,7 @@ const WhyAddact = ({ data }: IProps) => {
 
                     {/* Mobile Accordion */}
                     <div className="block sm:hidden mt-8 -mx-6 bg-[#1c1c1c]">
-                        {cards.slice(0, 6).map((service: any, index: number) => (
+                        {cards.slice(0, 6).map((service: CardItem, index: number) => (
                             <div
                                 key={service?.id ?? index}
                                 className={`${index === 0 ? "border-t" : ""} border-b border-gray-700`}
@@ -77,7 +88,7 @@ const WhyAddact = ({ data }: IProps) => {
                                     onClick={() => toggleAccordion(index)}
                                     className="flex justify-between items-center w-full py-4 px-6 text-left text-white"
                                 >
-                                    <span className="text-lg font-[400] md:font-semibold">{service?.Title}</span>
+                                    <span className="text-lg font-[400] md:font-semibold">{service?.Title ?? ""}</span>
                                     <svg
                                         className={`w-5 h-5 transform transition-transform duration-300 ${
                                             openIndex === index ? "rotate-180" : ""
@@ -109,7 +120,7 @@ const WhyAddact = ({ data }: IProps) => {
                     {/* Desktop Grid */}
                     <section className="hidden sm:block">
                         <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 sm:mt-14 2xl:mt-24">
-                            {cards.slice(0, 6).map((service: any, index: number) => (
+                            {cards.slice(0, 6).map((service: CardItem, index: number) => (
                                 <div key={service?.id ?? index} className="relative">
                                     <div className="text-white p-4 2xl:p-7">
                                         {/* Icon only for desktop */}
@@ -123,7 +134,7 @@ const WhyAddact = ({ data }: IProps) => {
                                                 />
                                             )}
                                         </div>
-                                        <h3 className="!text-[25px] 2xl:!text-3xl my-[30px]">{service?.Title}</h3>
+                                        <h3 className="!text-[25px] 2xl:!text-3xl my-[30px]">{service?.Title ?? ""}</h3>
                                         <div className="text-[18px] 2xl:text-[20px] text-white">
                                             <RichText
                                                 html={(service?.Description ?? "")

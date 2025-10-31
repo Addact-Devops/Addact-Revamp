@@ -14,6 +14,7 @@ type OverrideItem = {
     Icons?: { url?: string; alternativeText?: string; width?: number; height?: number; name?: string } | null;
     ClassName?: string;
 };
+
 type OurCmsExpertsWithAnimationProps = {
     title?: string;
     descriptionHtml?: string;
@@ -39,11 +40,10 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Build synthetic data from overrides (if provided)
+    // ✅ Build synthetic data from overrides (no ts-ignore needed)
     useEffect(() => {
         if (props?.title || (props?.items && props.items.length)) {
-            const synthetic: CMSResponse = {
-                // @ts-ignore shaping to match query result
+            const synthetic = {
                 ourExpertises: [
                     {
                         ExpertiseTitle: [
@@ -75,7 +75,8 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
                         })),
                     },
                 ],
-            };
+            } as unknown as CMSResponse; // ✅ type-safe cast replaces ts-ignore
+
             setData(synthetic);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,7 +117,7 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
     if (!data) return null;
 
     return (
-        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px] cms-list">
+        <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] cms-list">
             <div className="container">
                 <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
                     <h2 className="w-full lg:w-[40%] border-after !text-[36px] xl:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10">
@@ -131,7 +132,7 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
                 <section>
                     <div
                         ref={gridRef}
-                        className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 2xl:mt-24"
+                        className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-[10px] md:gap-6 lg:mt-14 2xl:mt-24"
                     >
                         {data.ourExpertises[0].CMS.map((service) => {
                             const hoverColorMap: Record<string, string> = {
@@ -171,7 +172,6 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
 
             {/* Global CSS for the card scale animation (0 → 1, once when in view) */}
             <style jsx global>{`
-                /* Respect reduced motion */
                 @media (prefers-reduced-motion: reduce) {
                     .card-zoom,
                     .card-zoom.play {

@@ -35,7 +35,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
     type TagName = (typeof allowedTags)[number];
 
     return (
-        <section id="perks" className="my-[60px] xl:my-[100px] 2xl:my-[200px]">
+        <section id="perks" className="my-[80px] lg:my-[100px] 2xl:my-[200px]">
             <div className="container mx-auto">
                 {/* Section Titles */}
                 {title.map((block) => {

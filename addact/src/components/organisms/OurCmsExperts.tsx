@@ -40,8 +40,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
     /* ✅ If industry overrides provided, build a CMSResponse-shaped object and set it */
     useEffect(() => {
         if (props?.title || (props?.items && props.items.length)) {
-            const synthetic: CMSResponse = {
-                // @ts-ignore
+            const synthetic = {
                 ourExpertises: [
                     {
                         ExpertiseTitle: [
@@ -73,7 +72,8 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                         })),
                     },
                 ],
-            };
+            } as unknown as CMSResponse; // ✅ no ts-ignore, no any
+
             setData(synthetic);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,7 +90,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
     }
 
     return (
-        <section className="my-[60px] xl:my-[100px] 2xl:my-[200px] cms-list">
+        <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] cms-list">
             <div className="container">
                 <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
                     <h2 className="w-full lg:w-[40%] border-after !text-[36px] xl:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10">

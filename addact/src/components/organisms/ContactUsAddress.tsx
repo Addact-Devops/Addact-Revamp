@@ -12,7 +12,7 @@ export default function ContactUsAddress({ addressContent }: Props) {
     const { OfficeCountry, OfficeCity, Address, ContactUsEmailPhone, MapIframe } = addressContent;
 
     return (
-        <section className="container my-[60px] xl:my-[100px] 2xl:my-[200px]" id="maps-component">
+        <section className="container my-[80px] lg:my-[100px] 2xl:my-[200px]" id="maps-component">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-[50px] md:gap-20 lg:gap-30 items-start">
                 {/* Left Side Content */}
                 <div className="text-[#0A0A0A] space-y-5">

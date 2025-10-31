@@ -74,12 +74,12 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
     return (
         <section
             ref={sectionRef}
-            className="my-[60px] xl:my-[100px] 2xl:my-[200px] solutionscards-wrapper overflow-hidden"
+            className="my-[80px] lg:my-[100px] 2xl:my-[200px] solutionscards-wrapper overflow-hidden"
         >
             <div className="container">
                 <div className="flex flex-col">
                     {/* Title */}
-                    <h2 className="border-after !text-[36px] xl:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10 xl:max-w-[60%] 2xl:max-w-[50%] mb-6 sm:mb-8 md:mb-14 2xl:mb-24">
+                    <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[64px] !pb-4 xl:!pb-10 xl:max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
                         {data?.Title ?? "Our Solutions"}
                     </h2>
 
@@ -119,7 +119,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
                                             key={`${i}-${j}`}
                                             className="relative group bg-[#1C1C1C] pb-15 border-l-[3px] border-[#3C4CFF] p-[16px]"
                                         >
-                                            <h3 className="text-white !text-[20px] md:!text-[30px] mb-3">
+                                            <h3 className="text-white !text-[17px] md:!text-[30px] mb-3">
                                                 {card?.Title ?? ""}
                                             </h3>
                                             <RichText html={card?.Description ?? ""} />
@@ -130,9 +130,13 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
                         </Slider>
 
                         {/* Tiny progress indicator */}
-                        <div className="relative mt-[40px] h-[1px] bg-gray-600">
+                        <div className="relative mt-[40px] h-[4px] flex items-center justify-center">
+                            {/* Center gray line */}
+                            <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-[#D9D9D9] -translate-y-1/2"></div>
+
+                            {/* Blue indicator bar */}
                             <div
-                                className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
+                                className="absolute top-0 left-0 h-[4px] bg-[#3C4CFF] transition-all duration-300"
                                 style={getIndicatorStyle(Math.ceil(cards.length / 2) || 1)}
                             />
                         </div>
