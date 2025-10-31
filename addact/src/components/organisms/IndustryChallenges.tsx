@@ -90,10 +90,9 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                         <div className="w-[85px] shrink-0">
                             <div className="sticky top-[60px]">
                                 <div
-                                    className="pointer-events-none select-none text-[72px] lg:text-[64px] leading-none tracking-tight"
+                                    className="pointer-events-none select-none text-[72px] lg:text-[64px] leading-none tracking-tight custom-stroke"
                                     style={{
                                         fontWeight: 900,
-                                        WebkitTextStrokeWidth: "2px",
                                         WebkitTextStrokeColor: "rgba(255, 255, 255, 0.7)",
                                         color: "transparent",
                                         fontFamily: "Poppins, sans-serif",

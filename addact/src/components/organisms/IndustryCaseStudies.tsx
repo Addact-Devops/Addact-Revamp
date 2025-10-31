@@ -186,7 +186,7 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
                     )}
 
                     <div>
-                        <div className="text-[12px] md:text-[14px] leading-[24px] px-[12px] lg:px-[20px] py-[8px] rounded-md bg-[#3F3F40] text-white border-1 border-[#3C4CFF] lg:mb-[20px] mb-[12px] w-fit mt-[15px] lg:mt-0">
+                        <div className="text-[12px] md:text-[14px] leading-[24px] px-5 py-1 lg:py-[6px] lg:px-[20px] rounded-md bg-[#3F3F40] text-white border-1 border-[#3C4CFF] lg:mb-[20px] mb-[12px] w-fit mt-[15px] lg:mt-0">
                             Case study
                         </div>
 
@@ -247,7 +247,7 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
                                 <div className="mt-[40px] flex justify-center">
                                     <Link
                                         href="/portfolio"
-                                        className="px-6 py-3 border border-white/20 text-white hover:bg-[#3C4CFF] transition-colors"
+                                        className="px-6 py-3 text-white bg-[#3C4CFF] transition-colors"
                                     >
                                         See More
                                     </Link>
