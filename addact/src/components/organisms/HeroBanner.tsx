@@ -30,39 +30,50 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
 
     return (
         <section className="relative text-white overflow-hidden">
-            {/* Background Image */}
-            <Image
-                src={backgroundImageUrl}
-                alt={title || "Hero Image"}
-                fill
-                className="object-cover object-center z-0"
-                priority
-            />
+            {/* ✅ Background Image or Video */}
+            {backgroundImageUrl?.match(/\.(mp4|webm)$/i) ? (
+                <video
+                    src={backgroundImageUrl}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                />
+            ) : (
+                <Image
+                    src={backgroundImageUrl}
+                    alt={title || "Hero Image"}
+                    fill
+                    className="object-cover object-center z-0"
+                    priority
+                />
+            )}
 
             {/* Overlay */}
             <div className="absolute bg-[rgba(0,0,0,0.5)]"></div>
 
             {/* Content */}
-            <div className="relative container mt-[68px] md:mt-[120px] min-h-[550px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
+            <div className="relative container mt-[68px] lg:mt-[120px] min-h-[400px] lg:min-h-[500px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
                 <div className="text-left max-w-[95%]">
-                    <h1 className="text-white mb-[10px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] lg:max-w-[60%]">
+                    <h1 className="text-white mb-[20px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] xl:max-w-[60%]">
                         {title}
                     </h1>
 
                     <div
-                        className="text-white text-[15px] leading-[25px] lg:text-[17px] lg:leading-[30px] font-normal mt-0 lg:max-w-[50%]"
+                        className="text-white text-[16px] leading-[25px] lg:text-[17px] lg:leading-[30px] font-normal mt-0 xl:max-w-[50%]"
                         dangerouslySetInnerHTML={{ __html: description }}
                     />
 
                     {button?.label && button?.url && (
-                        <div className="mt-10">
+                        <div className="mt-[30px] md:mt-10">
                             {button.url.includes("#") ? (
                                 <button
                                     onClick={() => {
                                         const targetId = button.url.replace("#", "");
                                         document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
                                     }}
-                                    className="inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]"
+                                    className="inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-[600] transition text-lg text-[16px] md:text-[15px]"
                                 >
                                     {button.label}
                                 </button>
