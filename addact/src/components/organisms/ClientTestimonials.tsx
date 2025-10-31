@@ -57,7 +57,7 @@ export default function ClientTestimonials() {
             {
                 breakpoint: 1023,
                 settings: {
-                    slidesToShow: 1.1,
+                    slidesToShow: 1,
                     slidesToScroll: 1,
                     arrows: false,
                     centerMode: false,
@@ -68,7 +68,7 @@ export default function ClientTestimonials() {
     };
 
     return (
-        <section className="bg-[#0F0F0F] text-white my-[60px] xl:my-[100px] 2xl:my-[200px]">
+        <section className="bg-[#0F0F0F] text-white my-[80px] lg:my-[100px] 2xl:my-[200px] textimonials-slider">
             <div className="container">
                 <div className="grid grid-cols-1 lg:grid-cols-3 items-start">
                     {/* Title & Arrows */}
@@ -136,7 +136,7 @@ export default function ClientTestimonials() {
                                     <div
                                         key={index}
                                         className={`xl:px-[12px] px-[6px] ${
-                                            isFirstVisible ? "max-[1023px]:ml-[16px] lg:ml-0" : ""
+                                            isFirstVisible ? "max-[1023px]:mr-[16px] lg:ml-0" : ""
                                         } h-full`}
                                     >
                                         <div className="bg-[#1C1C1C] xl:px-[20px] xl:py-[30px] 2xl:px-[40px] 2xl:py-[30px] p-[24px] h-full min-h-[240px] flex flex-col justify-between">

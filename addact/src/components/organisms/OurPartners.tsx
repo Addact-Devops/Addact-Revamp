@@ -9,8 +9,25 @@ type PartnerItem = {
     Image: PartnerImage[];
 };
 
-export default function OurPartners() {
+/* ✅ ADDED: optional props to override with industry data */
+type OurPartnersProps = {
+    titleBlocks?: PartnerTitle[];
+    images?: PartnerImage[];
+};
+
+export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
     const [partnerData, setPartnerData] = useState<PartnerItem | null>(null);
+
+    /* ✅ ADDED: if industry props are present, set state from props and skip fetch */
+    useEffect(() => {
+        if (props?.titleBlocks?.length || props?.images?.length) {
+            setPartnerData({
+                Title: props.titleBlocks ?? [],
+                Image: props.images ?? [],
+            });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props?.titleBlocks, props?.images]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,10 +39,25 @@ export default function OurPartners() {
             }
         };
 
-        fetchData();
+        /* ✅ ADDED: only fetch if no industry overrides */
+        if (!(props?.titleBlocks?.length || props?.images?.length)) {
+            fetchData();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const renderTitle = () => {
+        /* ✅ ADDED: prefer props.titleBlocks when present */
+        const overrideTitle = (props?.titleBlocks ?? [])[0];
+
+        if (overrideTitle) {
+            if ("h1" in overrideTitle && overrideTitle.h1) return overrideTitle.h1;
+            if ("h2" in overrideTitle && overrideTitle.h2) return overrideTitle.h2;
+            if ("h3" in overrideTitle && overrideTitle.h3) return overrideTitle.h3;
+            if ("h5" in overrideTitle && overrideTitle.h5) return overrideTitle.h5;
+            if ("h6" in overrideTitle && overrideTitle.h6) return overrideTitle.h6;
+        }
+
         const title = partnerData?.Title?.[0];
 
         if (!title) return "Our Partners";
@@ -49,7 +81,11 @@ export default function OurPartners() {
 
             <div className="overflow-hidden relative w-full py-4">
                 <div className="partners__marquee-content flex gap-[40px] md:gap-[80px] w-fit">
-                    {[...(partnerData?.Image || []), ...(partnerData?.Image || [])].map((item, index) => (
+                    {/* ✅ ADDED: prefer props.images when present, else partnerData.Image */}
+                    {[
+                        ...(props?.images || partnerData?.Image || []),
+                        ...(props?.images || partnerData?.Image || []),
+                    ].map((item, index) => (
                         <div key={index} className="min-w-[160px] flex items-center justify-center">
                             {item?.Image?.url && (
                                 <Image

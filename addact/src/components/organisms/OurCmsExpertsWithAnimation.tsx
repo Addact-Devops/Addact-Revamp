@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { CMSResponse, getCMSExpertiseData } from "@/graphql/queries/getCmsExperts";
 import Image from "../atom/image";
@@ -14,22 +14,25 @@ type OverrideItem = {
     Icons?: { url?: string; alternativeText?: string; width?: number; height?: number; name?: string } | null;
     ClassName?: string;
 };
-type OurCmsExpertsProps = {
+
+type OurCmsExpertsWithAnimationProps = {
     title?: string;
-    descriptionHtml?: string; // optional if you add it later
+    descriptionHtml?: string;
     items?: OverrideItem[];
 };
 
-const OurCmsExperts = (props: OurCmsExpertsProps) => {
+const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
     const [data, setData] = useState<CMSResponse | null>(null);
-    const [playLogos, setPlayLogos] = useState(false); // ▶️ trigger animation once
+
+    // ▶️ Play animation once grid is in view
+    const [playCards, setPlayCards] = useState(false);
+    const gridRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         async function fetchData() {
             const response = await getCMSExpertiseData();
             setData(response);
         }
-        // ✅ FETCH ONLY if no industry overrides were provided
         const hasOverrides = !!(props?.title || (props?.items && props.items.length));
         if (!hasOverrides) {
             fetchData();
@@ -37,7 +40,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    /* ✅ If industry overrides provided, build a CMSResponse-shaped object and set it */
+    // ✅ Build synthetic data from overrides (no ts-ignore needed)
     useEffect(() => {
         if (props?.title || (props?.items && props.items.length)) {
             const synthetic = {
@@ -72,22 +75,46 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                         })),
                     },
                 ],
-            } as unknown as CMSResponse; // ✅ no ts-ignore, no any
+            } as unknown as CMSResponse; // ✅ type-safe cast replaces ts-ignore
 
             setData(synthetic);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props?.title, props?.descriptionHtml, JSON.stringify(props?.items || [])]);
 
-    // ▶️ Start the logo animation once after first paint (prevents SSR flash)
+    // 👀 Start animation ONLY after the grid is rendered and enters viewport
     useEffect(() => {
-        const t = requestAnimationFrame(() => setPlayLogos(true));
-        return () => cancelAnimationFrame(t);
-    }, []);
+        if (!data) return; // wait for items to render
+        if (typeof window === "undefined") return;
 
-    if (!data) {
-        return null;
-    }
+        const el = gridRef.current;
+        if (!el) return;
+
+        if (!("IntersectionObserver" in window)) {
+            setPlayCards(true); // fallback: just show
+            return;
+        }
+
+        const obs = new IntersectionObserver(
+            (entries) => {
+                const entry = entries[0];
+                if (entry.isIntersecting) {
+                    setPlayCards(true);
+                    obs.disconnect(); // run once
+                }
+            },
+            {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "0px 0px -10% 0px",
+            }
+        );
+
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, [data]); // 🔑 re-run when data arrives so the grid actually exists
+
+    if (!data) return null;
 
     return (
         <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] cms-list">
@@ -103,7 +130,10 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                 </div>
 
                 <section>
-                    <div className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 2xl:mt-24">
+                    <div
+                        ref={gridRef}
+                        className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-[10px] md:gap-6 lg:mt-14 2xl:mt-24"
+                    >
                         {data.ourExpertises[0].CMS.map((service) => {
                             const hoverColorMap: Record<string, string> = {
                                 Sitecore: "hover:bg-[#EE3524]",
@@ -117,22 +147,22 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
 
                             return (
                                 <Link
-                                    className={`bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
                                     key={service?.id}
                                     href={service?.Links?.href}
                                     target={service?.Links?.isExternal ? "_blank" : "_self"}
+                                    // 🔥 Animate the ENTIRE card (0 → 1) when grid enters view
+                                    className={`card-zoom ${
+                                        playCards ? "play" : ""
+                                    } bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
                                 >
-                                    {/* 🔥 Animate ONLY the logo image */}
-                                    <div className={`logo-zoom ${playLogos ? "play" : ""}`}>
-                                        <Image
-                                            src={service?.Icons?.url}
-                                            alt={service?.Icons?.alternativeText || "Service Icon"}
-                                            width={service?.Icons?.width}
-                                            height={service?.Icons?.height}
-                                            className="w-[113px] md:w-[310px]"
-                                            unoptimized={false}
-                                        />
-                                    </div>
+                                    <Image
+                                        src={service?.Icons?.url}
+                                        alt={service?.Icons?.alternativeText || "Service Icon"}
+                                        width={service?.Icons?.width}
+                                        height={service?.Icons?.height}
+                                        className="w-[113px] md:w-[310px]"
+                                        unoptimized={false}
+                                    />
                                 </Link>
                             );
                         })}
@@ -140,27 +170,25 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                 </section>
             </div>
 
-            {/* Global CSS for the logo scale animation */}
+            {/* Global CSS for the card scale animation (0 → 1, once when in view) */}
             <style jsx global>{`
-                /* Respect reduced motion */
                 @media (prefers-reduced-motion: reduce) {
-                    .logo-zoom,
-                    .logo-zoom.play {
+                    .card-zoom,
+                    .card-zoom.play {
                         animation: none !important;
                         transform: none !important;
                     }
                 }
 
-                .logo-zoom {
-                    display: inline-block;
+                .card-zoom {
                     transform: scale(0);
                     transform-origin: center center;
                     will-change: transform;
                 }
-                .logo-zoom.play {
-                    animation: zoomInLogos 500ms ease-out forwards;
+                .card-zoom.play {
+                    animation: zoomInCards 500ms ease-out forwards;
                 }
-                @keyframes zoomInLogos {
+                @keyframes zoomInCards {
                     0% {
                         transform: scale(0);
                     }
@@ -173,4 +201,4 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
     );
 };
 
-export default OurCmsExperts;
+export default OurCmsExpertsWithAnimation;

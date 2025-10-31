@@ -85,7 +85,7 @@ const WhoWeAre = () => {
     return (
         <>
             <section
-                className="who-we-are my-[60px] xl:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
+                className="who-we-are my-[80px] lg:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
                 ref={containerRef}
             >
                 <div className="container">

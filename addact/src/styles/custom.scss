@@ -139,8 +139,8 @@ footer {
     }
 
     .slick-slide > div {
-        padding-left: 6%;
-        padding-right: 6%;
+        padding-left: 0;
+        padding-right: 0;
     }
 }
 
@@ -358,5 +358,67 @@ footer {
 
     @media (max-width: 400px) {
         transform: scale(0.85);
+    }
+}
+
+.industry-detail-page .bg-cover {
+    padding-top: 150px;
+
+    @media (max-width: 767px) {
+        padding-top: 0;
+    }
+}
+
+.solutionscards-wrapper p {
+    font-size: 18px !important;
+
+    @media (min-width: 1600px) {
+        font-size: 20px !important;
+    }
+
+    @media (max-width: 767px) {
+        font-size: 12px !important;
+        line-height: 20px !important;
+    }
+}
+
+.item-slider-wrapper {
+    .slick-dots {
+        bottom: -53px;
+    }
+
+    .slick-dots li button {
+        padding: 0;
+        width: 10px;
+    }
+
+    .slick-dots li,
+    .slick-dots li button:before {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+.item-slider-wrapper {
+    .slick-list {
+        overflow: visible;
+    }
+}
+
+.textimonials-slider,
+.solutionscards-wrapper {
+    .slick-slide > div {
+        @media (max-width: 767px) {
+            padding: 0;
+        }
+    }
+}
+
+.solutionscards-wrapper {
+    .slick-slide > div {
+        @media (max-width: 767px) {
+            padding: 0;
+            margin-right: 20px;
+        }
     }
 }
