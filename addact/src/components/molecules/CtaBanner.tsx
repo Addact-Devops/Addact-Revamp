@@ -41,8 +41,8 @@ const CtaBanner = ({ data }: IProps) => {
                 style={bgVars}
             >
                 <div className="container">
-                    <div className="pt-[40px] pb-[150px] md:pb-24 md:pt-0">
-                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] md:w-[412px] lg:w-[650px] xl:w-[500px] 2xl:leading-[85px]">
+                    <div className="pt-[40px] pb-[150px] md:pb-24 md:pt-[80px] banner-content-space">
+                        <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] md:w-[550px] lg:w-[800px] 2xl:leading-[85px]">
                             {data.Title[0].h2}
                         </h2>
                         <Link href={href} target={target}>

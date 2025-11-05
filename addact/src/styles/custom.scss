@@ -361,15 +361,27 @@ footer {
     }
 }
 
-.industry-detail-page .bg-cover {
-    padding-top: 150px;
+.industry-detail-page {
+    .bg-cover {
+        padding-top: 180px;
 
-    @media (max-width: 1600px) {
-        padding-top: 95px;
-    }
+        @media (min-width: 1600px) {
+            min-height: 550px;
+        }
 
-    @media (max-width: 767px) {
-        padding-top: 0;
+        @media (max-width: 1600px) {
+            padding-top: 95px;
+        }
+
+        @media (max-width: 767px) {
+            padding-top: 0;
+        }
+
+        .banner-content-space {
+            @media (min-width: 768px) {
+                padding-top: 0 !important;
+            }
+        }
     }
 }
 
