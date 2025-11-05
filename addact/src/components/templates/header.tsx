@@ -53,7 +53,47 @@ const Header = ({ headers }: HeaderProps) => {
         lowerPath === "/blogs/how-to-change-the-workflow-in-existing-items-using-the-powershell-script" ||
         lowerPath === "/blogs/importance-of-a-b-testing" ||
         lowerPath === "/blogs/offshore-vs-onshore-dedicated-developer-teams-how-to-choose" ||
-        lowerPath.startsWith("/sitecore");
+        lowerPath === "/blogs/beyond-pdfs-smarter-lead-generation-2025" ||
+        lowerPath === "/blogs/xmcloud-page-io-error" ||
+        lowerPath === "/blogs/what-is-omnichannel-personalization-strategies-in-marketing" ||
+        lowerPath === "/blogs/how-to-connect-ssms-to-docker-sql-server-for-xm-cloud" ||
+        lowerPath === "/blogs/how-to-solve-the-github-long-path-error" ||
+        lowerPath === "/blogs/how-to-manage-the-iis-website-via-the-release-pipeline" ||
+        lowerPath === "/blogs/top-10-must-have-features-for-your-website-search" ||
+        lowerPath === "/blogs/how-to-unlock-solr-index-and-cause-of-index-being-locked" ||
+        lowerPath === "/blogs/why-should-you-go-for-a-composable-dxp" ||
+        lowerPath === "/blogs/how-to-conduct-deployment-groups-configuration-for-ci-cd" ||
+        lowerPath === "/blogs/what-is-a-ci-cd-pipeline-how-does-it-work" ||
+        lowerPath === "/blogs/how-to-use-cache-for-the-storing-list-of-items" ||
+        lowerPath === "/blogs/how-to-restrict-value-type-from-field-by-custom-rule-validation" ||
+        lowerPath === "/blogs/project-configuration-in-xm-cloud-a-step-by-step-guide" ||
+        lowerPath === "/blogs/best-practices-for-managing-large-scale-content" ||
+        lowerPath === "/blogs/guide-to-understanding-a-composable-dxp" ||
+        lowerPath === "/blogs/top-3-ways-to-meet-customers-changing-content-needs-in-2023" ||
+        lowerPath === "/blogs/why-cloud-cms-is-the-future-of-marketing" ||
+        lowerPath === "/blogs/how-to-configure-redirect-rule" ||
+        lowerPath === "/blogs/discover-capabilities-a-guide-for-beginners" ||
+        lowerPath === "/blogs/solr-jvm-memory-getting-full" ||
+        lowerPath === "/blogs/create-ssl-certificates-for-development-websites" ||
+        lowerPath === "/blogs/what-how-why-everything-answered-about-personalization" ||
+        lowerPath === "/blogs/experience-editor-fails-with-a-profilecardspanel-css-script-error-in-the-console" ||
+        lowerPath ===
+            "/blogs/handler-autowiredpagehandlerfactory-has-bad-module-managedpipelinehandler-module-list-error-on-iis" ||
+        lowerPath === "/blogs/ordercloud-checkout-flow" ||
+        lowerPath === "/blogs/how-does-your-seo-benefit-from-personalization" ||
+        lowerPath === "/blogs/using-glass-mapper-item-datasource-children-getting-null" ||
+        lowerPath === "/blogs/google-analytics-custom-implementation" ||
+        lowerPath === "/blogs/how-to-successfully-implement-customer-data-platform" ||
+        lowerPath === "/blogs/how-does-personalization-impact-consumer-decisions" ||
+        lowerPath === "/blogs/step-by-step-guide-to-install-docker" ||
+        lowerPath === "/blogs/how-customer-data-platforms-reduce-shopping-cart-abandonment" ||
+        lowerPath === "/blogs/what-is-hyper-personalization-why-do-you-need-it-in-your-business" ||
+        lowerPath === "/blogs/ecommerce-catalog-management-importance-of-catalog-management" ||
+        lowerPath === "/blogs/everything-to-know-about-a-customer-data-platform" ||
+        lowerPath === "/blogs/identify-content-gaps-with-3-simple-way-and-fill-them" ||
+        lowerPath === "/blogs/addact-technologies-receives-5-star-rating-on-b2b-platform-clutch" ||
+        lowerPath === "/blogs/coveo-to-solr-migration";
+    lowerPath.startsWith("/sitecore");
 
     const handleDropdownToggle = (title: string) => {
         setOpenDropdown((prev) => (prev === title ? null : title));
