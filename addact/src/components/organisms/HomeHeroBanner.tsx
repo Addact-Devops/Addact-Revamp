@@ -10,7 +10,7 @@ interface IProps {
 const HomeHeroBanner = ({ data }: IProps) => {
     const src = data?.Banner[0]?.BannerImage?.url ?? "#";
     return (
-        <section className="relative w-full py-[60px]  lg:py-0 lg:h-screen flex items-center justify-center overflow-hidden mt-[56px] lg:mt-[120px]">
+        <section className="relative w-full py-[60px]  lg:py-0 lg:h-screen flex items-center justify-center overflow-hidden mt-[56px] lg:mt-[100px]">
             <video className="absolute top-0 left-0 w-full h-full object-cover z-0" autoPlay muted loop playsInline>
                 <source src={src} type="video/mp4" />
                 Your browser does not support the video tag.

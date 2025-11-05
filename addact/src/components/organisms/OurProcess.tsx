@@ -6,6 +6,7 @@ import { OurProcessData } from "@/graphql/queries/getOurProcess";
 export default function OurProcess(props: { data?: OurProcessData["home"]["ourprocess"] }) {
     const [data, setData] = useState<OurProcessData["home"]["ourprocess"]>();
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const timelineRef = useRef<HTMLDivElement | null>(null);
     const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [activeStep, setActiveStep] = useState(0);
     const [activeLineStyle, setActiveLineStyle] = useState({
@@ -14,11 +15,12 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
         opacity: "1",
     });
 
+    // positions (centers) of each step used to render dots in same parent as the line
+    const [stepCenters, setStepCenters] = useState<number[]>([]);
+
     // Fetch data
     useEffect(() => {
-        (async () => {
-            setData(props.data);
-        })();
+        setData(props.data);
     }, [props.data]);
 
     // Track active step
@@ -44,46 +46,93 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
         return () => window.removeEventListener("scroll", updateActiveStep);
     }, [data]);
 
-    // Update line position (Responsive fix only for mobile)
+    // Helper to calculate centers for dots (original approach then normalized so first dot top === 0)
+    const recalcCenters = () => {
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+        const offsetFix = isMobile ? 40 : 85;
+
+        // compute raw centers using same formula you used previously
+        const rawCenters: number[] = stepRefs.current.map((ref) => {
+            if (!ref) return 0;
+            return ref.offsetTop + ref.offsetHeight / 2 - offsetFix;
+        });
+
+        // determine dot size used in UI (match CSS: 16px on mobile, 24px on md+)
+        const dotSize = isMobile ? 16 : 24;
+        const dotRadius = dotSize / 2;
+
+        // If we have at least one center, shift all centers so that the FIRST dot's top === 0
+        // top = center - dotRadius. For top to be 0 => center === dotRadius.
+        if (rawCenters.length > 0) {
+            const firstRaw = rawCenters[0];
+            const desiredFirstCenter = dotRadius; // center that makes first dot top = 0
+            const shift = desiredFirstCenter - firstRaw;
+            const adjusted = rawCenters.map((c) => c + shift);
+            setStepCenters(adjusted);
+        } else {
+            setStepCenters(rawCenters);
+        }
+    };
+
+    // Calculate centers on mount, data change, resize and when step refs change
     useEffect(() => {
-        const isMobile = window.innerWidth < 768; // Tailwind md breakpoint
-        const offsetFix = isMobile ? 40 : 85; // smaller offset for mobile
+        recalcCenters();
 
-        const current = stepRefs.current[activeStep];
-        const next = stepRefs.current[activeStep + 1];
+        const handleResize = () => {
+            recalcCenters();
+        };
 
-        if (current) {
-            const currentDotEl = current.querySelector("div[class*='rounded-full']");
-            const dotRadius = (currentDotEl?.clientHeight ?? (isMobile ? 16 : 24)) / 2;
+        window.addEventListener("resize", handleResize);
+        // short timeout to cover fonts/images/layout shifts
+        const t = setTimeout(() => recalcCenters(), 200);
 
-            const currentDotTop = current.offsetTop + current.offsetHeight / 2 - offsetFix;
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            clearTimeout(t);
+        };
+    }, [data]);
 
+    // Update line position — use the computed (and normalized) stepCenters so line & dots use same base
+    useEffect(() => {
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+        const dotSize = isMobile ? 16 : 24;
+        const dotRadius = dotSize / 2;
+
+        // Use precomputed centers (normalized), fallback to computing if not ready
+        const currentCenter = stepCenters[activeStep];
+        const nextCenter = stepCenters[activeStep + 1];
+
+        if (typeof currentCenter !== "undefined" && !isNaN(currentCenter)) {
+            const currentDotTop = currentCenter;
             let nextDotTop: number;
-            if (next) {
-                const nextDotEl = next.querySelector("div[class*='rounded-full']");
-                const nextDotRadius = (nextDotEl?.clientHeight ?? (isMobile ? 16 : 24)) / 2;
-                nextDotTop = next.offsetTop + next.offsetHeight / 2 - offsetFix;
-                if (isMobile) {
-                    // fine-tune for mobile only
-                    nextDotTop += nextDotRadius - dotRadius;
-                }
+
+            if (typeof nextCenter !== "undefined" && !isNaN(nextCenter)) {
+                nextDotTop = nextCenter;
             } else {
-                const prev = stepRefs.current[activeStep - 1];
+                // fallback spacing when next isn't available (end of list) — use approximate spacing
+                const prevCenter = stepCenters[activeStep - 1];
                 let spacing = isMobile ? 80 : 120;
-                if (prev) {
-                    const prevCenter = prev.offsetTop + prev.offsetHeight / 2 - offsetFix;
+                if (typeof prevCenter !== "undefined" && !isNaN(prevCenter)) {
                     spacing = currentDotTop - prevCenter;
                 }
                 nextDotTop = currentDotTop + spacing;
             }
 
             setActiveLineStyle({
+                // line top should be currentDotTop - dotRadius (since style top is where line top starts)
                 top: `${currentDotTop - dotRadius}px`,
                 height: `${nextDotTop - currentDotTop}px`,
                 opacity: "1",
             });
+        } else {
+            // fallback: zero out the line if centers aren't computed yet
+            setActiveLineStyle({
+                top: "0px",
+                height: "0px",
+                opacity: "0",
+            });
         }
-    }, [activeStep, data]);
+    }, [activeStep, stepCenters, data]);
 
     const getTitle = () => {
         const title = data?.Title?.[0];
@@ -97,7 +146,8 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
                     {getTitle()}
                 </h2>
 
-                <div className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]">
+                {/* timeline wrapper — attach timelineRef here so line & dots are relative to same parent */}
+                <div className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]" ref={timelineRef}>
                     {/* Background gray line */}
                     <div className="absolute left-1 md:left-1/2 transform -translate-x-1/2 top-0 w-[2px] h-full bg-gray-600 opacity-40 z-0" />
 
@@ -106,6 +156,33 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
                         className="absolute left-1 md:left-1/2 transform -translate-x-1/2 w-[2px] bg-white z-10 transition-all duration-500 ease-in-out"
                         style={activeLineStyle}
                     />
+
+                    {/* Render timeline dots here so they all share the same positioned parent as the lines */}
+                    {data?.ProcessData &&
+                        stepCenters.length === data.ProcessData.length &&
+                        data.ProcessData.map((_, i) => {
+                            const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+                            const dotSize = isMobile ? 16 : 24;
+                            const dotRadius = dotSize / 2;
+                            const center = stepCenters[i] ?? 0;
+                            const topPx = center ? center - dotRadius : 0;
+                            const isActive = i === activeStep;
+
+                            return (
+                                <div
+                                    key={`timeline-dot-${i}`}
+                                    className={`absolute left-1 md:left-1/2 transform -translate-x-1/2 z-20 border-2 transition-all duration-300`}
+                                    style={{
+                                        top: `${topPx}px`,
+                                        width: `${dotSize}px`,
+                                        height: `${dotSize}px`,
+                                        borderRadius: "9999px",
+                                        background: isActive ? "#3C4CFF" : "black",
+                                        borderColor: isActive ? "white" : "rgba(255,255,255,0.2)",
+                                    }}
+                                />
+                            );
+                        })}
 
                     {/* Steps */}
                     <div className="w-full relative z-20">
@@ -153,9 +230,9 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
                                         />
                                     </div>
 
-                                    {/* Dot */}
+                                    {/* Original Dot (left in DOM but invisible so we don't remove code) */}
                                     <div
-                                        className={`w-[16px] h-[16px] md:w-[24px] md:h-[24px] rounded-full absolute left-[4px] md:left-1/2 -translate-x-1/2 z-24 border-2 transition-all duration-300
+                                        className={`w-[16px] h-[16px] md:w-[24px] md:h-[24px] rounded-full absolute left-[4px] md:left-1/2 -translate-x-1/2 z-24 border-2 transition-all duration-300 invisible
                                             ${isActive ? "bg-[#3C4CFF] border-white" : "bg-black border-white/20"}`}
                                     ></div>
 
