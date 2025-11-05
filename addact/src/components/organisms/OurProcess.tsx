@@ -6,6 +6,7 @@ import { OurProcessData } from "@/graphql/queries/getOurProcess";
 export default function OurProcess(props: { data?: OurProcessData["home"]["ourprocess"] }) {
     const [data, setData] = useState<OurProcessData["home"]["ourprocess"]>();
     const containerRef = useRef<HTMLDivElement | null>(null);
+    const timelineRef = useRef<HTMLDivElement | null>(null);
     const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [activeStep, setActiveStep] = useState(0);
     const [activeLineStyle, setActiveLineStyle] = useState({
@@ -14,14 +15,12 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
         opacity: "1",
     });
 
-    // New: positions (centers) of each step used to render dots in the same parent as the line
+    // positions (centers) of each step used to render dots in same parent as the line
     const [stepCenters, setStepCenters] = useState<number[]>([]);
 
     // Fetch data
     useEffect(() => {
-        (async () => {
-            setData(props.data);
-        })();
+        setData(props.data);
     }, [props.data]);
 
     // Track active step
@@ -47,10 +46,10 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
         return () => window.removeEventListener("scroll", updateActiveStep);
     }, [data]);
 
-    // Helper to calculate centers for dots (original approach but then normalize first dot to top=0)
+    // Helper to calculate centers for dots (original approach then normalized so first dot top === 0)
     const recalcCenters = () => {
-        const isMobile = typeof window !== "undefined" && window.innerWidth < 768; // Tailwind md breakpoint
-        const offsetFix = isMobile ? 40 : 85; // smaller offset for mobile
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+        const offsetFix = isMobile ? 40 : 85;
 
         // compute raw centers using same formula you used previously
         const rawCenters: number[] = stepRefs.current.map((ref) => {
@@ -58,7 +57,7 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
             return ref.offsetTop + ref.offsetHeight / 2 - offsetFix;
         });
 
-        // determine dot size used in UI (match your CSS: 16px on mobile, 24px on md+)
+        // determine dot size used in UI (match CSS: 16px on mobile, 24px on md+)
         const dotSize = isMobile ? 16 : 24;
         const dotRadius = dotSize / 2;
 
@@ -91,10 +90,9 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
             window.removeEventListener("resize", handleResize);
             clearTimeout(t);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
 
-    // Update line position — now use the computed (and normalized) stepCenters so line & dots use same base
+    // Update line position — use the computed (and normalized) stepCenters so line & dots use same base
     useEffect(() => {
         const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
         const dotSize = isMobile ? 16 : 24;
@@ -105,16 +103,11 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
         const nextCenter = stepCenters[activeStep + 1];
 
         if (typeof currentCenter !== "undefined" && !isNaN(currentCenter)) {
-            let currentDotTop = currentCenter;
+            const currentDotTop = currentCenter;
             let nextDotTop: number;
 
             if (typeof nextCenter !== "undefined" && !isNaN(nextCenter)) {
                 nextDotTop = nextCenter;
-                // optional mobile fine-tune kept similar to original logic:
-                if (isMobile) {
-                    // no change required here because normalization already considered dotRadius,
-                    // but keep parity with earlier mobile adjust pattern if needed.
-                }
             } else {
                 // fallback spacing when next isn't available (end of list) — use approximate spacing
                 const prevCenter = stepCenters[activeStep - 1];
@@ -139,7 +132,6 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
                 opacity: "0",
             });
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [activeStep, stepCenters, data]);
 
     const getTitle = () => {
@@ -154,7 +146,8 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
                     {getTitle()}
                 </h2>
 
-                <div className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]">
+                {/* timeline wrapper — attach timelineRef here so line & dots are relative to same parent */}
+                <div className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]" ref={timelineRef}>
                     {/* Background gray line */}
                     <div className="absolute left-1 md:left-1/2 transform -translate-x-1/2 top-0 w-[2px] h-full bg-gray-600 opacity-40 z-0" />
 
@@ -164,17 +157,15 @@ export default function OurProcess(props: { data?: OurProcessData["home"]["ourpr
                         style={activeLineStyle}
                     />
 
-                    {/* NEW: Render timeline dots here so they all share the same positioned parent as the lines */}
+                    {/* Render timeline dots here so they all share the same positioned parent as the lines */}
                     {data?.ProcessData &&
                         stepCenters.length === data.ProcessData.length &&
                         data.ProcessData.map((_, i) => {
-                            // Determine dot radius depending on breakpoint (match your CSS)
                             const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
                             const dotSize = isMobile ? 16 : 24;
                             const dotRadius = dotSize / 2;
                             const center = stepCenters[i] ?? 0;
                             const topPx = center ? center - dotRadius : 0;
-
                             const isActive = i === activeStep;
 
                             return (
