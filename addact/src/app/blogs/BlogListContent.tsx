@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getInitialBlogs, getNextBlogs } from "@/graphql/queries/getAllBlog";
@@ -44,6 +45,7 @@ type BlogType = {
 type Props = { data?: unknown };
 
 export default function BlogListContent({}: Props) {
+  const searchParams = useSearchParams();
   const [addactBlogs, setAddactBlogs] = useState<BlogType[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<BlogType[]>([]);
   const [searchText, setSearchText] = useState("");
@@ -80,6 +82,15 @@ export default function BlogListContent({}: Props) {
     return 0;
   };
 
+  // Read category from URL params
+  useEffect(() => {
+    const categoryFromUrl = searchParams.get("category");
+    if (categoryFromUrl) {
+      setSelectedCategory(categoryFromUrl);
+    } else {
+      setSelectedCategory("All Blogs");
+    }
+  }, [searchParams]);
   // Initial load
   useEffect(() => {
     const fetchInitialBlogs = async () => {
@@ -117,6 +128,7 @@ export default function BlogListContent({}: Props) {
           .slice()
           .sort((a, b) => getBlogDate(b) - getBlogDate(a));
 
+        console.log("sorted", sorted);
         setAddactBlogs(sorted);
         setFilteredBlogs(sorted);
         setHasMore(data.hasMore);
