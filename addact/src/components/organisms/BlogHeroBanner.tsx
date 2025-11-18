@@ -1,25 +1,31 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { getInitialBlogs } from "@/graphql/queries/getAllBlog";
 
 export default function BlogHeroBanner({
   searchText,
+  categories,
+  bgImageUrl,
+  title,
+  description,
   setSearchText,
   selectedCategory,
   setSelectedCategory,
 }: {
   searchText: string;
-  setSearchText: (value: string) => void;
   selectedCategory: string;
+  categories: string[];
+  bgImageUrl: string | null;
+  title: string;
+  description: string;
+  setCategories: (value: string[]) => void;
+  setBgImageUrl: (value: string | null) => void;
+  setTitle: (value: string) => void;
+  setDescription: (value: string) => void;
+  setSearchText: (value: string) => void;
   setSelectedCategory: (value: string) => void;
 }) {
   const [localSearch, setLocalSearch] = useState(searchText || "");
-  const [categories, setCategories] = useState<string[]>([]);
-  const [bgImageUrl, setBgImageUrl] = useState<string | null>(null);
-  const [title, setTitle] = useState("The think tank");
-  const [description, setDescription] = useState("");
 
   const router = useRouter();
   const pathname = usePathname();
@@ -29,46 +35,6 @@ export default function BlogHeroBanner({
     if (!localSearch && searchText) {
       setLocalSearch(searchText);
     }
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getInitialBlogs();
-
-        const banner = data.blogs?.blogBanner?.Banner?.[0];
-
-        if (banner?.BannerImage?.url) {
-          const rawUrl = banner.BannerImage.url;
-          const fullUrl = rawUrl.startsWith("http")
-            ? rawUrl
-            : `${process.env.NEXT_PUBLIC_STRAPI_URL || ""}${rawUrl}`;
-          setBgImageUrl(fullUrl);
-        }
-
-        if (banner?.BannerTitle) setTitle(banner.BannerTitle);
-
-        if (banner?.BannerDescription) {
-          const parser = new DOMParser();
-          const parsed = parser.parseFromString(
-            banner.BannerDescription,
-            "text/html"
-          );
-          setDescription(parsed.body.textContent || "");
-        }
-
-        const categoryList =
-          data.blogCategories
-            ?.map((cat) => cat?.Category?.CategoryTitle)
-            .filter((title) => title && title !== "All Blogs") || [];
-
-        setCategories(categoryList);
-      } catch (err) {
-        console.error("Failed to load blog data", err);
-      }
-    };
-
-    fetchData();
   }, []);
 
   const handleURLSearch = () => {
@@ -162,10 +128,7 @@ export default function BlogHeroBanner({
           className="container overflow-x-auto custom-scrollbar scroll-smooth"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
-          <div
-            className="flex flex-nowrap justify-center min-w-max gap-[20px] xl:gap-[22px] 2xl:gap-[33px] text-[16px] md:text-[18px] font-medium px-4"
-            // Optional: Add `cursor-grab active:cursor-grabbing` for feedback
-          >
+          <div className="flex flex-nowrap justify-center min-w-max gap-[20px] xl:gap-[22px] 2xl:gap-[33px] text-[16px] md:text-[18px] font-medium px-4">
             {["All Blogs", ...categories].map((cat, idx) => (
               <span
                 key={idx}

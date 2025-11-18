@@ -52,6 +52,10 @@ export default function BlogListContent({}: Props) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [bgImageUrl, setBgImageUrl] = useState<string | null>(null);
+  const [title, setTitle] = useState("The think tank");
+  const [description, setDescription] = useState("");
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -81,6 +85,33 @@ export default function BlogListContent({}: Props) {
     const fetchInitialBlogs = async () => {
       try {
         const data = await getInitialBlogs();
+        const banner = data.blogs?.blogBanner?.Banner?.[0];
+
+        if (banner?.BannerImage?.url) {
+          const rawUrl = banner.BannerImage.url;
+          const fullUrl = rawUrl.startsWith("http")
+            ? rawUrl
+            : `${process.env.NEXT_PUBLIC_STRAPI_URL || ""}${rawUrl}`;
+          setBgImageUrl(fullUrl);
+        }
+
+        if (banner?.BannerTitle) setTitle(banner.BannerTitle);
+
+        if (banner?.BannerDescription) {
+          const parser = new DOMParser();
+          const parsed = parser.parseFromString(
+            banner.BannerDescription,
+            "text/html"
+          );
+          setDescription(parsed.body.textContent || "");
+        }
+
+        const categoryList =
+          data.blogCategories
+            ?.map((cat) => cat?.Category?.CategoryTitle)
+            .filter((title) => title && title !== "All Blogs") || [];
+
+        setCategories(categoryList);
         const blogs = data.addactBlogs || [];
         const sorted = blogs
           .slice()
@@ -184,6 +215,14 @@ export default function BlogListContent({}: Props) {
         setSearchText={setSearchText}
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
+        categories={categories}
+        bgImageUrl={bgImageUrl}
+        title={title}
+        description={description}
+        setCategories={setCategories}
+        setBgImageUrl={setBgImageUrl}
+        setTitle={setTitle}
+        setDescription={setDescription}
       />
 
       <div className="container">
