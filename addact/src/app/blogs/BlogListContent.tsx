@@ -82,7 +82,7 @@ export default function BlogListContent({}: Props) {
     return 0;
   };
 
-  // Read category from URL params
+  // Read category and search query from URL params
   useEffect(() => {
     const categoryFromUrl = searchParams.get("category");
     if (categoryFromUrl) {
@@ -90,7 +90,15 @@ export default function BlogListContent({}: Props) {
     } else {
       setSelectedCategory("All Blogs");
     }
+
+    const queryFromUrl = searchParams.get("query");
+    if (queryFromUrl) {
+      setSearchText(queryFromUrl);
+    } else {
+      setSearchText("");
+    }
   }, [searchParams]);
+
   // Initial load
   useEffect(() => {
     const fetchInitialBlogs = async () => {
@@ -128,7 +136,6 @@ export default function BlogListContent({}: Props) {
           .slice()
           .sort((a, b) => getBlogDate(b) - getBlogDate(a));
 
-        console.log("sorted", sorted);
         setAddactBlogs(sorted);
         setFilteredBlogs(sorted);
         setHasMore(data.hasMore);
