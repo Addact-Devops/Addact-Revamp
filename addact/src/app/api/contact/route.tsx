@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
         const now = new Date();
 
-        const rowValues = [name, email, companyName, plainTextForSheets, pageTitle, formatDateTime(now), ip];
+        const rowValues = [name, email, companyName, , plainTextForSheets, pageTitle, formatDateTime(now), ip];
 
         await sheets.spreadsheets.values.append({
             spreadsheetId,
