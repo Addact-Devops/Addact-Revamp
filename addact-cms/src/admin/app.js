@@ -3,9 +3,9 @@ import mainlogo from "./extensions/addact-logo-white.svg";
 
 export default {
   config: {
-    auth: {
-      logo: fevicon,
-    },
+    // auth: {
+    //   logo: fevicon,
+    // },
     // Replace the favicon
     head: {
       favicon: fevicon,
@@ -31,7 +31,7 @@ export default {
         "app.components.LeftMenu.navbrand.workplace":
           "Digital Customer Experience Management Solution",
 
-        "Auth.form.welcome.title": "Welcom to Addact Dashboard",
+        "Auth.form.welcome.title": "Addact Technologies Pvt Ltd",
 
         "Auth.form.welcome.subtitle": "Login to your account",
 
