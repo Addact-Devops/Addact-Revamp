@@ -68,7 +68,7 @@ export default async function AboutUsPage() {
                     image={cta?.CTAImage?.[0]?.Image || null}
                     link={cta?.CTALink?.[0] || null}
                 />
-                <WeAreAddact
+                {weAreAddactData && <WeAreAddact
                     subtitle={weAreAddactData.SubTitle}
                     title={weAreAddactData.Title}
                     content={weAreAddactData.Content}
@@ -76,7 +76,7 @@ export default async function AboutUsPage() {
                     {...(weAreAddactData.NumberContent && {
                         numberContent: weAreAddactData.NumberContent,
                     })}
-                />
+                />}
             </main>
         </>
     );
