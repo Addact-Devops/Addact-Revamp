@@ -30,11 +30,11 @@ export default async function AboutUsPage() {
     ]);
 
     const banner = heroBannerData;
-    const about = aboutData.aboutUs.AboutUsContent;
-    const visionMission = visionData.aboutUs.OurVisionMission;
+    const about = aboutData?.aboutUs?.AboutUsContent || null;
+    const visionMission = visionData?.aboutUs?.OurVisionMission || null;
     const cta = ctaData;
 
-    const structuredData = seoData?.SEO?.structuredData;
+    const structuredData = seoData?.SEO?.structuredData || null;
 
     return (
         <>
