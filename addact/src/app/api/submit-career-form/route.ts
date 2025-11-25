@@ -97,92 +97,540 @@ export async function POST(req: NextRequest) {
                   .filter(Boolean)
             : [];
 
+        const currentYear = new Date().getFullYear();
+
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
             to: recipientList,
             subject: `Application for ${pageTitle} `,
             html: `
            <html>
-                <head>
-                    <title>Addact - Thank You for Your Submission.</title>
-                    <style>
-                        table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        background-color: #F6F7FF;
-                        }
-                        th {
-                        border-right: 1px solid #0000001a;
-                        text-align: left;
-                        }
-                        th, td {
-                        padding: 15px;
-                        }
-                        td {
-                        text-align: left;
-                        }
-                        img{
-                        width: 100%;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                        <h2 style="color: #1470af; margin-top: 0;">New Application Received for ${pageTitle}</h2>
-                        <p style="font-size: 14px; margin-bottom: 10px;"><strong>Candidate Details:</strong></p>
-                        <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%; font-size: 14px;">
-                            <tr>
-                                <th align="left" style="background: #f5f5f5; width: 30%;">Name</th>
-                                <td>${name}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Email</th>
-                                <td>${email}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Phone</th>
-                                <td>${phone}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Current CTC</th>
-                                <td>${currentCTC}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Expected CTC</th>
-                                <td>${expectedCTC}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Experience</th>
-                                <td>${experience}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">City</th>
-                                <td>${cityName}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">LinkedIn Profile</th>
-                                <td>${linkedInProfile || "N/A"}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Remarks</th>
-                                <td>${remarks || "N/A"}</td>
-                            </tr>
-                            <tr>
-                                <th align="left">Portfolio Link</th>
-                                <td>${hyperlink || "N/A"}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Applied For</th>
-                                <td>${pageTitle}</td>
-                            </tr>
-                            <tr>
-                                <th align="left" style="background: #f5f5f5;">Submitted At</th>
-                                <td>${formatDateTime(new Date())}</td>
-                            </tr>
-                        </table>
-                    </div>
-                </body>
-            </html>`,
+                    <head>
+                        <title>Addact - New Candidate Application Received</title>
+                         <style>
+                            body,
+                            table,
+                            td,
+                            a {
+                            -webkit-text-size-adjust: 100%;
+                            -ms-text-size-adjust: 100%;
+                            }
+                            table,
+                            td {
+                            mso-table-lspace: 0pt;
+                            mso-table-rspace: 0pt;
+                            }
+                            img {
+                            -ms-interpolation-mode: bicubic;
+                            border: 0;
+                            height: auto;
+                            line-height: 100%;
+                            outline: none;
+                            text-decoration: none;
+                            }
+                            body {
+                            font-family: Arial, sans-serif;
+                            }
+                            h1,
+                            h2,
+                            h3 {
+                            font-family: Arial, sans-serif;
+                            }
+                        </style>
+                    </head>
+                   <body style="margin: 0; padding: 0; background-color: #f8f8f8">
+    <div style="max-width: 600px; margin: 20px auto">
+      <table
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        width="100%"
+        style="table-layout: fixed;border: 1px solid #8e8b8b61; border-radius:8px"
+      >
+        <tr>
+          <td align="center" style="padding: 30px 0">
+            <table
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              width="100%"
+              style="
+                max-width: 600px;
+                background-color: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+              "
+            >
+              <tr>
+                <td align="center" style="padding: 25px 10px 15px 10px">
+                  <a href="https://addact.net/" target="_blank">
+                    <img
+                      src="https://d3l7d9gtq0bnch.cloudfront.net/Thank_You_Addact_6f33411529.jpg"
+                      alt="Addact"
+                      width="100%"
+                      style="display: block"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td height="2" style="background-color: #007bff"></td>
+              </tr>
+
+              <tr>
+                <td class="mobile-padding" style="padding: 40px 40px 20px 40px">
+                  <h3 style="color: #007bff; margin-top: 0">
+                         New Application Received for ${pageTitle}
+                  </h3>
+                  <p
+                    style="
+                      color: #555555;
+                      font-size: 14px;
+                      line-height: 26px;
+                      margin: 0 0 25px 0;
+                    "
+                  >
+                   We have received a new application for a career opportunity. Kindly review the candidate's information shared below.
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="mobile-padding" style="padding: 0 40px 40px 40px">
+                  <h3
+                    style="
+                      color: #1a1a1a;
+                      font-size: 16px;
+                      font-weight: 700;
+                      margin: 0 0 15px 0;
+                      border-left: 3px solid #007bff;
+                      padding-left: 10px;
+                    "
+                  >
+                    Candidate Submission Details:
+                  </h3>
+
+                  <table
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    width="100%"
+                    style="
+                      background-color: #f9fafc;
+                      border-radius: 6px;
+                      border: 1px solid #eeeeee;
+                    "
+                  >
+                    <tr>
+                      <td
+                        valign="top"
+                        width="35%"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Name
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${name}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Email Address
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${email}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Phone
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${phone}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Current CTC
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${currentCTC}
+                      </td>
+                    </tr>
+                     <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Expected CTC
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${expectedCTC}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Experience
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${experience}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        City
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${cityName}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        LinkedIn Profile
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${linkedInProfile || "N/A"}
+                      </td>
+                    </tr>
+                     <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Remarks
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${remarks || "N/A"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Portfolio Link
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${hyperlink || "N/A"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                       Applied For
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${pageTitle}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                       Submitted At
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${formatDateTime(new Date())}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  align="center"
+                  style="padding: 30px 20px; background-color: #1a1a1a"
+                >
+                  <table
+                    width="100%"
+                    cellpadding="0"
+                    cellspacing="0"
+                    border="0"
+                  >
+                    <tr>
+                      <td align="left" width="50%">
+                        <a
+                          href="https://www.addact.net/contact-us"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src="https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png"
+                            alt="Addact Logo"
+                            width="120"
+                            style="display: block"
+                          />
+                        </a>
+                      </td>
+
+                      <td align="right" width="50%">
+                        <a
+                          href="https://www.facebook.com/addacttech/"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/733/733547.png"
+                            alt="Facebook"
+                            width="22"
+                          />
+                        </a>
+                        <a
+                          href="https://www.instagram.com/addacttechnologies/"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/2111/2111463.png"
+                            alt="Instagram"
+                            width="22"
+                          />
+                        </a>
+                        <a
+                          href="https://www.linkedin.com/company/addact-technologies/?viewAsMember=true"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/3536/3536505.png"
+                            alt="LinkedIn"
+                            width="22"
+                          />
+                        </a>
+                        <a
+                          href="https://x.com/AddactTech"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/5969/5969020.png"
+                            alt="X"
+                            width="22"
+                          />
+                        </a>
+                        <p
+                          style="
+                            color: #999999;
+                            font-size: 11px;
+                            margin: 15px 0 0 0;
+                          "
+                        >
+                          &copy; ${currentYear} Addact. All
+                          Rights Reserved.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+                </html>`,
             attachments:
                 file && arrayBuffer
                     ? [
@@ -194,92 +642,511 @@ export async function POST(req: NextRequest) {
                     : [],
         });
         await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
-            to: email,
-            subject: "Thanks for Your Submission!",
-            html: `
-                <html>
+          from: `"Addact Technologies" <info@addact.net>`,
+          to: email,
+          subject: "Thanks for Your Submission!",
+          html: `
+                 <html>
                     <head>
-                        <title>Addact - Career Form Submission.</title>
-                        <style>
-                            table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            background-color: #F6F7FF;
+                        <title>Addact - Career Form Submission</title>
+                         <style>
+                            body,
+                            table,
+                            td,
+                            a {
+                            -webkit-text-size-adjust: 100%;
+                            -ms-text-size-adjust: 100%;
                             }
-                            th {
-                            border-right: 1px solid #0000001a;
-                            text-align: left;
-                            }
-                            th, td {
-                            padding: 15px;
-                            }
+                            table,
                             td {
-                            text-align: left;
+                            mso-table-lspace: 0pt;
+                            mso-table-rspace: 0pt;
                             }
-                            img{
-                            width: 100%;
+                            img {
+                            -ms-interpolation-mode: bicubic;
+                            border: 0;
+                            height: auto;
+                            line-height: 100%;
+                            outline: none;
+                            text-decoration: none;
+                            }
+                            body {
+                            font-family: Arial, sans-serif;
+                            }
+                            h1,
+                            h2,
+                            h3 {
+                            font-family: Arial, sans-serif;
                             }
                         </style>
                     </head>
-                    <body>
-                        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ddd;">
-                            <img src="https://d3l7d9gtq0bnch.cloudfront.net/Thank_You_Addact_6f33411529.jpg" alt="email-banner"/>                
-                            <p style="margin-top: 40px;">Dear ${name},</p>
-                            <p>We have received your message and will get back to you shortly.</p>
-                            <p>Here is the information you submitted:</p>
-                            <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%;">
-                                <tr>
-                                    <th align="left">Name</th>
-                                    <td>${name}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left">Email</th>
-                                    <td>${email}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left">Phone</th>
-                                    <td>${phone}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left" style="background: #f5f5f5;">Current CTC</th>
-                                    <td>${currentCTC}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left" style="background: #f5f5f5;">Expected CTC</th>
-                                    <td>${expectedCTC}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left" style="background: #f5f5f5;">Experience</th>
-                                    <td>${experience}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left" style="background: #f5f5f5;">City</th>
-                                    <td>${cityName}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left" style="background: #f5f5f5;">LinkedIn Profile</th>
-                                    <td>${linkedInProfile || "N/A"}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left" style="background: #f5f5f5;">Remarks</th>
-                                    <td>${remarks || "N/A"}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left">Portfolio Link</th>
-                                    <td>${hyperlink || "N/A"}</td>
-                                </tr>
-                                <tr>
-                                    <th align="left">Submitted At</th>
-                                    <td>${formatDateTime(new Date())}</td>
-                                </tr>
-                            </table>
-                            <br/>
-                            <span>Regards,</span>
-                            <br/>
-                            <span>Team Addact Technologies</span>
-                        </div>
-                    </body>
+                   <body style="margin: 0; padding: 0; background-color: #f8f8f8">
+    <div style="max-width: 600px; margin: 20px auto">
+      <table
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        width="100%"
+        style="table-layout: fixed;border: 1px solid #8e8b8b61; border-radius:8px"
+      >
+        <tr>
+          <td align="center" style="padding: 30px 0">
+            <table
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              width="100%"
+              style="
+                max-width: 600px;
+                background-color: #ffffff;
+                border-radius: 8px;
+                overflow: hidden;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+              "
+            >
+              <tr>
+                <td align="center" style="padding: 25px 10px 15px 10px">
+                  <a href="https://addact.net/" target="_blank">
+                    <img
+                      src="https://d3l7d9gtq0bnch.cloudfront.net/Thank_You_Addact_6f33411529.jpg"
+                      alt="Addact"
+                      width="100%"
+                      style="display: block"
+                    />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td height="2" style="background-color: #007bff"></td>
+              </tr>
+
+              <tr>
+                <td class="mobile-padding" style="padding: 40px 40px 20px 40px">
+                  <h3 style="color: #007bff; margin-top: 0">
+                        Dear ${name} !
+                  </h3>
+                  <p
+                    style="
+                      color: #555555;
+                      font-size: 14px;
+                      line-height: 26px;
+                      margin: 0 0 25px 0;
+                    "
+                  >
+                  We have received your message and will get back to you shortly.
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td class="mobile-padding" style="padding: 0 40px 40px 40px">
+                  <h3
+                    style="
+                      color: #1a1a1a;
+                      font-size: 16px;
+                      font-weight: 700;
+                      margin: 0 0 15px 0;
+                      border-left: 3px solid #007bff;
+                      padding-left: 10px;
+                    "
+                  >
+                    Submission Details:
+                  </h3>
+
+                  <table
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    width="100%"
+                    style="
+                      background-color: #f9fafc;
+                      border-radius: 6px;
+                      border: 1px solid #eeeeee;
+                    "
+                  >
+                    <tr>
+                      <td
+                        valign="top"
+                        width="35%"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Name
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${name}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Email Address
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${email}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Phone
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          border-bottom: 1px solid #e0e0e0;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${phone}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Current CTC
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${currentCTC}
+                      </td>
+                    </tr>
+                     <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Expected CTC
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${expectedCTC}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Experience
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${experience}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        City
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${cityName}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        LinkedIn Profile
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${linkedInProfile || "N/A"}
+                      </td>
+                    </tr>
+                     <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Remarks
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${remarks || "N/A"}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                        Portfolio Link
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${hyperlink || "N/A"}
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #666666;
+                          font-size: 14px;
+                          font-weight: 700;
+                          text-transform: uppercase;
+                        "
+                      >
+                       Submitted At
+                      </td>
+                      <td
+                        valign="top"
+                        style="
+                          padding: 12px 15px;
+                          color: #1a1a1a;
+                          font-size: 14px;
+                          line-height: 22px;
+                          font-weight: 400;
+                        "
+                      >
+                        ${formatDateTime(new Date())}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  align="center"
+                  style="padding: 30px 20px; background-color: #1a1a1a"
+                >
+                  <table
+                    width="100%"
+                    cellpadding="0"
+                    cellspacing="0"
+                    border="0"
+                  >
+                    <tr>
+                      <td align="left" width="50%">
+                        <a
+                          href="https://www.addact.net/contact-us"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src="https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png"
+                            alt="Addact Logo"
+                            width="120"
+                            style="display: block"
+                          />
+                        </a>
+                      </td>
+
+                      <td align="right" width="50%">
+                        <a
+                          href="https://www.facebook.com/addacttech/"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/733/733547.png"
+                            alt="Facebook"
+                            width="22"
+                          />
+                        </a>
+                        <a
+                          href="https://www.instagram.com/addacttechnologies/"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/2111/2111463.png"
+                            alt="Instagram"
+                            width="22"
+                          />
+                        </a>
+                        <a
+                          href="https://www.linkedin.com/company/addact-technologies/?viewAsMember=true"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/3536/3536505.png"
+                            alt="LinkedIn"
+                            width="22"
+                          />
+                        </a>
+                        <a
+                          href="https://x.com/AddactTech"
+                          style="text-decoration: none; margin: 0 5px"
+                        >
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/128/5969/5969020.png"
+                            alt="X"
+                            width="22"
+                          />
+                        </a>
+                        <p
+                          style="
+                            color: #999999;
+                            font-size: 11px;
+                            margin: 15px 0 0 0;
+                          "
+                        >
+                          &copy; ${currentYear} Addact. All
+                          Rights Reserved.
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
                 </html>
             `,
         });
