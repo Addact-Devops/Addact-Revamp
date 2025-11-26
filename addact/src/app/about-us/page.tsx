@@ -55,12 +55,12 @@ export default async function AboutUsPage() {
                     backgroundImageUrl={banner?.BannerImage?.url || ""}
                     showAnchorLinks={true}
                 />
-                <AboutUsContent
+               {about && <AboutUsContent
                     subtitle={about.SubTitle}
                     title={about.Title}
                     content={about.Description}
                     image={about.Image}
-                />
+                />}
                 <OurVisionMission data={visionMission} />
                 <GenericCTA
                     title={cta?.Title || []}
