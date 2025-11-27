@@ -1,4 +1,5 @@
-import { gql, GraphQLClient } from "graphql-request";
+import { gql } from "graphql-request";
+import client from "../client";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
 
@@ -6,7 +7,7 @@ if (!endpoint) {
     throw new Error("Missing NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT in environment variables.");
 }
 
-const client = new GraphQLClient(endpoint);
+
 
 const query = gql`
     query CareerGalleryData {
