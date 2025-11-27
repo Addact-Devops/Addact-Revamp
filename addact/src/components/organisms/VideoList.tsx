@@ -39,57 +39,71 @@ export default function VideoList({ videoList }: VideoListProps) {
                         const iframeSrc = extractIframeSrc(video.Iframe.Richtext);
 
                         return (
-                            <div key={index} className="overflow-hidden">
-                                {/* Iframe with loader */}
-                                <div className="relative w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden">
-                                    {loadingStates[index] && (
-                                        <div className="absolute inset-0 flex items-center justify-center bg-black z-10">
-                                            <Loader />
-                                        </div>
-                                    )}
-
-                                    {iframeSrc && (
-                                        <iframe
-                                            src={iframeSrc}
-                                            onLoad={() => {
-                                                setLoadingStates((prev) => {
-                                                    const updated = [...prev];
-                                                    updated[index] = false;
-                                                    return updated;
-                                                });
-                                            }}
-                                            className="w-full h-[200px] md:h-[250px] rounded-xl"
-                                            frameBorder="0"
-                                            allowFullScreen
-                                        />
-                                    )}
+                          <div key={index} className="overflow-hidden">
+                            {/* Iframe with loader */}
+                            <div className="relative w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden">
+                              {loadingStates[index] && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-black z-10">
+                                  <Loader />
                                 </div>
+                              )}
 
-                                {/* Title */}
-                                <h2 className="text-white font-semibold !text-[35px] !leading-[45px] my-[30px] [@media(max-width:1299px)]:!text-[30px] [@media(max-width:1299px)]:!leading-[40px]">
-                                    {video.Content.Title}
-                                </h2>
-
-                                {/* Description */}
-                                <div
-                                    className="text-[#fff]"
-                                    dangerouslySetInnerHTML={{
-                                        __html: video.Content.Description,
-                                    }}
+                              {iframeSrc && (
+                                <iframe
+                                  src={iframeSrc}
+                                  onLoad={() => {
+                                    setLoadingStates((prev) => {
+                                      const updated = [...prev];
+                                      updated[index] = false;
+                                      return updated;
+                                    });
+                                  }}
+                                  className="w-full h-[200px] md:h-[250px] rounded-xl"
+                                  frameBorder="0"
+                                  allowFullScreen
                                 />
-
-                                {/* Button */}
-                                {video.Content.Link?.href && (
-                                    <a
-                                        href={video.Content.Link.href}
-                                        target={video.Content.Link.isExternal ? "_blank" : "_self"}
-                                        rel="noopener noreferrer"
-                                        className="text-[15px] bg-[#3C4CFF] text-white text-base font-[600] rounded-lg transition h-[41px] inline-flex items-center justify-center px-[16px] mt-[20px] w-auto"
-                                    >
-                                        {video.Content.Link.label}
-                                    </a>
-                                )}
+                              )}
                             </div>
+
+                            {/* Title */}
+                            <h2
+                              className=" text-white font-semibold !text-[35px]
+                              !leading-[45px] line-clamp-2
+                              [@media(max-width:1299px)]:!text-[25px]
+                              [@media(max-width:1299px)]:!leading-[34px] my-[30px]"
+                              title={video.Content.Title}
+                            >
+                              {video.Content.Title}
+                            </h2>
+
+                            {/* Description */}
+                            <div
+                              className="text-[#fff] line-clamp-2"
+                              title={video.Content.Description.replace(
+                                /<[^>]+>/g,
+                                ""
+                              )}
+                              dangerouslySetInnerHTML={{
+                                __html: video.Content.Description,
+                              }}
+                            />
+
+                            {/* Button */}
+                            {video.Content.Link?.href && (
+                              <a
+                                href={video.Content.Link.href}
+                                target={
+                                  video.Content.Link.isExternal
+                                    ? "_blank"
+                                    : "_self"
+                                }
+                                rel="noopener noreferrer"
+                                className="text-[15px] bg-[#3C4CFF] text-white text-base font-[600] rounded-lg transition h-[41px] inline-flex items-center justify-center px-[16px] mt-[20px] w-auto"
+                              >
+                                {video.Content.Link.label}
+                              </a>
+                            )}
+                          </div>
                         );
                     })}
                 </div>
