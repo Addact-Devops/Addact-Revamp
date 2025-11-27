@@ -174,7 +174,7 @@ function InsightCard({ item, big = false }: InsightCardProps) {
                 <span className="px-5 py-2 bg-[#3C4CFF] md:bg-[#3f4040] border border-[#3C4CFF] text-white rounded-lg w-fit text-[12px] md:text-[14px] font-medium mb-[12px] md:mb-[20px]">
                     {item.type}
                 </span>
-                <h4 className="!text-[18px] !leading-[30px] md:!text-[22px] 2xl:!text-3xl font-medium mb-4 md:leading-tight line-clamp-3">
+                <h4 className="!text-[18px] !leading-[30px] md:!text-[22px] 2xl:!text-3xl font-medium mb-4 md:!leading-[44px] line-clamp-3">
                     {item.title}
                 </h4>
                 {item.date != "Unknown Date" && (
