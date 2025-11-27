@@ -1,9 +1,5 @@
-// src/utils/fetchSinglePage.ts
-
-import { gql, GraphQLClient } from "graphql-request";
-
-const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT!;
-const client = new GraphQLClient(endpoint);
+import { gql } from "graphql-request";
+import client from "../graphql/client";
 
 type SEOData = {
     metaTitle?: string;
