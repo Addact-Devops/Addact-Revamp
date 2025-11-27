@@ -30,11 +30,11 @@ export default async function AboutUsPage() {
     ]);
 
     const banner = heroBannerData;
-    const about = aboutData.aboutUs.AboutUsContent;
-    const visionMission = visionData.aboutUs.OurVisionMission;
+    const about = aboutData?.aboutUs?.AboutUsContent || null;
+    const visionMission = visionData?.aboutUs?.OurVisionMission || null;
     const cta = ctaData;
 
-    const structuredData = seoData?.SEO?.structuredData;
+    const structuredData = seoData?.SEO?.structuredData || null;
 
     return (
         <>
@@ -55,12 +55,12 @@ export default async function AboutUsPage() {
                     backgroundImageUrl={banner?.BannerImage?.url || ""}
                     showAnchorLinks={true}
                 />
-                <AboutUsContent
+               {about && <AboutUsContent
                     subtitle={about.SubTitle}
                     title={about.Title}
                     content={about.Description}
                     image={about.Image}
-                />
+                />}
                 <OurVisionMission data={visionMission} />
                 <GenericCTA
                     title={cta?.Title || []}
@@ -68,7 +68,7 @@ export default async function AboutUsPage() {
                     image={cta?.CTAImage?.[0]?.Image || null}
                     link={cta?.CTALink?.[0] || null}
                 />
-                <WeAreAddact
+                {weAreAddactData && <WeAreAddact
                     subtitle={weAreAddactData.SubTitle}
                     title={weAreAddactData.Title}
                     content={weAreAddactData.Content}
@@ -76,7 +76,7 @@ export default async function AboutUsPage() {
                     {...(weAreAddactData.NumberContent && {
                         numberContent: weAreAddactData.NumberContent,
                     })}
-                />
+                />}
             </main>
         </>
     );

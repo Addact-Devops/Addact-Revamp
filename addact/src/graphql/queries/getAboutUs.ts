@@ -307,7 +307,7 @@ const brandValueQuery = gql`
 
 export const getBrandValue = async (): Promise<BrandValueType> => {
     const res = await client.request<BrandValueQueryResponse>(brandValueQuery);
-    return res.aboutUs.BrandValue;
+    return res?.aboutUs?.BrandValue;
 };
 
 // -----------------------------
@@ -363,5 +363,5 @@ const addactQuery = gql`
 
 export const getWeAreAddact = async (): Promise<WeAreAddactType> => {
     const res = await client.request<{ aboutUs: { WeAreAddact: WeAreAddactType } }>(addactQuery);
-    return res.aboutUs.WeAreAddact;
+    return res?.aboutUs?.WeAreAddact;
 };
