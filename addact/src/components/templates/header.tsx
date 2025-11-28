@@ -136,7 +136,7 @@ const Header = ({ headers }: HeaderProps) => {
                         <Image
                             src={headerData?.HeaderLogo?.url}
                             alt={headerData?.HeaderLogo?.alternativeText || "Company Logo"}
-                            className="w-[130px] h-[16px] lg:w-[160px] lg:h-[20px] xl:w-[220px] xl:h-[27px]"
+                            className="w-[130px] h-full lg:w-[160px] xl:w-[220px] "
                             width={headerData?.HeaderLogo?.width}
                             height={headerData?.HeaderLogo?.height}
                         />
