@@ -25,6 +25,12 @@ const CaseStudyListing = () => {
     if (loading) return <Loader />;
     if (!caseStudyListing) return <p className="p-6 text-red-600 mt-32">Case-Study List not found.</p>;
 
+    const sortedData:IAllCaseStudy["addactCaseStudies"] = caseStudyListing.sort((a, b) => {
+      const dateA:Date = new Date(a?.HeroBanner?.[0]?.PublishDate || 0);
+      const dateB:Date = new Date(b?.HeroBanner?.[0]?.PublishDate || 0);
+      return dateB.getTime() - dateA.getTime();
+    });
+
     return (
         <div className="pt-[120px]">
             {/* Banner Section */}
@@ -51,7 +57,7 @@ const CaseStudyListing = () => {
 
             {/* Listing Section */}
             <div className="container mx-auto px-4 py-12 grid gap-[60px]">
-                {caseStudyListing.map((item) => (
+                {sortedData.map((item) => (
                     <div
                         key={item.documentId}
                         className="flex flex-col items-center md:flex-row bg-[#232630] p-5 text-white rounded-[20px] overflow-hidden shadow-lg"
