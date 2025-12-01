@@ -44,15 +44,20 @@ const ContactUs = ({ data }: IProps) => {
     const validate = (): FormErrors => {
         const newErrors: FormErrors = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
+        const strLenRegex = /^.{2,}$/;
         if (!formData.name) newErrors.name = "Name is required.";
+        if(!strLenRegex.test(formData.name)){
+          newErrors.name= "Please enter at least 2-3 character name"
+        }
         if (!formData.email) {
             newErrors.email = "Email is required.";
         } else if (!emailRegex.test(formData.email)) {
             newErrors.email = "Please enter a valid email address.";
         }
         if (!formData.company) newErrors.company = "Company name is required.";
-
+        if(!strLenRegex.test(formData.company)){
+          newErrors.company= "Please enter at least 2-3 character company name"
+        }
         return newErrors;
     };
 

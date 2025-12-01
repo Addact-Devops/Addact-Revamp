@@ -19,10 +19,15 @@ export const validateCareerForm = (
     captchaToken: string | null
 ): CareerFormErrors => {
     const errors: CareerFormErrors = {};
+    const strLenRegex = /^.{2,}$/;
 
     // Full name
     if (!form.fullName.trim()) {
         errors.fullName = "Full name is required.";
+    }
+
+    if(!strLenRegex.test(form.fullName)){
+      errors.fullName= "Please enter at least 2-3 character name"
     }
 
     // Email regex validation
