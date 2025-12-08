@@ -166,7 +166,7 @@ type InitialDataResponse = Omit<AddactBlogsResponse, "addactBlogs"> & {
 export async function getInitialBlogs(): Promise<InitialDataResponse> {
   const pageSize = 50;
   const page = 1;
-  const sort = ["id:desc"];
+  const sort = ["createdAt:desc"];
 
   const data = await client.request<AddactBlogsResponse>(GET_ALL_BLOGS, {
     page,
@@ -187,7 +187,7 @@ export async function getNextBlogs(
   page: number
 ): Promise<{ blogs: AddactBlogsResponse["addactBlogs"]; hasMore: boolean }> {
   const pageSize = 50;
-  const sort = ["id:desc"];
+  const sort = ["createdAt:desc"];
 
   const data = await client.request<AddactBlogsResponse>(GET_ALL_BLOGS, {
     page,
