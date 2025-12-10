@@ -17,45 +17,124 @@ import GlobeAnimation from "@/components/organisms/GlobeAnimation";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("home");
+  return generatePageMetadata("home");
 }
 
 export default async function HomePage() {
-    const [homeResponse, seoData] = await Promise.all([
-        getHOmePageData(),
-        fetchSinglePage("home"), // ✅ fetch SEO.structuredData
-    ]);
+  const [homeResponse, seoData] = await Promise.all([
+    getHOmePageData(),
+    fetchSinglePage("home"), // ✅ fetch SEO.structuredData
+  ]);
 
-    const homeData = homeResponse?.home;
-    const structuredData = seoData?.SEO?.structuredData;
+  const homeData = homeResponse?.home;
+  const structuredData = seoData?.SEO?.structuredData;
 
-    return (
-        <>
-            {/* ✅ Inject structured data */}
-            {structuredData && (
-                <script
-                    type='application/ld+json'
-                    suppressHydrationWarning
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(structuredData),
-                    }}
-                />
-            )}
+  return (
+    <>
+      {/* ✅ Inject structured data */}
+      {structuredData && (
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      )}
 
-            <main className='bg-dark'>
-                <HomeHeroBanner data={homeData?.banner} />
-                <OurPartners />
-                <WhoWeAre />
-                <OurServices data={homeData?.ourservices} />
-                <OurCmsExperts />
-                <WhyAddact data={homeData?.whyaddact} />
-                <CtaBanner data={homeData?.cta} />
-                <OurProcess data={homeData?.ourprocess} />
-                <ClientTestimonials />
-                <OurInsights />
-                <GlobeAnimation data={homeData?.GlobeAnimation} />
-                <ContactUs data={homeData?.contactus} />
-            </main>
-        </>
-    );
+      {/* ✅ Organization Schema */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            url: "https://www.addact.net/",
+            logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
+            name: "Addact Technologies",
+            "@type": "Organization",
+            sameAs: [
+              "https://www.facebook.com/addacttech/",
+              "https://x.com/AddactTech",
+              "https://www.instagram.com/addacttechnologies/",
+              "https://www.youtube.com/@addact3283",
+              "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all&viewAsMember=true",
+            ],
+            "@context": "https://schema.org",
+            contactPoint: {
+              "@type": "ContactPoint",
+              telephone: "+91 94272 37737",
+              areaServed: "IN",
+              contactType: "technical support",
+              availableLanguage: "en",
+            },
+            alternateName: "Addact",
+          }),
+        }}
+      />
+
+      {/* ✅ FAQ Schema */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@type": "FAQPage",
+            "@context": "https://schema.org",
+            mainEntity: [
+              {
+                name: "What CMS platforms does Addact specialize in?",
+                "@type": "Question",
+                acceptedAnswer: {
+                  text: "Addact provides end-to-end development, consulting, and support services across leading CMS platforms, including Sitecore, Umbraco, Kentico, Strapi, Contentful, and Contentstack.",
+                  "@type": "Answer",
+                },
+              },
+              {
+                name: "How do I know which CMS is right for my business?",
+                "@type": "Question",
+                acceptedAnswer: {
+                  text: "Every business has unique needs. Addact helps you evaluate platforms like Sitecore, Umbraco, Kentico, Strapi, Contentful, and Contentstack based on your budget, scalability, personalization needs, cloud readiness, and technical ecosystem.",
+                  "@type": "Answer",
+                },
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* ✅ Website Schema */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            url: "https://www.addact.net/",
+            name: "Addact Technologies",
+            "@type": "WebSite",
+            "@context": "https://schema.org/",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "{search_term_string}",
+              "query-input": "required name=search_term_string",
+            },
+          }),
+        }}
+      />
+
+      <main className="bg-dark">
+        <HomeHeroBanner data={homeData?.banner} />
+        <OurPartners />
+        <WhoWeAre />
+        <OurServices data={homeData?.ourservices} />
+        <OurCmsExperts />
+        <WhyAddact data={homeData?.whyaddact} />
+        <CtaBanner data={homeData?.cta} />
+        <OurProcess data={homeData?.ourprocess} />
+        <ClientTestimonials />
+        <OurInsights />
+        <GlobeAnimation data={homeData?.GlobeAnimation} />
+        <ContactUs data={homeData?.contactus} />
+      </main>
+    </>
+  );
 }

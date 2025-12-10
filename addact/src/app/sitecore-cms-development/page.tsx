@@ -47,7 +47,7 @@ export default async function SitecorePage() {
         <ClientTestimonials />
         <OurInsights />
         <FAQ data={data?.faq} />
-        <CtaBanner data={data?.cta} />
+        {data?.cta && <CtaBanner data={data?.cta} />}
         <ContactUs data={data?.contact_us} />
       </main>
     );
