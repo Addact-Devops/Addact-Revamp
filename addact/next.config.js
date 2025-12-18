@@ -46,37 +46,46 @@ const globalCsp = [
         key: "Content-Security-Policy",
         value: `
           default-src 'self';
-          script-src 'self' 'unsafe-inline' 'unsafe-eval'
-            https://www.googletagmanager.com
-            https://www.google-analytics.com
-            https://www.google.com
-            https://www.gstatic.com
-            https://code.tidio.co
-            https://scripts.clarity.ms
-            https://www.clarity.ms
-            https://googleads.g.doubleclick.net
-            https://www.googleadservices.com
-            https://va.vercel-scripts.com 
-            https://cdn.us.heap-api.com/config/1265451483/heap_config.js;
-          script-src-elem 'self' 'unsafe-inline' 'unsafe-eval'
-            https://www.googletagmanager.com
-            https://www.google-analytics.com
-            https://www.google.com
-            https://www.gstatic.com
-            https://code.tidio.co
-            https://scripts.clarity.ms
-            https://www.clarity.ms
-            https://googleads.g.doubleclick.net
-            https://www.googleadservices.com
-            https://va.vercel-scripts.com
-            https://cdn.us.heap-api.com/config/1265451483/heap_config.js; 
+          script-src
+            'self' 'unsafe-inline' 'unsafe-eval'
+              https://www.googletagmanager.com
+              https://www.google-analytics.com
+              https://www.google.com
+              https://www.gstatic.com
+              https://googleads.g.doubleclick.net
+              https://www.googleadservices.com
+              https://scripts.clarity.ms
+              https://www.clarity.ms
+              https://va.vercel-scripts.com
+              https://code.tidio.co
+              https://cdn.us.heap-api.com;
+
+              script-src-elem
+              'self' 'unsafe-inline' 'unsafe-eval'
+              https://www.googletagmanager.com
+              https://www.google-analytics.com
+              https://www.google.com
+              https://www.gstatic.com
+              https://googleads.g.doubleclick.net
+              https://www.googleadservices.com
+              https://scripts.clarity.ms
+              https://www.clarity.ms
+              https://va.vercel-scripts.com
+              https://code.tidio.co
+              https://cdn.us.heap-api.com;
+
           script-src-attr 'self' 'unsafe-inline';
+
           style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
           style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;
           style-src-attr 'self' 'unsafe-inline';
+
           img-src 'self' data: https:;
+
           font-src 'self' https://fonts.gstatic.com https://code.tidio.co;
-          connect-src 'self'
+
+          connect-src
+            'self'
             https://cms.addact.net
             https://www.google.com
             https://www.gstatic.com
@@ -88,21 +97,25 @@ const globalCsp = [
             https://www.googleadservices.com
             https://va.vercel-scripts.com
             https://code.tidio.co
-           https://cdn.us.heap-api.com/config/1265451483/heap_config.js
+            https://cdn.us.heap-api.com
             https://*.clarity.ms
             wss://socket.tidio.co
             wss:;
-          media-src 'self'
-            https://cms.addact.net
-            https://d3l7d9gtq0bnch.cloudfront.net
-            https://code.tidio.co;
-          frame-src 'self'
-            https://www.google.com
-            https://www.gstatic.com
-            https://www.googletagmanager.com
-            https://code.tidio.co
-            https://www.youtube.com
-            https://www.youtube-nocookie.com;
+
+          media-src
+            'self'
+          https://cms.addact.net
+          https://d3l7d9gtq0bnch.cloudfront.net
+          https://code.tidio.co;
+
+          frame-src
+            'self'
+          https://www.google.com
+          https://www.gstatic.com
+          https://www.googletagmanager.com
+          https://code.tidio.co
+          https://www.youtube.com
+          https://www.youtube-nocookie.com;
           object-src 'none';
           base-uri 'self';
           form-action 'self';
