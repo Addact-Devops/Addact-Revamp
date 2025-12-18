@@ -1,8 +1,7 @@
 // components/organisms/BlogDetailBanner.tsx
 "use client";
-import Image from "next/image";
-import Link from "next/link";
 import Breadcrumps from "@/components/atom/breadcrumps";
+import Image from "next/image";
 
 type BannerImageType = {
   url?: string;
