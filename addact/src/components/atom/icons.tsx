@@ -64,14 +64,16 @@ export const RightArrowUpIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
 export const CaretRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
   props
 ) => {
+  const { className, ...rest } = props || {};
   return (
     <svg
-      width="20px"
-      height="40px"
+      width="14"
+      height="14"
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      className={`align-middle inline-block ${className ?? ""}`}
+      {...rest}
     >
       <path
         fillRule="evenodd"
