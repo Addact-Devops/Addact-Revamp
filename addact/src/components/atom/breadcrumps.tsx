@@ -10,15 +10,18 @@ export type Crumb = {
 
 type Props = {
   crumbs: Crumb[];
+  className?: string;
 };
 
-const Breadcrumps: FC<Props> = ({ crumbs }) => {
+const Breadcrumps: FC<Props> = ({ crumbs, className }) => {
   if (!crumbs || crumbs.length === 0) return null;
 
   return (
     <nav
       aria-label="Breadcrumb"
-      className="mb-9 sm:mb-9 lg:mb-12 sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar"
+      className={`${
+        className ?? ""
+      } lg:mt-12  sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar`}
     >
       <ol className="flex items-center gap-2 sm:gap-3 text-sm text-white !list-none !pl-0 whitespace-nowrap !mt-0 !mb-0">
         {crumbs.map((crumb, idx) => {
