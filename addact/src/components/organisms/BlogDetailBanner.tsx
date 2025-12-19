@@ -51,7 +51,7 @@ export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
     : null;
 
   return (
-    <section className="bg-[#131318] md:mt-[120px] py-[120px] max-[1300px]:py-[80px] max-[991px]:py-[60px] z-[4] relative">
+    <section className="bg-[#131318] md:mt-[120px] py-[120px] max-[1300px]:py-[30px] max-[991px]:py-[60px] z-[4] relative">
       <div className="container">
         <Breadcrumps
           crumbs={[

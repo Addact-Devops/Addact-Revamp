@@ -18,9 +18,9 @@ const Breadcrumps: FC<Props> = ({ crumbs }) => {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="mb-12 -mx-4 sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar"
+      className="mb-12 sm:mb-9 sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar"
     >
-      <ol className="flex items-center gap-2 sm:gap-3 text-sm text-white !list-none !pl-0 whitespace-nowrap">
+      <ol className="flex items-center gap-2 sm:gap-3 text-sm text-white !list-none !pl-0 whitespace-nowrap !mt-0 !mb-0">
         {crumbs.map((crumb, idx) => {
           const isLast = idx === crumbs.length - 1;
           return (
@@ -29,7 +29,7 @@ const Breadcrumps: FC<Props> = ({ crumbs }) => {
                 {crumb.href && !isLast ? (
                   <Link
                     href={crumb.href}
-                    className="text-white hover:underline !text-[14px] sm:!text-[16px] md:!text-[20px] !no-underline"
+                    className="text-white hover:underline !text-[14px]  !no-underline"
                   >
                     {crumb.label}
                   </Link>
@@ -56,8 +56,8 @@ const Breadcrumps: FC<Props> = ({ crumbs }) => {
                       crumb.isCurrent ? "font-medium" : ""
                     } truncate ${
                       isLast
-                        ? "max-w-[60vw] sm:max-w-[40ch] !text-[14px] sm:!text-[16px] md:!text-[20px]"
-                        : "!text-[14px] sm:!text-[16px] md:!text-[20px]"
+                        ? "max-w-[60vw] sm:max-w-[40ch] !text-[14px]"
+                        : "!text-[14px]"
                     }`}
                   >
                     {crumb.label}
@@ -66,7 +66,7 @@ const Breadcrumps: FC<Props> = ({ crumbs }) => {
               </li>
 
               {idx < crumbs.length - 1 && (
-                <li className="!text-white !mb-0 !text-[14px] sm:!text-[16px] md:!text-[20px]">
+                <li className="!text-white !mb-0 !text-[14px] ">
                   <CaretRightIcon aria-hidden="true" />
                 </li>
               )}
