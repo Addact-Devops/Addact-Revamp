@@ -2,7 +2,6 @@
 "use client";
 import Breadcrumps from "@/components/atom/breadcrumps";
 import Image from "next/image";
-import { Fragment } from "react";
 
 type BannerImageType = {
   url?: string;
