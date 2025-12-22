@@ -15,38 +15,38 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 import ContactUs from "@/components/organisms/ContactUs";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/umbraco-cms-development");
+  return generatePageMetadata("serviceLists", "/umbraco-cms-development");
 }
 export default async function umbracoPage() {
-    const service = "umbraco-cms-development";
-    const data = await getServiceListBySlug(service);
-    if (!data) return notFound();
-    const bannerData = data.Banner?.Banner?.[0];
-
-    return (
-      <main className="bg-dark">
-        <HeroBanner
-          title={bannerData?.BannerTitle ?? ""}
-          description={
-            bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-          }
-          button={{
-            label: bannerData?.BannerLink?.label ?? "",
-            url: bannerData?.BannerLink?.href ?? "",
-          }}
-          backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-        />
-        <OurPartners />
-        <OurServicesWithTabs data={data?.our_service} />
-        <IndustriesWeServe />
-        <WhyAddact data={data?.why_addact} />
-        {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
-        <OurProcess data={data?.our_process} />
-        <ClientTestimonials />
-        <OurInsights />
-        <FAQ data={data?.faq} />
-        <CtaBanner data={data?.cta} />
-        <ContactUs data={data?.contact_us} />
-      </main>
-    );
+  const service = "umbraco-cms-development";
+  const data = await getServiceListBySlug(service);
+  if (!data) return notFound();
+  const bannerData = data.Banner?.Banner?.[0];
+  console.log("data", data);
+  return (
+    <main className="bg-dark">
+      <HeroBanner
+        title={bannerData?.BannerTitle ?? ""}
+        description={
+          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
+        }
+        button={{
+          label: bannerData?.BannerLink?.label ?? "",
+          url: bannerData?.BannerLink?.href ?? "",
+        }}
+        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+      />
+      <OurPartners />
+      <OurServicesWithTabs data={data?.our_service} />
+      <IndustriesWeServe />
+      <WhyAddact data={data?.why_addact} />
+      {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
+      <OurProcess data={data?.our_process} />
+      <ClientTestimonials />
+      <OurInsights />
+      <FAQ data={data?.faq} />
+      {data?.cta && <CtaBanner data={data?.cta} />}
+      <ContactUs data={data?.contact_us} />
+    </main>
+  );
 }

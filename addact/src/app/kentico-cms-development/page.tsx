@@ -12,42 +12,42 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/kentico-cms-development");
+  return generatePageMetadata("serviceLists", "/kentico-cms-development");
 }
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import ContactUs from "@/components/organisms/ContactUs";
 
 export default async function kenticoPage() {
-    const service = "kentico-cms-development";
-    const data = await getServiceListBySlug(service);
-    if (!data) return notFound();
-    const bannerData = data.Banner?.Banner?.[0];
+  const service = "kentico-cms-development";
+  const data = await getServiceListBySlug(service);
+  if (!data) return notFound();
+  const bannerData = data.Banner?.Banner?.[0];
 
-    return (
-      <main className="bg-dark">
-        <HeroBanner
-          title={bannerData?.BannerTitle ?? ""}
-          description={
-            bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-          }
-          button={{
-            label: bannerData?.BannerLink?.label ?? "",
-            url: bannerData?.BannerLink?.href ?? "",
-          }}
-          backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-        />
-        <OurPartners />
-        <OurServicesWithTabs data={data?.our_service} />
-        <IndustriesWeServe />
-        <WhyAddact data={data?.why_addact} />
-        {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
-        <OurProcess data={data?.our_process} />
-        <ClientTestimonials />
-        <OurInsights />
-        <FAQ data={data?.faq} />
-        <CtaBanner data={data?.cta} />
-        <ContactUs data={data?.contact_us} />
-      </main>
-    );
+  return (
+    <main className="bg-dark">
+      <HeroBanner
+        title={bannerData?.BannerTitle ?? ""}
+        description={
+          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
+        }
+        button={{
+          label: bannerData?.BannerLink?.label ?? "",
+          url: bannerData?.BannerLink?.href ?? "",
+        }}
+        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+      />
+      <OurPartners />
+      <OurServicesWithTabs data={data?.our_service} />
+      <IndustriesWeServe />
+      <WhyAddact data={data?.why_addact} />
+      {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
+      <OurProcess data={data?.our_process} />
+      <ClientTestimonials />
+      <OurInsights />
+      <FAQ data={data?.faq} />
+      {data?.cta && <CtaBanner data={data?.cta} />}
+      <ContactUs data={data?.contact_us} />
+    </main>
+  );
 }

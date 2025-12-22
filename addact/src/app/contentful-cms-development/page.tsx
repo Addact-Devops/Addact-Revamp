@@ -15,38 +15,40 @@ import ContactUs from "@/components/organisms/ContactUs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-    return generatePageMetadata("serviceLists", "/contentful-cms-development");
+  return generatePageMetadata("serviceLists", "/contentful-cms-development");
 }
 
 export default async function ContentfulPage() {
-    const service = "contentful-cms-development";
-    const data = await getServiceListBySlug(service);
-    if (!data) return notFound();
+  const service = "contentful-cms-development";
+  const data = await getServiceListBySlug(service);
+  if (!data) return notFound();
 
-    const bannerData = data.Banner?.Banner?.[0];
+  const bannerData = data.Banner?.Banner?.[0];
 
-    return (
-        <main className='bg-dark'>
-            <HeroBanner
-                title={bannerData?.BannerTitle ?? ""}
-                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
-                button={{
-                    label: bannerData?.BannerLink?.label ?? "",
-                    url: bannerData?.BannerLink?.href ?? "",
-                }}
-                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-            />
-            <OurPartners />
-            <OurServicesWithTabs data={data?.our_service} />
-            <IndustriesWeServe />
-            <WhyAddact data={data?.why_addact} />
-            {data?.cta2  &&<CtaBanner2 data={data?.cta2} />}
-            <OurProcess data={data?.our_process} />
-            <ClientTestimonials />
-            <OurInsights />
-            <FAQ data={data?.faq} />
-            <CtaBanner data={data?.cta} />
-            <ContactUs data={data?.contact_us} />
-        </main>
-    );
+  return (
+    <main className="bg-dark">
+      <HeroBanner
+        title={bannerData?.BannerTitle ?? ""}
+        description={
+          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
+        }
+        button={{
+          label: bannerData?.BannerLink?.label ?? "",
+          url: bannerData?.BannerLink?.href ?? "",
+        }}
+        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+      />
+      <OurPartners />
+      <OurServicesWithTabs data={data?.our_service} />
+      <IndustriesWeServe />
+      <WhyAddact data={data?.why_addact} />
+      {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
+      <OurProcess data={data?.our_process} />
+      <ClientTestimonials />
+      <OurInsights />
+      <FAQ data={data?.faq} />
+      {data?.cta && <CtaBanner data={data?.cta} />}
+      <ContactUs data={data?.contact_us} />
+    </main>
+  );
 }
