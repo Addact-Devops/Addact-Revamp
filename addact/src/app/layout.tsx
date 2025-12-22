@@ -107,10 +107,9 @@ export default async function RootLayout({
 
         {/* ✅ Tidio Chat */}
         <Script
-          id="tidio"
-          src="https://code.tidio.co/alwcrztooa3ur96b7luzlflxidei5qnd.js"
-          strategy="afterInteractive"
-        />
+          src={`//code.tidio.co/ggtkjichemvtqdbnwpdhliceejbhv3rg.js`}
+          strategy="lazyOnload"
+        ></Script>
 
         {/* ✅ Heap Analytics */}
         <Script
