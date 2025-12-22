@@ -227,6 +227,7 @@ export default function BlogListContent({}: Props) {
 
   if (loading) return <Loader />;
 
+  console.log("filteredBlogs", filteredBlogs);
   return (
     <>
       <BlogHeroBanner
@@ -246,7 +247,7 @@ export default function BlogListContent({}: Props) {
 
       <div className="container">
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
-          {filteredBlogs.length === 0 && (
+          {filteredBlogs.length === 0 && !loadingMore && !hasMore && (
             <p className="text-white !text-[35px] font-semibold col-span-full text-center">
               {searchText.trim()
                 ? `No blogs found for "${searchText}"`
