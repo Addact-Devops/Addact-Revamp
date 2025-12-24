@@ -3,104 +3,124 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { getAllCaseStudyData, IAllCaseStudy } from "@/graphql/queries/getAllCaseStudy";
+import {
+  getAllCaseStudyData,
+  IAllCaseStudy,
+} from "@/graphql/queries/getAllCaseStudy";
 import RichText from "@/components/atom/richText";
 import Loader from "@/components/atom/loader";
 
 const CaseStudyListing = () => {
-    const [caseStudyBanner, setCaseStudyBanner] = useState<IAllCaseStudy["caseStudy"]>();
-    const [caseStudyListing, setCaseStudyListing] = useState<IAllCaseStudy["addactCaseStudies"]>();
-    const [loading, setLoading] = useState(true);
+  const [caseStudyBanner, setCaseStudyBanner] =
+    useState<IAllCaseStudy["caseStudy"]>();
+  const [caseStudyListing, setCaseStudyListing] =
+    useState<IAllCaseStudy["addactCaseStudies"]>();
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchCaseStudy = async () => {
-            const data = await getAllCaseStudyData();
-            setCaseStudyBanner(data.caseStudy);
-            setCaseStudyListing(data.addactCaseStudies);
-            setLoading(false);
-        };
-        fetchCaseStudy();
-    }, []);
+  useEffect(() => {
+    const fetchCaseStudy = async () => {
+      const data = await getAllCaseStudyData();
+      setCaseStudyBanner(data.caseStudy);
+      setCaseStudyListing(data.addactCaseStudies);
+      setLoading(false);
+    };
+    fetchCaseStudy();
+  }, []);
 
-    if (loading) return <Loader />;
-    if (!caseStudyListing) return <p className="p-6 text-red-600 mt-32">Case-Study List not found.</p>;
+  if (loading) return <Loader />;
+  if (!caseStudyListing)
+    return <p className="p-6 text-red-600 mt-32">Case-Study List not found.</p>;
 
-    const sortedData:IAllCaseStudy["addactCaseStudies"] = caseStudyListing.sort((a, b) => {
-      const dateA:Date = new Date(a?.HeroBanner?.[0]?.PublishDate || 0);
-      const dateB:Date = new Date(b?.HeroBanner?.[0]?.PublishDate || 0);
+  const sortedData: IAllCaseStudy["addactCaseStudies"] = caseStudyListing.sort(
+    (a, b) => {
+      const dateA: Date = new Date(a?.HeroBanner?.[0]?.PublishDate || 0);
+      const dateB: Date = new Date(b?.HeroBanner?.[0]?.PublishDate || 0);
       return dateB.getTime() - dateA.getTime();
-    });
+    }
+  );
 
-    return (
-        <div className="pt-[120px]">
-            {/* Banner Section */}
-            {caseStudyBanner && (
-                <div className="relative w-full h-[400px] md:h-[500px] flex items-center justify-center text-white">
-                    <Image
-                        src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url}
-                        alt={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.alternativeText}
-                        layout="fill"
-                        objectFit="cover"
-                        priority
-                        className="absolute inset-0 z-0"
-                    />
-                    <div className="relative container z-10 px-4">
-                        <h1 className="!text-5xl md:text-5xl font-bold mb-4 max-w-2xl leading-16">
-                            {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
-                        </h1>
-                        <div className="mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl">
-                            <RichText html={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription} />
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Listing Section */}
-            <div className="container mx-auto px-4 py-12 grid gap-[60px]">
-                {sortedData.map((item) => (
-                    <div
-                        key={item.documentId}
-                        className="flex flex-col items-center md:flex-row bg-[#232630] p-5 text-white rounded-[20px] overflow-hidden shadow-lg"
-                    >
-                        <div className="relative w-full md:w-[550px] h-[200px] md:h-[300px]">
-                            <Image
-                                src={item.HeroBanner[0].BannerImage.url}
-                                alt={item.HeroBanner[0].BannerImage.alternativeText}
-                                layout="fill"
-                                objectFit="cover"
-                                className="rounded-[20px]"
-                            />
-                        </div>
-
-                        <div className="flex flex-col justify-between pt-6 md:pt-0 md:pl-9 w-full md:w-2/3">
-                            <div>
-                                <h2 className="!text-[28px] md:!text-[40px]  !font-bold mb-5 leading-9 md:leading-12">
-                                    {item.HeroBanner[0].BannerTitle}
-                                </h2>
-                                <p className="text-lg text-white mb-2.5 border rounded max-w-none inline-block px-2 border-[#676767]">
-                                    {new Date(item.HeroBanner[0].PublishDate).toLocaleDateString("en-GB", {
-                                        day: "2-digit",
-                                        month: "long",
-                                        year: "numeric",
-                                    })}
-                                </p>
-                                <p className="text-base text-gray-300">{item.caseStudySummary}</p>
-                            </div>
-
-                            <div className="mt-4">
-                                <Link
-                                    href={`/portfolio${item.Slug}`}
-                                    className="inline-block bg-[#3C4CFF] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#3440CB] transition"
-                                >
-                                    Know More
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+  return (
+    <div className="pt-[120px]">
+      {/* Banner Section */}
+      {caseStudyBanner && (
+        <div className="relative w-full h-[400px] md:h-[500px] flex items-center justify-center text-white">
+          <Image
+            src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url}
+            alt={
+              caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage
+                ?.alternativeText
+            }
+            layout="fill"
+            objectFit="cover"
+            priority
+            className="absolute inset-0 z-0"
+          />
+          <div className="relative container z-10 px-4">
+            <h1 className="text-white mb-[20px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] xl:max-w-[60%]">
+              {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
+            </h1>
+            <div className="mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl">
+              <RichText
+                html={
+                  caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription
+                }
+              />
             </div>
+          </div>
         </div>
-    );
+      )}
+
+      {/* Listing Section */}
+      <div className="container mx-auto px-4 py-12 grid gap-[60px]">
+        {sortedData.map((item) => (
+          <div
+            key={item.documentId}
+            className="flex flex-col items-center md:flex-row bg-[#232630] p-5 text-white rounded-[20px] overflow-hidden shadow-lg"
+          >
+            <div className="relative w-full md:w-[550px] h-[200px] md:h-[300px]">
+              <Image
+                src={item.HeroBanner[0].BannerImage.url}
+                alt={item.HeroBanner[0].BannerImage.alternativeText}
+                layout="fill"
+                objectFit="cover"
+                className="rounded-[20px]"
+              />
+            </div>
+
+            <div className="flex flex-col justify-between pt-6 md:pt-0 md:pl-9 w-full md:w-2/3">
+              <div>
+                <h2 className="!text-[28px] md:!text-[40px]  !font-bold mb-5 leading-9 md:leading-12">
+                  {item.HeroBanner[0].BannerTitle}
+                </h2>
+                <p className="text-lg text-white mb-2.5 border rounded max-w-none inline-block px-2 border-[#676767]">
+                  {new Date(item.HeroBanner[0].PublishDate).toLocaleDateString(
+                    "en-GB",
+                    {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    }
+                  )}
+                </p>
+                <p className="text-base text-gray-300">
+                  {item.caseStudySummary}
+                </p>
+              </div>
+
+              <div className="mt-4">
+                <Link
+                  href={`/portfolio${item.Slug}`}
+                  className="inline-block bg-[#3C4CFF] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#3440CB] transition"
+                >
+                  Know More
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default CaseStudyListing;
