@@ -11,7 +11,10 @@ import FAQ from "@/components/organisms/FAQ";
 import ContactUs from "@/components/organisms/ContactUs";
 
 // ✅ import the exact types your OurPartners component expects
-import type { PartnerTitle, PartnerImage } from "@/graphql/queries/getOurPartners";
+import type {
+  PartnerTitle,
+  PartnerImage,
+} from "@/graphql/queries/getOurPartners";
 import IndustryChallenges from "@/components/organisms/IndustryChallenges";
 import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
 import IndustryCaseStudies from "@/components/organisms/IndustryCaseStudies";
@@ -22,290 +25,293 @@ type Params = Promise<{ slug: string }>;
 
 // ---------- Local helper types (no `any`) ----------
 type ImgBasic = {
-    url?: string;
-    alternativeText?: string; // use undefined instead of null to match most component shapes
-    width?: number;
-    height?: number;
-    name?: string;
+  url?: string;
+  alternativeText?: string; // use undefined instead of null to match most component shapes
+  width?: number;
+  height?: number;
+  name?: string;
 };
 
 type LinkBasic = {
-    href: string;
-    label: string;
-    target?: "self" | "blank" | "parent" | "top";
-    isExternal?: boolean;
+  href: string;
+  label: string;
+  target?: "self" | "blank" | "parent" | "top";
+  isExternal?: boolean;
 };
 
 type CmsItemRaw = {
-    Title?: string;
-    Links?: Partial<LinkBasic>;
-    Icons?: Partial<ImgBasic>;
-    ClassName?: string;
+  Title?: string;
+  Links?: Partial<LinkBasic>;
+  Icons?: Partial<ImgBasic>;
+  ClassName?: string;
 };
 
 type FaqRawItem = {
-    Title?: string | null;
-    Description?: string | null;
+  Title?: string | null;
+  Description?: string | null;
 };
 
 type ContactFormRawItem = {
-    Title?: string | null;
-    Description?: string | null;
-    Image?: {
-        url?: string | null;
-        alternativeText?: string | null;
-        width?: number | null;
-        height?: number | null;
-    } | null;
+  Title?: string | null;
+  Description?: string | null;
+  Image?: {
+    url?: string | null;
+    alternativeText?: string | null;
+    width?: number | null;
+    height?: number | null;
+  } | null;
 };
 
 // Accept null/undefined safely from Strapi
-const normalizeTarget = (t: string | null | undefined): "self" | "blank" | "parent" | "top" =>
-    t === "blank" || t === "parent" || t === "top" ? t : "self";
+const normalizeTarget = (
+  t: string | null | undefined
+): "self" | "blank" | "parent" | "top" =>
+  t === "blank" || t === "parent" || t === "top" ? t : "self";
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-    const { slug } = await params;
-    const industry = await getIndustryBySlug(slug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const industry = await getIndustryBySlug(slug);
 
-    const seo = industry?.SEO;
-    if (!seo) return { title: "Industry" };
+  const seo = industry?.SEO;
+  if (!seo) return { title: "Industry" };
 
-    // ✅ FIX: Properly derive robots from Strapi value(s) with correct priority.
-    // Accepts values like "noindex", "index,follow", "noindex,nofollow", etc.
-    const robotsRaw = (seo.metaRobots || "").toString().toLowerCase();
-    const tokens = robotsRaw.split(/[,\s]+/).filter(Boolean); // normalize into tokens
+  // ✅ FIX: Properly derive robots from Strapi value(s) with correct priority.
+  // Accepts values like "noindex", "index,follow", "noindex,nofollow", etc.
+  const robotsRaw = (seo.metaRobots || "").toString().toLowerCase();
+  const tokens = robotsRaw.split(/[,\s]+/).filter(Boolean); // normalize into tokens
 
-    const hasNoindex = tokens.includes("noindex");
-    const hasIndex = tokens.includes("index");
-    const hasNofollow = tokens.includes("nofollow");
-    const hasFollow = tokens.includes("follow");
+  const hasNoindex = tokens.includes("noindex");
+  const hasIndex = tokens.includes("index");
+  const hasNofollow = tokens.includes("nofollow");
+  const hasFollow = tokens.includes("follow");
 
-    const robots: Metadata["robots"] = {
-        // explicit "noindex" wins; otherwise "index" if present; default true
-        index: hasNoindex ? false : hasIndex ? true : true,
-        // explicit "nofollow" wins; otherwise "follow" if present; default true
-        follow: hasNofollow ? false : hasFollow ? true : true,
-    };
+  const robots: Metadata["robots"] = {
+    // explicit "noindex" wins; otherwise "index" if present; default true
+    index: hasNoindex ? false : hasIndex ? true : true,
+    // explicit "nofollow" wins; otherwise "follow" if present; default true
+    follow: hasNofollow ? false : hasFollow ? true : true,
+  };
 
-    return {
-        title: seo.metaTitle ?? "Industry",
-        description: seo.metaDescription ?? undefined,
-        openGraph: {
-            title: seo.ogTitle ?? seo.metaTitle ?? undefined,
-            description: seo.ogDescription ?? seo.metaDescription ?? undefined,
-            images: seo.ogImage?.url ? [{ url: seo.ogImage.url }] : [],
-        },
-        twitter: { title: seo.twitterCardTitle ?? seo.metaTitle ?? undefined },
-        alternates: { canonical: seo.canonicalURL || undefined },
-        robots, // ✅ use the computed robots object
-    };
+  return {
+    title: seo.metaTitle ?? "Industry",
+    description: seo.metaDescription ?? undefined,
+    openGraph: {
+      title: seo.ogTitle ?? seo.metaTitle ?? undefined,
+      description: seo.ogDescription ?? seo.metaDescription ?? undefined,
+      images: seo.ogImage?.url ? [{ url: seo.ogImage.url }] : [],
+    },
+    twitter: { title: seo.twitterCardTitle ?? seo.metaTitle ?? undefined },
+    alternates: { canonical: seo.canonicalURL || undefined },
+    robots, // ✅ use the computed robots object
+  };
 }
 
 export default async function Page({ params }: { params: Params }) {
-    const { slug } = await params;
-    const industry = await getIndustryBySlug(slug);
-    const structuredData = industry?.SEO?.structuredData;
+  const { slug } = await params;
+  const industry = await getIndustryBySlug(slug);
+  const structuredData = industry?.SEO?.structuredData;
 
-    // ✅ Hero banner (first item)
-    const hero = industry?.HeroBanner?.Banner?.[0];
+  // ✅ Hero banner (first item)
+  const hero = industry?.HeroBanner?.Banner?.[0];
 
-    // =========================
-    // ✅ Partners (normalize to required shapes)
-    // =========================
-    const partnerTitleRaw = Array.isArray(industry?.OurPartner?.Title)
-        ? (industry?.OurPartner?.Title as unknown[])
-        : [];
+  // =========================
+  // ✅ Partners (normalize to required shapes)
+  // =========================
+  const partnerTitleRaw = Array.isArray(industry?.OurPartner?.Title)
+    ? (industry?.OurPartner?.Title as unknown[])
+    : [];
 
-    const normalizedPartnerTitleBlocks: PartnerTitle[] = partnerTitleRaw
-        .map((t: unknown) => {
-            const obj = t as Record<string, unknown> | null;
-            if (!obj) return null;
-            if (typeof obj.h1 === "string") return { h1: obj.h1 } as PartnerTitle;
-            if (typeof obj.h2 === "string") return { h2: obj.h2 } as PartnerTitle;
-            if (typeof obj.h3 === "string") return { h3: obj.h3 } as PartnerTitle;
-            if (typeof obj.h5 === "string") return { h5: obj.h5 } as PartnerTitle;
-            if (typeof obj.h6 === "string") return { h6: obj.h6 } as PartnerTitle;
-            return null;
-        })
-        .filter(Boolean) as PartnerTitle[];
+  const normalizedPartnerTitleBlocks: PartnerTitle[] = partnerTitleRaw
+    .map((t: unknown) => {
+      const obj = t as Record<string, unknown> | null;
+      if (!obj) return null;
+      if (typeof obj.h1 === "string") return { h1: obj.h1 } as PartnerTitle;
+      if (typeof obj.h2 === "string") return { h2: obj.h2 } as PartnerTitle;
+      if (typeof obj.h3 === "string") return { h3: obj.h3 } as PartnerTitle;
+      if (typeof obj.h5 === "string") return { h5: obj.h5 } as PartnerTitle;
+      if (typeof obj.h6 === "string") return { h6: obj.h6 } as PartnerTitle;
+      return null;
+    })
+    .filter(Boolean) as PartnerTitle[];
 
-    const partnerImagesRaw = Array.isArray(industry?.OurPartner?.Image)
-        ? (industry?.OurPartner?.Image as unknown[])
-        : [];
+  const partnerImagesRaw = Array.isArray(industry?.OurPartner?.Image)
+    ? (industry?.OurPartner?.Image as unknown[])
+    : [];
 
-    const normalizedPartnerImages: PartnerImage[] = partnerImagesRaw
-        .map((x: unknown) => {
-            const obj = x as { Image?: { url?: string; alternativeText?: string | null } } | null;
-            const url = obj?.Image?.url ?? "";
-            if (!url) return null;
-            return {
-                Image: {
-                    url,
-                    alternativeText: obj?.Image?.alternativeText ?? undefined,
-                },
-            } as PartnerImage;
-        })
-        .filter(Boolean) as PartnerImage[];
-
-    // =========================
-    // ✅ CMS Experts (Tech_Stack) -> pass as overrides to component
-    // =========================
-    const cmsTitle = industry?.Tech_Stack?.ExpertiseTitle?.[0]?.Title ?? "";
-
-    const cmsRaw: CmsItemRaw[] = Array.isArray(industry?.Tech_Stack?.CMS)
-        ? (industry?.Tech_Stack?.CMS as CmsItemRaw[])
-        : [];
-
-    // Build array compatible with common OverrideItem shapes
-    const cmsItems = cmsRaw.map((c: CmsItemRaw, idx: number) => ({
-        id: String(idx),
-        Title: c?.Title ?? "",
-        Links: {
-            id: String(idx),
-            href: c?.Links?.href ?? "#",
-            label: c?.Links?.label ?? c?.Title ?? "Learn more",
-            target: normalizeTarget(c?.Links?.target as string | null | undefined),
-            isExternal: normalizeTarget(c?.Links?.target as string | null | undefined) === "blank",
+  const normalizedPartnerImages: PartnerImage[] = partnerImagesRaw
+    .map((x: unknown) => {
+      const obj = x as {
+        Image?: { url?: string; alternativeText?: string | null };
+      } | null;
+      const url = obj?.Image?.url ?? "";
+      if (!url) return null;
+      return {
+        Image: {
+          url,
+          alternativeText: obj?.Image?.alternativeText ?? undefined,
         },
-        Icons: {
-            url: c?.Icons?.url ?? "",
-            alternativeText: c?.Icons?.alternativeText ?? undefined,
-            width: c?.Icons?.width ?? 113,
-            height: c?.Icons?.height ?? 64,
-            name: c?.Icons?.name ?? c?.Title ?? "icon",
-        } as ImgBasic,
-        ClassName: c?.ClassName ?? "",
-    }));
+      } as PartnerImage;
+    })
+    .filter(Boolean) as PartnerImage[];
 
-    // ✅ Why Addact (industry variant is `global_card`)
-    const whyAddactData = industry?.global_card ?? null;
+  // =========================
+  // ✅ CMS Experts (Tech_Stack) -> pass as overrides to component
+  // =========================
+  const cmsTitle = industry?.Tech_Stack?.ExpertiseTitle?.[0]?.Title ?? "";
 
-    // ✅ CTA Banner (industry variant is `banner`) – adapt to home CTA shape
-    const ctaData = industry?.banner ?? null;
-    const ctaAdapted = ctaData?.Banner?.[0]
-        ? {
-              CTAImage: [
-                  {
-                      Image: {
-                          url: ctaData.Banner[0].BannerImage?.url || "",
-                          alternativeText: ctaData.Banner[0].BannerImage?.alternativeText ?? undefined,
-                          width: ctaData.Banner[0].BannerImage?.width ?? 0,
-                          height: ctaData.Banner[0].BannerImage?.height ?? 0,
-                      },
-                  },
-              ],
-              CTALink: [
-                  {
-                      id: "0",
-                      href: ctaData.Banner[0].BannerLink?.href || "#",
-                      label: ctaData.Banner[0].BannerLink?.label || "",
-                      target: normalizeTarget(ctaData.Banner[0].BannerLink?.target ?? undefined),
-                      isExternal: normalizeTarget(ctaData.Banner[0].BannerLink?.target ?? undefined) === "blank",
-                  },
-              ],
-              Title: [{ h2: ctaData.Banner[0].BannerTitle || "" }],
-              CTADescription: [],
-          }
-        : null;
+  const cmsRaw: CmsItemRaw[] = Array.isArray(industry?.Tech_Stack?.CMS)
+    ? (industry?.Tech_Stack?.CMS as CmsItemRaw[])
+    : [];
 
-    // ✅ FAQ (industry variant is `faq`) – adapt to home FAQ shape (non-null strings)
-    const faqRaw = industry?.faq ?? null;
-    const faqAdapted = faqRaw
-        ? {
-              ReferenceTitle: faqRaw.ReferenceTitle ?? "",
-              Title: faqRaw.Title ?? "",
-              FAQ: (Array.isArray(faqRaw.FAQ) ? (faqRaw.FAQ as FaqRawItem[]) : []).map(
-                  (q): { Title: string; Description: string } => ({
-                      Title: q?.Title ?? "",
-                      Description: q?.Description ?? "",
-                  })
-              ),
-          }
-        : null;
+  // Build array compatible with common OverrideItem shapes
+  const cmsItems = cmsRaw.map((c: CmsItemRaw, idx: number) => ({
+    id: String(idx),
+    Title: c?.Title ?? "",
+    Links: {
+      id: String(idx),
+      href: c?.Links?.href ?? "#",
+      label: c?.Links?.label ?? c?.Title ?? "Learn more",
+      target: normalizeTarget(c?.Links?.target as string | null | undefined),
+      isExternal:
+        normalizeTarget(c?.Links?.target as string | null | undefined) ===
+        "blank",
+    },
+    Icons: {
+      url: c?.Icons?.url ?? "",
+      alternativeText: c?.Icons?.alternativeText ?? undefined,
+      width: c?.Icons?.width ?? 113,
+      height: c?.Icons?.height ?? 64,
+      name: c?.Icons?.name ?? c?.Title ?? "icon",
+    } as ImgBasic,
+    ClassName: c?.ClassName ?? "",
+  }));
 
-    // ✅ ContactUs (industry variant is `ContactUs`) – adapt to home contact_us shape
-    const contactRaw = industry?.ContactUs ?? null;
-    const contactAdapted = contactRaw
-        ? {
-              pageReference: contactRaw.pageReference ?? "",
-              Form: (Array.isArray(contactRaw?.Form) ? (contactRaw.Form as ContactFormRawItem[]) : []).map((f, i) => ({
-                  id: String(i),
-                  Title: f?.Title ?? "",
-                  Description: f?.Description ?? "",
-                  Image: f?.Image
-                      ? {
-                            url: f.Image.url ?? "",
-                            alternativeText: f.Image.alternativeText ?? undefined,
-                            width: f.Image.width ?? 0,
-                            height: f.Image.height ?? 0,
-                        }
-                      : null,
-              })),
-              NameLable: contactRaw.NameLable ?? "",
-              CompanyName: contactRaw.CompanyName ?? "",
-              RequirementsLabel: contactRaw.RequirementsLabel ?? "",
-              ButtonLabel: contactRaw.ButtonLabel ?? "",
-              EmailLabel: contactRaw.EmailLabel ?? "",
-              RecipientEmails: contactRaw.RecipientEmails ?? "",
-          }
-        : null;
+  // ✅ Why Addact (industry variant is `global_card`)
+  const whyAddactData = industry?.global_card ?? null;
 
-    // ✅ Project Highlights items directly from industry query (new)
-    const projectHighlightItems = industry?.ProjectHighlights?.addact_case_studies ?? [];
-    const projectHighlightsTitle = industry?.ProjectHighlights?.Title ?? "Project Highlights";
+  // ✅ FAQ (industry variant is `faq`) – adapt to home FAQ shape (non-null strings)
+  const faqRaw = industry?.faq ?? null;
+  const faqAdapted = faqRaw
+    ? {
+        ReferenceTitle: faqRaw.ReferenceTitle ?? "",
+        Title: faqRaw.Title ?? "",
+        FAQ: (Array.isArray(faqRaw.FAQ)
+          ? (faqRaw.FAQ as FaqRawItem[])
+          : []
+        ).map((q): { Title: string; Description: string } => ({
+          Title: q?.Title ?? "",
+          Description: q?.Description ?? "",
+        })),
+      }
+    : null;
 
-    return (
-        <>
-            {structuredData && (
-                <Script id="structured-data" type="application/ld+json">
-                    {JSON.stringify(structuredData)}
-                </Script>
-            )}
+  // ✅ ContactUs (industry variant is `ContactUs`) – adapt to home contact_us shape
+  const contactRaw = industry?.ContactUs ?? null;
+  const contactAdapted = contactRaw
+    ? {
+        pageReference: contactRaw.pageReference ?? "",
+        Form: (Array.isArray(contactRaw?.Form)
+          ? (contactRaw.Form as ContactFormRawItem[])
+          : []
+        ).map((f, i) => ({
+          id: String(i),
+          Title: f?.Title ?? "",
+          Description: f?.Description ?? "",
+          Image: f?.Image
+            ? {
+                url: f.Image.url ?? "",
+                alternativeText: f.Image.alternativeText ?? undefined,
+                width: f.Image.width ?? 0,
+                height: f.Image.height ?? 0,
+              }
+            : null,
+        })),
+        NameLable: contactRaw.NameLable ?? "",
+        CompanyName: contactRaw.CompanyName ?? "",
+        RequirementsLabel: contactRaw.RequirementsLabel ?? "",
+        ButtonLabel: contactRaw.ButtonLabel ?? "",
+        EmailLabel: contactRaw.EmailLabel ?? "",
+        RecipientEmails: contactRaw.RecipientEmails ?? "",
+      }
+    : null;
 
-            <main className="industry-detail-page">
-                {/* ✅ Hero Banner (image/video auto) */}
-                {hero && (
-                    <HeroBanner
-                        title={hero.BannerTitle || ""}
-                        description={hero.BannerDescription || ""}
-                        backgroundImageUrl={hero?.BannerImage?.url || ""}
-                        button={
-                            hero?.BannerLink?.label && hero?.BannerLink?.href
-                                ? { label: hero.BannerLink.label, url: hero.BannerLink.href }
-                                : undefined
-                        }
-                        showAnchorLinks={false}
-                    />
-                )}
+  // ✅ Project Highlights items directly from industry query (new)
+  const projectHighlightItems =
+    industry?.ProjectHighlights?.addact_case_studies ?? [];
+  const projectHighlightsTitle =
+    industry?.ProjectHighlights?.Title ?? "Project Highlights";
 
-                {/* ✅ Partners from this industry */}
-                <OurPartners titleBlocks={normalizedPartnerTitleBlocks} images={normalizedPartnerImages} />
+  return (
+    <>
+      {structuredData && (
+        <Script id="structured-data" type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </Script>
+      )}
 
-                {industry?.OurChallenges && <IndustryChallenges data={industry.OurChallenges as never} />}
+      <main className="industry-detail-page">
+        {/* ✅ Hero Banner (image/video auto) */}
+        {hero && (
+          <HeroBanner
+            title={hero.BannerTitle || ""}
+            description={hero.BannerDescription || ""}
+            backgroundImageUrl={hero?.BannerImage?.url || ""}
+            button={
+              hero?.BannerLink?.label && hero?.BannerLink?.href
+                ? { label: hero.BannerLink.label, url: hero.BannerLink.href }
+                : undefined
+            }
+            showAnchorLinks={false}
+          />
+        )}
 
-                {industry?.OurSolutions && <IndustrySolutionsWithAnimation data={industry.OurSolutions as never} />}
+        {/* ✅ Partners from this industry */}
+        <OurPartners
+          titleBlocks={normalizedPartnerTitleBlocks}
+          images={normalizedPartnerImages}
+        />
 
-                {/* ✅ CMS Experts from this industry */}
-                <OurCmsExpertsWithAnimation title={cmsTitle} items={cmsItems as never} />
+        {industry?.OurChallenges && (
+          <IndustryChallenges data={industry.OurChallenges as never} />
+        )}
 
-                {!!projectHighlightItems.length && (
-                    <IndustryCaseStudies title={projectHighlightsTitle} items={projectHighlightItems as never} />
-                )}
+        {industry?.OurSolutions && (
+          <IndustrySolutionsWithAnimation
+            data={industry.OurSolutions as never}
+          />
+        )}
 
-                {/* ✅ Why Addact from this industry */}
-                {whyAddactData && <WhyAddact data={whyAddactData as never} />}
+        {/* ✅ CMS Experts from this industry */}
+        <OurCmsExpertsWithAnimation
+          title={cmsTitle}
+          items={cmsItems as never}
+        />
 
-                <ClientTestimonials />
+        {!!projectHighlightItems.length && (
+          <IndustryCaseStudies
+            title={projectHighlightsTitle}
+            items={projectHighlightItems as never}
+          />
+        )}
 
-                {/* ✅ CTA Banner from this industry – adapted to home shape */}
-                {ctaAdapted && <CtaBanner data={ctaAdapted as never} />}
+        {/* ✅ Why Addact from this industry */}
+        {whyAddactData && <WhyAddact data={whyAddactData as never} />}
 
-                {/* ✅ FAQ from this industry – adapted to home shape */}
-                {faqAdapted && <FAQ data={faqAdapted as never} />}
+        <ClientTestimonials />
 
-                {/* ✅ Contact Us from this industry – adapted to home shape */}
-                {contactAdapted && <ContactUs data={contactAdapted as never} />}
-            </main>
-        </>
-    );
+        {/* ✅ CTA Banner from this industry – adapted to home shape */}
+        {industry?.cta && <CtaBanner data={industry?.cta as never} />}
+
+        {/* ✅ FAQ from this industry – adapted to home shape */}
+        {faqAdapted && <FAQ data={faqAdapted as never} />}
+
+        {/* ✅ Contact Us from this industry – adapted to home shape */}
+        {contactAdapted && <ContactUs data={contactAdapted as never} />}
+      </main>
+    </>
+  );
 }
