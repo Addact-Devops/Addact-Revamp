@@ -93,7 +93,7 @@ export default function BlogHeroBanner({
           <input
             type="text"
             placeholder="Search blogs"
-            className="flex-1 text-black outline-none bg-transparent text-md font-medium py-[15px]"
+            className="flex-1 text-black outline-none bg-transparent text-md font-medium py-[15px] [@media(max-width:360px)]:max-w-[175px]"
             value={localSearch}
             onChange={(e) => {
               const val = e.target.value;
