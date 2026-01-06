@@ -34,6 +34,16 @@
     "show_searchbox": {
       "type": "boolean",
       "default": false
+    },
+    "BannerLogo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   },
   "config": {}

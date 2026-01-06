@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_reuse_number_title_contents",
+  "info": {
+    "displayName": "Number Title Content"
+  },
+  "options": {},
+  "attributes": {
+    "Number": {
+      "type": "string"
+    },
+    "Title": {
+      "type": "text"
+    },
+    "Content": {
+      "type": "richtext"
+    }
+  },
+  "config": {}
+}

@@ -95,6 +95,21 @@ export interface AddactComponentContactUsEmailPhoneLinks
   };
 }
 
+export interface AddactComponentContentWithNumber
+  extends Struct.ComponentSchema {
+  collectionName: 'components_addact_component_content_with_numbers';
+  info: {
+    displayName: 'Content With Number';
+  };
+  attributes: {
+    NumberTitleContent: Schema.Attribute.Component<
+      'reuse.number-title-content',
+      true
+    >;
+    Title: Schema.Attribute.Text;
+  };
+}
+
 export interface AddactComponentGallery extends Struct.ComponentSchema {
   collectionName: 'components_addact_component_galleries';
   info: {
@@ -242,6 +257,9 @@ export interface BannerBanner extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios'
     >;
     BannerLink: Schema.Attribute.Component<'shared.link', false>;
+    BannerLogo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     BannerTitle: Schema.Attribute.String;
     show_searchbox: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
@@ -612,6 +630,46 @@ export interface ReuseCard extends Struct.ComponentSchema {
   };
 }
 
+export interface ReuseNumberTitleContent extends Struct.ComponentSchema {
+  collectionName: 'components_reuse_number_title_contents';
+  info: {
+    displayName: 'Number Title Content';
+  };
+  attributes: {
+    Content: Schema.Attribute.RichText;
+    Number: Schema.Attribute.String;
+    Title: Schema.Attribute.Text;
+  };
+}
+
+export interface ReuseProjectsSlider extends Struct.ComponentSchema {
+  collectionName: 'components_reuse_projects_sliders';
+  info: {
+    displayName: 'Projects Slider';
+  };
+  attributes: {
+    addact_case_studies: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::addact-case-study.addact-case-study'
+    >;
+    Title: Schema.Attribute.Text;
+  };
+}
+
+export interface ReuseTitleWithCard extends Struct.ComponentSchema {
+  collectionName: 'components_reuse_title_with_cards';
+  info: {
+    displayName: 'TitleWithCard';
+  };
+  attributes: {
+    SolutionsCards: Schema.Attribute.Component<
+      'base-template.title-with-description',
+      true
+    >;
+    Title: Schema.Attribute.Text;
+  };
+}
+
 export interface SharedCta extends Struct.ComponentSchema {
   collectionName: 'components_shared_ctas';
   info: {
@@ -744,6 +802,7 @@ declare module '@strapi/strapi' {
       'addact-component.contact-us-address': AddactComponentContactUsAddress;
       'addact-component.contact-us-days-online-offline': AddactComponentContactUsDaysOnlineOffline;
       'addact-component.contact-us-email-phone-links': AddactComponentContactUsEmailPhoneLinks;
+      'addact-component.content-with-number': AddactComponentContentWithNumber;
       'addact-component.gallery': AddactComponentGallery;
       'addact-component.gallery-titles': AddactComponentGalleryTitles;
       'addact-component.images': AddactComponentImages;
@@ -778,6 +837,9 @@ declare module '@strapi/strapi' {
       'headings.h5': HeadingsH5;
       'headings.h6': HeadingsH6;
       'reuse.card': ReuseCard;
+      'reuse.number-title-content': ReuseNumberTitleContent;
+      'reuse.projects-slider': ReuseProjectsSlider;
+      'reuse.title-with-card': ReuseTitleWithCard;
       'shared.cta': SharedCta;
       'shared.hero-link-item': SharedHeroLinkItem;
       'shared.image': SharedImage;
