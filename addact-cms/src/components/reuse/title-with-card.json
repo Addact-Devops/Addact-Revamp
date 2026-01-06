@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_reuse_title_with_cards",
+  "info": {
+    "displayName": "TitleWithCard"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "text"
+    },
+    "SolutionsCards": {
+      "type": "component",
+      "component": "base-template.title-with-description",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

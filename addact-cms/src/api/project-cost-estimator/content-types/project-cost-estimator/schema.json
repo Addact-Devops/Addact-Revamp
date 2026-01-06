@@ -1,0 +1,35 @@
+{
+  "kind": "singleType",
+  "collectionName": "project_cost_estimators",
+  "info": {
+    "singularName": "project-cost-estimator",
+    "pluralName": "project-cost-estimators",
+    "displayName": "project-cost-estimator"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "PageHeading": {
+      "type": "component",
+      "component": "base-template.base-heading",
+      "repeatable": false
+    },
+    "Content": {
+      "type": "component",
+      "component": "base-template.title-with-description",
+      "repeatable": false
+    }
+  }
+}
