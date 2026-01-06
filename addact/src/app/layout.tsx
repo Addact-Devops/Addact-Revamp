@@ -7,7 +7,7 @@ import { getFooterData } from "@/graphql/queries/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ScrollToTop from "@/components/atom/scrollToTop";
 import LayoutWrapper from "./LayoutWrapper";
-import SnowfallWrapper from "@/components/organisms/SnowfallWrapper";
+// import SnowfallWrapper from "@/components/organisms/SnowfallWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,7 +69,7 @@ export default async function RootLayout({
         <ScrollToTop />
         {/* ✅ Wrap children in LayoutWrapper (from current code) */}
         <LayoutWrapper headerData={HeaderData} footerData={footerData}>
-          <SnowfallWrapper />
+          {/* <SnowfallWrapper /> */}
           {children}
         </LayoutWrapper>
 
