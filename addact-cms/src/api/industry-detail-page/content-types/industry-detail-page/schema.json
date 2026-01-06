@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "industry_detail_pages",
+  "info": {
+    "singularName": "industry-detail-page",
+    "pluralName": "industry-detail-pages",
+    "displayName": "Industry Detail Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "text",
+      "required": true
+    },
+    "Slug": {
+      "type": "text",
+      "required": true
+    },
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "HeroBanner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "OurPartner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-partner.our-partner"
+    },
+    "OurChallenges": {
+      "type": "component",
+      "component": "addact-component.content-with-number",
+      "repeatable": false
+    },
+    "OurSolutions": {
+      "type": "component",
+      "component": "reuse.title-with-card",
+      "repeatable": false
+    },
+    "Tech_Stack": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-expertise.our-expertise"
+    },
+    "global_card": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "client_testimonial": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::client-testimonial.client-testimonial"
+    },
+    "cta": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cta.cta"
+    },
+    "faq": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::faq.faq"
+    },
+    "ContactUs": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    },
+    "ProjectHighlights": {
+      "type": "component",
+      "component": "reuse.projects-slider",
+      "repeatable": false
+    }
+  }
+}

@@ -979,6 +979,7 @@ export interface ApiCareersFormCareersForm extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    fieldName: Schema.Attribute.Component<'base-template.title', true>;
     FormFields: Schema.Attribute.Relation<
       'oneToOne',
       'api::form-field.form-field'
@@ -1920,6 +1921,69 @@ export interface ApiIndustriesWeServeIndustriesWeServe
   };
 }
 
+export interface ApiIndustryDetailPageIndustryDetailPage
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'industry_detail_pages';
+  info: {
+    displayName: 'Industry Detail Page';
+    pluralName: 'industry-detail-pages';
+    singularName: 'industry-detail-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    client_testimonial: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::client-testimonial.client-testimonial'
+    >;
+    ContactUs: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::form-field.form-field'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    global_card: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+    HeroBanner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry-detail-page.industry-detail-page'
+    > &
+      Schema.Attribute.Private;
+    OurChallenges: Schema.Attribute.Component<
+      'addact-component.content-with-number',
+      false
+    >;
+    OurPartner: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-partner.our-partner'
+    >;
+    OurSolutions: Schema.Attribute.Component<'reuse.title-with-card', false>;
+    ProjectHighlights: Schema.Attribute.Component<
+      'reuse.projects-slider',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.Text & Schema.Attribute.Required;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.Text & Schema.Attribute.Required;
+    Tech_Stack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-expertise.our-expertise'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiOurExpertiseOurExpertise
   extends Struct.CollectionTypeSchema {
   collectionName: 'our_expertises';
@@ -2122,6 +2186,44 @@ export interface ApiPrivacyPolicyPrivacyPolicy extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::privacy-policy.privacy-policy'
+    > &
+      Schema.Attribute.Private;
+    PageHeading: Schema.Attribute.Component<
+      'base-template.base-heading',
+      false
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiProjectCostEstimatorProjectCostEstimator
+  extends Struct.SingleTypeSchema {
+  collectionName: 'project_cost_estimators';
+  info: {
+    displayName: 'project-cost-estimator';
+    pluralName: 'project-cost-estimators';
+    singularName: 'project-cost-estimator';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    Content: Schema.Attribute.Component<
+      'base-template.title-with-description',
+      false
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-cost-estimator.project-cost-estimator'
     > &
       Schema.Attribute.Private;
     PageHeading: Schema.Attribute.Component<
@@ -3320,12 +3422,14 @@ declare module '@strapi/strapi' {
       'api::hire-developer.hire-developer': ApiHireDeveloperHireDeveloper;
       'api::home.home': ApiHomeHome;
       'api::industries-we-serve.industries-we-serve': ApiIndustriesWeServeIndustriesWeServe;
+      'api::industry-detail-page.industry-detail-page': ApiIndustryDetailPageIndustryDetailPage;
       'api::our-expertise.our-expertise': ApiOurExpertiseOurExpertise;
       'api::our-partner.our-partner': ApiOurPartnerOurPartner;
       'api::our-process.our-process': ApiOurProcessOurProcess;
       'api::position.position': ApiPositionPosition;
       'api::press-release.press-release': ApiPressReleasePressRelease;
       'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
+      'api::project-cost-estimator.project-cost-estimator': ApiProjectCostEstimatorProjectCostEstimator;
       'api::service-list.service-list': ApiServiceListServiceList;
       'api::service.service': ApiServiceService;
       'api::sitemap.sitemap': ApiSitemapSitemap;

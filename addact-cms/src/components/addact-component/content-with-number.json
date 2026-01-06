@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_addact_component_content_with_numbers",
+  "info": {
+    "displayName": "Content With Number"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "text"
+    },
+    "NumberTitleContent": {
+      "type": "component",
+      "component": "reuse.number-title-content",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

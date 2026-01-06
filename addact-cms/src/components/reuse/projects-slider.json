@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_reuse_projects_sliders",
+  "info": {
+    "displayName": "Projects Slider"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "text"
+    },
+    "addact_case_studies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::addact-case-study.addact-case-study"
+    }
+  },
+  "config": {}
+}
