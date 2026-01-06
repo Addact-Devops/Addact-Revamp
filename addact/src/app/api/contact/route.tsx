@@ -4,110 +4,96 @@ import nodemailer from "nodemailer";
 import { formatDateTime } from "@/utils/dateFormatter";
 
 function escapeHtml(unsafe: string) {
-  return unsafe
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+    return unsafe
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
+    try {
+        const body = await req.json();
 
-    // Required fields
-    const name = body.name || "N/A";
-    const email = body.email || "N/A";
-    const companyName = body.companyName || "";
-    const descriptionRaw = body.description || "";
-    const pageTitle = body.pageTitle || "";
-    const recipientEmails = body.recipientEmails || "";
+        // Required fields
+        const name = body.name || "N/A";
+        const email = body.email || "N/A";
+        const companyName = body.companyName || "";
+        const descriptionRaw = body.description || "";
+        const pageTitle = body.pageTitle || "";
+        const recipientEmails = body.recipientEmails || "";
 
-    const ip =
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-      req.headers.get("x-real-ip") ||
-      "Unknown";
+        const ip =
+            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
 
-    const plainTextForSheets = descriptionRaw
-      .replace(/\{TAB\}/g, "\t")
-      .replace(/\{ENTER\}/g, "\n")
-      .replace(/\{EOL\}/g, "\n");
+        const plainTextForSheets = descriptionRaw
+            .replace(/\{TAB\}/g, "\t")
+            .replace(/\{ENTER\}/g, "\n")
+            .replace(/\{EOL\}/g, "\n");
 
-    const escaped = escapeHtml(plainTextForSheets);
-    const htmlForEmail = escaped
-      .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;") // 4 spaces per tab
-      .replace(/\n/g, "<br/>");
+        const escaped = escapeHtml(plainTextForSheets);
+        const htmlForEmail = escaped
+            .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;") // 4 spaces per tab
+            .replace(/\n/g, "<br/>");
 
-    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+        const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+        const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+        const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
-    if (!clientEmail || !privateKey || !spreadsheetId) {
-      return NextResponse.json(
-        { message: "Missing Google Sheets credentials" },
-        { status: 500 }
-      );
-    }
+        if (!clientEmail || !privateKey || !spreadsheetId) {
+            return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
+        }
 
-    const auth = new google.auth.JWT({
-      email: clientEmail,
-      key: privateKey,
-      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-    });
+        const auth = new google.auth.JWT({
+            email: clientEmail,
+            key: privateKey,
+            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+        });
 
-    const sheets = google.sheets({ version: "v4", auth });
+        const sheets = google.sheets({ version: "v4", auth });
 
-    const now = new Date();
-    const currentYear = new Date().getFullYear();
-    const rowValues = [
-      name,
-      email,
-      companyName,
-      ,
-      plainTextForSheets,
-      pageTitle,
-      formatDateTime(now),
-      ip,
-    ];
+        const now = new Date();
+        const currentYear = new Date().getFullYear();
+        const rowValues = [name, email, companyName, , plainTextForSheets, pageTitle, formatDateTime(now), ip];
 
-    await sheets.spreadsheets.values.append({
-      spreadsheetId,
-      range: "Sheet1",
-      valueInputOption: "RAW",
-      insertDataOption: "INSERT_ROWS",
-      requestBody: {
-        values: [rowValues],
-      },
-    });
+        await sheets.spreadsheets.values.append({
+            spreadsheetId,
+            range: "Contact_US",
+            valueInputOption: "RAW",
+            insertDataOption: "INSERT_ROWS",
+            requestBody: {
+                values: [rowValues],
+            },
+        });
 
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
+        const smtpHost = process.env.SMTP_HOST;
+        const smtpUser = process.env.SMTP_USER;
+        const smtpPass = process.env.SMTP_PASS;
 
-    const transporter = nodemailer.createTransport({
-      host: smtpHost,
-      port: 587,
-      secure: false,
-      auth: {
-        user: smtpUser,
-        pass: smtpPass,
-      },
-    });
+        const transporter = nodemailer.createTransport({
+            host: smtpHost,
+            port: 587,
+            secure: false,
+            auth: {
+                user: smtpUser,
+                pass: smtpPass,
+            },
+        });
 
-    const recipientList = recipientEmails
-      ? recipientEmails
-          .split(",")
-          .map((mail: string) => mail.trim())
-          .filter(Boolean)
-      : [];
+        const recipientList = recipientEmails
+            ? recipientEmails
+                  .split(",")
+                  .map((mail: string) => mail.trim())
+                  .filter(Boolean)
+            : [];
 
-    // Send confirmation email
-    await transporter.sendMail({
-      from: `"Addact Technologies" <info@addact.net>`,
-      to: recipientList,
-      subject: "Addact - Business Inquiry",
-      html: `
+        // Send confirmation email
+        await transporter.sendMail({
+            from: `"Addact Technologies" <info@addact.net>`,
+            to: recipientList,
+            subject: "Addact - Business Inquiry",
+            html: `
         <html>
         <head>
              <style>
@@ -184,9 +170,7 @@ export async function POST(req: NextRequest) {
               <tr>
                 <td class="mobile-padding" style="padding: 40px 40px 20px 40px">
                   <h3 style="color: #007bff; margin-top: 0">
-                    New Contact Form Submission Received by  ${escapeHtml(
-                      name
-                    )}!
+                    New Contact Form Submission Received by  ${escapeHtml(name)}!
                   </h3>
                   <p
                     style="
@@ -429,12 +413,12 @@ export async function POST(req: NextRequest) {
   </body>
         </html>
       `,
-    });
-    await transporter.sendMail({
-      from: `"Addact Technologies" <info@addact.net>`,
-      to: email,
-      subject: "Addact - Thank You for Your Inquiry",
-      html: `
+        });
+        await transporter.sendMail({
+            from: `"Addact Technologies" <info@addact.net>`,
+            to: email,
+            subject: "Addact - Thank You for Your Inquiry",
+            html: `
         <html>
          <head>
              <style>
@@ -636,8 +620,8 @@ export async function POST(req: NextRequest) {
                     </td>
                   </tr>
                   ${
-                    plainTextForSheets
-                      ? `
+                      plainTextForSheets
+                          ? `
                   <tr>
                     <td
                       valign="top"
@@ -665,7 +649,7 @@ export async function POST(req: NextRequest) {
                     </td>
                   </tr>
                   `
-                      : ""
+                          : ""
                   }
                 </table>
               </td>
@@ -756,19 +740,16 @@ export async function POST(req: NextRequest) {
 </body>
         </html>
       `,
-    });
+        });
 
-    return NextResponse.json({ message: "Success" });
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Google Sheets API error:", error.message);
-      return NextResponse.json(
-        { message: "Error", error: error.message },
-        { status: 500 }
-      );
-    } else {
-      console.error("Unknown error:", error);
-      return NextResponse.json({ message: "Unknown error" }, { status: 500 });
+        return NextResponse.json({ message: "Success" });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            console.error("Google Sheets API error:", error.message);
+            return NextResponse.json({ message: "Error", error: error.message }, { status: 500 });
+        } else {
+            console.error("Unknown error:", error);
+            return NextResponse.json({ message: "Unknown error" }, { status: 500 });
+        }
     }
-  }
 }
