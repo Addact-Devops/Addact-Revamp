@@ -27,7 +27,7 @@ const BrandGuidelinesPageClient = () => {
     }
 
     if (!brandGuideline) {
-        return <p className="p-6 text-red-600 mt-32">Brand Guidelines not found.</p>;
+        return <p className='p-6 text-red-600 mt-32'>Brand Guidelines not found.</p>;
     }
 
     const banner = brandGuideline.brandGuideline.HeroBanner.Banner[0];
@@ -42,26 +42,26 @@ const BrandGuidelinesPageClient = () => {
                 description={banner.BannerDescription || ""}
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
-            <section className="bg-[#f4f4f4] caseStudy-wrapper pb-20">
-                <div className="container">
-                    <div className="grid grid-cols-1 lg:grid-cols-[30%_70%] gap-8 mx-auto pt-[60px] lg:pt-24 text-black">
-                        <div className="lg:mr-[20px]">
-                            <div className="sticky top-[140px] w-full">
+            <section className='bg-[#f4f4f4] caseStudy-wrapper pb-20'>
+                <div className='container'>
+                    <div className='grid grid-cols-1 lg:grid-cols-[30%_70%] gap-8 mx-auto pt-[60px] lg:pt-24 text-black'>
+                        <div className='lg:mr-[20px]'>
+                            <div className='sticky top-[140px] w-full'>
                                 <DownloadForm
                                     title={formTitle}
                                     pdfUrl={pdf.url}
-                                    submitUrl="/api/submit-form"
-                                    sheetName="Sheet1"
+                                    submitUrl='/api/submit-form'
+                                    sheetName='Home_Page'
                                     NameLabel={formFields?.NameLable}
                                     EmailLabel={formFields?.EmailLabel}
                                     PhoneLabel={formFields?.PhoneLabel}
                                     ButtonLabel={formFields?.ButtonLabel}
                                     RecipientEmails={formFields?.RecipientEmails}
-                                    pageTitle="Brand-Guidelines"
+                                    pageTitle='Brand-Guidelines'
                                 />
                             </div>
                         </div>
-                        <div className="lg:pl-[40px]">
+                        <div className='lg:pl-[40px]'>
                             <BlogContentRenderer blocks={brandGuideline.brandGuideline.Content} />
                         </div>
                     </div>

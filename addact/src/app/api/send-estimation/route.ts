@@ -73,8 +73,7 @@ export async function POST(req: NextRequest) {
             },
         });
 
-    const currentYear = new Date().getFullYear();
-
+        const currentYear = new Date().getFullYear();
 
         // 📩 Admin Email (with new UI)
         const adminHtml = `
@@ -335,8 +334,8 @@ export async function POST(req: NextRequest) {
                     "
                   >
                    ${answers
-                     .map(
-                       (a: { label: string; value: string }) => `
+                       .map(
+                           (a: { label: string; value: string }) => `
             <tr>
               <td  valign="top"
                         width="35%"
@@ -358,8 +357,8 @@ export async function POST(req: NextRequest) {
                         ">${a.value}</td>
             </tr>
           `
-                     )
-                     .join("")}
+                       )
+                       .join("")}
                   </table>
                 </td>
               </tr>
@@ -457,7 +456,7 @@ export async function POST(req: NextRequest) {
 
         await transporter.sendMail({
             from: `"Addact Technologies" <info@addact.net>`,
-            to: ["jayesh@addact.net", "nimesh@addact.net", "mitesh@addact.net"],
+            to: ["jayesh@addact.net", "mitesh@addact.net"],
             subject: "New Cost Estimator Submission",
             html: adminHtml,
         });
@@ -617,8 +616,8 @@ export async function POST(req: NextRequest) {
                       </td>
                     </tr>
                     ${answers
-                      .map(
-                        (a: { label: string; value: string }) => `
+                        .map(
+                            (a: { label: string; value: string }) => `
                     <tr>
                       <td
                         valign="top"
@@ -648,8 +647,8 @@ export async function POST(req: NextRequest) {
                       </td>
                     </tr>
                     `
-                      )
-                      .join("")}
+                        )
+                        .join("")}
                   </table>
                 </td>
               </tr>
