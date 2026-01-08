@@ -7,6 +7,7 @@ import { getFooterData } from "@/graphql/queries/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ScrollToTop from "@/components/atom/scrollToTop";
 import LayoutWrapper from "./LayoutWrapper";
+import TawkTo from "@/components/organisms/TwakTo";
 // import SnowfallWrapper from "@/components/organisms/SnowfallWrapper";
 
 const geistSans = Geist({
@@ -70,6 +71,7 @@ export default async function RootLayout({
         {/* ✅ Wrap children in LayoutWrapper (from current code) */}
         <LayoutWrapper headerData={HeaderData} footerData={footerData}>
           {/* <SnowfallWrapper /> */}
+          <TawkTo />
           {children}
         </LayoutWrapper>
 
@@ -87,26 +89,6 @@ export default async function RootLayout({
                           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                           })(window,document,'script','dataLayer','GTM-M4B35B8');
                         `,
-          }}
-        />
-
-        {/* ✅ Tawk.to Live Chat */}
-        <Script
-          type="text/javascript"
-          id="tawkto-script"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-                      var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-              (function() {
-                var s1 = document.createElement("script"),
-                    s0 = document.getElementsByTagName("script")[0];
-                s1.async = true;
-                s1.src='https://embed.tawk.to/695e37b1ffe983197e464287/1jec0j44v';
-                s1.charset = "UTF-8";
-                s1.setAttribute("crossorigin", "*");
-                s0.parentNode.insertBefore(s1, s0);
-              })();   `,
           }}
         />
 
