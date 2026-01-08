@@ -1,11 +1,12 @@
 "use client";
 
 import Script from "next/script";
+import { Fragment } from "react";
 
 export default function TawkTo() {
   return (
-    <>
-      {/* <Script
+    <Fragment>
+      <Script
         id="tawk-to"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -22,13 +23,7 @@ export default function TawkTo() {
             })();
           `,
         }}
-      /> */}
-      <Script
-        id="tawk-to"
-        strategy="afterInteractive"
-        src="https://embed.tawk.to/695e37b1ffe983197e464287/1jec0j44v"
-        crossOrigin="anonymous"
       />
-    </>
+    </Fragment>
   );
 }
