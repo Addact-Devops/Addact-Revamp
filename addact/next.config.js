@@ -22,9 +22,9 @@ const perRouteCsp = [
           "img-src 'self' data: https://googleads.g.doubleclick.net https://www.googleadservices.com https://d3l7d9gtq0bnch.cloudfront.net https:;",
           "font-src 'self' https://fonts.gstatic.com https://code.tidio.co;",
           // connect-src for analytics/ads
-          "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://code.tidio.co https://*.clarity.ms wss://socket.tidio.co wss:;",
-          "media-src 'self' https://cms.addact.net https://d3l7d9gtq0bnch.cloudfront.net https://code.tidio.co;",
-          "frame-src 'self' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com  https://www.tidio.com  https://code.tidio.co https://www.youtube.com https://www.youtube-nocookie.com;",
+          "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://embed.tawk.to https://code.tidio.co https://*.clarity.ms wss://socket.tidio.co wss:;",
+          "media-src 'self' https://cms.addact.net https://d3l7d9gtq0bnch.cloudfront.net https://code.tidio.co; https://embed.tawk.to",
+          "frame-src 'self' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com  https://embed.tawk.to https://www.tidio.com  https://code.tidio.co https://www.youtube.com https://www.youtube-nocookie.com;",
           "object-src 'none';",
           "base-uri 'self';",
           "form-action 'self';",
@@ -58,6 +58,7 @@ const globalCsp = [
               https://www.clarity.ms
               https://va.vercel-scripts.com
               https://code.tidio.co
+              https://embed.tawk.to
               https://cdn.us.heap-api.com;
 
               script-src-elem
@@ -72,6 +73,7 @@ const globalCsp = [
               https://www.clarity.ms
               https://va.vercel-scripts.com
               https://code.tidio.co
+              https://embed.tawk.to
               https://cdn.us.heap-api.com;
 
           script-src-attr 'self' 'unsafe-inline';
@@ -97,6 +99,7 @@ const globalCsp = [
             https://www.googleadservices.com
             https://va.vercel-scripts.com
             https://code.tidio.co
+            https://embed.tawk.to
             https://cdn.us.heap-api.com
             https://*.clarity.ms
             wss://socket.tidio.co
@@ -106,7 +109,8 @@ const globalCsp = [
             'self'
           https://cms.addact.net
           https://d3l7d9gtq0bnch.cloudfront.net
-          https://code.tidio.co;
+          https://code.tidio.co
+          https://embed.tawk.to;
 
           frame-src
             'self'
@@ -115,6 +119,7 @@ const globalCsp = [
           https://www.googletagmanager.com
           https://www.tidio.com
           https://code.tidio.co
+          https://embed.tawk.to
           https://www.youtube.com
           https://www.youtube-nocookie.com;
           object-src 'none';
