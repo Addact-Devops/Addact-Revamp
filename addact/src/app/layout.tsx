@@ -43,12 +43,6 @@ export default async function RootLayout({
           rel="stylesheet"
         />
 
-        <link
-          rel="preload"
-          href="https://code.tidio.co/widget-v4/fonts/inter_UcCo3FwrK3iLTcviYwYZ8UA3.woff2"
-          as="font"
-          type="font/woff2"
-        />
         {/* ✅ Google site verification */}
         <meta
           name="google-site-verification"
@@ -106,12 +100,6 @@ export default async function RootLayout({
                         `,
           }}
         />
-
-        {/* ✅ Tidio Chat */}
-        <Script
-          src={`//code.tidio.co/ggtkjichemvtqdbnwpdhliceejbhv3rg.js`}
-          strategy="lazyOnload"
-        ></Script>
 
         {/* ✅ Heap Analytics */}
         <Script
