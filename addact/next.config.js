@@ -20,7 +20,7 @@ const perRouteCsp = [
           "style-src-attr 'self' 'unsafe-inline';",
           // allow images from ad hosts & your cloudfront
           "img-src 'self' data: https://googleads.g.doubleclick.net https://www.googleadservices.com https://d3l7d9gtq0bnch.cloudfront.net https://embed.tawk.to https:;",
-          "font-src 'self' https://fonts.gstatic.com;",
+          "font-src 'self' https://fonts.gstatic.com https://embed.tawk.to;",
           // connect-src for analytics/ads
           "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://embed.tawk.to https://va.tawk.to https://*.clarity.ms wss://*.tawk.to;",
           "media-src 'self' https://cms.addact.net https://d3l7d9gtq0bnch.cloudfront.net https://va.tawk.to https://embed.tawk.to;",
@@ -83,7 +83,7 @@ const globalCsp = [
 
           img-src 'self' data: https://embed.tawk.to https:;
 
-          font-src 'self' https://fonts.gstatic.com;
+          font-src 'self' https://embed.tawk.to https://fonts.gstatic.com;
 
           connect-src
             'self'
