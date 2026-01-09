@@ -131,13 +131,16 @@ const globalCsp = [
           object-src 'none';
           base-uri 'self';
           form-action 'self';
-          frame-ancestors 'none';
+          frame-ancestors 'self', https://embed.tawk.to;
           upgrade-insecure-requests;
+
+          child-src
+          https://embed.tawk.to
+          https://va.tawk.to;
         `
           .replace(/\s{2,}/g, " ")
           .trim(),
       },
-      { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "X-XSS-Protection", value: "1; mode=block" },
     ],
   },
