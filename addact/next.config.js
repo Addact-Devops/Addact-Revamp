@@ -14,12 +14,12 @@ const perRouteCsp = [
           // minimal script hosts required for gtag/ads on this page
           "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com  https://embed.tawk.to https://va.tawk.to;",
           "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com ;",
-          "script-src-attr 'self' 'unsafe-inline';",
-          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
-          "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;",
+          "script-src-attr 'self' 'unsafe-inline' https://embed.tawk.to;",
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://embed.tawk.to;",
+          "style-src-elem 'self' 'unsafe-inline' https://embed.tawk.to https://fonts.googleapis.com;",
           "style-src-attr 'self' 'unsafe-inline';",
           // allow images from ad hosts & your cloudfront
-          "img-src 'self' data: https://googleads.g.doubleclick.net https://www.googleadservices.com https://d3l7d9gtq0bnch.cloudfront.net https:;",
+          "img-src 'self' data: https://googleads.g.doubleclick.net https://www.googleadservices.com https://d3l7d9gtq0bnch.cloudfront.net https://embed.tawk.to https:;",
           "font-src 'self' https://fonts.gstatic.com;",
           // connect-src for analytics/ads
           "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://embed.tawk.to https://va.tawk.to https://*.clarity.ms wss://*.tawk.to;",
@@ -77,11 +77,11 @@ const globalCsp = [
 
           script-src-attr 'self' 'unsafe-inline';
 
-          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-          style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;
+          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://embed.tawk.to;
+          style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://embed.tawk.to;
           style-src-attr 'self' 'unsafe-inline';
 
-          img-src 'self' data: https:;
+          img-src 'self' data: https://embed.tawk.to https:;
 
           font-src 'self' https://fonts.gstatic.com;
 
