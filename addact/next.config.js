@@ -13,7 +13,7 @@ const perRouteCsp = [
           "default-src 'self';",
           // minimal script hosts required for gtag/ads on this page
           "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com  https://embed.tawk.to https://va.tawk.to;",
-          "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://cdn.us.heap-api.com;",
+          "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com ;",
           "script-src-attr 'self' 'unsafe-inline';",
           "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
           "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;",
@@ -59,8 +59,7 @@ const globalCsp = [
               https://www.clarity.ms
               https://va.vercel-scripts.com
               https://va.tawk.to
-              https://embed.tawk.to
-              https://cdn.us.heap-api.com;
+              https://embed.tawk.to;
 
               script-src-elem
               'self' 'unsafe-inline' 'unsafe-eval'
@@ -74,8 +73,7 @@ const globalCsp = [
               https://www.clarity.ms
               https://va.vercel-scripts.com
               https://va.tawk.to
-              https://embed.tawk.to
-              https://cdn.us.heap-api.com;
+              https://embed.tawk.to;
 
           script-src-attr 'self' 'unsafe-inline';
 
@@ -101,7 +99,6 @@ const globalCsp = [
             https://va.vercel-scripts.com
             https://embed.tawk.to
             https://va.tawk.to
-            https://cdn.us.heap-api.com
             https://*.clarity.ms
             wss://*.tawk.to
             wss:;
