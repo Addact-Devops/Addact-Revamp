@@ -71,8 +71,8 @@ export default async function RootLayout({
         {/* ✅ Wrap children in LayoutWrapper (from current code) */}
         <LayoutWrapper headerData={HeaderData} footerData={footerData}>
           {/* <SnowfallWrapper /> */}
-          <TawkTo />
           {children}
+          <TawkTo />
         </LayoutWrapper>
 
         <SpeedInsights />
