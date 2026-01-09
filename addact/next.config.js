@@ -12,20 +12,21 @@ const perRouteCsp = [
         value: [
           "default-src 'self';",
           // minimal script hosts required for gtag/ads on this page
-          "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com;",
-          "script-src-elem 'self' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://cdn.us.heap-api.com;",
-          "script-src-attr 'self' 'unsafe-inline';",
-          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
-          "style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;",
+          "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com  https://embed.tawk.to https://va.tawk.to;",
+          "script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com ;",
+          "script-src-attr 'self' 'unsafe-inline' https://embed.tawk.to;",
+          "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://embed.tawk.to;",
+          "style-src-elem 'self' 'unsafe-inline' https://embed.tawk.to https://fonts.googleapis.com;",
           "style-src-attr 'self' 'unsafe-inline';",
           // allow images from ad hosts & your cloudfront
-          "img-src 'self' data: https://googleads.g.doubleclick.net https://www.googleadservices.com https://d3l7d9gtq0bnch.cloudfront.net https:;",
-          "font-src 'self' https://fonts.gstatic.com https://code.tidio.co;",
+          "img-src 'self' data: https://googleads.g.doubleclick.net https://www.googleadservices.com https://d3l7d9gtq0bnch.cloudfront.net https://embed.tawk.to https:;",
+          "font-src 'self' https://fonts.gstatic.com https://embed.tawk.to;",
           // connect-src for analytics/ads
-          "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://embed.tawk.to https://va.tawk.to https://code.tidio.co https://*.clarity.ms wss://*.tawk.to wss://socket.tidio.co wss:;",
-          "media-src 'self' https://cms.addact.net https://d3l7d9gtq0bnch.cloudfront.net https://code.tidio.co https://va.tawk.to https://embed.tawk.to;",
-          "frame-src 'self' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com  https://embed.tawk.to https://www.tidio.com  https://code.tidio.co https://va.tawk.to https://www.youtube.com https://www.youtube-nocookie.com;",
+          "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://embed.tawk.to https://va.tawk.to  https://www.googletagmanager.com https://*.clarity.ms wss://*.tawk.to;",
+          "media-src 'self' https://cms.addact.net https://d3l7d9gtq0bnch.cloudfront.net https://va.tawk.to https://embed.tawk.to;",
+          "frame-src 'self' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com  https://embed.tawk.to https://va.tawk.to https://www.youtube.com https://www.youtube-nocookie.com;",
           "object-src 'none';",
+          "child-src https://embed.tawk.to https://va.tawk.to;",
           "base-uri 'self';",
           "form-action 'self';",
           "frame-ancestors 'none';",
@@ -57,10 +58,8 @@ const globalCsp = [
               https://scripts.clarity.ms
               https://www.clarity.ms
               https://va.vercel-scripts.com
-              https://code.tidio.co
               https://va.tawk.to
-              https://embed.tawk.to
-              https://cdn.us.heap-api.com;
+              https://embed.tawk.to;
 
               script-src-elem
               'self' 'unsafe-inline' 'unsafe-eval'
@@ -74,19 +73,17 @@ const globalCsp = [
               https://www.clarity.ms
               https://va.vercel-scripts.com
               https://va.tawk.to
-              https://code.tidio.co
-              https://embed.tawk.to
-              https://cdn.us.heap-api.com;
+              https://embed.tawk.to;
 
           script-src-attr 'self' 'unsafe-inline';
 
-          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-          style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com;
+          style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://embed.tawk.to;
+          style-src-elem 'self' 'unsafe-inline' https://fonts.googleapis.com https://embed.tawk.to;
           style-src-attr 'self' 'unsafe-inline';
 
-          img-src 'self' data: https:;
+          img-src 'self' data: https://embed.tawk.to https:;
 
-          font-src 'self' https://fonts.gstatic.com https://code.tidio.co;
+          font-src 'self' https://embed.tawk.to https://fonts.gstatic.com;
 
           connect-src
             'self'
@@ -100,20 +97,17 @@ const globalCsp = [
             https://googleads.g.doubleclick.net
             https://www.googleadservices.com
             https://va.vercel-scripts.com
-            https://code.tidio.co
             https://embed.tawk.to
             https://va.tawk.to
-            https://cdn.us.heap-api.com
+            https://www.googletagmanager.com
             https://*.clarity.ms
             wss://*.tawk.to
-            wss://socket.tidio.co
             wss:;
 
           media-src
             'self'
           https://cms.addact.net
           https://d3l7d9gtq0bnch.cloudfront.net
-          https://code.tidio.co
           https://va.tawk.to
           https://embed.tawk.to;
 
@@ -122,8 +116,6 @@ const globalCsp = [
           https://www.google.com
           https://www.gstatic.com
           https://www.googletagmanager.com
-          https://www.tidio.com
-          https://code.tidio.co
           https://embed.tawk.to
           https://va.tawk.to
           https://www.youtube.com
@@ -141,7 +133,6 @@ const globalCsp = [
           .replace(/\s{2,}/g, " ")
           .trim(),
       },
-      { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "X-XSS-Protection", value: "1; mode=block" },
     ],
   },
