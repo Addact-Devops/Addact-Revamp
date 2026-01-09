@@ -15,6 +15,7 @@ import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
 import GlobeAnimation from "@/components/organisms/GlobeAnimation";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
+import Script from "next/script";
 
 export async function generateMetadata() {
   return generatePageMetadata("home");
@@ -121,6 +122,77 @@ export default async function HomePage() {
         }}
       />
 
+      {/*  Markup schema */}
+      <Script
+        id="website-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            url: "https://www.addact.net/",
+            name: "Addact Technologies",
+            "@type": "WebSite",
+            "@context": "https://schema.org/",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "{search_term_string}",
+              "query-input": "required name=search_term_string",
+            },
+          }),
+        }}
+      />
+
+      <Script
+        id="faqpage-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: {
+              "@type": "Question",
+              name: "What CMS platforms does Addact specialize in?",
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: "Addact provides end-to-end development, consulting, and support services across leading CMS platforms, including Sitecore, Umbraco, Kentico, Strapi, Contentful, and Contentstack.",
+              },
+            },
+          }),
+        }}
+      />
+
+      <Script
+        id="organization-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Addact Technologies",
+            alternateName: "Addact",
+            url: "https://www.addact.net/",
+            logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
+            contactPoint: {
+              "@type": "ContactPoint",
+              telephone: "94272 37737",
+              contactType: "technical support",
+              areaServed: ["US", "IN"],
+              availableLanguage: "en",
+            },
+            sameAs: [
+              "https://www.facebook.com/addacttech/",
+              "https://x.com/AddactTech",
+              "https://www.instagram.com/addacttechnologies/",
+              "https://www.youtube.com/@addact3283",
+              "https://www.linkedin.com/company/addact-technologies/",
+            ],
+          }),
+        }}
+      />
+
+      {/*  End Markup schema */}
       <main className="bg-dark">
         <HomeHeroBanner data={homeData?.banner} />
         <OurPartners />
