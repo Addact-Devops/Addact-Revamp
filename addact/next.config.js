@@ -22,7 +22,7 @@ const perRouteCsp = [
           "img-src 'self' data: https://googleads.g.doubleclick.net https://www.googleadservices.com https://d3l7d9gtq0bnch.cloudfront.net https://embed.tawk.to https:;",
           "font-src 'self' https://fonts.gstatic.com https://embed.tawk.to;",
           // connect-src for analytics/ads
-          "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://embed.tawk.to https://va.tawk.to https://*.clarity.ms wss://*.tawk.to;",
+          "connect-src 'self' https://cms.addact.net https://www.google.com https://www.gstatic.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://va.vercel-scripts.com https://embed.tawk.to https://va.tawk.to  https://www.googletagmanager.com https://*.clarity.ms wss://*.tawk.to;",
           "media-src 'self' https://cms.addact.net https://d3l7d9gtq0bnch.cloudfront.net https://va.tawk.to https://embed.tawk.to;",
           "frame-src 'self' https://www.google.com https://www.gstatic.com https://www.googletagmanager.com  https://embed.tawk.to https://va.tawk.to https://www.youtube.com https://www.youtube-nocookie.com;",
           "object-src 'none';",
@@ -99,6 +99,7 @@ const globalCsp = [
             https://va.vercel-scripts.com
             https://embed.tawk.to
             https://va.tawk.to
+            https://www.googletagmanager.com
             https://*.clarity.ms
             wss://*.tawk.to
             wss:;
