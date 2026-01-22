@@ -201,7 +201,7 @@ export default async function HomePage() {
         <OurCmsExperts />
         <WhyAddact data={homeData?.whyaddact} />
         <CtaBanner data={homeData?.cta} />
-        <OurProcess data={homeData?.ourprocess} />
+        {homeData?.ourprocess && <OurProcess data={homeData?.ourprocess} />}
         <ClientTestimonials />
         <OurInsights />
         <GlobeAnimation data={homeData?.GlobeAnimation} />
