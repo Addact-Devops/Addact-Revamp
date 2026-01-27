@@ -1,25 +1,25 @@
 // app/industries/[slug]/page.tsx
 
+import ContactUs from "@/components/organisms/ContactUs";
+import FAQ from "@/components/organisms/FAQ";
+import HeroBanner from "@/components/organisms/HeroBanner";
+import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
+import OurPartners from "@/components/organisms/OurPartners";
+import { getIndustryBySlug } from "@/graphql/queries/getIndustryBySlug";
 import { Metadata } from "next";
 import Script from "next/script";
-import { getIndustryBySlug } from "@/graphql/queries/getIndustryBySlug";
-import HeroBanner from "@/components/organisms/HeroBanner";
-import OurPartners from "@/components/organisms/OurPartners";
-import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
-import CtaBanner from "@/components/molecules/CtaBanner";
-import FAQ from "@/components/organisms/FAQ";
-import ContactUs from "@/components/organisms/ContactUs";
 
 // ✅ import the exact types your OurPartners component expects
-import type {
-  PartnerTitle,
-  PartnerImage,
-} from "@/graphql/queries/getOurPartners";
+import IndustryCtaBanner from "@/components/molecules/IndustryCtaBanner";
+import ClientTestimonials from "@/components/organisms/ClientTestimonials";
+import IndustryCaseStudies from "@/components/organisms/IndustryCaseStudies";
 import IndustryChallenges from "@/components/organisms/IndustryChallenges";
 import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
-import IndustryCaseStudies from "@/components/organisms/IndustryCaseStudies";
 import WhyAddact from "@/components/organisms/WhyAddactWithAnimation";
-import ClientTestimonials from "@/components/organisms/ClientTestimonials";
+import type {
+  PartnerImage,
+  PartnerTitle,
+} from "@/graphql/queries/getOurPartners";
 
 type Params = Promise<{ slug: string }>;
 
@@ -304,7 +304,7 @@ export default async function Page({ params }: { params: Params }) {
         <ClientTestimonials />
 
         {/* ✅ CTA Banner from this industry – adapted to home shape */}
-        {industry?.cta && <CtaBanner data={industry?.cta as never} />}
+        {industry?.cta && <IndustryCtaBanner data={industry?.cta as never} />}
 
         {/* ✅ FAQ from this industry – adapted to home shape */}
         {faqAdapted && <FAQ data={faqAdapted as never} />}
