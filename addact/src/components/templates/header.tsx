@@ -151,7 +151,7 @@ const Header = ({ headers }: HeaderProps) => {
   }, [pathname]);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F]">
+    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F] border-b border-b-[#2e2e2e]">
       {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
 
       {showBanner && (
@@ -167,7 +167,7 @@ const Header = ({ headers }: HeaderProps) => {
             </span>
             <Link
               href="/project-cost-estimators"
-              className="ml-[24px] hover:bg-white text-white px-[12px] py-[0px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-[250px] xl:w-auto text-center h-10 flex items-center"
+              className="ml-[24px] hover:bg-white text-white px-[12px] py-[0px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-auto xl:w-auto text-center h-10 flex items-center"
             >
               Get My Estimation
             </Link>
@@ -175,7 +175,7 @@ const Header = ({ headers }: HeaderProps) => {
         </div>
       )}
 
-      <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative">
+      <div className="mx-auto w-full flex items-center justify-between container max-w-[1920px] px-4 py-4 lg:px-0 lg:py-0 relative">
         <Link href="/">
           {headerData?.HeaderLogo?.url ? (
             <Image
