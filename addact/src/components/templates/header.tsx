@@ -152,6 +152,29 @@ const Header = ({ headers }: HeaderProps) => {
 
   return (
     <header className="fixed top-0 w-full z-50 bg-[#0F0F0F]">
+      {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
+
+      {showBanner && (
+        <div
+          className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${
+            bannerVisible ? "max-h-[60px]" : "max-h-0"
+          }`}
+        >
+          <div className="container text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
+            <span className="text-[14px] 2xl:text-[18px] font-[400]">
+              Need An Accurate Estimate For Your Sitecore XM Cloud Migration
+              Project? Kickstart Your Journey Here!
+            </span>
+            <Link
+              href="/project-cost-estimators"
+              className="ml-[24px] hover:bg-white text-white px-[12px] py-[0px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-[250px] xl:w-auto text-center h-10 flex items-center"
+            >
+              Get My Estimation
+            </Link>
+          </div>
+        </div>
+      )}
+
       <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative">
         <Link href="/">
           {headerData?.HeaderLogo?.url ? (
@@ -293,28 +316,6 @@ const Header = ({ headers }: HeaderProps) => {
           </button>
         </div>
       </div>
-      {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
-
-      {showBanner && (
-        <div
-          className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${
-            bannerVisible ? "max-h-[80px]" : "max-h-0"
-          }`}
-        >
-          <div className="container text-white justify-center items-center py-2 lg:py-3 hidden md:flex">
-            <span className="text-[16px] 2xl:text-[20px] font-[400]">
-              Need An Accurate Estimate For Your Sitecore XM Cloud Migration
-              Project? Kickstart Your Journey Here!
-            </span>
-            <Link
-              href="/project-cost-estimators"
-              className="ml-[24px] hover:bg-white text-white px-[20px] py-[12px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-[250px] xl:w-auto text-center"
-            >
-              Get My Estimation
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
