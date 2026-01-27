@@ -15,32 +15,36 @@ import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 import { SubServicePage } from "@/graphql/queries/getServieceDetail";
 import ContactUs from "@/components/organisms/ContactUs";
 
-const IndustriesWeServe = dynamic(() => import("@/components/organisms/IndustriesWeServe"), { ssr: false });
+const IndustriesWeServe = dynamic(
+  () => import("@/components/organisms/IndustriesWeServe"),
+  { ssr: false },
+);
 
 export default function SiteDetailClient({ data }: { data: SubServicePage }) {
-    const bannerData = data.HeroBanner;
-    console.log(data.our_process);
-    return (
-        <main className="bg-dark">
-            <HeroBanner
-                title={bannerData?.BannerTitle ?? ""}
-                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
-                button={{
-                    label: bannerData?.BannerLink?.label ?? "",
-                    url: bannerData?.BannerLink?.href ?? "",
-                }}
-                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-            />
-            <OurPartners />
-            <OurServicesWithTabs data={data.our_service} />
-            <IndustriesWeServe />
-            <WhyAddact data={data.why_addact} />
-            <ServiceCtaBanner2 data={data.cta2} />
-            <OurProcess data={data.our_process} />
-            <ClientTestimonials />
-            <OurInsights />
-            <FAQ data={data.faq} />
-            <ContactUs data={data.contact_us} />
-        </main>
-    );
+  const bannerData = data.HeroBanner;
+  return (
+    <main className="bg-dark">
+      <HeroBanner
+        title={bannerData?.BannerTitle ?? ""}
+        description={
+          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
+        }
+        button={{
+          label: bannerData?.BannerLink?.label ?? "",
+          url: bannerData?.BannerLink?.href ?? "",
+        }}
+        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+      />
+      <OurPartners />
+      <OurServicesWithTabs data={data.our_service} />
+      <IndustriesWeServe />
+      <WhyAddact data={data.why_addact} />
+      <ServiceCtaBanner2 data={data.cta2} />
+      <OurProcess data={data.our_process} />
+      <ClientTestimonials />
+      <OurInsights />
+      <FAQ data={data.faq} />
+      <ContactUs data={data.contact_us} />
+    </main>
+  );
 }
