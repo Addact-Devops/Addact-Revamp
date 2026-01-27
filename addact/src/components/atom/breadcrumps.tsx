@@ -21,7 +21,7 @@ const Breadcrumps: FC<Props> = ({ crumbs, className }) => {
       aria-label="Breadcrumb"
       className={`${
         className ?? ""
-      } lg:mt-12  sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar`}
+      } lg:mt-16  sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar`}
     >
       <ol className="flex items-center gap-2 sm:gap-3 text-sm text-white !list-none !pl-0 whitespace-nowrap !mt-0 !mb-0">
         {crumbs.map((crumb, idx) => {
