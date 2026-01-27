@@ -158,9 +158,11 @@ export default function OurProcess(props: {
       ref={containerRef}
     >
       <div>
-        <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
-          {getTitle()}
-        </h2>
+        {getTitle() && (
+          <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
+            {getTitle()}
+          </h2>
+        )}
 
         {/* timeline wrapper — attach timelineRef here so line & dots are relative to same parent */}
         <div

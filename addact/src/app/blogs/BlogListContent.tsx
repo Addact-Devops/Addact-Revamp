@@ -120,7 +120,7 @@ export default function BlogListContent({}: Props) {
           const parser = new DOMParser();
           const parsed = parser.parseFromString(
             banner.BannerDescription,
-            "text/html"
+            "text/html",
           );
           setDescription(parsed.body.textContent || "");
         }
@@ -218,7 +218,7 @@ export default function BlogListContent({}: Props) {
           loadMoreBlogs();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     observer.observe(loadMoreRef.current);
@@ -252,8 +252,8 @@ export default function BlogListContent({}: Props) {
               {searchText.trim()
                 ? `No blogs found for "${searchText}"`
                 : selectedCategory !== "All Blogs"
-                ? `No blogs found in "${selectedCategory}"`
-                : "No blogs found"}
+                  ? `No blogs found in "${selectedCategory}"`
+                  : "No blogs found"}
             </p>
           )}
 
@@ -316,7 +316,9 @@ export default function BlogListContent({}: Props) {
                     {title}
                   </h2>
 
-                  <p className="text-[#3C4CFF] font-bold">{author}</p>
+                  <p className="text-white !text-[14px] xl:!text-[18px]">
+                    {author}
+                  </p>
                 </div>
               </Link>
             );

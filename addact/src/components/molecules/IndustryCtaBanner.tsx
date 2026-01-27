@@ -13,11 +13,13 @@ interface IProps {
 /** Allow CSS custom properties (e.g. --cta-bg-mobile) on style objects */
 type CSSVars = CSSProperties & Record<`--${string}`, string>;
 
-const CtaBanner = ({ data }: IProps) => {
+const IndustryCtaBanner = ({ data }: IProps) => {
   const pathname = usePathname();
   const isIndustriesPage = pathname?.startsWith("/industries/");
 
   const desktopUrl = data?.CTAImage?.[0]?.Image?.url ?? "";
+  const tabletUrl =
+    "https://d3l7d9gtq0bnch.cloudfront.net/Tablet_CTA_eaa3f98736.png";
   const staticMobileUrl =
     "https://d3l7d9gtq0bnch.cloudfront.net/cta_bg_mobile_dc22d2edd3.png";
 
@@ -31,6 +33,7 @@ const CtaBanner = ({ data }: IProps) => {
 
   const bgVars: CSSVars = {
     "--cta-bg-mobile": `url(${mobileUrl})`,
+    "--cta-bg-tablet": `url(${tabletUrl})`,
     "--cta-bg-desktop": `url(${desktopUrl})`,
   };
 
@@ -42,12 +45,12 @@ const CtaBanner = ({ data }: IProps) => {
         style={bgVars}
       >
         <div className="container">
-          <div className="pt-[40px] pb-[150px]  md:py-[90px] banner-content-space">
-            <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] md:w-[550px] lg:!w-[800px] 2xl:leading-[85px]">
+          <div className="lg:pt-0 pb-[150px] md:pb-8 lg:pb-24 xl:pt-0 pt-8">
+            <h2 className="!text-[30px] lg:!text-[40px] 2xl:!text-[60px] w-full md:w-[350px] lg:!w-[700px] 2xl:w-[700px] lg:!leading-14 2xl:!leading-[85px]">
               {data.Title[0].h2}
             </h2>
             <Link href={href} target={target}>
-              <button className="mt-[24px] md:mt-12 bg-white text-[#3C4CFF] text-[16px] lg:text-lg px-4 py-2 lg:px-5 lg:py-4 rounded hover:bg-gray-200 flex items-center gap-5 font-semibold cursor-pointer">
+              <button className="mt-[24px] lg:mt-5 xl:mt-12 bg-white text-[#3C4CFF] text-[16px] lg:text-lg px-4 py-2 lg:px-5 lg:py-4 rounded hover:bg-gray-200 flex items-center gap-5 font-semibold cursor-pointer">
                 {label}
                 <RightArrowIcon />
               </button>
@@ -58,11 +61,20 @@ const CtaBanner = ({ data }: IProps) => {
 
       {/* Scoped styles: choose the BG per breakpoint using the variables above */}
       <style jsx>{`
-        /* Mobile first: use --cta-bg-mobile */
+        /* Mobile (default) */
         .cta-bg {
           background-image: var(--cta-bg-mobile) !important;
         }
-        @media (min-width: 768px) {
+
+        /* Tablet: from 768px up to 1024px */
+        @media (min-width: 768px) and (max-width: 1024px) {
+          .cta-bg {
+            background-image: var(--cta-bg-tablet) !important;
+          }
+        }
+
+        /* Desktop: 1025px and above */
+        @media (min-width: 1025px) {
           .cta-bg {
             background-image: var(--cta-bg-desktop) !important;
           }
@@ -72,4 +84,4 @@ const CtaBanner = ({ data }: IProps) => {
   );
 };
 
-export default CtaBanner;
+export default IndustryCtaBanner;
