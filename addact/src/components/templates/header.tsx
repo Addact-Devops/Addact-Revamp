@@ -17,7 +17,7 @@ const Header = ({ headers }: HeaderProps) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(
-    null
+    null,
   );
   const [bannerVisible, setBannerVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -151,14 +151,37 @@ const Header = ({ headers }: HeaderProps) => {
   }, [pathname]);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F]">
-      <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative">
+    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F] border-b border-b-[#2e2e2e]">
+      {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
+
+      {showBanner && (
+        <div
+          className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${
+            bannerVisible ? "max-h-[60px]" : "max-h-0"
+          }`}
+        >
+          <div className="container text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
+            <span className="text-[14px] 2xl:text-[18px] font-[400]">
+              Need An Accurate Estimate For Your Sitecore XM Cloud Migration
+              Project? Kickstart Your Journey Here!
+            </span>
+            <Link
+              href="/project-cost-estimators"
+              className="ml-[24px] hover:bg-white text-white px-[12px] py-[0px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-auto xl:w-auto text-center h-10 flex items-center"
+            >
+              Get My Estimation
+            </Link>
+          </div>
+        </div>
+      )}
+
+      <div className="mx-auto w-full flex items-center justify-between container max-w-[1920px] px-4 py-4 lg:px-0 lg:py-0 relative">
         <Link href="/">
           {headerData?.HeaderLogo?.url ? (
             <Image
               src={headerData?.HeaderLogo?.url}
               alt={headerData?.HeaderLogo?.alternativeText || "Company Logo"}
-              className="w-[130px] h-full lg:w-[160px] xl:w-[220px] "
+              className="w-[130px] h-full lg:w-[150px] xl:w-[220px] "
               width={headerData?.HeaderLogo?.width}
               height={headerData?.HeaderLogo?.height}
             />
@@ -171,12 +194,15 @@ const Header = ({ headers }: HeaderProps) => {
             const isActive = openDropdown === item.ReferenceTitle;
 
             return (
-              <div key={item.ReferenceTitle} className="group mr-5 xl:mr-10">
+              <div
+                key={item.ReferenceTitle}
+                className="group mr-5 lg:mr-7 xl:mr-10"
+              >
                 <div className="flex flex-col items-center">
                   <button
                     onClick={() => handleDropdownToggle(item.ReferenceTitle)}
                     data-dropdown-button
-                    className="flex items-center gap-1 text-[17px] xl:text-lg font-medium hover:text-blue-500 focus:outline-none transition-colors duration-200 cursor-pointer py-[46px]"
+                    className="flex items-center gap-1 text-[14px] xl:text-lg font-medium hover:text-blue-500 focus:outline-none transition-colors duration-200 cursor-pointer py-5 lg:py-[46px] "
                   >
                     {item.ReferenceTitle}
                     {isActive ? (
@@ -217,7 +243,7 @@ const Header = ({ headers }: HeaderProps) => {
                       </div>
 
                       {/* Right grid */}
-                      <ul className="grid grid-cols-2 md:gap-x-[25px] xl:gap-x-[40px] 2xl:gap-x-[60px] md:gap-y-[25px] xl:gap-y-[40px] 2xl:gap-y-[50px] xl:py-0 2xl:py-[40px] h-fit">
+                      <ul className="grid grid-cols-2 md:gap-x-[25px] xl:gap-x-[40px] 2xl:gap-x-[60px] md:gap-y-[25px] xl:gap-y-[40px] 2xl:gap-y-[50px] xl:py-0  h-fit">
                         {item.SubNavLink.map((child) => (
                           <li key={child.id}>
                             <Link
@@ -269,7 +295,7 @@ const Header = ({ headers }: HeaderProps) => {
           {/* Contact Button */}
           <Link
             href={headerData?.contact_us[0]?.href}
-            className="ml-4 bg-[#3C4CFF] px-4 py-2 rounded-[6px] md:rounded-[8px] text-white lg:py-4 lg:px-7 font-[600] hover:bg-[#3440CB]"
+            className="ml-4 bg-[#3C4CFF] px-4 py-2 rounded-[6px] md:rounded-[8px] text-white lg:py-4 lg:px-7 font-[600] hover:bg-[#3440CB] text-[14px] xl:text-lg"
             target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
           >
             {headerData?.contact_us[0]?.label}
@@ -290,28 +316,6 @@ const Header = ({ headers }: HeaderProps) => {
           </button>
         </div>
       </div>
-      {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
-
-      {showBanner && (
-        <div
-          className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${
-            bannerVisible ? "max-h-[80px]" : "max-h-0"
-          }`}
-        >
-          <div className="container text-white justify-center items-center py-2 lg:py-3 hidden md:flex">
-            <span className="text-[16px] 2xl:text-[20px] font-[400]">
-              Need An Accurate Estimate For Your Sitecore AI Migration Project?
-              Kickstart Your Journey Here!
-            </span>
-            <Link
-              href="/project-cost-estimators"
-              className="ml-[24px] hover:bg-white text-white px-[20px] py-[12px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-[250px] xl:w-auto text-center"
-            >
-              Get My Estimation
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
