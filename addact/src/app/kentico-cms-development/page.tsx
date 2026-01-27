@@ -26,6 +26,100 @@ export default async function kenticoPage() {
 
   return (
     <main className="bg-dark">
+      {/* ✅ WebSite Schema */}
+
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org/",
+            "@type": "WebSite",
+            name: "Addact Technologies",
+            url: " https://www.addact.net/kentico-cms-development ",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "{search_term_string}",
+              "query-input": "required name=search_term_string",
+            },
+          }),
+        }}
+      />
+
+      {/* ✅ Organization Schema */}
+
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Addact Technologies",
+            alternateName: "Addact",
+            url: "https://www.addact.net/",
+            logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
+            contactPoint: {
+              "@type": "ContactPoint",
+              telephone: "94272 37737",
+              contactType: "emergency",
+              contactOption: "TollFree",
+              areaServed: [
+                "SA",
+                "YE",
+                "KW",
+                "OM",
+                "QA",
+                "AE",
+                "BH",
+                "IL",
+                "JO",
+                "SY",
+              ],
+              availableLanguage: "en",
+            },
+            sameAs: [
+              "https://www.facebook.com/addacttech/",
+              "https://x.com/AddactTech",
+              "https://www.instagram.com/addacttechnologies/",
+              "https://www.youtube.com/@addact3283",
+              "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all",
+              "https://www.addact.net/",
+            ],
+          }),
+        }}
+      />
+
+      {/* ✅ FAQPage Schema */}
+
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: " Is Kentico CMS suitable for enterprise websites?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: " Yes, Kentico CMS is designed for enterprise-level websites, offering scalability, security, and advanced content management features.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: " What services do you offer for Kentico CMS?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "We provide Kentico CMS services including website development, customization, upgrades, and migration from other content management systems.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
       <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
         description={
