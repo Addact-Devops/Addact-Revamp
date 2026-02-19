@@ -1,0 +1,43 @@
+{
+  "kind": "singleType",
+  "collectionName": "addact_headers",
+  "info": {
+    "singularName": "addact-header",
+    "pluralName": "addact-headers",
+    "displayName": "AddactHeader"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "menu": {
+      "type": "component",
+      "component": "shared.layer-1",
+      "repeatable": true
+    },
+    "contactButton": {
+      "type": "component",
+      "component": "shared.card",
+      "repeatable": false
+    },
+    "contactDetails": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
+    },
+    "additionalText": {
+      "type": "string"
+    }
+  }
+}
