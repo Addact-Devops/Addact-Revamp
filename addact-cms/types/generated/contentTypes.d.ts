@@ -613,6 +613,38 @@ export interface ApiAddactEventsAddactEvents
   };
 }
 
+export interface ApiAddactHeaderAddactHeader extends Struct.SingleTypeSchema {
+  collectionName: 'addact_headers';
+  info: {
+    displayName: 'AddactHeader';
+    pluralName: 'addact-headers';
+    singularName: 'addact-header';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    additionalText: Schema.Attribute.String;
+    contactButton: Schema.Attribute.Component<'shared.card', false>;
+    contactDetails: Schema.Attribute.Component<'shared.link', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::addact-header.addact-header'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    menu: Schema.Attribute.Component<'shared.layer-1', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAddactPressReleaseAddactPressRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'addact_press_releases';
@@ -3387,6 +3419,7 @@ declare module '@strapi/strapi' {
       'api::addact-blog.addact-blog': ApiAddactBlogAddactBlog;
       'api::addact-case-study.addact-case-study': ApiAddactCaseStudyAddactCaseStudy;
       'api::addact-events.addact-events': ApiAddactEventsAddactEvents;
+      'api::addact-header.addact-header': ApiAddactHeaderAddactHeader;
       'api::addact-press-release.addact-press-release': ApiAddactPressReleaseAddactPressRelease;
       'api::addact-webinar.addact-webinar': ApiAddactWebinarAddactWebinar;
       'api::author-designation.author-designation': ApiAuthorDesignationAuthorDesignation;
