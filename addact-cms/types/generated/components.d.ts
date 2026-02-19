@@ -670,6 +670,33 @@ export interface ReuseTitleWithCard extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedCard extends Struct.ComponentSchema {
+  collectionName: 'components_shared_cards';
+  info: {
+    description: '';
+    displayName: 'Card';
+    icon: 'picture';
+  };
+  attributes: {
+    image: Schema.Attribute.Media<'images'>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedContactDetails extends Struct.ComponentSchema {
+  collectionName: 'components_shared_contact_details';
+  info: {
+    description: '';
+    displayName: 'Contact Details';
+    icon: 'phone';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images'>;
+    text: Schema.Attribute.String;
+  };
+}
+
 export interface SharedCta extends Struct.ComponentSchema {
   collectionName: 'components_shared_ctas';
   info: {
@@ -709,6 +736,65 @@ export interface SharedImage extends Struct.ComponentSchema {
   };
   attributes: {
     Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+  };
+}
+
+export interface SharedLayer1 extends Struct.ComponentSchema {
+  collectionName: 'components_shared_layer_1s';
+  info: {
+    description: '';
+    displayName: 'Layer 1';
+    icon: 'layer-group';
+  };
+  attributes: {
+    card: Schema.Attribute.Component<'shared.card', false>;
+    isCardShow: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    isNavHide: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    subLayers: Schema.Attribute.Component<'shared.layer-2', true>;
+  };
+}
+
+export interface SharedLayer2 extends Struct.ComponentSchema {
+  collectionName: 'components_shared_layer_2s';
+  info: {
+    description: '';
+    displayName: 'Layer 2';
+    icon: 'layer-group';
+  };
+  attributes: {
+    card: Schema.Attribute.Component<'shared.card', false>;
+    isCardShow: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    isNavHide: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    subLayers: Schema.Attribute.Component<'shared.layer-3', true>;
+  };
+}
+
+export interface SharedLayer3 extends Struct.ComponentSchema {
+  collectionName: 'components_shared_layer_3s';
+  info: {
+    description: '';
+    displayName: 'Layer 3';
+    icon: 'layer-group';
+  };
+  attributes: {
+    card: Schema.Attribute.Component<'shared.card', false>;
+    isCardShow: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    isNavHide: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.Component<'shared.link', false>;
   };
 }
 
@@ -840,9 +926,14 @@ declare module '@strapi/strapi' {
       'reuse.number-title-content': ReuseNumberTitleContent;
       'reuse.projects-slider': ReuseProjectsSlider;
       'reuse.title-with-card': ReuseTitleWithCard;
+      'shared.card': SharedCard;
+      'shared.contact-details': SharedContactDetails;
       'shared.cta': SharedCta;
       'shared.hero-link-item': SharedHeroLinkItem;
       'shared.image': SharedImage;
+      'shared.layer-1': SharedLayer1;
+      'shared.layer-2': SharedLayer2;
+      'shared.layer-3': SharedLayer3;
       'shared.link': SharedLink;
       'shared.link-icons': SharedLinkIcons;
       'shared.number-value-counter': SharedNumberValueCounter;
