@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_shared_layer_1s",
+  "info": {
+    "displayName": "Layer 1",
+    "icon": "layer-group",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "card": {
+      "type": "component",
+      "component": "shared.card",
+      "repeatable": false
+    },
+    "link": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "subLayers": {
+      "type": "component",
+      "component": "shared.layer-2",
+      "repeatable": true
+    },
+    "isCardShow": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "isNavHide": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

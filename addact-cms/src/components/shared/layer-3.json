@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_layer_3s",
+  "info": {
+    "displayName": "Layer 3",
+    "icon": "layer-group",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "card": {
+      "type": "component",
+      "component": "shared.card",
+      "repeatable": false
+    },
+    "link": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "isCardShow": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "isNavHide": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}
