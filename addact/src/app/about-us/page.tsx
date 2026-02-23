@@ -48,7 +48,7 @@ export default async function AboutUsPage() {
                 />
             )}
 
-            <main className="bg-[#f4f4f4]">
+            <main className="bg-white">
                 <HeroBanner
                     title={banner?.BannerTitle || ""}
                     description={banner?.BannerDescription || ""}

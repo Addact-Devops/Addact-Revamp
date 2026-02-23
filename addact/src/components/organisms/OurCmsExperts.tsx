@@ -8,6 +8,9 @@ import {
 } from "@/graphql/queries/getCmsExperts";
 import Image from "../atom/image";
 import RichText from "../atom/richText";
+import { motion } from "framer-motion";
+import SpotlightCard from "../atom/SpotlightCard";
+import TechReveal from "../atom/TechReveal";
 
 /* ✅ optional props to override with industry data (includes required fields) */
 type OverrideItem = {
@@ -120,55 +123,77 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
 
   return (
     <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] cms-list">
-      <div className="container">
+      <div className="container relative z-20">
         <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-          <h2 className="w-full lg:w-[40%] border-after !text-[36px] xl:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
-            {data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title}
-          </h2>
+          <div className="w-full lg:w-[40%] flex items-center gap-3">
+              <motion.span
+                  className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
+                  animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.h2
+                className="border-after !text-[36px] xl:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <TechReveal text={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title || ""} duration={1} />
+              </motion.h2>
+          </div>
 
-          <div className="w-full text-left">
+          <motion.div
+            className="w-full text-left"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+          >
             <RichText
               html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description}
             />
-          </div>
+          </motion.div>
         </div>
 
         <section>
-          <div className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 2xl:mt-24">
+          <motion.div
+            className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 2xl:mt-24"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }}
+          >
             {data.ourExpertises[0].CMS.map((service) => {
-              const hoverColorMap: Record<string, string> = {
-                Sitecore: "hover:bg-[#EE3524]",
-                Umbraco: "hover:bg-[#3544B1]",
-                Kentico: "hover:bg-[#F05A22]",
-                Strapi: "hover:bg-[#4945FF]",
-                Contentful: "hover:bg-[#1773EB]",
-                Contentstack: "hover:bg-[#7C4DFF]",
-              };
-              const hoverColorClass =
-                hoverColorMap[service?.Title] || "hover:bg-[#EE3524]";
-
               return (
-                <Link
-                  className={`bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
+                <motion.div
                   key={service?.id}
-                  href={service?.Links?.href}
-                  target={service?.Links?.isExternal ? "_blank" : "_self"}
+                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 >
-                  {/* 🔥 Animate ONLY the logo image */}
-                  <div className={`logo-zoom ${playLogos ? "play" : ""}`}>
-                    <Image
-                      src={service?.Icons?.url}
-                      alt={service?.Icons?.alternativeText || "Service Icon"}
-                      width={service?.Icons?.width}
-                      height={service?.Icons?.height}
-                      className="w-[113px] md:w-[310px]"
-                      unoptimized={false}
-                    />
-                  </div>
-                </Link>
+                <SpotlightCard className="h-full">
+                  <Link
+                    className="bg-transparent border border-white/5 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300"
+                    href={service?.Links?.href}
+                    target={service?.Links?.isExternal ? "_blank" : "_self"}
+                  >
+                    {/* 🔥 Animate ONLY the logo image */}
+                    <div className={`logo-zoom ${playLogos ? "play" : ""}`}>
+                      <Image
+                        src={service?.Icons?.url}
+                        alt={service?.Icons?.alternativeText || "Service Icon"}
+                        width={service?.Icons?.width}
+                        height={service?.Icons?.height}
+                        className="w-[113px] md:w-[310px]"
+                        unoptimized={false}
+                      />
+                    </div>
+                  </Link>
+                </SpotlightCard>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </section>
       </div>
 

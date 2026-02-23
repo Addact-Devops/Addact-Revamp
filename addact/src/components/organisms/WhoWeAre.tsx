@@ -5,6 +5,11 @@ import { getWhoAreWe, WhoAreWeResponse } from "@/graphql/queries/whoAreWe";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import RichText from "../atom/richText";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import TechReveal from "../atom/TechReveal";
+
+const NeuralParticles = dynamic(() => import("../atom/NeuralParticles"), { ssr: false });
 gsap.registerPlugin(ScrollTrigger);
 const WhoWeAre = () => {
   const numberRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -91,14 +96,32 @@ const WhoWeAre = () => {
   return (
     <>
       <section
-        className="who-we-are my-[80px] lg:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%]"
+        className="who-we-are my-[80px] lg:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%] relative overflow-hidden"
         ref={containerRef}
       >
-        <div className="container">
+        {/* Faded background AI neural network */}
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+          <NeuralParticles count={30} color="100, 130, 255" lineColor="80, 110, 255" connectDistance={150} />
+        </div>
+
+        <div className="container relative z-20">
           <div className="flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap">
-            <h2 className="w-full lg:w-[40%] border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
-              {data?.whoAreWes[0].Title[0].Title}
-            </h2>
+            <div className="w-full lg:w-[40%] flex items-center gap-3">
+              <motion.span
+                  className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
+                  animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.h2
+                className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <TechReveal text={data?.whoAreWes[0].Title[0].Title || ""} duration={1.2} />
+              </motion.h2>
+            </div>
 
             <div className="relative overflow-hidden w-full text-left  large">
               <div className="sticky top-0 flex items-center justify-center">
@@ -135,18 +158,33 @@ const WhoWeAre = () => {
                     ${isSecondInRowMobile ? "border-r-0" : ""} 
                     ${isFourthInRowDesktop ? "md:border-r-0" : "md:border-r"} 
                     ${isLastItem ? "border-r-0 md:border-r-0" : ""}
+                    group relative
                 `}
                 >
-                  <h2
-                    className="text-white !font-bold text-3xl mb-2 transition-colors duration-300 text-left"
-                    ref={(el) => {
-                      numberRefs.current[index] = el;
-                    }}
-                  >
-                    {`0${counterSuffixes[index] || ""}`}
-                  </h2>
-                  <div className="text-[14px] md:text-[20px] 2xl:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%]">
-                    {item.CounterTitle}
+                  {/* Subtle hover glow pulse */}
+                  <motion.div 
+                    className="absolute inset-0 bg-[#3C4CFF] opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500"
+                  />
+
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-2 mb-2">
+                       <motion.span 
+                         className="w-2 h-2 rounded-full bg-[#3C4CFF]"
+                         animate={{ opacity: [0.3, 1, 0.3] }}
+                         transition={{ duration: 1.5, repeat: Infinity, delay: index * 0.2 }}
+                       />
+                       <h2
+                        className="text-white !font-bold text-3xl transition-colors duration-300 text-left"
+                        ref={(el) => {
+                          numberRefs.current[index] = el;
+                        }}
+                      >
+                        {`0${counterSuffixes[index] || ""}`}
+                      </h2>
+                    </div>
+                    <div className="text-[14px] md:text-[20px] 2xl:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%] opacity-80 group-hover:opacity-100 transition-opacity">
+                      {item.CounterTitle}
+                    </div>
                   </div>
                 </div>
               );

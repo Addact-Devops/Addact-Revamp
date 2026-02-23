@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 import Image from "../atom/image";
 import { getOurPartners, PartnerImage, PartnerTitle } from "@/graphql/queries/getOurPartners";
 import "../../styles/components/ourPartners.scss";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import TechReveal from "../atom/TechReveal";
+
+const NeuralParticles = dynamic(() => import("../atom/NeuralParticles"), { ssr: false });
 
 type PartnerItem = {
     Title: PartnerTitle[];
@@ -72,11 +77,29 @@ export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
     };
 
     return (
-        <section className="partners py-[30px] md:py-[60px] border-t border-b border-[#2E2E2E]">
-            <div className="container">
-                <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white mb-[20px] md:mb-[50px] 2xl:mb-[80px]">
-                    {renderTitle()}
-                </h2>
+        <section className="partners py-[30px] md:py-[60px] border-t border-b border-[#2E2E2E] relative overflow-hidden">
+            {/* Neural network background */}
+            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+                <NeuralParticles count={30} color="100, 130, 255" lineColor="80, 100, 255" connectDistance={130} />
+            </div>
+
+            <div className="container relative z-10">
+                <div className="flex flex-col items-center gap-3 mb-[20px] md:mb-[50px] 2xl:mb-[80px]">
+                    <motion.span
+                        className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
+                        animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                    <motion.h2
+                        className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white m-0"
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                        <TechReveal text={renderTitle() || ""} as="h2" duration={1} />
+                    </motion.h2>
+                </div>
             </div>
 
             <div className="overflow-hidden relative w-full py-4">

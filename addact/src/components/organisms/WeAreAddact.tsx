@@ -46,7 +46,6 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
             },
             { threshold: 0.3 }
         );
-
         if (sectionRef.current) observer.observe(sectionRef.current);
         return () => {
             if (sectionRef.current) observer.unobserve(sectionRef.current);
@@ -60,10 +59,7 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
             const step = Math.ceil(num / 50);
             const interval = setInterval(() => {
                 current += step;
-                if (current >= num) {
-                    current = num;
-                    clearInterval(interval);
-                }
+                if (current >= num) { current = num; clearInterval(interval); }
                 setCounts((prev) => {
                     const updated = [...prev];
                     updated[index] = current;
@@ -74,59 +70,68 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
     };
 
     return (
-        <section ref={sectionRef} className="container mt-[60px] sm:mt-[60px] pb-[60px] sm:pb-[100px]" id="who-we-are">
-            <div className="flex flex-col md:flex-row items-center sm:gap-[60px] lg:gap-[120px]">
-                <div className="w-full md:w-1/2 hidden md:block">
-                    <img
-                        src={image.url}
-                        alt={image.alternativeText || "We Are Addact"}
-                        width={image.width}
-                        height={image.height}
-                        className="rounded-2xl w-full h-auto object-cover"
-                    />
-                </div>
+        <section ref={sectionRef} className="py-[70px] sm:py-[90px]" id="who-we-are">
+            <div className="container">
+                <div className="flex flex-col md:flex-row items-center gap-[50px] md:gap-[70px] lg:gap-[100px]">
 
-                <div className="w-full md:w-1/2">
-                    <p className="text-[#3C4CFF] text-[17px] leading-[30px] font-medium sm:mb-[15px] mb-[10px] block">
-                        {subtitle}
-                    </p>
-
-                    <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-black mb-[20px] !font-normal">
-                        {title}
-                    </h2>
-
-                    <div className="block md:hidden mb-[20px]">
+                    {/* Image — desktop */}
+                    <div className="w-full md:w-[45%] hidden md:block shrink-0">
                         <img
                             src={image.url}
                             alt={image.alternativeText || "We Are Addact"}
-                            width={image.width}
-                            height={image.height}
-                            className="rounded-2xl w-full h-auto object-cover max-h-[250px]"
+                            className="rounded-2xl w-full h-auto object-cover shadow-lg"
                         />
                     </div>
 
-                    <div className="text-base text-black leading-relaxed mb-8">
-                        {content?.map((block, index) => (
-                            <p key={index}>
-                                {block.children?.map((child, childIndex) => (
-                                    <span key={childIndex}>{child.text}</span>
-                                ))}
-                            </p>
-                        ))}
-                    </div>
+                    {/* Text */}
+                    <div className="w-full md:w-[55%]">
+                        {/* Pill label */}
+                        <div className="inline-flex items-center gap-[8px] bg-[#3C4CFF]/8 border border-[#3C4CFF]/20 text-[#3C4CFF] text-[12px] font-semibold uppercase tracking-[2px] px-[14px] py-[6px] rounded-full mb-[18px]">
+                            <span className="w-[6px] h-[6px] rounded-full bg-[#3C4CFF] inline-block" />
+                            {subtitle}
+                        </div>
 
-                    {numberContent.length > 0 && (
-                        <div className="flex flex-col sm:flex-row gap-8 mt-4 text-center sm:text-left">
-                            {numberContent.map((item, index) => (
-                                <div key={index}>
-                                    <h3 className="font-semibold text-[#3c4cff] mb-1">{counts[index]}+</h3>
-                                    <p className="text-sm text-black leading-snug whitespace-pre-line sm:max-w-[65%]">
-                                        {item.Content}
-                                    </p>
-                                </div>
+                        <h2 className="text-zinc-900 font-bold text-[28px] md:text-[38px] 2xl:text-[50px] leading-[1.15] mb-[14px]">
+                            {title}
+                        </h2>
+
+                        <div className="w-[48px] h-[3px] rounded-full bg-[#3C4CFF] mb-[22px]" />
+
+                        {/* Image — mobile */}
+                        <div className="block md:hidden mb-[22px]">
+                            <img
+                                src={image.url}
+                                alt={image.alternativeText || "We Are Addact"}
+                                className="rounded-xl w-full h-auto object-cover max-h-[260px] shadow-md"
+                            />
+                        </div>
+
+                        <div className="text-zinc-600 text-[16px] leading-[1.85] mb-8 space-y-3">
+                            {content?.map((block, index) => (
+                                <p key={index}>
+                                    {block.children?.map((child, ci) => (
+                                        <span key={ci}>{child.text}</span>
+                                    ))}
+                                </p>
                             ))}
                         </div>
-                    )}
+
+                        {/* Stats grid */}
+                        {numberContent.length > 0 && (
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-[1px] bg-zinc-200 rounded-2xl overflow-hidden border border-zinc-200">
+                                {numberContent.map((item, index) => (
+                                    <div key={index} className="bg-white px-[20px] py-[22px] text-center sm:text-left hover:bg-[#F5F7FF] transition-colors duration-200">
+                                        <div className="text-[#3C4CFF] font-black text-[32px] md:text-[40px] leading-none mb-[4px] tabular-nums">
+                                            {counts[index]}+
+                                        </div>
+                                        <p className="text-zinc-500 text-[13px] leading-snug font-medium">
+                                            {item.Content}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </section>

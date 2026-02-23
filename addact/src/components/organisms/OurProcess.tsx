@@ -2,6 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { OurProcessData } from "@/graphql/queries/getOurProcess";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+import TechReveal from "../atom/TechReveal";
+
+const NeuralParticles = dynamic(() => import("../atom/NeuralParticles"), { ssr: false });
 
 export default function OurProcess(props: {
   data?: OurProcessData["home"]["ourprocess"];
@@ -157,12 +162,31 @@ export default function OurProcess(props: {
       className="container my-[80px] lg:my-[100px] 2xl:my-[200px]"
       ref={containerRef}
     >
-      <div>
-        {getTitle() && (
-          <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
-            {getTitle()}
-          </h2>
-        )}
+      <div className="relative overflow-hidden">
+        {/* Faded AI background network */}
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+          <NeuralParticles count={30} color="100, 130, 255" lineColor="80, 110, 255" connectDistance={130} />
+        </div>
+
+        <div className="relative z-10">
+          {getTitle() && (
+            <div className="flex items-center gap-3">
+              <motion.span
+                  className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
+                  animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.h2
+                className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
+                initial={{ opacity: 0, x: -40 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <TechReveal text={getTitle()} duration={1.2} />
+              </motion.h2>
+            </div>
+          )}
 
         {/* timeline wrapper — attach timelineRef here so line & dots are relative to same parent */}
         <div
@@ -174,9 +198,17 @@ export default function OurProcess(props: {
 
           {/* Active white animated line */}
           <div
-            className="absolute left-1 md:left-1/2 transform -translate-x-1/2 w-[2px] bg-white z-10 transition-all duration-500 ease-in-out"
+            className="absolute left-1 md:left-1/2 transform -translate-x-1/2 w-[2px] bg-white z-10 transition-all duration-500 ease-in-out overflow-hidden"
             style={activeLineStyle}
-          />
+          >
+            {/* AI Data Flow beam traveling down the active line segment */}
+            <motion.div 
+               className="absolute left-[-2px] w-[6px] h-20 blur-[2px]"
+               style={{ background: "linear-gradient(to bottom, transparent, #3C4CFF, transparent)" }}
+               animate={{ top: ["-100%", "200%"] }}
+               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
 
           {/* Render timeline dots here so they all share the same positioned parent as the lines */}
           {data?.ProcessData &&
@@ -281,6 +313,7 @@ export default function OurProcess(props: {
           </div>
         </div>
       </div>
+    </div>
     </section>
   );
 }

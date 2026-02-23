@@ -12,7 +12,10 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider, { Settings } from "react-slick";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { RightArrowUpIcon } from "../atom/icons";
+import SpotlightCard from "../atom/SpotlightCard";
+import TechReveal from "../atom/TechReveal";
 
 type ImageType = {
   url?: string | null;
@@ -202,54 +205,56 @@ const IndustryCaseStudies: React.FC<Props> = ({
     const href = `/portfolio${slug?.startsWith("/") ? slug : `/${slug}`}`;
 
     return (
-      <article className="group border border-[#ffffff33] overflow-hidden relative h-full lg:flex min-h-[100%] lg:min-h-[300px]">
-        <div className="lg:flex p-[10px] pb-[20px] lg:p-[30px] gap-[30px] items-center w-full">
-          {img?.url ? (
-            <div className="relative w-[100%] min-h-[171px] h-[100%] lg:w-[320px] lg:min-w-[320px] lg:h-[244px] 2xl:w-[320px] 2xl:min-w-[320px] self-center">
-              <Image
-                src={img.url}
-                alt={img.alternativeText ?? theTitle}
-                fill
-                className="object-cover object-center"
-              />
-            </div>
-          ) : (
-            <div className="relative w-[100%] min-h-[171px] h-[100%] lg:w-[270px] lg:min-w-[270px] lg:h-[200px] 2xl:w-[320px] 2xl:min-w-[320px] 2xl:h-[244px] bg-[#222] self-center" />
-          )}
-
-          <div>
-            <div className="text-[12px] md:text-[14px] leading-[24px] px-5 py-1 lg:py-[6px] lg:px-[20px] rounded-md bg-[#3F3F40] text-white border-1 border-[#3C4CFF] lg:mb-[20px] mb-[12px] w-fit mt-[15px] lg:mt-0">
-              Case study
-            </div>
-
-            <h3
-              className="text-white !text-[18px] md:!text-[22px] 2xl:!text-[30px] !leading-[30px] lg:!leading-[38px] 2xl:!leading-[48px] mb-[16px] font-[500] line-clamp-2"
-              style={{
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {theTitle}
-            </h3>
-
-            {dateText && (
-              <div className="text-white text-[12px] md:text-[16px] leading-[18px]">
-                {dateText}
+      <SpotlightCard className="h-full">
+        <article className="group overflow-hidden relative h-full lg:flex min-h-full lg:min-h-[300px]">
+          <div className="lg:flex p-[10px] pb-[20px] lg:p-[30px] gap-[30px] items-center w-full">
+            {img?.url ? (
+              <div className="relative w-full min-h-[171px] h-full lg:w-[320px] lg:min-w-[320px] lg:h-[244px] 2xl:w-[320px] 2xl:min-w-[320px] self-center">
+                <Image
+                  src={img.url}
+                  alt={img.alternativeText ?? theTitle}
+                  fill
+                  className="object-cover object-center"
+                />
               </div>
+            ) : (
+              <div className="relative w-full min-h-[171px] h-full lg:w-[270px] lg:min-w-[270px] lg:h-[200px] 2xl:w-[320px] 2xl:min-w-[320px] 2xl:h-[244px] bg-[#222] self-center" />
             )}
-          </div>
-        </div>
 
-        <Link
-          href={href}
-          className="absolute bottom-0 right-0 w-[40px] h-[40px] lg:w-14 lg:h-14 bg-[#3C4CFF] text-white flex items-center justify-center"
-        >
-          <RightArrowUpIcon />
-        </Link>
-      </article>
+            <div>
+              <div className="text-[12px] md:text-[14px] leading-[24px] px-5 py-1 lg:py-[6px] lg:px-[20px] rounded-md bg-[#3F3F40] text-white border border-[#3C4CFF] lg:mb-[20px] mb-[12px] w-fit mt-[15px] lg:mt-0">
+                Case study
+              </div>
+
+              <h3
+                className="text-white !text-[18px] md:!text-[22px] 2xl:!text-[30px] !leading-[30px] lg:!leading-[38px] 2xl:!leading-[48px] mb-[16px] font-[500] line-clamp-2"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {theTitle}
+              </h3>
+
+              {dateText && (
+                <div className="text-white text-[12px] md:text-[16px] leading-[18px]">
+                  {dateText}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <Link
+            href={href}
+            className="absolute bottom-0 right-0 w-[40px] h-[40px] lg:w-14 lg:h-14 bg-[#3C4CFF] text-white flex items-center justify-center z-20"
+          >
+            <RightArrowUpIcon />
+          </Link>
+        </article>
+      </SpotlightCard>
     );
   };
 
@@ -260,9 +265,15 @@ const IndustryCaseStudies: React.FC<Props> = ({
       <div className="overflow-hidden lg:pb-[55px]">
         <div className="max-w-[1920px] m-auto">
           <div className="container" ref={containerRef}>
-            <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
-              {title ?? "Project Highlights"}
-            </h2>
+            <motion.h2
+              className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24"
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <TechReveal text={title ?? "Project Highlights"} duration={1.2} />
+            </motion.h2>
           </div>
 
           {/* =================== MOBILE/TABLET (< lg): GRID (no slider) =================== */}
