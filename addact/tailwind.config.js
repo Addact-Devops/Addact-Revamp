@@ -46,6 +46,9 @@ module.exports = {
           grayCustom: "#2e2e2e",
         },
       },
+      fontFamily: {
+        montserrat: ["var(--font-montserrat)"],
+      },
       animation: {
         marquee: "scroll-marquee 20s linear infinite",
         fadeWord: "fadeWord 1.3s ease forwards",

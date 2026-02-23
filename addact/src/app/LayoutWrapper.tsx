@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import Header from "@/components/templates/header";
 import Footer from "@/components/templates/Footer";
+import type { AddactHeaderData } from "@/graphql/queries/addact-header";
 
-// 🔹 infer prop types directly from Header and Footer components
-type HeaderProps = React.ComponentProps<typeof Header>;
+// 🔹 infer Footer prop type directly from Footer component
 type FooterProps = React.ComponentProps<typeof Footer>;
 
 function LayoutWrapper({
@@ -15,19 +15,20 @@ function LayoutWrapper({
     footerData,
 }: {
     children: React.ReactNode;
-    headerData: HeaderProps["headers"]; // type-safe!
-    footerData: FooterProps["data"]; // type-safe!
+    headerData: AddactHeaderData;
+    footerData?: FooterProps["data"];
 }) {
     const pathname = usePathname();
     const hideHeaderFooter = pathname === "/hire-certified-sitecore-developer";
 
     return (
         <>
-            {!hideHeaderFooter && <Header headers={headerData} />}
+            {!hideHeaderFooter && <Header headerData={headerData} />}
             {children}
-            {!hideHeaderFooter && <Footer data={footerData} />}
+            {!hideHeaderFooter && footerData && <Footer data={footerData} />}
         </>
     );
 }
 
 export default LayoutWrapper;
+
