@@ -47,12 +47,12 @@ const ContactUsTeam = ({
 
                 {/* Right Content */}
                 <div>
-                    <h2 className="text-[#155dfc] mb-[5px]">{TitleLine1}</h2>
-                    <h2 className="text-[#000000] mb-[15px]">{TitleLine2}</h2>
+                    <h2 className="text-[#3C4CFF] mb-[5px] font-bold">{TitleLine1}</h2>
+                    <h2 className="text-black mb-[15px] font-bold">{TitleLine2}</h2>
 
                     {/* Descriptions */}
                     {Descriptions?.map((block, index) => (
-                        <p key={index} className="text-base text-[#111111] mb-4">
+                        <p key={index} className="text-base text-zinc-600 mb-4 font-medium leading-relaxed">
                             {block?.children?.map((child, idx) => (
                                 <span key={idx}>{child?.text || ""}</span>
                             ))}
@@ -71,7 +71,7 @@ const ContactUsTeam = ({
                                     <span
                                         className={
                                             item.Availability.toLowerCase() === "online"
-                                                ? "text-[#155dfc]"
+                                                ? "text-[#3C4CFF]"
                                                 : "text-black"
                                         }
                                     >

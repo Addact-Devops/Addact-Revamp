@@ -77,16 +77,16 @@ export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
     };
 
     return (
-        <section className="partners py-[30px] md:py-[60px] border-t border-b border-[#2E2E2E] relative overflow-hidden">
+        <section className="partners py-[30px] md:py-[60px] border-t border-b border-black/10 relative overflow-hidden">
             {/* Neural network background */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-                <NeuralParticles count={30} color="100, 130, 255" lineColor="80, 100, 255" connectDistance={130} />
+            <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                <NeuralParticles count={30} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={130} />
             </div>
 
             <div className="container relative z-10">
                 <div className="flex flex-col items-center gap-3 mb-[20px] md:mb-[50px] 2xl:mb-[80px]">
                     <motion.h2
-                        className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white m-0"
+                        className="w-full lg:w-fit border-after m-0 text-black text-[28px]! md:text-[40px]! 2xl:text-[60px]! pb-4! xl:pb-10! border-black/20"
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.5 }}
@@ -104,14 +104,14 @@ export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
                         ...(props?.images || partnerData?.Image || []),
                         ...(props?.images || partnerData?.Image || []),
                     ].map((item, index) => (
-                        <div key={index} className="min-w-[160px] flex items-center justify-center">
+                        <div key={index} className="min-w-[160px] flex items-center justify-center group">
                             {item?.Image?.url && (
                                 <Image
                                     src={item?.Image?.url}
                                     alt={item.Image.alternativeText || `Partner Logo ${index + 1}`}
                                     width={164}
                                     height={64}
-                                    className="max-w-full w-full h-[64px] object-contain"
+                                    className="max-w-full w-full h-[64px] object-contain brightness-0 opacity-40 group-hover:opacity-100 group-hover:brightness-100 transition-all duration-500 transition-logo"
                                 />
                             )}
                         </div>

@@ -75,15 +75,15 @@ export default function ClientTestimonials() {
 
     return (
         <motion.section
-            className="bg-[#0F0F0F] text-white my-[80px] lg:my-[100px] 2xl:my-[200px] textimonials-slider relative overflow-hidden"
+            className="bg-white text-black my-[80px] lg:my-[100px] 2xl:my-[200px] textimonials-slider relative overflow-hidden"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
             {/* Neural network background */}
-            <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-                <NeuralParticles count={30} color="100, 130, 255" lineColor="80, 100, 255" connectDistance={130} />
+            <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                <NeuralParticles count={30} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={130} />
             </div>
 
             {/* Scanning beam — AI theme signature */}
@@ -102,7 +102,7 @@ export default function ClientTestimonials() {
                     <div className="col-span-1 mb-6 lg:mb-0">
                         <div className="flex items-center gap-3">
                             <motion.h2
-                                className="w-full lg:w-fit border-after m-0"
+                                className="w-full lg:w-fit border-after m-0 text-black border-black/20"
                                 initial={{ opacity: 0, x: -30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true, amount: 0.5 }}
@@ -118,7 +118,7 @@ export default function ClientTestimonials() {
                             <button
                                 aria-label="Previous"
                                 onClick={() => sliderRef.current?.slickPrev()}
-                                className="2xl:w-[70px] 2xl:h-[70px] w-[45px] h-[45px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
+                                className="2xl:w-[70px] 2xl:h-[70px] w-[45px] h-[45px] bg-zinc-100 rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-zinc-200"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +130,7 @@ export default function ClientTestimonials() {
                                 >
                                     <path
                                         d="M60 35H10M10 35L20 25M10 35L20 45"
-                                        stroke="white"
+                                        stroke="black"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -142,7 +142,7 @@ export default function ClientTestimonials() {
                             <button
                                 aria-label="Next"
                                 onClick={() => sliderRef.current?.slickNext()}
-                                className="2xl:w-[70px] 2xl:h-[70px] w-[45px] h-[45px] bg-[#2E2E2E] rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-[#201f1f]"
+                                className="2xl:w-[70px] 2xl:h-[70px] w-[45px] h-[45px] bg-zinc-100 rounded-[10px] flex items-center justify-center p-[10px] cursor-pointer transition-all duration-400 hover:bg-zinc-200"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -154,7 +154,7 @@ export default function ClientTestimonials() {
                                 >
                                     <path
                                         d="M10 35H60M60 35L50 25M60 35L50 45"
-                                        stroke="white"
+                                        stroke="black"
                                         strokeWidth="1.5"
                                         strokeLinecap="round"
                                         strokeLinejoin="round"
@@ -189,7 +189,7 @@ export default function ClientTestimonials() {
                                                             />
                                                         ))}
                                                     </div>
-                                                    <p className="2xl:!text-[30px] !text-[18px] font-[400] text-white xl:mb-[30px] mb-[24px]">
+                                                    <p className="2xl:!text-[30px] !text-[18px] font-[400] text-black xl:mb-[30px] mb-[24px]">
                                                         {testimonial.quote?.[0]?.children?.[0]?.text || ""}
                                                     </p>
                                                 </div>
@@ -197,7 +197,7 @@ export default function ClientTestimonials() {
                                                     <p className="2xl:!text-[18px] md:!text-[15px] !text-[12px] mb-[5px] font-[400] text-[#3C4CFF]">
                                                         {testimonial.author_position}
                                                     </p>
-                                                    <p className="2xl:!text-[22px] md:!text-[18px] !text-[14px] font-[600]">
+                                                    <p className="2xl:!text-[22px] md:!text-[18px] !text-[14px] font-[600] text-black">
                                                         {testimonial.author_name}
                                                     </p>
                                                 </div>

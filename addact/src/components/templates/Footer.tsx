@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import VerticalLines from "../molecules/VerticalLines";
 
 type ImageType = {
     url?: string;
@@ -117,11 +116,6 @@ export default function Footer({ data }: FooterProps) {
 
             {/* Main Footer starts here */}
             <footer className="relative bg-[#0F0F0F] text-white lg:py-[60px] py-[40px] border-t border-b border-white/15 z-[4]">
-                <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-                    <div className="relative w-full h-full">
-                        <VerticalLines />
-                    </div>
-                </div>
                 {/* Desktop BG Image */}
                 {BackGroundImage?.Image?.url && (
                     <Image

@@ -127,7 +127,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
         <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
           <div className="w-full lg:w-[40%] flex items-center gap-3">
               <motion.h2
-                className="border-after !text-[36px] xl:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
+                className="text-[28px]! md:text-[40px]! 2xl:text-[60px]! mb-10! leading-tight text-black border-after border-black/20 pb-4! xl:pb-10!"
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
@@ -138,7 +138,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
           </div>
 
           <motion.div
-            className="w-full text-left"
+            className="w-full text-left text-black [&_p]:text-black font-medium"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -158,7 +158,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
             viewport={{ once: true, amount: 0.1 }}
             variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }}
           >
-            {data.ourExpertises[0].CMS.map((service) => {
+            {data.ourExpertises[0].CMS.map((service, index) => {
               return (
                 <motion.div
                   key={service?.id}
@@ -166,25 +166,28 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                   transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
                 >
-                <SpotlightCard className="h-full">
-                  <Link
-                    className="bg-transparent border border-white/5 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300"
-                    href={service?.Links?.href}
-                    target={service?.Links?.isExternal ? "_blank" : "_self"}
-                  >
-                    {/* 🔥 Animate ONLY the logo image */}
-                    <div className={`logo-zoom ${playLogos ? "play" : ""}`}>
-                      <Image
-                        src={service?.Icons?.url}
-                        alt={service?.Icons?.alternativeText || "Service Icon"}
-                        width={service?.Icons?.width}
-                        height={service?.Icons?.height}
-                        className="w-[113px] md:w-[310px]"
-                        unoptimized={false}
-                      />
-                    </div>
-                  </Link>
-                </SpotlightCard>
+                  <SpotlightCard className="h-full">
+                    <Link
+                      className="group relative bg-white border border-zinc-200 rounded-2xl overflow-hidden aspect-3/2 flex justify-center items-center transition-all duration-500 hover:border-[#3C4CFF]/40 hover:shadow-[0_40px_80px_-20px_rgba(60,76,255,0.15)]"
+                      href={service?.Links?.href}
+                      target={service?.Links?.isExternal ? "_blank" : "_self"}
+                    >
+                      {/* Interactive background highlight */}
+                      <div className="absolute inset-0 bg-linear-to-br from-[#3C4CFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      {/* Logo Container */}
+                      <div className={`logo-zoom relative z-10 w-[70%] h-[50%] flex items-center justify-center ${playLogos ? "play" : ""}`}>
+                        <Image
+                          src={service?.Icons?.url}
+                          alt={service?.Icons?.alternativeText || "Service Icon"}
+                          width={service?.Icons?.width}
+                          height={service?.Icons?.height}
+                          className="object-contain w-full h-full group-hover:scale-110 transition-all duration-500 cms-logo-filter"
+                          unoptimized={false}
+                        />
+                      </div>
+                    </Link>
+                  </SpotlightCard>
                 </motion.div>
               );
             })}

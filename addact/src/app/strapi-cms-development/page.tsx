@@ -25,7 +25,7 @@ export default async function strapiPage() {
   const bannerData = data.Banner?.Banner?.[0];
 
   return (
-    <main className="bg-dark">
+    <main className="bg-white">
       {/* ✅ WebSite Schema */}
 
       <script

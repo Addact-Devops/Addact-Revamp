@@ -35,7 +35,7 @@ export default function VideoList({ videoList }: VideoListProps) {
     const [loadingStates, setLoadingStates] = useState<boolean[]>(new Array(videoList.length).fill(true));
 
     return (
-        <section className="py-24 bg-[#0A0A0A] relative overflow-hidden">
+        <section className="py-24 bg-white relative overflow-hidden">
             {/* Background Accents */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#3C4CFF]/5 blur-[120px] -z-1" />
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#3C4CFF]/5 blur-[120px] -z-1" />
@@ -52,7 +52,7 @@ export default function VideoList({ videoList }: VideoListProps) {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                                className="group relative bg-[#0E0D0D]/40 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 flex flex-col h-full"
+                                className="group relative bg-white border border-zinc-200 rounded-2xl overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(60,76,255,0.15)] flex flex-col h-full"
                             >
                                 {/* Video Container */}
                                 <div className="relative aspect-video overflow-hidden bg-black/40">
@@ -94,7 +94,7 @@ export default function VideoList({ videoList }: VideoListProps) {
                                     </div>
 
                                     <h2
-                                        className="text-white font-semibold !text-[22px] xl:!text-[28px] leading-[1.3] mb-4 group-hover:text-[#3C4CFF] transition-colors duration-300 line-clamp-2"
+                                        className="text-zinc-900 font-semibold text-[22px]! xl:text-[28px]! leading-[1.3] mb-4 group-hover:text-[#3C4CFF] transition-colors duration-300 line-clamp-2"
                                         title={video.Content.Title}
                                     >
                                         {video.Content.Title}
@@ -102,7 +102,7 @@ export default function VideoList({ videoList }: VideoListProps) {
 
                                     {/* Description */}
                                     <div
-                                        className="text-white/60 text-sm leading-relaxed mb-8 line-clamp-2 flex-1"
+                                        className="text-zinc-600 text-sm leading-relaxed mb-8 line-clamp-2 flex-1"
                                         title={video.Content.Description.replace(/<[^>]+>/g, "")}
                                         dangerouslySetInnerHTML={{
                                             __html: video.Content.Description,

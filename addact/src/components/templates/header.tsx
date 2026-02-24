@@ -151,7 +151,7 @@ const Header = ({ headers }: HeaderProps) => {
   }, [pathname]);
 
   return (
-    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F] border-b border-b-[#2e2e2e]">
+    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F] text-white border-b border-b-[#2e2e2e]">
       {/* Blue Banner Strip (hidden only on /project-cost-estimators) */}
 
       {showBanner && (
@@ -167,7 +167,7 @@ const Header = ({ headers }: HeaderProps) => {
             </span>
             <Link
               href="/project-cost-estimators"
-              className="ml-[24px] hover:bg-white text-white px-[12px] py-[0px] rounded-[8px] border border-white font-[600] hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-auto xl:w-auto text-center h-10 flex items-center"
+              className="ml-[24px] hover:bg-white text-white px-[12px] py-[0px] rounded-[8px] border border-white font-semibold hover:text-[#3c4cff] text-[14px] 2xl:text-[16px] w-auto xl:w-auto text-center h-10 flex items-center"
             >
               Get My Estimation
             </Link>
@@ -295,7 +295,7 @@ const Header = ({ headers }: HeaderProps) => {
           {/* Contact Button */}
           <Link
             href={headerData?.contact_us[0]?.href}
-            className="ml-4 bg-[#3C4CFF] px-4 py-2 rounded-[6px] md:rounded-[8px] text-white lg:py-4 lg:px-7 font-[600] hover:bg-[#3440CB] text-[14px] xl:text-lg"
+            className="ml-4 bg-[#3C4CFF] px-4 py-2 rounded-[6px] md:rounded-[8px] text-white lg:py-4 lg:px-7 font-semibold hover:bg-[#3440CB] text-[14px] xl:text-lg"
             target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
           >
             {headerData?.contact_us[0]?.label}
@@ -307,7 +307,7 @@ const Header = ({ headers }: HeaderProps) => {
           <Link
             href={headerData?.contact_us[0]?.href}
             target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
-            className="bg-[#3C4CFF] px-[15px] py-[3px] rounded-[6px] text-white font-[600] text-[14px] hover:bg-[#3440CB]"
+            className="bg-[#3C4CFF] px-[15px] py-[3px] rounded-[6px] text-white font-semibold text-[14px] hover:bg-[#3440CB]"
           >
             {headerData?.contact_us[0]?.label}
           </Link>
@@ -336,7 +336,7 @@ const Header = ({ headers }: HeaderProps) => {
                 target={
                   headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"
                 }
-                className="bg-[#3C4CFF] px-[15px] py-[3px] rounded-[6px] text-white font-[600] text-[14px] hover:bg-[#3440CB]"
+                className="bg-[#3C4CFF] px-[15px] py-[3px] rounded-[6px] text-white font-semibold text-[14px] hover:bg-[#3440CB]"
               >
                 {headerData?.contact_us[0]?.label}
               </Link>

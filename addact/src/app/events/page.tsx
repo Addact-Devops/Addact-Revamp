@@ -15,7 +15,7 @@ export default async function EventsPage() {
   const banner = data.event.EventBanner.Banner[0];
 
   return (
-    <main className="bg-[#0A0A0A] min-h-screen">
+    <main className="bg-white min-h-screen pb-20">
       {/* ✅ WebSite Schema */}
 
       <script

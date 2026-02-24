@@ -83,7 +83,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
         <div className="lg:hidden">
           {/* Full-width title */}
           <div className="mb-[60px] lg:mb-6">
-            <h2 className="!text-white !text-[28px] md:!text-[32px] leading-tight">
+            <h2 className="text-black text-[28px]! md:text-[32px]! leading-tight">
               {data?.Title ?? "Our Challenges"}
             </h2>
             <div className="w-[120px] h-[4px] bg-[#3C4CFF] mt-4 rounded" />
@@ -97,7 +97,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                   className="pointer-events-none select-none text-[72px] lg:text-[64px] leading-none tracking-tight custom-stroke"
                   style={{
                     fontWeight: 900,
-                    WebkitTextStrokeColor: "rgba(255, 255, 255, 0.7)",
+                    WebkitTextStrokeColor: "rgba(0, 0, 0, 0.1)",
                     color: "transparent",
                     fontFamily: "Poppins, sans-serif",
                     opacity: 0.5,
@@ -120,11 +120,11 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                         ref={(el) => {
                           headingRefs.current[idx] = el ?? null; // return void -> TS OK
                         }}
-                        className="text-white !font-bold !text-[20px] lg:!text-[26px] mb-[15px]"
+                        className="text-black font-bold! text-[20px]! lg:text-[26px]! mb-[15px]"
                       >
                         {(item?.Title ?? "").trim()}
                       </h3>
-                      <div className="text-white text-[12px] md:text-[15px] lg:text-[18px] leading-[23px] md:leading-[24px] lg:leading-[30px]">
+                      <div className="text-zinc-600 text-[12px] md:text-[15px] lg:text-[18px] leading-[23px] md:leading-[24px] lg:leading-[30px]">
                         {(item?.Content ?? "").split("\n").map((line, i) => (
                           <div key={i}>{line.trim()}</div>
                         ))}
@@ -142,7 +142,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
           {/* Left: Sticky title */}
           <div className="w-full lg:w-[40%] 2xl:w-[35%]">
             <div className="lg:sticky lg:top-[120px]">
-              <h2 className="!text-white !text-[36px] xl:!text-[38px] 2xl:!text-[60px] leading-tight">
+              <h2 className="text-black text-[36px]! xl:text-[38px]! 2xl:text-[60px]! leading-tight">
                 {data?.Title ?? "Our Challenges"}
               </h2>
               <div className="w-[160px] h-[6px] bg-[#3C4CFF] mt-6 rounded" />
@@ -161,7 +161,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                       style={{
                         fontWeight: 900,
                         WebkitTextStrokeWidth: "2px",
-                        WebkitTextStrokeColor: "rgba(255, 255, 255, 0.7)",
+                        WebkitTextStrokeColor: "rgba(0, 0, 0, 0.1)",
                         color: "transparent",
                         lineHeight: "0.8",
                         fontFamily: "Poppins, sans-serif",
@@ -172,11 +172,11 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                       {displayNum}
                     </div>
 
-                    <h3 className="text-white !font-bold !text-[30px] 2xl:!text-[48px] mb-[15px] 2xl:mb-[40px]">
+                    <h3 className="text-black font-bold! text-[30px]! 2xl:text-[48px]! mb-[15px] 2xl:mb-[40px]">
                       {(item?.Title ?? "").trim()}
                     </h3>
 
-                    <div className="text-white text-[22px] lg:text-[24px] 2xl:text-[30px] leading-[40px] 2xl:leading-[54px]">
+                    <div className="text-zinc-600 text-[22px] lg:text-[24px] 2xl:text-[30px] leading-[40px] 2xl:leading-[54px]">
                       {(item?.Content ?? "").split("\n").map((line, i) => (
                         <div key={i}>{line.trim()}</div>
                       ))}

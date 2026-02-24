@@ -115,13 +115,13 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
 
                         {/* Stats grid */}
                         {numberContent.length > 0 && (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-[1px] bg-zinc-200 rounded-2xl overflow-hidden border border-zinc-200">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-zinc-200/50 rounded-2xl overflow-hidden border border-black/10 shadow-sm">
                                 {numberContent.map((item, index) => (
-                                    <div key={index} className="bg-white px-[20px] py-[22px] text-center sm:text-left hover:bg-[#F5F7FF] transition-colors duration-200">
-                                        <div className="text-[#3C4CFF] font-black text-[32px] md:text-[40px] leading-none mb-[4px] tabular-nums">
+                                    <div key={index} className="bg-white px-[20px] py-[22px] text-center sm:text-left hover:bg-zinc-50 transition-colors duration-300">
+                                        <div className="text-[#3C4CFF] font-black text-[32px] md:text-[40px] leading-none mb-[6px] tabular-nums">
                                             {counts[index]}+
                                         </div>
-                                        <p className="text-zinc-500 text-[13px] leading-snug font-medium">
+                                        <p className="text-zinc-500 text-[13px] leading-snug font-semibold uppercase tracking-wider">
                                             {item.Content}
                                         </p>
                                     </div>

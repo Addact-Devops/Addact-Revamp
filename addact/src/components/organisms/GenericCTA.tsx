@@ -50,11 +50,11 @@ const GenericCTA: React.FC<CTAProps> = ({ title, description, image, link }) => 
             }}
         >
             {/* Content wrapper with same minHeight */}
-            <div className='relative container flex py-[30px]' style={{ minHeight: sectionMinHeight }}>
-                <div className='flex flex-col w-full justify-end lg:justify-center text-white max-w-xl text-left'>
-                    {headingText && <h2 className='mb-[15px]'>{headingText}</h2>}
+            <div className='relative container flex py-[40px]' style={{ minHeight: sectionMinHeight }}>
+                <div className='flex flex-col w-full justify-end lg:justify-center text-white max-w-2xl text-left bg-black/20 backdrop-blur-[2px] p-6 lg:p-0 rounded-2xl lg:rounded-none'>
+                    {headingText && <h2 className='mb-[20px] text-white font-bold'>{headingText}</h2>}
 
-                    {descriptionText && <p className='mb-[15px]'>{descriptionText}</p>}
+                    {descriptionText && <p className='mb-[25px] text-white/80 leading-relaxed font-medium'>{descriptionText}</p>}
 
                     {link && (
                         <a

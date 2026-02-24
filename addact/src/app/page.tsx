@@ -193,7 +193,7 @@ export default async function HomePage() {
       />
 
       {/*  End Markup schema */}
-      <main className="bg-dark">
+      <main className="bg-white text-black">
         <HomeHeroBanner data={homeData?.banner} />
         <OurPartners />
         <WhoWeAre />

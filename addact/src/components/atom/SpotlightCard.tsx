@@ -17,7 +17,7 @@ interface SpotlightCardProps {
 export default function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(60, 76, 255, 0.15)",
+  spotlightColor = "rgba(60, 76, 255, 0.1)",
   gridOpacity = 0.2,
   gridSize = 25,
 }: SpotlightCardProps) {
@@ -36,7 +36,7 @@ export default function SpotlightCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`relative group overflow-hidden bg-[#121212] border border-white/10 ${className}`}
+      className={`relative group overflow-hidden border border-black/10 ${className}`}
     >
       {/* Interactive Spotlight Overlay */}
       <motion.div
@@ -52,18 +52,18 @@ export default function SpotlightCard({
         }}
       />
 
-      {/* Grid Pattern Overlay (Revealed by Spotlight/Hover) */}
+      {/* Grid Pattern Overlay (Revealed by Spotlight/Hover) — Refined for white theme */}
       <div 
-        className="pointer-events-none absolute inset-0 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-500"
+        className="pointer-events-none absolute inset-0 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-500"
         style={{
-          backgroundImage: `linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, black 1px, transparent 1px), linear-gradient(to bottom, black 1px, transparent 1px)`,
           backgroundSize: `${gridSize}px ${gridSize}px`,
         }}
       />
 
       {/* Subtle border highlight that follows mouse */}
       <motion.div
-        className="pointer-events-none absolute -inset-px rounded-inherit border-2 border-[#3C4CFF] opacity-0 transition duration-500 group-hover:opacity-10"
+        className="pointer-events-none absolute -inset-px rounded-inherit border-2 border-brand-blue opacity-0 transition duration-500 group-hover:opacity-10"
         style={{
           maskImage: useMotionTemplate`
             radial-gradient(

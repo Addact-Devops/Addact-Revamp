@@ -39,23 +39,23 @@ const CtaBanner = ({ data }: IProps) => {
   };
 
   return (
-    <section>
+    <section className="relative overflow-hidden">
       <div
         className="cta-bg text-white w-full h-full shadow-md bg-no-repeat bg-cover bg-center"
         // pass both URLs as CSS variables; CSS below chooses per breakpoint
         style={bgVars}
       >
-        <div className="container">
-          <div className="pt-[40px] pb-[150px] md:py-[90px] banner-content-space">
-            <motion.h2
-              className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] md:w-[550px] lg:!w-[800px] 2xl:leading-[85px]"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {data.Title[0].h2}
-            </motion.h2>
+          <div className="container">
+            <div className="pt-[40px] pb-[150px] md:py-[90px] banner-content-space text-white">
+              <motion.h2
+                className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] md:w-[550px] lg:!w-[800px] 2xl:leading-[85px] text-white"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {data.Title[0].h2}
+              </motion.h2>
             <motion.div
               initial={{ opacity: 0, scale: 0.85 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -78,7 +78,7 @@ const CtaBanner = ({ data }: IProps) => {
                 style={{ background: "radial-gradient(circle, rgba(139,92,246,0.3) 0%, transparent 70%)" }}
               />
               <Link href={href} target={target}>
-                <button className="relative bg-white text-[#3C4CFF] text-[16px] lg:text-lg px-4 py-2 lg:px-5 lg:py-4 rounded hover:bg-gray-200 flex items-center gap-5 font-semibold cursor-pointer">
+                <button className="relative bg-[#3C4CFF] text-white text-[16px] lg:text-lg px-4 py-2 lg:px-5 lg:py-4 rounded hover:bg-blue-700 flex items-center gap-5 font-semibold cursor-pointer border-none">
                   {label}
                   <motion.span
                     animate={{ x: [0, 5, 0] }}
@@ -94,19 +94,19 @@ const CtaBanner = ({ data }: IProps) => {
       </div>
 
       {/* Neural particle overlay */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
-        <NeuralParticles count={35} color="160, 180, 255" lineColor="140, 160, 255" connectDistance={120} />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1, opacity: 0.4 }}>
+        <NeuralParticles count={35} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={120} />
       </div>
 
       {/* Scoped styles: choose the BG per breakpoint using the variables above */}
       <style jsx>{`
         /* Mobile first: use --cta-bg-mobile */
         .cta-bg {
-          background-image: var(--cta-bg-mobile) !important;
+          background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), var(--cta-bg-mobile) !important;
         }
         @media (min-width: 768px) {
           .cta-bg {
-            background-image: var(--cta-bg-desktop) !important;
+            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 100%), var(--cta-bg-desktop) !important;
           }
         }
       `}</style>

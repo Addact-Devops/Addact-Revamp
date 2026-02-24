@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import TechReveal from "@/components/atom/TechReveal";
 import Magnetic from "@/components/molecules/Magnetic";
-import VerticalLines from "@/components/molecules/VerticalLines";
 import {
   getAllCaseStudyData,
   IAllCaseStudy,
@@ -86,10 +85,6 @@ const CaseStudyListing = () => {
                 <NeuralParticles count={40} color="100, 130, 255" lineColor="80, 110, 255" connectDistance={130} interactive={true} />
             </div>
 
-            {/* Vertical grid motif */}
-            <div className="absolute inset-0 z-1 pointer-events-none opacity-20">
-                <VerticalLines />
-            </div>
 
             {/* Scanning beam effect */}
             <motion.div
@@ -127,8 +122,8 @@ const CaseStudyListing = () => {
         </section>
       )}
 
-      {/* Listing Section */}
-      <div className="container mx-auto px-4 py-16 grid gap-12">
+      {/* Listing Section Section */}
+      <div className="container mx-auto px-4 py-24 grid gap-16 relative z-10">
         {sortedData.map((item, index) => (
           <motion.div
             key={item.documentId}
@@ -137,7 +132,7 @@ const CaseStudyListing = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <div className="group relative bg-[#0E0D0D]/40 backdrop-blur-md border border-white/5 rounded-[24px] overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 hover:shadow-[0_0_50px_-15px_rgba(60,76,255,0.2)] flex flex-col md:flex-row items-stretch md:min-h-[450px]">
+            <div className="group relative bg-white border border-zinc-200 rounded-[32px] overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 hover:shadow-[0_50px_100px_-20px_rgba(60,76,255,0.15)] flex flex-col md:flex-row items-stretch md:min-h-[480px]">
               {/* Image Column */}
               <div className="relative w-full md:w-[45%] aspect-video md:aspect-auto overflow-hidden">
                 <Image
@@ -146,18 +141,18 @@ const CaseStudyListing = () => {
                   fill
                   className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-linear-to-r from-black/60 to-transparent md:block hidden" />
-                <div className="absolute inset-0 bg-linear-to-t from-black/80 md:hidden block" />
+                <div className="absolute inset-0 bg-linear-to-r from-zinc-900/40 to-transparent md:block hidden" />
+                <div className="absolute inset-0 bg-linear-to-t from-zinc-900/60 md:hidden block" />
                 <div className="absolute inset-0 bg-[#3C4CFF]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
 
               {/* Content Column */}
-              <div className="flex-1 flex flex-col justify-center p-6 md:p-12 xl:p-16 relative z-10">
+              <div className="flex-1 flex flex-col justify-center p-8 md:p-14 xl:p-20 relative z-10 bg-white">
                 <div className="flex items-center gap-4 mb-6">
-                  <Badge variant="outline" className="text-[10px] uppercase tracking-widest text-[#3C4CFF] border-[#3C4CFF]/20">
+                  <Badge variant="outline" className="text-[10px] uppercase tracking-widest text-[#3C4CFF] border-[#3C4CFF]/20 font-bold">
                     Case Study
                   </Badge>
-                  <span className="text-white/30 text-[14px] font-medium tracking-wide">
+                  <span className="text-zinc-400 text-[14px] font-semibold tracking-wide">
                     {new Date(item.HeroBanner[0].PublishDate).toLocaleDateString("en-GB", {
                       day: "2-digit",
                       month: "long",
@@ -166,19 +161,19 @@ const CaseStudyListing = () => {
                   </span>
                 </div>
 
-                <h2 className="text-white font-semibold !text-[24px] md:!text-[40px] leading-[1.2] mb-6 group-hover:text-white transition-colors duration-300">
+                <h2 className="text-zinc-900 font-bold text-[28px]! md:text-[45px]! leading-[1.1] mb-6 group-hover:text-[#3C4CFF] transition-colors duration-300">
                   {item.HeroBanner[0].BannerTitle}
                 </h2>
 
-                <p className="text-base md:text-lg text-white/60 leading-relaxed mb-10 max-w-2xl">
+                <p className="text-base md:text-xl text-zinc-600 leading-relaxed mb-10 max-w-2xl font-light">
                   {item.caseStudySummary}
                 </p>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-6 mt-auto">
                   <Magnetic>
                     <Link
                         href={`/portfolio${item.Slug}`}
-                        className="group/btn relative inline-flex items-center gap-3 bg-[#3C4CFF] text-white px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-bold transition-all duration-300 hover:bg-[#4D5DFF] hover:translate-y-[-2px] shadow-lg shadow-[#3C4CFF]/20 text-sm md:text-base"
+                        className="group/btn relative inline-flex items-center gap-3 bg-[#3C4CFF] text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black text-sm md:text-base uppercase tracking-widest transition-all duration-300 hover:bg-[#3440CB] hover:translate-y-[-2px] shadow-[0_20px_40px_-10px_rgba(60,76,255,0.4)]"
                     >
                         View Project
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -189,8 +184,8 @@ const CaseStudyListing = () => {
                 </div>
               </div>
 
-              {/* Decorative Accent (Right edge) */}
-              <div className="absolute right-0 top-0 bottom-0 w-[2px] bg-linear-to-b from-[#3C4CFF]/0 via-[#3C4CFF]/40 to-[#3C4CFF]/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              {/* Decorative Accent (Right edge highlight) */}
+              <div className="absolute right-0 top-0 bottom-0 w-[4px] bg-[#3C4CFF] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
           </motion.div>
         ))}

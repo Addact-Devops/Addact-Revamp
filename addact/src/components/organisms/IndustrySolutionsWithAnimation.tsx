@@ -84,7 +84,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
       <div className="container">
         <div className="flex flex-col">
           {/* Title */}
-          <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
+          <h2 className="border-after text-[28px]! lg:text-[38px]! 2xl:text-[60px]! pb-4! xl:pb-10! max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
             {data?.Title ?? "Our Solutions"}
           </h2>
 
@@ -93,7 +93,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
             {cards.map((card, idx) => (
               <div
                 key={idx}
-                className={`group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px] ${
+                className={`group relative bg-white border border-zinc-200 border-l-[3px] md:border-l-[5px] border-l-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px] ${
                   animate ? "show" : ""
                 }`}
                 style={
@@ -106,7 +106,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
                     : undefined
                 }
               >
-                <h3 className="text-white !text-[20px] md:!text-[27px] 2xl:!text-[30px] mb-[30px]">
+                <h3 className="text-black text-[20px]! md:text-[27px]! 2xl:text-[30px]! mb-[30px]">
                   {card?.Title ?? ""}
                 </h3>
                 <RichText html={card?.Description ?? ""} />
@@ -122,9 +122,9 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
                   {group.map((card, j) => (
                     <div
                       key={`${i}-${j}`}
-                      className="relative group bg-[#1C1C1C] pb-15 border-l-[3px] border-[#3C4CFF] p-[16px]"
+                      className="relative group bg-white pb-15 border border-zinc-200 border-l-[3px] border-l-[#3C4CFF] p-[16px]"
                     >
-                      <h3 className="text-white !text-[17px] md:!text-[30px] mb-3">
+                      <h3 className="text-black text-[17px]! md:text-[30px]! mb-3">
                         {card?.Title ?? ""}
                       </h3>
                       <RichText html={card?.Description ?? ""} />
@@ -137,7 +137,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
             {/* Tiny progress indicator */}
             <div className="relative mt-[40px] h-[4px] flex items-center justify-center">
               {/* Center gray line */}
-              <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-[#D9D9D9] -translate-y-1/2"></div>
+              <div className="absolute left-0 right-0 top-1/2 h-px bg-[#D9D9D9] -translate-y-1/2"></div>
 
               {/* Blue indicator bar */}
               <div

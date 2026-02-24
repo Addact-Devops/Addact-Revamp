@@ -8,7 +8,6 @@ import dynamic from "next/dynamic";
 import { useRef, useState } from "react";
 import TechReveal from "../atom/TechReveal";
 import Magnetic from "../molecules/Magnetic";
-import VerticalLines from "../molecules/VerticalLines";
 
 const NeuralParticles = dynamic(() => import("../atom/NeuralParticles"), { ssr: false });
 
@@ -79,10 +78,6 @@ const HeroBanner = ({ title, description, backgroundImageUrl, button, showAnchor
                 <NeuralParticles count={50} color="100, 130, 255" lineColor="80, 110, 255" connectDistance={140} interactive={true} />
             </div>
 
-            {/* Vertical lines grid motif */}
-            <div className="absolute inset-0 z-1 pointer-events-none opacity-20">
-                <VerticalLines />
-            </div>
 
             {/* Scanning beam effect */}
             <motion.div

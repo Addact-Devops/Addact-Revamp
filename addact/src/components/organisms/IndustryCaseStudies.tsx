@@ -218,16 +218,16 @@ const IndustryCaseStudies: React.FC<Props> = ({
                 />
               </div>
             ) : (
-              <div className="relative w-full min-h-[171px] h-full lg:w-[270px] lg:min-w-[270px] lg:h-[200px] 2xl:w-[320px] 2xl:min-w-[320px] 2xl:h-[244px] bg-[#222] self-center" />
+              <div className="relative w-full min-h-[171px] h-full lg:w-[270px] lg:min-w-[270px] lg:h-[200px] 2xl:w-[320px] 2xl:min-w-[320px] 2xl:h-[244px] bg-zinc-100 self-center" />
             )}
 
             <div>
-              <div className="text-[12px] md:text-[14px] leading-[24px] px-5 py-1 lg:py-[6px] lg:px-[20px] rounded-md bg-[#3F3F40] text-white border border-[#3C4CFF] lg:mb-[20px] mb-[12px] w-fit mt-[15px] lg:mt-0">
+              <div className="text-[12px] md:text-[14px] leading-[24px] px-5 py-1 lg:py-[6px] lg:px-[20px] rounded-md bg-black/5 text-black border border-black/10 lg:mb-[20px] mb-[12px] w-fit mt-[15px] lg:mt-0 font-medium">
                 Case study
               </div>
 
               <h3
-                className="text-white !text-[18px] md:!text-[22px] 2xl:!text-[30px] !leading-[30px] lg:!leading-[38px] 2xl:!leading-[48px] mb-[16px] font-[500] line-clamp-2"
+                className="text-black !text-[18px] md:!text-[22px] 2xl:!text-[30px] !leading-[30px] lg:!leading-[38px] 2xl:!leading-[48px] mb-[16px] font-[500] line-clamp-2"
                 style={{
                   display: "-webkit-box",
                   WebkitLineClamp: 2,
@@ -240,7 +240,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
               </h3>
 
               {dateText && (
-                <div className="text-white text-[12px] md:text-[16px] leading-[18px]">
+                <div className="text-black/70 text-[12px] md:text-[16px] leading-[18px]">
                   {dateText}
                 </div>
               )}
@@ -266,7 +266,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
         <div className="max-w-[1920px] m-auto">
           <div className="container" ref={containerRef}>
             <motion.h2
-              className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24"
+              className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24 text-black border-black/20"
               initial={{ opacity: 0, x: -40 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -331,8 +331,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
                     <div className="h-full">
                       <Link
                         href="/portfolio"
-                        className="h-full w-full max-w-[382px] hover:bg-[#3C4CFF] transition-colors text-white text-[22px] md:text-[28px] 2xl:text-[30px] font-[500] flex items-center justify-center mdmin-h-[260px] md:min-h-[300px] 2xl:min-h-[300px]"
-                        style={{ border: "1px solid rgb(255 255 255 / 20%)" }}
+                        className="h-full w-full max-w-[382px] border border-black/10 hover:bg-[#3C4CFF] transition-colors text-black hover:text-white text-[22px] md:text-[28px] 2xl:text-[30px] font-[500] flex items-center justify-center mdmin-h-[260px] md:min-h-[300px] 2xl:min-h-[300px]"
                       >
                         See More
                       </Link>
@@ -345,11 +344,11 @@ const IndustryCaseStudies: React.FC<Props> = ({
 
           <style jsx global>{`
             .slick-dots li button:before {
-              color: #ffffff !important;
-              opacity: 0.35 !important;
+              color: #000000 !important;
+              opacity: 0.15 !important;
             }
             .slick-dots li.slick-active button:before {
-              opacity: 1 !important;
+              opacity: 0.8 !important;
             }
             /* Hide the dot for the last slide (See More) */
             .item-slider-wrapper .slick-dots li:last-child {

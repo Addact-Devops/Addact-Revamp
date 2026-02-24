@@ -1,148 +1,51 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { OurProcessData } from "@/graphql/queries/getOurProcess";
-import { motion } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import dynamic from "next/dynamic";
 import TechReveal from "../atom/TechReveal";
 
+import { 
+  ClipboardList, 
+  Paintbrush, 
+  Code2, 
+  ShieldCheck, 
+  Rocket, 
+  Settings
+} from "lucide-react";
+
 const NeuralParticles = dynamic(() => import("../atom/NeuralParticles"), { ssr: false });
+
+const stepIcons = [
+  ClipboardList,
+  Paintbrush,
+  Code2,
+  ShieldCheck,
+  Rocket,
+  Settings
+];
 
 export default function OurProcess(props: {
   data?: OurProcessData["home"]["ourprocess"];
 }) {
   const [data, setData] = useState<OurProcessData["home"]["ourprocess"]>();
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const timelineRef = useRef<HTMLDivElement | null>(null);
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeStep, setActiveStep] = useState(0);
-  const [activeLineStyle, setActiveLineStyle] = useState({
-    top: "0px",
-    height: "0px",
-    opacity: "1",
-  });
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // positions (centers) of each step used to render dots in same parent as the line
-  const [stepCenters, setStepCenters] = useState<number[]>([]);
-
-  // Fetch data
   useEffect(() => {
     setData(props.data);
   }, [props.data]);
 
-  // Track active step
-  useEffect(() => {
-    const updateActiveStep = () => {
-      const offset = window.innerHeight * 0.6;
-      const positions = stepRefs.current.map(
-        (ref) => ref?.getBoundingClientRect().top ?? 9999,
-      );
-      const activeIndex = positions.findIndex((pos) => pos > offset);
-      const isAtBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
 
-      const finalActive = isAtBottom
-        ? positions.length - 1
-        : activeIndex === -1
-          ? positions.length - 1
-          : Math.max(0, activeIndex - 1);
-
-      setActiveStep(finalActive);
-    };
-
-    window.addEventListener("scroll", updateActiveStep);
-    updateActiveStep();
-
-    return () => window.removeEventListener("scroll", updateActiveStep);
-  }, [data]);
-
-  // Helper to calculate centers for dots (original approach then normalized so first dot top === 0)
-  const recalcCenters = () => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const offsetFix = isMobile ? 40 : 85;
-
-    // compute raw centers using same formula you used previously
-    const rawCenters: number[] = stepRefs.current.map((ref) => {
-      if (!ref) return 0;
-      return ref.offsetTop + ref.offsetHeight / 2 - offsetFix;
-    });
-
-    // determine dot size used in UI (match CSS: 16px on mobile, 24px on md+)
-    const dotSize = isMobile ? 16 : 24;
-    const dotRadius = dotSize / 2;
-
-    // If we have at least one center, shift all centers so that the FIRST dot's top === 0
-    // top = center - dotRadius. For top to be 0 => center === dotRadius.
-    if (rawCenters.length > 0) {
-      const firstRaw = rawCenters[0];
-      const desiredFirstCenter = dotRadius; // center that makes first dot top = 0
-      const shift = desiredFirstCenter - firstRaw;
-      const adjusted = rawCenters.map((c) => c + shift);
-      setStepCenters(adjusted);
-    } else {
-      setStepCenters(rawCenters);
-    }
-  };
-
-  // Calculate centers on mount, data change, resize and when step refs change
-  useEffect(() => {
-    recalcCenters();
-
-    const handleResize = () => {
-      recalcCenters();
-    };
-
-    window.addEventListener("resize", handleResize);
-    // short timeout to cover fonts/images/layout shifts
-    const t = setTimeout(() => recalcCenters(), 200);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      clearTimeout(t);
-    };
-  }, [data]);
-
-  // Update line position — use the computed (and normalized) stepCenters so line & dots use same base
-  useEffect(() => {
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-    const dotSize = isMobile ? 16 : 24;
-    const dotRadius = dotSize / 2;
-
-    // Use precomputed centers (normalized), fallback to computing if not ready
-    const currentCenter = stepCenters[activeStep];
-    const nextCenter = stepCenters[activeStep + 1];
-
-    if (typeof currentCenter !== "undefined" && !isNaN(currentCenter)) {
-      const currentDotTop = currentCenter;
-      let nextDotTop: number;
-
-      if (typeof nextCenter !== "undefined" && !isNaN(nextCenter)) {
-        nextDotTop = nextCenter;
-      } else {
-        // fallback spacing when next isn't available (end of list) — use approximate spacing
-        const prevCenter = stepCenters[activeStep - 1];
-        let spacing = isMobile ? 80 : 120;
-        if (typeof prevCenter !== "undefined" && !isNaN(prevCenter)) {
-          spacing = currentDotTop - prevCenter;
-        }
-        nextDotTop = currentDotTop + spacing;
-      }
-
-      setActiveLineStyle({
-        // line top should be currentDotTop - dotRadius (since style top is where line top starts)
-        top: `${currentDotTop - dotRadius}px`,
-        height: `${nextDotTop - currentDotTop}px`,
-        opacity: "1",
-      });
-    } else {
-      // fallback: zero out the line if centers aren't computed yet
-      setActiveLineStyle({
-        top: "0px",
-        height: "0px",
-        opacity: "0",
-      });
-    }
-  }, [activeStep, stepCenters, data]);
+  const scaleY = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   const getTitle = () => {
     const title = data?.Title?.[0];
@@ -157,150 +60,127 @@ export default function OurProcess(props: {
     );
   };
 
+  const processData = data?.ProcessData || [];
+
   return (
-    <section
-      className="container my-[80px] lg:my-[100px] 2xl:my-[200px]"
-      ref={containerRef}
-    >
-      <div className="relative overflow-hidden">
-        {/* Faded AI background network */}
-        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-          <NeuralParticles count={30} color="100, 130, 255" lineColor="80, 110, 255" connectDistance={130} />
-        </div>
-
-        <div className="relative z-10">
-          {getTitle() && (
-            <div className="flex items-center gap-3">
-              <motion.h2
-                className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <TechReveal text={getTitle()} duration={1.2} />
-              </motion.h2>
-            </div>
-          )}
-
-        {/* timeline wrapper — attach timelineRef here so line & dots are relative to same parent */}
-        <div
-          className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]"
-          ref={timelineRef}
-        >
-          {/* Background gray line */}
-          <div className="absolute left-1 md:left-1/2 transform -translate-x-1/2 top-0 w-[2px] h-full bg-gray-600 opacity-40 z-0" />
-
-          {/* Active white animated line */}
-          <div
-            className="absolute left-1 md:left-1/2 transform -translate-x-1/2 w-[2px] bg-white z-10 transition-all duration-500 ease-in-out overflow-hidden"
-            style={activeLineStyle}
-          />
-
-          {/* Render timeline dots here so they all share the same positioned parent as the lines */}
-          {data?.ProcessData &&
-            stepCenters.length === data.ProcessData.length &&
-            data.ProcessData.map((_, i) => {
-              const isMobile =
-                typeof window !== "undefined" && window.innerWidth < 768;
-              const dotSize = isMobile ? 16 : 24;
-              const dotRadius = dotSize / 2;
-              const center = stepCenters[i] ?? 0;
-              const topPx = center ? center - dotRadius : 0;
-              const isActive = i === activeStep;
-
-              return (
-                <div
-                  key={`timeline-dot-${i}`}
-                  className={`absolute left-1 md:left-1/2 transform -translate-x-1/2 z-20 border-2 transition-all duration-300`}
-                  style={{
-                    top: `${topPx}px`,
-                    width: `${dotSize}px`,
-                    height: `${dotSize}px`,
-                    borderRadius: "9999px",
-                    background: isActive ? "white" : "black",
-                    borderColor: isActive ? "#3C4CFF" : "rgba(255,255,255,0.2)",
-                  }}
-                />
-              );
-            })}
-
-          {/* Steps */}
-          <div className="w-full relative z-20">
-            {data?.ProcessData?.map((step, index: number) => {
-              const isLeft = index % 2 !== 0;
-              const isActive = index === activeStep;
-
-              return (
-                <div
-                  key={step.id}
-                  ref={(el) => {
-                    stepRefs.current[index] = el;
-                  }}
-                  className="relative flex flex-col md:flex-row justify-between items-start w-full mb-[40px] md:mb-[50px] lg:mb-[60px] xl:mb-[70px]"
-                >
-                  {/* Left content (desktop only) */}
-                  {isLeft ? (
-                    <div className="hidden md:block w-1/2 pr-[50px] text-left">
-                      <p className="font-normal text-[12px] leading-[100%] mb-[18px] md:text-[24px] md:leading-[48px]">
-                        Step {index + 1 < 10 ? `0${index + 1}` : index + 1}
-                      </p>
-                      <div className="font-normal text-[18px] leading-[100%] mb-[12px] md:font-medium md:text-[30px] md:leading-[48px] md:mb-[16px]">
-                        {step.Title}
-                      </div>
-                      <div
-                        className="text-gray-300 font-normal text-[12px] leading-[19px] md:text-[20px] md:leading-[34px]"
-                        dangerouslySetInnerHTML={{ __html: step.Description }}
-                      />
-                    </div>
-                  ) : (
-                    <div className="hidden md:block w-1/2" />
-                  )}
-
-                  {/* Mobile content */}
-                  <div className="block md:hidden w-full pl-[25px]">
-                    <p className="font-normal text-[12px] leading-[100%] mb-[18px]">
-                      Step {index + 1 < 10 ? `0${index + 1}` : index + 1}
-                    </p>
-                    <div className="font-normal text-[18px] leading-[100%] mb-[12px]">
-                      {step.Title}
-                    </div>
-                    <div
-                      className="text-gray-300 font-normal text-[12px] leading-[19px]"
-                      dangerouslySetInnerHTML={{ __html: step.Description }}
-                    />
-                  </div>
-
-                  {/* Original Dot (left in DOM but invisible so we don't remove code) */}
-                  <div
-                    className={`w-[16px] h-[16px] md:w-[24px] md:h-[24px] rounded-full absolute left-[4px] md:left-1/2 -translate-x-1/2 z-24 border-2 transition-all duration-300 invisible
-                                            ${isActive ? "bg-[#3C4CFF] border-white" : "bg-black border-white/20"}`}
-                  ></div>
-
-                  {/* Right content (desktop) */}
-                  {!isLeft ? (
-                    <div className="hidden md:block w-1/2 pl-[50px] text-left">
-                      <p className="font-normal text-[12px] leading-[100%] mb-[18px] md:text-[24px] md:leading-[48px]">
-                        Step {index + 1 < 10 ? `0${index + 1}` : index + 1}
-                      </p>
-                      <div className="font-normal text-[18px] leading-[100%] mb-[12px] md:font-medium md:text-[30px] md:leading-[48px] md:mb-[16px]">
-                        {step.Title}
-                      </div>
-                      <div
-                        className="text-gray-300 font-normal text-[12px] leading-[19px] md:text-[20px] md:leading-[34px]"
-                        dangerouslySetInnerHTML={{ __html: step.Description }}
-                      />
-                    </div>
-                  ) : (
-                    <div className="hidden md:block w-1/2" />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
+    <section ref={containerRef} className="relative py-20 md:py-40 bg-white overflow-hidden">
+      
+      {/* Background Ambience */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+          <NeuralParticles count={30} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={150} />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(60,76,255,0.02)_0%,transparent_70%)]" />
       </div>
-    </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        
+        {/* Section Header */}
+        <div className="text-center mb-24 md:mb-40">
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="flex items-center justify-center gap-3 mb-6"
+            >
+                <div className="w-10 h-px bg-brand-blue/30" />
+                <span className="text-brand-blue text-xs md:text-sm font-bold uppercase tracking-[0.4em]">The Methodology</span>
+                <div className="w-10 h-px bg-brand-blue/30" />
+            </motion.div>
+            <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-black tracking-tighter uppercase leading-none">
+                <TechReveal text={getTitle()} />
+            </h2>
+        </div>
+
+        {/* Zig-Zag Timeline */}
+        <div className="relative max-w-7xl mx-auto">
+            
+            {/* Central Line */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-zinc-100 -translate-x-1/2 hidden md:block">
+                <motion.div 
+                    className="absolute top-0 left-0 w-full bg-brand-blue origin-top"
+                    style={{ height: "100%", scaleY }}
+                />
+            </div>
+
+            {/* Steps */}
+            <div className="flex flex-col gap-24 md:gap-40">
+                {processData.map((step, index) => {
+                    const isEven = index % 2 === 0;
+                    const Icon = stepIcons[index % stepIcons.length];
+                    const phaseNumber = (index + 1).toString().padStart(2, '0');
+
+                    return (
+                        <div key={index} className={`flex flex-col md:flex-row items-center gap-10 md:gap-0 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+                            
+                            {/* Graphic Side */}
+                            <div className="w-full md:w-1/2 flex justify-center items-center">
+                                <motion.div 
+                                    initial={{ opacity: 0, scale: 0.8, x: isEven ? -40 : 40 }}
+                                    whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    className="relative"
+                                >
+                                    {/* Number Watermark */}
+                                    <span className="absolute -top-10 -left-10 text-9xl font-black text-zinc-50 select-none z-0">
+                                        {phaseNumber}
+                                    </span>
+                                    
+                                    <div className="relative z-10 w-48 h-48 md:w-64 md:h-64 bg-white rounded-[40px] shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] border border-zinc-100 flex items-center justify-center group">
+                                        {/* Animated Border Beam */}
+                                        <div className="absolute inset-0 rounded-[40px] border border-brand-blue/0 group-hover:border-brand-blue/20 transition-colors duration-500" />
+                                        
+                                        <Icon size={80} className="text-brand-blue stroke-[1.2] group-hover:scale-110 transition-transform duration-500" />
+                                        
+                                        {/* Corner Label */}
+                                        <div className="absolute -top-4 -right-4 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-black italic shadow-xl">
+                                            {phaseNumber}
+                                        </div>
+                                    </div>
+
+                                    {/* Connectivity Dot */}
+                                    <div className={`absolute top-1/2 -translate-y-1/2 ${isEven ? '-right-4 md:-right-8' : '-left-4 md:-left-8'} hidden md:block`}>
+                                        <div className="w-4 h-4 rounded-full bg-white border-2 border-brand-blue shadow-[0_0_15px_rgba(60,76,255,0.3)]" />
+                                    </div>
+                                </motion.div>
+                            </div>
+
+                            {/* Content Side */}
+                            <div className={`w-full md:w-1/2 px-4 md:px-20 text-center ${isEven ? 'md:text-left' : 'md:text-right'}`}>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ delay: 0.2 }}
+                                >
+                                    <span className="inline-block px-4 py-1.5 rounded-full bg-brand-blue/5 text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-6">
+                                        Phase {phaseNumber}
+                                    </span>
+                                    
+                                    <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-black mb-6 tracking-tighter uppercase leading-tight">
+                                        {step.Title}
+                                    </h3>
+                                    
+                                    <div
+                                        className="text-zinc-600 text-lg md:text-xl lg:text-2xl leading-relaxed font-normal max-w-xl mx-auto md:mx-0"
+                                        dangerouslySetInnerHTML={{ __html: step.Description }}
+                                    />
+
+                                    {/* Tech Line Decor */}
+                                    <div className={`mt-8 flex gap-2 ${isEven ? 'justify-start' : 'justify-end md:justify-end'} justify-center`}>
+                                        <div className="w-12 h-1 bg-brand-blue rounded-full" />
+                                        <div className="w-3 h-1 bg-zinc-100 rounded-full" />
+                                        <div className="w-3 h-1 bg-zinc-100 rounded-full" />
+                                    </div>
+                                </motion.div>
+                            </div>
+
+                        </div>
+                    );
+                })}
+            </div>
+
+        </div>
+
+      </div>
     </section>
   );
 }

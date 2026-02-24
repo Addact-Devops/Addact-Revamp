@@ -45,7 +45,7 @@ const OurVisionMission = ({ data }: Props) => {
             <div className="container">
                 {/* Section Header */}
                 <div className="text-center mb-[50px] md:mb-[60px]">
-                    <h2 className="text-zinc-900 font-bold text-[28px] md:text-[38px] 2xl:text-[48px] leading-tight mb-0">
+                    <h2 className="text-black font-bold text-[28px] md:text-[38px] 2xl:text-[48px] leading-tight mb-0">
                         Vision &amp; Mission
                     </h2>
                 </div>
@@ -78,11 +78,11 @@ const OurVisionMission = ({ data }: Props) => {
                                         {icons[index] ?? icons[0]}
                                     </div>
 
-                                    <h3 className="text-zinc-900 font-bold text-[22px] md:text-[26px] leading-tight mb-[16px]">
+                                    <h3 className="text-black font-bold text-[22px] md:text-[26px] leading-tight mb-[16px]">
                                         {item.Title}
                                     </h3>
 
-                                    <p className="text-zinc-600 text-[15px] md:text-[16px] leading-[1.85]">
+                                    <p className="text-black text-[15px] md:text-[16px] leading-[1.85]">
                                         {description}
                                     </p>
                                 </div>

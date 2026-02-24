@@ -15,7 +15,7 @@ export default async function PressRelease() {
   const banner = data.pressRelease.HeroBanner.Banner[0];
 
   return (
-    <main className="bg-[#0A0A0A] min-h-screen">
+    <main className="bg-white min-h-screen pb-20">
       {/* ✅ WebSite Schema */}
 
       <script

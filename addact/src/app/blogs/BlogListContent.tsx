@@ -248,10 +248,10 @@ export default function BlogListContent({}: Props) {
         setDescription={setDescription}
       />
 
-      <div className="container">
+      <div className="container overflow-visible">
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
           {filteredBlogs.length === 0 && !loadingMore && !hasMore && (
-            <p className="text-white !text-[35px] font-semibold col-span-full text-center">
+            <p className="text-zinc-900 !text-[35px] font-bold col-span-full text-center">
               {searchText.trim()
                 ? `No blogs found for "${searchText}"`
                 : selectedCategory !== "All Blogs"
@@ -300,7 +300,7 @@ export default function BlogListContent({}: Props) {
                   href={blogLink}
                   className="group block h-full"
                 >
-                  <div className="relative h-full bg-[#0E0D0D]/40 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-[#3C4CFF]/50 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(60,76,255,0.2)] flex flex-col">
+                  <div className="relative h-full bg-white border border-zinc-100 rounded-2xl overflow-hidden hover:border-[#3C4CFF]/50 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(60,76,255,0.12)] flex flex-col">
                     {/* Image Container */}
                     {imageUrl && (
                       <div className="relative aspect-[16/10] overflow-hidden">
@@ -315,18 +315,18 @@ export default function BlogListContent({}: Props) {
                           className="object-cover transform transition-transform duration-700 ease-out group-hover:scale-110"
                         />
                         {/* Interactive Overlay */}
-                        <div className="absolute inset-0 bg-linear-to-t from-[#0E0D0D] via-transparent to-transparent opacity-60" />
+                        <div className="absolute inset-0 bg-linear-to-t from-zinc-900/40 via-transparent to-transparent opacity-60" />
                         <div className="absolute inset-0 bg-[#3C4CFF]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       </div>
                     )}
 
                     {/* Content Section */}
-                    <div className="p-5 sm:p-6 flex flex-col flex-1">
+                    <div className="p-5 sm:p-6 flex flex-col flex-1 bg-white">
                       <div className="flex flex-wrap items-center gap-3 mb-4">
-                        <Badge variant="outline" className="text-[10px] uppercase tracking-wider">
+                        <Badge variant="outline" className="text-[10px] uppercase tracking-wider text-[#3C4CFF] border-[#3C4CFF]/20 font-bold">
                           {category}
                         </Badge>
-                        <div className="flex items-center gap-2 text-white/40 text-xs font-medium tracking-wide">
+                        <div className="flex items-center gap-2 text-zinc-400 text-xs font-semibold tracking-wide">
                           <CalendarDays size={14} className="text-[#3C4CFF]" />
                           <span>
                             {new Date(getBlogDate(blog)).toLocaleDateString('en-US', {
@@ -338,24 +338,24 @@ export default function BlogListContent({}: Props) {
                         </div>
                       </div>
 
-                      <h2 className="text-white font-semibold !text-[22px] sm:!text-[25px] xl:!text-[35px] !leading-[1.3] md:!leading-[34px] xl:!leading-[45px] mb-4 group-hover:text-[#3C4CFF] transition-colors duration-300">
+                      <h2 className="text-zinc-900 font-bold !text-[22px] sm:!text-[25px] xl:!text-[35px] !leading-[1.3] md:!leading-[34px] xl:!leading-[45px] mb-4 group-hover:text-[#3C4CFF] transition-colors duration-300">
                         {title}
                       </h2>
 
-                      <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                      <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
                         <div className="flex items-start gap-3">
-                          <div className="w-7 h-7 rounded-full bg-[#3C4CFF]/20 border border-[#3C4CFF]/40 flex items-center justify-center overflow-hidden shrink-0 mt-0.5">
-                            <span className="text-[#3C4CFF] text-[9px] font-bold">
+                          <div className="w-7 h-7 rounded-full bg-[#3C4CFF]/10 border border-[#3C4CFF]/20 flex items-center justify-center overflow-hidden shrink-0 mt-0.5">
+                            <span className="text-[#3C4CFF] text-[9px] font-black">
                               {author.charAt(0)}
                             </span>
                           </div>
-                          <span className="text-white/60 !text-[14px] xl:!text-[18px] font-medium leading-tight">
+                          <span className="text-zinc-500 !text-[14px] xl:!text-[18px] font-semibold leading-tight">
                             {author}
                           </span>
                         </div>
                         
                         <div className="text-[#3C4CFF] opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                           </svg>
                         </div>

@@ -16,7 +16,7 @@ const Badge = ({ children, variant = "primary", className = "" }: BadgeProps) =>
     primary: "bg-[#3C4CFF] text-white shadow-lg shadow-[#3C4CFF]/20",
     glass: "bg-white/10 backdrop-blur-md border border-white/10 text-white/90 group-hover:bg-[#3C4CFF]/20 group-hover:border-[#3C4CFF]/30 transition-all duration-300",
     status: "bg-[#3C4CFF] text-white font-bold tracking-widest uppercase",
-    outline: "border border-white/20 text-white/60 hover:border-[#3C4CFF]/50 hover:text-white transition-all duration-300",
+    outline: "border border-[#3C4CFF]/30 text-[#3C4CFF] hover:bg-[#3C4CFF] hover:text-white transition-all duration-500",
   };
 
   return (

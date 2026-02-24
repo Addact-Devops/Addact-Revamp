@@ -43,7 +43,7 @@ export const RightArrowUpIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
     >
       <path
         d="M18.7832 14.4863L29.5135 14.4863L29.5135 25.2167"
-        stroke="white"
+        stroke="currentColor"
         strokeWidth="2"
         strokeMiterlimit="10"
         strokeLinecap="round"
@@ -51,7 +51,7 @@ export const RightArrowUpIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
       />
       <path
         d="M14.4883 29.5127L29.364 14.6369"
-        stroke="white"
+        stroke="currentColor"
         strokeWidth="2"
         strokeMiterlimit="10"
         strokeLinecap="round"

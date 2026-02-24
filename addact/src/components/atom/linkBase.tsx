@@ -11,7 +11,7 @@ export default function LinkBase({ href, label, target, isExternal }: ButtonProp
             href={href}
             target={isExternal ? "_blank" : target}
             rel={isExternal ? "noopener noreferrer" : undefined}
-            className='block text-black hover:text-[#5865F2] underline text-[22px]'
+            className='block text-black hover:text-[#3C4CFF] underline text-[22px] transition-colors duration-300'
         >
             {label}
         </a>

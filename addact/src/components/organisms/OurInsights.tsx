@@ -98,7 +98,7 @@ export default function OurInsights() {
   ];
 
   return (
-    <section className="relative py-[140px] lg:py-[200px] overflow-hidden bg-[#050505]" id="insights">
+    <section className="relative py-[140px] lg:py-[200px] overflow-hidden bg-white" id="insights">
       {/* Animated Mesh Gradient Background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <motion.div 
@@ -107,7 +107,7 @@ export default function OurInsights() {
             y: [0, -50, 0],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 -left-[10%] w-[1000px] h-[1000px] bg-[#3C4CFF]/[0.07] blur-[160px] rounded-full"
+          className="absolute top-0 -left-[10%] w-[1000px] h-[1000px] bg-[#3C4CFF]/[0.03] blur-[160px] rounded-full"
         />
         <motion.div 
           animate={{
@@ -115,7 +115,7 @@ export default function OurInsights() {
             y: [0, 50, 0],
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-0 -right-[10%] w-[800px] h-[800px] bg-[#3C4CFF]/[0.05] blur-[160px] rounded-full"
+          className="absolute bottom-0 -right-[10%] w-[800px] h-[800px] bg-[#3C4CFF]/[0.02] blur-[160px] rounded-full"
         />
       </div>
 
@@ -126,7 +126,7 @@ export default function OurInsights() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-white font-bold text-[32px] md:text-[48px] 2xl:text-[72px] leading-[1] tracking-tighter"
+            className="text-black font-bold text-[32px] md:text-[48px] 2xl:text-[72px] leading-[1] tracking-tighter"
           >
             Our Insights
           </motion.h2>
@@ -168,7 +168,7 @@ function mapBlogToCard(blog: Blog): InsightCardData {
       : "Unknown Date",
     image: banner?.BannerImage,
     description: banner?.BannerDescription ?? "",
-    link: "/blogs/" + blog.Slug || "/blogs/" + banner?.ReadNow?.href,
+    link: blog.Slug ? "/blogs/" + blog.Slug : (banner?.ReadNow?.href ? (banner.ReadNow.href.startsWith('/') ? banner.ReadNow.href : "/blogs/" + banner.ReadNow.href) : "#"),
     linkLabel: banner?.ReadNow?.label || "Read Story",
   };
 }
@@ -187,7 +187,7 @@ function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
       : "Unknown Date",
     image: banner?.BannerImage,
     description: banner?.BannerDescription ?? "",
-    link: "/portfolio/" + cs.Slug,
+    link: cs.Slug ? "/portfolio/" + cs.Slug : "#",
     linkLabel: banner?.ReadNow?.label || "View Case Study",
   };
 }
@@ -232,11 +232,11 @@ function BentoCard({ item, index, big = false }: { item: InsightCardData, index:
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.9, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className={`group relative flex flex-col h-full rounded-[48px] overflow-hidden border border-white/5 bg-zinc-950/40 backdrop-blur-3xl transition-all duration-700 hover:border-white/10 hover:bg-zinc-900/40 hover:shadow-[0_40px_100px_-20px_rgba(60,76,255,0.2)]`}
+      className={`group relative flex flex-col h-full rounded-[48px] overflow-hidden border border-black/5 bg-zinc-50/40 backdrop-blur-3xl transition-all duration-700 hover:border-black/10 hover:bg-zinc-100/40 hover:shadow-[0_40px_100px_-20px_rgba(60,76,255,0.1)] cursor-pointer`}
     >
-      <Link href={item?.link} className="flex flex-col h-full w-full relative z-30">
+      <Link href={item?.link || "#"} className="flex flex-col h-full w-full relative z-30 cursor-pointer">
         {/* Decorative Editorial Number */}
-        <div className="absolute top-10 right-10 text-[120px] font-black text-white/[0.03] leading-none pointer-events-none select-none z-0 tracking-tighter transition-all duration-700 group-hover:text-white/[0.06] group-hover:scale-110">
+        <div className="absolute top-10 right-10 text-[120px] font-black text-black/[0.03] leading-none pointer-events-none select-none z-0 tracking-tighter transition-all duration-700 group-hover:text-black/[0.06] group-hover:scale-110">
           0{index + 1}
         </div>
 
@@ -271,7 +271,7 @@ function BentoCard({ item, index, big = false }: { item: InsightCardData, index:
           
           {/* Floating Narrative Badge */}
           <div className="absolute top-8 left-8">
-            <span className="px-6 py-2.5 bg-black/60 border border-white/10 text-white rounded-full text-[11px] font-black uppercase tracking-[4px] backdrop-blur-3xl">
+            <span className="px-6 py-2.5 bg-white/80 border border-black/10 text-black rounded-full text-[11px] font-black uppercase tracking-[4px] backdrop-blur-3xl">
                 {item.type}
               </span>
           </div>
@@ -279,16 +279,16 @@ function BentoCard({ item, index, big = false }: { item: InsightCardData, index:
 
         <div className={`flex flex-col justify-between flex-1 relative z-20 ${big ? "p-12 lg:p-16" : "p-10 md:p-12"}`}>
           <div style={{ transform: "translateZ(40px)" }}>
-            <div className="text-zinc-500 text-[11px] md:text-[13px] font-black tracking-[5px] uppercase mb-5">
+            <div className="text-black/70 text-[11px] md:text-[13px] font-black tracking-[5px] uppercase mb-5">
               {item.date}
             </div>
-            <h4 className={`text-white font-bold leading-[1.1] transition-colors duration-500 leading-tight ${
-              big ? "text-[28px] md:text-[44px] 2xl:text-[56px] mb-8" : "text-[22px] md:text-[30px] 2xl:text-[36px] mb-6"
+            <h4 className={`text-black font-bold leading-[1.1] transition-colors duration-500 leading-tight ${
+              big ? "text-[28px] md:text-[40px] 2xl:text-[60px] mb-10" : "text-[22px] md:text-[30px] 2xl:text-[36px] mb-6"
             }`}>
               {item.title}
             </h4>
             {big && (
-              <p className="mt-8 text-zinc-400 text-[18px] md:text-[21px] leading-relaxed font-medium line-clamp-2 max-w-[85%] group-hover:text-zinc-200 transition-colors duration-500">
+              <p className="mt-8 text-black/80 text-[18px] md:text-[21px] leading-relaxed font-medium line-clamp-2 max-w-[85%] group-hover:text-black transition-colors duration-500">
                 {item.description}
               </p>
             )}
@@ -296,14 +296,14 @@ function BentoCard({ item, index, big = false }: { item: InsightCardData, index:
 
           <div className="flex items-center mt-10 h-fit" style={{ transform: "translateZ(60px)" }}>
             <div 
-              className="group/link flex items-center gap-8 text-white font-black text-[14px] uppercase tracking-[4px] relative"
+              className="group/link flex items-center gap-8 text-black font-black text-[14px] uppercase tracking-[4px] relative"
             >
               <span className="relative">
                 {item.linkLabel}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-[#3C4CFF] transition-all duration-500 group-hover/link:w-full" />
               </span>
-              <div className="w-[56px] h-[56px] rounded-full border border-white/20 flex items-center justify-center transition-all duration-700 group-hover/link:bg-[#3C4CFF] group-hover/link:border-[#3C4CFF] group-hover/link:scale-110 group-hover/link:shadow-[0_0_30px_rgba(60,76,255,0.5)]">
-                <RightArrowUpIcon className="w-6 h-6 transition-transform duration-700 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 text-white" />
+              <div className="w-[56px] h-[56px] rounded-full border border-black/20 flex items-center justify-center transition-all duration-700 group-hover/link:bg-[#3C4CFF] group-hover/link:border-[#3C4CFF] group-hover/link:scale-110 group-hover/link:shadow-[0_0_30px_rgba(60,76,255,0.5)]">
+                <RightArrowUpIcon className="w-6 h-6 transition-transform duration-700 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 text-black group-hover/link:text-white" />
               </div>
             </div>
           </div>

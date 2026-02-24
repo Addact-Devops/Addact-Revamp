@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { BANNER } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
-import VerticalLines from "../molecules/VerticalLines";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import TechReveal from "../atom/TechReveal";
@@ -30,21 +29,18 @@ const HomeHeroBanner = ({ data }: IProps) => {
 
             {/* Neural particle network overlay — the AI company signature */}
             <div className="absolute inset-0 z-10 pointer-events-none">
-                <NeuralParticles count={60} color="100, 130, 255" lineColor="80, 110, 255" connectDistance={140} />
+                <NeuralParticles count={60} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={140} />
             </div>
 
-            {/* Vertical grid lines */}
-            <div className="absolute inset-0 z-11 pointer-events-none">
-                <div className="relative w-full h-full">
-                    <VerticalLines />
-                </div>
-            </div>
+            {/* Light Overlay for Video transparency — Restore dark theme */}
+            <div className="absolute inset-0 z-[1] bg-black/60 pointer-events-none" />
 
-            {/* Scanning beam line — AI data-analysis feel */}
+
+            {/* Scanning beam line — Subdued for white theme */}
             <motion.div
-                className="absolute left-0 right-0 h-[1.5px] z-20 pointer-events-none"
+                className="absolute left-0 right-0 h-px z-20 pointer-events-none"
                 style={{
-                    background: "linear-gradient(90deg, transparent 0%, rgba(60,76,255,0.7) 30%, rgba(139,92,246,0.9) 50%, rgba(60,76,255,0.7) 70%, transparent 100%)",
+                    background: "linear-gradient(90deg, transparent 0%, rgba(60,76,255,0.4) 30%, rgba(139,92,246,0.5) 50%, rgba(60,76,255,0.4) 70%, transparent 100%)",
                 }}
                 animate={{ y: ["10vh", "90vh"] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "linear", repeatType: "loop" }}
@@ -53,14 +49,14 @@ const HomeHeroBanner = ({ data }: IProps) => {
             <div className="relative z-20 md:max-w-[80%] 2xl:max-w-[1234px] w-full">
                 <div className="text-white px-10 xl:px-0">
                     {/* Hero title — typewriter char-by-char reveal + blur */}
-                    <h1 className="uppercase banner-title">
+                    <h1 className="uppercase banner-title text-white">
                         <TechReveal text={title} duration={1.2} />
                     </h1>
 
                     <div className="flex flex-col sm:flex-row sm:items-center lg:gap-9">
                         {/* Subtitle fades up after typewriter */}
                         <motion.div
-                            className="text-base sm:!text-base lg:!text-2xl font-medium max-w-[910px] hero-subtext"
+                            className="hidden md:block py-3 px-8 rounded-full border border-white/15 text-white/90 font-medium hover:bg-white/5 transition-all duration-300 text-[16px]! lg:text-[18px]!"
                             initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
                             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                             transition={{ duration: 0.9, ease, delay: 0.8 + title.length * 0.032 }}
@@ -87,7 +83,7 @@ const HomeHeroBanner = ({ data }: IProps) => {
                                 target={data?.Banner?.[0]?.BannerLink?.isExternal ? "_blank" : "_self"}
                                 className="inline-block group relative shrink-0"
                             >
-                                <div className="relative w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-full bg-[#3C4CFF] overflow-visible float-right">
+                                <div className="relative w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-full bg-brand-blue overflow-visible float-right">
                                     <motion.div
                                         className="absolute w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] left-[-20px] lg:left-[-30px] top-1/2 -translate-y-1/2 text-white"
                                     >

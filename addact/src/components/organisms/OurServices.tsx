@@ -30,11 +30,11 @@ const OurServices = ({ data }: IProps) => {
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
+                        <motion.h2 className="w-full lg:w-fit border-after m-0 text-black border-black/20 text-[28px]! md:text-[40px]! 2xl:text-[60px]! pb-4! xl:pb-10!">
                             <TechReveal text={data.Title[0].h2 || ""} duration={1.2} />
-                        </h2>
+                        </motion.h2>
                     </motion.div>
-
+ 
                     <section>
                         <motion.div
                             className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 sm:mt-14 2xl:mt-24 service-listing"
@@ -51,7 +51,7 @@ const OurServices = ({ data }: IProps) => {
                                     whileHover={{ y: -6, transition: { duration: 0.2 } }}
                                 >
                                     <SpotlightCard className="h-full">
-                                        <div className="text-white p-4 2xl:p-7 h-full">
+                                        <div className="text-black p-4 2xl:p-7 h-full">
                                             {service?.Image?.url && (
                                                 <motion.div
                                                     initial={{ scale: 0.8, opacity: 0 }}
@@ -65,12 +65,14 @@ const OurServices = ({ data }: IProps) => {
                                                         alt={service.Image.alternativeText || "Service Image"}
                                                         width={service.Image.width}
                                                         height={service.Image.height}
-                                                        className="!w-[50px] !h-[50px] 2xl:!w-[80px] 2xl:!h-[80px]"
+                                                        className="brand-blue-filter opacity-80 group-hover:opacity-100 transition-all duration-300"
                                                     />
                                                 </motion.div>
                                             )}
-                                            <h3 className="!text-[25px] 2xl:!text-3xl my-[30px]">{service.Title}</h3>
-                                            <RichText html={service.Description} />
+                                            <h3 className="text-[25px]! 2xl:text-3xl! my-[30px] font-bold text-black">{service?.Title ?? ""}</h3>
+                                            <div className="text-zinc-600 [&_p]:text-zinc-600">
+                                                <RichText html={service.Description} />
+                                            </div>
                                         </div>
                                     </SpotlightCard>
                                 </motion.div>

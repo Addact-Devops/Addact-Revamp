@@ -99,16 +99,16 @@ const WhoWeAre = () => {
         className="who-we-are my-[80px] lg:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%] relative overflow-hidden"
         ref={containerRef}
       >
-        {/* Faded background AI neural network */}
-        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-          <NeuralParticles count={30} color="100, 130, 255" lineColor="80, 110, 255" connectDistance={150} />
+        {/* Clean background — keeping neural particles very subtle */}
+        <div className="absolute inset-0 z-0 opacity-5 pointer-events-none">
+          <NeuralParticles count={30} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={150} />
         </div>
 
         <div className="container relative z-20">
           <div className="flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap">
             <div className="w-full lg:w-[40%] flex items-center gap-3">
               <motion.h2
-                className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
+                className="text-[28px]! md:text-[40px]! 2xl:text-[60px]! mb-10! leading-tight text-zinc-900 border-after border-black/20 pb-4! xl:pb-10!"
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
@@ -118,11 +118,11 @@ const WhoWeAre = () => {
               </motion.h2>
             </div>
 
-            <div className="relative overflow-hidden w-full text-left  large">
+            <div className="relative overflow-hidden w-full text-left large">
               <div className="sticky top-0 flex items-center justify-center">
                 <div
                   className={
-                    "flex flex-wrap gap-x-[10px] [&_p]:lg:!text-[22px] [&_p]:2xl:!text-[34px] [&_p]:!leading-relaxed"
+                    "flex flex-wrap gap-x-[10px] [&_p]:lg:!text-[22px] [&_p]:2xl:!text-[34px] [&_p]:!leading-relaxed [&_p]:text-black font-medium"
                   }
                 >
                   <RichText
@@ -135,7 +135,7 @@ const WhoWeAre = () => {
 
           <div
             ref={counterSectionRef}
-            className="grid grid-cols-2 md:grid-cols-4 border border-white/15 border-b-0 md:border-b mt-[30px] md:mt-20 2xl:mt-24 overflow-hidden"
+            className="grid grid-cols-2 md:grid-cols-4 border border-black/10 border-b-0 md:border-b mt-[30px] md:mt-20 2xl:mt-24 overflow-hidden"
           >
             {data?.whoAreWes[0].Counter.map((item, index) => {
               const isSecondInRowMobile = (index + 1) % 2 === 0;
@@ -148,32 +148,32 @@ const WhoWeAre = () => {
                   className={`
                     text-center p-[24px] md:p-[40px] 2xl:p-[60px] 
                     border-b md:border-b-0 
-                    border-white/15 
+                    border-black/10 
                     ${!isSecondInRowMobile ? "border-r" : ""} 
                     ${isSecondInRowMobile ? "border-r-0" : ""} 
                     ${isFourthInRowDesktop ? "md:border-r-0" : "md:border-r"} 
                     ${isLastItem ? "border-r-0 md:border-r-0" : ""}
                     group relative
-                `}
+                  `}
                 >
                   {/* Subtle hover glow pulse */}
                   <motion.div 
-                    className="absolute inset-0 bg-[#3C4CFF] opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500"
+                    className="absolute inset-0 bg-brand-blue opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500"
                   />
 
-                  <div className="relative z-10">
+                   <div className="relative z-10">
                     <div className="flex items-center gap-2 mb-2">
-                       <h2
-                        className="text-white !font-bold text-3xl transition-colors duration-300 text-left"
-                        ref={(el) => {
-                          numberRefs.current[index] = el;
-                        }}
-                      >
-                        {`0${counterSuffixes[index] || ""}`}
-                      </h2>
+                        <h2
+                            className="text-black font-bold text-3xl md:text-4xl transition-colors duration-300 text-left"
+                            ref={(el) => {
+                                numberRefs.current[index] = el;
+                            }}
+                        >
+                            {`0${counterSuffixes[index] || ""}`}
+                        </h2>
                     </div>
-                    <div className="text-[14px] md:text-[20px] 2xl:text-2xl text-left font-normal leading-[1.75] max-w-[70%] md:max-w-[100%] opacity-80 group-hover:opacity-100 transition-opacity">
-                      {item.CounterTitle}
+                    <div className="text-[14px] md:text-[20px] 2xl:text-2xl text-left font-medium leading-[1.75] max-w-[70%] md:max-w-full text-black transition-opacity">
+                        {item.CounterTitle}
                     </div>
                   </div>
                 </div>
