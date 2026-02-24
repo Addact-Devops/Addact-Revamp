@@ -30,11 +30,6 @@ const OurServices = ({ data }: IProps) => {
                         viewport={{ once: true, amount: 0.3 }}
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <motion.span
-                            className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
-                            animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
-                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        />
                         <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
                             <TechReveal text={data.Title[0].h2 || ""} duration={1.2} />
                         </h2>

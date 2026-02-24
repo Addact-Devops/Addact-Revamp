@@ -85,11 +85,6 @@ export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
 
             <div className="container relative z-10">
                 <div className="flex flex-col items-center gap-3 mb-[20px] md:mb-[50px] 2xl:mb-[80px]">
-                    <motion.span
-                        className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
-                        animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    />
                     <motion.h2
                         className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] text-center text-white m-0"
                         initial={{ opacity: 0, y: 30 }}
@@ -97,7 +92,7 @@ export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
                         viewport={{ once: true, amount: 0.5 }}
                         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                     >
-                        <TechReveal text={renderTitle() || ""} as="h2" duration={1} />
+                        <TechReveal text={renderTitle() || ""} as="span" duration={1} />
                     </motion.h2>
                 </div>
             </div>

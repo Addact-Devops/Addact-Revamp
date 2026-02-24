@@ -1,77 +1,76 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
-interface TextScrambleProps {
+const CYCLES_PER_LETTER = 2;
+const SHUFFLE_SPEED = 30;
+
+const CHARS = "!@#$%^&*()_+{}:\"<>?,./;'[]\\-=`~ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+type Props = {
   text: string;
   className?: string;
-  duration?: number;
-  scrambleSpeed?: number;
-  revealDelay?: number;
-  triggerOnce?: boolean;
-}
+};
 
-const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$€%&*/\\?!";
+export default function TextScramble({ text, className }: Props) {
+  const [displayText, setDisplayText] = useState("");
+  const timer = useRef<NodeJS.Timeout | null>(null);
+  const queue = useRef<{ from: string; to: string; start: number; end: number; char?: string }[]>([]);
+  const frame = useRef(0);
 
-/**
- * TextScramble decrypts text by shuffling random characters before settling on the final text.
- */
-export default function TextScramble({
-  text,
-  className = "",
-  duration = 0.8,
-  scrambleSpeed = 40,
-  revealDelay = 0,
-  triggerOnce = true,
-}: TextScrambleProps) {
-  const [displayText, setDisplayText] = useState(text);
-  const [isScrambling, setIsScrambling] = useState(false);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: triggerOnce, margin: "-100px" });
-  const iterationRef = useRef(0);
+  const scramble = useCallback(() => {
+    let complete = 0;
+    const nextText = queue.current.map((item, i) => {
+      const { from, to, start, end, char } = item;
+      if (frame.current >= end) {
+        complete++;
+        return to;
+      }
+      if (frame.current >= start) {
+        if (!char || Math.random() < 0.28) {
+          const randomChar = CHARS[Math.floor(Math.random() * CHARS.length)];
+          queue.current[i].char = randomChar;
+          return randomChar;
+        }
+        return char;
+      }
+      return from;
+    }).join("");
+
+    setDisplayText(nextText);
+
+    if (complete === queue.current.length) {
+      if (timer.current) clearInterval(timer.current);
+    } else {
+      frame.current++;
+    }
+  }, []);
 
   useEffect(() => {
-    if (isInView && !isScrambling) {
-      scramble();
-    }
-  }, [isInView]);
-
-  const scramble = () => {
-    setIsScrambling(true);
-    iterationRef.current = 0;
+    const from = displayText || "";
+    const to = text;
+    const length = Math.max(from.length, to.length);
+    queue.current = [];
     
-    const interval = setInterval(() => {
-      setDisplayText((prev) =>
-        text
-          .split("")
-          .map((char, index) => {
-            if (index < iterationRef.current) {
-              return text[index];
-            }
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          })
-          .join("")
-      );
+    for (let i = 0; i < length; i++) {
+      const start = Math.floor(Math.random() * 40);
+      const end = start + Math.floor(Math.random() * 40);
+      queue.current.push({
+        from: from[i] || "",
+        to: to[i] || "",
+        start,
+        end,
+      });
+    }
 
-      if (iterationRef.current >= text.length) {
-        clearInterval(interval);
-        setIsScrambling(false);
-      }
+    if (timer.current) clearInterval(timer.current);
+    frame.current = 0;
+    timer.current = setInterval(scramble, SHUFFLE_SPEED);
 
-      iterationRef.current += text.length / (duration * 1000 / scrambleSpeed);
-    }, scrambleSpeed);
-  };
+    return () => {
+      if (timer.current) clearInterval(timer.current);
+    };
+  }, [text, scramble]);
 
-  return (
-    <motion.span
-      ref={ref}
-      className={`inline-block font-mono ${className}`}
-      initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.3, delay: revealDelay }}
-    >
-      {displayText}
-    </motion.span>
-  );
+  return <span className={className}>{displayText}</span>;
 }

@@ -86,16 +86,13 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
                     {/* Text */}
                     <div className="w-full md:w-[55%]">
                         {/* Pill label */}
-                        <div className="inline-flex items-center gap-[8px] bg-[#3C4CFF]/8 border border-[#3C4CFF]/20 text-[#3C4CFF] text-[12px] font-semibold uppercase tracking-[2px] px-[14px] py-[6px] rounded-full mb-[18px]">
-                            <span className="w-[6px] h-[6px] rounded-full bg-[#3C4CFF] inline-block" />
+                        <div className="inline-flex items-center gap-[8px] text-[#3C4CFF] text-[12px] font-semibold uppercase tracking-[2px] mb-[12px]">
                             {subtitle}
                         </div>
 
-                        <h2 className="text-zinc-900 font-bold text-[28px] md:text-[38px] 2xl:text-[50px] leading-[1.15] mb-[14px]">
+                        <h2 className="text-zinc-900 font-bold text-[28px] md:text-[38px] 2xl:text-[50px] leading-[1.15] mb-[22px]">
                             {title}
                         </h2>
-
-                        <div className="w-[48px] h-[3px] rounded-full bg-[#3C4CFF] mb-[22px]" />
 
                         {/* Image — mobile */}
                         <div className="block md:hidden mb-[22px]">

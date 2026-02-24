@@ -15,7 +15,7 @@ export default async function EventsPage() {
   const banner = data.event.EventBanner.Banner[0];
 
   return (
-    <div>
+    <main className="bg-[#0A0A0A] min-h-screen">
       {/* ✅ WebSite Schema */}
 
       <script
@@ -73,7 +73,7 @@ export default async function EventsPage() {
         description={banner.BannerDescription || ""}
         backgroundImageUrl={banner.BannerImage?.url || ""}
       />
-      <div className="pt-24">
+      <div className="py-24">
         {data.addactsEvents.map((event, index: number) => {
           const banner = event.EventBanner[0];
           const formattedDate = banner.PublishDate
@@ -94,10 +94,11 @@ export default async function EventsPage() {
               description={event.EventSummary}
               imageUrl={banner.BannerImage.url}
               slug={event.Slug}
+              linkText="Explore Event"
             />
           );
         })}
       </div>
-    </div>
+    </main>
   );
 }

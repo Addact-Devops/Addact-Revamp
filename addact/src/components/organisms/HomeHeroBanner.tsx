@@ -90,8 +90,6 @@ const HomeHeroBanner = ({ data }: IProps) => {
                                 <div className="relative w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] rounded-full bg-[#3C4CFF] overflow-visible float-right">
                                     <motion.div
                                         className="absolute w-[80px] h-[80px] lg:w-[120px] lg:h-[120px] left-[-20px] lg:left-[-30px] top-1/2 -translate-y-1/2 text-white"
-                                        whileHover={{ x: 8 }}
-                                        transition={{ type: "spring", stiffness: 300, damping: 18 }}
                                     >
                                         <div className="hidden lg:block">
                                             <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">

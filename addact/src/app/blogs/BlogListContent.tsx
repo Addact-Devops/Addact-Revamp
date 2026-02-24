@@ -3,7 +3,10 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Badge from "@/components/atom/badge";
 import Image from "next/image";
+import { CalendarDays } from "lucide-react";
+import { motion } from "framer-motion";
 import { getInitialBlogs, getNextBlogs } from "@/graphql/queries/getAllBlog";
 import BlogHeroBanner from "@/components/organisms/BlogHeroBanner";
 import Loader from "@/components/atom/loader";
@@ -286,41 +289,81 @@ export default function BlogListContent({}: Props) {
               typeof rawCategory === "string" ? rawCategory.trim() : "General";
 
             return (
-              <Link
+              <motion.div
                 key={blog.Slug || blog.documentId}
-                href={blogLink}
-                className="group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.5 }}
               >
-                <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
-                  {imageUrl && (
-                    <div className="relative blogitem-h rounded-xl overflow-hidden mb-4">
-                      <Image
-                        src={imageUrl}
-                        alt={
-                          banner.BannerImage?.alternativeText ||
-                          banner.BannerImage?.name ||
-                          "Blog Image"
-                        }
-                        fill
-                        className="object-cover transform transition-transform duration-300 ease-in-out group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-[rgb(60,76,255,0.4)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Link
+                  href={blogLink}
+                  className="group block h-full"
+                >
+                  <div className="relative h-full bg-[#0E0D0D]/40 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-[#3C4CFF]/50 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(60,76,255,0.2)] flex flex-col">
+                    {/* Image Container */}
+                    {imageUrl && (
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        <Image
+                          src={imageUrl}
+                          alt={
+                            banner.BannerImage?.alternativeText ||
+                            banner.BannerImage?.name ||
+                            "Blog Image"
+                          }
+                          fill
+                          className="object-cover transform transition-transform duration-700 ease-out group-hover:scale-110"
+                        />
+                        {/* Interactive Overlay */}
+                        <div className="absolute inset-0 bg-linear-to-t from-[#0E0D0D] via-transparent to-transparent opacity-60" />
+                        <div className="absolute inset-0 bg-[#3C4CFF]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      </div>
+                    )}
+
+                    {/* Content Section */}
+                    <div className="p-5 sm:p-6 flex flex-col flex-1">
+                      <div className="flex flex-wrap items-center gap-3 mb-4">
+                        <Badge variant="outline" className="text-[10px] uppercase tracking-wider">
+                          {category}
+                        </Badge>
+                        <div className="flex items-center gap-2 text-white/40 text-xs font-medium tracking-wide">
+                          <CalendarDays size={14} className="text-[#3C4CFF]" />
+                          <span>
+                            {new Date(getBlogDate(blog)).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </span>
+                        </div>
+                      </div>
+
+                      <h2 className="text-white font-semibold !text-[22px] sm:!text-[25px] xl:!text-[35px] !leading-[1.3] md:!leading-[34px] xl:!leading-[45px] mb-4 group-hover:text-[#3C4CFF] transition-colors duration-300">
+                        {title}
+                      </h2>
+
+                      <div className="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                        <div className="flex items-start gap-3">
+                          <div className="w-7 h-7 rounded-full bg-[#3C4CFF]/20 border border-[#3C4CFF]/40 flex items-center justify-center overflow-hidden shrink-0 mt-0.5">
+                            <span className="text-[#3C4CFF] text-[9px] font-bold">
+                              {author.charAt(0)}
+                            </span>
+                          </div>
+                          <span className="text-white/60 !text-[14px] xl:!text-[18px] font-medium leading-tight">
+                            {author}
+                          </span>
+                        </div>
+                        
+                        <div className="text-[#3C4CFF] opacity-0 group-hover:opacity-100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all duration-300">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                          </svg>
+                        </div>
+                      </div>
                     </div>
-                  )}
-
-                  <div className="inline-block px-[10px] py-[2px] rounded-[10px] text-[15px] leading-[23px] text-[#fff] bg-[#3C4CFF] my-[15px] font-medium">
-                    {category}
                   </div>
-
-                  <h2 className="text-white font-semibold !text-[35px] !leading-[45px] mb-[30px] line-clamp-2 [@media(max-width:1299px)]:!text-[25px] [@media(max-width:1299px)]:!leading-[34px]">
-                    {title}
-                  </h2>
-
-                  <p className="text-white !text-[14px] xl:!text-[18px]">
-                    {author}
-                  </p>
-                </div>
-              </Link>
+                </Link>
+              </motion.div>
             );
           })}
         </div>
@@ -331,7 +374,7 @@ export default function BlogListContent({}: Props) {
             ref={loadMoreRef}
             className="h-10 flex justify-center items-center m-8"
           >
-            {loadingMore && <Loader />}
+            {loadingMore && <Loader fullPage={false} />}
           </div>
         )}
       </div>

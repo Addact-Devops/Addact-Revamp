@@ -14,7 +14,7 @@ export default async function VideosPage() {
   const videos = data.videoListing.VideoList;
 
   return (
-    <main className="bg-[#f4f4f4]">
+    <main className="bg-[#0A0A0A] min-h-screen">
       {/* ✅ WebSite Schema */}
 
       <script

@@ -101,11 +101,6 @@ export default function ClientTestimonials() {
                     {/* Title & Arrows */}
                     <div className="col-span-1 mb-6 lg:mb-0">
                         <div className="flex items-center gap-3">
-                            <motion.span
-                                className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
-                                animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
-                                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                            />
                             <motion.h2
                                 className="w-full lg:w-fit border-after m-0"
                                 initial={{ opacity: 0, x: -30 }}

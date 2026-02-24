@@ -171,11 +171,6 @@ export default function OurProcess(props: {
         <div className="relative z-10">
           {getTitle() && (
             <div className="flex items-center gap-3">
-              <motion.span
-                  className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
-                  animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
               <motion.h2
                 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
                 initial={{ opacity: 0, x: -40 }}
@@ -200,15 +195,7 @@ export default function OurProcess(props: {
           <div
             className="absolute left-1 md:left-1/2 transform -translate-x-1/2 w-[2px] bg-white z-10 transition-all duration-500 ease-in-out overflow-hidden"
             style={activeLineStyle}
-          >
-            {/* AI Data Flow beam traveling down the active line segment */}
-            <motion.div 
-               className="absolute left-[-2px] w-[6px] h-20 blur-[2px]"
-               style={{ background: "linear-gradient(to bottom, transparent, #3C4CFF, transparent)" }}
-               animate={{ top: ["-100%", "200%"] }}
-               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            />
-          </div>
+          />
 
           {/* Render timeline dots here so they all share the same positioned parent as the lines */}
           {data?.ProcessData &&
@@ -231,8 +218,8 @@ export default function OurProcess(props: {
                     width: `${dotSize}px`,
                     height: `${dotSize}px`,
                     borderRadius: "9999px",
-                    background: isActive ? "#3C4CFF" : "black",
-                    borderColor: isActive ? "white" : "rgba(255,255,255,0.2)",
+                    background: isActive ? "white" : "black",
+                    borderColor: isActive ? "#3C4CFF" : "rgba(255,255,255,0.2)",
                   }}
                 />
               );

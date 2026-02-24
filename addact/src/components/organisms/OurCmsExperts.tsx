@@ -126,11 +126,6 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
       <div className="container relative z-20">
         <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
           <div className="w-full lg:w-[40%] flex items-center gap-3">
-              <motion.span
-                  className="inline-block w-[10px] h-[10px] rounded-full bg-[#3C4CFF] shrink-0"
-                  animate={{ scale: [1, 1.6, 1], opacity: [1, 0.4, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              />
               <motion.h2
                 className="border-after !text-[36px] xl:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10"
                 initial={{ opacity: 0, x: -40 }}

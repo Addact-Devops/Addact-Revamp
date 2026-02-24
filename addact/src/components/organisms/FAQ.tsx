@@ -1,88 +1,88 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Minus, Plus } from "lucide-react";
+import { useState } from "react";
+import { Plus, Minus } from "lucide-react";
 import { Faq } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface IProps {
     data: Faq;
 }
 
 const FAQ = ({ data }: IProps) => {
-    const [openIndexes, setOpenIndexes] = useState<number[] | null>(null);
-
-    useEffect(() => {
-        const stored = typeof window !== "undefined" && sessionStorage.getItem("faq-open");
-        if (stored) {
-            setOpenIndexes(JSON.parse(stored));
-        } else {
-            setOpenIndexes([0]); // default open first one
-        }
-    }, []);
-
-    useEffect(() => {
-        if (openIndexes !== null) {
-            sessionStorage.setItem("faq-open", JSON.stringify(openIndexes));
-        }
-    }, [openIndexes]);
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     const toggleIndex = (index: number) => {
-        setOpenIndexes((prev) => {
-            if (!prev) return [index];
-            return prev[0] === index ? [] : [index];
-        });
+        setOpenIndex(openIndex === index ? null : index);
     };
 
-    if (openIndexes === null) return null;
-
     return (
-        <section className="my-[80px] lg:my-[100px] 2xl:my-[200px]">
-            <div className="container mx-auto px-4">
-                <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
-                    {data.Title?.split("Asked")[0]}
-                    <br className="block" />
-                </h2>
+        <section className="relative py-[90px] lg:py-[150px] overflow-hidden bg-[#050505]" id="faq">
+            {/* Background Glows for Depth */}
+            <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-[#3C4CFF]/5 blur-[160px] rounded-full pointer-events-none" />
+            
+            <div className="w-full px-6 md:px-12 lg:px-20 max-w-[1750px] mx-auto relative z-10">
+                {/* Header */}
+                <div className="mb-[60px] md:mb-[100px]">
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-white font-bold text-[36px] md:text-[52px] 2xl:text-[72px] leading-[1.05] w-full"
+                    >
+                        {data?.Title || "Frequently Asked Questions"}
+                    </motion.h2>
+                </div>
 
-                <div className="border border-gray-700 mt-12 lg:mt-24">
-                    {data.FAQ.map((faq, index) => {
-                        const isOpen = openIndexes.includes(index);
+                {/* FAQ Box Container - Full Width Reach */}
+                <div className="w-full border border-white/10 rounded-[24px] md:rounded-[40px] overflow-hidden bg-white/1 backdrop-blur-3xl shadow-2xl">
+                    {data?.FAQ?.map((faq, index) => {
+                        const isOpen = openIndex === index;
+                        
                         return (
                             <div
                                 key={index}
-                                className={`border-t border-gray-700 hover:bg-[#3440CB] ${
-                                    index === 0 ? "border-t-0" : ""
-                                }`}
+                                className={`group transition-all duration-500 ${
+                                    index !== 0 ? "border-t border-white/5" : ""
+                                } ${isOpen ? "bg-white/4" : "hover:bg-white/2"}`}
                             >
                                 <button
                                     onClick={() => toggleIndex(index)}
-                                    className="w-full flex items-start text-left transition-colors duration-200 px-0 py-6 pr-5 lg:pr-0"
+                                    className="w-full flex items-center justify-between gap-[20px] md:gap-[50px] text-left px-[28px] sm:px-[50px] lg:px-[80px] py-[30px] md:py-[50px] group/btn"
                                 >
-                                    <span className="ml-5 lg:ml-[40px] mr-5 lg:mr-[65px] mt-1 shrink-0 w-5 lg:w-[30px] h-5 lg:h-[30px] flex items-center justify-center">
-                                        {isOpen ? (
-                                            <Minus size={30} strokeWidth={2.5} />
-                                        ) : (
-                                            <Plus size={30} strokeWidth={2.5} />
-                                        )}
-                                    </span>
-                                    <span
-                                        className="font-montserrat text-lg md:text-2xl font-semibold leading-none"
-                                        style={{ lineHeight: "100%" }}
-                                    >
+                                    <span className={`text-[17px] md:text-[26px] font-bold tracking-tight transition-colors duration-300 flex-1 ${
+                                        isOpen ? "text-white" : "text-zinc-400 group-hover/btn:text-zinc-100"
+                                    }`}>
                                         {faq.Title}
                                     </span>
+
+                                    <div className={`shrink-0 flex items-center justify-center w-[36px] h-[36px] md:w-[48px] md:h-[48px] rounded-full transition-all duration-500 border ${
+                                        isOpen 
+                                            ? "bg-[#3C4CFF] border-[#3C4CFF] text-white shadow-[0_0_30px_rgba(60,76,255,0.45)]" 
+                                            : "bg-white/5 border-white/10 text-zinc-500 group-hover/btn:bg-white/10 group-hover/btn:border-white/20 group-hover/btn:text-zinc-100"
+                                    }`}>
+                                        {isOpen ? <Minus size={24} strokeWidth={2.5} /> : <Plus size={24} strokeWidth={2.5} />}
+                                    </div>
                                 </button>
 
-                                <div
-                                    className={`overflow-hidden transition-[max-height] duration-500 ease-in-out`}
-                                    style={{
-                                        maxHeight: isOpen ? "500px" : "0px",
-                                    }}
-                                >
-                                    <div className="pl-[60px] lg:pl-[135px] pr-6 pb-6 text-base md:text-xl font-normal font-montserrat leading-[34px]">
-                                        <RichText html={faq.Description} />
-                                    </div>
-                                </div>
+                                <AnimatePresence initial={false}>
+                                    {isOpen && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                        >
+                                            <div className="px-[28px] sm:px-[50px] lg:px-[80px] pb-[40px] md:pb-[70px]">
+                                                <div className="text-zinc-400 text-[16px] md:text-[21px] leading-[1.8] font-medium w-full max-w-[1200px]">
+                                                    <RichText html={faq.Description} />
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
                             </div>
                         );
                     })}

@@ -9,6 +9,8 @@ interface Particle {
     vy: number;
     size: number;
     opacity: number;
+    originX: number;
+    originY: number;
 }
 
 interface NeuralParticlesProps {
@@ -17,6 +19,7 @@ interface NeuralParticlesProps {
     color?: string;
     lineColor?: string;
     connectDistance?: number;
+    interactive?: boolean;
 }
 
 export default function NeuralParticles({
@@ -25,8 +28,10 @@ export default function NeuralParticles({
     color = "100, 120, 255",
     lineColor = "80, 100, 255",
     connectDistance = 130,
+    interactive = true,
 }: NeuralParticlesProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const mouseRef = useRef({ x: -1000, y: -1000 });
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -34,7 +39,6 @@ export default function NeuralParticles({
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // Respect reduced motion
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
         let W = canvas.offsetWidth;
@@ -42,65 +46,106 @@ export default function NeuralParticles({
         canvas.width = W;
         canvas.height = H;
 
-        const particles: Particle[] = Array.from({ length: count }, () => ({
-            x: Math.random() * W,
-            y: Math.random() * H,
-            vx: (Math.random() - 0.5) * 0.45,
-            vy: (Math.random() - 0.5) * 0.45,
-            size: Math.random() * 1.8 + 1.2,
-            opacity: Math.random() * 0.5 + 0.4,
-        }));
+        const particles: Particle[] = Array.from({ length: count }, () => {
+            const x = Math.random() * W;
+            const y = Math.random() * H;
+            return {
+                x,
+                y,
+                originX: x,
+                originY: y,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                size: Math.random() * 1.5 + 1,
+                opacity: Math.random() * 0.4 + 0.3,
+            }
+        });
 
         let raf: number;
 
         const draw = () => {
             ctx.clearRect(0, 0, W, H);
 
-            // Move particles
+            const mx = mouseRef.current.x;
+            const my = mouseRef.current.y;
+
             particles.forEach((p) => {
+                // Natural movement
                 p.x += p.vx;
                 p.y += p.vy;
+
+                // Mouse Interaction
+                if (interactive && mx > 0 && my > 0) {
+                    const dx = mx - p.x;
+                    const dy = my - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = 200;
+
+                    if (dist < maxDist) {
+                        const force = (maxDist - dist) / maxDist;
+                        p.x -= dx * force * 0.03;
+                        p.y -= dy * force * 0.03;
+                    }
+                }
+
+                // Bound check
                 if (p.x < 0 || p.x > W) p.vx *= -1;
                 if (p.y < 0 || p.y > H) p.vy *= -1;
             });
 
-            // Draw connections
+            // Connections
+            ctx.lineWidth = 0.6;
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < connectDistance) {
-                        const alpha = (1 - dist / connectDistance) * 0.35;
+                    const distSq = dx * dx + dy * dy;
+                    if (distSq < connectDistance * connectDistance) {
+                        const dist = Math.sqrt(distSq);
+                        const alpha = (1 - dist / connectDistance) * 0.3;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.strokeStyle = `rgba(${lineColor}, ${alpha})`;
-                        ctx.lineWidth = 0.7;
                         ctx.stroke();
                     }
                 }
             }
 
-            // Draw particles + glow
+            // Particles
             particles.forEach((p) => {
-                // Outer glow
-                const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 4);
-                grad.addColorStop(0, `rgba(${color}, ${p.opacity * 0.5})`);
-                grad.addColorStop(1, `rgba(${color}, 0)`);
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size * 4, 0, Math.PI * 2);
-                ctx.fillStyle = grad;
-                ctx.fill();
-
-                // Core dot
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(${color}, ${p.opacity})`;
                 ctx.fill();
+
+                // Subtle glow for active-ish particles
+                if (interactive) {
+                    const dmx = mouseRef.current.x - p.x;
+                    const dmy = mouseRef.current.y - p.y;
+                    const dist = Math.sqrt(dmx * dmx + dmy * dmy);
+                    if (dist < 100) {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(${color}, ${(1 - dist/100) * 0.2})`;
+                        ctx.fill();
+                    }
+                }
             });
 
             raf = requestAnimationFrame(draw);
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseRef.current = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+            };
+        };
+
+        const handleMouseLeave = () => {
+            mouseRef.current = { x: -1000, y: -1000 };
         };
 
         draw();
@@ -111,13 +156,20 @@ export default function NeuralParticles({
             canvas.width = W;
             canvas.height = H;
         };
+
         window.addEventListener("resize", handleResize);
+        if (interactive) {
+            window.addEventListener("mousemove", handleMouseMove);
+            canvas.parentElement?.addEventListener("mouseleave", handleMouseLeave);
+        }
 
         return () => {
             cancelAnimationFrame(raf);
             window.removeEventListener("resize", handleResize);
+            window.removeEventListener("mousemove", handleMouseMove);
+            canvas.parentElement?.removeEventListener("mouseleave", handleMouseLeave);
         };
-    }, [count, color, lineColor, connectDistance]);
+    }, [count, color, lineColor, connectDistance, interactive]);
 
     return (
         <canvas

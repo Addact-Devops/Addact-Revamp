@@ -15,7 +15,7 @@ export default async function PressRelease() {
   const banner = data.pressRelease.HeroBanner.Banner[0];
 
   return (
-    <div>
+    <main className="bg-[#0A0A0A] min-h-screen">
       {/* ✅ WebSite Schema */}
 
       <script
@@ -74,22 +74,22 @@ export default async function PressRelease() {
         description={banner.BannerDescription || ""}
         backgroundImageUrl={banner.BannerImage?.url || ""}
       />
-      <div className="pt-24">
+      <div className="py-24">
         {data.addactPressReleases.map((event, index: number) => {
           const banner = event.HeroBanner[0];
           return (
             <EventCard
               key={index}
-              pageType="Event"
+              pageType="Press Release"
               title={banner.BannerTitle}
               description={event.PressReleaseSummary}
               imageUrl={banner.BannerImage.url}
               slug={event.Slug}
-              linkText={"Read More"}
+              linkText="Read More"
             />
           );
         })}
       </div>
-    </div>
+    </main>
   );
 }

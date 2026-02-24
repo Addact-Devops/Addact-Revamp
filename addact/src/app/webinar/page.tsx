@@ -15,7 +15,7 @@ export default async function SitecorePage() {
   const banner = data.webinar.HeroBanner.Banner[0];
 
   return (
-    <div>
+    <main className="bg-[#0A0A0A] min-h-screen">
       {/* ✅ WebSite Schema */}
 
       <script
@@ -73,7 +73,7 @@ export default async function SitecorePage() {
         description={banner.BannerDescription || ""}
         backgroundImageUrl={banner.BannerImage?.url || ""}
       />
-      <div className="pt-24">
+      <div className="py-24">
         {data.addactWebinars.map((event, index: number) => {
           const banner = event.HeroBanner[0];
           const formattedDate = banner.PublishDate
@@ -93,10 +93,11 @@ export default async function SitecorePage() {
               description={banner.BannerDescription}
               imageUrl={banner.BannerImage.url}
               slug={event.Slug}
+              linkText="Watch Webinar"
             />
           );
         })}
       </div>
-    </div>
+    </main>
   );
 }
