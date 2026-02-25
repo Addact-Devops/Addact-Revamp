@@ -111,7 +111,7 @@ export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
                                     alt={item.Image.alternativeText || `Partner Logo ${index + 1}`}
                                     width={164}
                                     height={64}
-                                    className="max-w-full w-full h-[64px] object-contain brightness-0 opacity-40 group-hover:opacity-100 group-hover:brightness-100 transition-all duration-500 transition-logo"
+                                    className="max-w-full w-full h-[64px] object-contain brightness-0 opacity-60 group-hover:opacity-100 group-hover:[filter:brightness(0)_saturate(100%)_invert(27%)_sepia(89%)_saturate(3000%)_hue-rotate(224deg)_brightness(105%)] transition-all duration-500"
                                 />
                             )}
                         </div>

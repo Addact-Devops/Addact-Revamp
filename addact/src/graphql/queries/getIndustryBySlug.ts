@@ -107,6 +107,7 @@ const GET_INDUSTRY_BY_SLUG = gql`
         ExpertiseTitle {
           ... on ComponentBaseTemplateTitleWithDescription {
             Title
+            Description
           }
         }
         CMS {
@@ -372,7 +373,7 @@ export type IndustryDetail = {
   } | null;
 
   Tech_Stack?: {
-    ExpertiseTitle?: { Title?: string | null }[] | null;
+    ExpertiseTitle?: { Title?: string | null; Description?: string | null }[] | null;
     CMS?: Array<{
       Title?: string | null;
       Links?: {

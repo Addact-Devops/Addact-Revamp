@@ -15,7 +15,7 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import IndustryCaseStudies from "@/components/organisms/IndustryCaseStudies";
 import IndustryChallenges from "@/components/organisms/IndustryChallenges";
 import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
-import WhyAddact from "@/components/organisms/WhyAddactWithAnimation";
+import WhyAddact from "@/components/organisms/WhyAddact";
 import type {
   PartnerImage,
   PartnerTitle,
@@ -288,6 +288,7 @@ export default async function Page({ params }: { params: Params }) {
         {/* ✅ CMS Experts from this industry */}
         <OurCmsExpertsWithAnimation
           title={cmsTitle}
+          descriptionHtml={industry?.Tech_Stack?.ExpertiseTitle?.[0]?.Description ?? ""}
           items={cmsItems as never}
         />
 

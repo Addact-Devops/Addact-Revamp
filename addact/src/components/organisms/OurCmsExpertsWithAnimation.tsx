@@ -8,6 +8,7 @@ import {
 } from "@/graphql/queries/getCmsExperts";
 import Image from "../atom/image";
 import RichText from "../atom/richText";
+import TechReveal from "../atom/TechReveal";
 
 /* ✅ optional props to override with industry data (includes required fields) */
 type OverrideItem = {
@@ -149,11 +150,14 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
     <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] cms-list">
       <div className="container">
         <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-          <h2 className="w-full lg:w-[40%] border-after !text-[36px] xl:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
-            {data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title}
+          <h2 className="w-full lg:w-[40%] border-after text-[36px]! xl:text-[38px]! 2xl:text-[60px]! pb-4! xl:pb-10! text-black border-black/10">
+            <TechReveal 
+                text={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title || "Our CMS Expertise"} 
+                duration={0.8} 
+            />
           </h2>
 
-          <div className="w-full text-left">
+          <div className="w-full text-left text-zinc-600 text-[18px] 2xl:text-[22px] leading-relaxed">
             <RichText
               html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description}
             />
@@ -183,16 +187,16 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
                   href={service?.Links?.href}
                   target={service?.Links?.isExternal ? "_blank" : "_self"}
                   // 🔥 Animate the ENTIRE card (0 → 1) when grid enters view
-                  className={`card-zoom ${
+                  className={`card-zoom group ${
                     playCards ? "play" : ""
-                  } bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
+                  } bg-white border border-zinc-200 py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-all duration-300 hover:border-brand-blue/30 hover:shadow-xl hover:shadow-brand-blue/5`}
                 >
                   <Image
                     src={service?.Icons?.url}
                     alt={service?.Icons?.alternativeText || "Service Icon"}
                     width={service?.Icons?.width}
                     height={service?.Icons?.height}
-                    className="w-[113px] md:w-[310px]"
+                    className="w-[113px] md:w-[310px] cms-logo-filter"
                     unoptimized={false}
                   />
                 </Link>

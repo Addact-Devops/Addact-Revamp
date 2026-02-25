@@ -70,32 +70,41 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
     };
 
     return (
-        <section ref={sectionRef} className="py-[70px] sm:py-[90px]" id="who-we-are">
-            <div className="container">
+        <section ref={sectionRef} className="py-[70px] sm:py-[90px] bg-white relative overflow-hidden" id="who-we-are">
+            {/* Ambient blobs */}
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-[#3C4CFF]/4 blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#3C4CFF]/3 blur-[100px] pointer-events-none" />
+
+            <div className="container relative z-10">
                 <div className="flex flex-col md:flex-row items-center gap-[50px] md:gap-[70px] lg:gap-[100px]">
 
                     {/* Image — desktop */}
-                    <div className="w-full md:w-[45%] hidden md:block shrink-0">
+                    <div className="w-full md:w-[45%] hidden md:block shrink-0 relative">
+                        {/* Decorative frame */}
+                        <div className="absolute -bottom-5 -left-5 w-full h-full rounded-2xl border-2 border-[#3C4CFF]/15 pointer-events-none" />
+
                         <img
                             src={image.url}
                             alt={image.alternativeText || "We Are Addact"}
-                            className="rounded-2xl w-full h-auto object-cover shadow-lg"
+                            className="rounded-2xl w-full h-auto object-cover shadow-2xl shadow-black/10 relative z-10"
                         />
                     </div>
 
                     {/* Text */}
                     <div className="w-full md:w-[55%]">
-                        {/* Pill label */}
-                        <div className="inline-flex items-center gap-[8px] text-[#3C4CFF] text-[12px] font-semibold uppercase tracking-[2px] mb-[12px]">
+                        {/* Subtitle label */}
+                        <p className="text-[#3C4CFF] text-[12px] font-semibold uppercase tracking-[2px] mb-5">
                             {subtitle}
-                        </div>
+                        </p>
 
-                        <h2 className="text-zinc-900 font-bold text-[28px] md:text-[38px] 2xl:text-[50px] leading-[1.15] mb-[22px]">
+                        <h2 className="text-zinc-900 font-bold text-[28px] md:text-[38px] 2xl:text-[50px] leading-[1.15] mb-3">
                             {title}
                         </h2>
 
+                        <div className="w-10 h-[3px] bg-[#3C4CFF] rounded-full mb-6" />
+
                         {/* Image — mobile */}
-                        <div className="block md:hidden mb-[22px]">
+                        <div className="block md:hidden mb-6 relative">
                             <img
                                 src={image.url}
                                 alt={image.alternativeText || "We Are Addact"}
@@ -113,15 +122,21 @@ const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberC
                             ))}
                         </div>
 
-                        {/* Stats grid */}
+                        {/* Stats grid — premium */}
                         {numberContent.length > 0 && (
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-px bg-zinc-200/50 rounded-2xl overflow-hidden border border-black/10 shadow-sm">
+                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                                 {numberContent.map((item, index) => (
-                                    <div key={index} className="bg-white px-[20px] py-[22px] text-center sm:text-left hover:bg-zinc-50 transition-colors duration-300">
-                                        <div className="text-[#3C4CFF] font-black text-[32px] md:text-[40px] leading-none mb-[6px] tabular-nums">
+                                    <div
+                                        key={index}
+                                        className="group/stat relative bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-5 hover:border-[#3C4CFF]/30 hover:shadow-lg hover:shadow-[#3C4CFF]/8 transition-all duration-300 overflow-hidden"
+                                    >
+                                        {/* Subtle blue corner */}
+                                        <div className="absolute top-0 right-0 w-12 h-12 bg-gradient-to-br from-[#3C4CFF]/5 to-transparent rounded-bl-2xl" />
+
+                                        <div className="text-[#3C4CFF] font-black text-[32px] md:text-[38px] leading-none mb-1.5 tabular-nums group-hover/stat:scale-105 transition-transform duration-300 origin-left">
                                             {counts[index]}+
                                         </div>
-                                        <p className="text-zinc-500 text-[13px] leading-snug font-semibold uppercase tracking-wider">
+                                        <p className="text-zinc-400 text-[11px] font-semibold uppercase tracking-wider leading-snug">
                                             {item.Content}
                                         </p>
                                     </div>

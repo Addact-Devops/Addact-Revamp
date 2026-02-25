@@ -23,7 +23,7 @@ const IndustriesWeServe = dynamic(
 export default function SiteDetailClient({ data }: { data: SubServicePage }) {
   const bannerData = data.HeroBanner;
   return (
-    <main className="bg-dark">
+    <main className="bg-white text-black">
       <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
         description={

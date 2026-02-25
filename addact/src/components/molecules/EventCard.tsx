@@ -59,15 +59,22 @@ export default function EventCard({
 
                 {/* Content Column */}
                 <div className="flex-1 flex flex-col justify-center p-6 md:p-12 xl:p-16 relative z-10 bg-white">
-                    <div className="flex items-center gap-4 mb-6">
+                    <div className="flex flex-wrap items-center gap-4 mb-6">
                         {pageType && (
                             <Badge variant="outline" className="text-[10px] uppercase tracking-widest text-[#3C4CFF] border-[#3C4CFF]/20 font-bold">
                                 {pageType}
                             </Badge>
                         )}
                         {date && (
-                            <span className="text-zinc-400 text-[14px] font-medium tracking-wide">
+                            <span className="flex items-center gap-1.5 text-zinc-400 text-[14px] font-medium tracking-wide">
+                                <CalendarDays size={14} className="text-[#3C4CFF] shrink-0" />
                                 {date}
+                            </span>
+                        )}
+                        {location && (
+                            <span className="flex items-center gap-1.5 text-zinc-400 text-[14px] font-medium tracking-wide">
+                                <MapPin size={14} className="text-[#3C4CFF] shrink-0" />
+                                {location}
                             </span>
                         )}
                     </div>

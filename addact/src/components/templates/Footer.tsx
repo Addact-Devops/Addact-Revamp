@@ -68,45 +68,35 @@ export default function Footer({ data }: FooterProps) {
 
     return (
         <>
-            {/* Mobile Contact Info + Background */}
-            <div className="block lg:hidden relative bg-[#0F0F0F] p-[40px] px-[25px]">
+            {/* Mobile Contact Section */}
+            <div className="block lg:hidden relative bg-[#0F0F0F] p-[40px] px-[25px] border-t border-white/10">
                 {AddressInformationMobileBgImg?.[0]?.Image?.url && (
                     <Image
                         src={AddressInformationMobileBgImg[0].Image.url}
                         alt={AddressInformationMobileBgImg[0].Image.alternativeText || "Mobile Background"}
                         width={AddressInformationMobileBgImg[0].Image.width || 600}
                         height={AddressInformationMobileBgImg[0].Image.height || 600}
-                        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                        className="absolute top-0 left-0 w-full h-full object-cover z-0 opacity-10"
                     />
                 )}
                 <div className="relative text-white">
-                    {/* Title Block - Contact Info */}
                     {AddressInformation?.[0] && (
-                        <div>
+                        <div className="mb-5">
                             {AddressInformation[0].Title && (
-                                <div className="text-[28px] font-normal mb-[12px]">{AddressInformation[0].Title}</div>
+                                <div className="text-[11px] font-bold text-white uppercase tracking-widest mb-1">{AddressInformation[0].Title}</div>
                             )}
                             {AddressInformation[0].Description && (
-                                <div
-                                    className="text-[14px] font-normal"
-                                    dangerouslySetInnerHTML={{ __html: AddressInformation[0].Description }}
-                                />
+                                <div className="text-[14px] font-normal text-white/60" dangerouslySetInnerHTML={{ __html: AddressInformation[0].Description }} />
                             )}
                         </div>
                     )}
-
-                    {/* Grid for India and United States */}
-                    <div className="grid grid-cols-2 gap-[15px] mt-6">
+                    <div className="grid grid-cols-2 gap-[15px] mt-4">
                         {AddressInformation?.slice(1, 3).map((item, i) => (
                             <div key={i}>
-                                {item?.Title && (
-                                    <div className="lg:text-[28px] text-[16px] font-[600] mb-[10px]">{item.Title}</div>
-                                )}
+                                {item?.Title && <div className="text-[11px] font-bold text-white uppercase tracking-widest mb-1">{item.Title}</div>}
                                 {item?.Description && (
-                                    <div
-                                        className="text-[14px] font-normal footer-richtext"
-                                        dangerouslySetInnerHTML={{ __html: item.Description }}
-                                    />
+                                    <div className="text-[13px] font-normal text-white/55 footer-richtext"
+                                        dangerouslySetInnerHTML={{ __html: item.Description }} />
                                 )}
                             </div>
                         ))}
@@ -114,84 +104,73 @@ export default function Footer({ data }: FooterProps) {
                 </div>
             </div>
 
-            {/* Main Footer starts here */}
-            <footer className="relative bg-[#0F0F0F] text-white lg:py-[60px] py-[40px] border-t border-b border-white/15 z-[4]">
-                {/* Desktop BG Image */}
+            {/* ════════════ MAIN FOOTER ════════════ */}
+            <footer className="relative bg-[#0F0F0F] text-white z-[4] overflow-hidden">
+
+                {/* Glow blobs */}
+                <div className="absolute inset-0 pointer-events-none z-0">
+                    <div className="absolute top-0 left-[30%] w-[600px] h-[300px] bg-[#3C4CFF]/[0.06] blur-[100px]" />
+                </div>
+
+                {/* Watermark */}
                 {BackGroundImage?.Image?.url && (
                     <Image
                         src={BackGroundImage.Image.url}
-                        alt="footer background"
+                        alt=""
                         width={1200}
                         height={1200}
-                        className="absolute bottom-0 right-0 
-                        max-h-[400px] h-full w-auto z-0 object-cover opacity-100 
-                        scale-x-[-1] 
-                        md:top-0 md:left-0 md:bottom-auto md:right-auto 
-                        md:max-h-none md:scale-x-100"
+                        className="absolute top-0 left-0 h-full w-auto z-0 opacity-[0.05] pointer-events-none select-none"
                     />
                 )}
 
-                <div className="container">
-                    <div className="pl-0 relative grid grid-cols-12">
-                        {/* Logo and Slogan */}
-                        <div className="col-span-12 lg:col-span-3 flex flex-col justify-start">
+                {/* Top gradient line */}
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-[#3C4CFF]/60 to-transparent" />
+
+                {/* ────── Section 1: Logo + Nav Links ────── */}
+                <div className="relative z-[1] container py-12 lg:py-16">
+                    <div className="grid grid-cols-12 gap-8 xl:gap-12">
+
+                        {/* Logo col */}
+                        <div className="col-span-12 lg:col-span-3">
                             {Logo?.Image?.url && (
-                                <Link href="/" className="cursor-pointer">
+                                <Link href="/" className="inline-block mb-4">
                                     <Image
                                         src={Logo.Image.url}
-                                        alt={Logo.Image.alternativeText || ""}
+                                        alt={Logo.Image.alternativeText || "Logo"}
                                         width={380}
                                         height={47}
-                                        className="
-                                    mb-[10px]
-                                    sm:mb-[15px]
-                                    lg:mb-[20px]
-                                    w-[120px] h-auto
-                                    sm:w-[150px]
-                                    lg:w-[200px]
-                                    xl:w-[320px]
-                                    2xl:w-[380px] 2xl:h-[47px]
-                                    "
+                                        className="w-[140px] lg:w-[160px] xl:w-[200px] h-auto brightness-0 invert"
                                     />
                                 </Link>
                             )}
                             {SiteSlog && (
-                                <p
-                                    className="
-                                    text-[12px]
-                                    sm:text-[14px]
-                                    lg:text-[16px]
-                                    xl:text-[20px]
-                                    2xl:text-[24px]
-                                    font-normal text-white
-                                    "
-                                >
+                                <p className="text-[14px] text-white/70 leading-relaxed mb-4 max-w-[180px]">
                                     {SiteSlog}
                                 </p>
                             )}
+                            <span className="inline-block w-6 h-[2px] bg-[#3C4CFF] rounded-full" />
                         </div>
 
-                        {/* Links */}
-                        <div className="col-span-12 lg:col-span-9 2xl:pl-[142px] 2xl:pr-[35px] xl:pl-[108px] xl:pr-[0px]">
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-0">
+                        {/* Nav link columns */}
+                        <div className="col-span-12 lg:col-span-9">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
                                 {footerlinks?.slice(0, 4).map((column, index) => {
                                     const links = column.NavLink || [];
                                     const titleItem = links[0] as { Title?: string };
                                     const linkItems = links.slice(1) as FooterLink[];
-
                                     return (
                                         <div key={index}>
-                                            <div className="text-[16px] lg:text-[18px] xl:text-[20px] 2xl:text-[24px] font-semibold lg:mb-6 mb-2 mt-[25px] lg:mt-0">
+                                            <p className="text-[9px] font-semibold uppercase tracking-[0.22em] text-white mb-3">
                                                 {titleItem?.Title}
-                                            </div>
-                                            <ul className="lg:space-y-[15px] space-y-[5px]">
+                                            </p>
+                                            <ul className="space-y-[10px]">
                                                 {linkItems.map((link, i) => (
                                                     <li key={link.id || i}>
                                                         <Link
                                                             href={link.href || "/"}
                                                             target={link?.isExternal ? "_blank" : "_self"}
                                                             rel={link.isExternal ? "noopener noreferrer" : undefined}
-                                                            className="2xl:text-[20px] xl:text-[18px] md:text-[17px] text-[16px] text-[#AEAEAE] font-medium hover:text-white"
+                                                            className="text-[12px] lg:text-[13px] text-white/75 hover:text-white transition-colors duration-200 block"
                                                         >
                                                             {link.label}
                                                         </Link>
@@ -202,19 +181,47 @@ export default function Footer({ data }: FooterProps) {
                                     );
                                 })}
                             </div>
+                        </div>
+                    </div>
+                </div>
 
-                            {/* Desktop Address Info */}
-                            <div className="hidden lg:grid 2xl:grid-cols-4 lg:grid-cols-3 2xl:gap-4 xl:gap-6 mt-[60px]">
-                                {AddressInformation?.filter(Boolean).map((item, i) => (
+                {/* Separator */}
+                <div className="relative z-[1] container">
+                    <div className="border-t border-white/[0.07]" />
+                </div>
+
+                {/* ────── Section 2: Address Strip (aligned to same grid) ────── */}
+                <div className="relative z-[1] container hidden lg:block py-7">
+                    <div className="grid grid-cols-12 gap-8 xl:gap-12">
+
+                        {/* CONTACT INFO — under logo */}
+                        <div className="col-span-3">
+                            {AddressInformation?.[0]?.Title && (
+                                <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white mb-1.5">
+                                    {AddressInformation[0].Title}
+                                </p>
+                            )}
+                            {AddressInformation?.[0]?.Description && (
+                                <div
+                                    className="custom-html-content text-[11px] text-white/75 leading-relaxed"
+                                    dangerouslySetInnerHTML={{ __html: AddressInformation[0].Description }}
+                                />
+                            )}
+                        </div>
+
+                        {/* INDIA + UNITED STATES — under nav columns */}
+                        <div className="col-span-9">
+                            <div className="grid grid-cols-4 gap-8">
+                                {AddressInformation?.slice(1).filter(Boolean).map((item, i) => (
                                     <div key={i}>
                                         {item?.Title && (
-                                            <div className="2xl:text-[24px] xl:text-[20px] md:text-[18px] font-semibold mb-6">
+                                            <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-white mb-1.5">
                                                 {item.Title}
-                                            </div>
+                                            </p>
                                         )}
                                         {item?.Description && (
                                             <div
-                                                className="custom-html-content"
+                                                className="custom-html-content text-[11px] text-white/75 leading-relaxed"
                                                 dangerouslySetInnerHTML={{ __html: item.Description }}
                                             />
                                         )}
@@ -223,47 +230,50 @@ export default function Footer({ data }: FooterProps) {
                             </div>
                         </div>
 
-                        {/* Bottom Row */}
-                        <div className="col-span-12 flex flex-col-reverse 2xl:grid lg:grid-cols-12 lg:mt-12 2xl:gap-6 lg:gap-[50px] items-end">
-                            {/* Copyright - shown last on mobile */}
-                            {CopyrightText && (
-                                <div className="w-full lg:col-span-5 2xl:text-left text-center lg:text-[18px] text-[14px] font-medium text-[#AEAEAE]">
-                                    {CopyrightText}
-                                </div>
-                            )}
-
-                            {/* Milestones - shown first on mobile */}
-                            {(milestonestitle?.CommonTitle?.[0]?.Title ||
-                                milestonesimage?.some((i) => i.Image?.url)) && (
-                                <div className="w-full lg:col-span-6 2xl:text-left md:text-center mb-[40px] lg:mb-0 ml-[95px]">
-                                    <div className="text-[16px] md:text-[22px] xl:text-[24px] font-semibold 2xl:mb-[50px] xl:mb-[20px] mb-[15px] mt-[25px] lg:mt-0">
-                                        {milestonestitle?.CommonTitle?.[0]?.Title}
-                                    </div>
-                                    <div className="flex flex-wrap gap-[14px] lg:gap-[40px] 2xl:gap-[55px]  md:justify-center 2xl:justify-start">
-                                        {milestonesimage
-                                            ?.filter((m) => m.Image?.url)
-                                            .map((item, i) => (
-                                                <Image
-                                                    key={i}
-                                                    src={item.Image!.url!}
-                                                    alt={item.Image!.alternativeText || ""}
-                                                    width={item.Image!.width || 100}
-                                                    height={item.Image!.height || 100}
-                                                    className="
-                                                    max-w-[50px]
-                                                    sm:max-w-[70px]
-                                                    lg:max-w-[90px]
-                                                    xl:max-w-[100px]
-                                                    h-auto object-contain
-                                                "
-                                                />
-                                            ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
                     </div>
                 </div>
+
+                {/* Separator */}
+                <div className="relative z-[1] container">
+                    <div className="border-t border-white/[0.07]" />
+                </div>
+
+                {/* ────── Section 3: Milestones + Copyright ────── */}
+                <div className="relative z-[1] container py-5 flex flex-col sm:flex-row items-center justify-between gap-5">
+                    {/* Milestones */}
+                    {(milestonestitle?.CommonTitle?.[0]?.Title || milestonesimage?.some((i) => i.Image?.url)) && (
+                        <div className="flex flex-wrap items-center gap-4">
+                            {milestonestitle?.CommonTitle?.[0]?.Title && (
+                                <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50 whitespace-nowrap">
+                                    {milestonestitle.CommonTitle[0].Title}
+                                </span>
+                            )}
+                            <div className="flex flex-wrap gap-2 items-center">
+                                {milestonesimage?.filter((m) => m.Image?.url).map((item, i) => (
+                                    <div key={i} className="p-1.5 rounded-lg border border-white/[0.07] hover:border-[#3C4CFF]/40 transition-colors duration-200">
+                                        <Image
+                                            src={item.Image!.url!}
+                                            alt={item.Image!.alternativeText || ""}
+                                            width={item.Image!.width || 100}
+                                            height={item.Image!.height || 100}
+                                            className="max-w-[44px] lg:max-w-[52px] h-auto object-contain"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Copyright */}
+                    {CopyrightText && (
+                        <p className="text-[12px] text-white/55 text-center sm:text-right">
+                            {CopyrightText}
+                        </p>
+                    )}
+                </div>
+
+                {/* Bottom line */}
+                <div className="h-px bg-gradient-to-r from-transparent via-[#3C4CFF]/30 to-transparent" />
             </footer>
         </>
     );

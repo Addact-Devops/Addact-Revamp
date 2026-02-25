@@ -34,7 +34,11 @@ export default async function CareersPage() {
                 />
             )}
 
-            <main className="bg-[#f4f4f4] pb-[60px] sm:pb-[100px]">
+            <main className="relative bg-white pb-[60px] sm:pb-[100px] overflow-hidden">
+                {/* Global ambient background lights */}
+                <div className='absolute top-[20%] right-[-10%] w-[600px] h-[600px] bg-[#3C4CFF]/5 blur-[120px] rounded-full pointer-events-none' />
+                <div className='absolute bottom-[10%] left-[-5%] w-[500px] h-[500px] bg-[#3C4CFF]/5 blur-[100px] rounded-full pointer-events-none' />
+
                 {banner && (
                     <HeroBanner
                         title={banner.BannerTitle || ""}

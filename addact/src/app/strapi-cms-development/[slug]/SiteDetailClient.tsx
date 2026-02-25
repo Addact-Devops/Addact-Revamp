@@ -25,7 +25,7 @@ const SiteDetailClient = ({ data }: SiteDetailClientProps) => {
     const bannerData = data.HeroBanner;
 
     return (
-        <main className='bg-dark'>
+        <main className='bg-white text-black'>
             <HeroBanner
                 title={bannerData?.BannerTitle ?? ""}
                 description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}

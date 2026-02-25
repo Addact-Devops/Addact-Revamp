@@ -78,27 +78,32 @@ const GET_EVENT_DETAIL_PAGE = gql`
                 NameLable
                 RequirementsLabel
                 RecipientEmails
-                PhoneLabel
-                Form {
-                    ... on ComponentBaseTemplatePromo {
+            social_icons {
+                SocialIcon {
+                    ... on ComponentBaseTemplateLinkImage {
                         Title
-                        Description
+                        Links {
+                            href
+                            id
+                            isExternal
+                            label
+                        }
+                        Icons {
+                            alternativeText
+                            height
+                            name
+                            url
+                            width
+                        }
+                        HoverIcon {
+                            alternativeText
+                            height
+                            name
+                            url
+                            width
+                        }
                     }
                 }
-            }
-            SEO {
-                metaTitle
-                metaDescription
-                ogTitle
-                ogDescription
-                ogImage {
-                    url
-                }
-                metaRobots
-                twitterCardTitle
-                canonicalURL
-                structuredData
-                languageTag
             }
         }
     }
