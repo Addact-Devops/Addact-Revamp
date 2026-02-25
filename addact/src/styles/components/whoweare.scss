@@ -1,7 +1,7 @@
-@import "../base/variables";
-@import "../base/mixins";
-@import "../base/typography";
-@import "../base/functions";
+@use "../base/variables" as *;
+@use "../base/mixins" as *;
+@use "../base/functions" as *;
+@use "../base/typography" as *;
 
 .who-we-are {
     .fade-in {

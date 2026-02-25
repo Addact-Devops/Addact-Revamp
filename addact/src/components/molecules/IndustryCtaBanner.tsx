@@ -45,15 +45,15 @@ const IndustryCtaBanner = ({ data }: IProps) => {
   return (
     <section className="relative overflow-hidden">
       <div
-        className="cta-bg text-white w-full h-full shadow-md bg-no-repeat bg-cover bg-center"
+        className="cta-bg text-white w-full shadow-md bg-no-repeat bg-cover bg-center md:bg-bottom-right"
         // pass both URLs as CSS variables; CSS below chooses per breakpoint
         style={bgVars}
       >
         <div className="container">
-          <div className="pb-[150px] md:pb-8 lg:pb-32 xl:pt-0 pt-16">
+          <div className="flex flex-col justify-center min-h-[350px] md:min-h-[400px] 2xl:min-h-[550px] py-16 md:py-20 lg:py-24">
             <motion.h2 
-                className="text-[30px]! lg:text-[40px]! 2xl:text-[60px]! w-full md:w-[350px] lg:w-[700px]! 2xl:w-[700px] lg:leading-14! 2xl:leading-[85px]!"
-                initial={{ opacity: 0, y: 40 }}
+                className="text-[28px]! md:text-[40px]! 2xl:text-[60px]! w-full max-w-[850px] leading-tight! md:leading-[1.2]! 2xl:leading-[1.1]! mb-6 font-bold"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
@@ -61,26 +61,26 @@ const IndustryCtaBanner = ({ data }: IProps) => {
               {data.Title[0].h2}
             </motion.h2>
             <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-              className="relative inline-block mt-[24px] lg:mt-5 xl:mt-12"
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+              className="relative inline-block"
             >
                 {/* Ripple ring 1 */}
                 <motion.div
-                    className="absolute inset-0 rounded pointer-events-none"
-                    animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
-                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute inset-0 rounded-lg pointer-events-none"
+                    animate={{ scale: [1, 1.6, 1], opacity: [0.4, 0, 0.4] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                     style={{ background: "radial-gradient(circle, rgba(60,76,255,0.4) 0%, transparent 70%)" }}
                 />
                 
                 <Link href={href} target={target}>
-                <button className="relative bg-[#3C4CFF] text-white text-[16px] lg:text-lg px-4 py-2 lg:px-5 lg:py-4 rounded hover:bg-[#3440CB] flex items-center gap-5 font-semibold cursor-pointer border-none transition-all duration-300">
+                <button className="relative bg-[#3C4CFF] text-white text-[16px] lg:text-lg px-8 py-3 lg:px-10 lg:py-4 rounded-lg hover:bg-[#3440CB] flex items-center gap-5 font-bold cursor-pointer border-none transition-all duration-300 shadow-xl shadow-brand-blue/20">
                     {label}
                     <motion.span
                         animate={{ x: [0, 5, 0] }}
-                        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     >
                         <RightArrowIcon />
                     </motion.span>

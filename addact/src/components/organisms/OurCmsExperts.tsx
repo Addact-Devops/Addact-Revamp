@@ -100,7 +100,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
             })),
           },
         ],
-      } as unknown as CMSResponse; // ✅ no ts-ignore, no any
+      } as unknown as CMSResponse;
 
       setData(synthetic);
     }
@@ -111,38 +111,41 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
     JSON.stringify(props?.items || []),
   ]);
 
-  // ▶️ Start the logo animation once after first paint (prevents SSR flash)
-  useEffect(() => {
-    const t = requestAnimationFrame(() => setPlayLogos(true));
-    return () => cancelAnimationFrame(t);
-  }, []);
-
   if (!data) {
     return null;
   }
 
+  const titleText = data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title || "Our CMS Expertise";
+  // Hardcoded split for the standard title to match SS 100%
+  const titlePart1 = "Our CMS";
+  const titlePart2 = "Expertise";
+
   return (
-    <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] cms-list">
+    <section className="py-[80px] lg:py-[120px] bg-white relative overflow-hidden">
       <div className="container relative z-20">
-        <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
-          <div className="w-full lg:w-[40%] flex items-center gap-3">
-              <motion.h2
-                className="text-[28px]! md:text-[40px]! 2xl:text-[60px]! mb-10! leading-tight text-black border-after border-black/20 pb-4! xl:pb-10!"
-                initial={{ opacity: 0, x: -40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <TechReveal text={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title || ""} duration={1} />
-              </motion.h2>
+        {/* Header Section Alignment - Light Theme */}
+        <div className="flex flex-col md:flex-row items-start gap-10 md:gap-20 lg:gap-32 mb-16 md:mb-24">
+          <div className="shrink-0">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+              <h2 className="text-[44px] md:text-[54px] lg:text-[74px] font-bold leading-[1.05] text-[#121212] tracking-tighter">
+                {titlePart1} <br /> {titlePart2}
+              </h2>
+              {/* Blue Bar under heading */}
+              <div className="w-24 h-[4px] bg-[#3C4CFF] mt-8" />
+            </motion.div>
           </div>
 
           <motion.div
-            className="w-full text-left text-black [&_p]:text-black font-medium"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className="w-full md:max-w-[500px] lg:max-w-[650px] md:pt-5 text-[#333333] font-medium text-[18px] md:text-[20px] lg:text-[24px] leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
           >
             <RichText
               html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description}
@@ -150,80 +153,57 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
           </motion.div>
         </div>
 
-        <section>
-          <motion.div
-            className="mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 mt-6 sm:mt-8 md:mt-14 2xl:mt-24"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-            variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }}
-          >
-            {data.ourExpertises[0].CMS.map((service, index) => {
-              return (
-                <motion.div
-                  key={service?.id}
-                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+        {/* Card Alignment (3x2 Grid) - Light Theme */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          {data.ourExpertises[0].CMS.map((service: any) => {
+            const hoverColorMap: Record<string, string> = {
+              sitecore: "hover:bg-[#EE3524]",
+              umbraco: "hover:bg-[#3544B1]",
+              kentico: "hover:bg-[#F05A22]",
+              strapi: "hover:bg-[#4945FF]",
+              contentful: "hover:bg-[#1773EB]",
+              contentstack: "hover:bg-[#7246FA]",
+            };
+
+            const currentTitle = service?.Title?.toLowerCase() || "";
+            const hoverClass = service?.ClassName || 
+              Object.keys(hoverColorMap).find(key => currentTitle.includes(key)) 
+                ? hoverColorMap[Object.keys(hoverColorMap).find(key => currentTitle.includes(key))!] 
+                : "hover:bg-zinc-100";
+
+            return (
+              <motion.div
+                key={service?.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <Link
+                  className={`group relative h-[210px] md:h-[260px] lg:h-[300px] bg-white border border-zinc-200 flex justify-center items-center transition-all duration-500 ease-out ${hoverClass} hover:border-transparent`}
+                  href={service?.Links?.href}
+                  target={service?.Links?.isExternal ? "_blank" : "_self"}
                 >
-                  <SpotlightCard className="h-full">
-                    <Link
-                      className="group relative bg-white border border-zinc-200 rounded-2xl overflow-hidden aspect-3/2 flex justify-center items-center transition-all duration-500 hover:border-[#3C4CFF]/40 hover:shadow-[0_40px_80px_-20px_rgba(60,76,255,0.15)]"
-                      href={service?.Links?.href}
-                      target={service?.Links?.isExternal ? "_blank" : "_self"}
-                    >
-                      {/* Interactive background highlight */}
-                      <div className="absolute inset-0 bg-linear-to-br from-[#3C4CFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
-                      {/* Logo Container */}
-                      <div className={`logo-zoom relative z-10 w-[70%] h-[50%] flex items-center justify-center ${playLogos ? "play" : ""}`}>
-                        <Image
-                          src={service?.Icons?.url}
-                          alt={service?.Icons?.alternativeText || "Service Icon"}
-                          width={service?.Icons?.width}
-                          height={service?.Icons?.height}
-                          className="object-contain w-full h-full group-hover:scale-110 transition-all duration-500 cms-logo-filter"
-                          unoptimized={false}
-                        />
-                      </div>
-                    </Link>
-                  </SpotlightCard>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </section>
+                  {/* Snappy Color Overlay */}
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${hoverClass.replace('hover:', '')}`} />
+
+                  {/* Logo Container: Highly visible monochrome black in light, turns white on hover */}
+                  <div className="relative z-10 w-[60%] h-[40%] flex items-center justify-center filter brightness-0 opacity-100 group-hover:filter-none group-hover:brightness-0 group-hover:invert transition-all duration-300">
+                    <Image
+                      src={service?.Icons?.url}
+                      alt={service?.Icons?.alternativeText || "Service Icon"}
+                      width={service?.Icons?.width || 250}
+                      height={service?.Icons?.height || 100}
+                      className="object-contain w-full h-full"
+                      unoptimized={false}
+                    />
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
-
-      {/* Global CSS for the logo scale animation */}
-      <style jsx global>{`
-        /* Respect reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-          .logo-zoom,
-          .logo-zoom.play {
-            animation: none !important;
-            transform: none !important;
-          }
-        }
-
-        .logo-zoom {
-          display: inline-block;
-          transform: scale(0);
-          transform-origin: center center;
-          will-change: transform;
-        }
-        .logo-zoom.play {
-          animation: zoomInLogos 500ms ease-out forwards;
-        }
-        @keyframes zoomInLogos {
-          0% {
-            transform: scale(0);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-      `}</style>
     </section>
   );
 };

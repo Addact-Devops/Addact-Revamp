@@ -1,51 +1,48 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { OurProcessData } from "@/graphql/queries/getOurProcess";
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { 
+  motion, 
+  useScroll, 
+  useMotionValueEvent, 
+  AnimatePresence 
+} from "framer-motion";
 import dynamic from "next/dynamic";
 import TechReveal from "../atom/TechReveal";
 
-import { 
-  ClipboardList, 
-  Paintbrush, 
-  Code2, 
-  ShieldCheck, 
-  Rocket, 
-  Settings
-} from "lucide-react";
-
 const NeuralParticles = dynamic(() => import("../atom/NeuralParticles"), { ssr: false });
-
-const stepIcons = [
-  ClipboardList,
-  Paintbrush,
-  Code2,
-  ShieldCheck,
-  Rocket,
-  Settings
-];
 
 export default function OurProcess(props: {
   data?: OurProcessData["home"]["ourprocess"];
 }) {
-  const [data, setData] = useState<OurProcessData["home"]["ourprocess"]>();
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeStep, setActiveStep] = useState(0);
 
-  useEffect(() => {
-    setData(props.data);
-  }, [props.data]);
+  const data = props.data;
+  const processData = data?.ProcessData || [];
+
+  const totalSteps = processData.length;
+  // Dynamic height based on number of steps (e.g., 60vh per step)
+  const sectionHeight = `${totalSteps * 60}vh`;
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start start", "end end"]
   });
 
-  const scaleY = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (totalSteps <= 1) return;
+    const step = Math.min(
+      Math.floor(latest * totalSteps),
+      totalSteps - 1
+    );
+    if (step !== activeStep && step >= 0) {
+      setActiveStep(step);
+    }
   });
+
+  if (processData.length === 0) return null;
 
   const getTitle = () => {
     const title = data?.Title?.[0];
@@ -60,124 +57,130 @@ export default function OurProcess(props: {
     );
   };
 
-  const processData = data?.ProcessData || [];
-
   return (
-    <section ref={containerRef} className="relative py-20 md:py-40 bg-white overflow-hidden">
-      
-      {/* Background Ambience */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-          <NeuralParticles count={30} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={150} />
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(60,76,255,0.02)_0%,transparent_70%)]" />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
+    <section 
+      ref={containerRef} 
+      className="relative bg-white"
+      style={{ height: sectionHeight }}
+    >
+      {/* Sticky Content Wrapper */}
+      <div className="sticky top-0 h-screen w-full flex items-center overflow-hidden">
         
-        {/* Section Header */}
-        <div className="text-center mb-24 md:mb-40">
-            <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="flex items-center justify-center gap-3 mb-6"
-            >
-                <div className="w-10 h-px bg-brand-blue/30" />
-                <span className="text-brand-blue text-xs md:text-sm font-bold uppercase tracking-[0.4em]">The Methodology</span>
-                <div className="w-10 h-px bg-brand-blue/30" />
-            </motion.div>
-            <h2 className="text-4xl md:text-6xl lg:text-8xl font-black text-black tracking-tighter uppercase leading-none">
-                <TechReveal text={getTitle()} />
-            </h2>
+        {/* Background Atmosphere */}
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.02]">
+          <NeuralParticles count={30} color="60, 76, 255" lineColor="60, 76, 255" />
         </div>
 
-        {/* Zig-Zag Timeline */}
-        <div className="relative max-w-7xl mx-auto">
+        <div className="container mx-auto px-6 relative z-10">
+          
+          {/* Top Header Section */}
+          {getTitle() && (
+            <div className="mb-12 md:mb-20">
+              <div className="max-w-4xl">
+                <h2 className="text-[32px] md:text-[60px] lg:text-7xl font-black text-black tracking-tight leading-[1.1] mb-2 md:mb-4 uppercase">
+                  <TechReveal text={getTitle()} duration={1.2} />
+                </h2>
+              </div>
+            </div>
+          )}
+
+          {/* Main Grid: Sidebar + Single Card Display */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             
-            {/* Central Line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-zinc-100 -translate-x-1/2 hidden md:block">
-                <motion.div 
-                    className="absolute top-0 left-0 w-full bg-brand-blue origin-top"
-                    style={{ height: "100%", scaleY }}
-                />
-            </div>
-
-            {/* Steps */}
-            <div className="flex flex-col gap-24 md:gap-40">
-                {processData.map((step, index) => {
-                    const isEven = index % 2 === 0;
-                    const Icon = stepIcons[index % stepIcons.length];
-                    const phaseNumber = (index + 1).toString().padStart(2, '0');
-
-                    return (
-                        <div key={index} className={`flex flex-col md:flex-row items-center gap-10 md:gap-0 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                            
-                            {/* Graphic Side */}
-                            <div className="w-full md:w-1/2 flex justify-center items-center">
-                                <motion.div 
-                                    initial={{ opacity: 0, scale: 0.8, x: isEven ? -40 : 40 }}
-                                    whileInView={{ opacity: 1, scale: 1, x: 0 }}
-                                    viewport={{ once: true, margin: "-100px" }}
-                                    className="relative"
-                                >
-                                    {/* Number Watermark */}
-                                    <span className="absolute -top-10 -left-10 text-9xl font-black text-zinc-50 select-none z-0">
-                                        {phaseNumber}
-                                    </span>
-                                    
-                                    <div className="relative z-10 w-48 h-48 md:w-64 md:h-64 bg-white rounded-[40px] shadow-[0_30px_70px_-20px_rgba(0,0,0,0.08)] border border-zinc-100 flex items-center justify-center group">
-                                        {/* Animated Border Beam */}
-                                        <div className="absolute inset-0 rounded-[40px] border border-brand-blue/0 group-hover:border-brand-blue/20 transition-colors duration-500" />
-                                        
-                                        <Icon size={80} className="text-brand-blue stroke-[1.2] group-hover:scale-110 transition-transform duration-500" />
-                                        
-                                        {/* Corner Label */}
-                                        <div className="absolute -top-4 -right-4 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center font-black italic shadow-xl">
-                                            {phaseNumber}
-                                        </div>
-                                    </div>
-
-                                    {/* Connectivity Dot */}
-                                    <div className={`absolute top-1/2 -translate-y-1/2 ${isEven ? '-right-4 md:-right-8' : '-left-4 md:-left-8'} hidden md:block`}>
-                                        <div className="w-4 h-4 rounded-full bg-white border-2 border-brand-blue shadow-[0_0_15px_rgba(60,76,255,0.3)]" />
-                                    </div>
-                                </motion.div>
-                            </div>
-
-                            {/* Content Side */}
-                            <div className={`w-full md:w-1/2 px-4 md:px-20 text-center ${isEven ? 'md:text-left' : 'md:text-right'}`}>
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, margin: "-100px" }}
-                                    transition={{ delay: 0.2 }}
-                                >
-                                    <span className="inline-block px-4 py-1.5 rounded-full bg-brand-blue/5 text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-6">
-                                        Phase {phaseNumber}
-                                    </span>
-                                    
-                                    <h3 className="text-3xl md:text-5xl lg:text-6xl font-black text-black mb-6 tracking-tighter uppercase leading-tight">
-                                        {step.Title}
-                                    </h3>
-                                    
-                                    <div
-                                        className="text-zinc-600 text-lg md:text-xl lg:text-2xl leading-relaxed font-normal max-w-xl mx-auto md:mx-0"
-                                        dangerouslySetInnerHTML={{ __html: step.Description }}
-                                    />
-
-                                    {/* Tech Line Decor */}
-                                    <div className={`mt-8 flex gap-2 ${isEven ? 'justify-start' : 'justify-end md:justify-end'} justify-center`}>
-                                        <div className="w-12 h-1 bg-brand-blue rounded-full" />
-                                        <div className="w-3 h-1 bg-zinc-100 rounded-full" />
-                                        <div className="w-3 h-1 bg-zinc-100 rounded-full" />
-                                    </div>
-                                </motion.div>
-                            </div>
-
-                        </div>
-                    );
+            {/* Left Sidebar: Fixed Menu */}
+            <aside className="lg:col-span-4 hidden lg:block border-l border-zinc-100 pl-10">
+              <div className="space-y-10 relative">
+                {processData.map((step, idx) => {
+                  const isActive = activeStep === idx;
+                  return (
+                    <button
+                      key={idx}
+                      className="relative flex items-center w-full group transition-all text-left cursor-default pointer-events-none"
+                    >
+                      {/* Active Indicator Bar */}
+                      <AnimatePresence>
+                        {isActive && (
+                          <motion.div 
+                            layoutId="activeBar"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="absolute left-[-41px] w-1.5 h-full bg-brand-blue"
+                            transition={{ duration: 0.3 }}
+                          />
+                        )}
+                      </AnimatePresence>
+                      
+                      <span className={`text-sm xl:text-base font-bold uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? "text-black translate-x-1" : "text-zinc-300"}`}>
+                        {step.Title}
+                      </span>
+                    </button>
+                  );
                 })}
+              </div>
+            </aside>
+
+            {/* Right Section: Animated Single Card Overlay */}
+            <div className="lg:col-span-8 relative min-h-[450px] md:min-h-[400px] flex items-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -50 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="w-full"
+                >
+                  <div className="bg-white rounded-[32px] md:rounded-[40px] border border-zinc-100 p-6 md:p-16 shadow-[0_20px_50px_rgba(0,0,0,0.02)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.06)] transition-shadow duration-500">
+                    <div className="space-y-6 md:space-y-10">
+                      {/* Title Block */}
+                      <div className="space-y-4 md:space-y-6">
+                        <h3 className="text-2xl md:text-5xl lg:text-7xl font-black text-black leading-tight tracking-tighter">
+                          {processData[activeStep]?.Title}
+                        </h3>
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: "100%" }}
+                          className="h-1 bg-brand-blue max-w-[150px] md:max-w-[300px]"
+                        />
+                      </div>
+
+                      {/* Description Text */}
+                      <div 
+                        className="text-zinc-500 text-[15px] md:text-2xl lg:text-3xl leading-relaxed font-medium"
+                        dangerouslySetInnerHTML={{ __html: processData[activeStep]?.Description }}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
+          </div>
+        </div>
+
+        {/* Mobile View Progress Bar */}
+        <div className="absolute top-[15%] left-0 right-0 lg:hidden px-6">
+          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-4 border-b border-zinc-100">
+            {processData.map((step, idx) => (
+                <div
+                    key={idx}
+                    className={`shrink-0 text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeStep === idx ? "text-brand-blue" : "text-zinc-300"}`}
+                >
+                    {(idx + 1).toString().padStart(2, '0')}. {step.Title}
+                </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Mobile Bottom Dot Indicator */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 lg:hidden flex gap-2">
+            {processData.map((_, idx) => (
+                <div 
+                    key={idx}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${activeStep === idx ? "w-8 bg-brand-blue" : "w-1.5 bg-zinc-200"}`}
+                />
+            ))}
         </div>
 
       </div>

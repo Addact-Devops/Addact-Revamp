@@ -80,7 +80,7 @@ function VideoModal({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
-                className="fixed inset-0 z-[9999] flex items-center justify-center p-4 md:p-8"
+                className="fixed inset-0 z-9999 flex items-center justify-center p-4 md:p-8"
                 onClick={onClose}
             >
                 {/* Backdrop */}
@@ -102,7 +102,7 @@ function VideoModal({
                         aria-label="Close video"
                     >
                         <span className="hidden sm:block">Close</span>
-                        <div className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-200 group-hover:rotate-90 transition-transform">
+                        <div className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition duration-200 group-hover:rotate-90">
                             <X size={16} />
                         </div>
                     </button>
@@ -217,16 +217,19 @@ function VideoCard({
                     dangerouslySetInnerHTML={{ __html: video.Content.Description }}
                 />
 
-                {video.Content.Link?.href && (
-                    <a
-                        href={video.Content.Link.href}
-                        target={video.Content.Link.isExternal ? "_blank" : "_self"}
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-[#3C4CFF] text-sm font-bold tracking-wide hover:gap-3 transition-all duration-300"
+                {video.Content.Link?.label && (
+                    <button
+                        onClick={(e) => {
+                            if (iframeSrc) {
+                                e.preventDefault();
+                                onPlay(iframeSrc, video.Content.Title);
+                            }
+                        }}
+                        className="inline-flex items-center gap-2 text-[#3C4CFF] text-sm font-bold tracking-wide hover:gap-3 transition-all duration-300 focus:outline-none cursor-pointer text-left"
                     >
                         {video.Content.Link.label}
                         <ArrowRight size={16} />
-                    </a>
+                    </button>
                 )}
             </div>
 
