@@ -230,7 +230,6 @@ export default function BlogListContent({}: Props) {
 
   if (loading) return <Loader />;
 
-  console.log("filteredBlogs", filteredBlogs);
   return (
     <>
       <BlogHeroBanner
