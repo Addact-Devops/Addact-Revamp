@@ -98,56 +98,46 @@ export default function OurInsights() {
   ];
 
   return (
-    <section className="relative py-[140px] lg:py-[200px] overflow-hidden bg-white" id="insights">
-      {/* Animated Mesh Gradient Background */}
+    <section className="relative py-[80px] lg:py-[120px] overflow-hidden bg-white" id="insights">
+      {/* Subtle animated background */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <motion.div 
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-          }}
+        <motion.div
+          animate={{ x: [0, 80, 0], y: [0, -40, 0] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 -left-[10%] w-[1000px] h-[1000px] bg-[#3C4CFF]/[0.03] blur-[160px] rounded-full"
-        />
-        <motion.div 
-          animate={{
-            x: [0, -100, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-0 -right-[10%] w-[800px] h-[800px] bg-[#3C4CFF]/[0.02] blur-[160px] rounded-full"
+          className="absolute top-0 -left-[10%] w-[800px] h-[800px] bg-[#3C4CFF]/[0.03] blur-[160px] rounded-full"
         />
       </div>
 
-      <div className="w-full px-6 md:px-12 lg:px-20 max-w-[1750px] mx-auto relative z-10">
-        <div className="mb-[60px] lg:mb-[80px]">
-          <motion.h2 
-            initial={{ opacity: 0, y: 30 }}
+      <div className="container relative z-10">
+        {/* Section Header */}
+        <div className="mb-[40px] lg:mb-[60px]">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-black font-bold text-[32px] md:text-[48px] 2xl:text-[72px] leading-[1] tracking-tighter"
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="text-zinc-900 font-bold text-[22px] sm:text-[25px] xl:text-[35px] leading-[1.3] tracking-tight"
           >
             Our Insights
           </motion.h2>
         </div>
 
-        {/* Bento Grid Implementation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 h-auto lg:min-h-[950px]">
-          {/* Main Feature Card (Big) */}
-          <div className="lg:col-span-12 xl:col-span-8">
-            <BentoCard item={items[0]} index={0} big />
-          </div>
-          
-          {/* Secondary Cards Stack */}
-          <div className="lg:col-span-12 xl:col-span-4 flex flex-col gap-6 lg:gap-10 min-h-full">
-            <div className="flex-1">
-              <BentoCard item={items[1]} index={1} />
-            </div>
-            <div className="flex-1">
-              <BentoCard item={items[2]} index={2} />
-            </div>
-          </div>
+        {/* Featured Card — Horizontal Layout */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-6"
+        >
+          <FeaturedCard item={items[0]} />
+        </motion.div>
+
+        {/* 2-Column Equal Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {items.slice(1).map((item, i) => (
+            <BentoCard key={i} item={item} index={i + 1} />
+          ))}
         </div>
       </div>
     </section>
@@ -190,6 +180,58 @@ function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
     link: cs.Slug ? "/portfolio/" + cs.Slug : "#",
     linkLabel: banner?.ReadNow?.label || "View Case Study",
   };
+}
+
+// Featured Card — Horizontal layout (image left + content right)
+function FeaturedCard({ item }: { item: InsightCardData }) {
+  return (
+    <Link href={item?.link || "#"} className="group block">
+      <div className="relative flex flex-col md:flex-row rounded-2xl overflow-hidden border border-zinc-100 bg-white hover:border-[#3C4CFF]/40 hover:shadow-[0_20px_60px_-10px_rgba(60,76,255,0.12)] transition-all duration-500">
+        {/* Image — 40% width on desktop */}
+        {item.image?.url && (
+          <div className="relative md:w-[40%] shrink-0 aspect-video md:aspect-auto overflow-hidden">
+            <Image
+              src={item.image.url}
+              alt={item.image.alternativeText || item.image.name}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-linear-to-r from-transparent to-black/10" />
+            {/* Badge */}
+            <div className="absolute top-5 left-5">
+              <span className="px-4 py-1.5 bg-white/90 border border-black/10 text-black rounded-full text-[10px] font-black uppercase tracking-[3px] backdrop-blur-sm">
+                {item.type}
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Content — 60% width */}
+        <div className="flex flex-col justify-between flex-1 p-8 lg:p-10">
+          <div>
+            <div className="text-zinc-400 text-[11px] font-black tracking-[4px] uppercase mb-4">
+              {item.date}
+            </div>
+            <h3 className="text-zinc-900 font-bold text-[22px] sm:text-[25px] xl:text-[30px] leading-[1.3] mb-4 group-hover:text-[#3C4CFF] transition-colors duration-300">
+              {item.title}
+            </h3>
+            <p className="text-zinc-500 text-[14px] md:text-[15px] leading-relaxed line-clamp-2">
+              {item.description}
+            </p>
+          </div>
+          <div className="flex items-center gap-4 mt-6 pt-6 border-t border-zinc-100">
+            <span className="text-black font-black text-[13px] uppercase tracking-[3px] relative">
+              {item.linkLabel}
+              <span className="absolute -bottom-1 left-0 w-0 h-px bg-[#3C4CFF] transition-all duration-400 group-hover:w-full" />
+            </span>
+            <div className="w-10 h-10 rounded-full border border-black/15 flex items-center justify-center transition-all duration-500 group-hover:bg-[#3C4CFF] group-hover:border-[#3C4CFF] group-hover:shadow-[0_0_20px_rgba(60,76,255,0.4)]">
+              <RightArrowUpIcon className="w-4 h-4 text-black group-hover:text-white transition-colors duration-500" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
 }
 
 // Custom 3D Tilt Bento Card Component with "Border Beam" Light Trail
@@ -258,7 +300,7 @@ function BentoCard({ item, index, big = false }: { item: InsightCardData, index:
           />
         </div>
 
-        <div className={`relative overflow-hidden shrink-0 ${big ? "basis-[52%]" : "basis-[42%]"}`}>
+        <div className={`relative overflow-hidden shrink-0 ${big ? "aspect-video" : "aspect-16/10"}`}>
           {item.image?.url && (
             <Image
               src={item.image?.url}
@@ -277,24 +319,24 @@ function BentoCard({ item, index, big = false }: { item: InsightCardData, index:
           </div>
         </div>
 
-        <div className={`flex flex-col justify-between flex-1 relative z-20 ${big ? "p-12 lg:p-16" : "p-10 md:p-12"}`}>
-          <div style={{ transform: "translateZ(40px)" }}>
+        <div className={`flex flex-col justify-between flex-1 relative z-20 ${big ? "p-8 lg:p-12" : "p-7 md:p-10"}`}>
+          <div>
             <div className="text-black/70 text-[11px] md:text-[13px] font-black tracking-[5px] uppercase mb-5">
               {item.date}
             </div>
-            <h4 className={`text-black font-bold leading-[1.1] transition-colors duration-500 leading-tight ${
-              big ? "text-[28px] md:text-[40px] 2xl:text-[60px] mb-10" : "text-[22px] md:text-[30px] 2xl:text-[36px] mb-6"
+            <h4 className={`text-zinc-900 font-bold transition-colors duration-500 ${
+              big ? "text-[22px] sm:text-[25px] xl:text-[35px] leading-[1.3] mb-6" : "text-[18px] sm:text-[22px] xl:text-[28px] leading-[1.3] mb-4"
             }`}>
               {item.title}
             </h4>
             {big && (
-              <p className="mt-8 text-black/80 text-[18px] md:text-[21px] leading-relaxed font-medium line-clamp-2 max-w-[85%] group-hover:text-black transition-colors duration-500">
+              <p className="mt-8 text-black/80 text-[14px] md:text-[16px] leading-relaxed font-medium line-clamp-2 max-w-[85%] group-hover:text-black transition-colors duration-500">
                 {item.description}
               </p>
             )}
           </div>
 
-          <div className="flex items-center mt-10 h-fit" style={{ transform: "translateZ(60px)" }}>
+          <div className="flex items-center mt-auto pt-6 h-fit">
             <div 
               className="group/link flex items-center gap-8 text-black font-black text-[14px] uppercase tracking-[4px] relative"
             >
