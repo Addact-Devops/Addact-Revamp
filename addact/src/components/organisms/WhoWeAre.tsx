@@ -96,14 +96,9 @@ const WhoWeAre = () => {
   return (
     <>
       <section
-        className="who-we-are my-[80px] lg:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%] relative overflow-hidden"
+        className="who-we-are my-[80px] lg:my-[100px] 2xl:my-[200px] !mx-h-[100%] !h-[100%] relative overflow-hidden bg-white"
         ref={containerRef}
       >
-        {/* Clean background — keeping neural particles very subtle */}
-        <div className="absolute inset-0 z-0 opacity-5 pointer-events-none">
-          <NeuralParticles count={30} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={150} />
-        </div>
-
         <div className="container relative z-20">
           <div className="flex gap-10 md:gap-[40px] 2xl:gap-[100px] flex-wrap lg:flex-nowrap">
             <div className="w-full lg:w-[40%] flex items-center gap-3">
@@ -135,36 +130,39 @@ const WhoWeAre = () => {
 
           <div
             ref={counterSectionRef}
-            className="grid grid-cols-2 md:grid-cols-4 border border-black/10 border-b-0 md:border-b mt-[30px] md:mt-20 2xl:mt-24 overflow-hidden"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 2xl:gap-6 mt-[40px] md:mt-20 2xl:mt-24"
           >
             {data?.whoAreWes[0].Counter.map((item, index) => {
-              const isSecondInRowMobile = (index + 1) % 2 === 0;
-              const isFourthInRowDesktop = (index + 1) % 4 === 0;
-              const isLastItem = index === data.whoAreWes[0].Counter.length - 1;
-
               return (
-                <div
+                <motion.div
                   key={item.id}
-                  className={`
-                    text-center p-[24px] md:p-[40px] 2xl:p-[60px] 
-                    border-b md:border-b-0 
-                    border-black/10 
-                    ${!isSecondInRowMobile ? "border-r" : ""} 
-                    ${isSecondInRowMobile ? "border-r-0" : ""} 
-                    ${isFourthInRowDesktop ? "md:border-r-0" : "md:border-r"} 
-                    ${isLastItem ? "border-r-0 md:border-r-0" : ""}
-                    group relative
-                  `}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group relative bg-white border border-zinc-200 rounded-[16px] p-6 md:p-8 2xl:p-10 transition-all duration-500 hover:border-[#3C4CFF]/60 hover:shadow-[0_40px_80px_-20px_rgba(60,76,255,0.15)] flex flex-col justify-center min-h-[160px] md:min-h-[200px] overflow-hidden"
                 >
-                  {/* Subtle hover glow pulse */}
-                  <motion.div 
-                    className="absolute inset-0 bg-brand-blue opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500"
+                  {/* Internal Technical Grid - Moved here & Increased Visibility */}
+                  <div 
+                    className="absolute inset-0 z-0 opacity-[0.08] group-hover:opacity-[0.14] transition-opacity duration-500 pointer-events-none"
+                    style={{ 
+                      backgroundImage: `linear-gradient(#3C4CFF 1.5px, transparent 1.5px), linear-gradient(90deg, #3C4CFF 1.5px, transparent 1.5px)`,
+                      backgroundSize: '25px 25px'
+                    }}
                   />
 
+                  {/* Internal Neural Particles - Moved here */}
+                  <div className="absolute inset-0 z-0 opacity-[0.04] group-hover:opacity-[0.1] transition-opacity duration-500 pointer-events-none">
+                    <NeuralParticles count={15} color="60, 76, 255" lineColor="60, 76, 255" connectDistance={100} />
+                  </div>
+
+                  {/* Subtle Background Glow */}
+                  <div className="absolute inset-0 bg-linear-to-br from-[#3C4CFF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
                    <div className="relative z-10">
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex items-center gap-2 mb-3">
                         <h2
-                            className="text-black font-bold text-3xl md:text-4xl transition-colors duration-300 text-left"
+                            className="text-[#3C4CFF] font-extrabold text-3xl md:text-4xl 2xl:text-5xl transition-colors duration-300 text-left"
                             ref={(el) => {
                                 numberRefs.current[index] = el;
                             }}
@@ -172,11 +170,14 @@ const WhoWeAre = () => {
                             {`0${counterSuffixes[index] || ""}`}
                         </h2>
                     </div>
-                    <div className="text-[14px] md:text-[20px] 2xl:text-2xl text-left font-medium leading-[1.75] max-w-[70%] md:max-w-full text-black transition-opacity">
+                    <div className="text-[14px] md:text-[18px] 2xl:text-xl text-left font-bold leading-tight text-zinc-900 group-hover:text-[#3C4CFF] transition-colors duration-300">
                         {item.CounterTitle}
                     </div>
                   </div>
-                </div>
+
+                  {/* Decorative Border Accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[4px] bg-[#3C4CFF] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                </motion.div>
               );
             })}
           </div>

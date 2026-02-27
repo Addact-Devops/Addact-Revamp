@@ -43,7 +43,7 @@ export default function EventCard({
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="container mb-24"
         >
-            <div className="group relative bg-white border border-zinc-200 rounded-[24px] overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(60,76,255,0.15)] flex flex-col md:flex-row items-stretch md:min-h-[450px]">
+            <div className="group relative bg-white border border-zinc-200 rounded-[16px] overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(60,76,255,0.12)] flex flex-col md:flex-row items-stretch md:min-h-[320px]">
                 {/* Image Section */}
                 <div className="relative w-full md:w-[45%] aspect-video md:aspect-auto overflow-hidden">
                     <Image
@@ -58,32 +58,26 @@ export default function EventCard({
                 </div>
 
                 {/* Content Column */}
-                <div className="flex-1 flex flex-col justify-center p-6 md:p-12 xl:p-16 relative z-10 bg-white">
-                    <div className="flex flex-wrap items-center gap-4 mb-6">
+                <div className="flex-1 flex flex-col justify-center p-5 md:p-6 lg:p-8 relative z-10 bg-white">
+                    <div className="flex flex-wrap items-center gap-3 mb-4">
                         {pageType && (
-                            <Badge variant="outline" className="text-[10px] uppercase tracking-widest text-[#3C4CFF] border-[#3C4CFF]/20 font-bold">
+                            <Badge variant="outline" className="text-[10px] uppercase tracking-widest text-[#3C4CFF] border-[#3C4CFF]/20 font-bold px-2 py-0.5">
                                 {pageType}
                             </Badge>
                         )}
                         {date && (
-                            <span className="flex items-center gap-1.5 text-zinc-400 text-[14px] font-medium tracking-wide">
-                                <CalendarDays size={14} className="text-[#3C4CFF] shrink-0" />
+                            <span className="flex items-center gap-1 text-zinc-400 text-[12px] font-medium">
+                                <CalendarDays size={12} className="text-[#3C4CFF] shrink-0" />
                                 {date}
-                            </span>
-                        )}
-                        {location && (
-                            <span className="flex items-center gap-1.5 text-zinc-400 text-[14px] font-medium tracking-wide">
-                                <MapPin size={14} className="text-[#3C4CFF] shrink-0" />
-                                {location}
                             </span>
                         )}
                     </div>
 
-                    <h2 className="text-zinc-900 font-bold !text-[24px] md:!text-[40px] leading-[1.2] mb-6 group-hover:text-[#3C4CFF] transition-colors duration-300">
+                    <h2 className="text-zinc-900 font-bold text-[18px]! md:text-[24px]! leading-tight mb-3 group-hover:text-[#3C4CFF] transition-colors duration-300 line-clamp-2">
                         {title}
                     </h2>
 
-                    <p className="text-base md:text-lg text-zinc-600 leading-relaxed mb-10 max-w-2xl line-clamp-3">
+                    <p className="text-xs md:text-sm text-zinc-500 leading-relaxed mb-6 max-w-2xl line-clamp-2">
                         {description}
                     </p>
 
@@ -92,10 +86,10 @@ export default function EventCard({
                             href={href}
                             target={slug.startsWith("http") ? "_blank" : undefined}
                             rel={slug.startsWith("http") ? "noopener noreferrer" : undefined}
-                            className="group/btn relative inline-flex items-center gap-3 bg-[#3C4CFF] text-white px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-bold transition-all duration-300 hover:bg-[#3440CB] hover:translate-y-[-2px] shadow-[0_20px_40px_-10px_rgba(60,76,255,0.3)] text-sm md:text-base"
+                            className="group/btn relative inline-flex items-center gap-2 bg-[#3C4CFF] text-white px-4 py-2 md:px-6 md:py-2.5 rounded-md font-bold transition-all duration-300 hover:bg-[#3440CB] hover:translate-y-[-1px] shadow-[0_10px_20px_-5px_rgba(60,76,255,0.25)] text-[11px] md:text-xs uppercase tracking-widest"
                         >
                             {linkText}
-                            <ArrowRight size={18} className="transform group-hover/btn:translate-x-1 transition-transform" />
+                            <ArrowRight size={14} className="transform group-hover/btn:translate-x-1 transition-transform" />
                         </Link>
                     </div>
                 </div>

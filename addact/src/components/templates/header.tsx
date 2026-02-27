@@ -26,6 +26,7 @@ import type {
   HeaderSubLayer,
   HeaderLink,
 } from "@/graphql/queries/addact-header";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface HeaderProps {
   headerData: AddactHeaderData;
@@ -155,16 +156,23 @@ function DropdownContent({
             const label = sub.link?.label ?? `Category ${idx + 1}`;
             const isActive = activeIdx === idx;
             return (
-              <button
+              <motion.button
                 key={sub.id ?? idx}
                 onClick={(e) => { e.stopPropagation(); setActiveIdx(idx); }}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: idx * 0.05 }}
                 className={`w-full text-left px-5 py-5 text-[16px] font-medium font-montserrat transition-all flex justify-between items-center gap-2 ${
                   isActive ? "bg-[#3C4CFF] text-white" : "text-gray-300 hover:text-white hover:bg-[#1a1a1a]"
                 }`}
               >
                 <span className="flex-1 leading-snug">{label}</span>
-                <ChevronRight size={11} className={`shrink-0 ${isActive ? "opacity-100" : "opacity-30"}`} />
-              </button>
+                <motion.div
+                  animate={{ x: isActive ? 0 : -5, opacity: isActive ? 1 : 0.3 }}
+                >
+                  <ChevronRight size={11} className="shrink-0" />
+                </motion.div>
+              </motion.button>
             );
           })}
         </div>
@@ -177,25 +185,31 @@ function DropdownContent({
                 const deepLink = deep.link;
                 if (!deepLink) return null;
                 return (
-                  <Link
+                  <motion.div
                     key={deep.id ?? di}
-                    href={deepLink.href ?? "#"}
-                    target={deepLink.isExternal ? "_blank" : "_self"}
-                    className="flex items-center gap-3 group"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 + di * 0.03 }}
                   >
-                    {deepLink.Icon?.url && (
-                      <Image
-                        src={deepLink.Icon.url}
-                        alt={deepLink.Icon.alternativeText || ""}
-                        width={28}
-                        height={28}
-                        className="w-7 h-7 object-contain shrink-0 opacity-80"
-                      />
-                    )}
-                    <span className="text-[16px] font-medium font-montserrat text-gray-200 group-hover:text-white transition-colors leading-[22px]">
-                      {deepLink.label}
-                    </span>
-                  </Link>
+                    <Link
+                      href={deepLink.href ?? "#"}
+                      target={deepLink.isExternal ? "_blank" : "_self"}
+                      className="flex items-center gap-3 group transition-transform hover:translate-x-1 duration-300"
+                    >
+                      {deepLink.Icon?.url && (
+                        <Image
+                          src={deepLink.Icon.url}
+                          alt={deepLink.Icon.alternativeText || ""}
+                          width={28}
+                          height={28}
+                          className="w-7 h-7 object-contain shrink-0 opacity-80"
+                        />
+                      )}
+                      <span className="text-[16px] font-medium font-montserrat text-gray-200 group-hover:text-white transition-colors leading-[22px]">
+                        {deepLink.label}
+                      </span>
+                    </Link>
+                  </motion.div>
                 );
               })}
             </div>
@@ -232,25 +246,31 @@ function DropdownContent({
               if (!label) return null;
 
               return (
-                <Link
+                <motion.div
                   key={sub.id ?? si}
-                  href={href}
-                  target={lnk?.isExternal ? "_blank" : "_self"}
-                  className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors py-0.5 group"
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: si * 0.03 }}
                 >
-                  {lnk?.Icon?.url && (
-                    <span className="text-gray-500 group-hover:text-[#3C4CFF] transition-colors shrink-0">
-                      <Image 
-                        src={lnk.Icon.url} 
-                        alt="" 
-                        width={20} 
-                        height={20} 
-                        className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100" 
-                      />
-                    </span>
-                  )}
-                  <span className="text-[16px] font-medium font-montserrat leading-[22px]">{label}</span>
-                </Link>
+                  <Link
+                    href={href}
+                    target={lnk?.isExternal ? "_blank" : "_self"}
+                    className="flex items-center gap-3 text-gray-300 hover:text-white transition-all py-0.5 group hover:translate-x-1 duration-300"
+                  >
+                    {lnk?.Icon?.url && (
+                      <span className="text-gray-500 group-hover:text-[#3C4CFF] transition-colors shrink-0">
+                        <Image 
+                          src={lnk.Icon.url} 
+                          alt="" 
+                          width={20} 
+                          height={20} 
+                          className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100" 
+                        />
+                      </span>
+                    )}
+                    <span className="text-[16px] font-medium font-montserrat leading-[22px]">{label}</span>
+                  </Link>
+                </motion.div>
               );
             })}
           </div>
@@ -428,50 +448,77 @@ const Header = ({ headerData }: HeaderProps) => {
                     <button
                       data-nav-btn
                       onClick={() => setOpenDropdown((prev) => (prev === item.id ? null : item.id ?? null))}
-                      className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] focus:outline-none transition-colors cursor-pointer py-5 lg:py-[40px]"
+                      className={`flex items-center gap-1.5 text-[14px] xl:text-[16px] font-medium transition-all cursor-pointer py-5 lg:py-[40px] group ${isActive ? 'text-[#3C4CFF]' : 'text-white hover:text-[#3C4CFF]'}`}
                     >
                       {label}
-                      {isActive ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                      <motion.div
+                        animate={{ rotate: isActive ? 180 : 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <ChevronDown size={14} />
+                      </motion.div>
                     </button>
                   ) : (
                     <Link href={href}
-                      className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] transition-colors py-5 lg:py-[40px]">
+                      className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] transition-all py-5 lg:py-[40px] hover:translate-y-[-1px]">
                       {label}
                     </Link>
                   )}
-                  {isActive && <div className="absolute bottom-0 w-[45px] h-[4px] bg-white rounded-t" />}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div 
+                        layoutId="nav-underline"
+                        className="absolute bottom-0 w-full h-[3px] bg-[#3C4CFF] rounded-t"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        exit={{ scaleX: 0 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      />
+                    )}
+                  </AnimatePresence>
                 </div>
 
-                {hasDrop && isActive && (
-                  <div 
-                    className="fixed z-40 overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
-                    style={{
-                      top: "130px",
-                      background: "#0F0F0F",
-                      border: "1px solid #2E2E2E",
-                      borderRadius: "20px",
-                      boxShadow: "0 8px 34px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4)",
-                    }}
-                  >
-                    <DropdownContent
-                      item={item}
-                      additionalText={headerData?.additionalText}
-                      isLastItem={menu.length - 1 === i}
-                      contactDetails={contactDetails}
-                    />
-                  </div>
-                )}
+                <AnimatePresence>
+                  {hasDrop && isActive && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                      className="fixed z-40 overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
+                      style={{
+                        top: "130px",
+                        background: "#0F0F0F",
+                        border: "1px solid #2E2E2E",
+                        borderRadius: "20px",
+                        boxShadow: "0 8px 34px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4)",
+                      }}
+                    >
+                      <DropdownContent
+                        item={item}
+                        additionalText={headerData?.additionalText}
+                        isLastItem={menu.length - 1 === i}
+                        contactDetails={contactDetails}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             );
           })}
 
-          <Link href={contactHref} target={contactIsExternal ? "_blank" : "_self"}
-            className="ml-4 bg-[#3C4CFF] px-5 py-3 rounded-[8px] text-white font-semibold hover:bg-[#3440CB] text-[14px] xl:text-[15px] transition-colors flex items-center gap-2">
-            {contactIcon && (
-              <Image src={contactIcon} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain invert brightness-0" />
-            )}
-            {contactLabel}
-          </Link>
+          <motion.div
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Link href={contactHref} target={contactIsExternal ? "_blank" : "_self"}
+              className="ml-4 bg-[#3C4CFF] px-5 py-3 rounded-[8px] text-white font-semibold hover:bg-[#3440CB] text-[14px] xl:text-[15px] transition-colors flex items-center gap-2">
+              {contactIcon && (
+                <Image src={contactIcon} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain invert brightness-0" />
+              )}
+              {contactLabel}
+            </Link>
+          </motion.div>
         </div>
 
         {/* Mobile buttons */}

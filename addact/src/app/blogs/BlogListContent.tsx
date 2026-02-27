@@ -248,7 +248,7 @@ export default function BlogListContent({}: Props) {
       />
 
       <div className="container overflow-visible">
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-y-[50px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[30px] my-[80px]">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-y-[40px] gap-x-[15px] [@media(min-width:1400px)]:gap-x-[25px] my-[60px]">
           {filteredBlogs.length === 0 && !loadingMore && !hasMore && (
             <p className="text-zinc-900 !text-[35px] font-bold col-span-full text-center">
               {searchText.trim()
@@ -337,7 +337,7 @@ export default function BlogListContent({}: Props) {
                         </div>
                       </div>
 
-                      <h2 className="text-zinc-900 font-bold !text-[22px] sm:!text-[25px] xl:!text-[35px] !leading-[1.3] md:!leading-[34px] xl:!leading-[45px] mb-4 group-hover:text-[#3C4CFF] transition-colors duration-300">
+                      <h2 className="text-zinc-900 font-bold text-[16px]! md:text-[20px]! xl:text-[24px]! leading-[1.3] md:leading-[1.4] mb-3 group-hover:text-[#3C4CFF] transition-colors duration-300 line-clamp-2">
                         {title}
                       </h2>
 
@@ -348,7 +348,7 @@ export default function BlogListContent({}: Props) {
                               {author.charAt(0)}
                             </span>
                           </div>
-                          <span className="text-zinc-500 !text-[14px] xl:!text-[18px] font-semibold leading-tight">
+                          <span className="text-zinc-500 text-[13px]! xl:text-[15px]! font-semibold leading-tight">
                             {author}
                           </span>
                         </div>

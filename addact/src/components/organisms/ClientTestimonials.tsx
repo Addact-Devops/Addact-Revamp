@@ -176,7 +176,7 @@ export default function ClientTestimonials() {
                                                         />
                                                     </div>
                                                     <div className="flex flex-col gap-1 overflow-hidden">
-                                                        <h4 className="text-[14px] md:text-[18px] font-black text-black leading-tight tracking-tight uppercase break-words">
+                                                        <h4 className="text-[14px] md:text-[18px] font-black text-black leading-tight tracking-tight uppercase wrap-break-word">
                                                             {item.author_name}
                                                         </h4>
                                                         <div className="flex items-center gap-2">

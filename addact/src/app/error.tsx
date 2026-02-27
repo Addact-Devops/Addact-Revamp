@@ -21,51 +21,63 @@ export default function Error({ error, reset }: ErrorProps) {
 
     return (
         <main className="min-h-screen bg-white flex items-center justify-center relative overflow-hidden px-6">
-            {/* Immersive Background Atmosphere */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/5 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute inset-0 z-0 opacity-[0.03] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-size-[32px_32px] pointer-events-none" />
+            {/* Immersive Background Atmosphere - Refined & Lightweight */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-blue/5 rounded-full blur-[140px] pointer-events-none" />
+            <div className="absolute inset-0 z-0 opacity-[0.02] bg-[radial-gradient(#3C4CFF_1px,transparent_1px)] bg-size-[32px_32px] pointer-events-none" />
 
-            <div className="relative z-10 w-full max-w-2xl flex flex-col items-center text-center">
+            <div className="relative z-10 w-full max-w-4xl flex flex-col items-center text-center">
                 
-                {/* Visual Error Header with Brand Glow */}
+                {/* Visual Error Header - Minimalist & Premium */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                    className="relative mb-8 flex items-center justify-center"
+                    className="relative mb-10 flex items-center justify-center"
                 >
-                    <div className="absolute inset-0 bg-red-500/10 blur-[60px] rounded-full scale-75 animate-pulse" />
+                    <div className="absolute inset-0 bg-brand-blue/10 blur-[50px] rounded-full scale-125 transition-all duration-1000" />
                     
-                    <div className="relative w-32 h-32 rounded-3xl bg-black flex items-center justify-center text-white shadow-2xl shadow-red-500/20">
-                        {isUnauthorized ? <ShieldAlert size={60} /> : <Cpu size={60} />}
+                    <div className="relative w-24 h-24 rounded-2xl bg-white border border-zinc-200 flex items-center justify-center text-brand-blue shadow-xl shadow-brand-blue/5 group">
+                        {isUnauthorized ? <ShieldAlert size={44} className="group-hover:scale-110 transition-transform duration-500" /> : <Cpu size={44} className="group-hover:scale-110 transition-transform duration-500" />}
                     </div>
                 </motion.div>
 
-                {/* Content Block */}
-                <div className="space-y-4 md:space-y-6 mb-12">
-                    <h1 className="text-[40px] md:text-[56px] font-black text-black leading-tight tracking-tight uppercase">
-                        <TechReveal text={isUnauthorized ? "401 Access Denied" : "500 System Halt"} duration={1} />
+                <div className="space-y-4 md:space-y-6 mb-12 flex flex-col items-center w-full">
+                    <h1 className="text-[32px] md:text-[44px] font-bold text-zinc-900 leading-[1.1] tracking-tight text-center whitespace-nowrap">
+                        <TechReveal 
+                            text={isUnauthorized ? "401 Access Denied" : "System Under Maintenance"} 
+                            duration={1} 
+                            className="whitespace-nowrap"
+                        />
                     </h1>
                     
-                    <p className="text-zinc-500 text-lg md:text-xl font-medium leading-relaxed max-w-md mx-auto">
+                    <p className="text-zinc-500 text-lg leading-relaxed max-w-[600px] text-center">
                         {isUnauthorized 
-                            ? "Your credentials lack the necessary clearance for this node. Access is restricted."
-                            : "Our servers are experiencing an internal logic exception. Our engineers are investigating."}
+                            ? "Your current session lacks the required authorization. Please re-authenticate."
+                            : "Our platform is currently undergoing scheduled maintenance to enhance performance. We'll be back online in just a moment."}
                     </p>
                 </div>
 
-                {/* Action Hub */}
-                <div className="flex justify-center">
-                    <Link href="/">
+                {/* Action Hub - Premium Buttons */}
+                <div className="flex flex-col sm:flex-row justify-center items-center gap-4 w-full">
+                    <Link href="/" className="w-full sm:w-auto">
                         <motion.div
-                            whileHover={{ scale: 1.05 }}
+                            whileHover={{ y: -2 }}
                             whileTap={{ scale: 0.98 }}
-                            className="px-12 py-5 bg-black text-white rounded-full font-black text-sm uppercase tracking-widest flex items-center gap-3 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.4)] transition-all hover:bg-brand-blue"
+                            className="px-10 py-4 bg-brand-blue text-white rounded-xl font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-3 shadow-lg shadow-brand-blue/20 hover:shadow-xl hover:shadow-brand-blue/30 transition-all duration-300 min-w-[210px]"
                         >
                             <Home size={18} />
-                            Back to Base
+                            Return Home
                         </motion.div>
                     </Link>
+                    
+                    <motion.button
+                        onClick={() => reset()}
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="px-10 py-4 bg-white text-zinc-900 border border-zinc-200 rounded-xl font-bold text-sm uppercase tracking-wider transition-all duration-300 hover:bg-zinc-50 hover:border-zinc-300 shadow-sm min-w-[210px] flex items-center justify-center"
+                    >
+                        Try Re-syncing
+                    </motion.button>
                 </div>
             </div>
         </main>

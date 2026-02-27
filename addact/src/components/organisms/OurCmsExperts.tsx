@@ -9,8 +9,6 @@ import {
 import Image from "../atom/image";
 import RichText from "../atom/richText";
 import { motion } from "framer-motion";
-import SpotlightCard from "../atom/SpotlightCard";
-import TechReveal from "../atom/TechReveal";
 
 /* ✅ optional props to override with industry data (includes required fields) */
 type OverrideItem = {
@@ -40,7 +38,6 @@ type OurCmsExpertsProps = {
 
 const OurCmsExperts = (props: OurCmsExpertsProps) => {
   const [data, setData] = useState<CMSResponse | null>(null);
-  const [playLogos, setPlayLogos] = useState(false); // ▶️ trigger animation once
 
   useEffect(() => {
     async function fetchData() {
@@ -124,8 +121,8 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
     <section className="py-[80px] lg:py-[120px] bg-white relative overflow-hidden">
       <div className="container relative z-20">
         {/* Header Section Alignment - Light Theme */}
-        <div className="flex flex-col md:flex-row items-start gap-10 md:gap-20 lg:gap-32 mb-16 md:mb-24">
-          <div className="shrink-0">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-16 mb-16 md:mb-24">
+          <div className="w-full md:w-[45%] lg:w-[40%]">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -136,12 +133,12 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                 {titlePart1} <br /> {titlePart2}
               </h2>
               {/* Blue Bar under heading */}
-              <div className="w-24 h-[4px] bg-[#3C4CFF] mt-8" />
+              <div className="w-24 h-[4px] bg-[#3C4CFF] mt-6 md:mt-8" />
             </motion.div>
           </div>
 
           <motion.div
-            className="w-full md:max-w-[500px] lg:max-w-[650px] md:pt-5 text-[#333333] font-medium text-[18px] md:text-[20px] lg:text-[24px] leading-relaxed"
+            className="w-full md:w-[50%] lg:w-[45%] text-[#333333] font-medium text-[18px] md:text-[20px] lg:text-2xl leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

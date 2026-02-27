@@ -132,7 +132,7 @@ const CaseStudyListing = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <div className="group relative bg-white border border-zinc-200 rounded-[32px] overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 hover:shadow-[0_50px_100px_-20px_rgba(60,76,255,0.15)] flex flex-col md:flex-row items-stretch md:min-h-[480px]">
+            <div className="group relative bg-white border border-zinc-200 rounded-[16px] overflow-hidden hover:border-[#3C4CFF]/40 transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(60,76,255,0.12)] flex flex-col md:flex-row items-stretch md:min-h-[340px]">
               {/* Image Column */}
               <div className="relative w-full md:w-[45%] aspect-video md:aspect-auto overflow-hidden">
                 <Image
@@ -147,9 +147,9 @@ const CaseStudyListing = () => {
               </div>
 
               {/* Content Column */}
-              <div className="flex-1 flex flex-col justify-center p-8 md:p-14 xl:p-20 relative z-10 bg-white">
+              <div className="flex-1 flex flex-col justify-center p-5 md:p-8 lg:p-10 relative z-10 bg-white">
                 <div className="flex items-center gap-4 mb-6">
-                  <Badge variant="outline" className="text-[10px] uppercase tracking-widest text-[#3C4CFF] border-[#3C4CFF]/20 font-bold">
+                  <Badge variant="outline" className="text-[9px] uppercase tracking-widest text-[#3C4CFF] border-[#3C4CFF]/20 font-bold px-2 py-0.5">
                     Case Study
                   </Badge>
                   <span className="text-zinc-400 text-[14px] font-semibold tracking-wide">
@@ -161,11 +161,11 @@ const CaseStudyListing = () => {
                   </span>
                 </div>
 
-                <h2 className="text-zinc-900 font-bold text-[28px]! md:text-[45px]! leading-[1.1] mb-6 group-hover:text-[#3C4CFF] transition-colors duration-300">
+                <h2 className="text-zinc-900 font-bold text-[20px]! md:text-[28px]! leading-tight mb-3 group-hover:text-[#3C4CFF] transition-colors duration-300 line-clamp-2">
                   {item.HeroBanner[0].BannerTitle}
                 </h2>
 
-                <p className="text-base md:text-xl text-zinc-600 leading-relaxed mb-10 max-w-2xl font-light">
+                <p className="text-xs md:text-base text-zinc-500 leading-relaxed mb-6 max-w-2xl font-light line-clamp-2">
                   {item.caseStudySummary}
                 </p>
 
@@ -173,10 +173,10 @@ const CaseStudyListing = () => {
                   <Magnetic>
                     <Link
                         href={`/portfolio${item.Slug}`}
-                        className="group/btn relative inline-flex items-center gap-3 bg-[#3C4CFF] text-white px-8 py-4 md:px-10 md:py-5 rounded-2xl font-black text-sm md:text-base uppercase tracking-widest transition-all duration-300 hover:bg-[#3440CB] hover:translate-y-[-2px] shadow-[0_20px_40px_-10px_rgba(60,76,255,0.4)]"
+                        className="group/btn relative inline-flex items-center gap-2 bg-[#3C4CFF] text-white px-5 py-2.5 md:px-7 md:py-3 rounded-lg font-bold text-[10px] md:text-xs uppercase tracking-widest transition-all duration-300 hover:bg-[#3440CB] hover:translate-y-[-1px] shadow-[0_10px_20px_-5px_rgba(60,76,255,0.25)]"
                     >
                         View Project
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                         </svg>
                     </Link>

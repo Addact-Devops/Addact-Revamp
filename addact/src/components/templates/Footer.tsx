@@ -105,11 +105,11 @@ export default function Footer({ data }: FooterProps) {
             </div>
 
             {/* ════════════ MAIN FOOTER ════════════ */}
-            <footer className="relative bg-[#0F0F0F] text-white z-[4] overflow-hidden">
+            <footer className="relative bg-[#0F0F0F] text-white z-4 overflow-hidden">
 
                 {/* Glow blobs */}
                 <div className="absolute inset-0 pointer-events-none z-0">
-                    <div className="absolute top-0 left-[30%] w-[600px] h-[300px] bg-[#3C4CFF]/[0.06] blur-[100px]" />
+                    <div className="absolute top-0 left-[30%] w-[600px] h-[300px] bg-[#3C4CFF]/6 blur-[100px]" />
                 </div>
 
                 {/* Watermark */}
@@ -119,15 +119,15 @@ export default function Footer({ data }: FooterProps) {
                         alt=""
                         width={1200}
                         height={1200}
-                        className="absolute top-0 left-0 h-full w-auto z-0 opacity-[0.05] pointer-events-none select-none"
+                        className="absolute top-0 left-0 h-full w-auto z-0 opacity-[0.15] pointer-events-none select-none"
                     />
                 )}
 
                 {/* Top gradient line */}
-                <div className="h-px w-full bg-gradient-to-r from-transparent via-[#3C4CFF]/60 to-transparent" />
+                <div className="h-px w-full bg-linear-to-r from-transparent via-[#3C4CFF]/60 to-transparent" />
 
                 {/* ────── Section 1: Logo + Nav Links ────── */}
-                <div className="relative z-[1] container py-12 lg:py-16">
+                <div className="relative z-1 container py-12 lg:py-16">
                     <div className="grid grid-cols-12 gap-8 xl:gap-12">
 
                         {/* Logo col */}
@@ -186,12 +186,12 @@ export default function Footer({ data }: FooterProps) {
                 </div>
 
                 {/* Separator */}
-                <div className="relative z-[1] container">
-                    <div className="border-t border-white/[0.07]" />
+                <div className="relative z-1 container">
+                    <div className="border-t border-white/7" />
                 </div>
 
                 {/* ────── Section 2: Address Strip (aligned to same grid) ────── */}
-                <div className="relative z-[1] container hidden lg:block py-7">
+                <div className="relative z-1 container hidden lg:block py-7">
                     <div className="grid grid-cols-12 gap-8 xl:gap-12">
 
                         {/* CONTACT INFO — under logo */}
@@ -234,12 +234,12 @@ export default function Footer({ data }: FooterProps) {
                 </div>
 
                 {/* Separator */}
-                <div className="relative z-[1] container">
-                    <div className="border-t border-white/[0.07]" />
+                <div className="relative z-1 container">
+                    <div className="border-t border-white/7" />
                 </div>
 
                 {/* ────── Section 3: Milestones + Copyright ────── */}
-                <div className="relative z-[1] container py-5 flex flex-col sm:flex-row items-center justify-between gap-5">
+                <div className="relative z-1 container py-5 flex flex-col sm:flex-row items-center justify-between gap-5">
                     {/* Milestones */}
                     {(milestonestitle?.CommonTitle?.[0]?.Title || milestonesimage?.some((i) => i.Image?.url)) && (
                         <div className="flex flex-wrap items-center gap-4">
@@ -250,7 +250,7 @@ export default function Footer({ data }: FooterProps) {
                             )}
                             <div className="flex flex-wrap gap-2 items-center">
                                 {milestonesimage?.filter((m) => m.Image?.url).map((item, i) => (
-                                    <div key={i} className="p-1.5 rounded-lg border border-white/[0.07] hover:border-[#3C4CFF]/40 transition-colors duration-200">
+                                    <div key={i} className="p-1.5 rounded-lg border border-white/7 hover:border-[#3C4CFF]/40 transition-colors duration-200">
                                         <Image
                                             src={item.Image!.url!}
                                             alt={item.Image!.alternativeText || ""}
@@ -273,7 +273,7 @@ export default function Footer({ data }: FooterProps) {
                 </div>
 
                 {/* Bottom line */}
-                <div className="h-px bg-gradient-to-r from-transparent via-[#3C4CFF]/30 to-transparent" />
+                <div className="h-px bg-linear-to-r from-transparent via-[#3C4CFF]/30 to-transparent" />
             </footer>
         </>
     );

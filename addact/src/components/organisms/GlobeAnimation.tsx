@@ -1,6 +1,7 @@
 "use client";
 import { GloabeAnimation } from "@/graphql/queries/getHomePage";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import TechReveal from "../atom/TechReveal";
 import NeuralParticles from "../atom/NeuralParticles";
 
@@ -86,29 +87,52 @@ export default function GlobeAnimation(data: InternalProps) {
                     </h2>
                 </div>
 
-                {/* Boundless Globe Canvas */}
-                <div className="relative w-full max-w-5xl group">
-                    {/* Decorative Ring */}
-                    <div className="absolute inset-0 rounded-full border border-white/5 scale-110 -z-1 transition-transform duration-1000 group-hover:scale-115" />
-                    <div className="absolute inset-0 rounded-full border border-[#3C4CFF]/5 scale-125 -z-1 transition-transform duration-1000 group-hover:scale-130 delay-100" />
-
-                    <div className="relative aspect-video rounded-[40px] overflow-hidden">
-                        <video
-                            ref={videoRef}
-                            src={data.data?.Video?.url}
-                            autoPlay
-                            muted
-                            playsInline
-                            loop
-                            className="w-full h-full object-cover mix-blend-screen opacity-90 transition-opacity duration-700 group-hover:opacity-100"
+                {/* Holographic Globe Visualization */}
+                <div className="relative w-full max-w-5xl mx-auto group">
+                    {/* Unique Orbital Rings (Animated) */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-visible">
+                        <motion.div 
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                            className="absolute w-[90%] md:w-[110%] aspect-square border border-[#3C4CFF]/10 rounded-full"
                         />
-                        
-                        {/* Vignette Overlay for seamless blending */}
-                        <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_40px_rgba(5,5,5,0.9)]" />
+                        <motion.div 
+                            animate={{ rotate: -360 }}
+                            transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
+                            className="absolute w-[100%] md:w-[125%] aspect-square border border-white/5 rounded-full"
+                        />
                     </div>
 
-                    {/* Bottom Reflection Glow */}
-                    <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[80%] h-20 bg-[#3C4CFF]/20 blur-[60px] rounded-full opacity-30" />
+                    {/* Floating Globe Wrapper */}
+                    <motion.div 
+                        animate={{ y: [0, -20, 0] }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                        className="relative z-10 p-4 md:p-12"
+                    >
+                        {/* Inner Core Holographic Glow */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] bg-[#3C4CFF]/15 blur-[120px] rounded-full -z-1 opacity-60" />
+                        
+                        <div 
+                            className="relative aspect-video flex items-center justify-center"
+                            style={{
+                                maskImage: 'radial-gradient(circle, black 30%, transparent 75%)',
+                                WebkitMaskImage: 'radial-gradient(circle, black 30%, transparent 75%)'
+                            }}
+                        >
+                            <video
+                                ref={videoRef}
+                                src={data.data?.Video?.url}
+                                autoPlay
+                                muted
+                                playsInline
+                                loop
+                                className="w-full h-full object-contain mix-blend-screen opacity-90 transition-all duration-700 group-hover:opacity-100 group-hover:scale-105"
+                            />
+                        </div>
+                    </motion.div>
+
+                    {/* Bottom Ground Soft Reflection */}
+                    <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[60%] h-8 bg-[#3C4CFF]/30 blur-[60px] rounded-full opacity-20" />
                 </div>
             </div>
 

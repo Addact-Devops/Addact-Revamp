@@ -52,7 +52,7 @@ export default function TechReveal({
             opacity: 1,
             letterSpacing: "0em",
             transition: {
-                type: "spring",
+                type: "spring" as const,
                 damping: 30, // More damping for smoother settle
                 stiffness: 120,
                 duration: duration,
@@ -63,7 +63,7 @@ export default function TechReveal({
     return (
         <Tag className={`inline-block ${className}`} ref={ref}>
             <motion.span
-                className="inline-flex flex-wrap leading-[1.2] py-[0.1em]" 
+                className={`inline-flex ${className.includes('whitespace-nowrap') ? 'flex-nowrap' : 'flex-wrap'} leading-[1.2] py-[0.1em]`} 
                 variants={containerVariants}
                 initial="hidden"
                 animate={isInView ? "visible" : "hidden"}

@@ -53,3 +53,4 @@ body {
 .group:hover .cms-logo-filter {
   filter: brightness(0) saturate(100%) invert(27%) sepia(87%) saturate(4529%) hue-rotate(233deg) brightness(100%);
 }
+
