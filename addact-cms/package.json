@@ -21,6 +21,7 @@
     "@strapi/plugin-users-permissions": "5.16.0",
     "@strapi/provider-upload-aws-s3": "^5.15.0",
     "@strapi/strapi": "5.16.0",
+    "export-import-kkm": "^1.1.1",
     "mysql2": "3.9.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
