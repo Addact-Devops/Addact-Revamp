@@ -4,16 +4,26 @@
 @import "../base/functions";
 
 .who-we-are {
-    .fade-in {
-        animation: fadeWord 1.3s ease forwards;
-    }
+  .who-we-are__description {
+    color: #1e1f23;
+  }
 
-    @keyframes fadeWord {
-        from {
-            opacity: 0.5;
-        }
-        to {
-            opacity: 1;
-        }
+  .word {
+    display: inline-block;
+    opacity: 0.25;
+    will-change: opacity;
+  }
+
+  .fade-in {
+    animation: fadeWord 1.3s ease forwards;
+  }
+
+  @keyframes fadeWord {
+    from {
+      opacity: 0.5;
     }
+    to {
+      opacity: 1;
+    }
+  }
 }
