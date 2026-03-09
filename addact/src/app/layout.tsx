@@ -1,8 +1,8 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import "../styles/custom.scss";
-import { getHeaderData } from "@/graphql/queries/header";
+import { getAddactHeaderData } from "@/graphql/queries/addact-header";
 import { getFooterData } from "@/graphql/queries/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ScrollToTop from "@/components/atom/scrollToTop";
@@ -20,13 +20,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+});
+
 export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const HeaderData = await getHeaderData();
-  const footerData = await getFooterData();
+  let headerRes;
+  let footerData;
+  try {
+    headerRes = await getAddactHeaderData();
+  } catch (e) {
+    console.error("[Header] getAddactHeaderData failed:", e);
+    headerRes = { addactHeader: {} };
+  }
+  try {
+    footerData = await getFooterData();
+  } catch (e) {
+    console.error("[Footer] getFooterData failed:", e);
+    footerData = undefined;
+  }
 
   return (
     <html lang="en">
@@ -50,7 +67,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
       >
         <noscript>
           <iframe
@@ -63,7 +80,7 @@ export default async function RootLayout({
 
         <ScrollToTop />
         {/* ✅ Wrap children in LayoutWrapper (from current code) */}
-        <LayoutWrapper headerData={HeaderData} footerData={footerData}>
+        <LayoutWrapper headerData={headerRes.addactHeader} footerData={footerData}>
           {/* <SnowfallWrapper /> */}
           {children}
           <TawkTo />
