@@ -8,14 +8,6 @@ import {
   ChevronUp,
   ChevronRight,
   ChevronLeft,
-  ArrowRight,
-  FileText,
-  Video,
-  BookOpen,
-  Calendar,
-  Newspaper,
-  Mail,
-  Phone,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,6 +18,7 @@ import type {
   HeaderSubLayer,
   HeaderLink,
 } from "@/graphql/queries/addact-header";
+import { ChevronRightIcon } from "../atom/icons";
 
 interface HeaderProps {
   headerData: AddactHeaderData;
@@ -66,62 +59,52 @@ function formatContactHref(href: string): string {
 
 // ─── Featured Card ────────────────────────────────────────────────────────────────────────────
 
-function FeaturedCard({ card }: { card: HeaderCard }) {
+function FeaturedCard({
+  card,
+  className,
+}: {
+  card: HeaderCard;
+  className?: string;
+}) {
   const lnk = card.link;
   const imgUrl = card.image?.url;
 
   return (
     <div
-      className="relative w-full h-[276px] bg-[#3C4CFF] rounded-2xl text-white overflow-hidden flex font-montserrat group/card"
+      className={`relative h-[276px] bg-[#3C4CFF] rounded-2xl text-white overflow-hidden flex font-montserrat group/card ${className ?? "w-[474px]"}`}
     >
       {/* Background Image or Circles */}
-      {imgUrl ? (
+      {imgUrl && (
         <div className="absolute inset-0 z-0">
-          <Image 
-            src={imgUrl} 
-            alt={card.image?.alternativeText || ""} 
-            fill 
+          <Image
+            src={imgUrl}
+            alt={card.image?.alternativeText || ""}
+            fill
             className="object-cover opacity-40 group-hover/card:scale-105 transition-transform duration-500"
           />
           <div className="absolute inset-0 bg-linear-to-t from-[#3C4CFF] via-transparent to-transparent" />
         </div>
-      ) : (
-        <>
-          <div className="absolute -top-8 -right-8 w-[120px] h-[120px] rounded-full bg-white/10 pointer-events-none" />
-          <div className="absolute top-4 right-10 w-[65px] h-[65px] rounded-full bg-white/10 pointer-events-none" />
-        </>
       )}
 
       {/* Content container */}
       <div className="relative z-10 flex flex-col justify-between p-[30px] flex-1 min-w-0">
-        <h3 className="text-[24px] font-medium leading-[1.4] line-clamp-3">
+        <h3 className="text-[30px]! font-medium leading-[45px]! line-clamp-3! w-[312px]">
           {card.title ?? "Featured Article"}
         </h3>
         {lnk && (
           <Link
             href={lnk.href ?? "#"}
             target={lnk.isExternal ? "_blank" : "_self"}
-            className="inline-flex items-center gap-2 bg-white text-[#3C4CFF] px-5 py-2.5 rounded-full font-bold text-[13px] hover:bg-gray-100 transition-all w-fit shadow-lg shadow-black/20 group/btn"
+            className="inline-flex items-center bg-white text-[#3C4CFF] px-5 py-[17px] rounded-[8px] font-semibold text-[18px] hover:bg-gray-100 transition-all w-fit shadow-lg shadow-black/20 group/btn"
           >
             {lnk.label ?? "Read More"}
-            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+
+            <ChevronRightIcon className="group-hover/btn:translate-x-1 transition-transform ml-[20px]" />
           </Link>
         )}
       </div>
     </div>
   );
-}
-
-
-
-// ─── Resource icon helper ─────────────────────────────────────────────────────
-function ResourceIcon({ label }: { label?: string }) {
-  const l = (label ?? "").toLowerCase();
-  if (l.includes("blog") || l.includes("press")) return <Newspaper size={18} />;
-  if (l.includes("webinar") || l.includes("video")) return <Video size={18} />;
-  if (l.includes("ebook") || l.includes("case")) return <BookOpen size={18} />;
-  if (l.includes("event")) return <Calendar size={18} />;
-  return <FileText size={18} />;
 }
 
 // ─── Dropdown Content ─────────────────────────────────────────────────────────
@@ -150,29 +133,42 @@ function DropdownContent({
     return (
       <div className="flex w-full items-stretch min-h-[336px]">
         {/* Sidebar */}
-        <div className="w-[400px] shrink-0 flex flex-col" style={{ background: "#0F0F0F" }}>
+        <div
+          className="w-[clamp(280px,34vw,533px)] shrink-0 flex flex-col border-r border-[#2E2E2E]"
+          style={{ background: "#0F0F0F" }}
+        >
           {subs.map((sub, idx) => {
             const label = sub.link?.label ?? `Category ${idx + 1}`;
             const isActive = activeIdx === idx;
             return (
               <button
                 key={sub.id ?? idx}
-                onClick={(e) => { e.stopPropagation(); setActiveIdx(idx); }}
-                className={`w-full text-left px-5 py-5 text-[16px] font-medium font-montserrat transition-all flex justify-between items-center gap-2 ${
-                  isActive ? "bg-[#3C4CFF] text-white" : "text-gray-300 hover:text-white hover:bg-[#1a1a1a]"
+                onMouseEnter={() => {
+                  setActiveIdx(idx);
+                }}
+                className={`w-full text-left text-white px-5 py-7.5 text-[20px] font-medium font-montserrat transition-all flex justify-between items-center gap-2 border-b h-[84px] border-[#2E2E2E] ${
+                  isActive ? "bg-[#3C4CFF]" : ""
                 }`}
               >
                 <span className="flex-1 leading-snug">{label}</span>
-                <ChevronRight size={11} className={`shrink-0 ${isActive ? "opacity-100" : "opacity-30"}`} />
+                <ChevronRight
+                  size={24}
+                  className={`shrink-0 ${isActive ? "opacity-100" : "opacity-30"}`}
+                />
+                {/* <ChevronRightIcon className={`shrink-0 `} /> */}
               </button>
             );
           })}
         </div>
 
-        {/* Links Content */}
-        <div className="flex-1 pl-12 pr-8 pt-[30px] pb-7 text-white" style={{ background: "#0F0F0F" }}>
+        <div
+          className="flex-1 px-[40px] py-[30px] pb-7 text-white"
+          style={{ background: "#0F0F0F" }}
+        >
           {hasLevel3 ? (
-            <div className={`grid ${showCard ? "grid-cols-1" : "grid-cols-2"} gap-x-8 gap-y-[18px]`}>
+            <div
+              className={`grid ${showCard ? "grid-cols-1" : "grid-cols-2"} gap-x-8 gap-y-[28px]`}
+            >
               {activeSub?.subLayers?.map((deep, di) => {
                 const deepLink = deep.link;
                 if (!deepLink) return null;
@@ -192,7 +188,7 @@ function DropdownContent({
                         className="w-7 h-7 object-contain shrink-0 opacity-80"
                       />
                     )}
-                    <span className="text-[16px] font-medium font-montserrat text-gray-200 group-hover:text-white transition-colors leading-[22px]">
+                    <span className="text-[18px] font-medium font-montserrat text-[#B7B7B7] group-hover:text-white transition-colors leading-[22px]">
                       {deepLink.label}
                     </span>
                   </Link>
@@ -208,7 +204,10 @@ function DropdownContent({
 
         {/* Card Section */}
         {showCard && (
-          <div className="w-[474px] shrink-0 p-[30px]" style={{ background: "#0F0F0F" }}>
+          <div
+            className="shrink-0 pr-[30px] pt-[30px]"
+            style={{ background: "#0F0F0F" }}
+          >
             <FeaturedCard card={activeSub.card!} />
           </div>
         )}
@@ -217,14 +216,20 @@ function DropdownContent({
   }
 
   // ── Layout B: Flat grid (Industry/Resources/Company) ──
-  const showCard = (item.isCardShow && item.card) || (isLastItem && !!additionalText);
-  
+  const showCard =
+    (item.isCardShow && item.card) || (isLastItem && !!additionalText);
+
   return (
     <div className="flex flex-col w-full min-h-[336px]">
-      <div className="flex w-full items-stretch flex-1">
+      <div className="flex w-full items-stretch flex-1 gap-5">
         {/* Links Area */}
-        <div className="flex-1 px-10 py-9" style={{ background: "#0F0F0F" }}>
-          <div className={`grid ${showCard ? "grid-cols-2" : "grid-cols-3"} gap-x-8 gap-y-5`}>
+        <div
+          className={`flex-1 min-w-0 px-10 py-7.5 ${showCard ? "w-full max-w-[1066px]" : ""}`}
+          style={{ background: "#0F0F0F" }}
+        >
+          <div
+            className={`grid ${showCard ? "grid-cols-2" : "grid-cols-3"} gap-x-8 gap-y-7`}
+          >
             {subs.map((sub, si) => {
               const lnk = sub.link ?? sub.card?.link;
               const label = lnk?.label ?? sub.card?.title;
@@ -236,49 +241,57 @@ function DropdownContent({
                   key={sub.id ?? si}
                   href={href}
                   target={lnk?.isExternal ? "_blank" : "_self"}
-                  className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors py-0.5 group"
+                  className="flex items-center gap-3 text-[#B7B7B7] hover:text-white transition-colors py-0.5 group"
                 >
                   {lnk?.Icon?.url && (
-                    <span className="text-gray-500 group-hover:text-[#3C4CFF] transition-colors shrink-0">
-                      <Image 
-                        src={lnk.Icon.url} 
-                        alt="" 
-                        width={20} 
-                        height={20} 
-                        className="w-5 h-5 object-contain opacity-70 group-hover:opacity-100" 
+                    <span className="text-[#E3E3E3] transition-colors shrink-0">
+                      <Image
+                        src={lnk.Icon.url}
+                        alt=""
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 object-contain"
                       />
                     </span>
                   )}
-                  <span className="text-[16px] font-medium font-montserrat leading-[22px]">{label}</span>
+                  <span className="text-[18px] font-medium font-montserrat leading-[22px]">
+                    {label}
+                  </span>
                 </Link>
               );
             })}
           </div>
         </div>
 
-        {/* Right Section: Card or Hero Text */}
         {showCard && (
-          <div 
-            className="w-[474px] shrink-0 p-[30px] relative overflow-hidden flex flex-col justify-center" 
+          <div
+            className="w-[474px] min-w-[474px] max-w-[474px] shrink-0 relative overflow-hidden flex flex-col"
             style={{ background: "#0F0F0F" }}
           >
             {isLastItem && additionalText ? (
-              <div className="relative z-10 text-right pr-2 xl:pr-5 font-montserrat">
+              <div className="relative z-10 text-right font-montserrat pt-[30px]">
                 <div className="flex flex-col items-end">
                   {(() => {
                     const words = additionalText.split(" ");
                     if (words.length > 2) {
-                      // Group first words together to ensure exactly 2 lines
-                      const firstPart = words.slice(0, words.length - 1).join(" ");
+                      const firstPart = words
+                        .slice(0, words.length - 1)
+                        .join(" ");
                       const secondPart = words[words.length - 1];
                       return [firstPart, secondPart].map((line, index) => (
-                        <span key={index} className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter">
+                        <span
+                          key={index}
+                          className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter"
+                        >
                           {line}
                         </span>
                       ));
                     }
                     return words.map((word, index) => (
-                      <span key={index} className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter">
+                      <span
+                        key={index}
+                        className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter"
+                      >
                         {word}
                       </span>
                     ));
@@ -286,7 +299,11 @@ function DropdownContent({
                 </div>
               </div>
             ) : (
-              item.card && <FeaturedCard card={item.card} />
+              <div>
+                {item.card && (
+                  <FeaturedCard card={item.card} className="w-full" />
+                )}
+              </div>
             )}
           </div>
         )}
@@ -294,7 +311,10 @@ function DropdownContent({
 
       {/* Footer Strip */}
       {isLastItem && contactDetails.length > 0 && (
-        <div className="flex w-full items-stretch border-t border-[#2E2E2E] h-[80px]" style={{ background: "#3C4CFF" }}>
+        <div
+          className="flex w-full items-stretch border-t border-[#2E2E2E] h-[80px]"
+          style={{ background: "#3C4CFF" }}
+        >
           {contactDetails.slice(0, 3).map((detail, idx) => (
             <Link
               key={detail.id ?? idx}
@@ -304,12 +324,23 @@ function DropdownContent({
                 idx < 2 ? "border-r border-white/10" : ""
               }`}
             >
-              <div className="flex flex-col">
-                <span className="text-white text-[16px] font-semibold font-montserrat">{detail.label}</span>
+              <div className="flex gap-2">
+                <span className="text-white text-[20px] font-semibold font-montserrat">
+                  {detail.label}
+                </span>
+                <span className="text-white text-[20px] font-montserrat">
+                  {detail?.SubDisc}
+                </span>
               </div>
               {detail.Icon?.url && (
                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white transition-all">
-                  <Image src={detail.Icon.url} alt="" width={16} height={16} className="w-4 h-4 object-contain invert-0" />
+                  <Image
+                    src={detail.Icon.url}
+                    alt=""
+                    width={16}
+                    height={16}
+                    className="w-4 h-4 object-contain invert-0"
+                  />
                 </div>
               )}
             </Link>
@@ -325,8 +356,9 @@ const Header = ({ headerData }: HeaderProps) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
-  const [activeMobileItem, setActiveMobileItem] = useState<HeaderMenuItem | null>(null); // Level 1 active
+
+  const [activeMobileItem, setActiveMobileItem] =
+    useState<HeaderMenuItem | null>(null); // Level 1 active
   const [expandedLevel2, setExpandedLevel2] = useState<string | null>(null); // Level 2 accordion
   const [bannerVisible, setBannerVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -344,7 +376,6 @@ const Header = ({ headerData }: HeaderProps) => {
 
   useEffect(() => {
     setOpenDropdown(null);
-    setOpenMobileDropdown(null);
     setActiveMobileItem(null);
     setExpandedLevel2(null);
     setMobileMenuOpen(false);
@@ -381,35 +412,44 @@ const Header = ({ headerData }: HeaderProps) => {
   const contactDetails = headerData?.contactDetails ?? [];
 
   const contactHref = contactBtn?.link?.href ?? "/contact-us";
-  const contactLabel = contactBtn?.link?.label ?? contactBtn?.title ?? "Contact us";
+  const contactLabel =
+    contactBtn?.link?.label ?? contactBtn?.title ?? "Contact us";
   const contactIsExternal = contactBtn?.link?.isExternal ?? false;
   const contactIcon = contactBtn?.link?.Icon?.url ?? contactBtn?.image?.url;
 
   return (
     <header className="fixed top-0 w-full z-50 bg-[#0F0F0F] border-b border-b-[#2e2e2e]">
-
       {/* Banner */}
       {showBanner && (
-        <div className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${bannerVisible ? "max-h-[60px]" : "max-h-0"}`}>
+        <div
+          className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${bannerVisible ? "max-h-[60px]" : "max-h-0"}`}
+        >
           <div className="container text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
             <span className="text-[14px] 2xl:text-[18px]">
-              Need An Accurate Estimate For Your Sitecore XM Cloud Migration Project? Kickstart Your Journey Here!
+              Need An Accurate Estimate For Your Sitecore XM Cloud Migration
+              Project? Kickstart Your Journey Here!
             </span>
-            <Link href="/project-cost-estimators" className="ml-6 hover:bg-white text-white px-3 rounded-[8px] border border-white font-semibold hover:text-[#3c4cff] text-[14px] h-10 flex items-center">
+            <Link
+              href="/project-cost-estimators"
+              className="ml-6 hover:bg-white text-white px-3 rounded-[8px] border border-white font-semibold hover:text-[#3c4cff] text-[14px] h-10 flex items-center"
+            >
               Get My Estimation
             </Link>
           </div>
         </div>
       )}
 
-
       {/* Main bar */}
       <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative">
         <Link href="/">
           {logo?.url && (
-            <Image src={logo.url} alt={logo.alternativeText || "Company Logo"}
+            <Image
+              src={logo.url}
+              alt={logo.alternativeText || "Company Logo"}
               className="w-[130px] h-full lg:w-[150px] xl:w-[200px]"
-              width={logo.width ?? 200} height={logo.height ?? 50} />
+              width={logo.width ?? 200}
+              height={logo.height ?? 50}
+            />
           )}
         </Link>
 
@@ -427,30 +467,43 @@ const Header = ({ headerData }: HeaderProps) => {
                   {hasDrop ? (
                     <button
                       data-nav-btn
-                      onClick={() => setOpenDropdown((prev) => (prev === item.id ? null : item.id ?? null))}
+                      onClick={() =>
+                        setOpenDropdown((prev) =>
+                          prev === item.id ? null : (item.id ?? null),
+                        )
+                      }
                       className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] focus:outline-none transition-colors cursor-pointer py-5 lg:py-[40px]"
                     >
                       {label}
-                      {isActive ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                      {isActive ? (
+                        <ChevronUp size={14} />
+                      ) : (
+                        <ChevronDown size={14} />
+                      )}
                     </button>
                   ) : (
-                    <Link href={href}
-                      className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] transition-colors py-5 lg:py-[40px]">
+                    <Link
+                      href={href}
+                      className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] transition-colors py-5 lg:py-[40px]"
+                    >
                       {label}
                     </Link>
                   )}
-                  {isActive && <div className="absolute bottom-0 w-[45px] h-[4px] bg-white rounded-t" />}
+                  {isActive && (
+                    <div className="absolute bottom-0 w-[45px] h-[4px] bg-white rounded-t" />
+                  )}
                 </div>
 
                 {hasDrop && isActive && (
-                  <div 
+                  <div
                     className="fixed z-40 overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
                     style={{
                       top: "130px",
                       background: "#0F0F0F",
                       border: "1px solid #2E2E2E",
                       borderRadius: "20px",
-                      boxShadow: "0 8px 34px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4)",
+                      boxShadow:
+                        "0 8px 34px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4)",
                     }}
                   >
                     <DropdownContent
@@ -465,10 +518,19 @@ const Header = ({ headerData }: HeaderProps) => {
             );
           })}
 
-          <Link href={contactHref} target={contactIsExternal ? "_blank" : "_self"}
-            className="ml-4 bg-[#3C4CFF] px-5 py-3 rounded-[8px] text-white font-semibold hover:bg-[#3440CB] text-[14px] xl:text-[15px] transition-colors flex items-center gap-2">
+          <Link
+            href={contactHref}
+            target={contactIsExternal ? "_blank" : "_self"}
+            className="ml-4 bg-[#3C4CFF] px-5 py-3 rounded-[8px] text-white font-semibold hover:bg-[#3440CB] text-[14px] xl:text-[15px] transition-colors flex items-center gap-2"
+          >
             {contactIcon && (
-              <Image src={contactIcon} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain invert brightness-0" />
+              <Image
+                src={contactIcon}
+                alt=""
+                width={18}
+                height={18}
+                className="w-[18px] h-[18px] object-contain invert brightness-0"
+              />
             )}
             {contactLabel}
           </Link>
@@ -476,14 +538,26 @@ const Header = ({ headerData }: HeaderProps) => {
 
         {/* Mobile buttons */}
         <div className="lg:hidden flex items-center space-x-3">
-          <Link href={contactHref} target={contactIsExternal ? "_blank" : "_self"}
-            className="bg-[#3C4CFF] px-4 py-1.5 rounded-[6px] text-white font-semibold text-[13px] hover:bg-[#3440CB] flex items-center gap-2">
+          <Link
+            href={contactHref}
+            target={contactIsExternal ? "_blank" : "_self"}
+            className="bg-[#3C4CFF] px-4 py-1.5 rounded-[6px] text-white font-semibold text-[13px] hover:bg-[#3440CB] flex items-center gap-2"
+          >
             {contactIcon && (
-              <Image src={contactIcon} alt="" width={14} height={14} className="w-[14px] h-[14px] object-contain invert brightness-0" />
+              <Image
+                src={contactIcon}
+                alt=""
+                width={14}
+                height={14}
+                className="w-[14px] h-[14px] object-contain invert brightness-0"
+              />
             )}
             {contactLabel}
           </Link>
-          <button onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+          >
             <Menu className="w-6 h-6 text-white" />
           </button>
         </div>
@@ -493,33 +567,39 @@ const Header = ({ headerData }: HeaderProps) => {
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-60 bg-[#0F0F0F] text-white flex flex-col overflow-hidden">
           {/* Mobile Header: Top Row (Logo & X) */}
-          <div className="flex items-center justify-between border-b border-white/20 h-[70px] shrink-0 relative">
-            <div className="pl-6 h-full flex items-center">
+          <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
+            <div className="h-full flex items-center">
               <Link href="/">
                 {logo?.url && (
-                  <Image src={logo.url} alt={logo.alternativeText || "Company Logo"} width={130} height={30} className="w-[130px] h-auto" />
+                  <Image
+                    src={logo.url}
+                    alt={logo.alternativeText || "Company Logo"}
+                    className="w-[130px] h-full lg:w-[150px] xl:w-[200px]"
+                    width={logo.width ?? 200}
+                    height={logo.height ?? 50}
+                  />
                 )}
               </Link>
             </div>
-            
-            <button 
-              onClick={() => setMobileMenuOpen(false)} 
-              aria-label="Close menu" 
-              className="w-[70px] h-full flex items-center justify-center border-l border-white/20 z-10"
+
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              aria-label="Close menu"
+              className="w-[70px] h-full flex items-center justify-end border-l border-[#2E2E2E] z-10"
             >
-              <X className="w-8 h-8" />
+              <X className="w-8 h-8 text-white" />
             </button>
           </div>
 
           {/* Mobile Header: Sub Row (Back & Title) */}
           {activeMobileItem && (
-            <div className="flex items-center justify-center border-b border-white/20 h-[70px] shrink-0 relative bg-[#0F0F0F]">
-              <button 
+            <div className="flex items-center justify-center pt-6.5 shrink-0 relative bg-[#0F0F0F]">
+              <button
                 onClick={() => {
                   setActiveMobileItem(null);
                   setExpandedLevel2(null);
                 }}
-                className="absolute left-4 p-2 z-10"
+                className="absolute left-4 z-10"
               >
                 <ChevronLeft className="w-8 h-8" />
               </button>
@@ -537,7 +617,7 @@ const Header = ({ headerData }: HeaderProps) => {
                 {menu.map((item) => {
                   const label = getMenuLabel(item);
                   const hasDrop = hasDropdown(item);
-                  
+
                   return (
                     <div key={item.id}>
                       {hasDrop ? (
@@ -546,11 +626,14 @@ const Header = ({ headerData }: HeaderProps) => {
                           className="w-full flex justify-between items-center px-6 py-5 text-[18px] font-medium font-montserrat group"
                         >
                           {label}
-                          <ChevronRight size={24} className="text-white/50 group-hover:text-white" />
+                          <ChevronRight
+                            size={24}
+                            className="text-white/50 group-hover:text-white"
+                          />
                         </button>
                       ) : (
-                        <Link 
-                          href={getMenuHref(item)} 
+                        <Link
+                          href={getMenuHref(item)}
                           className="flex items-center px-6 py-5 text-[18px] font-medium font-montserrat"
                         >
                           {label}
@@ -575,18 +658,33 @@ const Header = ({ headerData }: HeaderProps) => {
                         /* Accordion for Level 2 with Level 3 children */
                         <>
                           <button
-                            onClick={() => setExpandedLevel2(isExpanded ? null : sub.id ?? `sub-${idx}`)}
-                            className="w-full flex justify-between items-center px-6 py-5 text-[18px] font-medium font-montserrat"
+                            onClick={() =>
+                              setExpandedLevel2(
+                                isExpanded ? null : (sub.id ?? `sub-${idx}`),
+                              )
+                            }
+                            className={`w-full flex justify-between items-center px-6 py-[26px] text-[18px] font-medium font-montserrat ${isExpanded ? "" : "border-b border-[#2E2E2E]"} `}
                           >
                             <span className="flex items-center gap-3">
-                              {iconUrl && <Image src={iconUrl} alt="" width={20} height={20} className="w-[20px] h-[20px] object-contain" />}
+                              {iconUrl && (
+                                <Image
+                                  src={iconUrl}
+                                  alt=""
+                                  width={20}
+                                  height={20}
+                                  className="w-[20px] h-[20px] object-contain"
+                                />
+                              )}
                               {subLabel}
                             </span>
-                            <ChevronDown size={22} className={`transition-transform duration-200 text-white/50 ${isExpanded ? "rotate-180" : ""}`} />
+                            <ChevronDown
+                              size={22}
+                              className={`transition-transform duration-200 text-white/50 ${isExpanded ? "rotate-180" : ""}`}
+                            />
                           </button>
-                          
+
                           {isExpanded && (
-                            <div className="bg-[#111] py-2 border-t border-[#2E2E2E]/50">
+                            <div className="bg-[#111]">
                               {sub.subLayers?.map((l3, l3i) => (
                                 <Link
                                   key={l3.id ?? l3i}
@@ -605,7 +703,15 @@ const Header = ({ headerData }: HeaderProps) => {
                           href={sub.link?.href ?? "#"}
                           className="flex items-center gap-3 px-6 py-5 text-[18px] font-medium font-montserrat"
                         >
-                          {iconUrl && <Image src={iconUrl} alt="" width={20} height={20} className="w-[20px] h-[20px] object-contain" />}
+                          {iconUrl && (
+                            <Image
+                              src={iconUrl}
+                              alt=""
+                              width={20}
+                              height={20}
+                              className="w-[20px] h-[20px] object-contain"
+                            />
+                          )}
                           {subLabel}
                         </Link>
                       )}
@@ -616,45 +722,67 @@ const Header = ({ headerData }: HeaderProps) => {
             )}
 
             {/* Contact Details Cards - Only shown on the last category (Company) */}
-            {activeMobileItem && menu[menu.length - 1]?.id === activeMobileItem.id && contactDetails.length > 0 && (
-              <div className="px-5 pb-10 flex flex-col gap-3 mt-6">
-                {contactDetails.map((details, i) => {
-                  const isEmail = details.label?.toLowerCase().includes("email") || details.href?.startsWith("mailto:");
-                  const isPhone = details.label?.toLowerCase().includes("india") || details.label?.toLowerCase().includes("usa") || details.href?.startsWith("tel:");
-                  
-                  return (
-                    <Link 
-                      key={details.id ?? i} 
-                      href={formatContactHref(details.href ?? "#")} 
-                      target={details.isExternal ? "_blank" : "_self"}
-                      className="flex items-center justify-between p-4 rounded-[12px] border border-white bg-transparent transition-colors group/contact"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="text-[14px] font-bold text-white whitespace-nowrap">
-                          {details.label}
-                        </span>
-                        <span className="text-[14px] font-medium text-white">
-                          {details.SubDisc}
-                        </span>
-                      </div>
-                      {details.Icon?.url && (
-                        <div className="text-white transition-colors ml-2 shrink-0">
-                          <Image src={details.Icon.url} alt="" width={18} height={18} className="w-[18px] h-[18px] object-contain invert brightness-0" />
+            {activeMobileItem &&
+              menu[menu.length - 1]?.id === activeMobileItem.id &&
+              contactDetails.length > 0 && (
+                <div className="px-5 pb-10 flex flex-col gap-3 mt-6">
+                  {contactDetails.map((details, i) => {
+                    // const isEmail =
+                    //   details.label?.toLowerCase().includes("email") ||
+                    //   details.href?.startsWith("mailto:");
+                    // const isPhone =
+                    //   details.label?.toLowerCase().includes("india") ||
+                    //   details.label?.toLowerCase().includes("usa") ||
+                    //   details.href?.startsWith("tel:");
+
+                    return (
+                      <Link
+                        key={details.id ?? i}
+                        href={formatContactHref(details.href ?? "#")}
+                        target={details.isExternal ? "_blank" : "_self"}
+                        className="flex items-center justify-between py-2.75 px-4 rounded-[8px] border border-[#2E2E2E] bg-transparent transition-colors group/contact"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-[16px] font-bold text-white whitespace-nowrap">
+                            {details.label}
+                          </span>
+                          <span className="text-[16px] font-medium text-white">
+                            {details.SubDisc}
+                          </span>
                         </div>
-                      )}
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
+                        {details.Icon?.url && (
+                          <div className="text-white transition-colors ml-2 shrink-0">
+                            <Image
+                              src={details.Icon.url}
+                              alt=""
+                              width={details?.Icon?.width}
+                              height={details?.Icon?.height}
+                              className="object-contain invert brightness-0"
+                            />
+                          </div>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
           </div>
 
           {/* Footer Button Wrapper */}
-          <div className="p-4 bg-[#0F0F0F] border-t border-white/20 sticky bottom-0">
-            <Link href={contactHref} target={contactIsExternal ? "_blank" : "_self"}
-              className="w-full bg-[#3C4CFF] py-4 rounded-[12px] text-white font-semibold text-[16px] flex items-center justify-center gap-2 font-montserrat shadow-lg hover:bg-[#3440CB] transition-colors">
+          <div className="py-7.5 px-6 bg-[#0F0F0F] sticky bottom-0">
+            <Link
+              href={contactHref}
+              target={contactIsExternal ? "_blank" : "_self"}
+              className="w-full bg-[#3C4CFF] py-3.5 rounded-[12px] text-white font-semibold text-[16px] flex items-center justify-center gap-2 font-montserrat shadow-lg hover:bg-[#3440CB] transition-colors"
+            >
               {contactIcon && (
-                <Image src={contactIcon} alt="" width={20} height={20} className="w-[20px] h-[20px] invert brightness-0" />
+                <Image
+                  src={contactIcon}
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="w-[20px] h-[20px] invert brightness-0"
+                />
               )}
               {contactLabel}
             </Link>
