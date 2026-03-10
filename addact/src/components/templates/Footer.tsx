@@ -74,7 +74,7 @@ export default function Footer({ data }: FooterProps) {
     footerlinks,
     milestonestitle,
     milestonesimage,
-    AddressInformationMobileBgImg,
+    // AddressInformationMobileBgImg,
     socialicons,
     contacticons,
     CopyrightText,
@@ -98,7 +98,7 @@ export default function Footer({ data }: FooterProps) {
 
   return (
     <>
-      <div className="block lg:hidden relative bg-[#0F0F0F] p-10 px-6">
+      {/* <div className="block lg:hidden relative bg-[#0F0F0F] p-10 px-6">
         {AddressInformationMobileBgImg?.[0]?.Image?.url && (
           <Image
             src={AddressInformationMobileBgImg[0].Image.url}
@@ -148,7 +148,7 @@ export default function Footer({ data }: FooterProps) {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <footer className="relative overflow-hidden bg-[#0F0F0F] text-white lg:pt-16 pt-10 border-t border-b border-white/15 z-10">
         <div className="container">
