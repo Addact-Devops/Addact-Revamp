@@ -81,13 +81,15 @@ const WhoWeAre = () => {
         <div className="max-w-[1200px] mx-auto text-center mb-12 sm:mb-16 md:mb-24 lg:mb-32!">
           <div
             ref={descriptionRef}
-            className="flex flex-wrap justify-center gap-x-2 md:gap-x-3 text-[20px]! sm:text-[28px]! md:text-[36px]! lg:text-[40px]! font-medium leading-[1.3] sm:leading-[1.25] md:leading-[1.2] text-black"
+            className="flex flex-wrap justify-center gap-x-2 md:gap-x-3 text-[20px] sm:text-[28px] md:text-[36px] lg:text-[40px]! font-medium leading-[1.3] sm:leading-[1.25] md:leading-[54px] text-black"
           >
-            {descriptionWords.map((word, index) => (
-              <span key={`${word}-${index}`} className="word inline-block">
-                {word}
-              </span>
-            ))}
+            {descriptionWords &&
+              descriptionWords?.length > 0 &&
+              descriptionWords?.map((word, index) => (
+                <span key={`${word}-${index}`} className="word inline-block">
+                  {word}
+                </span>
+              ))}
           </div>
         </div>
 
