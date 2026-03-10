@@ -747,6 +747,32 @@ export interface ApiAddactWebinarAddactWebinar
   };
 }
 
+export interface ApiAiAi extends Struct.CollectionTypeSchema {
+  collectionName: 'ais';
+  info: {
+    displayName: 'AI ';
+    pluralName: 'ais';
+    singularName: 'ai';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AIEcoSystem: Schema.Attribute.Component<'home.ai-eco-system', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::ai.ai'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    referenceTitle: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAuthorDesignationAuthorDesignation
   extends Struct.CollectionTypeSchema {
   collectionName: 'author_designations';
@@ -1122,6 +1148,7 @@ export interface ApiClientTestimonialClientTestimonial
     draftAndPublish: true;
   };
   attributes: {
+    bgText: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1136,6 +1163,10 @@ export interface ApiClientTestimonialClientTestimonial
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.String;
+    ratingImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -1870,6 +1901,8 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    aiEcoSystem: Schema.Attribute.Relation<'oneToOne', 'api::ai.ai'>;
+    animationBanner: Schema.Attribute.Component<'home.animation-banner', false>;
     banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
     contactus: Schema.Attribute.Relation<
       'oneToOne',
@@ -1883,9 +1916,14 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
       'base-template.globe-animation',
       false
     >;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::home.home'> &
       Schema.Attribute.Private;
+    ourCapabilitiy: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-capabilitiy.our-capabilitiy'
+    >;
     ourexpertise: Schema.Attribute.Relation<
       'oneToOne',
       'api::our-expertise.our-expertise'
@@ -1983,6 +2021,7 @@ export interface ApiIndustryDetailPageIndustryDetailPage
       'api::global-card.global-card'
     >;
     HeroBanner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -2010,6 +2049,36 @@ export interface ApiIndustryDetailPageIndustryDetailPage
       'oneToOne',
       'api::our-expertise.our-expertise'
     >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOurCapabilitiyOurCapabilitiy
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'our_capabilitiys';
+  info: {
+    displayName: 'Our Capabilitiy';
+    pluralName: 'our-capabilitiys';
+    singularName: 'our-capabilitiy';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    capabilities: Schema.Attribute.Component<'home.capabilities', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heading: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::our-capabilitiy.our-capabilitiy'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -3460,6 +3529,7 @@ declare module '@strapi/strapi' {
       'api::addact-header.addact-header': ApiAddactHeaderAddactHeader;
       'api::addact-press-release.addact-press-release': ApiAddactPressReleaseAddactPressRelease;
       'api::addact-webinar.addact-webinar': ApiAddactWebinarAddactWebinar;
+      'api::ai.ai': ApiAiAi;
       'api::author-designation.author-designation': ApiAuthorDesignationAuthorDesignation;
       'api::author.author': ApiAuthorAuthor;
       'api::banner.banner': ApiBannerBanner;
@@ -3494,6 +3564,7 @@ declare module '@strapi/strapi' {
       'api::home.home': ApiHomeHome;
       'api::industries-we-serve.industries-we-serve': ApiIndustriesWeServeIndustriesWeServe;
       'api::industry-detail-page.industry-detail-page': ApiIndustryDetailPageIndustryDetailPage;
+      'api::our-capabilitiy.our-capabilitiy': ApiOurCapabilitiyOurCapabilitiy;
       'api::our-expertise.our-expertise': ApiOurExpertiseOurExpertise;
       'api::our-partner.our-partner': ApiOurPartnerOurPartner;
       'api::our-process.our-process': ApiOurProcessOurProcess;

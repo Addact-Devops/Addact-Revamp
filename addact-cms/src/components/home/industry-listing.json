@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_home_industry_listings",
+  "info": {
+    "displayName": "Industry Listing"
+  },
+  "options": {},
+  "attributes": {
+    "industryListTitle": {
+      "type": "string"
+    },
+    "industry_list": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::industry-detail-page.industry-detail-page"
+    }
+  },
+  "config": {}
+}

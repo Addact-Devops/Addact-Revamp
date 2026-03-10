@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ais",
+  "info": {
+    "singularName": "ai",
+    "pluralName": "ais",
+    "displayName": "AI "
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "referenceTitle": {
+      "type": "string"
+    },
+    "AIEcoSystem": {
+      "type": "component",
+      "component": "home.ai-eco-system",
+      "repeatable": false
+    }
+  }
+}

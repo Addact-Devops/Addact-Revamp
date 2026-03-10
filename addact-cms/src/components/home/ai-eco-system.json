@@ -1,0 +1,58 @@
+{
+  "collectionName": "components_home_ai_eco_systems",
+  "info": {
+    "displayName": "AI Eco System"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultMarkdown"
+      }
+    },
+    "firstImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "secondImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "tagLine": {
+      "type": "string"
+    },
+    "link": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "firstLayerlogos": {
+      "type": "component",
+      "component": "shared.image",
+      "repeatable": true
+    },
+    "secondLayerlogos": {
+      "type": "component",
+      "component": "shared.image",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "our_capabilitiys",
+  "info": {
+    "singularName": "our-capabilitiy",
+    "pluralName": "our-capabilitiys",
+    "displayName": "Our Capabilitiy"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "component",
+      "component": "home.capabilities",
+      "repeatable": true
+    }
+  }
+}

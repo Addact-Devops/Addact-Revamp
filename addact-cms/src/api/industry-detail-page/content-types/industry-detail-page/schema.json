@@ -78,6 +78,11 @@
       "type": "component",
       "component": "reuse.projects-slider",
       "repeatable": false
+    },
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
     }
   }
 }

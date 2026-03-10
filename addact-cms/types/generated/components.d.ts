@@ -612,6 +612,115 @@ export interface HeadingsH6 extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeAiEcoSystem extends Struct.ComponentSchema {
+  collectionName: 'components_home_ai_eco_systems';
+  info: {
+    displayName: 'AI Eco System';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    firstImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    firstLayerlogos: Schema.Attribute.Component<'shared.image', true>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    secondImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    secondLayerlogos: Schema.Attribute.Component<'shared.image', true>;
+    tagLine: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeAnimationBanner extends Struct.ComponentSchema {
+  collectionName: 'components_home_animation_banners';
+  info: {
+    displayName: 'Animation Banner';
+  };
+  attributes: {
+    animationTitle: Schema.Attribute.String;
+    bannerDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    bannerImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    bannerLink: Schema.Attribute.Component<'shared.link', false>;
+    bannerSubTitle: Schema.Attribute.Component<'base-template.title', true>;
+    bannerTitle: Schema.Attribute.String;
+    firstAnimationImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    secondAnimationImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+  };
+}
+
+export interface HomeBaseComponent extends Struct.ComponentSchema {
+  collectionName: 'components_home_base_components';
+  info: {
+    displayName: 'Base Component';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeCapabilities extends Struct.ComponentSchema {
+  collectionName: 'components_home_capabilities';
+  info: {
+    displayName: 'Capabilities';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    sublinks: Schema.Attribute.Component<'shared.link', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeIndustryListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_industry_listings';
+  info: {
+    displayName: 'Industry Listing';
+  };
+  attributes: {
+    industry_list: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry-detail-page.industry-detail-page'
+    >;
+    industryListTitle: Schema.Attribute.String;
+  };
+}
+
 export interface ReuseCard extends Struct.ComponentSchema {
   collectionName: 'components_reuse_cards';
   info: {
@@ -922,6 +1031,11 @@ declare module '@strapi/strapi' {
       'headings.h4': HeadingsH4;
       'headings.h5': HeadingsH5;
       'headings.h6': HeadingsH6;
+      'home.ai-eco-system': HomeAiEcoSystem;
+      'home.animation-banner': HomeAnimationBanner;
+      'home.base-component': HomeBaseComponent;
+      'home.capabilities': HomeCapabilities;
+      'home.industry-listing': HomeIndustryListing;
       'reuse.card': ReuseCard;
       'reuse.number-title-content': ReuseNumberTitleContent;
       'reuse.projects-slider': ReuseProjectsSlider;
