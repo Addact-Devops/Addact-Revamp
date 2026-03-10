@@ -82,7 +82,7 @@ export default function Footer({ data }: FooterProps) {
 
   const linkColumns = footerlinks?.slice(0, 4) || [];
   const policyColumn = footerlinks?.[4]?.NavLink || [];
-  const policyLinks = (policyColumn.slice(1) as FooterLink[]).filter(
+  const policyLinks = (policyColumn as FooterLink[]).filter(
     (item) => item?.label && item?.href,
   );
   const fallbackPolicyLinks: FooterLink[] = [
