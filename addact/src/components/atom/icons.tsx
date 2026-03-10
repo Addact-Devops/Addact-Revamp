@@ -134,7 +134,7 @@ export const EmailIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
         cy="20"
         r="19.5"
         fill="white"
-        fill-opacity="0.1"
+        fillOpacity="0.1"
         stroke="#3C4CFF"
       />
       <path

@@ -11,13 +11,14 @@ import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 // import ContactUs from "@/components/organisms/ContactUs";
-import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
+// import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
 // import GlobeAnimation from "@/components/organisms/GlobeAnimation";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import Script from "next/script";
 import OurCapabilities from "@/components/organisms/OurCapabilities";
 import BuildingAIEcosystem from "@/components/organisms/BuildingAIEcosystem";
+import HomeBanner from "@/components/organisms/HomeBanner";
 
 export async function generateMetadata() {
   return generatePageMetadata("home");
@@ -196,7 +197,8 @@ export default async function HomePage() {
 
       {/*  End Markup schema */}
       <main className="bg-dark">
-        <HomeHeroBanner data={homeData?.banner} />
+        {/* <HomeHeroBanner data={homeData?.banner} /> */}
+        <HomeBanner />
         <OurPartners />
         <WhoWeAre />
         <OurCapabilities />
