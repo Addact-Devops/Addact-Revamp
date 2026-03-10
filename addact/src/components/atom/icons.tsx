@@ -1,6 +1,6 @@
 import React from "react";
 
-export const RightArrowIcon: React.FC = () => {
+export const RightArrowIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
       width="30"
@@ -8,10 +8,11 @@ export const RightArrowIcon: React.FC = () => {
       viewBox="0 0 30 30"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         d="M18.0383 7.4126L25.6258 15.0001L18.0383 22.5876"
-        stroke="#3C4CFF"
+        stroke="currentColor"
         strokeWidth="2"
         strokeMiterlimit="10"
         strokeLinecap="round"
@@ -19,7 +20,7 @@ export const RightArrowIcon: React.FC = () => {
       />
       <path
         d="M4.375 15L25.4125 15"
-        stroke="#3C4CFF"
+        stroke="currentColor"
         strokeWidth="2"
         strokeMiterlimit="10"
         strokeLinecap="round"
