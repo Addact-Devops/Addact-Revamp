@@ -10,12 +10,14 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
-import ContactUs from "@/components/organisms/ContactUs";
+// import ContactUs from "@/components/organisms/ContactUs";
 import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
-import GlobeAnimation from "@/components/organisms/GlobeAnimation";
+// import GlobeAnimation from "@/components/organisms/GlobeAnimation";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import Script from "next/script";
+import OurCapabilities from "@/components/organisms/OurCapabilities";
+import BuildingAIEcosystem from "@/components/organisms/BuildingAIEcosystem";
 
 export async function generateMetadata() {
   return generatePageMetadata("home");
@@ -197,15 +199,17 @@ export default async function HomePage() {
         <HomeHeroBanner data={homeData?.banner} />
         <OurPartners />
         <WhoWeAre />
+        <OurCapabilities />
+        <BuildingAIEcosystem />
         <OurServices data={homeData?.ourservices} />
         <OurCmsExperts />
         <WhyAddact data={homeData?.whyaddact} />
-        <CtaBanner data={homeData?.cta} />
         {homeData?.ourprocess && <OurProcess data={homeData?.ourprocess} />}
         <ClientTestimonials />
         <OurInsights />
-        <GlobeAnimation data={homeData?.GlobeAnimation} />
-        <ContactUs data={homeData?.contactus} />
+        <CtaBanner data={homeData?.cta} />
+        {/* <GlobeAnimation data={homeData?.GlobeAnimation} /> */}
+        {/* <ContactUs data={homeData?.contactus} /> */}
       </main>
     </>
   );
