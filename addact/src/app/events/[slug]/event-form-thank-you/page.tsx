@@ -33,7 +33,7 @@
 
 //     return (
 //         <div className="bg-white pt-[120px]">
-//             <div className="container grid grid-cols-1 md:grid-cols-2 items-center justify-between px-6 md:px-16 py-12 max-w-7xl mx-auto gap-12">
+//             <div className="container-main grid grid-cols-1 md:grid-cols-2 items-center justify-between px-6 md:px-16 py-12 max-w-7xl mx-auto gap-12">
 //                 {/* Left Text Section */}
 //                 <div className="text-center md:text-left w-full">
 //                     <h1 className="!text-4xl md:!text-6xl !font-extrabold text-gray-900 leading-tight mb-6">
@@ -82,75 +82,82 @@ import EventThankYouClient from "./EventThankYouClient";
 type JsonPrimitive = string | number | boolean | null;
 type JsonArray = JsonValue[];
 interface JsonObject {
-    [key: string]: JsonValue;
+  [key: string]: JsonValue;
 }
 type JsonValue = JsonPrimitive | JsonObject | JsonArray;
 
 export async function generateMetadata(): Promise<Metadata> {
-    const slug = "event-form-thank-you"; // Hardcoded slug here
-    const data = await getThankYouPageBySlug(slug);
-    const page = data?.thankyouPages?.[0];
-    const seo = page?.SEO;
+  const slug = "event-form-thank-you"; // Hardcoded slug here
+  const data = await getThankYouPageBySlug(slug);
+  const page = data?.thankyouPages?.[0];
+  const seo = page?.SEO;
 
-    if (!seo) {
-        return {
-            title: "Thank You",
-            description: "Thank you for your submission.",
-        };
-    }
-
+  if (!seo) {
     return {
-        title: seo.metaTitle || "Thank You",
-        description: seo.metaDescription || "",
-        openGraph: {
-            title: seo.ogTitle || seo.metaTitle || "",
-            description: seo.ogDescription || seo.metaDescription || "",
-            images: seo.ogImage?.url ? [{ url: seo.ogImage.url }] : [],
-        },
-        robots: seo.metaRobots
-            ? { index: seo.metaRobots.includes("index"), follow: seo.metaRobots.includes("follow") }
-            : undefined,
-        alternates: seo.canonicalURL ? { canonical: seo.canonicalURL } : undefined,
-        other: {
-            twitterCardTitle: seo.twitterCardTitle || "",
-            structuredData: seo.structuredData ? JSON.stringify(seo.structuredData) : "",
-            languageTag: seo.languageTag || "",
-        },
+      title: "Thank You",
+      description: "Thank you for your submission.",
     };
+  }
+
+  return {
+    title: seo.metaTitle || "Thank You",
+    description: seo.metaDescription || "",
+    openGraph: {
+      title: seo.ogTitle || seo.metaTitle || "",
+      description: seo.ogDescription || seo.metaDescription || "",
+      images: seo.ogImage?.url ? [{ url: seo.ogImage.url }] : [],
+    },
+    robots: seo.metaRobots
+      ? {
+          index: seo.metaRobots.includes("index"),
+          follow: seo.metaRobots.includes("follow"),
+        }
+      : undefined,
+    alternates: seo.canonicalURL ? { canonical: seo.canonicalURL } : undefined,
+    other: {
+      twitterCardTitle: seo.twitterCardTitle || "",
+      structuredData: seo.structuredData
+        ? JSON.stringify(seo.structuredData)
+        : "",
+      languageTag: seo.languageTag || "",
+    },
+  };
 }
 
 export default async function EventFormThankYouPage() {
-    const slug = "event-form-thank-you"; // Hardcoded slug here
-    const data = await getThankYouPageBySlug(slug);
-    const page = data?.thankyouPages?.[0];
+  const slug = "event-form-thank-you"; // Hardcoded slug here
+  const data = await getThankYouPageBySlug(slug);
+  const page = data?.thankyouPages?.[0];
 
-    if (!page) {
-        return <p className='p-6 text-red-600 mt-32'>Thank You Page not found.</p>;
-    }
+  if (!page) {
+    return <p className="p-6 text-red-600 mt-32">Thank You Page not found.</p>;
+  }
 
-    // Cast structuredData to JsonValue to satisfy the client component type
-    const seo = page.SEO
-        ? {
-              ...page.SEO,
-              structuredData: page.SEO.structuredData as JsonValue | null,
-          }
-        : null;
+  // Cast structuredData to JsonValue to satisfy the client component type
+  const seo = page.SEO
+    ? {
+        ...page.SEO,
+        structuredData: page.SEO.structuredData as JsonValue | null,
+      }
+    : null;
 
-    // Create typed page object with updated SEO
-    const typedPage = {
-        ...page,
-        SEO: seo,
-    };
+  // Create typed page object with updated SEO
+  const typedPage = {
+    ...page,
+    SEO: seo,
+  };
 
-    return (
-        <>
-            {typedPage.SEO?.structuredData && (
-                <script
-                    type='application/ld+json'
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(typedPage.SEO.structuredData) }}
-                />
-            )}
-            <EventThankYouClient thankYouData={typedPage} />
-        </>
-    );
+  return (
+    <>
+      {typedPage.SEO?.structuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(typedPage.SEO.structuredData),
+          }}
+        />
+      )}
+      <EventThankYouClient thankYouData={typedPage} />
+    </>
+  );
 }

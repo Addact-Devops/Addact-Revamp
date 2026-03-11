@@ -43,7 +43,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
   const redirectUrl = `${pathname}/thank-you-career`;
   const pageTitle = useMemo(
     () => pathname.split("/").filter(Boolean).pop(),
-    [pathname]
+    [pathname],
   );
 
   const onReCAPTCHAChange = useCallback((token: string | null) => {
@@ -54,7 +54,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
     return <p className="p-6 text-red-600 mt-32">Career Details not found.</p>;
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -138,7 +138,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
     formData.append("sheetName", "CareerForm");
     formData.append(
       "RecipientEmails",
-      data.careers_form.FormFields.RecipientEmails
+      data.careers_form.FormFields.RecipientEmails,
     );
     formData.append("pageTitle", `"${pageTitle}"`);
 
@@ -200,7 +200,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
       )}
 
       <section className="bg-[#f4f4f4] py-[40px]">
-        <div className="container">
+        <div className="container-main">
           <div className="caseStudy-wrapper mt-16 text-black">
             <BlogContentRenderer blocks={data.JobDescription} />
           </div>

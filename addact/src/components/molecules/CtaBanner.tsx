@@ -87,7 +87,7 @@ const CtaBanner = ({ data }: IProps) => {
             </defs>
           </svg>
         </div>
-        <div className="container relative">
+        <div className="container-main relative">
           <div className="absolute inset-0 bg-linear-to-r from-[#0f0f0f] from-[38.053%] via-[rgba(15,15,15,0.7)] via-[58.884%] to-[rgba(15,15,15,0)] to-[80.044%] z-10" />
 
           <div className="relative z-20 pt-[40px] pb-[150px] md:py-[90px] banner-content-space">

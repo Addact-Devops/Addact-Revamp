@@ -151,7 +151,7 @@ export default function Footer({ data }: FooterProps) {
       </div> */}
 
       <footer className="relative overflow-hidden bg-[#0F0F0F] text-white lg:pt-16 pt-10 border-t border-b border-white/15 z-10">
-        <div className="container">
+        <div className="container-main">
           <div className="pl-0 relative z-20">
             {/* Top Row: Logo + Contact Info (Left) and Milestones (Right) */}
             <div className="grid grid-cols-12 gap-y-6 lg:gap-x-8 mb-10 lg:mb-16">

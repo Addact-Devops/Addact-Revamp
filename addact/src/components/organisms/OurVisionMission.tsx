@@ -1,46 +1,47 @@
 import Image from "next/image";
 
 type ParagraphBlock = {
-    type: "paragraph";
-    children: {
-        type: string;
-        text: string;
-    }[];
+  type: "paragraph";
+  children: {
+    type: string;
+    text: string;
+  }[];
 };
 
 type Item = {
-    SubTitle: string;
-    Title: string;
-    Description: ParagraphBlock[];
-    Image: {
-        url: string;
-        alternativeText?: string | null;
-    };
+  SubTitle: string;
+  Title: string;
+  Description: ParagraphBlock[];
+  Image: {
+    url: string;
+    alternativeText?: string | null;
+  };
 };
 
 type Props = {
-    data: Item[];
+  data: Item[];
 };
 
 const OurVisionMission = ({ data }: Props) => {
-    const renderText = (blocks: ParagraphBlock[]) => {
-        return blocks?.map((block, i) => {
-            if (block.type === "paragraph") {
-                return (
-                    <p key={i} className="text-[#000] mb-[30px] md:mb-0">
-                        {block.children.map((child) => child.text)}
-                    </p>
-                );
-            }
-            return null;
-        });
-    };
+  const renderText = (blocks: ParagraphBlock[]) => {
+    return blocks?.map((block, i) => {
+      if (block.type === "paragraph") {
+        return (
+          <p key={i} className="text-[#000] mb-[30px] md:mb-0">
+            {block.children.map((child) => child.text)}
+          </p>
+        );
+      }
+      return null;
+    });
+  };
 
-    return (
-      <section className="my-[60px] sm:my-[60px]" id="vision-mission">
-        <div className="container">
-          <div className="bg-white px-[20px] lg:px-[100px] py-[15px] lg:py-[60px] rounded-2xl flex flex-col gap-[60px]">
-            {data && data?.map((item, index) => {
+  return (
+    <section className="my-[60px] sm:my-[60px]" id="vision-mission">
+      <div className="container-main">
+        <div className="bg-white px-[20px] lg:px-[100px] py-[15px] lg:py-[60px] rounded-2xl flex flex-col gap-[60px]">
+          {data &&
+            data?.map((item, index) => {
               const isEven = index % 2 === 0;
 
               return (
@@ -78,10 +79,10 @@ const OurVisionMission = ({ data }: Props) => {
                 </div>
               );
             })}
-          </div>
         </div>
-      </section>
-    );
+      </div>
+    </section>
+  );
 };
 
 export default OurVisionMission;

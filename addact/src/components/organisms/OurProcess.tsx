@@ -154,7 +154,7 @@ export default function OurProcess(props: {
 
   return (
     <section
-      className="container my-[80px] lg:my-[100px] 2xl:my-[200px]"
+      className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]"
       ref={containerRef}
     >
       <div>

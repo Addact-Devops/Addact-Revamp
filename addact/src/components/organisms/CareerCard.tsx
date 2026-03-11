@@ -36,7 +36,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
 
   return (
     <section id="perks" className="my-[80px] lg:my-[100px] 2xl:my-[200px]">
-      <div className="container mx-auto">
+      <div className="container-main mx-auto">
         {/* Section Titles */}
         {title.map((block) => {
           if ("Richtext" in block && block.Richtext) {
@@ -50,7 +50,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
           }
 
           const [tag, content] = Object.entries(block).find(
-            ([key]) => key !== "id"
+            ([key]) => key !== "id",
           ) as [string, string];
 
           const tagName: TagName | "div" = allowedTags.includes(tag as TagName)
@@ -64,7 +64,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
               className:
                 "text-[#000] !font-[400] 2xl:mb-[40px] md:mb-[30px] text-center !text-[35px] md:!text-[45px] ",
             },
-            content
+            content,
           );
         })}
 

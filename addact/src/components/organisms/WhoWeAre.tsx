@@ -77,7 +77,7 @@ const WhoWeAre = () => {
 
   return (
     <section className="who-we-are py-16 md:py-24 lg:py-40! bg-white overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-6">
+      <div className="container-main mx-auto px-4 sm:px-6 md:px-8 lg:px-6">
         <div className="max-w-[1200px] mx-auto text-center mb-12 sm:mb-16 md:mb-24 lg:mb-32!">
           <div
             ref={descriptionRef}
