@@ -40,7 +40,7 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
 
   return (
     <main className="bg-dark">
-      <HomeBanner />
+      <HomeBanner data={homeData?.animationBanner} />
       <OurPartners />
       <WhoWeAre />
       <OurCapabilities />
