@@ -140,7 +140,7 @@ export default function WhyWorkWithUs() {
           <div className="flex flex-col-reverse lg:flex-row! lg:items-start! items-center gap-8 md:gap-12 lg:gap-16! xl:gap-20!">
             {/* Radial Diagram - responsive positioning */}
             <motion.div
-              className="shrink-0 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px]! xl:max-w-[900px]! 2xl:max-w-[1057px]! aspect-square lg:absolute! lg:-left-20! xl:-left-44! lg:-top-20!"
+              className="shrink-0 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[800px]! xl:max-w-[900px]! 2xl:max-w-[1057px]! aspect-square lg:absolute! lg:-left-52! xl:-left-62! 2xl:-left-52! lg:-top-20!"
               style={{ aspectRatio: "1057/1091" }}
             >
               <RadialDiagram
@@ -150,9 +150,9 @@ export default function WhyWorkWithUs() {
             </motion.div>
 
             {/* Content - responsive margins */}
-            <div className="flex-1 w-full min-w-0 lg:ml-auto! lg:max-w-full! xl:max-w-[400px] 2xl:max-w-[900px]! lg:pl-8! xl:pl-12!">
+            <div className="flex-1 w-full min-w-0 lg:ml-auto! lg:max-w-[600px] xl:max-w-[700px]! 2xl:max-w-[900px]! lg:pl-8! xl:pl-12!">
               <motion.h2
-                className="justify-start text-stone-950 text-2xl md:text-3xl lg:text-6xl! font-semibold! font-['Montserrat'] leading-[85px] mb-10"
+                className="justify-start text-stone-950 text-2xl md:text-3xl lg:text-5xl! xl:text-6xl! font-semibold! font-['Montserrat'] leading-[85px] mb-10"
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

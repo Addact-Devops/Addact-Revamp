@@ -42,7 +42,7 @@ function AccordionRow({
           {isActive ? <AddactDropdownIcon /> : <AddactRightIcon />}
         </motion.div>
         <motion.span
-          className="justify-start text-stone-950 text-3xl font-medium font-['Montserrat'] leading-[48px]"
+          className="justify-start text-stone-950 text-xl lg:text-2xl xl:text-3xl font-medium font-['Montserrat'] leading-[48px]"
           animate={{ color: isActive ? "#0F0F0F" : "#0F0F0F" }}
           transition={{ duration: 0.3 }}
         >
@@ -61,7 +61,7 @@ function AccordionRow({
             className="overflow-hidden"
           >
             <motion.p
-              className=" w-[723px] justify-start text-stone-950 text-xl font-normal font-['Montserrat'] leading-8 px-6 pl-[76px] pb-6"
+              className="w-full 2xl:w-[723px] justify-start text-stone-950 text-xl font-normal font-['Montserrat'] leading-8 px-6 pl-[76px] pb-6"
               initial={{ y: -8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -8, opacity: 0 }}
