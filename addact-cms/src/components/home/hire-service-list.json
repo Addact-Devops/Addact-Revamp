@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_home_hire_service_lists",
+  "info": {
+    "displayName": "hireServiceList"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hire-expert-detail.hire-expert-detail"
+    }
+  },
+  "config": {}
+}

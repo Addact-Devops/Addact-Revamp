@@ -91,6 +91,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::our-capabilitiy.our-capabilitiy"
+    },
+    "ourInshightsTitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
     }
   }
 }

@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tech_stack_categories",
+  "info": {
+    "singularName": "tech-stack-category",
+    "pluralName": "tech-stack-categories",
+    "displayName": "Tech Stack Category"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "categoryTitle": {
+      "type": "string"
+    }
+  }
+}
