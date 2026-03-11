@@ -1,0 +1,240 @@
+"use client";
+
+import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
+
+// Static data — will be replaced with GraphQL data later
+const introData = {
+    title: "ADD ACTION\nWITH AI",
+    scrollLabel: "SCROLL DOWN",
+    backgroundVideo: "/Screen_animation.mp4",
+    leftHandImage: "/human.png",
+    rightHandImage: "/ai.png",
+};
+
+interface IntroSplashProps {
+    onComplete: () => void;
+}
+
+const IntroSplash = ({ onComplete }: IntroSplashProps) => {
+    const [phase, setPhase] = useState<0 | 1 | 2>(0);
+    const hasCompletedRef = useRef(false);
+    const isTransitioningRef = useRef(false);
+    const touchStartYRef = useRef<number | null>(null);
+
+    const goToNextPhase = useCallback(() => {
+        if (hasCompletedRef.current || isTransitioningRef.current) return;
+
+        isTransitioningRef.current = true;
+
+        setPhase((prev) => {
+            if (prev === 0) {
+                return 1;
+            }
+
+            if (prev === 1) {
+                hasCompletedRef.current = true;
+                window.setTimeout(() => {
+                    onComplete();
+                }, 450);
+                return 2;
+            }
+
+            return prev;
+        });
+
+        window.setTimeout(() => {
+            isTransitioningRef.current = false;
+        }, 650);
+    }, [onComplete]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = "hidden";
+
+        const handleWheel = (event: WheelEvent) => {
+            if (event.deltaY <= 10) return;
+            event.preventDefault();
+            goToNextPhase();
+        };
+
+        const handleTouchStart = (event: TouchEvent) => {
+            touchStartYRef.current = event.touches[0]?.clientY ?? null;
+        };
+
+        const handleTouchEnd = (event: TouchEvent) => {
+            if (touchStartYRef.current === null) return;
+            const endY = event.changedTouches[0]?.clientY ?? touchStartYRef.current;
+            const delta = touchStartYRef.current - endY;
+            touchStartYRef.current = null;
+
+            if (delta > 30) {
+                goToNextPhase();
+            }
+        };
+
+        window.addEventListener("wheel", handleWheel, { passive: false });
+        window.addEventListener("touchstart", handleTouchStart, { passive: true });
+        window.addEventListener("touchend", handleTouchEnd, { passive: true });
+
+        return () => {
+            document.body.style.overflow = previousOverflow;
+            window.removeEventListener("wheel", handleWheel);
+            window.removeEventListener("touchstart", handleTouchStart);
+            window.removeEventListener("touchend", handleTouchEnd);
+        };
+    }, [goToNextPhase]);
+
+    const textOpacity = phase >= 1 ? 0 : 1;
+    const textTranslateY = phase >= 1 ? 90 : 0;
+
+    // Hand transforms are independent so both can move/rotate toward center text.
+    const leftHandX = phase >= 1 ? 4 : -20;
+    const leftHandY = phase >= 1 ? -8 : 8;
+    const leftHandRotate = phase >= 1 ? -16 : -16;
+
+    const rightHandX = phase >= 1 ? -6 : 30;
+    const rightHandY = phase >= 1 ? -7 : -13;
+    const rightHandRotate = phase >= 1 ? -16 : -15;
+    const wrapperOpacity = phase >= 2 ? 0 : 1;
+    const wrapperTranslateY = phase >= 2 ? -80 : 0;
+    const sideOverlayOpacity = phase >= 1 ? 1 : 0;
+    const scrollIndicatorOpacity = phase >= 1 ? 0 : 1;
+
+    // Parse title to apply underline to last word
+    const titleLines = introData.title.split("\n");
+    const lastLine = titleLines[titleLines.length - 1];
+    const lastLineWords = lastLine.split(" ");
+    const lastWord = lastLineWords.pop();
+    const restOfLastLine = lastLineWords.join(" ");
+
+    return (
+        <div className='relative h-[calc(100vh-72px)] lg:h-[calc(100vh-86px)] mt-[72px] lg:mt-[86px]'>
+            <div
+                className='sticky top-[72px] lg:top-[86px] left-0 w-full h-[calc(100vh-72px)] lg:h-[calc(100vh-86px)] overflow-hidden z-40'
+                style={{
+                    opacity: wrapperOpacity,
+                    transform: `translateY(${wrapperTranslateY}px)`,
+                    transition: "opacity 450ms ease, transform 450ms ease",
+                }}
+            >
+                {/* Background Video */}
+                <video className='absolute inset-0 w-full h-full object-cover z-0' autoPlay muted loop playsInline>
+                    <source src={introData.backgroundVideo} type='video/mp4' />
+                </video>
+
+                {/* Dark overlay */}
+                <div className='absolute inset-0 bg-black/30 z-[1]' />
+
+                {/* Left Hand */}
+                <div
+                    className='absolute bottom-[-3%] left-[-8%] z-[2] w-[60%] h-[74%] md:h-[80%] lg:h-[86%]'
+                    style={{
+                        transform: `translate(${leftHandX}%, ${leftHandY}%) rotate(${leftHandRotate}deg)`,
+                        transition: "transform 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                    }}
+                >
+                    <Image
+                        src={introData.leftHandImage}
+                        alt='Left hand'
+                        fill
+                        className='object-contain object-left-bottom'
+                        priority
+                    />
+                </div>
+
+                {/* Right Hand */}
+                <div
+                    className='absolute top-[-3%] right-[-8%] z-[2] w-[60%] h-[74%] md:h-[80%] lg:h-[86%]'
+                    style={{
+                        transform: `translate(${rightHandX}%, ${rightHandY}%) rotate(${rightHandRotate}deg)`,
+                        transition: "transform 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                    }}
+                >
+                    <Image
+                        src={introData.rightHandImage}
+                        alt='Right hand'
+                        fill
+                        className='object-contain object-right-top'
+                        priority
+                    />
+                </div>
+
+                {/* Side black overlays - become stronger toward the end */}
+                <div
+                    className='absolute inset-y-0 left-0 w-[22%] z-[3] pointer-events-none'
+                    style={{
+                        opacity: sideOverlayOpacity,
+                        background: "linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0))",
+                        transition: "opacity 500ms ease",
+                    }}
+                />
+                <div
+                    className='absolute inset-y-0 right-0 w-[22%] z-[3] pointer-events-none'
+                    style={{
+                        opacity: sideOverlayOpacity,
+                        background: "linear-gradient(to left, rgba(0,0,0,0.85), rgba(0,0,0,0))",
+                        transition: "opacity 500ms ease",
+                    }}
+                />
+
+                {/* Center Content */}
+                <div
+                    className='absolute inset-0 z-[4] flex flex-col items-center justify-center'
+                    style={{
+                        opacity: textOpacity,
+                        transform: `translateY(-${textTranslateY}px)`,
+                        transition: "transform 550ms ease, opacity 550ms ease",
+                    }}
+                >
+                    <h1 className='text-white text-center font-bold uppercase leading-[1.1]'>
+                        {titleLines.length > 1 && (
+                            <>
+                                {titleLines.slice(0, -1).map((line, i) => (
+                                    <span
+                                        key={i}
+                                        className='block font-bold text-[36px] md:text-[60px] lg:text-[80px] xl:text-[100px] 2xl:text-[110px]'
+                                    >
+                                        {line}
+                                    </span>
+                                ))}
+                            </>
+                        )}
+                        <span className='block font-bold text-[36px] md:text-[60px] lg:text-[80px] xl:text-[100px] 2xl:text-[110px]'>
+                            {restOfLastLine && <>{restOfLastLine} </>}
+                            <span className='relative inline-block'>
+                                {lastWord}
+                                <span className='absolute bottom-1 md:bottom-2 left-0 w-full h-[2px] md:h-[3px] bg-white' />
+                            </span>
+                        </span>
+                    </h1>
+                </div>
+
+                {/* Scroll Down Indicator */}
+                <div
+                    className='absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-[5] flex flex-col items-center gap-2'
+                    style={{
+                        opacity: scrollIndicatorOpacity,
+                        transition: "opacity 250ms ease",
+                    }}
+                >
+                    <div className='w-8 h-8 md:w-10 md:h-10 flex items-center justify-center animate-bounce'>
+                        <svg width='26' height='36' viewBox='0 0 26 36' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                            <path
+                                d='M14.5833 0H11.25C5.05 0 0 5.05 0 11.25V24.5833C0 30.7833 5.05 35.8333 11.25 35.8333H14.5833C20.7833 35.8333 25.8333 30.7833 25.8333 24.5833V11.25C25.8333 5.05 20.7833 0 14.5833 0ZM18.8 22.1333L13.8 27.1333C13.55 27.3833 13.2333 27.5 12.9167 27.5C12.6 27.5 12.2833 27.3833 12.0333 27.1333L7.03333 22.1333C6.55 21.65 6.55 20.85 7.03333 20.3667C7.51667 19.8833 8.31667 19.8833 8.8 20.3667L11.6667 23.2333V9.58333C11.6667 8.9 12.2333 8.33333 12.9167 8.33333C13.6 8.33333 14.1667 8.9 14.1667 9.58333V23.2333L17.0333 20.3667C17.5167 19.8833 18.3167 19.8833 18.8 20.3667C19.2833 20.85 19.2833 21.65 18.8 22.1333Z'
+                                fill='white'
+                                fill-opacity='0.6'
+                            />
+                        </svg>
+                    </div>
+                    <span className='text-white/70 text-[16px] md:text-[20px] tracking-[3px] uppercase'>
+                        {introData.scrollLabel}
+                    </span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default IntroSplash;
