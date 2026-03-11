@@ -40,11 +40,13 @@ function shortestStep(from: number, to: number): number {
 export interface RadialDiagramProps {
   activeIndex: number;
   onSpokeClick: (index: number) => void;
+  mobileRotateOnly?: string; // e.g. "270px"
 }
 
 export function RadialDiagram({
   activeIndex,
   onSpokeClick,
+  mobileRotateOnly,
 }: RadialDiagramProps) {
   const [totalDeg, setTotalDeg] = useState(0);
   const prevIndexRef = useRef(0);
@@ -63,7 +65,10 @@ export function RadialDiagram({
     <svg
       viewBox={`0 0 ${VB_W} ${VB_H}`}
       className="w-full h-full"
-      style={{ overflow: "visible" }}
+      style={{
+        overflow: "visible",
+        transform: mobileRotateOnly ? `rotate(${mobileRotateOnly})` : undefined,
+      }}
     >
       <defs>
         {/* Glow for the active (filled) shape */}
