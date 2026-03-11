@@ -1,9 +1,14 @@
 "use client";
 
-import { getOurInsights } from "@/graphql/queries/getOurInsights";
+import {
+  getOurInsights,
+  getHomeOurInsightsTitle,
+  type HomeResponse,
+} from "@/graphql/queries/getOurInsights";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import RichText from "../atom/richText";
 
 export interface BlogBanner {
   PublishDate?: string;
@@ -63,11 +68,14 @@ interface InsightCardProps {
 
 export default function OurInsights() {
   const [data, setData] = useState<OurInsightsData | null>(null);
+  const [homeData, setHomeData] = useState<HomeResponse | null>(null);
 
   useEffect(() => {
     (async () => {
       const result = await getOurInsights();
       setData(result);
+      const homeResult = await getHomeOurInsightsTitle();
+      setHomeData(homeResult);
     })();
   }, []);
 
@@ -93,25 +101,26 @@ export default function OurInsights() {
     mapCaseStudyToCard(caseStudy),
   ];
 
+  const titleData = homeData?.home?.ourInshightsTitle?.CommonTitle?.[0];
+
   return (
     <section className="py-10 md:py-20 xl:py-[160px] bg-white">
       <div className="container-main mx-auto px-4">
         <h2 className="text-[#0F0F0F] font-montserrat font-semibold text-[28px] md:text-[40px] 2xl:text-[60px] leading-[40px] md:leading-[60px] 2xl:leading-[85px] pb-4 xl:pb-10">
-          Our Insights
+          {titleData?.Title || "Our Insights"}
         </h2>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mt-4 md:mt-6 xl:mt-8">
-          <p className="text-[#0F0F0F] font-montserrat text-sm sm:text-base md:text-lg xl:text-xl! 2xl:text-2xl! max-w-full md:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl leading-7! xl:leading-9! 2xl:leading-10!">
-            We are passionate about fintech, digital transformation, and tech
-            innovations, and love sharing our insights. Read our recent blog
-            articles.
-          </p>
+          <div className="text-[#0F0F0F] font-montserrat text-sm sm:text-base md:text-lg xl:text-xl! 2xl:text-2xl! max-w-full md:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl leading-7! xl:leading-9! 2xl:leading-10!">
+            <RichText html={titleData?.Description || ""} />
+          </div>
           <Link
-            href="/blogs"
+            href={titleData?.Link?.href || ""}
+            target={titleData?.Link?.target === "blank" ? "_blank" : "_self"}
             className="px-4 py-2.5 sm:px-5 sm:py-3 md:py-4 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] outline-1 -outline-offset-1 outline-indigo-600 inline-flex justify-center items-center gap-2 sm:gap-3 md:gap-4 xl:gap-5 overflow-hidden hover:bg-indigo-50 transition-colors flex-shrink-0"
           >
             <span className="text-indigo-600 text-sm sm:text-base md:text-lg font-semibold font-montserrat leading-5 sm:leading-6 md:leading-7 whitespace-nowrap">
-              See more
+              {titleData?.Link?.label || ""}
             </span>
             <svg
               width="16"
@@ -207,7 +216,7 @@ function InsightCard({ item }: InsightCardProps) {
             </span>
           </div>
 
-          <p className="text-stone-950 text-lg sm:text-xl md:text-xl lg:text-3xl! font-medium! font-montserrat leading-7 sm:leading-8 md:leading-9 lg:leading-[48px] mb-3 md:mb-4 line-clamp-2">
+          <p className="text-stone-950 text-lg sm:text-xl lg:text-2xl! xl:text-3xl! font-medium! font-montserrat leading-7 sm:leading-8 md:leading-9 lg:leading-[48px] mb-3 md:mb-4 line-clamp-2">
             {item.title}
           </p>
 
