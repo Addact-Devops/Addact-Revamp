@@ -1,25 +1,8 @@
 import { getHOmePageData } from "@/graphql/queries/getHomePage";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
-
-// import OurPartners from "@/components/organisms/OurPartners";
-// import WhoWeAre from "@/components/organisms/WhoWeAre";
-// import OurServices from "@/components/organisms/OurServices";
-// import OurCmsExperts from "@/components/organisms/OurCmsExperts";
-// import WhyAddact from "@/components/organisms/WhyAddact";
-// import CtaBanner from "@/components/molecules/CtaBanner";
-// import OurProcess from "@/components/organisms/OurProcess";
-// import ClientTestimonials from "@/components/organisms/ClientTestimonials";
-// import OurInsights from "@/components/organisms/OurInsights";
-// import ContactUs from "@/components/organisms/ContactUs";
-// import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
-// import GlobeAnimation from "@/components/organisms/GlobeAnimation";
-
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import Script from "next/script";
-// import OurCapabilities from "@/components/organisms/OurCapabilities";
-// import BuildingAIEcosystem from "@/components/organisms/BuildingAIEcosystem";
-// import HomeBanner from "@/components/organisms/HomeBanner";
-// import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
+
 import HomePageFlow from "@/components/templates/HomePageFlow";
 
 export async function generateMetadata() {
@@ -197,26 +180,8 @@ export default async function HomePage() {
         }}
       />
 
-      <HomePageFlow homeData={homeData} />
       {/*  End Markup schema */}
-      {/* <main className="bg-dark"> */}
-      {/* <HomeHeroBanner data={homeData?.banner} /> */}
-      {/* <HomeBanner />
-        <OurPartners />
-        <WhoWeAre />
-        <OurCapabilities />
-        <BuildingAIEcosystem />
-        <IndustryMarqueeCards />
-        <OurServices data={homeData?.ourservices} />
-        <OurCmsExperts />
-        <WhyAddact data={homeData?.whyaddact} />
-        {homeData?.ourprocess && <OurProcess data={homeData?.ourprocess} />}
-        <ClientTestimonials />
-        <OurInsights />
-        <CtaBanner data={homeData?.cta} /> */}
-      {/* <GlobeAnimation data={homeData?.GlobeAnimation} /> */}
-      {/* <ContactUs data={homeData?.contactus} /> */}
-      {/* </main> */}
+      <HomePageFlow homeData={homeData} />
     </>
   );
 }
