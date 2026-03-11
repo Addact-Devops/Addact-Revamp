@@ -188,7 +188,6 @@ function InsightCard({ item }: InsightCardProps) {
       className="flex-1 min-w-[300px] max-w-full md:max-w-[calc(33.333%-14px)]"
     >
       <div className="border border-[#0F0F0F] rounded-[10px] flex flex-col h-full overflow-hidden">
-        {/* Image Section */}
         <div className="w-full aspect-[520/321] overflow-hidden">
           {item.image?.url && (
             <Image
@@ -208,9 +207,9 @@ function InsightCard({ item }: InsightCardProps) {
             </span>
           </div>
 
-          <h4 className="text-stone-950 text-lg! sm:text-xl! md:text-xl! lg:text-3xl! font-medium! font-montserrat leading-7 sm:leading-8 md:leading-9 lg:leading-[48px] mb-3 md:mb-4 line-clamp-2">
+          <p className="text-stone-950 text-lg sm:text-xl md:text-xl lg:text-3xl! font-medium! font-montserrat leading-7 sm:leading-8 md:leading-9 lg:leading-[48px] mb-3 md:mb-4 line-clamp-2">
             {item.title}
-          </h4>
+          </p>
 
           {item.date !== "Unknown Date" && (
             <div className="flex items-center gap-2">
