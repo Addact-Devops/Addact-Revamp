@@ -67,7 +67,7 @@ export default function CareerPositions({ positions, positionsTitle }: Props) {
 
   return (
     <section
-      className="container my-[80px] lg:my-[100px] 2xl:my-[200px]"
+      className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]"
       id="open-positions"
     >
       {/* Title Section */}

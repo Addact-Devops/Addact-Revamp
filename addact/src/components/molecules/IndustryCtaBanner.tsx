@@ -44,7 +44,7 @@ const IndustryCtaBanner = ({ data }: IProps) => {
         // pass both URLs as CSS variables; CSS below chooses per breakpoint
         style={bgVars}
       >
-        <div className="container">
+        <div className="container-main">
           <div className="lg:pt-0 pb-[150px] md:pb-8 lg:pb-24 xl:pt-0 pt-8">
             <h2 className="!text-[30px] lg:!text-[40px] 2xl:!text-[60px] w-full md:w-[350px] lg:!w-[700px] 2xl:w-[700px] lg:!leading-14 2xl:!leading-[85px]">
               {data.Title[0].h2}

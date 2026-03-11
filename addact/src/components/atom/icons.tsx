@@ -1,6 +1,8 @@
 import React from "react";
 
-export const RightArrowIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
+export const RightArrowIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props,
+) => {
   return (
     <svg
       width="30"
@@ -186,6 +188,48 @@ export const TestimonialWatermarkIcon: React.FC<
         fill="#3C4CFF"
         fillOpacity="0.1"
         mask="url(#path-1-outside-1_18204_4593)"
+      />
+    </svg>
+  );
+};
+
+export const AddactDropdownIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props,
+) => {
+  const { ...rest } = props || {};
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="28"
+      viewBox="0 0 30 28"
+      fill="none"
+      {...rest}
+    >
+      <path
+        d="M30 -1.90735e-06L24.4932 -1.90735e-06L14.9583 21.733L5.42333 -1.90735e-06H0L12.6552 28H17.3036L30 -1.90735e-06Z"
+        fill="#3C4CFF"
+      />
+    </svg>
+  );
+};
+
+export const AddactRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
+  props,
+) => {
+  const { ...rest } = props || {};
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="28"
+      viewBox="0 0 30 28"
+      fill="none"
+      {...rest}
+    >
+      <path
+        d="M30 -1.90735e-06L24.4932 -1.90735e-06L14.9583 21.733L5.42333 -1.90735e-06H0L12.6552 28H17.3036L30 -1.90735e-06Z"
+        fill="#3C4CFF"
       />
     </svg>
   );

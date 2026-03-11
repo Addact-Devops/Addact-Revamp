@@ -79,7 +79,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
       startXRef.current = e.touches[0].clientX;
       draggingRef.current = true;
     },
-    []
+    [],
   );
 
   const onTouchMoveCapture = useCallback(
@@ -92,7 +92,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
         sliderRef.current?.slickGoTo(secondLast, true);
       }
     },
-    [currentIndex, secondLast]
+    [currentIndex, secondLast],
   );
 
   const onTouchEndCapture = useCallback(() => {
@@ -105,7 +105,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
       startXRef.current = e.clientX;
       draggingRef.current = true;
     },
-    []
+    [],
   );
 
   const onMouseMoveCapture = useCallback(
@@ -118,7 +118,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
         sliderRef.current?.slickGoTo(secondLast, true);
       }
     },
-    [currentIndex, secondLast]
+    [currentIndex, secondLast],
   );
 
   const onMouseUpCapture = useCallback(() => {
@@ -126,7 +126,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
     startXRef.current = null;
   }, []);
 
-  // Align slider content’s left edge with container’s content start
+  // Align slider content’s left edge with container-main’s content start
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [padLeft, setPadLeft] = useState<number>(0);
 
@@ -189,7 +189,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
         },
       ],
     }),
-    [seeMoreIndex, secondLast]
+    [seeMoreIndex, secondLast],
   );
 
   // Reusable card
@@ -259,14 +259,14 @@ const IndustryCaseStudies: React.FC<Props> = ({
     <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] item-slider-wrapper">
       <div className="overflow-hidden lg:pb-[55px]">
         <div className="max-w-[1920px] m-auto">
-          <div className="container" ref={containerRef}>
+          <div className="container-main" ref={containerRef}>
             <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
               {title ?? "Project Highlights"}
             </h2>
           </div>
 
           {/* =================== MOBILE/TABLET (< lg): GRID (no slider) =================== */}
-          <div className="container lg:hidden">
+          <div className="container-main lg:hidden">
             {hasItems ? (
               <>
                 <div className="grid grid-cols-1 min-[576px]:grid-cols-2 gap-4">

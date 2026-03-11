@@ -52,7 +52,7 @@ export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
 
   return (
     <div className="mt-[80px] py-[40px] bg-[#131318]">
-      <div className="container">
+      <div className="container-main">
         <Breadcrumps
           crumbs={[
             { label: "Home", href: "/" },
@@ -63,7 +63,7 @@ export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
         />
       </div>
       <section className="bg-[#131318]  py-[60px] max-[1300px]:py-[40px] max-[991px]:py-[40px] z-[4] relative">
-        <div className="container">
+        <div className="container-main">
           <div className="flex !items-center flex-col min-[992px]:flex-row justify-between gap-[150px] max-[1300px]:gap-[80px] max-[992px]:gap-[60px]">
             <div className="w-full min-[992px]:w-1/2:w-1/2 order-1 min-[992px]:w-1/2:order-none text-white min-[992px]:max-w-[50%]">
               {blogcategory?.Category?.CategoryTitle && (

@@ -45,7 +45,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
           obs.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
     );
 
     obs.observe(el);
@@ -81,7 +81,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
       ref={sectionRef}
       className="my-[80px] lg:my-[100px] 2xl:my-[200px] solutionscards-wrapper overflow-hidden"
     >
-      <div className="container">
+      <div className="container-main">
         <div className="flex flex-col">
           {/* Title */}
           <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">

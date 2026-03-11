@@ -109,7 +109,7 @@ const OurCapabilities = () => {
 
   return (
     <section className="bg-white -mt-0.5">
-      <div className="container">
+      <div className="container-main">
         {/* Mobile heading */}
         <h2 className="md:hidden !text-[28px] !pb-4 !text-[#0F0F0F]">
           Our Capabilities

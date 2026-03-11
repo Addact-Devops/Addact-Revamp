@@ -33,7 +33,7 @@ const expertiseLogosRow2 = [
 const BuildingAIEcosystem = () => {
   return (
     <section className="bg-[#0F0F0F]">
-      <div className="container">
+      <div className="container-main">
         <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 2xl:gap-6 items-center">
           {/* Left side — Image (hidden on mobile, shown on lg+) */}
           <div className="hidden lg:block w-full lg:w-[45%] 2xl:w-[50%]">
@@ -69,7 +69,7 @@ const BuildingAIEcosystem = () => {
                 On Hand Expertise
               </span>
 
-              {/* Marquee container-main — glass effect */}
+              {/* Marquee container-main-main — glass effect */}
               <div className="border border-white/20 rounded-lg overflow-hidden py-6 md:py-8 2xl:py-10 group bg-white/[0.03] backdrop-blur-sm">
                 {/* Row 1 — Left to Right */}
                 <div className="flex overflow-hidden mb-4 md:mb-6 marquee-mask">
