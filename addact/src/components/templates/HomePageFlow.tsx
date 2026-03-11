@@ -7,9 +7,9 @@ import HomeBanner from "@/components/organisms/HomeBanner";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
 import OurCapabilities from "@/components/organisms/OurCapabilities";
 import BuildingAIEcosystem from "@/components/organisms/BuildingAIEcosystem";
-import OurServices from "@/components/organisms/OurServices";
-import OurCmsExperts from "@/components/organisms/OurCmsExperts";
-import WhyAddact from "@/components/organisms/WhyAddact";
+// import OurServices from "@/components/organisms/OurServices";
+// import OurCmsExperts from "@/components/organisms/OurCmsExperts";
+// import WhyAddact from "@/components/organisms/WhyAddact";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
@@ -47,9 +47,9 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
       <BuildingAIEcosystem />
       <IndustryMarqueeCards />
       <WhyWorkWithUs />
-      <OurServices data={homeData?.ourservices} />
-      <OurCmsExperts />
-      <WhyAddact data={homeData?.whyaddact} />
+      {/* <OurServices data={homeData?.ourservices} /> */}
+      {/* <OurCmsExperts /> */}
+      {/* <WhyAddact data={homeData?.whyaddact} /> */}
       {homeData?.ourprocess && <OurProcess data={homeData?.ourprocess} />}
       <ClientTestimonials />
       <OurInsights />
