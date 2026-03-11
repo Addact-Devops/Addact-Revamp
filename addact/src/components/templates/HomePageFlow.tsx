@@ -3,7 +3,6 @@
 import { useCallback, useState } from "react";
 import type { HomeItems } from "@/graphql/queries/getHomePage";
 
-import IntroSplash from "@/components/organisms/IntroSplash";
 import HomeBanner from "@/components/organisms/HomeBanner";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
 import OurCapabilities from "@/components/organisms/OurCapabilities";
@@ -19,6 +18,8 @@ import OurInsights from "@/components/organisms/OurInsights";
 // import ContactUs from "@/components/organisms/ContactUs";
 import OurPartners from "../organisms/OurPartners";
 import IndustryMarqueeCards from "../organisms/IndustryMarqueeCards";
+import WhyWorkWithUs from "../organisms/WhyWorkWithUs";
+import IntroSplash from "../organisms/IntroSplash";
 
 interface HomePageFlowProps {
   homeData: HomeItems;
@@ -45,6 +46,7 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
       <OurCapabilities />
       <BuildingAIEcosystem />
       <IndustryMarqueeCards />
+      <WhyWorkWithUs />
       <OurServices data={homeData?.ourservices} />
       <OurCmsExperts />
       <WhyAddact data={homeData?.whyaddact} />
