@@ -86,7 +86,7 @@ function FeaturedCard({
         </div>
       )}
 
-      {/* Content container */}
+      {/* Content container-main */}
       <div className="relative z-10 flex flex-col justify-between p-[30px] flex-1 min-w-0">
         <h3 className="text-[30px]! font-medium leading-[45px]! line-clamp-3! w-[312px]">
           {card.title ?? "Featured Article"}
@@ -424,7 +424,7 @@ const Header = ({ headerData }: HeaderProps) => {
         <div
           className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${bannerVisible ? "max-h-[60px]" : "max-h-0"}`}
         >
-          <div className="container text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
+          <div className="container-main text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
             <span className="text-[14px] 2xl:text-[18px]">
               Need An Accurate Estimate For Your Sitecore XM Cloud Migration
               Project? Kickstart Your Journey Here!
@@ -440,7 +440,7 @@ const Header = ({ headerData }: HeaderProps) => {
       )}
 
       {/* Main bar */}
-      <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative">
+      <div className="mx-auto w-full flex items-center justify-between container-main px-4 py-4 lg:px-0 lg:py-0 relative">
         <Link href="/">
           {logo?.url && (
             <Image
@@ -567,7 +567,7 @@ const Header = ({ headerData }: HeaderProps) => {
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-60 bg-[#0F0F0F] text-white flex flex-col overflow-hidden">
           {/* Mobile Header: Top Row (Logo & X) */}
-          <div className="mx-auto w-full flex items-center justify-between container px-4 py-4 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
+          <div className="mx-auto w-full flex items-center justify-between container-main px-4 py-4 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
             <div className="h-full flex items-center">
               <Link href="/">
                 {logo?.url && (

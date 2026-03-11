@@ -44,7 +44,7 @@
 
 //     return (
 //         <div className="flex flex-col pt-[60px] md:pt-[120px]">
-//             <section className="container relative w-full text-white overflow-hidden">
+//             <section className="container-main relative w-full text-white overflow-hidden">
 //                 <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-[40px] md:py-24">
 //                     <div>
 //                         <span className="inline-block px-3 py-1 text-sm text-white bg-white/10 border border-white/20 rounded mb-3">
@@ -94,7 +94,7 @@
 //                 </div>
 //             </section>
 //             <section className="bg-[#f4f4f4] caseStudy-wrapper pb-20">
-//                 <div className="container">
+//                 <div className="container-main">
 //                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto mt-[60px] xl:mt-24 text-black">
 //                         <div className="lg:mr-36">
 //                             <div className="sticky top-[140px] w-full">
@@ -135,60 +135,64 @@ import { notFound } from "next/navigation";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-    const { slug } = await params;
-    const res = await getEventDetailBySlug(slug);
-    const event = res?.addactsEvents?.[0];
-    const seo = event?.SEO;
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const res = await getEventDetailBySlug(slug);
+  const event = res?.addactsEvents?.[0];
+  const seo = event?.SEO;
 
-    if (!seo) {
-        return { title: "Event" };
-    }
+  if (!seo) {
+    return { title: "Event" };
+  }
 
-    return {
-        title: seo.metaTitle || "Event",
-        description: seo.metaDescription || "",
-        alternates: {
-            canonical: seo.canonicalURL || undefined,
-        },
-        openGraph: {
-            title: seo.ogTitle || seo.metaTitle || "",
-            description: seo.ogDescription || seo.metaDescription || "",
-            images: seo.ogImage?.url ? [{ url: seo.ogImage.url }] : [],
-        },
-        twitter: {
-            title: seo.twitterCardTitle || seo.metaTitle || "",
-        },
-        robots: seo.metaRobots
-            ? {
-                  index: seo.metaRobots.includes("index"),
-                  follow: seo.metaRobots.includes("follow"),
-              }
-            : undefined,
-        metadataBase: new URL("https://www.addact.net"),
-    };
+  return {
+    title: seo.metaTitle || "Event",
+    description: seo.metaDescription || "",
+    alternates: {
+      canonical: seo.canonicalURL || undefined,
+    },
+    openGraph: {
+      title: seo.ogTitle || seo.metaTitle || "",
+      description: seo.ogDescription || seo.metaDescription || "",
+      images: seo.ogImage?.url ? [{ url: seo.ogImage.url }] : [],
+    },
+    twitter: {
+      title: seo.twitterCardTitle || seo.metaTitle || "",
+    },
+    robots: seo.metaRobots
+      ? {
+          index: seo.metaRobots.includes("index"),
+          follow: seo.metaRobots.includes("follow"),
+        }
+      : undefined,
+    metadataBase: new URL("https://www.addact.net"),
+  };
 }
 
 export default async function Page({ params }: { params: Params }) {
-    const { slug } = await params;
-    const res = await getEventDetailBySlug(slug);
-    const event = res?.addactsEvents?.[0];
+  const { slug } = await params;
+  const res = await getEventDetailBySlug(slug);
+  const event = res?.addactsEvents?.[0];
 
-    if (!event) {
-        return notFound();
-    }
+  if (!event) {
+    return notFound();
+  }
 
-    const structuredData = event.SEO?.structuredData ?? null;
+  const structuredData = event.SEO?.structuredData ?? null;
 
-    return (
-        <>
-            {structuredData && (
-                <Script id='structured-data' type='application/ld+json'>
-                    {JSON.stringify(structuredData)}
-                </Script>
-            )}
+  return (
+    <>
+      {structuredData && (
+        <Script id="structured-data" type="application/ld+json">
+          {JSON.stringify(structuredData)}
+        </Script>
+      )}
 
-            <EventDetailClient data={res} />
-        </>
-    );
+      <EventDetailClient data={res} />
+    </>
+  );
 }

@@ -64,7 +64,7 @@ export default function BlogHeroBanner({
       className="relative bg-cover bg-center md:mt-[120px] bg-no-repeat text-white min-h-[538px] flex flex-col justify-between pt-[80px]"
       style={{ backgroundImage: bgImageUrl ? `url(${bgImageUrl})` : "none" }}
     >
-      <div className="container text-center pt-[80px]">
+      <div className="container-main text-center pt-[80px]">
         <h1 className="text-[42px] md:text-[60px] font-bold mb-[20px] leading-[1.2]">
           {title}
         </h1>
@@ -125,7 +125,7 @@ export default function BlogHeroBanner({
 
       <div className="bg-[rgba(15,15,15,0.34)] backdrop-blur-md mt-[30px] pt-[11px] border border-[#2E2E2E]">
         <div
-          className="container overflow-x-auto custom-scrollbar scroll-smooth"
+          className="container-main overflow-x-auto custom-scrollbar scroll-smooth"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           <div className="flex flex-nowrap justify-center min-w-max gap-[20px] xl:gap-[22px] 2xl:gap-[33px] text-[16px] md:text-[18px] font-medium px-4">

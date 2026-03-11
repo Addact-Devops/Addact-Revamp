@@ -44,7 +44,7 @@ export default function ClientTestimonials() {
 
   return (
     <section className="relative bg-[#FAFAFA] overflow-hidden flex items-center pt-16 lg:py-0">
-      <div className="container mx-auto px-4 relative">
+      <div className="container-main mx-auto px-4 relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative">
           {/* LEFT SIDE */}
           <div className="lg:col-span-5 relative z-10 text-center lg:text-left">

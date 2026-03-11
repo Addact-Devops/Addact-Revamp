@@ -58,8 +58,8 @@ const HomeBanner = () => {
       <div className="absolute inset-0 bg-black/40 z-[1]" />
 
       {/* Content */}
-      <div className="relative z-10 w-full container">
-        <div className="ml-3 sm:ml-5 md:ml-12 lg:ml-40 max-w-[900px] 2xl:max-w-[1100px]">
+      <div className="relative z-10 w-full container-main">
+        <div className="max-w-[900px] 2xl:max-w-[1100px]">
           {/* Title */}
           <h1 className="uppercase text-white font-bold mb-6 md:mb-8 2xl:mb-10">
             {/* Static line */}

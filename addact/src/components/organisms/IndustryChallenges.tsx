@@ -29,7 +29,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
   const items = useMemo(
     () =>
       Array.isArray(data?.NumberTitleContent) ? data!.NumberTitleContent! : [],
-    [data]
+    [data],
   );
 
   // Mobile (<lg) active number
@@ -78,7 +78,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
 
   return (
     <section className="my-[80px] lg:my-[100px] 2xl:my-[200px]">
-      <div className="container">
+      <div className="container-main">
         {/* ===== MOBILE (below lg) ===== */}
         <div className="lg:hidden">
           {/* Full-width title */}
