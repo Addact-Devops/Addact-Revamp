@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_home_tech_stack_components",
+  "info": {
+    "displayName": "Tech Stack Component"
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tech-stack-category.tech-stack-category"
+    },
+    "tabContent": {
+      "type": "component",
+      "component": "home.logo",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

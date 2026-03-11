@@ -1,0 +1,98 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hire_expert_details",
+  "info": {
+    "singularName": "hire-expert-detail",
+    "pluralName": "hire-expert-details",
+    "displayName": "Hire Expert Detail"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
+    },
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "ReferenceTitle": {
+      "type": "string",
+      "required": true
+    },
+    "Slug": {
+      "type": "string",
+      "required": true
+    },
+    "HeroBanner": {
+      "type": "component",
+      "component": "banner.banner",
+      "repeatable": false
+    },
+    "our_partner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-partner.our-partner"
+    },
+    "our_service": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::service.service"
+    },
+    "why_addact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "cta": {
+      "type": "component",
+      "component": "shared.cta",
+      "repeatable": false
+    },
+    "cta2": {
+      "type": "component",
+      "component": "shared.cta",
+      "repeatable": false
+    },
+    "faq": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::faq.faq"
+    },
+    "our_process": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-process.our-process"
+    },
+    "client_testimonial": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::client-testimonial.client-testimonial"
+    },
+    "contact_us": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::form-field.form-field"
+    },
+    "industries_we_serve": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::industries-we-serve.industries-we-serve"
+    },
+    "ourInshightsTitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
+    },
+    "industry": {
+      "type": "component",
+      "component": "home.industry-listing",
+      "repeatable": false
+    }
+  }
+}

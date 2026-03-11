@@ -8,48 +8,56 @@ import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
 
 export async function generateMetadata() {
-    return generatePageMetadata("careers");
+  return generatePageMetadata("careers");
 }
 
 export default async function CareersPage() {
-    const [careers, seoData] = await Promise.all([getCareersData(), fetchSinglePage("careers")]);
+  const [careers, seoData] = await Promise.all([
+    getCareersData(),
+    fetchSinglePage("careers"),
+  ]);
 
-    const structuredData = seoData?.SEO?.structuredData || null;
+  const structuredData = seoData?.SEO?.structuredData || null;
 
-    const banner = careers.Banner?.Banner?.[0];
-    const cardTitle = careers.Careercard?.Title ?? [];
-    const cardItems = careers.Careercard?.GlobalCard ?? [];
-    const positions = careers.positions ?? [];
-    const positionsTitle = careers.PositionsTitle ? [careers.PositionsTitle] : [];
+  const banner = careers.Banner?.Banner?.[0];
+  const cardTitle = careers.Careercard?.Title ?? [];
+  const cardItems = careers.Careercard?.GlobalCard ?? [];
+  const positions = careers.positions ?? [];
+  const positionsTitle = careers.PositionsTitle ? [careers.PositionsTitle] : [];
 
-    return (
-        <>
-            {structuredData && (
-                <script
-                    type="application/ld+json"
-                    suppressHydrationWarning
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(structuredData),
-                    }}
-                />
-            )}
+  return (
+    <>
+      {structuredData && (
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData),
+          }}
+        />
+      )}
 
-            <main className="bg-[#f4f4f4] pb-[60px] sm:pb-[100px]">
-                {banner && (
-                    <HeroBanner
-                        title={banner.BannerTitle || ""}
-                        description={banner.BannerDescription || ""}
-                        backgroundImageUrl={banner.BannerImage?.url || ""}
-                        showAnchorLinks={true}
-                    />
-                )}
+      <main className="bg-[#f4f4f4] pb-[60px] sm:pb-[100px]">
+        {banner && (
+          <HeroBanner
+            title={banner.BannerTitle || ""}
+            description={banner.BannerDescription || ""}
+            backgroundImageUrl={banner.BannerImage?.url || ""}
+            showAnchorLinks={true}
+          />
+        )}
 
-                <CareerCard title={cardTitle} cards={cardItems} />
+        <CareerCard title={cardTitle} cards={cardItems} />
 
-                {positions.length > 0 && <CareerPositions positions={positions} positionsTitle={positionsTitle} />}
+        {positions.length > 0 && (
+          <CareerPositions
+            positions={positions}
+            positionsTitle={positionsTitle}
+          />
+        )}
 
-                <CareerGallery />
-            </main>
-        </>
-    );
+        <CareerGallery />
+      </main>
+    </>
+  );
 }

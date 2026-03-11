@@ -263,6 +263,7 @@ export interface BannerBanner extends Struct.ComponentSchema {
     BannerTitle: Schema.Attribute.String;
     show_searchbox: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
+    videoLink: Schema.Attribute.String;
   };
 }
 
@@ -707,6 +708,35 @@ export interface HomeCapabilities extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeDevelopmentAndDesignListing
+  extends Struct.ComponentSchema {
+  collectionName: 'components_home_development_and_design_listings';
+  info: {
+    displayName: 'development and Design Listing';
+  };
+  attributes: {
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::development-and-design-detail.development-and-design-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+  };
+}
+
+export interface HomeHireServiceList extends Struct.ComponentSchema {
+  collectionName: 'components_home_hire_service_lists';
+  info: {
+    displayName: 'hireServiceList';
+  };
+  attributes: {
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hire-expert-detail.hire-expert-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+  };
+}
+
 export interface HomeIndustryListing extends Struct.ComponentSchema {
   collectionName: 'components_home_industry_listings';
   info: {
@@ -718,6 +748,31 @@ export interface HomeIndustryListing extends Struct.ComponentSchema {
       'api::industry-detail-page.industry-detail-page'
     >;
     industryListTitle: Schema.Attribute.String;
+  };
+}
+
+export interface HomeLogo extends Struct.ComponentSchema {
+  collectionName: 'components_home_logos';
+  info: {
+    displayName: 'logo';
+  };
+  attributes: {
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeTechStackComponent extends Struct.ComponentSchema {
+  collectionName: 'components_home_tech_stack_components';
+  info: {
+    displayName: 'Tech Stack Component';
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack-category.tech-stack-category'
+    >;
+    tabContent: Schema.Attribute.Component<'home.logo', true>;
   };
 }
 
@@ -1035,7 +1090,11 @@ declare module '@strapi/strapi' {
       'home.animation-banner': HomeAnimationBanner;
       'home.base-component': HomeBaseComponent;
       'home.capabilities': HomeCapabilities;
+      'home.development-and-design-listing': HomeDevelopmentAndDesignListing;
+      'home.hire-service-list': HomeHireServiceList;
       'home.industry-listing': HomeIndustryListing;
+      'home.logo': HomeLogo;
+      'home.tech-stack-component': HomeTechStackComponent;
       'reuse.card': ReuseCard;
       'reuse.number-title-content': ReuseNumberTitleContent;
       'reuse.projects-slider': ReuseProjectsSlider;

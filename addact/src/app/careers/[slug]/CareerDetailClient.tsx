@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { CareerDetailResponse } from "@/graphql/queries/getCareerDetails";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
-import "../../../styles/components/caseStudy-detail.scss";
+// import "../../../styles/components/caseStudy-detail.scss";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import {
   CareerFormState,
