@@ -43,7 +43,7 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
       <HomeBanner data={homeData?.animationBanner} />
       <OurPartners />
       <WhoWeAre />
-      <OurCapabilities />
+      <OurCapabilities data={homeData?.ourCapabilitiy} />
       <BuildingAIEcosystem />
       <IndustryMarqueeCards />
       <WhyWorkWithUs />

@@ -295,6 +295,48 @@ const GET_HOME_PAGE = gql`
           target
         }
       }
+
+      ourCapabilitiy {
+        heading
+        capabilities {
+          title
+          description
+          link {
+            id
+            href
+            label
+            target
+            isExternal
+            SubDisc
+            Icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+          image {
+            alternativeText
+            height
+            url
+            width
+          }
+          sublinks {
+            id
+            href
+            label
+            target
+            isExternal
+            SubDisc
+            Icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -428,6 +470,29 @@ export interface AnimationBanner {
   };
 }
 
+export interface LinkWithIcon {
+  id: string;
+  href: string;
+  label: string | null;
+  target: string;
+  isExternal: boolean;
+  SubDisc: string | null;
+  Icon: Image | null;
+}
+
+export interface Capability {
+  title: string;
+  description: string;
+  link: LinkWithIcon;
+  image: Image;
+  sublinks: LinkWithIcon[];
+}
+
+export interface OurCapabilitiy {
+  heading: string;
+  capabilities: Capability[];
+}
+
 // Main interface
 export interface HomeItems {
   documentId: string;
@@ -444,6 +509,7 @@ export interface HomeItems {
   faq: Faq;
   GlobeAnimation: GloabeAnimation;
   animationBanner: AnimationBanner;
+  ourCapabilitiy: OurCapabilitiy;
 }
 
 export interface HomeResponse {
