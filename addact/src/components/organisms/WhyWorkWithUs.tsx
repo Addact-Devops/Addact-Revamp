@@ -2,44 +2,32 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { RadialDiagram } from "./RadialDiagram";
 import { AccordionItem, AccordionList } from "./AccordionList";
+import Image from "next/image";
+import RichText from "../atom/richText";
+import type { Whyaddact } from "@/graphql/queries/getHomePage";
 
-const items: AccordionItem[] = [
-  {
-    title: "Skilled CMS Developers",
-    description:
-      "Our CMS specialists bring deep platform expertise to deliver powerful, scalable solutions — from custom content architectures to seamless integrations — that accelerate your digital transformation.",
-  },
-  {
-    title: "Seamless Communication",
-    description:
-      "We maintain transparent, real-time communication across every stage of your project, ensuring your vision is heard, understood, and brought to life without friction or guesswork.",
-  },
-  {
-    title: "Client-Centric Collaboration",
-    description:
-      "Your goals are our goals. We embed ourselves as a true partner — listening, adapting, and delivering solutions that keep your business objectives at the absolute forefront.",
-  },
-  {
-    title: "40 Hours of Free Consultancy",
-    description:
-      "Kickstart your journey with 40 complimentary consulting hours. Our experts assess your needs, map a clear roadmap, and align strategy — before a single line of code is written.",
-  },
-  {
-    title: "Agile & Flexible Engagement Models",
-    description:
-      "From dedicated teams to sprint-based delivery, we offer engagement models that flex with your budget, timeline, and evolving project requirements — no rigid contracts.",
-  },
-  {
-    title: "Post-Deployment Support",
-    description:
-      "Our relationship doesn't end at launch. We provide ongoing monitoring, maintenance, and performance optimisation to keep your product running at its best long after go-live.",
-  },
-];
+interface WhyWorkWithUsProps {
+  data: Whyaddact;
+}
 
-export default function WhyWorkWithUs() {
+export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [mobileCardIndex, setMobileCardIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Transform API data to AccordionItem format
+  const items: AccordionItem[] =
+    data?.GlobalCard?.map((card) => ({
+      title: card.Title,
+      description: card.Description,
+      image: card.Image,
+    })) || [];
+
+  const heading = data?.Title?.[0]?.h2 || "Why work with us";
+
+  if (!items || items.length === 0) {
+    return null;
+  }
 
   // Update active index when mobile card changes
   const handleMobileCardChange = (index: number) => {
@@ -53,7 +41,7 @@ export default function WhyWorkWithUs() {
       <div className="block lg:hidden">
         <div className="px-6 pb-64 md:pb-72">
           <h2 className="text-stone-950 text-[26px] font-semibold font-['Montserrat'] leading-normal mb-8">
-            Why work with us
+            {heading}
           </h2>
 
           {/* Carousel - One card at a time */}
@@ -90,12 +78,26 @@ export default function WhyWorkWithUs() {
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
                   >
-                    <h3 className="text-stone-950 text-[20px] font-medium font-['Montserrat'] leading-8 mb-2.5">
-                      {item.title}
-                    </h3>
-                    <p className="text-stone-950 text-sm font-normal font-['Montserrat'] leading-[1.7]">
-                      {item.description}
-                    </p>
+                    <div className="flex items-center gap-3 mb-3">
+                      {item.image?.url && (
+                        <div className="relative w-10 h-10 shrink-0">
+                          <Image
+                            src={item.image.url}
+                            alt={item.image.alternativeText || item.title}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                      )}
+                      <h3 className="text-stone-950 text-[20px] font-medium font-['Montserrat'] leading-8">
+                        {item?.title}
+                      </h3>
+                    </div>
+                    {item?.description && (
+                      <div className="text-stone-950 text-sm font-normal font-['Montserrat'] leading-[1.7]">
+                        <RichText html={item?.description} />
+                      </div>
+                    )}
                   </motion.div>
                 ))}
               </motion.div>
@@ -140,7 +142,7 @@ export default function WhyWorkWithUs() {
           <div className="flex flex-col-reverse lg:flex-row! lg:items-start! items-center gap-8 md:gap-12 lg:gap-16! xl:gap-20!">
             {/* Radial Diagram - responsive positioning */}
             <motion.div
-              className="shrink-0 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[800px]! xl:max-w-[900px]! 2xl:max-w-[1057px]! aspect-square lg:absolute! lg:-left-52! xl:-left-62! 2xl:-left-52! lg:-top-20!"
+              className="shrink-0 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[800px]! xl:max-w-[900px]! 2xl:max-w-[1057px]! aspect-square lg:absolute! lg:-left-52! xl:-left-62! 2xl:-left-52! lg:top-20! xl:-top-20!"
               style={{ aspectRatio: "1057/1091" }}
             >
               <RadialDiagram
@@ -158,7 +160,7 @@ export default function WhyWorkWithUs() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                Why work with us
+                {heading}
               </motion.h2>
 
               <AccordionList
