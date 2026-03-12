@@ -2,67 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import i1 from "../../../public/capabilities-development.png";
-// Static data — will be replaced with GraphQL data later
-const capabilitiesData = [
-  {
-    id: "1",
-    title: "Development & Design",
-    description:
-      "At ADDACT, we don't just build websites, we craft exceptional digital experiences powered by the industry-leading Sitecore platform. We are a Certified Sitecore Agency that utilizes Sitecore to deliver personalized content journeys, automate marketing campaigns, engage audience, & drive real results.",
-    services: [
-      "Web Development",
-      "Devops",
-      "Front End/Full Stack",
-      "Software Product",
-      "Mobile Development",
-      "CMS Development",
-      "UI/UX Design Services",
-      "E-commerce",
-      "Low Code / No Code",
-    ],
-    image: i1,
-  },
-  {
-    id: "2",
-    title: "QA Testing & Support",
-    description:
-      "At ADDACT, we don't just build websites, we craft exceptional digital experiences powered by the industry-leading Sitecore platform. We are a Certified Sitecore Agency that utilizes Sitecore to deliver personalized content journeys, automate marketing campaigns, engage audience, & drive real results.",
-    services: [
-      "Automated Testing",
-      "Mobile Testing",
-      "Software Testing",
-      "Support and Maintenance",
-    ],
-    image: i1,
-  },
-  {
-    id: "3",
-    title: "AI Services",
-    description:
-      "At ADDACT, we don't just build websites, we craft exceptional digital experiences powered by the industry-leading Sitecore platform. We are a Certified Sitecore Agency that utilizes Sitecore to deliver personalized content journeys, automate marketing campaigns, engage audience, & drive real results.",
-    services: [
-      "AI Development",
-      "AI Chatbot Development",
-      "AI Consulting",
-      "AI Integration",
-    ],
-    image: i1,
-  },
-  {
-    id: "4",
-    title: "Digital Marketing Services",
-    description:
-      "At ADDACT, we don't just build websites, we craft exceptional digital experiences powered by the industry-leading Sitecore platform. We are a Certified Sitecore Agency that utilizes Sitecore to deliver personalized content journeys, automate marketing campaigns, engage audience, & drive real results.",
-    services: [
-      "SEO Service",
-      "SMO Service",
-      "Content Marketing",
-      "AI Integration",
-    ],
-    image: i1,
-  },
-];
+import type { OurCapabilitiy } from "@/graphql/queries/getHomePage";
+
+interface OurCapabilitiesProps {
+  data: OurCapabilitiy;
+}
 
 const ArrowIcon = () => (
   <svg
@@ -91,10 +35,11 @@ const ArrowIcon = () => (
   </svg>
 );
 
-const OurCapabilities = () => {
+const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [heights, setHeights] = useState<number[]>([]);
+  const { heading, capabilities } = data;
 
   useEffect(() => {
     const measured = contentRefs.current.map((el) =>
@@ -107,27 +52,35 @@ const OurCapabilities = () => {
     setActiveIndex(index);
   };
 
+  if (!capabilities || capabilities.length === 0) {
+    return null;
+  }
+
   return (
     <section className="bg-white -mt-0.5">
       <div className="container-main">
         {/* Mobile heading */}
-        <h2 className="md:hidden !text-[28px] !pb-4 !text-[#0F0F0F]">
-          Our Capabilities
-        </h2>
+        {heading && (
+          <h2 className="md:hidden !text-[28px] !pb-4 !text-[#0F0F0F]">
+            {heading}
+          </h2>
+        )}
 
         {/* Desktop / Tablet layout */}
         <div className="hidden md:flex gap-2 lg:gap-4 2xl:gap-6">
           {/* Left side — Heading + Tabs */}
           <div className="w-full md:w-[55%] lg:w-[50%] max-w-[1059px]">
-            <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !text-[#0F0F0F]">
-              Our Capabilities
-            </h2>
-            {capabilitiesData.map((item, index) => {
+            {heading && (
+              <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !text-[#0F0F0F]">
+                {heading}
+              </h2>
+            )}
+            {capabilities.map((item, index) => {
               const isActive = activeIndex === index;
 
               return (
                 <div
-                  key={item.id}
+                  key={item?.link?.id}
                   className="border-t border-[#e0e0e0] last:border-b"
                 >
                   <div className="pl-5 2xl:pl-6">
@@ -138,7 +91,7 @@ const OurCapabilities = () => {
                       <h3
                         className={`!text-[20px] lg:!text-[24px] 2xl:!text-[36px] !font-medium transition-colors duration-300 text-[#0F0F0F]`}
                       >
-                        {item.title}
+                        {item?.title}
                       </h3>
                     </button>
 
@@ -162,21 +115,23 @@ const OurCapabilities = () => {
                         </p>
 
                         {/* Services grid */}
-                        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 2xl:gap-y-4 pb-6 2xl:pb-8">
-                          {item.services.map((service) => (
-                            <div
-                              key={service}
-                              className="flex items-center gap-2 text-[#0F0F0F]"
-                            >
-                              <span className="flex-shrink-0">
-                                <ArrowIcon />
-                              </span>
-                              <span className="!text-[18px] !lg:text-[20px] !2xl:text-[22px] font-medium">
-                                {service}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
+                        {item?.sublinks && item?.sublinks?.length > 0 && (
+                          <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-3 2xl:gap-y-4 pb-6 2xl:pb-8">
+                            {item?.sublinks?.map((sublink) => (
+                              <div
+                                key={sublink?.id}
+                                className="flex items-center gap-2 text-[#0F0F0F]"
+                              >
+                                <span className="flex-shrink-0">
+                                  <ArrowIcon />
+                                </span>
+                                <span className="!text-[18px] !lg:text-[20px] !2xl:text-[22px] font-medium">
+                                  {sublink?.label}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -188,22 +143,24 @@ const OurCapabilities = () => {
           {/* Right side — Image */}
           <div className="w-full md:w-[45%] lg:w-[50%] flex items-start">
             <div className="relative w-full aspect-[4/5] overflow-hidden rounded-tl-[240px]">
-              {capabilitiesData.map((item, index) => (
+              {capabilities?.map((item, index) => (
                 <div
-                  key={item.id}
+                  key={item?.link?.id}
                   className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
                     activeIndex === index
                       ? "opacity-100"
                       : "opacity-0 pointer-events-none"
                   }`}
                 >
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 768px) 45vw, 50vw"
-                  />
+                  {item.image?.url && (
+                    <Image
+                      src={item?.image?.url}
+                      alt={item?.image?.alternativeText || item?.title}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 768px) 45vw, 50vw"
+                    />
+                  )}
                 </div>
               ))}
             </div>
@@ -212,12 +169,12 @@ const OurCapabilities = () => {
 
         {/* Mobile layout — Accordion */}
         <div className="block md:hidden mt-8">
-          {capabilitiesData.map((item, index) => {
+          {capabilities?.map((item, index) => {
             const isActive = activeIndex === index;
 
             return (
               <div
-                key={item.id}
+                key={item?.link?.id}
                 className="border-t border-[#e0e0e0] last:border-b"
               >
                 <button
@@ -254,36 +211,40 @@ const OurCapabilities = () => {
                 >
                   <div className="pb-4">
                     {/* Image */}
-                    <div className="relative w-full aspect-[4/3] overflow-hidden rounded-tl-[120px] mb-4">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                        sizes="100vw"
-                      />
-                    </div>
+                    {item?.image?.url && (
+                      <div className="relative w-full aspect-[4/3] overflow-hidden rounded-tl-[120px] mb-4">
+                        <Image
+                          src={item?.image?.url}
+                          alt={item?.image?.alternativeText || item?.title}
+                          fill
+                          className="object-cover"
+                          sizes="100vw"
+                        />
+                      </div>
+                    )}
 
                     <p className="text-[#0F0F0F]/70 text-[14px] leading-relaxed pb-3">
-                      {item.description}
+                      {item?.description}
                     </p>
 
                     {/* Services grid */}
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-3 pb-2">
-                      {item.services.map((service) => (
-                        <div
-                          key={service}
-                          className="flex items-center gap-2 text-[#0F0F0F]"
-                        >
-                          <span className="flex-shrink-0">
-                            <ArrowIcon />
-                          </span>
-                          <span className="text-[14px] font-medium">
-                            {service}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
+                    {item?.sublinks && item?.sublinks.length > 0 && (
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-3 pb-2">
+                        {item?.sublinks.map((sublink) => (
+                          <div
+                            key={sublink?.id}
+                            className="flex items-center gap-2 text-[#0F0F0F]"
+                          >
+                            <span className="flex-shrink-0">
+                              <ArrowIcon />
+                            </span>
+                            <span className="text-[14px] font-medium">
+                              {sublink?.label}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
