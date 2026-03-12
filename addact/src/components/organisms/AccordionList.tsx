@@ -1,9 +1,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { AddactDropdownIcon, AddactRightIcon } from "../atom/icons";
+import RichText from "../atom/richText";
+import type { Image as ImageType } from "@/graphql/queries/getHomePage";
 
 export interface AccordionItem {
   title: string;
   description: string;
+  image?: ImageType | null;
 }
 
 interface AccordionListProps {
@@ -34,24 +37,24 @@ function AccordionRow({
       transition={{ duration: 0.38, delay: index * 0.07 }}
       onClick={onClick}
     >
-      <div className="flex items-center gap-5 py-5 px-6 select-none">
-        <motion.div
-          animate={{ rotate: isActive ? 0 : 270 }}
-          transition={{ duration: 0.3 }}
-        >
+      <div
+        className={`flex items-center gap-5 py-5 px-6 select-none ${isActive ? "pb-0" : ""}`}
+      >
+        <motion.div transition={{ duration: 0.3 }}>
           {isActive ? <AddactDropdownIcon /> : <AddactRightIcon />}
         </motion.div>
+
         <motion.span
           className="justify-start text-stone-950 text-xl lg:text-2xl xl:text-3xl font-medium font-['Montserrat'] leading-[48px]"
           animate={{ color: isActive ? "#0F0F0F" : "#0F0F0F" }}
           transition={{ duration: 0.3 }}
         >
-          {item.title}
+          {item?.title}
         </motion.span>
       </div>
 
       <AnimatePresence initial={false}>
-        {isActive && (
+        {isActive && item?.description && (
           <motion.div
             key="body"
             initial={{ height: 0, opacity: 0 }}
@@ -60,15 +63,15 @@ function AccordionRow({
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <motion.p
+            <motion.div
               className="w-full 2xl:w-[723px] justify-start text-stone-950 text-xl font-normal font-['Montserrat'] leading-8 px-6 pl-[76px] pb-6"
               initial={{ y: -8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -8, opacity: 0 }}
               transition={{ duration: 0.28, delay: 0.08 }}
             >
-              {item.description}
-            </motion.p>
+              <RichText html={item.description} />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

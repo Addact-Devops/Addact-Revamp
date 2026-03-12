@@ -221,14 +221,14 @@ export const AddactRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="30"
-      height="28"
-      viewBox="0 0 30 28"
+      width="28"
+      height="30"
+      viewBox="0 0 28 30"
       fill="none"
       {...rest}
     >
       <path
-        d="M30 -1.90735e-06L24.4932 -1.90735e-06L14.9583 21.733L5.42333 -1.90735e-06H0L12.6552 28H17.3036L30 -1.90735e-06Z"
+        d="M-3.58775e-07 4.62013e-07L-6.43028e-07 5.50675L21.733 15.0417L-1.6274e-06 24.5767L-1.90735e-06 30L28 17.3448L28 12.6964L-3.58775e-07 4.62013e-07Z"
         fill="#3C4CFF"
       />
     </svg>
