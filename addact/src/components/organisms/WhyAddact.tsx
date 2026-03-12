@@ -72,10 +72,10 @@ const WhyAddact = ({ data }: IProps) => {
   const cards = getCards(data as { GlobalCard?: CardItem[] | null } | null);
 
   return (
-    <section className="my-[80px] lg:my-[100px] 2xl:my-[200px]">
+    <section className="pb-16 md:pb-20 lg:pb-24 2xl:pb-[160px]">
       <div className="container-main">
         <div className="flex flex-col">
-          <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
+          <h2 className="text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 font-semibold!">
             {heading}
           </h2>
 
@@ -127,12 +127,12 @@ const WhyAddact = ({ data }: IProps) => {
 
           {/* Desktop Grid */}
           <section className="hidden sm:block">
-            <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-10 sm:mt-14 2xl:mt-24">
+            <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {cards.slice(0, 6).map((service: CardItem, index: number) => (
                 <div key={service?.id ?? index} className="relative">
                   <div className="text-white p-4 2xl:p-7">
                     {/* Icon only for desktop */}
-                    <div className="w-10 lg:w-14 lg:h-14 2xl:w-20 h-10 2xl:h-20 rounded-sm mb-4">
+                    <div className="size-[40px] rounded-sm mb-4">
                       {service?.Image?.url && (
                         <Image
                           src={service.Image.url}
@@ -142,7 +142,7 @@ const WhyAddact = ({ data }: IProps) => {
                         />
                       )}
                     </div>
-                    <h3 className="!text-[25px] 2xl:!text-3xl my-[30px]">
+                    <h3 className="!text-[25px] 2xl:!text-3xl my-[30px] max-w-[380px] w-full leading-[48px]">
                       {service?.Title ?? ""}
                     </h3>
                     <div className="text-[18px] 2xl:text-[20px] text-white">
@@ -154,7 +154,7 @@ const WhyAddact = ({ data }: IProps) => {
                     </div>
                   </div>
                   {(index + 1) % 3 !== 0 && (
-                    <div className="absolute top-1/8 right-0 h-3/4 w-[1px] bg-white opacity-40"></div>
+                    <div className="absolute top-1/8 right-0 h-5/6 w-[1px] bg-white opacity-40"></div>
                   )}
                 </div>
               ))}

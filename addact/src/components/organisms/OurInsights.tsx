@@ -106,7 +106,7 @@ export default function OurInsights() {
   return (
     <section className="py-10 md:py-20 xl:py-[160px] bg-white">
       <div className="container-main mx-auto px-4">
-        <h2 className="text-[#0F0F0F] font-montserrat font-semibold text-[28px] md:text-[40px] 2xl:text-[60px] leading-[40px] md:leading-[60px] 2xl:leading-[85px] pb-4 xl:pb-10">
+        <h2 className="text-[#0F0F0F] font-montserrat font-semibold! text-[28px] md:text-[40px] 2xl:text-[60px] leading-[40px] md:leading-[60px] 2xl:leading-[85px] pb-4 xl:pb-10">
           {titleData?.Title || "Our Insights"}
         </h2>
 

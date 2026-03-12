@@ -24,9 +24,9 @@ const CtaBanner = ({ data }: IProps) => {
   // On industries/* use static image for mobile, else use desktop image for both
   const mobileUrl = isIndustriesPage ? staticMobileUrl : desktopUrl;
 
-  const cta = data.CTALink[0];
-  const href = cta.href;
-  const label = cta.label;
+  const cta = data?.CTALink[0];
+  const href = cta?.href || "";
+  const label = cta?.label || "";
   const target = cta?.isExternal ? "_blank" : "_self";
 
   const bgVars: CSSVars = {
