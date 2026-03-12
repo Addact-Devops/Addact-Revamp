@@ -337,6 +337,42 @@ const GET_HOME_PAGE = gql`
           }
         }
       }
+
+      aiEcoSystem {
+        AIEcoSystem {
+          title
+          description
+          tagLine
+          firstImage {
+            alternativeText
+            height
+            url
+            width
+          }
+          secondImage {
+            alternativeText
+            height
+            url
+            width
+          }
+          firstLayerlogos {
+            Image {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+          secondLayerlogos {
+            Image {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -493,6 +529,24 @@ export interface OurCapabilitiy {
   capabilities: Capability[];
 }
 
+export interface LogoLayer {
+  Image: Image;
+}
+
+export interface AIEcoSystemData {
+  title: string;
+  description: string;
+  tagLine: string;
+  firstImage: Image;
+  secondImage: Image;
+  firstLayerlogos: LogoLayer[];
+  secondLayerlogos: LogoLayer[];
+}
+
+export interface AIEcoSystem {
+  AIEcoSystem: AIEcoSystemData;
+}
+
 // Main interface
 export interface HomeItems {
   documentId: string;
@@ -510,6 +564,7 @@ export interface HomeItems {
   GlobeAnimation: GloabeAnimation;
   animationBanner: AnimationBanner;
   ourCapabilitiy: OurCapabilitiy;
+  aiEcoSystem: AIEcoSystem;
 }
 
 export interface HomeResponse {

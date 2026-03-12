@@ -2,142 +2,157 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import i1 from "../../../public/ai-ecosystem.png";
-// Static data — will be replaced with GraphQL data later
-const sectionData = {
-  title: "Building AI EcoSystem That Align",
-  description:
-    "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution. From custom LLMs to automated workflows, we move your business beyond the hype into practical, revenue-generating AI implementation.",
-  buttonLabel: "Book Your Free AI Consultation",
-  buttonLink: "/contact-us",
-  image: i1,
-};
+import type { AIEcoSystem } from "@/graphql/queries/getHomePage";
 
-// Placeholder logos — will be replaced with actual logo images from GraphQL
-const expertiseLogosRow1 = [
-  { id: "1", src: "/images/ai-logo-1.svg", alt: "OpenAI" },
-  { id: "2", src: "/images/ai-logo-2.svg", alt: "GPT" },
-  { id: "3", src: "/images/ai-logo-3.svg", alt: "LLM" },
-  { id: "4", src: "/images/ai-logo-4.svg", alt: "AI Tool" },
-  { id: "5", src: "/images/ai-logo-5.svg", alt: "ML Platform" },
-];
+interface BuildingAIEcosystemProps {
+  data: AIEcoSystem;
+}
 
-const expertiseLogosRow2 = [
-  { id: "6", src: "/images/ai-logo-6.svg", alt: "Deep Learning" },
-  { id: "7", src: "/images/ai-logo-7.svg", alt: "Neural Net" },
-  { id: "8", src: "/images/ai-logo-8.svg", alt: "NLP" },
-  { id: "9", src: "/images/ai-logo-9.svg", alt: "Computer Vision" },
-  { id: "10", src: "/images/ai-logo-10.svg", alt: "AI Framework" },
-];
+const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
+  const aiData = data?.AIEcoSystem;
 
-const BuildingAIEcosystem = () => {
+  if (!aiData) {
+    return null;
+  }
   return (
-    <section className="bg-[#0F0F0F]">
+    <section className="bg-[#0F0F0F] py-12 md:py-16 lg:py-20 2xl:py-[160px]">
       <div className="container-main">
-        <div className="flex flex-col lg:flex-row gap-2 lg:gap-4 2xl:gap-6 items-center">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-4 2xl:gap-6 items-center">
           {/* Left side — Image (hidden on mobile, shown on lg+) */}
-          <div className="hidden lg:block w-full lg:w-[45%] 2xl:w-[50%]">
-            <div className="relative w-full aspect-[3/4] overflow-hidden">
-              <Image
-                src={sectionData.image}
-                alt={sectionData.title}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 45vw, 50vw"
-              />
-            </div>
-          </div>
-
-          {/* Right side — Content */}
-          <div className="w-full lg:w-[55%] 2xl:w-[50%] pt-3 md:pt-0">
-            {/* Heading */}
-            <h2 className="!text-[28px] md:!text-[40px] lg:!text-[48px] 2xl:!text-[60px] !font-semibold text-white leading-[1.2] mb-5 md:mb-6 2xl:mb-8">
-              {sectionData.title.split(" ").slice(0, 2).join(" ")}
-              <br className="hidden lg:block" />
-              {sectionData.title.split(" ").slice(2).join(" ")}
-            </h2>
-
-            {/* Description */}
-            <p className="text-white/70 text-[14px] md:text-[16px] 2xl:text-[18px] leading-[1.8] mb-8 md:mb-10 2xl:mb-12 max-w-[600px]">
-              {sectionData.description}
-            </p>
-
-            {/* On Hand Expertise — Marquee */}
-            <div className="relative mb-8 md:mb-10 2xl:mb-12">
-              {/* Label — positioned as legend between border lines */}
-              <span className="inline-block text-[#0F0F0F] border border-white/20 bg-white text-[12px] md:text-[14px] font-medium px-4 py-1.5 md:py-2 rounded-xl relative z-10 translate-y-1/2 ml-4 md:ml-6">
-                On Hand Expertise
-              </span>
-
-              {/* Marquee container-main-main — glass effect */}
-              <div className="border border-white/20 rounded-lg overflow-hidden py-6 md:py-8 2xl:py-10 group bg-white/[0.03] backdrop-blur-sm">
-                {/* Row 1 — Left to Right */}
-                <div className="flex overflow-hidden mb-4 md:mb-6 marquee-mask">
-                  <div className="flex gap-8 md:gap-12 2xl:gap-16 items-center animate-marquee-ltr group-hover:[animation-play-state:paused]">
-                    {[
-                      ...expertiseLogosRow1,
-                      ...expertiseLogosRow1,
-                      ...expertiseLogosRow1,
-                      ...expertiseLogosRow1,
-                    ].map((logo, index) => (
-                      <div
-                        key={`row1-${logo.id}-${index}`}
-                        className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] 2xl:w-[70px] 2xl:h-[70px] flex items-center justify-center"
-                      >
-                        <Image
-                          src={logo.src}
-                          alt={logo.alt}
-                          width={70}
-                          height={70}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Row 2 — Right to Left */}
-                <div className="flex overflow-hidden marquee-mask">
-                  <div className="flex gap-8 md:gap-12 2xl:gap-16 items-center animate-marquee-rtl group-hover:[animation-play-state:paused]">
-                    {[
-                      ...expertiseLogosRow2,
-                      ...expertiseLogosRow2,
-                      ...expertiseLogosRow2,
-                      ...expertiseLogosRow2,
-                    ].map((logo, index) => (
-                      <div
-                        key={`row2-${logo.id}-${index}`}
-                        className="flex-shrink-0 w-[50px] h-[50px] md:w-[60px] md:h-[60px] 2xl:w-[70px] 2xl:h-[70px] flex items-center justify-center"
-                      >
-                        <Image
-                          src={logo.src}
-                          alt={logo.alt}
-                          width={70}
-                          height={70}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+          {aiData?.secondImage?.url && (
+            <div className="hidden lg:block w-full lg:w-[45%] 2xl:w-[50%]">
+              <div className="relative w-full aspect-[3/4] overflow-hidden">
+                <Image
+                  src={aiData.secondImage.url}
+                  alt={
+                    aiData.secondImage.alternativeText ||
+                    aiData.title ||
+                    "AI Ecosystem"
+                  }
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 45vw, 50vw"
+                />
               </div>
             </div>
+          )}
+
+          {/* Right side — Content */}
+          <div className="w-full lg:w-[55%] 2xl:w-[50%]">
+            {/* Heading */}
+            {aiData.title && (
+              <h2 className="text-[32px] md:text-[44px] lg:text-[52px] 2xl:text-[60px] font-semibold text-white leading-[1.2] md:leading-[1.3] 2xl:leading-[85px] mb-6 md:mb-8 lg:mb-10 2xl:mb-[50px]">
+                {aiData.title.split(" ").slice(0, 2).join(" ")}
+                <br className="hidden lg:block" />
+                {aiData.title.split(" ").slice(2).join(" ")}
+              </h2>
+            )}
+
+            {/* Description */}
+            {aiData.description && (
+              <p className="text-white/70 text-[16px] md:text-[18px] lg:text-[20px] 2xl:text-[24px] leading-[1.6] md:leading-[1.7] 2xl:leading-[44px] mb-10 md:mb-12 lg:mb-14 2xl:mb-[70px] max-w-[788px]">
+                {aiData.description}
+              </p>
+            )}
+
+            {/* On Hand Expertise — Marquee */}
+            {(aiData.firstLayerlogos?.length ||
+              aiData.secondLayerlogos?.length) && (
+              <div className="relative mb-10 md:mb-12 lg:mb-14 2xl:mb-[60px]">
+                {/* Label — positioned as legend between border lines */}
+                {aiData.tagLine && (
+                  <span className="inline-block text-[#0F0F0F] border border-white/20 bg-white text-[12px] md:text-[14px] font-medium px-4 md:px-5 py-2 md:py-[10px] rounded-[8px] relative z-10 translate-y-1/2 ml-4 md:ml-6">
+                    {aiData.tagLine}
+                  </span>
+                )}
+
+                {/* Marquee container-main-main — glass effect */}
+                <div className="border border-white/20 rounded-[10px] overflow-hidden py-8 md:py-10 lg:py-12 2xl:py-[70px] group bg-white/[0.03] backdrop-blur-sm">
+                  {/* Row 1 — Left to Right */}
+                  {aiData.firstLayerlogos &&
+                    aiData.firstLayerlogos.length > 0 && (
+                      <div className="flex overflow-hidden mb-6 md:mb-8 lg:mb-10 2xl:mb-[69px] marquee-mask">
+                        <div className="flex gap-10 md:gap-12 lg:gap-14 2xl:gap-16 items-center animate-marquee-ltr group-hover:[animation-play-state:paused]">
+                          {[
+                            ...aiData.firstLayerlogos,
+                            ...aiData.firstLayerlogos,
+                            ...aiData.firstLayerlogos,
+                            ...aiData.firstLayerlogos,
+                          ].map(
+                            (logo, index) =>
+                              logo?.Image?.url && (
+                                <div
+                                  key={`row1-${index}`}
+                                  className="flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center"
+                                >
+                                  <Image
+                                    src={logo.Image.url}
+                                    alt={
+                                      logo.Image.alternativeText || "AI Logo"
+                                    }
+                                    width={80}
+                                    height={80}
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                              ),
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                  {/* Row 2 — Right to Left */}
+                  {aiData.secondLayerlogos &&
+                    aiData.secondLayerlogos.length > 0 && (
+                      <div className="flex overflow-hidden marquee-mask">
+                        <div className="flex gap-10 md:gap-12 lg:gap-14 2xl:gap-16 items-center animate-marquee-rtl group-hover:[animation-play-state:paused]">
+                          {[
+                            ...aiData.secondLayerlogos,
+                            ...aiData.secondLayerlogos,
+                            ...aiData.secondLayerlogos,
+                            ...aiData.secondLayerlogos,
+                          ].map(
+                            (logo, index) =>
+                              logo?.Image?.url && (
+                                <div
+                                  key={`row2-${index}`}
+                                  className="flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center"
+                                >
+                                  <Image
+                                    src={logo.Image.url}
+                                    alt={
+                                      logo.Image.alternativeText || "AI Logo"
+                                    }
+                                    width={80}
+                                    height={80}
+                                    className="w-full h-full object-contain"
+                                  />
+                                </div>
+                              ),
+                          )}
+                        </div>
+                      </div>
+                    )}
+                </div>
+              </div>
+            )}
 
             {/* CTA Button */}
             <Link
-              href={sectionData.buttonLink}
-              className="inline-flex items-center gap-3 bg-white text-[#0F0F0F] border border-white text-[16px] md:text-[18px] !font-semibold px-6 py-3 md:px-8 md:py-4 rounded-[10px] transition-all duration-300 hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:text-white"
+              href="/contact-us"
+              className="inline-flex items-center gap-3 md:gap-4 lg:gap-5 bg-white text-[#0F0F0F] border border-white text-[14px] md:text-[16px] lg:text-[18px] font-semibold px-5 py-3 md:px-6 md:py-3.5 lg:px-8 lg:py-4 rounded-[8px] md:rounded-[10px] transition-all duration-300 hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:text-white shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)]"
             >
-              {sectionData.buttonLabel}
+              Book Your Free AI Consultation
               <svg
-                width="20"
-                height="20"
+                width="24"
+                height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="w-5 h-5 md:w-6 md:h-6 lg:w-[30px] lg:h-[30px]"
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
