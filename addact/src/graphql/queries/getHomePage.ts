@@ -373,6 +373,36 @@ const GET_HOME_PAGE = gql`
           }
         }
       }
+
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;

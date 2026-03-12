@@ -16,7 +16,7 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 // import GlobeAnimation from "@/components/organisms/GlobeAnimation";
 // import ContactUs from "@/components/organisms/ContactUs";
-import OurPartners from "../organisms/OurPartners";
+// import OurPartners from "../organisms/OurPartners";
 import IndustryMarqueeCards from "../organisms/IndustryMarqueeCards";
 import WhyWorkWithUs from "../organisms/WhyWorkWithUs";
 import IntroSplash from "../organisms/IntroSplash";
@@ -41,7 +41,7 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
   return (
     <main className="bg-dark">
       <HomeBanner data={homeData?.animationBanner} />
-      <OurPartners />
+      {/* <OurPartners /> */}
       <WhoWeAre />
       <OurCapabilities data={homeData?.ourCapabilitiy} />
       <BuildingAIEcosystem data={homeData?.aiEcoSystem} />

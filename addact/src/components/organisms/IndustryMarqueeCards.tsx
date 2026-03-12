@@ -171,7 +171,7 @@ export default function IndustryMarqueeCards({
     <>
       <section className="relative w-full bg-[#0f0f0f] py-12.5 md:py-40 overflow-hidden">
         <div className="container-main">
-          <h2 className="text-[32px] md:text-[44px] lg:text-[60px] font-semibold leading-[1.4] text-white mb-12.5 md:mb-20 max-w-169.25">
+          <h2 className="text-[32px] md:text-[44px] lg:text-[60px] font-semibold! leading-[1.4] text-white mb-12.5 md:mb-20 max-w-169.25">
             {title}
           </h2>
         </div>
