@@ -48,7 +48,7 @@ export default function ClientTestimonials() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative">
           {/* LEFT SIDE */}
           <div className="lg:col-span-5 relative z-10 text-center lg:text-left">
-            <h2 className="text-[#0F0F0F] text-[32px] md:text-[44px] lg:text-[60px] font-semibold leading-[1.3] mb-10 lg:mb-16 font-montserrat">
+            <h2 className="text-[#0F0F0F] text-[32px] md:text-[44px] lg:text-[60px] font-semibold! leading-[1.3] mb-10 lg:mb-16 font-montserrat">
               {data?.Title}
             </h2>
 

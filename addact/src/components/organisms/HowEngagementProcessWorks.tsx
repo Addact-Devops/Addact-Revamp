@@ -56,7 +56,7 @@ const HowEngagementProcessWorks = ({
   ].slice(0, CARD_COUNT);
 
   return (
-    <section className="bg-[#050608] py-[72px] md:py-[88px] xl:py-[110px]">
+    <section className="bg-[#0F0F0F] py-[72px] md:py-[88px] xl:py-[110px]">
       <div className="container-main">
         <h2 className="mb-10 max-w-[660px] !text-[34px] !font-semibold !leading-[1.22] text-white md:mb-14 md:!text-[48px] lg:!text-[56px]">
           {title}
