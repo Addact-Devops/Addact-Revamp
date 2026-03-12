@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_home_hire_service_lists",
+  "collectionName": "components_home_sitecore_listings",
   "info": {
-    "displayName": "hireServiceList"
+    "displayName": "Sitecore Listing"
   },
   "options": {},
   "attributes": {
@@ -11,7 +11,7 @@
     "serviceList": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::hire-expert-detail.hire-expert-detail"
+      "target": "api::sitecore-detail.sitecore-detail"
     },
     "isCarousel": {
       "type": "boolean"

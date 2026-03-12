@@ -12,6 +12,9 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::development-and-design-detail.development-and-design-detail"
+    },
+    "isCarousel": {
+      "type": "boolean"
     }
   },
   "config": {}

@@ -63,6 +63,16 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::tech-stack.tech-stack"
+    },
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "ourService": {
+      "type": "dynamiczone",
+      "components": [
+        "home.cms-listing",
+        "home.service-list"
+      ]
     }
   }
 }

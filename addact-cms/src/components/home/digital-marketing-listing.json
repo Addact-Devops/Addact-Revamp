@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_home_hire_service_lists",
+  "collectionName": "components_home_digital_marketing_listings",
   "info": {
-    "displayName": "hireServiceList"
+    "displayName": "Digital Marketing Listing"
   },
   "options": {},
   "attributes": {
@@ -11,7 +11,7 @@
     "serviceList": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::hire-expert-detail.hire-expert-detail"
+      "target": "api::digital-marketing-detail.digital-marketing-detail"
     },
     "isCarousel": {
       "type": "boolean"

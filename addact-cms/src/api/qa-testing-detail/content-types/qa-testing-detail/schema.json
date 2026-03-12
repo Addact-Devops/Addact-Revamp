@@ -1,16 +1,21 @@
 {
-  "kind": "singleType",
-  "collectionName": "hire_experts",
+  "kind": "collectionType",
+  "collectionName": "qa_testing_details",
   "info": {
-    "singularName": "hire-expert",
-    "pluralName": "hire-experts",
-    "displayName": "hire-expert"
+    "singularName": "qa-testing-detail",
+    "pluralName": "qa-testing-details",
+    "displayName": "QA Testing Detail"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
+    },
     "SEO": {
       "type": "component",
       "component": "shared.seo",
@@ -59,10 +64,13 @@
       "relation": "oneToOne",
       "target": "api::tech-stack.tech-stack"
     },
+    "ReferenceTitle": {
+      "type": "string"
+    },
     "ourService": {
       "type": "dynamiczone",
       "components": [
-        "home.hire-service-list"
+        "home.service-list"
       ]
     }
   }

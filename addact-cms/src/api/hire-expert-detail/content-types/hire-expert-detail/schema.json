@@ -29,11 +29,6 @@
       "type": "string",
       "required": true
     },
-    "HeroBanner": {
-      "type": "component",
-      "component": "banner.banner",
-      "repeatable": false
-    },
     "our_partner": {
       "type": "relation",
       "relation": "oneToOne",
@@ -48,16 +43,6 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::global-card.global-card"
-    },
-    "cta": {
-      "type": "component",
-      "component": "shared.cta",
-      "repeatable": false
-    },
-    "cta2": {
-      "type": "component",
-      "component": "shared.cta",
-      "repeatable": false
     },
     "faq": {
       "type": "relation",
@@ -93,6 +78,16 @@
       "type": "component",
       "component": "home.industry-listing",
       "repeatable": false
+    },
+    "Banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "cta": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cta.cta"
     }
   }
 }

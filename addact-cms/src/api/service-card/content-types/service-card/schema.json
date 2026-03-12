@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "service_cards",
+  "info": {
+    "singularName": "service-card",
+    "pluralName": "service-cards",
+    "displayName": "Service Card"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
+    }
+  }
+}
