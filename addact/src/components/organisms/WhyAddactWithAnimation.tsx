@@ -149,7 +149,7 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
                 <div key={service?.id ?? index} className="relative">
                   <div className="text-white p-4 2xl:p-7 overflow-hidden">
                     {/* Icon only for desktop (no animation on icon) */}
-                    <div className="w-10 lg:w-14 lg:h-14 2xl:w-20 h-10 2xl:h-20 rounded-sm mb-4">
+                    <div className="size-[40px] rounded-sm mb-4">
                       {service?.Image?.url && (
                         <Image
                           src={service.Image.url}

@@ -1,3 +1,4 @@
+import ContactUs from "@/components/organisms/ContactUsPage";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import { getContactUsData } from "@/graphql/queries/getContactUs";
 // import ContactUsTeam from "@/components/organisms/ContactUsTeam";
@@ -13,7 +14,7 @@ export default async function ContactUsPage() {
   const data = await getContactUsData();
   const contactus = data.contactus;
   const bannerData = contactus?.banner?.Banner?.[0];
-
+  const contactUsForm = data.contactus.contactus;
   return (
     <>
       <main>
@@ -88,14 +89,19 @@ export default async function ContactUsPage() {
           />
         ) : null}
 
+        <ContactUs data={contactUsForm} />
         {/* <ContactUsTeam
-                    AddactTeamImage={contactus.AddactTeamImage}
-                    TitleLine1={contactus.TitleLine1}
-                    TitleLine2={contactus.TitleLine2}
-                    Descriptions={contactus.Descriptions}
-                    ContactUsAvailability={contactus.ContactUsAvailability}
-                />
-                {contactus.AddressContent ? <ContactUsAddress addressContent={contactus.AddressContent} /> : ""} */}
+          AddactTeamImage={contactus.AddactTeamImage}
+          TitleLine1={contactus.TitleLine1}
+          TitleLine2={contactus.TitleLine2}
+          Descriptions={contactus.Descriptions}
+          ContactUsAvailability={contactus.ContactUsAvailability}
+        />
+        {contactus.AddressContent ? (
+          <ContactUsAddress addressContent={contactus.AddressContent} />
+        ) : (
+          ""
+        )} */}
       </main>
 
       {/* ✅ Inline Structured Data */}
