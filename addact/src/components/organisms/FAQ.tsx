@@ -6,7 +6,7 @@ import { Faq } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
 
 interface IProps {
-  data: Faq;
+  data?: Faq | null;
 }
 
 const FAQ = ({ data }: IProps) => {
@@ -35,17 +35,19 @@ const FAQ = ({ data }: IProps) => {
     });
   };
 
+  if (!data || !Array.isArray(data.FAQ) || data.FAQ.length === 0) return null;
   if (openIndexes === null) return null;
 
   return (
     <section className="py-5 md:py-10 2xl:py-[80px] bg-white">
       <div className="container-main mx-auto px-4">
         <h2 className="text-[#0F0F0F] font-montserrat !text-[28px] md:!text-[40px] 2xl:!text-[60px] font-semibold! max-w-[677px] w-full">
-          {data.Title?.split("Asked")[0]}
+          {data.Title?.split("Asked")[0] ?? ""}
         </h2>
 
         <div className="mt-5 lg:mt-10">
           {data.FAQ.map((faq, index) => {
+            if (!faq) return null;
             const isOpen = openIndexes.includes(index);
             return (
               <div
@@ -83,7 +85,7 @@ const FAQ = ({ data }: IProps) => {
                   }}
                 >
                   <div className="text-base md:text-xl font-normal font-montserrat leading-[34px] text-[#0F0F0F] group-hover:text-white transition-colors duration-200 max-w-[1085px] w-full">
-                    <RichText html={faq.Description} />
+                    <RichText html={String(faq.Description)} />
                   </div>
                 </div>
               </div>
