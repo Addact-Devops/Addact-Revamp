@@ -77,7 +77,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
   }, [items.length]);
 
   return (
-    <section className="my-[80px] lg:my-[100px] 2xl:my-[200px]">
+    <section className="py-16 md:py-24 lg:py-40! bg-white">
       <div className="container-main">
         {/* ===== MOBILE (below lg) ===== */}
         <div className="lg:hidden">
@@ -142,10 +142,9 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
           {/* Left: Sticky title */}
           <div className="w-full lg:w-[40%] 2xl:w-[35%]">
             <div className="lg:sticky lg:top-[120px]">
-              <h2 className="!text-white !text-[36px] xl:!text-[38px] 2xl:!text-[60px] leading-tight">
+              <h2 className="!text-[#0F0F0F] !text-[36px] xl:!text-[38px] 2xl:!text-[60px] leading-tight font-semibold!">
                 {data?.Title ?? "Our Challenges"}
               </h2>
-              <div className="w-[160px] h-[6px] bg-[#3C4CFF] mt-6 rounded" />
             </div>
           </div>
 
@@ -161,7 +160,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                       style={{
                         fontWeight: 900,
                         WebkitTextStrokeWidth: "2px",
-                        WebkitTextStrokeColor: "rgba(255, 255, 255, 0.7)",
+                        WebkitTextStrokeColor: "#E5E5E5",
                         color: "transparent",
                         lineHeight: "0.8",
                         fontFamily: "Poppins, sans-serif",
@@ -172,11 +171,11 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                       {displayNum}
                     </div>
 
-                    <h3 className="text-white !font-bold !text-[30px] 2xl:!text-[48px] mb-[15px] 2xl:mb-[40px]">
+                    <h3 className="text-[#0F0F0F] !font-bold !text-[30px] 2xl:!text-[48px] mb-[15px] 2xl:mb-[40px]">
                       {(item?.Title ?? "").trim()}
                     </h3>
 
-                    <div className="text-white text-[22px] lg:text-[24px] 2xl:text-[30px] leading-[40px] 2xl:leading-[54px]">
+                    <div className="text-[#0F0F0F] text-[22px] lg:text-[24px] 2xl:text-[30px] leading-[40px] 2xl:leading-[54px]">
                       {(item?.Content ?? "").split("\n").map((line, i) => (
                         <div key={i}>{line.trim()}</div>
                       ))}

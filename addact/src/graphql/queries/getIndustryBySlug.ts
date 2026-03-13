@@ -1,7 +1,7 @@
 // src/graphql/queries/getIndustryBySlug.ts
 import { gql } from "graphql-request";
 import client from "../client";
-import { Heading } from "./getHomePage";
+import { Heading, Image } from "./getHomePage";
 
 /**
  * Main detail query — filtered by slug.
@@ -100,38 +100,6 @@ const GET_INDUSTRY_BY_SLUG = gql`
         SolutionsCards {
           Title
           Description
-        }
-      }
-
-      Tech_Stack {
-        ExpertiseTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-          }
-        }
-        CMS {
-          ... on ComponentBaseTemplateLinkImage {
-            Title
-            Links {
-              label
-              target
-              href
-              SubDisc
-              Icon {
-                url
-                height
-                alternativeText
-                width
-              }
-            }
-            Icons {
-              url
-              alternativeText
-              width
-              height
-            }
-            ClassName
-          }
         }
       }
 
@@ -293,6 +261,25 @@ const GET_INDUSTRY_BY_SLUG = gql`
           }
         }
       }
+
+      techStack {
+        title
+        description
+        tab {
+          category {
+            categoryTitle
+          }
+          tabContent {
+            title
+            logo {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -307,6 +294,24 @@ const GET_INDUSTRY_SLUGS = gql`
 `;
 
 // -------------------- Types --------------------
+
+export interface TechStack {
+  title: string;
+  description: string;
+  tab: Tab[];
+}
+
+export interface Tab {
+  category: {
+    categoryTitle: string;
+  };
+  tabContent: TabContent[];
+}
+
+export interface TabContent {
+  title: string;
+  logo: Image | null;
+}
 
 export type IndustryDetail = {
   Slug: string;
@@ -492,6 +497,8 @@ export type IndustryDetail = {
       }> | null;
     }> | null;
   } | null;
+
+  techStack?: TechStack | null;
 };
 
 export type IndustryBySlugResponse = {
@@ -504,7 +511,7 @@ export async function getIndustryBySlug(slug: string) {
   const normalized = slug.startsWith("/") ? slug : `/${slug}`;
   const data = await client.request<IndustryBySlugResponse>(
     GET_INDUSTRY_BY_SLUG,
-    { slug: normalized }
+    { slug: normalized },
   );
   return data.industryDetailPages?.[0] || null;
 }

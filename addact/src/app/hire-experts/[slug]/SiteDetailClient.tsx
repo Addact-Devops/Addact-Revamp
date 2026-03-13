@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";
-import OurPartners from "@/components/organisms/OurPartners";
 // import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
@@ -19,11 +18,12 @@ import {
 } from "@/graphql/queries/getHireExpertSlug";
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
+import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
 
-const IndustriesWeServe = dynamic(
-  () => import("@/components/organisms/IndustriesWeServe"),
-  { ssr: false },
-);
+// const IndustriesWeServe = dynamic(
+//   () => import("@/components/organisms/IndustriesWeServe"),
+//   { ssr: false },
+// );
 
 const SiteDetailClient = ({ data }: { data: HireExpert }) => {
   const [pageData, setPageData] = useState<HireExpert | null>(data);
@@ -74,11 +74,10 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
         }}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
-      <OurPartners />
       {pageData?.our_service && (
         <OurServicesWithTabs data={pageData.our_service} />
       )}
-      <IndustriesWeServe />
+      <IndustryMarqueeCards />
       {pageData?.why_addact && <WhyAddact data={pageData.why_addact} />}
       <HowEngagementProcessWorks />
 

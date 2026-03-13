@@ -2,48 +2,52 @@
 
 import FAQ from "@/components/organisms/FAQ";
 import HeroBanner from "@/components/organisms/HeroBanner";
-import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
-import OurPartners from "@/components/organisms/OurPartners";
+// import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
 import { getIndustryBySlug } from "@/graphql/queries/getIndustryBySlug";
 import { Metadata } from "next";
 import Script from "next/script";
 
 // ✅ import the exact types your OurPartners component expects
-import IndustryCtaBanner from "@/components/molecules/IndustryCtaBanner";
+// import IndustryCtaBanner from "@/components/molecules/IndustryCtaBanner";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import IndustryCaseStudies from "@/components/organisms/IndustryCaseStudies";
 import IndustryChallenges from "@/components/organisms/IndustryChallenges";
+// import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
+// import WhyAddact from "@/components/organisms/WhyAddactWithAnimation";
+import CtaBanner from "@/components/molecules/CtaBanner";
+// import OurTechStack from "@/components/organisms/OurTechStack";
+import WhyAddact from "@/components/organisms/WhyAddact";
+import OurTechStack from "@/components/organisms/OurTechStack";
 import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
-import WhyAddact from "@/components/organisms/WhyAddactWithAnimation";
-import type {
-  PartnerImage,
-  PartnerTitle,
-} from "@/graphql/queries/getOurPartners";
+// import type {
+//   PartnerImage,
+//   PartnerTitle,
+// } from "@/graphql/queries/getOurPartners";
 
 type Params = Promise<{ slug: string }>;
 
 // ---------- Local helper types (no `any`) ----------
-type ImgBasic = {
-  url?: string;
-  alternativeText?: string; // use undefined instead of null to match most component shapes
-  width?: number;
-  height?: number;
-  name?: string;
-};
+// type ImgBasic = {
+//   url?: string;
+//   alternativeText?: string; // use undefined instead of null to match most component shapes
+//   width?: number;
+//   height?: number;
+//   name?: string;
+// };
 
-type LinkBasic = {
-  href: string;
-  label: string;
-  target?: "self" | "blank" | "parent" | "top";
-  isExternal?: boolean;
-};
+// type LinkBasic = {
+//   href: string;
+//   label: string;
+//   target?: "self" | "blank" | "parent" | "top";
+//   isExternal?: boolean;
+// };
 
-type CmsItemRaw = {
-  Title?: string;
-  Links?: Partial<LinkBasic>;
-  Icons?: Partial<ImgBasic>;
-  ClassName?: string;
-};
+// type CmsItemRaw = {
+//   Title?: string;
+//   Links?: Partial<LinkBasic>;
+//   Icons?: Partial<ImgBasic>;
+//   ClassName?: string;
+// };
 
 type FaqRawItem = {
   Title?: string | null;
@@ -51,10 +55,10 @@ type FaqRawItem = {
 };
 
 // Accept null/undefined safely from Strapi
-const normalizeTarget = (
-  t: string | null | undefined,
-): "self" | "blank" | "parent" | "top" =>
-  t === "blank" || t === "parent" || t === "top" ? t : "self";
+// const normalizeTarget = (
+//   t: string | null | undefined,
+// ): "self" | "blank" | "parent" | "top" =>
+//   t === "blank" || t === "parent" || t === "top" ? t : "self";
 
 export async function generateMetadata({
   params,
@@ -109,74 +113,74 @@ export default async function Page({ params }: { params: Params }) {
   // =========================
   // ✅ Partners (normalize to required shapes)
   // =========================
-  const partnerTitleRaw = Array.isArray(industry?.OurPartner?.Title)
-    ? (industry?.OurPartner?.Title as unknown[])
-    : [];
+  // const partnerTitleRaw = Array.isArray(industry?.OurPartner?.Title)
+  //   ? (industry?.OurPartner?.Title as unknown[])
+  //   : [];
 
-  const normalizedPartnerTitleBlocks: PartnerTitle[] = partnerTitleRaw
-    .map((t: unknown) => {
-      const obj = t as Record<string, unknown> | null;
-      if (!obj) return null;
-      if (typeof obj.h1 === "string") return { h1: obj.h1 } as PartnerTitle;
-      if (typeof obj.h2 === "string") return { h2: obj.h2 } as PartnerTitle;
-      if (typeof obj.h3 === "string") return { h3: obj.h3 } as PartnerTitle;
-      if (typeof obj.h5 === "string") return { h5: obj.h5 } as PartnerTitle;
-      if (typeof obj.h6 === "string") return { h6: obj.h6 } as PartnerTitle;
-      return null;
-    })
-    .filter(Boolean) as PartnerTitle[];
+  // const normalizedPartnerTitleBlocks: PartnerTitle[] = partnerTitleRaw
+  //   .map((t: unknown) => {
+  //     const obj = t as Record<string, unknown> | null;
+  //     if (!obj) return null;
+  //     if (typeof obj.h1 === "string") return { h1: obj.h1 } as PartnerTitle;
+  //     if (typeof obj.h2 === "string") return { h2: obj.h2 } as PartnerTitle;
+  //     if (typeof obj.h3 === "string") return { h3: obj.h3 } as PartnerTitle;
+  //     if (typeof obj.h5 === "string") return { h5: obj.h5 } as PartnerTitle;
+  //     if (typeof obj.h6 === "string") return { h6: obj.h6 } as PartnerTitle;
+  //     return null;
+  //   })
+  //   .filter(Boolean) as PartnerTitle[];
 
-  const partnerImagesRaw = Array.isArray(industry?.OurPartner?.Image)
-    ? (industry?.OurPartner?.Image as unknown[])
-    : [];
+  // const partnerImagesRaw = Array.isArray(industry?.OurPartner?.Image)
+  //   ? (industry?.OurPartner?.Image as unknown[])
+  //   : [];
 
-  const normalizedPartnerImages: PartnerImage[] = partnerImagesRaw
-    .map((x: unknown) => {
-      const obj = x as {
-        Image?: { url?: string; alternativeText?: string | null };
-      } | null;
-      const url = obj?.Image?.url ?? "";
-      if (!url) return null;
-      return {
-        Image: {
-          url,
-          alternativeText: obj?.Image?.alternativeText ?? undefined,
-        },
-      } as PartnerImage;
-    })
-    .filter(Boolean) as PartnerImage[];
+  // const normalizedPartnerImages: PartnerImage[] = partnerImagesRaw
+  //   .map((x: unknown) => {
+  //     const obj = x as {
+  //       Image?: { url?: string; alternativeText?: string | null };
+  //     } | null;
+  //     const url = obj?.Image?.url ?? "";
+  //     if (!url) return null;
+  //     return {
+  //       Image: {
+  //         url,
+  //         alternativeText: obj?.Image?.alternativeText ?? undefined,
+  //       },
+  //     } as PartnerImage;
+  //   })
+  //   .filter(Boolean) as PartnerImage[];
 
   // =========================
   // ✅ CMS Experts (Tech_Stack) -> pass as overrides to component
   // =========================
-  const cmsTitle = industry?.Tech_Stack?.ExpertiseTitle?.[0]?.Title ?? "";
+  // const cmsTitle = industry?.Tech_Stack?.ExpertiseTitle?.[0]?.Title ?? "";
 
-  const cmsRaw: CmsItemRaw[] = Array.isArray(industry?.Tech_Stack?.CMS)
-    ? (industry?.Tech_Stack?.CMS as CmsItemRaw[])
-    : [];
+  // const cmsRaw: CmsItemRaw[] = Array.isArray(industry?.Tech_Stack?.CMS)
+  //   ? (industry?.Tech_Stack?.CMS as CmsItemRaw[])
+  //   : [];
 
   // Build array compatible with common OverrideItem shapes
-  const cmsItems = cmsRaw.map((c: CmsItemRaw, idx: number) => ({
-    id: String(idx),
-    Title: c?.Title ?? "",
-    Links: {
-      id: String(idx),
-      href: c?.Links?.href ?? "#",
-      label: c?.Links?.label ?? c?.Title ?? "Learn more",
-      target: normalizeTarget(c?.Links?.target as string | null | undefined),
-      isExternal:
-        normalizeTarget(c?.Links?.target as string | null | undefined) ===
-        "blank",
-    },
-    Icons: {
-      url: c?.Icons?.url ?? "",
-      alternativeText: c?.Icons?.alternativeText ?? undefined,
-      width: c?.Icons?.width ?? 113,
-      height: c?.Icons?.height ?? 64,
-      name: c?.Icons?.name ?? c?.Title ?? "icon",
-    } as ImgBasic,
-    ClassName: c?.ClassName ?? "",
-  }));
+  // const cmsItems = cmsRaw.map((c: CmsItemRaw, idx: number) => ({
+  //   id: String(idx),
+  //   Title: c?.Title ?? "",
+  //   Links: {
+  //     id: String(idx),
+  //     href: c?.Links?.href ?? "#",
+  //     label: c?.Links?.label ?? c?.Title ?? "Learn more",
+  //     target: normalizeTarget(c?.Links?.target as string | null | undefined),
+  //     isExternal:
+  //       normalizeTarget(c?.Links?.target as string | null | undefined) ===
+  //       "blank",
+  //   },
+  //   Icons: {
+  //     url: c?.Icons?.url ?? "",
+  //     alternativeText: c?.Icons?.alternativeText ?? undefined,
+  //     width: c?.Icons?.width ?? 113,
+  //     height: c?.Icons?.height ?? 64,
+  //     name: c?.Icons?.name ?? c?.Title ?? "icon",
+  //   } as ImgBasic,
+  //   ClassName: c?.ClassName ?? "",
+  // }));
 
   // ✅ Why Addact (industry variant is `global_card`)
   const whyAddactData = industry?.global_card ?? null;
@@ -228,10 +232,10 @@ export default async function Page({ params }: { params: Params }) {
         )}
 
         {/* ✅ Partners from this industry */}
-        <OurPartners
+        {/* <OurPartners
           titleBlocks={normalizedPartnerTitleBlocks}
           images={normalizedPartnerImages}
-        />
+        /> */}
 
         {industry?.OurChallenges && (
           <IndustryChallenges data={industry.OurChallenges as never} />
@@ -244,10 +248,11 @@ export default async function Page({ params }: { params: Params }) {
         )}
 
         {/* ✅ CMS Experts from this industry */}
-        <OurCmsExpertsWithAnimation
+        {/* <OurCmsExpertsWithAnimation
           title={cmsTitle}
           items={cmsItems as never}
-        />
+        /> */}
+        {industry?.techStack && <OurTechStack data={industry?.techStack} />}
 
         {!!projectHighlightItems.length && (
           <IndustryCaseStudies
@@ -262,10 +267,12 @@ export default async function Page({ params }: { params: Params }) {
         <ClientTestimonials />
 
         {/* ✅ CTA Banner from this industry – adapted to home shape */}
-        {industry?.cta && <IndustryCtaBanner data={industry?.cta as never} />}
+        {/* {industry?.cta && <IndustryCtaBanner data={industry?.cta as never} />} */}
 
         {/* ✅ FAQ from this industry – adapted to home shape */}
         {faqAdapted && <FAQ data={faqAdapted as never} />}
+
+        {industry?.cta && <CtaBanner data={industry?.cta as never} />}
       </main>
     </>
   );
