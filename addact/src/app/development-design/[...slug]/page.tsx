@@ -4,13 +4,28 @@ import {
   DevelopmentDesignDetail,
   getDevelopmentDesignSlug,
 } from "@/graphql/queries/getDevelopmentDesignSlug";
+import {
+  CmsDetail,
+  getDevelopmentDesignDetailsCmsSlug,
+} from "@/graphql/queries/getDevelopmentDesignCmsSlug";
+import {
+  SitecoreDetail,
+  getDevelopmentDesignDetailsSitecoreSlug,
+} from "@/graphql/queries/getDevelopmentDesignSitecoreSlug";
 
-type Params = Promise<{ slug: string }>;
+type Params = Promise<{ slug: string[] }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
-  const data: DevelopmentDesignDetail | null =
-    await getDevelopmentDesignSlug(slug);
+  let data: DevelopmentDesignDetail | CmsDetail | SitecoreDetail | null = null;
+
+  if (slug.length === 1) {
+    data = await getDevelopmentDesignSlug(slug[0]);
+  } else if (slug.length === 2) {
+    data = await getDevelopmentDesignDetailsCmsSlug(slug.join("/"));
+  } else if (slug.length === 3) {
+    data = await getDevelopmentDesignDetailsSitecoreSlug(slug.join("/"));
+  }
 
   if (!data || !data.SEO) return {};
 
@@ -52,8 +67,15 @@ export async function generateMetadata({ params }: { params: Params }) {
 
 const SiteDetailPage = async ({ params }: { params: Params }) => {
   const { slug } = await params;
-  const data: DevelopmentDesignDetail | null =
-    await getDevelopmentDesignSlug(slug);
+  let data: DevelopmentDesignDetail | CmsDetail | SitecoreDetail | null = null;
+
+  if (slug.length === 1) {
+    data = await getDevelopmentDesignSlug(slug[0]);
+  } else if (slug.length === 2) {
+    data = await getDevelopmentDesignDetailsCmsSlug(slug.join("/"));
+  } else if (slug.length === 3) {
+    data = await getDevelopmentDesignDetailsSitecoreSlug(slug.join("/"));
+  }
 
   if (!data) return notFound();
 

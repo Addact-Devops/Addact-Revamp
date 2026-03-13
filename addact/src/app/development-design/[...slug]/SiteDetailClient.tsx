@@ -14,6 +14,14 @@ import {
   getDevelopmentDesignSlug,
   DevelopmentDesignDetail,
 } from "@/graphql/queries/getDevelopmentDesignSlug";
+import {
+  CmsDetail,
+  getDevelopmentDesignDetailsCmsSlug,
+} from "@/graphql/queries/getDevelopmentDesignCmsSlug";
+import {
+  SitecoreDetail,
+  getDevelopmentDesignDetailsSitecoreSlug,
+} from "@/graphql/queries/getDevelopmentDesignSitecoreSlug";
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
@@ -24,24 +32,38 @@ import OurTechStack from "@/components/organisms/OurTechStack";
 //   { ssr: false },
 // );
 
-const DetailSlug = ({ data }: { data: DevelopmentDesignDetail }) => {
-  const [pageData, setPageData] = useState<DevelopmentDesignDetail | null>(
-    data,
-  );
+type PageData = DevelopmentDesignDetail | CmsDetail | SitecoreDetail;
+
+const SiteDetailClient = ({ data }: { data: PageData }) => {
+  const [pageData, setPageData] = useState<PageData | null>(data);
   const [loading, setLoading] = useState(false); // set false, we already have data
 
   const params = useParams();
-  const slug =
-    typeof params?.slug === "string"
-      ? params.slug
-      : Array.isArray(params?.slug)
-        ? params.slug[0]
-        : "";
+  const slugArray = Array.isArray(params?.slug)
+    ? params.slug
+    : typeof params?.slug === "string"
+      ? [params.slug]
+      : [];
 
   useEffect(() => {
-    if (!pageData && slug) {
+    if (!pageData && slugArray.length > 0) {
       setLoading(true);
-      getDevelopmentDesignSlug(slug)
+      let fetchPromise: Promise<PageData | null>;
+
+      if (slugArray.length === 1) {
+        fetchPromise = getDevelopmentDesignSlug(slugArray[0]);
+      } else if (slugArray.length === 2) {
+        fetchPromise = getDevelopmentDesignDetailsCmsSlug(slugArray.join("/"));
+      } else if (slugArray.length === 3) {
+        fetchPromise = getDevelopmentDesignDetailsSitecoreSlug(
+          slugArray.join("/"),
+        );
+      } else {
+        setLoading(false);
+        return;
+      }
+
+      fetchPromise
         .then((res) => {
           setPageData(res);
         })
@@ -50,7 +72,7 @@ const DetailSlug = ({ data }: { data: DevelopmentDesignDetail }) => {
         })
         .finally(() => setLoading(false));
     }
-  }, [slug, pageData]);
+  }, [slugArray, pageData]);
 
   if (loading) {
     return <div className="text-white p-8">Loading...</div>;
@@ -89,4 +111,4 @@ const DetailSlug = ({ data }: { data: DevelopmentDesignDetail }) => {
   );
 };
 
-export default DetailSlug;
+export default SiteDetailClient;

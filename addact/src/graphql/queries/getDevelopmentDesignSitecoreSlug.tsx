@@ -3,10 +3,8 @@ import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const developmentDesignDetailsSlugQuery = gql`
-  query DevelopmentDesignSlug(
-    $filters: DevelopmentAndDesignDetailFiltersInput
-  ) {
-    developmentAndDesignDetails(filters: $filters) {
+  query SitecoreDetails($filters: SitecoreDetailFiltersInput) {
+    sitecoreDetails(filters: $filters) {
       SEO {
         metaTitle
         metaDescription
@@ -170,40 +168,26 @@ const developmentDesignDetailsSlugQuery = gql`
         }
       }
 
-      ourService {
-        ... on ComponentHomeCmsListing {
-          id
-          serviceTitle
-          serviceList {
-            listingContext {
-              id
-              title
-              description
-              image {
-                alternativeText
-                url
-                width
-                height
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
+      techStack {
+        title
+        description
+        tab {
+          category {
+            categoryTitle
+          }
+          tabContent {
+            title
+            logo {
+              alternativeText
+              height
+              url
+              width
             }
           }
-
-          isCarousel
         }
+      }
+
+      ourService {
         ... on ComponentHomeServiceList {
           id
           serviceTitle
@@ -307,22 +291,24 @@ const developmentDesignDetailsSlugQuery = gql`
   }
 `;
 
-export interface HireExpertResponse {
-  hireExpertDetails: HireExpert[];
+export interface SitecoreDetailResponse {
+  sitecoreDetails: SitecoreDetail[];
 }
 
-export interface HireExpert {
+export interface SitecoreDetail {
   SEO: SEO | null;
   Banner: BannerSection;
   cta: CTA | null;
-  why_addact: Whyaddact | null;
+  whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
-  ourService?: OurServiceList;
-  our_service?: OurServiceData;
+  ourService: OurServiceList[];
+  industry: Industry;
+  ourprocess: OurProcess;
 }
 
 export interface OurServiceList {
+  id: string;
   isCarousel: boolean;
   serviceTitle: string;
   serviceList: ServiceListItem[];
@@ -330,6 +316,7 @@ export interface OurServiceList {
 
 export interface ServiceListItem {
   listingContext: {
+    id: string;
     title: string;
     description: string;
     image: Image | null;
@@ -342,51 +329,6 @@ export interface ServiceListItem {
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
-  };
-}
-
-export interface OurServiceData {
-  Titeldescription?: {
-    Description: string;
-    Title: string;
-  }[];
-
-  FirstTabDisplayName: string;
-  SecondTabDisplayName: string;
-
-  ForEnterprisesBrands: {
-    GlobalCard: {
-      id: string;
-      Title: string;
-      Description: string;
-      Image?: Image;
-      Link?: Link;
-      sub_service_page?: {
-        Slug: string;
-      };
-    }[];
-
-    Title: {
-      id?: string;
-      h2: string;
-    }[];
-  };
-
-  ReferenceTitle: string;
-
-  team_feature: {
-    documentId?: string;
-    ReferenceTitle?: string;
-    Description: string;
-    Cards: {
-      id: string;
-      Title: string;
-      Description: string;
-      Link?: Link;
-    }[];
-    createdAt?: string;
-    updatedAt?: string;
-    publishedAt?: string;
   };
 }
 
@@ -481,11 +423,44 @@ export interface TabContent {
   logo: Image | null;
 }
 
+export interface Industry {
+  industryListTitle: string;
+  industry_list: IndustryListItem[];
+}
+
+export interface IndustryListItem {
+  Slug: string;
+  listingContext: {
+    title: string;
+    description: string;
+    image: Image | null;
+    link: {
+      id: string;
+      href: string;
+      label: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: Image | null;
+    } | null;
+  } | null;
+}
+
+export interface OurProcess {
+  Title: Heading[];
+  ProcessData: ProcessDataItem[];
+}
+
+export interface ProcessDataItem {
+  id: string;
+  Title: string;
+  Description: string;
+}
+
 // Fetch function
-export async function getDevelopmentDesignDetailsSlug(
+export async function getDevelopmentDesignDetailsSitecoreSlug(
   slug: string,
-): Promise<HireExpert | null> {
-  const data = await client.request<HireExpertResponse>(
+): Promise<SitecoreDetail | null> {
+  const data = await client.request<SitecoreDetailResponse>(
     developmentDesignDetailsSlugQuery,
     {
       filters: {
@@ -496,5 +471,5 @@ export async function getDevelopmentDesignDetailsSlug(
     },
   );
 
-  return data.hireExpertDetails?.[0] ?? null;
+  return data.sitecoreDetails?.[0] ?? null;
 }
