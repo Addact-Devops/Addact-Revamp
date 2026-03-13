@@ -4,28 +4,29 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 
-import {
-  getServiceDetailBySlug,
-  SubServicePage,
-} from "@/graphql/queries/getServieceDetail";
-
 import HeroBanner from "@/components/organisms/HeroBanner";
 import WhyAddact from "@/components/organisms/WhyAddact";
 import OurPartners from "@/components/organisms/OurPartners";
-import OurProcess from "@/components/organisms/OurProcess";
+// import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
-import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
+// import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
+import {
+  getHireExpertsSlug,
+  HireExpert,
+} from "@/graphql/queries/getHireExpertSlug";
+import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
+import CtaBanner from "@/components/molecules/CtaBanner";
 
 const IndustriesWeServe = dynamic(
   () => import("@/components/organisms/IndustriesWeServe"),
   { ssr: false },
 );
 
-const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
-  const [pageData, setPageData] = useState<SubServicePage | null>(data);
+const SiteDetailClient = ({ data }: { data: HireExpert }) => {
+  const [pageData, setPageData] = useState<HireExpert | null>(data);
   const [loading, setLoading] = useState(false); // set false, we already have data
 
   const params = useParams();
@@ -39,7 +40,7 @@ const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
   useEffect(() => {
     if (!pageData && slug) {
       setLoading(true);
-      getServiceDetailBySlug(slug)
+      getHireExpertsSlug(slug)
         .then((res) => {
           setPageData(res);
         })
@@ -58,7 +59,7 @@ const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
     return <div className="text-white p-8">Page Not Found</div>;
   }
 
-  const bannerData = pageData.HeroBanner;
+  const bannerData = pageData.Banner?.Banner?.[0];
 
   return (
     <main className="bg-dark">
@@ -74,14 +75,17 @@ const SiteDetailClient = ({ data }: { data: SubServicePage }) => {
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
       <OurPartners />
-      <OurServicesWithTabs data={pageData.our_service} />
+      {pageData?.our_service && (
+        <OurServicesWithTabs data={pageData.our_service} />
+      )}
       <IndustriesWeServe />
-      <WhyAddact data={pageData.why_addact} />
-      <ServiceCtaBanner2 data={pageData.cta2} />
-      <OurProcess data={data.our_process} />
+      {pageData?.why_addact && <WhyAddact data={pageData.why_addact} />}
+      <HowEngagementProcessWorks />
+
       <ClientTestimonials />
       <OurInsights />
       <FAQ data={pageData.faq} />
+      {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
   );
 };

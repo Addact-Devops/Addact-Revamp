@@ -55,7 +55,7 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
       <OurInsights />
       <CtaBanner data={homeData?.cta} />
       {/* <GlobeAnimation data={homeData?.GlobeAnimation} />
-            <ContactUs data={homeData?.contactus} /> */}
+       */}
     </main>
   );
 };

@@ -1,32 +1,31 @@
-import { getServiceListBySlug } from "@/graphql/queries/getServieceList";
 import HeroBanner from "@/components/organisms/HeroBanner";
-import WhyAddact from "@/components/organisms/WhyAddact";
-import OurPartners from "@/components/organisms/OurPartners";
-import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import { notFound } from "next/navigation";
-import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import FAQ from "@/components/organisms/FAQ";
-import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
-import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
-
+import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
+import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
+import { getHireExperts } from "@/graphql/queries/getHireExperts";
+import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
+import OurTechStack from "@/components/organisms/OurTechStack";
+import DetailPageServices from "@/components/organisms/DetailPageServices";
+// import OurProcess from "@/components/organisms/OurProcess";
+// import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
+// import OurPartners from "@/components/organisms/OurPartners";
+// import CtaBanner2 from "@/components/molecules/CtaBanner2";
 
 export async function generateMetadata() {
-  return generatePageMetadata("serviceLists", "/contentstack-cms-development");
+  return generatePageMetadata("hire-experts");
 }
-
-export default async function strapiPage() {
-  const service = "contentstack-cms-development";
-  const data = await getServiceListBySlug(service);
+export default async function umbracoPage() {
+  const data = await getHireExperts();
   if (!data) return notFound();
   const bannerData = data.Banner?.Banner?.[0];
-
   return (
     <main className="bg-dark">
-      {/* ✅ WebSite Schema */}
+      {/* ✅ SearchAction Schema */}
 
       <script
         type="application/ld+json"
@@ -36,7 +35,7 @@ export default async function strapiPage() {
             "@context": "https://schema.org/",
             "@type": "WebSite",
             name: "Addact Technologies",
-            url: "https://www.addact.net/contentstack-cms-development",
+            url: " https://www.addact.net/umbraco-cms-development",
             potentialAction: {
               "@type": "SearchAction",
               target: "{search_term_string}",
@@ -64,9 +63,21 @@ export default async function strapiPage() {
               telephone: "94272 37737",
               contactType: "emergency",
               contactOption: "TollFree",
-              areaServed: ["US", "IN"],
+              areaServed: [
+                "SA",
+                "YE",
+                "KW",
+                "OM",
+                "QA",
+                "AE",
+                "BH",
+                "IL",
+                "JO",
+                "SY",
+              ],
               availableLanguage: "en",
             },
+
             sameAs: [
               "https://www.facebook.com/addacttech/",
               "https://x.com/AddactTech",
@@ -91,18 +102,18 @@ export default async function strapiPage() {
             mainEntity: [
               {
                 "@type": "Question",
-                name: "Can I migrate my existing website to Contentstack?",
+                name: " Can you migrate our website from another CMS to Umbraco?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Yes, websites can be migrated to Contentstack while preserving content structure and enabling flexible, API-driven management.",
+                  text: "Definitely. Whether you're moving from WordPress, Drupal, Sitecore, or any other CMS, we handle complete end-to-end migration to Umbraco. This includes content restructuring, SEO preservation, custom functionality replication, and platform optimization.",
                 },
               },
               {
                 "@type": "Question",
-                name: "What makes Contentstack suitable for enterprise websites?",
+                name: " Is Umbraco suitable for enterprise-level and scalable websites?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Contentstack is a headless CMS that supports scalable, multi-channel content delivery with robust APIs and enterprise-grade security.",
+                  text: " Yes, Umbraco is suitable for scalable and enterprise-level websites due to its flexible architecture, extensibility, and efficient content management capabilities.",
                 },
               },
             ],
@@ -121,15 +132,17 @@ export default async function strapiPage() {
         }}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
-      <OurPartners />
-      <OurServicesWithTabs data={data?.our_service} />
-      <IndustriesWeServe />
-      <WhyAddact data={data?.why_addact} />
-      {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
-      <OurProcess data={data?.our_process} />
+      <DetailPageServices title="Our Services Carousel Test" isCaraousl />
+      <DetailPageServices title="Our Services Grid Test" />
+      {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
+      {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
+      {/* <OurProcess data={data?.our_process} /> */}
+      <OurTechStack data={data?.techStack} />
+      <HowEngagementProcessWorks />
+      <IndustryMarqueeCards />
       <ClientTestimonials />
+      {data?.faq && <FAQ data={data?.faq} />}
       <OurInsights />
-      <FAQ data={data?.faq} />
       {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
   );

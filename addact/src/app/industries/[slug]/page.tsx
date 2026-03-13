@@ -1,6 +1,5 @@
 // app/industries/[slug]/page.tsx
 
-import ContactUs from "@/components/organisms/ContactUs";
 import FAQ from "@/components/organisms/FAQ";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
@@ -51,20 +50,9 @@ type FaqRawItem = {
   Description?: string | null;
 };
 
-type ContactFormRawItem = {
-  Title?: string | null;
-  Description?: string | null;
-  Image?: {
-    url?: string | null;
-    alternativeText?: string | null;
-    width?: number | null;
-    height?: number | null;
-  } | null;
-};
-
 // Accept null/undefined safely from Strapi
 const normalizeTarget = (
-  t: string | null | undefined
+  t: string | null | undefined,
 ): "self" | "blank" | "parent" | "top" =>
   t === "blank" || t === "parent" || t === "top" ? t : "self";
 
@@ -209,36 +197,6 @@ export default async function Page({ params }: { params: Params }) {
       }
     : null;
 
-  // ✅ ContactUs (industry variant is `ContactUs`) – adapt to home contact_us shape
-  const contactRaw = industry?.ContactUs ?? null;
-  const contactAdapted = contactRaw
-    ? {
-        pageReference: contactRaw.pageReference ?? "",
-        Form: (Array.isArray(contactRaw?.Form)
-          ? (contactRaw.Form as ContactFormRawItem[])
-          : []
-        ).map((f, i) => ({
-          id: String(i),
-          Title: f?.Title ?? "",
-          Description: f?.Description ?? "",
-          Image: f?.Image
-            ? {
-                url: f.Image.url ?? "",
-                alternativeText: f.Image.alternativeText ?? undefined,
-                width: f.Image.width ?? 0,
-                height: f.Image.height ?? 0,
-              }
-            : null,
-        })),
-        NameLable: contactRaw.NameLable ?? "",
-        CompanyName: contactRaw.CompanyName ?? "",
-        RequirementsLabel: contactRaw.RequirementsLabel ?? "",
-        ButtonLabel: contactRaw.ButtonLabel ?? "",
-        EmailLabel: contactRaw.EmailLabel ?? "",
-        RecipientEmails: contactRaw.RecipientEmails ?? "",
-      }
-    : null;
-
   // ✅ Project Highlights items directly from industry query (new)
   const projectHighlightItems =
     industry?.ProjectHighlights?.addact_case_studies ?? [];
@@ -308,9 +266,6 @@ export default async function Page({ params }: { params: Params }) {
 
         {/* ✅ FAQ from this industry – adapted to home shape */}
         {faqAdapted && <FAQ data={faqAdapted as never} />}
-
-        {/* ✅ Contact Us from this industry – adapted to home shape */}
-        {contactAdapted && <ContactUs data={contactAdapted as never} />}
       </main>
     </>
   );

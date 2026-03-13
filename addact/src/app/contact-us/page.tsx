@@ -4,7 +4,6 @@ import { getContactUsData } from "@/graphql/queries/getContactUs";
 // import ContactUsAddress from "@/components/organisms/ContactUsAddress";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
-import ContactUs from "@/components/organisms/ContactUs";
 
 export async function generateMetadata() {
   return generatePageMetadata("contactus");
@@ -13,7 +12,6 @@ export async function generateMetadata() {
 export default async function ContactUsPage() {
   const data = await getContactUsData();
   const contactus = data.contactus;
-  const contactUsForm = data.contactus.contactus;
   const bannerData = contactus?.banner?.Banner?.[0];
 
   return (
@@ -89,8 +87,6 @@ export default async function ContactUsPage() {
             showAnchorLinks={false}
           />
         ) : null}
-
-        <ContactUs data={contactUsForm} />
 
         {/* <ContactUsTeam
                     AddactTeamImage={contactus.AddactTeamImage}

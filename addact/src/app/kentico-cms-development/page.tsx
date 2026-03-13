@@ -16,7 +16,6 @@ export async function generateMetadata() {
 }
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
-import ContactUs from "@/components/organisms/ContactUs";
 
 export default async function kenticoPage() {
   const service = "kentico-cms-development";
@@ -141,7 +140,6 @@ export default async function kenticoPage() {
       <OurInsights />
       <FAQ data={data?.faq} />
       {data?.cta && <CtaBanner data={data?.cta} />}
-      <ContactUs data={data?.contact_us} />
     </main>
   );
 }
