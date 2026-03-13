@@ -12,7 +12,6 @@ import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import CtaBanner from "@/components/molecules/CtaBanner";
-import ContactUs from "@/components/organisms/ContactUs";
 
 export async function generateMetadata() {
   return generatePageMetadata("serviceLists", "/umbraco-cms-development");
@@ -141,7 +140,6 @@ export default async function umbracoPage() {
       <OurInsights />
       <FAQ data={data?.faq} />
       {data?.cta && <CtaBanner data={data?.cta} />}
-      <ContactUs data={data?.contact_us} />
     </main>
   );
 }

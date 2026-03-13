@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 interface EngagementProcessCard {
   id: string;
   step: string;
@@ -58,9 +60,35 @@ const HowEngagementProcessWorks = ({
   return (
     <section className="bg-[#0F0F0F] py-[72px] md:py-[88px] xl:py-[110px]">
       <div className="container-main">
-        <h2 className="mb-10 max-w-[660px] !text-[34px] !font-semibold !leading-[1.22] text-white md:mb-14 md:!text-[48px] lg:!text-[56px]">
-          {title}
-        </h2>
+        <div className="flex justify-between items-center">
+          <h2 className="mb-10 max-w-[660px] !text-[34px] !font-semibold !leading-[1.22] text-white md:mb-14 md:!text-[48px] lg:!text-[56px]">
+            {title}
+          </h2>
+          <Link
+            href={"#"}
+            target={"_self"}
+            className="px-4 py-2.5 sm:px-5 sm:py-3 md:py-4 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] inline-flex justify-center items-center gap-2 sm:gap-3 md:gap-4 xl:gap-5 overflow-hidden bg-white hover:bg-[#3C4CFF] transition-colors flex-shrink-0 group"
+          >
+            <span className="text-[#0F0F0F] text-sm sm:text-base md:text-lg font-semibold font-montserrat leading-5 sm:leading-6 md:leading-7 whitespace-nowrap group-hover:text-white">
+              {"Contact Us"}
+            </span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="flex-shrink-0 sm:w-5 sm:h-5 stroke-[#0F0F0F] group-hover:stroke-white transition-colors"
+            >
+              <path
+                d="M4.16699 10H15.8337M15.8337 10L10.0003 4.16669M15.8337 10L10.0003 15.8334"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+        </div>
 
         <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-4 lg:justify-items-stretch lg:gap-5">
           {resolvedCards.map((card) => (
