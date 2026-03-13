@@ -261,6 +261,8 @@ export interface BannerBanner extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios'
     >;
     BannerTitle: Schema.Attribute.String;
+    isTextAlignCenter: Schema.Attribute.Boolean;
+    isVideo: Schema.Attribute.Boolean;
     show_searchbox: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
     videoLink: Schema.Attribute.String;
@@ -708,6 +710,21 @@ export interface HomeCapabilities extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeCmsListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_cms_listings';
+  info: {
+    displayName: 'CMS Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cms-detail.cms-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+  };
+}
+
 export interface HomeDevelopmentAndDesignListing
   extends Struct.ComponentSchema {
   collectionName: 'components_home_development_and_design_listings';
@@ -715,9 +732,25 @@ export interface HomeDevelopmentAndDesignListing
     displayName: 'development and Design Listing';
   };
   attributes: {
+    isCarousel: Schema.Attribute.Boolean;
     serviceList: Schema.Attribute.Relation<
       'oneToMany',
       'api::development-and-design-detail.development-and-design-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+  };
+}
+
+export interface HomeDigitalMarketingListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_digital_marketing_listings';
+  info: {
+    displayName: 'Digital Marketing Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::digital-marketing-detail.digital-marketing-detail'
     >;
     serviceTitle: Schema.Attribute.String;
   };
@@ -729,6 +762,7 @@ export interface HomeHireServiceList extends Struct.ComponentSchema {
     displayName: 'hireServiceList';
   };
   attributes: {
+    isCarousel: Schema.Attribute.Boolean;
     serviceList: Schema.Attribute.Relation<
       'oneToMany',
       'api::hire-expert-detail.hire-expert-detail'
@@ -759,6 +793,51 @@ export interface HomeLogo extends Struct.ComponentSchema {
   attributes: {
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeQaTestingListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_qa_testing_listings';
+  info: {
+    displayName: 'QA Testing Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::qa-testing-detail.qa-testing-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+  };
+}
+
+export interface HomeServiceList extends Struct.ComponentSchema {
+  collectionName: 'components_home_service_lists';
+  info: {
+    displayName: 'serviceList';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-card.service-card'
+    >;
+    serviceTitle: Schema.Attribute.String;
+  };
+}
+
+export interface HomeSitecoreListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_sitecore_listings';
+  info: {
+    displayName: 'Sitecore Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sitecore-detail.sitecore-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
   };
 }
 
@@ -1090,10 +1169,15 @@ declare module '@strapi/strapi' {
       'home.animation-banner': HomeAnimationBanner;
       'home.base-component': HomeBaseComponent;
       'home.capabilities': HomeCapabilities;
+      'home.cms-listing': HomeCmsListing;
       'home.development-and-design-listing': HomeDevelopmentAndDesignListing;
+      'home.digital-marketing-listing': HomeDigitalMarketingListing;
       'home.hire-service-list': HomeHireServiceList;
       'home.industry-listing': HomeIndustryListing;
       'home.logo': HomeLogo;
+      'home.qa-testing-listing': HomeQaTestingListing;
+      'home.service-list': HomeServiceList;
+      'home.sitecore-listing': HomeSitecoreListing;
       'home.tech-stack-component': HomeTechStackComponent;
       'reuse.card': ReuseCard;
       'reuse.number-title-content': ReuseNumberTitleContent;

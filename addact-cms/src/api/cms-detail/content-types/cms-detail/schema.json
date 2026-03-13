@@ -1,16 +1,21 @@
 {
-  "kind": "singleType",
-  "collectionName": "hire_experts",
+  "kind": "collectionType",
+  "collectionName": "cms_details",
   "info": {
-    "singularName": "hire-expert",
-    "pluralName": "hire-experts",
-    "displayName": "hire-expert"
+    "singularName": "cms-detail",
+    "pluralName": "cms-details",
+    "displayName": "CMS Detail"
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
+    },
     "SEO": {
       "type": "component",
       "component": "shared.seo",
@@ -59,10 +64,14 @@
       "relation": "oneToOne",
       "target": "api::tech-stack.tech-stack"
     },
+    "ReferenceTitle": {
+      "type": "string"
+    },
     "ourService": {
       "type": "dynamiczone",
       "components": [
-        "home.hire-service-list"
+        "home.sitecore-listing",
+        "home.service-list"
       ]
     }
   }

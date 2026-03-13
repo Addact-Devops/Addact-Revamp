@@ -47,6 +47,12 @@
     },
     "videoLink": {
       "type": "string"
+    },
+    "isVideo": {
+      "type": "boolean"
+    },
+    "isTextAlignCenter": {
+      "type": "boolean"
     }
   },
   "config": {}
