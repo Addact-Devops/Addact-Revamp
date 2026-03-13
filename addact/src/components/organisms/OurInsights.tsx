@@ -69,7 +69,6 @@ interface InsightCardProps {
 export default function OurInsights() {
   const [data, setData] = useState<OurInsightsData | null>(null);
   const [homeData, setHomeData] = useState<HomeResponse | null>(null);
-
   useEffect(() => {
     (async () => {
       const result = await getOurInsights();
@@ -102,7 +101,6 @@ export default function OurInsights() {
   ];
 
   const titleData = homeData?.home?.ourInshightsTitle?.CommonTitle?.[0];
-
   return (
     <section className="py-10 md:py-20 xl:py-[160px] bg-white">
       <div className="container-main mx-auto px-4">

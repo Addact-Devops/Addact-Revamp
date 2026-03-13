@@ -17,7 +17,7 @@ import { RightArrowUpIcon } from "../atom/icons";
 // import { MdPadding } from "react-icons/md";
 
 interface Props {
-  data: OurServiceData;
+  data?: OurServiceData;
 }
 
 // ✅ Card type for array items
@@ -52,11 +52,12 @@ const OurServicesWithTabs = ({ data }: Props) => {
     "ForEnterprisesBrands" | "team_feature"
   >("ForEnterprisesBrands");
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  if (!data) return null;
+
   const enterprisesCards = data?.ForEnterprisesBrands?.GlobalCard ?? [];
   const teamFeatureCards = data?.team_feature?.Cards ?? [];
-
-  // track current slide for indicator
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   // ---- Slider settings ----
   const enterprisesSliderSettings = {

@@ -11,7 +11,6 @@ import CtaBanner2 from "@/components/molecules/CtaBanner2";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 import CtaBanner from "@/components/molecules/CtaBanner";
-import ContactUs from "@/components/organisms/ContactUs";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
@@ -132,7 +131,6 @@ export default async function SitecorePage() {
       <OurInsights />
       <FAQ data={data?.faq} />
       {data?.cta && <CtaBanner data={data?.cta} />}
-      <ContactUs data={data?.contact_us} />
     </main>
   );
 }

@@ -1,13 +1,17 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import Image from "next/image";
 import { CONTACTUS } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
 import ReCAPTCHA from "react-google-recaptcha";
 import { usePathname } from "next/navigation";
+import { X } from "lucide-react";
 
 interface IProps {
   data: CONTACTUS;
+  isDrawer?: boolean;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 export interface ContactFormData {
@@ -23,7 +27,12 @@ export interface FormErrors {
   company?: string;
 }
 
-const ContactUs = ({ data }: IProps) => {
+const ContactUs = ({
+  data,
+  isDrawer = false,
+  isOpen = false,
+  onClose,
+}: IProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -36,6 +45,39 @@ const ContactUs = ({ data }: IProps) => {
   const [formLoading, setFormLoading] = useState(false);
 
   const redirectUrl = "/contact-us/connect-now-thank-you";
+  const formBlock = data?.Form?.[0];
+
+  useEffect(() => {
+    if (!isDrawer || !isOpen) {
+      return;
+    }
+
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+    };
+  }, [isDrawer, isOpen]);
+
+  useEffect(() => {
+    if (!isDrawer || !isOpen) {
+      return;
+    }
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose?.();
+      }
+    };
+
+    document.addEventListener("keydown", handleEsc);
+    return () => document.removeEventListener("keydown", handleEsc);
+  }, [isDrawer, isOpen, onClose]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -115,6 +157,158 @@ const ContactUs = ({ data }: IProps) => {
     }
   };
 
+  if (!formBlock) {
+    return null;
+  }
+
+  if (isDrawer) {
+    return (
+      <div
+        className={`fixed inset-0 z-[120] ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        aria-hidden={!isOpen}
+      >
+        <div
+          className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
+            isOpen ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => onClose?.()}
+        />
+
+        <aside
+          role="dialog"
+          aria-modal="true"
+          aria-label="Contact us"
+          onClick={(event) => event.stopPropagation()}
+          className={`absolute right-0 top-0 h-full w-full max-w-full overflow-y-auto bg-[#0A0A0A] text-white shadow-2xl transition-transform duration-300 ease-out sm:w-[88vw] md:w-[760px] ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="px-6 pb-8 pt-7 md:px-10 md:pb-10 md:pt-8">
+            <div className="mb-7 flex items-start justify-between md:mb-9">
+              <div>
+                <h2 className="!pb-3 !text-[48px] !font-light !leading-[1.05] md:!text-[64px]">
+                  {formBlock.Title}
+                </h2>
+                <div className="h-[4px] w-[130px] bg-[#3C4CFF]" />
+              </div>
+
+              <button
+                type="button"
+                onClick={() => onClose?.()}
+                aria-label="Close contact form"
+                className="mt-1 rounded-md p-1 text-white transition-colors hover:text-[#3C4CFF]"
+              >
+                <X className="h-10 w-10" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                >
+                  Your Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  autoComplete="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  placeholder="Type your name here"
+                />
+                {errors.name && (
+                  <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                >
+                  Email Address <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  placeholder="Type your email here"
+                />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="company"
+                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                >
+                  Company Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  id="company"
+                  name="company"
+                  autoComplete="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  placeholder="Type your company name here"
+                />
+                {errors.company && (
+                  <p className="mt-1 text-sm text-red-500">{errors.company}</p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                >
+                  Describe Your Requirements
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  autoComplete="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={2}
+                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  placeholder="Type here..."
+                />
+              </div>
+
+              <div className="flex justify-center md:justify-start">
+                <div className="recaptcha-wrapper scale-[0.92] origin-left sm:scale-100">
+                  <ReCAPTCHA
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
+                    onChange={(token: string | null) => setCaptchaToken(token)}
+                    size="normal"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={formLoading}
+                className="w-full cursor-pointer rounded bg-[#3C4CFF] py-3 text-lg font-semibold text-white transition-colors hover:bg-[#3440CB]"
+              >
+                {formLoading ? "Submitting..." : "Contact Us"}
+              </button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    );
+  }
+
   return (
     <section
       className="w-full text-white md:py-12 pb-[100px] px-4"
@@ -126,13 +320,13 @@ const ContactUs = ({ data }: IProps) => {
             <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0">
               <div className="md:w-[30%] border-r border-gray-700 px-5 md:px-12 2xl:px-16 py-5 md:py-12 2xl:py-20">
                 <h2 className="!text-[28px] lg:!text-[40px] 2xl:!text-[55px] font-semibold leading-tight !pb-4 xl:!pb-10">
-                  {data.Form[0].Title}
+                  {formBlock.Title}
                 </h2>
                 <div className="h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-[#3C4CFF] mt-2 mb-4"></div>
               </div>
 
               <div className="md:w-[70%] text-white px-5 pb-5 md:px-16 [&_p]:font-light [&_p]:!text-[18px] [&_p]:md:!text-[22px] [&_p]:xl:!text-3xl [&_p]:xl:!leading-[54px]">
-                <RichText html={data.Form[0].Description} />
+                <RichText html={formBlock.Description} />
               </div>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-stretch justify-center">
@@ -249,10 +443,10 @@ const ContactUs = ({ data }: IProps) => {
               </form>
 
               <div className="hidden lg:block w-1/2 relative">
-                {data?.Form[0]?.Image?.url && (
+                {formBlock?.Image?.url && (
                   <Image
-                    src={data.Form[0].Image.url}
-                    alt={data.Form[0].Image.alternativeText || "Contact image"}
+                    src={formBlock.Image.url}
+                    alt={formBlock.Image.alternativeText || "Contact image"}
                     fill
                     className="object-cover"
                   />

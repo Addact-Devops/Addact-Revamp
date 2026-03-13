@@ -2,29 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
-interface TechStackImage {
-  url: string;
-  alt: string;
-}
-
-interface TechStackItem {
-  id: string;
-  label: string;
-  image: TechStackImage;
-}
-
-interface TechStackTab {
-  id: string;
-  title: string;
-  items: TechStackItem[];
-}
+import { TechStack } from "@/graphql/queries/getHireExperts";
 
 interface OurTechStackProps {
-  title?: string;
-  description?: string;
-  tabs?: TechStackTab[];
-  defaultActiveTabId?: string;
+  data?: TechStack;
 }
 
 const createIconDataUrl = () =>
@@ -37,182 +18,22 @@ const createIconDataUrl = () =>
       </svg>
     `)}`;
 
-const staticTabs: TechStackTab[] = [
-  {
-    id: "mobile",
-    title: "Mobile",
-    items: [
-      {
-        id: "ios-1",
-        label: "iOS",
-        image: { url: createIconDataUrl(), alt: "iOS" },
-      },
-      {
-        id: "ios-2",
-        label: "iOS",
-        image: { url: createIconDataUrl(), alt: "iOS" },
-      },
-      {
-        id: "ios-3",
-        label: "iOS",
-        image: { url: createIconDataUrl(), alt: "iOS" },
-      },
-      {
-        id: "ios-4",
-        label: "iOS",
-        image: { url: createIconDataUrl(), alt: "iOS" },
-      },
-    ],
-  },
-  {
-    id: "frontend",
-    title: "Frontend",
-    items: [
-      {
-        id: "react",
-        label: "React",
-        image: { url: createIconDataUrl(), alt: "React" },
-      },
-      {
-        id: "next",
-        label: "Next.js",
-        image: { url: createIconDataUrl(), alt: "Next.js" },
-      },
-      {
-        id: "vue",
-        label: "Vue",
-        image: { url: createIconDataUrl(), alt: "Vue" },
-      },
-      {
-        id: "angular",
-        label: "Angular",
-        image: { url: createIconDataUrl(), alt: "Angular" },
-      },
-    ],
-  },
-  {
-    id: "backend",
-    title: "Backend",
-    items: [
-      {
-        id: "node",
-        label: "Node.js",
-        image: { url: createIconDataUrl(), alt: "Node.js" },
-      },
-      {
-        id: "dotnet",
-        label: ".NET",
-        image: { url: createIconDataUrl(), alt: ".NET" },
-      },
-      {
-        id: "php",
-        label: "PHP",
-        image: { url: createIconDataUrl(), alt: "PHP" },
-      },
-      {
-        id: "python",
-        label: "Python",
-        image: { url: createIconDataUrl(), alt: "Python" },
-      },
-    ],
-  },
-  {
-    id: "testing",
-    title: "Testing",
-    items: [
-      {
-        id: "jest",
-        label: "Jest",
-        image: { url: createIconDataUrl(), alt: "Jest" },
-      },
-      {
-        id: "cypress",
-        label: "Cypress",
-        image: { url: createIconDataUrl(), alt: "Cypress" },
-      },
-      {
-        id: "playwright",
-        label: "Playwright",
-        image: { url: createIconDataUrl(), alt: "Playwright" },
-      },
-      {
-        id: "selenium",
-        label: "Selenium",
-        image: { url: createIconDataUrl(), alt: "Selenium" },
-      },
-    ],
-  },
-  {
-    id: "devops",
-    title: "Devops",
-    items: [
-      {
-        id: "docker",
-        label: "Docker",
-        image: { url: createIconDataUrl(), alt: "Docker" },
-      },
-      {
-        id: "kubernetes",
-        label: "Kubernetes",
-        image: { url: createIconDataUrl(), alt: "Kubernetes" },
-      },
-      {
-        id: "aws",
-        label: "AWS",
-        image: { url: createIconDataUrl(), alt: "AWS" },
-      },
-      {
-        id: "azure",
-        label: "Azure",
-        image: { url: createIconDataUrl(), alt: "Azure" },
-      },
-    ],
-  },
-  {
-    id: "aiml",
-    title: "AI/ML",
-    items: [
-      {
-        id: "openai",
-        label: "OpenAI",
-        image: { url: createIconDataUrl(), alt: "OpenAI" },
-      },
-      {
-        id: "langchain",
-        label: "LangChain",
-        image: { url: createIconDataUrl(), alt: "LangChain" },
-      },
-      {
-        id: "pytorch",
-        label: "PyTorch",
-        image: { url: createIconDataUrl(), alt: "PyTorch" },
-      },
-      {
-        id: "tensorflow",
-        label: "TensorFlow",
-        image: { url: createIconDataUrl(), alt: "TensorFlow" },
-      },
-    ],
-  },
-];
+const OurTechStack = ({ data }: OurTechStackProps) => {
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-const OurTechStack = ({
-  title = "Our Tech Stack",
-  description = "Our operations are backed by a robust and versatile tech stack, ensuring seamless functionality and innovation.",
-  tabs = staticTabs,
-  defaultActiveTabId,
-}: OurTechStackProps) => {
-  const initialTabId =
-    defaultActiveTabId && tabs.some((tab) => tab.id === defaultActiveTabId)
-      ? defaultActiveTabId
-      : tabs[0]?.id;
+  if (!data) return null;
 
-  const [activeTabId, setActiveTabId] = useState(initialTabId);
-  const activeTab = tabs.find((tab) => tab.id === activeTabId) ?? tabs[0];
+  const tabs = data?.tab ?? [];
+  const activeTab = tabs[activeTabIndex];
 
-  if (!activeTab) {
+  if (!activeTab || tabs.length === 0) {
     return null;
   }
+
+  const title = data?.title ?? "Our Tech Stack";
+  const description =
+    data?.description ??
+    "Our operations are backed by a robust and versatile tech stack, ensuring seamless functionality and innovation.";
 
   return (
     <section className="bg-[#F5F5F5] py-[72px] md:py-[88px] xl:py-[110px]">
@@ -228,12 +49,12 @@ const OurTechStack = ({
 
         <div className="mt-10 border-b border-[#D7D7D7] md:mt-14">
           <div className="flex gap-6 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:justify-center md:gap-8 xl:gap-10">
-            {tabs.map((tab) => {
-              const isActive = tab.id === activeTab.id;
+            {tabs.map((tab, index) => {
+              const isActive = index === activeTabIndex;
 
               return (
                 <button
-                  key={tab.id}
+                  key={index}
                   type="button"
                   className={[
                     "relative shrink-0 border-b-2 px-1 pb-4 !text-[20px] !font-medium transition-colors duration-200 md:!text-[22px]",
@@ -241,9 +62,9 @@ const OurTechStack = ({
                       ? "border-[#3C4CFF] text-[#111111]"
                       : "border-transparent text-[#7E7E7E]",
                   ].join(" ")}
-                  onClick={() => setActiveTabId(tab.id)}
+                  onClick={() => setActiveTabIndex(index)}
                 >
-                  {tab.title}
+                  {tab?.category?.categoryTitle}
                 </button>
               );
             })}
@@ -251,21 +72,21 @@ const OurTechStack = ({
         </div>
 
         <div className="mx-auto mt-8 grid max-w-[820px] grid-cols-2 justify-items-center gap-4 md:mt-10 md:grid-cols-4 md:gap-5">
-          {activeTab.items.map((item) => (
+          {activeTab?.tabContent?.map((item, index) => (
             <article
-              key={item.id}
+              key={index}
               className="flex h-[164px] w-full max-w-[170px] flex-col items-center justify-center rounded-[10px] border border-[#D7D7D7] bg-white px-4 py-5"
             >
               <Image
-                src={item.image.url}
-                alt={item.image.alt}
+                src={item?.logo?.url ?? createIconDataUrl()}
+                alt={item?.title ?? "Tech logo"}
                 width={68}
                 height={68}
                 unoptimized
                 className="h-[68px] w-[68px] object-contain"
               />
               <p className="mt-4 text-center !text-[18px] !font-medium text-[#161616] md:!text-[20px]">
-                {item.label}
+                {item?.title}
               </p>
             </article>
           ))}
