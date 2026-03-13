@@ -1,23 +1,23 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import type {
+  AddactHeaderData,
+  HeaderCard,
+  HeaderLink,
+  HeaderMenuItem,
+  HeaderSubLayer,
+} from "@/graphql/queries/addact-header";
 import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
   Menu,
   X,
-  ChevronDown,
-  ChevronUp,
-  ChevronRight,
-  ChevronLeft,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type {
-  AddactHeaderData,
-  HeaderMenuItem,
-  HeaderCard,
-  HeaderSubLayer,
-  HeaderLink,
-} from "@/graphql/queries/addact-header";
+import { usePathname } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
 import { ChevronRightIcon } from "../atom/icons";
 
 interface HeaderProps {
@@ -142,22 +142,28 @@ function DropdownContent({
             const label = sub.link?.label ?? `Category ${idx + 1}`;
             const isActive = activeIdx === idx;
             return (
-              <button
+              <Link
+                href={sub.link?.href ?? "#"}
+                target={sub.link?.isExternal ? "_blank" : "_self"}
                 key={sub.id ?? idx}
-                onMouseEnter={() => {
-                  setActiveIdx(idx);
-                }}
-                className={`w-full text-left text-white px-5 py-7.5 text-[20px] font-medium font-montserrat transition-all flex justify-between items-center gap-2 border-b h-[84px] border-[#2E2E2E] ${
-                  isActive ? "bg-[#3C4CFF]" : ""
-                }`}
               >
-                <span className="flex-1 leading-snug">{label}</span>
-                <ChevronRight
-                  size={24}
-                  className={`shrink-0 ${isActive ? "opacity-100" : "opacity-30"}`}
-                />
-                {/* <ChevronRightIcon className={`shrink-0 `} /> */}
-              </button>
+                <button
+                  key={sub.id ?? idx}
+                  onMouseEnter={() => {
+                    setActiveIdx(idx);
+                  }}
+                  className={`w-full text-left text-white px-5 py-7.5 text-[20px] font-medium font-montserrat transition-all flex justify-between items-center gap-2 border-b h-[84px] border-[#2E2E2E] ${
+                    isActive ? "bg-[#3C4CFF]" : ""
+                  }`}
+                >
+                  <span className="flex-1 leading-snug">{label}</span>
+                  <ChevronRight
+                    size={24}
+                    className={`shrink-0 ${isActive ? "opacity-100" : "opacity-30"}`}
+                  />
+                  {/* <ChevronRightIcon className={`shrink-0 `} /> */}
+                </button>
+              </Link>
             );
           })}
         </div>
@@ -364,6 +370,21 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
   const [bannerVisible, setBannerVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const closeDropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearCloseDropdownTimer = () => {
+    if (closeDropdownTimer.current) {
+      clearTimeout(closeDropdownTimer.current);
+      closeDropdownTimer.current = null;
+    }
+  };
+
+  const scheduleCloseDropdown = () => {
+    clearCloseDropdownTimer();
+    closeDropdownTimer.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 140);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -397,6 +418,12 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
     if (openDropdown) document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [openDropdown]);
+
+  useEffect(() => {
+    return () => {
+      clearCloseDropdownTimer();
+    };
+  }, []);
 
   const lp = pathname.toLowerCase();
   const showBanner =
@@ -476,16 +503,24 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
             const isActive = openDropdown === item.id;
 
             return (
-              <div key={item.id} className="mr-5 lg:mr-7 xl:mr-9 static">
+              <div
+                key={item.id}
+                className="mr-5 lg:mr-7 xl:mr-9 static"
+                onMouseEnter={() => {
+                  if (hasDrop) {
+                    clearCloseDropdownTimer();
+                    setOpenDropdown(item.id ?? null);
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (hasDrop) scheduleCloseDropdown();
+                }}
+              >
                 <div className="flex flex-col items-center relative h-full">
                   {hasDrop ? (
-                    <button
+                    <Link
+                      href={href}
                       data-nav-btn
-                      onClick={() =>
-                        setOpenDropdown((prev) =>
-                          prev === item.id ? null : (item.id ?? null),
-                        )
-                      }
                       className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] focus:outline-none transition-colors cursor-pointer py-5 lg:py-[40px]"
                     >
                       {label}
@@ -494,7 +529,7 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
                       ) : (
                         <ChevronDown size={14} />
                       )}
-                    </button>
+                    </Link>
                   ) : (
                     <Link
                       href={href}
@@ -510,6 +545,13 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
 
                 {hasDrop && isActive && (
                   <div
+                    onMouseEnter={() => {
+                      clearCloseDropdownTimer();
+                      setOpenDropdown(item.id ?? null);
+                    }}
+                    onMouseLeave={() => {
+                      scheduleCloseDropdown();
+                    }}
                     className="fixed z-40 overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
                     style={{
                       top: "130px",
@@ -637,16 +679,21 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
                   return (
                     <div key={item.id}>
                       {hasDrop ? (
-                        <button
-                          onClick={() => setActiveMobileItem(item)}
-                          className="w-full flex justify-between items-center px-6 py-5 text-[18px] font-medium font-montserrat group"
-                        >
-                          {label}
-                          <ChevronRight
-                            size={24}
-                            className="text-white/50 group-hover:text-white"
-                          />
-                        </button>
+                        <div className="w-full flex justify-between items-center px-6 py-5 text-[18px] font-medium font-montserrat group">
+                          <Link href={getMenuHref(item)} className="flex-1">
+                            {label}
+                          </Link>
+                          <button
+                            onClick={() => setActiveMobileItem(item)}
+                            aria-label={`Open ${label} submenu`}
+                            className="ml-3"
+                          >
+                            <ChevronRight
+                              size={24}
+                              className="text-white/50 group-hover:text-white"
+                            />
+                          </button>
+                        </div>
                       ) : (
                         <Link
                           href={getMenuHref(item)}
@@ -673,15 +720,13 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
                       {hasMore ? (
                         /* Accordion for Level 2 with Level 3 children */
                         <>
-                          <button
-                            onClick={() =>
-                              setExpandedLevel2(
-                                isExpanded ? null : (sub.id ?? `sub-${idx}`),
-                              )
-                            }
+                          <div
                             className={`w-full flex justify-between items-center px-6 py-[26px] text-[18px] font-medium font-montserrat ${isExpanded ? "" : "border-b border-[#2E2E2E]"} `}
                           >
-                            <span className="flex items-center gap-3">
+                            <Link
+                              href={sub.link?.href ?? "#"}
+                              className="flex items-center gap-3 flex-1"
+                            >
                               {iconUrl && (
                                 <Image
                                   src={iconUrl}
@@ -692,12 +737,22 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
                                 />
                               )}
                               {subLabel}
-                            </span>
-                            <ChevronDown
-                              size={22}
-                              className={`transition-transform duration-200 text-white/50 ${isExpanded ? "rotate-180" : ""}`}
-                            />
-                          </button>
+                            </Link>
+                            <button
+                              onClick={() =>
+                                setExpandedLevel2(
+                                  isExpanded ? null : (sub.id ?? `sub-${idx}`),
+                                )
+                              }
+                              aria-label={`Toggle ${subLabel} submenu`}
+                              className="ml-3"
+                            >
+                              <ChevronDown
+                                size={22}
+                                className={`transition-transform duration-200 text-white/50 ${isExpanded ? "rotate-180" : ""}`}
+                              />
+                            </button>
+                          </div>
 
                           {isExpanded && (
                             <div className="bg-[#111]">

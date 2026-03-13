@@ -104,18 +104,18 @@ export const ChevronRightIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
       <path
         d="M18.0383 7.41235L25.6258 14.9999L18.0383 22.5874"
         stroke="#3C4CFF"
-        stroke-width="2"
+        strokeWidth="2"
         strokeMiterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M4.375 15L25.4125 15"
         stroke="#3C4CFF"
-        stroke-width="2"
+        strokeWidth="2"
         strokeMiterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
