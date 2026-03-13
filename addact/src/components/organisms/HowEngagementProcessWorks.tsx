@@ -1,61 +1,48 @@
 "use client";
 
 import Link from "next/link";
-
-interface EngagementProcessCard {
-  id: string;
-  step: string;
-  title: string;
-  description: string;
-}
+import { OurProcess } from "@/graphql/queries/getDevelopmentDesign";
+import RichText from "@/components/atom/richText";
 
 interface HowEngagementProcessWorksProps {
-  title?: string;
-  cards?: EngagementProcessCard[];
+  data?: OurProcess;
 }
 
-const staticCards: EngagementProcessCard[] = [
-  {
-    id: "1",
-    step: "01",
-    title: "Share your Requirements",
-    description:
-      "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-  },
-  {
-    id: "2",
-    step: "02",
-    title: "Identify Suitable Candidates",
-    description:
-      "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-  },
-  {
-    id: "3",
-    step: "03",
-    title: "Conduct Interviews",
-    description:
-      "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-  },
-  {
-    id: "4",
-    step: "04",
-    title: "Resource Onboarding and Kick-off",
-    description:
-      "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-  },
-];
-
-const CARD_COUNT = 4;
-
 const HowEngagementProcessWorks = ({
-  title = "How our engagement process works",
-  cards,
+  data,
 }: HowEngagementProcessWorksProps) => {
-  const incomingCards = cards?.slice(0, CARD_COUNT) ?? [];
-  const resolvedCards = [
-    ...incomingCards,
-    ...staticCards.slice(incomingCards.length, CARD_COUNT),
-  ].slice(0, CARD_COUNT);
+  // Extract title from Title array
+  const titleText =
+    data?.Title?.[0] &&
+    ("h1" in data.Title[0]
+      ? data.Title[0].h1
+      : "h2" in data.Title[0]
+        ? data.Title[0].h2
+        : "h3" in data.Title[0]
+          ? data.Title[0].h3
+          : "h4" in data.Title[0]
+            ? data.Title[0].h5
+            : "h5" in data.Title[0]
+              ? data.Title[0].h5
+              : "h6" in data.Title[0]
+                ? data.Title[0].h6
+                : "How our engagement process works");
+
+  const title = titleText || "How our engagement process works";
+
+  // Map ProcessData to cards format
+  const resolvedCards =
+    data?.ProcessData?.map((item, index) => ({
+      id: item?.id || `${index + 1}`,
+      step: String(index + 1).padStart(2, "0"),
+      title: item?.Title || "",
+      description: item?.Description || "",
+    })) ?? [];
+
+  // Don't render if no cards
+  if (!resolvedCards.length) {
+    return null;
+  }
 
   return (
     <section className="bg-[#0F0F0F] py-[72px] md:py-[88px] xl:py-[110px]">
@@ -107,9 +94,9 @@ const HowEngagementProcessWorks = ({
                 <h3 className="mb-3 min-h-[64px] !text-[30px] !font-semibold !leading-[1.35] text-[#E8EAEE] transition-colors duration-300 group-hover:text-white">
                   {card.title}
                 </h3>
-                <p className="!text-[22px] !leading-[1.8] text-[#A7ACB4] transition-colors duration-300 group-hover:text-[#EEF1FF]">
-                  {card.description}
-                </p>
+                <div className="text-[#A7ACB4] transition-colors duration-300 group-hover:text-[#EEF1FF] [&_p]:!text-[22px] [&_p]:!leading-[1.8]">
+                  <RichText html={card.description} />
+                </div>
               </div>
             </article>
           ))}
