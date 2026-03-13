@@ -79,12 +79,12 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
   return (
     <section
       ref={sectionRef}
-      className="my-[80px] lg:my-[100px] 2xl:my-[200px] solutionscards-wrapper overflow-hidden"
+      className="py-16 md:py-20 lg:py-24 2xl:py-[160px] solutionscards-wrapper overflow-hidden bg-white"
     >
       <div className="container-main">
         <div className="flex flex-col">
           {/* Title */}
-          <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
+          <h2 className="!text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24 text-[#0F0F0F] font-montserrat font-semibold">
             {data?.Title ?? "Our Solutions"}
           </h2>
 
@@ -93,7 +93,7 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
             {cards.map((card, idx) => (
               <div
                 key={idx}
-                className={`group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px] ${
+                className={`group relative border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px] ${
                   animate ? "show" : ""
                 }`}
                 style={
@@ -106,10 +106,12 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
                     : undefined
                 }
               >
-                <h3 className="text-white !text-[20px] md:!text-[27px] 2xl:!text-[30px] mb-[30px]">
+                <h3 className="text-[#0F0F0F] !text-[20px] md:!text-[27px] 2xl:!text-[30px] mb-[30px]">
                   {card?.Title ?? ""}
                 </h3>
-                <RichText html={card?.Description ?? ""} />
+                <div className="text-[#0F0F0F]">
+                  <RichText html={card?.Description ?? ""} />
+                </div>
               </div>
             ))}
           </div>
@@ -122,12 +124,14 @@ const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
                   {group.map((card, j) => (
                     <div
                       key={`${i}-${j}`}
-                      className="relative group bg-[#1C1C1C] pb-15 border-l-[3px] border-[#3C4CFF] p-[16px]"
+                      className="relative group pb-15 border-l-[3px] border-[#3C4CFF] p-[16px]"
                     >
-                      <h3 className="text-white !text-[17px] md:!text-[30px] mb-3">
+                      <h3 className="text-[#0F0F0F] !text-[17px] md:!text-[30px] mb-3">
                         {card?.Title ?? ""}
                       </h3>
-                      <RichText html={card?.Description ?? ""} />
+                      <div className="text-[#0F0F0F]">
+                        <RichText html={card?.Description ?? ""} />
+                      </div>
                     </div>
                   ))}
                 </div>
