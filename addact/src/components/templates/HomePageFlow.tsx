@@ -35,7 +35,14 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
   }, []);
 
   if (!showMainContent) {
-    return <IntroSplash onComplete={handleIntroComplete} />;
+    return (
+      <IntroSplash
+        onComplete={handleIntroComplete}
+        animationTitle={homeData?.animationBanner?.animationTitle}
+        firstAnimationImage={homeData?.animationBanner?.firstAnimationImage}
+        secondAnimationImage={homeData?.animationBanner?.secondAnimationImage}
+      />
+    );
   }
 
   return (
