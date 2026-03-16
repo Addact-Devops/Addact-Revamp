@@ -4,6 +4,7 @@ import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import HeroAISection from "@/components/organisms/HeroAISection";
 import SolveProblemsWithAI from "@/components/organisms/SolveProblemsWithAI";
 import BenefitsSection from "@/components/organisms/BenfitsSections";
+import ServicesSection from "@/components/organisms/ServicesSection";
 // import OurProcess from "@/components/organisms/OurProcess";
 // import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 // import OurPartners from "@/components/organisms/OurPartners";
@@ -117,6 +118,7 @@ export default async function umbracoPage() {
       <HeroAISection />
       <SolveProblemsWithAI />
       <BenefitsSection />
+      <ServicesSection />
       {/* <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
         description={
