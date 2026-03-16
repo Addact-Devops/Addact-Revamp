@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_home_card_variants",
+  "info": {
+    "displayName": "cardVariant"
+  },
+  "options": {},
+  "attributes": {
+    "variant": {
+      "type": "enumeration",
+      "enum": [
+        "twoCard",
+        "threeCard",
+        "fourCard"
+      ]
+    }
+  },
+  "config": {}
+}

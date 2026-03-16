@@ -53,6 +53,11 @@
     },
     "isTextAlignCenter": {
       "type": "boolean"
+    },
+    "chipsText": {
+      "type": "component",
+      "component": "base-template.title",
+      "repeatable": true
     }
   },
   "config": {}

@@ -1,20 +1,26 @@
 {
-  "collectionName": "components_home_digital_marketing_listings",
+  "collectionName": "components_home_ui_ux_lisitngs",
   "info": {
-    "displayName": "Digital Marketing Listing"
+    "displayName": "UI UX Lisitng"
   },
   "options": {},
   "attributes": {
     "serviceTitle": {
       "type": "string"
     },
+    "isCarousel": {
+      "type": "boolean",
+      "default": false
+    },
     "serviceList": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::digital-marketing-detail.digital-marketing-detail"
+      "target": "api::service-card.service-card"
     },
-    "isCarousel": {
-      "type": "boolean"
+    "link": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
     },
     "serviceVariant": {
       "type": "component",

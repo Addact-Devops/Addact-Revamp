@@ -1,0 +1,74 @@
+{
+  "kind": "singleType",
+  "collectionName": "ai_services",
+  "info": {
+    "singularName": "ai-service",
+    "pluralName": "ai-services",
+    "displayName": "AI Service"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Slug": {
+      "type": "string"
+    },
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "Banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "cta": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cta.cta"
+    },
+    "faq": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::faq.faq"
+    },
+    "techStack": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tech-stack.tech-stack"
+    },
+    "ourInshightsTitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
+    },
+    "industry": {
+      "type": "component",
+      "component": "home.industry-listing",
+      "repeatable": false
+    },
+    "aiBenefit": {
+      "type": "component",
+      "component": "home.ai-card",
+      "repeatable": false
+    },
+    "ourprocess": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-process.our-process"
+    },
+    "ourService": {
+      "type": "dynamiczone",
+      "components": [
+        "home.ai-our-services"
+      ]
+    },
+    "aiSolveProblem": {
+      "type": "component",
+      "component": "home.ai-solve-problem",
+      "repeatable": false
+    }
+  }
+}

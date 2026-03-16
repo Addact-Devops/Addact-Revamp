@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_home_ai_solve_problems",
+  "info": {
+    "displayName": "AI Solve Problem"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "aiSolveProblemList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ai-solve-problem-list.ai-solve-problem-list"
+    }
+  },
+  "config": {}
+}

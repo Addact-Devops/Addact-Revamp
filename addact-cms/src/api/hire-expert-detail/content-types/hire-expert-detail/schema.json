@@ -34,12 +34,7 @@
       "relation": "oneToOne",
       "target": "api::our-partner.our-partner"
     },
-    "our_service": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::service.service"
-    },
-    "why_addact": {
+    "whyaddact": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::global-card.global-card"
@@ -88,6 +83,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::cta.cta"
+    },
+    "ourService": {
+      "type": "dynamiczone",
+      "components": [
+        "home.service-list"
+      ]
     }
   }
 }
