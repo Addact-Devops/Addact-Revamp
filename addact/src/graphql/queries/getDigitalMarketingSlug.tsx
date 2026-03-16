@@ -268,7 +268,7 @@ export interface DigitalMarketingService {
   SEO: SEO | null;
   Banner: BannerSection;
   cta: CTA | null;
-  why_addact: Whyaddact | null;
+  whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
   ourService?: OurServiceList;

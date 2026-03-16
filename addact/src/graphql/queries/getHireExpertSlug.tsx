@@ -108,7 +108,7 @@ const hireExpertsSlugQuery = gql`
         }
       }
 
-      why_addact {
+      whyaddact {
         Title {
           ... on ComponentHeadingsH1 {
             id
@@ -250,7 +250,7 @@ export interface HireExpert {
   SEO: SEO | null;
   Banner: BannerSection;
   cta: CTA | null;
-  why_addact: Whyaddact | null;
+  whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
   ourService?: OurServiceList;

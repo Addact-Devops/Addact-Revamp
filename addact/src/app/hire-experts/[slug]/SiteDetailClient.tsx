@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
 import HeroBanner from "@/components/organisms/HeroBanner";
-import WhyAddact from "@/components/organisms/WhyAddact";
 // import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
@@ -19,6 +18,7 @@ import {
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
+import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
@@ -78,7 +78,8 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
         <OurServicesWithTabs data={pageData.our_service} />
       )}
       <IndustryMarqueeCards />
-      {pageData?.why_addact && <WhyAddact data={pageData.why_addact} />}
+      {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
+
       <HowEngagementProcessWorks />
 
       <ClientTestimonials />
