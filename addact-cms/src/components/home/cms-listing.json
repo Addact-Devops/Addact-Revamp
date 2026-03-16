@@ -15,6 +15,11 @@
     },
     "isCarousel": {
       "type": "boolean"
+    },
+    "serviceVariant": {
+      "type": "component",
+      "component": "home.card-variant",
+      "repeatable": false
     }
   },
   "config": {}
