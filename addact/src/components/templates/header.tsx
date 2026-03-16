@@ -22,6 +22,7 @@ import { ChevronRightIcon } from "../atom/icons";
 
 interface HeaderProps {
   headerData: AddactHeaderData;
+  transparentHeader?: boolean;
   onContactClick?: () => void;
 }
 
@@ -359,7 +360,11 @@ function DropdownContent({
 }
 
 // ─── Main Header ─────────────────────────────────────────────────────────────
-const Header = ({ headerData, onContactClick }: HeaderProps) => {
+const Header = ({
+  headerData,
+  onContactClick,
+  transparentHeader,
+}: HeaderProps) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -371,6 +376,7 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const closeDropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [scrolled, setScrolled] = React.useState(false);
 
   const clearCloseDropdownTimer = () => {
     if (closeDropdownTimer.current) {
@@ -458,8 +464,23 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F] border-b border-b-[#2e2e2e]">
+    <header
+      className={`fixed top-0 w-full z-50 transition-all duration-300
+  ${
+    transparentHeader && !scrolled
+      ? "bg-transparent border-transparent"
+      : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"
+  }`}
+    >
       {/* Banner */}
       {showBanner && (
         <div
