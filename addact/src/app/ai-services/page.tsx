@@ -5,6 +5,7 @@ import HeroAISection from "@/components/organisms/HeroAISection";
 import SolveProblemsWithAI from "@/components/organisms/SolveProblemsWithAI";
 import BenefitsSection from "@/components/organisms/BenfitsSections";
 import ServicesSection from "@/components/organisms/ServicesSection";
+import AIProcess from "@/components/organisms/AIProcess";
 // import OurProcess from "@/components/organisms/OurProcess";
 // import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 // import OurPartners from "@/components/organisms/OurPartners";
@@ -119,6 +120,7 @@ export default async function umbracoPage() {
       <SolveProblemsWithAI />
       <BenefitsSection />
       <ServicesSection />
+      <AIProcess />
       {/* <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
         description={

@@ -1,8 +1,5 @@
 "use client";
 
-// ─────────────────────────────────────────────
-// Types
-// ─────────────────────────────────────────────
 interface ServiceCardProps {
   title: string;
   description: string;
@@ -14,9 +11,6 @@ interface ServiceItem {
   description: string;
 }
 
-// ─────────────────────────────────────────────
-// Static Data
-// ─────────────────────────────────────────────
 const SERVICES: ServiceItem[] = [
   {
     id: 1,
@@ -67,12 +61,8 @@ const SECTION_DESCRIPTION =
   "With our rich and long-standing experience in development and design services, we have been successfully delivering experiences that are mature, meaningful.";
 const CTA_LABEL = "Get a free AI Consultation";
 
-// Set this to your actual navbar height in px
 const NAVBAR_HEIGHT = 80;
 
-// ─────────────────────────────────────────────
-// Arrow Icon
-// ─────────────────────────────────────────────
 function ArrowUpRight({ className }: { className?: string }) {
   return (
     <svg
@@ -91,23 +81,16 @@ function ArrowUpRight({ className }: { className?: string }) {
   );
 }
 
-// ─────────────────────────────────────────────
-// ServiceCard — turns fully blue on hover via group-hover
-// No JS state needed — pure CSS via Tailwind group/group-hover
-// ─────────────────────────────────────────────
 export function ServiceCard({ title, description }: ServiceCardProps) {
   return (
     <div className="group w-full rounded-[10px] border border-solid border-[rgba(15,15,15,0.2)] bg-white p-[30px] cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:shadow-[0_4px_20px_rgba(60,76,255,0.12)]">
-      {/* Title row */}
       <div className="flex items-center justify-between gap-3 mb-5">
         <h3 className="font-['Montserrat',sans-serif] font-semibold! text-[18px]! leading-[28px] md:text-[20px]! md:leading-[30px]! xl:text-[30px]! xl:leading-[36px]! m-0 text-[#0f0f0f] group-hover:text-white transition-colors duration-200">
           {title}
         </h3>
-        {/* Arrow hidden by default, visible on hover */}
         <ArrowUpRight className="w-6 h-6 shrink-0 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
       </div>
 
-      {/* Description */}
       <p className="font-['Montserrat',sans-serif] font-normal text-[14px] leading-[22px] md:text-[16px]! md:leading-[26px]! xl:text-[17px]! xl:leading-[28px]! m-0 text-[#0f0f0f] group-hover:text-white/90 transition-colors duration-200">
         {description}
       </p>
@@ -115,18 +98,9 @@ export function ServiceCard({ title, description }: ServiceCardProps) {
   );
 }
 
-// ─────────────────────────────────────────────
-// ServicesSection
-// ─────────────────────────────────────────────
 export default function ServicesSection() {
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap"
-        rel="stylesheet"
-      />
-
-      {/* ── Mobile / Tablet: stacked ── */}
       <section className="bg-white w-full box-border px-4 py-10 md:px-10 md:py-16 lg:hidden!">
         <div className="flex flex-col gap-6 mb-8">
           <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[#0f0f0f] m-0 text-[28px] leading-[38px] md:text-[40px]! md:leading-[52px]!">
@@ -151,9 +125,7 @@ export default function ServicesSection() {
         </div>
       </section>
 
-      {/* ── Desktop: sticky left + scrollable right ── */}
       <div className="items-start justify-between px-10 xl:px-[160px]! bg-white hidden lg:flex!">
-        {/* LEFT — sticky */}
         <div
           className="sticky self-start shrink-0 w-[38%] xl:w-[653px]! flex flex-col gap-8 pt-[80px] pb-[80px]"
           style={{ top: `${NAVBAR_HEIGHT}px` }}
@@ -170,7 +142,6 @@ export default function ServicesSection() {
           </button>
         </div>
 
-        {/* RIGHT — scrollable cards */}
         <div className="flex flex-col gap-[10px] w-[49%] xl:w-[788px]! py-[80px]">
           {SERVICES.map((service) => (
             <ServiceCard
