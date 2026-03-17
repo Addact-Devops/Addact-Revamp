@@ -16,6 +16,7 @@ export async function generateMetadata() {
 }
 export default async function umbracoPage() {
   const data = await getHireExperts();
+  // const data = await getAIService();
   if (!data) return notFound();
   //   const bannerData = data.Banner?.Banner?.[0];
   return (
