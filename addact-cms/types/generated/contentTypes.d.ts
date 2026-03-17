@@ -2041,6 +2041,7 @@ export interface ApiFooterFooter extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     SiteSlog: Schema.Attribute.String;
+    socialMedia: Schema.Attribute.Component<'shared.link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
