@@ -474,7 +474,7 @@ const Header = ({
   }, []);
   return (
     <header
-      className={`fixed top-0 w-full z-50 transition-all duration-300
+      className={`fixed top-0 w-full z-[130] transition-all duration-300
   ${
     transparentHeader && !scrolled
       ? "bg-transparent border-transparent"
@@ -573,7 +573,7 @@ const Header = ({
                     onMouseLeave={() => {
                       scheduleCloseDropdown();
                     }}
-                    className="fixed z-40 overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
+                    className="fixed z-[140] overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
                     style={{
                       top: "130px",
                       background: "#0F0F0F",
@@ -644,7 +644,7 @@ const Header = ({
 
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-60 bg-[#0F0F0F] text-white flex flex-col overflow-hidden">
+        <div className="lg:hidden fixed inset-0 z-[140] bg-[#0F0F0F] text-white flex flex-col overflow-hidden">
           {/* Mobile Header: Top Row (Logo & X) */}
           <div className="mx-auto w-full flex items-center justify-between container-main px-4 py-4 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
             <div className="h-full flex items-center">

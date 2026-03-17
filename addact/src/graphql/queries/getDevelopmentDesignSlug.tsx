@@ -21,6 +21,7 @@ const developmentDesignSlugQuery = gql`
         structuredData
         languageTag
       }
+      isUxpage
       Banner {
         Banner {
           ... on ComponentBannerBanner {
@@ -55,6 +56,9 @@ const developmentDesignSlugQuery = gql`
                 url
                 width
               }
+            }
+            chipsText {
+              Title
             }
           }
         }
@@ -332,6 +336,7 @@ export interface DevelopmentDesignSlugResponse {
 export interface DevelopmentDesignDetail {
   SEO: SEO | null;
   Banner: BannerSection;
+  isUxpage: boolean | null;
   cta: CTA | null;
   whyaddact: Whyaddact | null;
   faq: FAQ;
@@ -395,6 +400,9 @@ export interface BannerItem {
   show_searchbox: boolean;
   videoLink: string | null;
   BannerLink: BannerLink;
+  chipsText: {
+    Title: string;
+  }[];
 }
 
 export interface BannerLink {
