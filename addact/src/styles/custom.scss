@@ -37,14 +37,65 @@ body {
   background-color: $primary-color;
 }
 
+// .container-main {
+//   width: 100%;
+//   margin-left: auto;
+//   margin-right: auto;
+//   padding-left: 16px;
+//   padding-right: 16px;
+
+//   @media (min-width: 1400px) {
+//     padding-left: 50px;
+//     padding-right: 50px;
+//   }
+
+//   @media (max-width: 1299px) {
+//     width: calc(100% - 5%);
+//     max-width: 100%;
+//     padding-left: 30px;
+//     padding-right: 30px;
+//   }
+
+//   @media (max-width: 991px) {
+//     width: 100%;
+//     padding-left: 25px;
+//     padding-right: 25px;
+//   }
+
+//   @media (min-width: 1920px) {
+//     max-width: 1600px;
+//     padding-left: 20px;
+//     padding-right: 20px;
+//   }
+// }
+
 .container-main {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
 
-  @media (min-width: 1400px) {
+  // Original 1920px design target
+  @media (min-width: 1601px) {
+    max-width: 1600px;
+  }
+
+  // 125% scaled laptops (1920 ÷ 1.25 = 1536px effective)
+  // Visually mirrors the 1920 layout — proportionally reduced
+  @media (min-width: 1536px) and (max-width: 1600px) {
+    max-width: 1502px; // 1600px ÷ 1.25
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // 150% scaled laptops (1920 ÷ 1.50 = 1280px effective)
+  // Visually mirrors the 1920 layout — proportionally reduced
+  @media (min-width: 1280px) and (max-width: 1535px) {
+    max-width: 1254px; // 1600px ÷ 1.50
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @media (min-width: 1400px) and (max-width: 1279px) {
     padding-left: 50px;
     padding-right: 50px;
   }
@@ -60,12 +111,6 @@ body {
     width: 100%;
     padding-left: 25px;
     padding-right: 25px;
-  }
-
-  @media (min-width: 1920px) {
-    max-width: 1600px;
-    padding-left: 20px;
-    padding-right: 20px;
   }
 }
 

@@ -12,39 +12,51 @@ import type { CONTACTUS } from "@/graphql/queries/getHomePage";
 type FooterProps = React.ComponentProps<typeof Footer>;
 
 function LayoutWrapper({
-    children,
-    headerData,
-    footerData,
-    contactSidebarData,
+  children,
+  headerData,
+  footerData,
+  contactSidebarData,
 }: {
-    children: React.ReactNode;
-    headerData: AddactHeaderData;
-    footerData?: FooterProps["data"];
-    contactSidebarData?: CONTACTUS;
+  children: React.ReactNode;
+  headerData: AddactHeaderData;
+  footerData?: FooterProps["data"];
+  contactSidebarData?: CONTACTUS;
 }) {
-    const pathname = usePathname();
-    const [isContactSidebarOpen, setContactSidebarOpen] = React.useState(false);
-    const hideHeaderFooter = pathname === "/hire-certified-sitecore-developer";
+  const pathname = usePathname();
+  const [isContactSidebarOpen, setContactSidebarOpen] = React.useState(false);
+  const hideHeaderFooter = pathname === "/hire-certified-sitecore-developer";
 
-    React.useEffect(() => {
-        setContactSidebarOpen(false);
-    }, [pathname]);
+  const isAIPage = pathname === "/ai-services";
+  const isUIUXPage = pathname === "/ui-ux-service";
+  const isHomePage = pathname === "/";
 
-    return (
-        <>
-            {!hideHeaderFooter && <Header headerData={headerData} onContactClick={() => setContactSidebarOpen(true)} />}
-            {children}
-            {!hideHeaderFooter && footerData && <Footer data={footerData} />}
-            {!hideHeaderFooter && contactSidebarData && (
-                <ContactUs
-                    data={contactSidebarData}
-                    isDrawer
-                    isOpen={isContactSidebarOpen}
-                    onClose={() => setContactSidebarOpen(false)}
-                />
-            )}
-        </>
-    );
+  const isTransparentHeaderPage = isAIPage || isUIUXPage || isHomePage;
+
+  React.useEffect(() => {
+    setContactSidebarOpen(false);
+  }, [pathname]);
+
+  return (
+    <>
+      {!hideHeaderFooter && (
+        <Header
+          headerData={headerData}
+          onContactClick={() => setContactSidebarOpen(true)}
+          transparentHeader={isTransparentHeaderPage}
+        />
+      )}
+      {children}
+      {!hideHeaderFooter && footerData && <Footer data={footerData} />}
+      {!hideHeaderFooter && contactSidebarData && (
+        <ContactUs
+          data={contactSidebarData}
+          isDrawer
+          isOpen={isContactSidebarOpen}
+          onClose={() => setContactSidebarOpen(false)}
+        />
+      )}
+    </>
+  );
 }
 
 export default LayoutWrapper;

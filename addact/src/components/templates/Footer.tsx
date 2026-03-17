@@ -56,7 +56,7 @@ type FooterProps = {
     milestonesimage?: {
       Image?: ImageType | null;
     }[];
-    socialicons?: IconLink[];
+    socialMedia?: IconLink[];
     contacticons?: {
       Icon?: ImageType;
     }[];
@@ -75,7 +75,7 @@ export default function Footer({ data }: FooterProps) {
     milestonestitle,
     milestonesimage,
     // AddressInformationMobileBgImg,
-    socialicons,
+    socialMedia,
     contacticons,
     CopyrightText,
   } = data;
@@ -308,7 +308,7 @@ export default function Footer({ data }: FooterProps) {
 
                 {/* Social Media Icons - Center */}
                 <div className="flex items-center justify-center gap-3 lg:gap-4">
-                  {socialicons
+                  {socialMedia
                     ?.filter((icon) => icon?.Icon?.url)
                     .map((icon, index) => (
                       <Link
