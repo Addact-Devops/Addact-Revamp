@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_home_ai_cards",
+  "info": {
+    "displayName": "AI Card"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service-card.service-card"
+    }
+  },
+  "config": {}
+}

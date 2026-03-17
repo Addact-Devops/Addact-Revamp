@@ -747,6 +747,114 @@ export interface ApiAddactWebinarAddactWebinar
   };
 }
 
+export interface ApiAiServiceAiService extends Struct.SingleTypeSchema {
+  collectionName: 'ai_services';
+  info: {
+    displayName: 'AI Service';
+    pluralName: 'ai-services';
+    singularName: 'ai-service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aiBenefit: Schema.Attribute.Component<'home.ai-card', false>;
+    aiSolveProblem: Schema.Attribute.Component<'home.ai-solve-problem', false>;
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-service.ai-service'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.ai-our-services']>;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAiServicesDetailAiServicesDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'ai_services_details';
+  info: {
+    displayName: 'AI Services Detail';
+    pluralName: 'ai-services-details';
+    singularName: 'ai-services-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-services-detail.ai-services-detail'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Slug: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAiSolveProblemListAiSolveProblemList
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'ai_solve_problem_lists';
+  info: {
+    displayName: 'AI Solve Problem List';
+    pluralName: 'ai-solve-problem-lists';
+    singularName: 'ai-solve-problem-list';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    list: Schema.Attribute.Component<'home.ai-solve-problem-card', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-solve-problem-list.ai-solve-problem-list'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAiAi extends Struct.CollectionTypeSchema {
   collectionName: 'ais';
   info: {
@@ -1480,6 +1588,43 @@ export interface ApiCtaCta extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDesignDevelopmentFlowDesignDevelopmentFlow
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'design_development_flows';
+  info: {
+    displayName: 'Design Development Flow';
+    pluralName: 'design-development-flows';
+    singularName: 'design-development-flow';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::design-development-flow.design-development-flow'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tabsAndFlow: Schema.Attribute.Component<'home.design-tabs', true>;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiDevelopmentAndDesignDetailDevelopmentAndDesignDetail
   extends Struct.CollectionTypeSchema {
   collectionName: 'development_and_design_details';
@@ -1493,12 +1638,22 @@ export interface ApiDevelopmentAndDesignDetailDevelopmentAndDesignDetail
   };
   attributes: {
     Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    challenges: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    designFlow: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::design-development-flow.design-development-flow'
+    >;
     faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    impactUx: Schema.Attribute.Component<'home.impact-ux', false>;
     industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    isUxpage: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     listingContext: Schema.Attribute.Component<'home.base-component', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -1515,7 +1670,7 @@ export interface ApiDevelopmentAndDesignDetailDevelopmentAndDesignDetail
       'api::our-process.our-process'
     >;
     ourService: Schema.Attribute.DynamicZone<
-      ['home.cms-listing', 'home.service-list']
+      ['home.cms-listing', 'home.service-list', 'home.ui-ux-lisitng']
     >;
     publishedAt: Schema.Attribute.DateTime;
     ReferenceTitle: Schema.Attribute.String;
@@ -1886,6 +2041,7 @@ export interface ApiFooterFooter extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     SiteSlog: Schema.Attribute.String;
+    socialMedia: Schema.Attribute.Component<'shared.link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2208,11 +2364,11 @@ export interface ApiHireExpertDetailHireExpertDetail
       'oneToOne',
       'api::our-process.our-process'
     >;
-    our_service: Schema.Attribute.Relation<'oneToOne', 'api::service.service'>;
     ourInshightsTitle: Schema.Attribute.Relation<
       'oneToOne',
       'api::common-title.common-title'
     >;
+    ourService: Schema.Attribute.DynamicZone<['home.service-list']>;
     publishedAt: Schema.Attribute.DateTime;
     ReferenceTitle: Schema.Attribute.String & Schema.Attribute.Required;
     SEO: Schema.Attribute.Component<'shared.seo', false>;
@@ -2220,7 +2376,7 @@ export interface ApiHireExpertDetailHireExpertDetail
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    why_addact: Schema.Attribute.Relation<
+    whyaddact: Schema.Attribute.Relation<
       'oneToOne',
       'api::global-card.global-card'
     >;
@@ -2436,9 +2592,9 @@ export interface ApiIndustryDetailPageIndustryDetailPage
     ReferenceTitle: Schema.Attribute.Text & Schema.Attribute.Required;
     SEO: Schema.Attribute.Component<'shared.seo', false>;
     Slug: Schema.Attribute.Text & Schema.Attribute.Required;
-    Tech_Stack: Schema.Attribute.Relation<
+    techStack: Schema.Attribute.Relation<
       'oneToOne',
-      'api::our-expertise.our-expertise'
+      'api::tech-stack.tech-stack'
     >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -4171,6 +4327,9 @@ declare module '@strapi/strapi' {
       'api::addact-header.addact-header': ApiAddactHeaderAddactHeader;
       'api::addact-press-release.addact-press-release': ApiAddactPressReleaseAddactPressRelease;
       'api::addact-webinar.addact-webinar': ApiAddactWebinarAddactWebinar;
+      'api::ai-service.ai-service': ApiAiServiceAiService;
+      'api::ai-services-detail.ai-services-detail': ApiAiServicesDetailAiServicesDetail;
+      'api::ai-solve-problem-list.ai-solve-problem-list': ApiAiSolveProblemListAiSolveProblemList;
       'api::ai.ai': ApiAiAi;
       'api::author-designation.author-designation': ApiAuthorDesignationAuthorDesignation;
       'api::author.author': ApiAuthorAuthor;
@@ -4191,6 +4350,7 @@ declare module '@strapi/strapi' {
       'api::contact.contact': ApiContactContact;
       'api::contactus.contactus': ApiContactusContactus;
       'api::cta.cta': ApiCtaCta;
+      'api::design-development-flow.design-development-flow': ApiDesignDevelopmentFlowDesignDevelopmentFlow;
       'api::development-and-design-detail.development-and-design-detail': ApiDevelopmentAndDesignDetailDevelopmentAndDesignDetail;
       'api::development-and-design.development-and-design': ApiDevelopmentAndDesignDevelopmentAndDesign;
       'api::digital-marketing-detail.digital-marketing-detail': ApiDigitalMarketingDetailDigitalMarketingDetail;

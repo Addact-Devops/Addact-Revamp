@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ai_services_details",
+  "info": {
+    "singularName": "ai-services-detail",
+    "pluralName": "ai-services-details",
+    "displayName": "AI Services Detail"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Slug": {
+      "type": "string"
+    },
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
+    }
+  }
+}

@@ -26,13 +26,14 @@ import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProce
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
 import OurTechStack from "@/components/organisms/OurTechStack";
+import UIUXPageFlow from "@/components/organisms/UIUXPageFlow";
 
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
 //   { ssr: false },
 // );
 
-type PageData = DevelopmentDesignDetail | CmsDetail | SitecoreDetail;
+export type PageData = DevelopmentDesignDetail | CmsDetail | SitecoreDetail;
 
 const SiteDetailClient = ({ data }: { data: PageData }) => {
   const [pageData, setPageData] = useState<PageData | null>(data);
@@ -83,30 +84,37 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
   }
 
   const bannerData = pageData.Banner?.Banner?.[0];
+  const isUxPage = "isUxpage" in pageData && Boolean(pageData.isUxpage);
 
   return (
     <main className="bg-dark">
-      <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      <DetailPageServices title="Our Services Carousel Test" isCaraousl />
-      <DetailPageServices title="Our Services Grid Test" />
-      {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
-      <OurTechStack data={pageData?.techStack} />
-      <HowEngagementProcessWorks data={pageData?.ourprocess} />
-      <IndustryMarqueeCards data={pageData?.industry} />
-      <ClientTestimonials />
-      {pageData?.faq && <FAQ data={pageData?.faq} />}
-      <OurInsights />
-      {data?.cta && <CtaBanner data={data?.cta} />}
+      {isUxPage ? (
+        <UIUXPageFlow data={pageData} />
+      ) : (
+        <>
+          <HeroBanner
+            title={bannerData?.BannerTitle ?? ""}
+            description={
+              bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
+            }
+            button={{
+              label: bannerData?.BannerLink?.label ?? "",
+              url: bannerData?.BannerLink?.href ?? "",
+            }}
+            backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+          />
+          <DetailPageServices title="Our Services Carousel Test" isCaraousl />
+          <DetailPageServices title="Our Services Grid Test" />
+          {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
+          <OurTechStack data={pageData?.techStack} />
+          <HowEngagementProcessWorks data={pageData?.ourprocess} />
+          <IndustryMarqueeCards data={pageData?.industry} />
+          <ClientTestimonials />
+          {pageData?.faq && <FAQ data={pageData?.faq} />}
+          <OurInsights />
+          {data?.cta && <CtaBanner data={data?.cta} />}
+        </>
+      )}
     </main>
   );
 };

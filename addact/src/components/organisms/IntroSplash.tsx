@@ -233,7 +233,6 @@ const IntroSplash = ({
           transition: "opacity 450ms ease, transform 450ms ease",
         }}
       >
-        {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
@@ -244,10 +243,8 @@ const IntroSplash = ({
           <source src={introData.backgroundVideo} type="video/mp4" />
         </video>
 
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/30 z-[1]" />
 
-        {/* Left Hand */}
         <div
           className="absolute bottom-[-3%] left-[-8%] z-[2] w-[60%] h-[74%] md:h-[80%] lg:h-[86%]"
           style={{
@@ -266,7 +263,6 @@ const IntroSplash = ({
           )}
         </div>
 
-        {/* Right Hand */}
         <div
           className="absolute top-[-3%] right-[-8%] z-[2] w-[60%] h-[74%] md:h-[80%] lg:h-[86%]"
           style={{
@@ -285,7 +281,6 @@ const IntroSplash = ({
           )}
         </div>
 
-        {/* Side black overlays - become stronger toward the end */}
         <div
           className="absolute inset-y-0 left-0 w-[22%] z-[3] pointer-events-none"
           style={{
@@ -305,7 +300,6 @@ const IntroSplash = ({
           }}
         />
 
-        {/* Center Content */}
         <div
           className="absolute inset-0 z-[4] flex flex-col items-center justify-center"
           style={{
@@ -333,7 +327,6 @@ const IntroSplash = ({
           </h1>
         </div>
 
-        {/* Scroll Down Indicator */}
         <button
           type="button"
           aria-label="Start intro animation"

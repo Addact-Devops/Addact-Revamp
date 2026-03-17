@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "design_development_flows",
+  "info": {
+    "singularName": "design-development-flow",
+    "pluralName": "design-development-flows",
+    "displayName": "Design Development Flow"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultMarkdown"
+      }
+    },
+    "tabsAndFlow": {
+      "type": "component",
+      "component": "home.design-tabs",
+      "repeatable": true
+    }
+  }
+}

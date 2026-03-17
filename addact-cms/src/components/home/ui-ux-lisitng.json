@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_home_ui_ux_lisitngs",
+  "info": {
+    "displayName": "UI UX Lisitng"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "isCarousel": {
+      "type": "boolean",
+      "default": false
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service-card.service-card"
+    },
+    "link": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "serviceVariant": {
+      "type": "component",
+      "component": "home.card-variant",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}
