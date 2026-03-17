@@ -411,7 +411,7 @@ const GET_HOME_PAGE = gql`
 export interface Image {
   alternativeText: string | null;
   height: number;
-  name: string;
+  name?: string;
   url: string;
   width: number;
 }
@@ -419,9 +419,11 @@ export interface Image {
 export interface Link {
   id: string;
   href: string;
-  label: string;
-  target: string;
+  label: string | null;
+  target?: string | null;
   isExternal: boolean;
+  SubDisc?: string | null;
+  Icon?: Image | null;
 }
 
 export interface Heading {
@@ -577,9 +579,28 @@ export interface AIEcoSystem {
   AIEcoSystem: AIEcoSystemData;
 }
 
+export interface Industry {
+  industryListTitle: string;
+  industry_list: IndustryListItem[];
+}
+
+export interface IndustryListItem {
+  Slug: string;
+  listingContext: {
+    title: string;
+    description: string;
+    image: Image | null;
+    link: LinkWithIcon | null;
+  } | null;
+}
+
 // Main interface
 export interface HomeItems {
   documentId: string;
+  PageHeading?: {
+    PageTitle: string;
+    Slug: string;
+  }[];
   pageHeading: {
     PageTitle: string;
     Slug: string;
@@ -595,6 +616,7 @@ export interface HomeItems {
   animationBanner: AnimationBanner;
   ourCapabilitiy: OurCapabilitiy;
   aiEcoSystem: AIEcoSystem;
+  industry?: Industry;
 }
 
 export interface HomeResponse {

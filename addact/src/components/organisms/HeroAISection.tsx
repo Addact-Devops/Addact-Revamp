@@ -1,9 +1,26 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Orb from "../Orb";
+import RichText from "../atom/richText";
 
-export default function HeroAISection() {
+interface HeroAISectionProps {
+  data?: {
+    BannerTitle?: string | null;
+    BannerDescription?: string | null;
+    BannerLink?: {
+      href?: string | null;
+      label?: string | null;
+      target?: string | null;
+      isExternal?: boolean | null;
+    } | null;
+  }[];
+}
+
+export default function HeroAISection({ data }: HeroAISectionProps) {
+  const banner = data?.[0];
+
   return (
     <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
       {/* Orb Background */}
@@ -17,31 +34,36 @@ export default function HeroAISection() {
           className="text-white font-bold! uppercase leading-[1.1]
           text-[34px] md:text-[54px] lg:text-[60px]! xl:text-[100px]!"
         >
-          BUILD THE FUTURE
-          <br />
-          WITH AI
+          {banner?.BannerTitle}
         </h1>
 
-        <p
+        <div
           className="text-white/70 mt-6 max-w-[788px] mx-auto
           text-[15px] md:text-[18px] xl:text-[24px]!"
         >
-          With our rich and long-standing experience in development and design
-          services, we have been successfully delivering experiences that are
-          mature, meaningful.
-        </p>
+          <RichText html={banner?.BannerDescription || ""} />
+        </div>
 
         {/* Button needs pointer events */}
-        <button
+        <Link
+          href={banner?.BannerLink?.href || "#"}
+          target={
+            banner?.BannerLink?.isExternal
+              ? "_blank"
+              : (banner?.BannerLink?.target ?? "_self")
+          }
+          rel={
+            banner?.BannerLink?.isExternal ? "noopener noreferrer" : undefined
+          }
           className="pointer-events-auto mt-8 inline-flex items-center gap-3
           bg-[#4F6EF7] hover:bg-[#3f5ce0]
           text-white px-6 py-3 rounded-lg
           text-[16px] font-medium
           transition-all duration-300"
         >
-          Start a Project
+          {banner?.BannerLink?.label}
           <ArrowRight size={18} />
-        </button>
+        </Link>
       </div>
     </section>
   );

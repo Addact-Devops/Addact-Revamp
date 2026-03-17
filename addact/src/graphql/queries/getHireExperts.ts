@@ -186,6 +186,36 @@ const hireExpertsQuery = gql`
         }
       }
 
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+
       ourService {
         ... on ComponentHomeHireServiceList {
           isCarousel
@@ -233,7 +263,8 @@ export interface HireExpert {
   whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
-  ourService?: OurServiceList;
+  industry: Industry | null;
+  ourService: OurServiceList | null;
 }
 
 export interface OurServiceList {
@@ -250,13 +281,35 @@ export interface ServiceListItem {
     link: {
       id: string;
       href: string;
-      label: string;
-      target: string;
+      label: string | null;
+      target?: string | null;
       isExternal: boolean;
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
   };
+}
+
+export interface Industry {
+  industryListTitle: string;
+  industry_list: IndustryListItem[];
+}
+
+export interface IndustryListItem {
+  Slug: string;
+  listingContext: {
+    title: string;
+    description: string;
+    image: Image | null;
+    link: {
+      id: string;
+      href: string;
+      label: string | null;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: Image | null;
+    } | null;
+  } | null;
 }
 
 export interface SEO {

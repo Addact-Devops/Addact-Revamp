@@ -295,6 +295,35 @@ const aiServiceSlugQuery = gql`
           }
         }
       }
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -315,8 +344,30 @@ export interface AIService {
   ourService: OurService | null;
   ourprocess?: OurProcess | null;
   our_process?: OurProcess | null;
+  industry: Industry | null;
 }
 
+export interface Industry {
+  industryListTitle: string;
+  industry_list: IndustryListItem[];
+}
+
+export interface IndustryListItem {
+  Slug: string;
+  listingContext: {
+    title: string;
+    description: string;
+    image: Image | null;
+    link: {
+      id: string;
+      href: string;
+      label: string | null;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: Image | null;
+    } | null;
+  } | null;
+}
 export interface GraphQLErrorItem {
   code?: string;
   message?: string;

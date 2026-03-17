@@ -243,7 +243,7 @@ const aiServiceQuery = gql`
         }
       }
 
-      our_process {
+      ourprocess {
         Title {
           ... on ComponentHeadingsH6 {
             id
@@ -295,6 +295,35 @@ const aiServiceQuery = gql`
           }
         }
       }
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -312,7 +341,8 @@ export interface AIService {
   aiSolveProblem: AISolveProblem | null;
   aiBenefit: AIBenefit | null;
   ourService: OurService | null;
-  our_process: OurProcess | null;
+  ourprocess: OurProcess | null;
+  industry: Industry | null;
 }
 
 export interface SEO {
@@ -350,7 +380,7 @@ export interface LinkWithIcon {
   id: string;
   href: string;
   label: string | null;
-  target: string;
+  target?: string | null;
   isExternal: boolean;
   SubDisc: string | null;
   Icon: Image | null;
@@ -398,9 +428,9 @@ export interface AISolveProblem {
   aiSolveProblemList: {
     list: {
       title: string;
-      image: Image;
-      bgImage: Image;
-    }[];
+      image: Image | null;
+      bgImage: Image | null;
+    };
   }[];
 }
 
@@ -440,6 +470,19 @@ export interface OurProcess {
     Title: string;
     Description: string;
     Link: LinkWithIcon;
+  }[];
+}
+
+export interface Industry {
+  industryListTitle: string;
+  industry_list: {
+    Slug: string;
+    listingContext: {
+      title: string;
+      description: string;
+      image: Image | null;
+      link: LinkWithIcon;
+    };
   }[];
 }
 
