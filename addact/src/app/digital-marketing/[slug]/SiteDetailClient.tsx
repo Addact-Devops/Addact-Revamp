@@ -81,7 +81,7 @@ const SiteDetailClient = ({ data }: { data: DigitalMarketingService }) => {
       <WhoWeAre />
       <DetailPageServices title="Our Services Carousel Test" isCaraousl />
       <DetailPageServices title="Our Services Grid Test" />
-      {data?.why_addact && <WhyWorkWithUs data={data.why_addact} />}
+      {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
       {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
       {/* <OurProcess data={data?.our_process} /> */}
       <OurTechStack data={data?.techStack} />

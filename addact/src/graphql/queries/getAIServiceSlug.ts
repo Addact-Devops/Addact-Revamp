@@ -2,11 +2,9 @@ import { gql } from "graphql-request";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
-const developmentDesignSlugQuery = gql`
-  query DevelopmentDesignSlug(
-    $filters: DevelopmentAndDesignDetailFiltersInput
-  ) {
-    developmentAndDesignDetails(filters: $filters) {
+const aiServiceSlugQuery = gql`
+  query AiSolveProblem($filters: AiServicesDetailFiltersInput) {
+    aiServicesDetails(filters: $filters) {
       SEO {
         metaTitle
         metaDescription
@@ -21,7 +19,6 @@ const developmentDesignSlugQuery = gql`
         structuredData
         languageTag
       }
-      isUxpage
       Banner {
         Banner {
           ... on ComponentBannerBanner {
@@ -56,9 +53,6 @@ const developmentDesignSlugQuery = gql`
                 url
                 width
               }
-            }
-            chipsText {
-              Title
             }
           }
         }
@@ -114,56 +108,6 @@ const developmentDesignSlugQuery = gql`
         }
       }
 
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
       faq {
         Title
         FAQ {
@@ -192,78 +136,30 @@ const developmentDesignSlugQuery = gql`
         }
       }
 
-      ourService {
-        ... on ComponentHomeCmsListing {
-          id
-          serviceTitle
-          serviceList {
-            listingContext {
-              id
-              title
-              description
-              image {
-                alternativeText
-                url
-                width
-                height
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
+      aiSolveProblem {
+        title
+        aiSolveProblemList {
+          list {
+            title
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            bgImage {
+              alternativeText
+              url
+              width
+              height
             }
           }
-
-          isCarousel
-        }
-        ... on ComponentHomeServiceList {
-          id
-          serviceTitle
-          serviceList {
-            listingContext {
-              id
-              title
-              description
-              image {
-                alternativeText
-                url
-                width
-                height
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
-            }
-          }
-          isCarousel
         }
       }
 
-      industry {
-        industryListTitle
-        industry_list {
-          Slug
+      aiBenefit {
+        title
+        serviceList {
           listingContext {
             title
             description
@@ -277,13 +173,70 @@ const developmentDesignSlugQuery = gql`
               id
               href
               label
+              target
               isExternal
               SubDisc
               Icon {
                 alternativeText
+                height
                 url
                 width
+              }
+            }
+          }
+        }
+      }
+
+      ourService {
+        ... on ComponentHomeAiOurServices {
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
                 height
+                url
+                width
+              }
+            }
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                height
+                url
+                width
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
               }
             }
           }
@@ -292,36 +245,53 @@ const developmentDesignSlugQuery = gql`
 
       ourprocess {
         Title {
-          ... on ComponentHeadingsH1 {
+          ... on ComponentHeadingsH6 {
             id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
+            h6
           }
           ... on ComponentHeadingsH5 {
             id
             h5
           }
-          ... on ComponentHeadingsH6 {
+          ... on ComponentHeadingsH4 {
             id
-            h6
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on Error {
+            code
+            message
           }
         }
         ProcessData {
           ... on ComponentBaseTemplateTitleWithDescription {
-            id
             Title
             Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
           }
         }
       }
@@ -329,46 +299,27 @@ const developmentDesignSlugQuery = gql`
   }
 `;
 
-export interface DevelopmentDesignSlugResponse {
-  developmentAndDesignDetails: DevelopmentDesignDetail[];
+export interface AIServiceResponse {
+  aiServicesDetails?: AIService[];
+  aiService?: AIService;
 }
 
-export interface DevelopmentDesignDetail {
+export interface AIService {
   SEO: SEO | null;
   Banner: BannerSection;
-  isUxpage: boolean | null;
   cta: CTA | null;
-  whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
-  ourService: OurServiceList[];
-  industry: Industry;
-  ourprocess: OurProcess;
+  aiSolveProblem: AISolveProblem | null;
+  aiBenefit: AIBenefit | null;
+  ourService: OurService | null;
+  ourprocess?: OurProcess | null;
+  our_process?: OurProcess | null;
 }
 
-export interface OurServiceList {
-  id: string;
-  isCarousel: boolean;
-  serviceTitle: string;
-  serviceList: ServiceListItem[];
-}
-
-export interface ServiceListItem {
-  listingContext: {
-    id: string;
-    title: string;
-    description: string;
-    image: Image | null;
-    link: {
-      id: string;
-      href: string;
-      label: string;
-      target: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: Image | null;
-    } | null;
-  };
+export interface GraphQLErrorItem {
+  code?: string;
+  message?: string;
 }
 
 export interface SEO {
@@ -399,16 +350,13 @@ export interface BannerItem {
   isVideo: boolean | null;
   show_searchbox: boolean;
   videoLink: string | null;
-  BannerLink: BannerLink;
-  chipsText: {
-    Title: string;
-  }[];
+  BannerLink: LinkWithIcon;
 }
 
-export interface BannerLink {
+export interface LinkWithIcon {
   id: string;
   href: string;
-  label: string;
+  label: string | null;
   target: string;
   isExternal: boolean;
   SubDisc: string | null;
@@ -423,19 +371,6 @@ export interface CTA {
   }[];
   CTALink: Link[];
   Title: Heading[];
-}
-
-export interface Whyaddact {
-  Title: Heading[];
-  pageReference?: string;
-  GlobalCard: GlobalCard2[];
-}
-export interface GlobalCard2 {
-  id?: string;
-  Title: string;
-  Description: string;
-  Image: Image;
-  Link?: Link | null;
 }
 
 export interface FAQ {
@@ -465,53 +400,67 @@ export interface TabContent {
   logo: Image | null;
 }
 
-export interface Industry {
-  industryListTitle: string;
-  industry_list: IndustryListItem[];
+export interface AISolveProblem {
+  title: string;
+  aiSolveProblemList: {
+    list: {
+      title: string;
+      image: Image;
+      bgImage: Image;
+    }[];
+  }[];
 }
 
-export interface IndustryListItem {
-  Slug: string;
+export interface AIBenefit {
+  title: string;
+  serviceList: {
+    listingContext: {
+      title: string;
+      description: string;
+      image: Image;
+      link: LinkWithIcon;
+    };
+  }[];
+}
+
+export interface OurService {
   listingContext: {
     title: string;
     description: string;
-    image: Image | null;
-    link: {
+    image: Image;
+    link: LinkWithIcon;
+  };
+  serviceList: {
+    listingContext: {
       id: string;
-      href: string;
-      label: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: Image | null;
-    } | null;
-  } | null;
+      title: string;
+      description: string;
+      image: Image;
+      link: LinkWithIcon;
+    };
+  }[];
 }
 
 export interface OurProcess {
-  Title: Heading[];
-  ProcessData: ProcessDataItem[];
-}
-
-export interface ProcessDataItem {
-  id: string;
-  Title: string;
-  Description: string;
+  Title: (Heading | GraphQLErrorItem)[];
+  ProcessData: {
+    Title: string;
+    Description: string;
+    Link: LinkWithIcon;
+  }[];
 }
 
 // Fetch function
-export async function getDevelopmentDesignSlug(
+export async function getAIServiceSlug(
   slug: string,
-): Promise<DevelopmentDesignDetail | null> {
-  const data = await client.request<DevelopmentDesignSlugResponse>(
-    developmentDesignSlugQuery,
-    {
-      filters: {
-        Slug: {
-          eq: `/${slug}`,
-        },
+): Promise<AIService | null> {
+  const data = await client.request<AIServiceResponse>(aiServiceSlugQuery, {
+    filters: {
+      Slug: {
+        eq: `/${slug}`,
       },
     },
-  );
+  });
 
-  return data.developmentAndDesignDetails?.[0] ?? null;
+  return data.aiServicesDetails?.[0] ?? data.aiService ?? null;
 }

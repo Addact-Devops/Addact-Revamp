@@ -22,6 +22,7 @@ import { ChevronRightIcon } from "../atom/icons";
 
 interface HeaderProps {
   headerData: AddactHeaderData;
+  transparentHeader?: boolean;
   onContactClick?: () => void;
 }
 
@@ -359,7 +360,11 @@ function DropdownContent({
 }
 
 // ─── Main Header ─────────────────────────────────────────────────────────────
-const Header = ({ headerData, onContactClick }: HeaderProps) => {
+const Header = ({
+  headerData,
+  onContactClick,
+  transparentHeader,
+}: HeaderProps) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -371,6 +376,7 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const closeDropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [scrolled, setScrolled] = React.useState(false);
 
   const clearCloseDropdownTimer = () => {
     if (closeDropdownTimer.current) {
@@ -458,8 +464,23 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
     }
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   return (
-    <header className="fixed top-0 w-full z-50 bg-[#0F0F0F] border-b border-b-[#2e2e2e]">
+    <header
+      className={`fixed top-0 w-full z-[130] transition-all duration-300
+  ${
+    transparentHeader && !scrolled
+      ? "bg-transparent border-transparent"
+      : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"
+  }`}
+    >
       {/* Banner */}
       {showBanner && (
         <div
@@ -552,7 +573,7 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
                     onMouseLeave={() => {
                       scheduleCloseDropdown();
                     }}
-                    className="fixed z-40 overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
+                    className="fixed z-[140] overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
                     style={{
                       top: "130px",
                       background: "#0F0F0F",
@@ -623,7 +644,7 @@ const Header = ({ headerData, onContactClick }: HeaderProps) => {
 
       {/* Mobile overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-60 bg-[#0F0F0F] text-white flex flex-col overflow-hidden">
+        <div className="lg:hidden fixed inset-0 z-[140] bg-[#0F0F0F] text-white flex flex-col overflow-hidden">
           {/* Mobile Header: Top Row (Logo & X) */}
           <div className="mx-auto w-full flex items-center justify-between container-main px-4 py-4 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
             <div className="h-full flex items-center">

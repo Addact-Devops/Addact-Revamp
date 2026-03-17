@@ -4,21 +4,19 @@ import { useEffect, useState } from "react";
 // import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 
-import HeroBanner from "@/components/organisms/HeroBanner";
 // import OurProcess from "@/components/organisms/OurProcess";
-import ClientTestimonials from "@/components/organisms/ClientTestimonials";
-import OurInsights from "@/components/organisms/OurInsights";
-import FAQ from "@/components/organisms/FAQ";
-import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
+
 // import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 import {
   getHireExpertsSlug,
   HireExpert,
 } from "@/graphql/queries/getHireExpertSlug";
-import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
-import CtaBanner from "@/components/molecules/CtaBanner";
-import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
-import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
+
+import HeroAISection from "@/components/organisms/HeroAISection";
+import SolveProblemsWithAI from "@/components/organisms/SolveProblemsWithAI";
+import BenefitsSection from "@/components/organisms/BenfitsSections";
+import ServicesSection from "@/components/organisms/ServicesSection";
+import AIDevelopmentProcess from "@/components/organisms/AIProcess";
 
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
@@ -41,6 +39,8 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
     if (!pageData && slug) {
       setLoading(true);
       getHireExpertsSlug(slug)
+        //getAIServiceSlug(slug);
+
         .then((res) => {
           setPageData(res);
         })
@@ -59,33 +59,13 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
     return <div className="text-white p-8">Page Not Found</div>;
   }
 
-  const bannerData = pageData.Banner?.Banner?.[0];
-
   return (
-    <main className="bg-dark">
-      <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      {pageData?.our_service && (
-        <OurServicesWithTabs data={pageData.our_service} />
-      )}
-      <IndustryMarqueeCards />
-      {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
-
-      <HowEngagementProcessWorks />
-
-      <ClientTestimonials />
-      <OurInsights />
-      <FAQ data={pageData.faq} />
-      {data?.cta && <CtaBanner data={data?.cta} />}
+    <main>
+      <HeroAISection />
+      <SolveProblemsWithAI />
+      <BenefitsSection />
+      <ServicesSection />
+      <AIDevelopmentProcess />
     </main>
   );
 };
