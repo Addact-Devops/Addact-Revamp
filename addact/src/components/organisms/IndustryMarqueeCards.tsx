@@ -4,7 +4,23 @@ import { useRef, useState, MouseEvent, TouchEvent } from "react";
 import Image from "../atom/image";
 import Link from "next/link";
 import RichText from "../atom/richText";
-import type { Industry } from "@/graphql/queries/getAIService";
+
+type IndustryData = {
+  industryListTitle?: string | null;
+  industry_list?: Array<{
+    Slug?: string | null;
+    listingContext?: {
+      title?: string | null;
+      description?: string | null;
+      image?: {
+        url?: string | null;
+      } | null;
+      link?: {
+        href?: string | null;
+      } | null;
+    } | null;
+  }> | null;
+};
 
 type IndustryCard = {
   id: number;
@@ -15,7 +31,7 @@ type IndustryCard = {
 };
 
 type IndustryMarqueeCardsProps = {
-  data?: Industry | null;
+  data?: IndustryData | null;
   title?: string;
   cards?: IndustryCard[];
 };

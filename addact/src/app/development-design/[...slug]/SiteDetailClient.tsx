@@ -102,7 +102,7 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
       {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
       <OurTechStack data={pageData?.techStack} />
       <HowEngagementProcessWorks data={pageData?.ourprocess} />
-      <IndustryMarqueeCards />
+      <IndustryMarqueeCards data={pageData?.industry} />
       <ClientTestimonials />
       {pageData?.faq && <FAQ data={pageData?.faq} />}
       <OurInsights />

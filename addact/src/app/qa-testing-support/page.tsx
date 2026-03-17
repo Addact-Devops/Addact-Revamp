@@ -113,7 +113,7 @@ export default async function QATestingSupport() {
       <DetailPageServices title="Our Services Grid Test" />
 
       <HowEngagementProcessWorks data={data?.ourprocess} />
-      <IndustryMarqueeCards />
+      <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
       <OurInsights />
       {data?.cta && <CtaBanner data={data?.cta} />}

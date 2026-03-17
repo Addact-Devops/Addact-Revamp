@@ -1,15 +1,32 @@
 import React from "react";
 import MagicBento from "./MagicBento";
-import type { AISolveProblem } from "@/graphql/queries/getAIService";
+
+type AISolveProblemData = {
+  title?: string;
+  aiSolveProblemList?: Array<{
+    list?:
+      | {
+          title?: string;
+        }
+      | Array<{
+          title?: string;
+        }>;
+  }>;
+};
 
 interface SolveProblemsWithAIProps {
-  data?: AISolveProblem | null;
+  data?: AISolveProblemData | null;
 }
 
 const SolveProblemsWithAI = ({ data }: SolveProblemsWithAIProps) => {
   const problemTitles =
     data?.aiSolveProblemList
-      ?.map((item) => item?.list?.title)
+      ?.flatMap((item) => {
+        if (Array.isArray(item?.list)) {
+          return item.list.map((entry) => entry?.title || "");
+        }
+        return [item?.list?.title || ""];
+      })
       .filter((title): title is string => Boolean(title)) ?? [];
 
   return (

@@ -167,6 +167,36 @@ const hireExpertsSlugQuery = gql`
         }
       }
 
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+
       our_service {
         FirstTabDisplayName
         SecondTabDisplayName
@@ -255,8 +285,30 @@ export interface HireExpert {
   techStack: TechStack;
   ourService?: OurServiceList;
   our_service?: OurServiceData;
+  industry: Industry | null;
 }
 
+export interface Industry {
+  industryListTitle: string;
+  industry_list: IndustryListItem[];
+}
+
+export interface IndustryListItem {
+  Slug: string;
+  listingContext: {
+    title: string;
+    description: string;
+    image: Image | null;
+    link: {
+      id: string;
+      href: string;
+      label: string | null;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: Image | null;
+    } | null;
+  } | null;
+}
 export interface OurServiceList {
   isCarousel: boolean;
   serviceTitle: string;
@@ -294,8 +346,20 @@ export interface OurServiceData {
       id: string;
       Title: string;
       Description: string;
-      Image?: Image;
-      Link?: Link;
+      Image?: {
+        alternativeText: string | null;
+        height: number;
+        name: string;
+        url: string;
+        width: number;
+      };
+      Link?: {
+        id: string;
+        href: string;
+        label: string;
+        target: string;
+        isExternal: boolean;
+      };
       sub_service_page?: {
         Slug: string;
       };
@@ -317,7 +381,13 @@ export interface OurServiceData {
       id: string;
       Title: string;
       Description: string;
-      Link?: Link;
+      Link?: {
+        id: string;
+        href: string;
+        label: string;
+        target: string;
+        isExternal: boolean;
+      };
     }[];
     createdAt?: string;
     updatedAt?: string;

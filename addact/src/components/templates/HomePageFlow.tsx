@@ -51,7 +51,7 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
         <WhoWeAre />
         <OurCapabilities data={homeData?.ourCapabilitiy} />
         <BuildingAIEcosystem data={homeData?.aiEcoSystem} />
-        <IndustryMarqueeCards />
+        <IndustryMarqueeCards data={homeData?.industry} />
         <WhyWorkWithUs data={homeData?.whyaddact} />
         {/* <OurServices data={homeData?.ourservices} /> */}
         {/* <OurCmsExperts /> */}

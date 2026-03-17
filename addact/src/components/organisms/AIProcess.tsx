@@ -2,7 +2,27 @@
 import React, { useState, useEffect, FC, useMemo } from "react";
 import Cubes from "./CubeAnimation";
 import RichText from "../atom/richText";
-import type { OurProcess } from "@/graphql/queries/getAIService";
+
+type ProcessTitleItem = {
+  h1?: string;
+  h2?: string;
+  h3?: string;
+  h4?: string;
+  h5?: string;
+  h6?: string;
+  code?: string;
+  message?: string;
+};
+
+type ProcessDataItem = {
+  Title?: string;
+  Description?: string;
+};
+
+type AIProcessData = {
+  Title?: ProcessTitleItem[];
+  ProcessData?: ProcessDataItem[];
+};
 
 interface AccordionItem {
   id: number;
@@ -55,7 +75,7 @@ const AccordionRow: FC<AccordionItemProps> = ({
 };
 
 interface AIDevelopmentProcessProps {
-  data?: OurProcess | null;
+  data?: AIProcessData | null;
 }
 
 const AIDevelopmentProcess: FC<AIDevelopmentProcessProps> = ({ data }) => {

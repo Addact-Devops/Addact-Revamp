@@ -77,7 +77,7 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
       {pageData?.our_service && (
         <OurServicesWithTabs data={pageData.our_service} />
       )}
-      <IndustryMarqueeCards />
+      <IndustryMarqueeCards data={pageData?.industry} />
       {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
 
       <HowEngagementProcessWorks />
