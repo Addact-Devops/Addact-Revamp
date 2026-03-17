@@ -1,14 +1,23 @@
 "use client";
 
+import Link from "next/link";
+import type { OurService } from "@/graphql/queries/getAIService";
+
 interface ServiceCardProps {
   title: string;
   description: string;
+  href?: string;
+  target?: string;
+  isExternal?: boolean;
 }
 
 interface ServiceItem {
   id: number;
   title: string;
   description: string;
+  href?: string;
+  target?: string;
+  isExternal?: boolean;
 }
 
 const SERVICES: ServiceItem[] = [
@@ -63,6 +72,10 @@ const CTA_LABEL = "Get a free AI Consultation";
 
 const NAVBAR_HEIGHT = 80;
 
+interface ServicesSectionProps {
+  data?: OurService | null;
+}
+
 function ArrowUpRight({ className }: { className?: string }) {
   return (
     <svg
@@ -81,9 +94,20 @@ function ArrowUpRight({ className }: { className?: string }) {
   );
 }
 
-export function ServiceCard({ title, description }: ServiceCardProps) {
+export function ServiceCard({
+  title,
+  description,
+  href,
+  target,
+  isExternal,
+}: ServiceCardProps) {
   return (
-    <div className="group w-full rounded-[10px] border border-solid border-[rgba(15,15,15,0.2)] bg-white p-[30px] cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:shadow-[0_4px_20px_rgba(60,76,255,0.12)]">
+    <Link
+      href={href || "#"}
+      target={isExternal ? "_blank" : target || "_self"}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      className="group block w-full rounded-[10px] border border-solid border-[rgba(15,15,15,0.2)] bg-white p-[30px] cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:shadow-[0_4px_20px_rgba(60,76,255,0.12)]"
+    >
       <div className="flex items-center justify-between gap-3 mb-5">
         <h3 className="font-['Montserrat',sans-serif] font-semibold! text-[18px]! leading-[28px] md:text-[20px]! md:leading-[30px]! xl:text-[30px]! xl:leading-[36px]! m-0 text-[#0f0f0f] group-hover:text-white transition-colors duration-200">
           {title}
@@ -94,32 +118,53 @@ export function ServiceCard({ title, description }: ServiceCardProps) {
       <p className="font-['Montserrat',sans-serif] font-normal text-[14px] leading-[22px] md:text-[16px]! md:leading-[26px]! xl:text-[17px]! xl:leading-[28px]! m-0 text-[#0f0f0f] group-hover:text-white/90 transition-colors duration-200">
         {description}
       </p>
-    </div>
+    </Link>
   );
 }
 
-export default function ServicesSection() {
+export default function ServicesSection({ data }: ServicesSectionProps) {
+  const dynamicServices =
+    data?.serviceList
+      ?.map((service, index) => ({
+        id: Number(service?.listingContext?.id) || index + 1,
+        title: service?.listingContext?.title || "",
+        description: service?.listingContext?.description || "",
+        href: service?.listingContext?.link?.href || "",
+        target: service?.listingContext?.link?.target || "_self",
+        isExternal: service?.listingContext?.link?.isExternal || false,
+      }))
+      .filter((service) => service.title || service.description) ?? [];
+
+  const servicesToRender = dynamicServices.length ? dynamicServices : SERVICES;
+  const sectionHeading = data?.listingContext?.title || SECTION_HEADING;
+  const sectionDescription =
+    data?.listingContext?.description || SECTION_DESCRIPTION;
+  const ctaLabel = data?.listingContext?.link?.label || CTA_LABEL;
+
   return (
     <>
       <section className="bg-white w-full box-border px-4 py-10 md:px-10 md:py-16 lg:hidden!">
         <div className="flex flex-col gap-6 mb-8">
           <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[#0f0f0f] m-0 text-[28px] leading-[38px] md:text-[40px]! md:leading-[52px]!">
-            {SECTION_HEADING}
+            {sectionHeading}
           </h2>
           <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[14px] leading-[22px] md:text-[16px]! md:leading-[28px]! m-0">
-            {SECTION_DESCRIPTION}
+            {sectionDescription}
           </p>
           <button className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] md:text-[16px]! px-6 py-3 md:px-8! md:py-4! rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none">
-            {CTA_LABEL}
+            {ctaLabel}
             <ArrowUpRight className="w-4 h-4" />
           </button>
         </div>
         <div className="flex flex-col gap-3">
-          {SERVICES.map((service) => (
+          {servicesToRender.map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}
               description={service.description}
+              href={service.href}
+              target={service.target}
+              isExternal={service.isExternal}
             />
           ))}
         </div>
@@ -131,23 +176,26 @@ export default function ServicesSection() {
           style={{ top: `${NAVBAR_HEIGHT}px` }}
         >
           <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[#0f0f0f] m-0 text-[32px] leading-[44px] xl:text-[60px]! xl:leading-[85px]!">
-            {SECTION_HEADING}
+            {sectionHeading}
           </h2>
           <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[15px] leading-[26px] xl:text-[20px]! xl:leading-[34px]! m-0 xl:pr-15!">
-            {SECTION_DESCRIPTION}
+            {sectionDescription}
           </p>
           <button className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] xl:text-[16px]! px-7 py-4 rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none">
-            {CTA_LABEL}
+            {ctaLabel}
             <ArrowUpRight className="w-5 h-5" />
           </button>
         </div>
 
         <div className="flex flex-col gap-[10px] w-[49%] xl:w-[788px]! py-[80px]">
-          {SERVICES.map((service) => (
+          {servicesToRender.map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}
               description={service.description}
+              href={service.href}
+              target={service.target}
+              isExternal={service.isExternal}
             />
           ))}
         </div>

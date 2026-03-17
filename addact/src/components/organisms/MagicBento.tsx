@@ -6,6 +6,8 @@ import { gsap } from "gsap";
 
 export interface BentoProps {
   textAutoHide?: boolean;
+  headingText?: string;
+  problemTitles?: string[];
   enableStars?: boolean;
   enableSpotlight?: boolean;
   enableBorderGlow?: boolean;
@@ -460,6 +462,8 @@ const InteractiveCard: React.FC<{
 // ─── MagicBento ─────────────────────────────────────────────────────────────
 
 const MagicBento: React.FC<BentoProps> = ({
+  headingText,
+  problemTitles = [],
   enableSpotlight = true,
   enableBorderGlow = true,
   disableAnimations = false,
@@ -639,7 +643,7 @@ const MagicBento: React.FC<BentoProps> = ({
 
       <div className="w-full">
         <h2 className="solve-ai-heading mb-8 max-w-[677px] w-full font-semibold! text-white md:mb-10 xl:mb-12!">
-          How we solve your problems with AI
+          {headingText || "How we solve your problems with AI"}
         </h2>
 
         <div
@@ -659,12 +663,8 @@ const MagicBento: React.FC<BentoProps> = ({
           >
             <div className="relative z-1 flex h-full flex-col justify-between gap-8">
               <p className="solve-ai-copy w-full max-w-full text-white md:max-w-[24ch]">
-                Automate customer interactions with{" "}
-                <span className="solve-ai-strong">AI chatbots</span>
-                <span className="solve-ai-muted">
-                  {" "}
-                  that deliver instant responses and improve support efficiency.
-                </span>
+                {problemTitles[0] ||
+                  "Automate customer interactions with AI chatbots that deliver instant responses and improve support efficiency."}
               </p>
               <div className="pointer-events-none flex items-end justify-between gap-6">
                 <div className="solve-ai-shadow-star shrink-0" />
@@ -715,13 +715,8 @@ const MagicBento: React.FC<BentoProps> = ({
           >
             <div className="relative z-1 flex h-full items-start">
               <p className="solve-ai-copy-small w-full max-w-full text-white md:max-w-[13ch]">
-                <span className="solve-ai-strong">
-                  Detect and prevent fraudulent activities
-                </span>
-                <span className="solve-ai-muted">
-                  {" "}
-                  in real time using intelligent AI-powered monitoring systems.
-                </span>
+                {problemTitles[1] ||
+                  "Detect and prevent fraudulent activities in real time using intelligent AI-powered monitoring systems."}
               </p>
             </div>
           </InteractiveCard>
@@ -739,10 +734,8 @@ const MagicBento: React.FC<BentoProps> = ({
           >
             <div className="relative z-1 flex h-full flex-col justify-between gap-8">
               <p className="solve-ai-copy-small w-full max-w-full text-white md:max-w-[12ch]">
-                <span className="solve-ai-muted">
-                  Understand your customers better with{" "}
-                </span>
-                <span className="solve-ai-strong">AI-driven analytics.</span>
+                {problemTitles[2] ||
+                  "Understand your customers better with AI-driven analytics."}
               </p>
               <div className="relative mx-auto w-full max-w-76">
                 <Image
@@ -768,12 +761,8 @@ const MagicBento: React.FC<BentoProps> = ({
           >
             <div className="relative z-1 flex h-full flex-col justify-between gap-8">
               <p className="solve-ai-copy-small w-full max-w-full text-white md:max-w-[13ch]">
-                <span className="solve-ai-muted">
-                  Make smarter business decisions with{" "}
-                </span>
-                <span className="solve-ai-strong">
-                  AI-driven demand forecasting that predicts future trends.
-                </span>
+                {problemTitles[3] ||
+                  "Make smarter business decisions with AI-driven demand forecasting that predicts future trends."}
               </p>
               <div className="relative min-h-48 overflow-hidden">
                 <div className="solve-ai-forecast-left" />
@@ -810,7 +799,7 @@ const MagicBento: React.FC<BentoProps> = ({
                     className="solve-ai-analyzing-orb h-14 w-14 shrink-0 md:h-16 md:w-16 xl:h-22! xl:w-22!"
                   />
                   <span className="text-[2rem] font-semibold leading-none tracking-[-0.04em] text-white/15 md:text-[2.5rem] xl:text-[3.75rem]!">
-                    Analysing...
+                    {problemTitles[4] || "Analysing..."}
                   </span>
                 </div>
               </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment } from "react";
+import type { AIBenefit } from "@/graphql/queries/getAIService";
 
 interface BenefitCardProps {
   number: number;
@@ -49,6 +50,10 @@ const BENEFITS: BenefitCardProps[] = [
 
 const SECTION_HEADING = "AI Benefits for Businesses:";
 
+interface BenefitsSectionProps {
+  data?: AIBenefit | null;
+}
+
 export function BenefitCard({ number, title, description }: BenefitCardProps) {
   return (
     <div
@@ -73,7 +78,18 @@ export function BenefitCard({ number, title, description }: BenefitCardProps) {
   );
 }
 
-export default function BenefitsSection() {
+export default function BenefitsSection({ data }: BenefitsSectionProps) {
+  const dynamicBenefits =
+    data?.serviceList
+      ?.map((item, index) => ({
+        number: index + 1,
+        title: item?.listingContext?.title || "",
+        description: item?.listingContext?.description || "",
+      }))
+      .filter((item) => item.title || item.description) ?? [];
+
+  const benefitsToRender = dynamicBenefits.length ? dynamicBenefits : BENEFITS;
+
   return (
     <Fragment>
       <link
@@ -83,11 +99,11 @@ export default function BenefitsSection() {
 
       <section className="bg-white w-full box-border px-4 py-10 md:px-10 md:py-14 xl:px-[160px]! xl:py-20!">
         <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[#0f0f0f] m-0 text-[28px] leading-[38px] md:text-[40px] md:leading-[56px] xl:text-[60px]! xl:leading-[85px]! mb-8 lg:mb-[50px]!">
-          {SECTION_HEADING}
+          {data?.title || SECTION_HEADING}
         </h2>
 
         <div className="flex flex-wrap gap-4 lg:gap-5!">
-          {BENEFITS.map((benefit) => (
+          {benefitsToRender.map((benefit) => (
             <BenefitCard
               key={benefit.number}
               number={benefit.number}

@@ -3,6 +3,8 @@
 import { useRef, useState, MouseEvent, TouchEvent } from "react";
 import Image from "../atom/image";
 import Link from "next/link";
+import RichText from "../atom/richText";
+import type { Industry } from "@/graphql/queries/getAIService";
 
 type IndustryCard = {
   id: number;
@@ -13,6 +15,7 @@ type IndustryCard = {
 };
 
 type IndustryMarqueeCardsProps = {
+  data?: Industry | null;
   title?: string;
   cards?: IndustryCard[];
 };
@@ -79,6 +82,7 @@ const ArrowIcon = () => (
 );
 
 export default function IndustryMarqueeCards({
+  data,
   title = "Solving Complex Industry Challenges",
   cards = defaultCards,
 }: IndustryMarqueeCardsProps) {
@@ -89,7 +93,20 @@ export default function IndustryMarqueeCards({
   const [scrollLeft, setScrollLeft] = useState(0);
   const [dragStartTime, setDragStartTime] = useState(0);
 
-  const duplicatedCards = [...cards, ...cards];
+  const dynamicCards: IndustryCard[] =
+    data?.industry_list
+      ?.map((item, index) => ({
+        id: index + 1,
+        title: item?.listingContext?.title || "",
+        description: item?.listingContext?.description || "",
+        imageUrl: item?.listingContext?.image?.url || "",
+        slug: item?.listingContext?.link?.href || "#",
+      }))
+      .filter((item) => item.title || item.description || item.imageUrl) ?? [];
+
+  const displayTitle = data?.industryListTitle || title;
+  const displayCards = dynamicCards.length ? dynamicCards : cards;
+  const duplicatedCards = [...displayCards, ...displayCards];
 
   const handleMouseEnter = () => {
     setIsPaused(true);
@@ -172,7 +189,7 @@ export default function IndustryMarqueeCards({
       <section className="relative w-full bg-[#0f0f0f] py-12.5 md:py-40 overflow-hidden">
         <div className="container-main">
           <h2 className="text-[32px] md:text-[44px] lg:text-[60px] font-semibold! leading-[1.4] text-white mb-12.5 md:mb-20 max-w-169.25">
-            {title}
+            {displayTitle}
           </h2>
         </div>
 
@@ -240,9 +257,11 @@ export default function IndustryMarqueeCards({
                         </div>
                       </div>
 
-                      <p className="font-['Montserrat'] font-normal text-base md:text-xl lg:text-2xl! leading-7 md:leading-9 lg:leading-11! tracking-normal text-white m-0  md:line-clamp-none">
-                        {card.description}
-                      </p>
+                      <div className="font-['Montserrat'] font-normal text-base md:text-xl lg:text-2xl! leading-7 md:leading-9 lg:leading-11! tracking-normal text-white m-0 md:line-clamp-none">
+                        {card.description ? (
+                          <RichText html={card.description} />
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </div>
