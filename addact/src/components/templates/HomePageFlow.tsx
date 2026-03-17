@@ -26,44 +26,44 @@ interface HomePageFlowProps {
 }
 
 const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
-  const [showMainContent, setShowMainContent] = useState(false);
+  const [isIntroVisible, setIsIntroVisible] = useState(true);
 
   const handleIntroComplete = useCallback(() => {
-    setShowMainContent(true);
+    setIsIntroVisible(false);
     // Ensure user lands at the first section of main content.
     window.scrollTo(0, 0);
   }, []);
 
-  if (!showMainContent) {
-    return (
-      <IntroSplash
-        onComplete={handleIntroComplete}
-        animationTitle={homeData?.animationBanner?.animationTitle}
-        firstAnimationImage={homeData?.animationBanner?.firstAnimationImage}
-        secondAnimationImage={homeData?.animationBanner?.secondAnimationImage}
-      />
-    );
-  }
-
   return (
-    <main className="bg-dark">
-      <HomeBanner data={homeData?.animationBanner} />
-      {/* <OurPartners /> */}
-      <WhoWeAre />
-      <OurCapabilities data={homeData?.ourCapabilitiy} />
-      <BuildingAIEcosystem data={homeData?.aiEcoSystem} />
-      <IndustryMarqueeCards />
-      <WhyWorkWithUs data={homeData?.whyaddact} />
-      {/* <OurServices data={homeData?.ourservices} /> */}
-      {/* <OurCmsExperts /> */}
-      {/* <WhyAddact data={homeData?.whyaddact} /> */}
-      {homeData?.ourprocess && <OurProcess data={homeData?.ourprocess} />}
-      <ClientTestimonials />
-      <OurInsights />
-      <CtaBanner data={homeData?.cta} />
-      {/* <GlobeAnimation data={homeData?.GlobeAnimation} />
-       */}
-    </main>
+    <>
+      {isIntroVisible && (
+        <IntroSplash
+          onComplete={handleIntroComplete}
+          animationTitle={homeData?.animationBanner?.animationTitle}
+          firstAnimationImage={homeData?.animationBanner?.firstAnimationImage}
+          secondAnimationImage={homeData?.animationBanner?.secondAnimationImage}
+        />
+      )}
+
+      <main className="bg-dark">
+        <HomeBanner data={homeData?.animationBanner} />
+        {/* <OurPartners /> */}
+        <WhoWeAre />
+        <OurCapabilities data={homeData?.ourCapabilitiy} />
+        <BuildingAIEcosystem data={homeData?.aiEcoSystem} />
+        <IndustryMarqueeCards />
+        <WhyWorkWithUs data={homeData?.whyaddact} />
+        {/* <OurServices data={homeData?.ourservices} /> */}
+        {/* <OurCmsExperts /> */}
+        {/* <WhyAddact data={homeData?.whyaddact} /> */}
+        {homeData?.ourprocess && <OurProcess data={homeData?.ourprocess} />}
+        <ClientTestimonials />
+        <OurInsights />
+        <CtaBanner data={homeData?.cta} />
+        {/* <GlobeAnimation data={homeData?.GlobeAnimation} />
+         */}
+      </main>
+    </>
   );
 };
 
