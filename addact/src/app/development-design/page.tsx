@@ -133,7 +133,7 @@ export default async function umbracoPage() {
       {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
       <OurTechStack data={data?.techStack} />
       <HowEngagementProcessWorks data={data?.ourprocess} />
-      <IndustryMarqueeCards />
+      <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
       {data?.faq && <FAQ data={data?.faq} />}
       <OurInsights />

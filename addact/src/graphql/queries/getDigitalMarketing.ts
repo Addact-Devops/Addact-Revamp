@@ -254,6 +254,36 @@ const digitalMarketingQuery = gql`
         }
       }
 
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+
       ourprocess {
         Title {
           ... on ComponentHeadingsH1 {
@@ -304,11 +334,13 @@ export interface DigitalMarketingService {
   whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
-  ourService?: OurServiceList;
+  ourService: OurServiceList | null;
+  industry: Industry | null;
   ourprocess: OurProcess;
 }
 
 export interface OurServiceList {
+  id: string;
   isCarousel: boolean;
   serviceTitle: string;
   serviceList: ServiceListItem[];
@@ -316,19 +348,42 @@ export interface OurServiceList {
 
 export interface ServiceListItem {
   listingContext: {
+    id: string;
     title: string;
     description: string;
     image: Image | null;
     link: {
       id: string;
       href: string;
-      label: string;
-      target: string;
+      label: string | null;
+      target?: string | null;
       isExternal: boolean;
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
   };
+}
+
+export interface Industry {
+  industryListTitle: string;
+  industry_list: IndustryListItem[];
+}
+
+export interface IndustryListItem {
+  Slug: string;
+  listingContext: {
+    title: string;
+    description: string;
+    image: Image | null;
+    link: {
+      id: string;
+      href: string;
+      label: string | null;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: Image | null;
+    } | null;
+  } | null;
 }
 
 export interface SEO {

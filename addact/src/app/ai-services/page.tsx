@@ -1,24 +1,25 @@
 import { notFound } from "next/navigation";
-import { getHireExperts } from "@/graphql/queries/getHireExperts";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import HeroAISection from "@/components/organisms/HeroAISection";
 import SolveProblemsWithAI from "@/components/organisms/SolveProblemsWithAI";
 import BenefitsSection from "@/components/organisms/BenfitsSections";
 import ServicesSection from "@/components/organisms/ServicesSection";
 import AIProcess from "@/components/organisms/AIProcess";
-// import OurProcess from "@/components/organisms/OurProcess";
-// import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
-// import OurPartners from "@/components/organisms/OurPartners";
-// import CtaBanner2 from "@/components/molecules/CtaBanner2";
+import OurTechStack from "@/components/organisms/OurTechStack";
+import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
+import OurInsights from "@/components/organisms/OurInsights";
+import FAQ from "@/components/organisms/FAQ";
+import CtaBanner from "@/components/molecules/CtaBanner";
+import { getAIService } from "@/graphql/queries/getAIService";
 
 export async function generateMetadata() {
   return generatePageMetadata("ai-services");
 }
 export default async function umbracoPage() {
-  const data = await getHireExperts();
-  // const data = await getAIService();
+  const data = await getAIService();
   if (!data) return notFound();
   //   const bannerData = data.Banner?.Banner?.[0];
+  console.log("data", data);
   return (
     <main className="bg-dark">
       {/* ✅ SearchAction Schema */}
@@ -117,34 +118,16 @@ export default async function umbracoPage() {
         }}
       />
 
-      <HeroAISection />
-      <SolveProblemsWithAI />
-      <BenefitsSection />
-      <ServicesSection />
-      <AIProcess />
-      {/* <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      <DetailPageServices title="Our Services Carousel Test" isCaraousl />
-      <DetailPageServices title="Our Services Grid Test" />
-      {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />} */}
-      {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
-      {/* <OurProcess data={data?.our_process} /> */}
-      {/* <OurTechStack data={data?.techStack} />
-      <HowEngagementProcessWorks />
-      <IndustryMarqueeCards />
-      <ClientTestimonials />
-      {data?.faq && <FAQ data={data?.faq} />}
+      <HeroAISection data={data?.Banner?.Banner} />
+      <SolveProblemsWithAI data={data?.aiSolveProblem} />
+      <BenefitsSection data={data?.aiBenefit} />
+      <ServicesSection data={data?.ourService} />
+      <AIProcess data={data?.ourprocess} />
+      <IndustryMarqueeCards data={data?.industry} />
+      <OurTechStack data={data?.techStack} />
       <OurInsights />
-      {data?.cta && <CtaBanner data={data?.cta} />} */}
+      {data?.faq && <FAQ data={data?.faq} />}
+      {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
   );
 }

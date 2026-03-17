@@ -8,23 +8,27 @@ import { useParams } from "next/navigation";
 
 // import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 import {
-  getHireExpertsSlug,
-  HireExpert,
-} from "@/graphql/queries/getHireExpertSlug";
+  AIService,
+  getAIServiceSlug,
+} from "@/graphql/queries/getAIServiceSlug";
 
 import HeroAISection from "@/components/organisms/HeroAISection";
 import SolveProblemsWithAI from "@/components/organisms/SolveProblemsWithAI";
 import BenefitsSection from "@/components/organisms/BenfitsSections";
 import ServicesSection from "@/components/organisms/ServicesSection";
-import AIDevelopmentProcess from "@/components/organisms/AIProcess";
-
+import AIProcess from "@/components/organisms/AIProcess";
+import OurTechStack from "@/components/organisms/OurTechStack";
+import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
+import OurInsights from "@/components/organisms/OurInsights";
+import FAQ from "@/components/organisms/FAQ";
+import CtaBanner from "@/components/molecules/CtaBanner";
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
 //   { ssr: false },
 // );
 
-const SiteDetailClient = ({ data }: { data: HireExpert }) => {
-  const [pageData, setPageData] = useState<HireExpert | null>(data);
+const SiteDetailClient = ({ data }: { data: AIService }) => {
+  const [pageData, setPageData] = useState<AIService | null>(data);
   const [loading, setLoading] = useState(false); // set false, we already have data
 
   const params = useParams();
@@ -38,9 +42,7 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
   useEffect(() => {
     if (!pageData && slug) {
       setLoading(true);
-      getHireExpertsSlug(slug)
-        //getAIServiceSlug(slug);
-
+      getAIServiceSlug(slug)
         .then((res) => {
           setPageData(res);
         })
@@ -61,11 +63,16 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
 
   return (
     <main>
-      <HeroAISection />
-      <SolveProblemsWithAI />
-      <BenefitsSection />
-      <ServicesSection />
-      <AIDevelopmentProcess />
+      <HeroAISection data={data?.Banner?.Banner} />
+      <SolveProblemsWithAI data={data?.aiSolveProblem} />
+      <BenefitsSection data={data?.aiBenefit} />
+      <ServicesSection data={data?.ourService} />
+      <AIProcess data={data?.ourprocess} />
+      <IndustryMarqueeCards data={data?.industry} />
+      <OurTechStack data={data?.techStack} />
+      <OurInsights />
+      {data?.faq && <FAQ data={data?.faq} />}
+      {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
   );
 };

@@ -86,7 +86,7 @@ const SiteDetailClient = ({ data }: { data: DigitalMarketingService }) => {
       {/* <OurProcess data={data?.our_process} /> */}
       <OurTechStack data={data?.techStack} />
       <HowEngagementProcessWorks data={data?.ourprocess} />
-      <IndustryMarqueeCards />
+      <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
       {data?.faq && <FAQ data={data?.faq} />}
       <OurInsights />

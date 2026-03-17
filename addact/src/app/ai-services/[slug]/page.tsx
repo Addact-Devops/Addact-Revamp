@@ -1,16 +1,15 @@
 import { notFound } from "next/navigation";
 import SiteDetailClient from "./SiteDetailClient";
 import {
-  getHireExpertsSlug,
-  HireExpert,
-} from "@/graphql/queries/getHireExpertSlug";
+  AIService,
+  getAIServiceSlug,
+} from "@/graphql/queries/getAIServiceSlug";
 
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
-  const data: HireExpert | null = await getHireExpertsSlug(slug);
-  //const data : AIService | null = await getAIServiceSlug(slug);
+  const data: AIService | null = await getAIServiceSlug(slug);
 
   if (!data || !data.SEO) return {};
 
@@ -52,8 +51,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 
 const SiteDetailPage = async ({ params }: { params: Params }) => {
   const { slug } = await params;
-  const data: HireExpert | null = await getHireExpertsSlug(slug);
-  //const data : AIService | null = await getAIServiceSlug(slug);
+  const data: AIService | null = await getAIServiceSlug(slug);
 
   if (!data) return notFound();
 
