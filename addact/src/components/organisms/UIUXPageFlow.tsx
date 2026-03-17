@@ -2,6 +2,7 @@ import type { PageData } from "@/app/development-design/[...slug]/SiteDetailClie
 import React from "react";
 import UIUXHeroBanner from "./UIUXHeroBanner";
 import UIUXWhyImportant from "./UIUXWhyImportant";
+import UIUXImpactSlider from "./UIUXImpactSlider";
 
 const UIUXPageFlow = ({ data }: { data: PageData }) => {
   const bannerData = data?.Banner?.Banner?.[0] ?? null;
@@ -9,6 +10,7 @@ const UIUXPageFlow = ({ data }: { data: PageData }) => {
     <>
       <UIUXHeroBanner data={bannerData} />
       <UIUXWhyImportant />
+      <UIUXImpactSlider />
     </>
   );
 };

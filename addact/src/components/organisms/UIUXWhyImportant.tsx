@@ -140,7 +140,7 @@ const TiltedCard = ({ children }: { children: React.ReactNode }) => {
 
 const UIUXWhyImportant = () => {
   return (
-    <section className="bg-[#f3f3f3] px-4 sm:px-8 py-16 md:py-24 lg:py-40! xl:px-16!">
+    <section className="bg-white px-4 sm:px-8 py-16 md:py-24 lg:py-40! xl:px-16!">
       <div className="mx-auto w-full max-w-[1604px]">
         <h2 className="text-center font-montserrat text-[34px] font-semibold! leading-tight text-[#0f0f0f] sm:text-[42px] lg:text-[54px]! xl:text-[60px]!">
           Why UX Is Important

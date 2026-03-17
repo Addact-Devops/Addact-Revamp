@@ -33,6 +33,7 @@
     "react-snowfall": "^2.3.0",
     "sass": "^1.89.2",
     "slick-carousel": "^1.8.1",
+    "slick-image-compare": "^0.4.11",
     "tailwind-scrollbar": "^4.0.2",
     "xlsx": "^0.18.5",
     "yet-another-react-lightbox": "^3.25.0"
