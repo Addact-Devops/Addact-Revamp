@@ -4,6 +4,7 @@ import UIUXHeroBanner from "./UIUXHeroBanner";
 import UIUXWhyImportant from "./UIUXWhyImportant";
 import UIUXImpactSlider from "./UIUXImpactSlider";
 import DesignProcess from "./DesignProcess";
+import ProductExperienceChallenges from "./ProductExperienceChallenges";
 
 const UIUXPageFlow = ({ data }: { data: PageData }) => {
   const bannerData = data?.Banner?.Banner?.[0] ?? null;
@@ -13,6 +14,7 @@ const UIUXPageFlow = ({ data }: { data: PageData }) => {
       <UIUXWhyImportant />
       <UIUXImpactSlider />
       <DesignProcess />
+      <ProductExperienceChallenges />
     </>
   );
 };

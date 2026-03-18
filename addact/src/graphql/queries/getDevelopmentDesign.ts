@@ -218,10 +218,16 @@ const developementDesignQuery = gql`
             }
           }
           isCarousel
+          serviceVariant {
+            variant
+          }
         }
         ... on ComponentHomeDevelopmentAndDesignListing {
           id
           serviceTitle
+          serviceVariant {
+            variant
+          }
           serviceList {
             listingContext {
               id
@@ -340,16 +346,19 @@ export interface DevelopmentDesign {
 
 export interface OurServiceList {
   id: string;
-  isCarousel: boolean;
-  serviceTitle: string;
+  isCarousel: boolean | null;
+  serviceTitle: string | null;
+  serviceVariant: {
+    variant: string;
+  } | null;
   serviceList: ServiceListItem[];
 }
 
 export interface ServiceListItem {
   listingContext: {
     id: string;
-    title: string;
-    description: string;
+    title: string | null;
+    description: string | null;
     image: Image | null;
     link: {
       id: string;
@@ -360,7 +369,7 @@ export interface ServiceListItem {
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
-  };
+  } | null;
 }
 
 export interface SEO {
