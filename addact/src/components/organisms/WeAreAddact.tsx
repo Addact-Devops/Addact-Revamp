@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "../atom/image";
 
 type ImageType = {
   url: string;
@@ -87,7 +88,7 @@ const WeAreAddact: React.FC<Props> = ({
     >
       <div className="flex flex-col md:flex-row items-center sm:gap-[60px] lg:gap-[120px]">
         <div className="w-full md:w-1/2 hidden md:block">
-          <img
+          <Image
             src={image.url}
             alt={image.alternativeText || "We Are Addact"}
             width={image.width}
@@ -106,7 +107,7 @@ const WeAreAddact: React.FC<Props> = ({
           </h2>
 
           <div className="block md:hidden mb-[20px]">
-            <img
+            <Image
               src={image.url}
               alt={image.alternativeText || "We Are Addact"}
               width={image.width}

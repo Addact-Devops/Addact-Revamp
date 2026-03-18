@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "../atom/image";
 
 // Inline types
 type HeadingBlock =
@@ -80,7 +81,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                 {/* Title + Icon */}
                 <div className="relative mb-[15px] ">
                   {card.Image?.url && (
-                    <img
+                    <Image
                       src={card.Image.url}
                       alt={card.Image.alternativeText || ""}
                       className="inline mr-[10px] w-[20px] md:w-[25px]"
