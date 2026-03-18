@@ -189,6 +189,9 @@ const digitalMarketingQuery = gql`
       ourService {
         ... on ComponentHomeDigitalMarketingListing {
           id
+          serviceVariant {
+            variant
+          }
           serviceTitle
           serviceList {
             listingContext {
@@ -223,6 +226,9 @@ const digitalMarketingQuery = gql`
         ... on ComponentHomeServiceList {
           id
           serviceTitle
+          serviceVariant {
+            variant
+          }
           serviceList {
             listingContext {
               id
@@ -334,23 +340,26 @@ export interface DigitalMarketingService {
   whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
-  ourService: OurServiceList | null;
+  ourService: OurServiceList[];
   industry: Industry | null;
   ourprocess: OurProcess;
 }
 
 export interface OurServiceList {
   id: string;
-  isCarousel: boolean;
-  serviceTitle: string;
+  isCarousel: boolean | null;
+  serviceTitle: string | null;
+  serviceVariant: {
+    variant: string;
+  } | null;
   serviceList: ServiceListItem[];
 }
 
 export interface ServiceListItem {
   listingContext: {
     id: string;
-    title: string;
-    description: string;
+    title: string | null;
+    description: string | null;
     image: Image | null;
     link: {
       id: string;
@@ -361,7 +370,7 @@ export interface ServiceListItem {
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
-  };
+  } | null;
 }
 
 export interface Industry {
