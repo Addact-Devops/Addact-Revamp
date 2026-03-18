@@ -128,8 +128,7 @@ export default async function umbracoPage() {
         }}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
-      <DetailPageServices title="Our Services Carousel Test" isCaraousl />
-      <DetailPageServices title="Our Services Grid Test" />
+      <DetailPageServices data={data?.ourService} />
       {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
       <OurTechStack data={data?.techStack} />
       <HowEngagementProcessWorks data={data?.ourprocess} />
