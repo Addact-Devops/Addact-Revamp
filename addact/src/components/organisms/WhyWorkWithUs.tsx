@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { RadialDiagram } from "./RadialDiagram";
 import { AccordionItem, AccordionList } from "./AccordionList";
-import Image from "next/image";
 import RichText from "../atom/richText";
 import type { Whyaddact } from "@/graphql/queries/getHomePage";
 
@@ -41,7 +40,7 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
       {/* Mobile View - Cards + Non-clickable SVG */}
       <div className="block lg:hidden">
         <div className="px-6 pb-64 md:pb-72">
-          <h2 className="text-stone-950 text-[26px] font-semibold font-['Montserrat'] leading-normal mb-8">
+          <h2 className="text-stone-950 text-[26px] !font-semibold font-['Montserrat'] leading-normal mb-8">
             {heading}
           </h2>
 
@@ -80,16 +79,6 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
                     viewport={{ once: true }}
                   >
                     <div className="flex items-center gap-3 mb-3">
-                      {item.image?.url && (
-                        <div className="relative w-10 h-10 shrink-0">
-                          <Image
-                            src={item.image.url}
-                            alt={item.image.alternativeText || item.title}
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                      )}
                       <h3 className="text-stone-950 text-[20px] font-medium font-['Montserrat'] leading-8">
                         {item?.title}
                       </h3>
@@ -139,23 +128,25 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
 
       {/* Desktop View - Original Layout */}
       <div className="hidden lg:block">
-        <div className="mx-auto px-4 sm:px-6 md:px-10 lg:px-20! xl:px-32! max-w-[1920px]">
-          <div className="flex flex-col-reverse lg:flex-row! lg:items-start! items-center gap-8 md:gap-12 lg:gap-16! xl:gap-20!">
-            {/* Radial Diagram - responsive positioning */}
+        <div className="mx-auto max-w-[1920px] pl-0 pr-6 lg:pr-10 xl:pr-16 2xl:pr-24">
+          <div className="grid grid-cols-12 items-center gap-8 xl:gap-12 2xl:gap-16">
+            {/* Radial Diagram */}
             <motion.div
-              className="shrink-0 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[800px]! xl:max-w-[900px]! 2xl:max-w-[1057px]! aspect-square lg:absolute! lg:-left-52! xl:-left-62! 2xl:-left-52! lg:top-20! xl:-top-20!"
+              className="col-span-6 self-center"
               style={{ aspectRatio: "1057/1091" }}
             >
-              <RadialDiagram
-                activeIndex={activeIndex}
-                onSpokeClick={setActiveIndex}
-              />
+              <div className="w-full max-w-[700px] xl:max-w-[860px] 2xl:max-w-[1020px]">
+                <RadialDiagram
+                  activeIndex={activeIndex}
+                  onSpokeClick={setActiveIndex}
+                />
+              </div>
             </motion.div>
 
-            {/* Content - responsive margins */}
-            <div className="flex-1 w-full min-w-0 lg:ml-auto! lg:max-w-[600px] xl:max-w-[700px]! 2xl:max-w-[900px]! lg:pl-8! xl:pl-12!">
+            {/* Content */}
+            <div className="col-span-6 self-center w-full min-w-0">
               <motion.h2
-                className="justify-start text-stone-950 text-2xl md:text-3xl lg:text-5xl! xl:text-6xl! font-semibold! font-['Montserrat'] leading-[85px] mb-10"
+                className="mb-8 text-stone-950 text-4xl xl:text-5xl 2xl:text-6xl !font-semibold font-['Montserrat'] leading-tight"
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
