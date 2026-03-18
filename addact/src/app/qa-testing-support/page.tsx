@@ -109,8 +109,7 @@ export default async function QATestingSupport() {
           ))}
         </>
       )} */}
-      <DetailPageServices title="Our Services Carousel Test" isCaraousl />
-      <DetailPageServices title="Our Services Grid Test" />
+      <DetailPageServices data={data?.ourService} />
 
       <HowEngagementProcessWorks data={data?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />

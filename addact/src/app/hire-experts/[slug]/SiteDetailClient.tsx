@@ -19,6 +19,7 @@ import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProce
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
 import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
+import DetailPageServices from "@/components/organisms/DetailPageServices";
 
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
@@ -74,9 +75,10 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
         }}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
-      {pageData?.our_service && (
+      <DetailPageServices data={pageData?.ourService} />
+      {/* {pageData?.our_service && (
         <OurServicesWithTabs data={pageData.our_service} />
-      )}
+      )} */}
       <IndustryMarqueeCards data={pageData?.industry} />
       {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
 

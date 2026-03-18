@@ -220,6 +220,9 @@ const hireExpertsQuery = gql`
         ... on ComponentHomeHireServiceList {
           isCarousel
           serviceTitle
+          serviceVariant {
+            variant
+          }
           serviceList {
             listingContext {
               title
@@ -264,19 +267,22 @@ export interface HireExpert {
   faq: FAQ;
   techStack: TechStack;
   industry: Industry | null;
-  ourService: OurServiceList | null;
+  ourService: OurServiceList[];
 }
 
 export interface OurServiceList {
-  isCarousel: boolean;
-  serviceTitle: string;
+  isCarousel: boolean | null;
+  serviceTitle: string | null;
+  serviceVariant: {
+    variant: string;
+  } | null;
   serviceList: ServiceListItem[];
 }
 
 export interface ServiceListItem {
   listingContext: {
-    title: string;
-    description: string;
+    title: string | null;
+    description: string | null;
     image: Image | null;
     link: {
       id: string;
@@ -287,7 +293,7 @@ export interface ServiceListItem {
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
-  };
+  } | null;
 }
 
 export interface Industry {
