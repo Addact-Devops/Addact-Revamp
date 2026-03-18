@@ -4,37 +4,59 @@ on:
   push:
     branches:
       - uat
+    paths:
+      - 'addact/**'
+      - 'addact-cms/**'
 
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
+      # 🔧 Fix Git permission issue
       - name: Fix Git Safe Directory
-        run: |
-          git config --global --add safe.directory F:/Addact-Revamp
+        run: git config --global --add safe.directory F:/Addact-Revamp
 
+      # 🔄 Pull latest code
       - name: Pull latest code
         run: |
           Set-Location "F:\Addact-Revamp"
           git pull origin uat
 
+      # =========================
+      # 🔹 BACKEND (addact-cms)
+      # =========================
+
       - name: Install Backend Dependencies
+        if: contains(github.event.head_commit.message, 'backend')
         run: |
           Set-Location "F:\Addact-Revamp\addact-cms"
           npm install
 
+      - name: Restart Backend
+        if: contains(github.event.head_commit.message, 'backend')
+        run: |
+          for /f "tokens=5" %%a in ('netstat -aon ^| findstr :1339') do taskkill /F /PID %%a
+          start /B cmd /c "cd /d F:\Addact-Revamp\addact-cms && npm run develop"
+
+      # =========================
+      # 🔹 FRONTEND (addact)
+      # =========================
+
       - name: Install Frontend Dependencies
+        if: contains(github.event.head_commit.message, 'frontend')
         run: |
           Set-Location "F:\Addact-Revamp\addact"
           npm install
 
       - name: Build Frontend
+        if: contains(github.event.head_commit.message, 'frontend')
         run: |
           Set-Location "F:\Addact-Revamp\addact"
           npm run build
 
-      - name: Restart Backend
+      - name: Restart Frontend
+        if: contains(github.event.head_commit.message, 'frontend')
         run: |
-          taskkill /F /IM node.exe
-          Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact-cms && npm start'
+          for /f "tokens=5" %%a in ('netstat -aon ^| findstr :3001') do taskkill /F /PID %%a
+          start /B cmd /c "cd /d F:\Addact-Revamp\addact && npm run start"
