@@ -502,7 +502,6 @@ export interface ProcessDataItem {
 export async function getDevelopmentDesignDetailsCmsSlug(
   slug: string,
 ): Promise<CmsDetail | null> {
-  console.log("slug????", slug);
   const data = await client.request<CmsDetailResponse>(
     developmentDesignDetailsSlugQuery,
     {

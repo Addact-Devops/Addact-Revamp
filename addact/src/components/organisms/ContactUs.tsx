@@ -5,7 +5,7 @@ import { CONTACTUS } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
 import ReCAPTCHA from "react-google-recaptcha";
 import { usePathname } from "next/navigation";
-import { X } from "lucide-react";
+import { Mail, Phone, X } from "lucide-react";
 
 interface IProps {
   data: CONTACTUS;
@@ -46,6 +46,29 @@ const ContactUs = ({
 
   const redirectUrl = "/contact-us/connect-now-thank-you";
   const formBlock = data?.Form?.[0];
+  const drawerContactDetails = [
+    {
+      id: "email",
+      label: "Email us",
+      value: "info@addact.net",
+      icon: Mail,
+      href: "mailto:info@addact.net",
+    },
+    {
+      id: "india",
+      label: "India",
+      value: "+91 94277 22717",
+      icon: Phone,
+      href: "tel:+919427722717",
+    },
+    {
+      id: "usa",
+      label: "USA",
+      value: "+1 619-738-5955",
+      icon: Phone,
+      href: "tel:+16197385955",
+    },
+  ];
 
   useEffect(() => {
     if (!isDrawer || !isOpen) {
@@ -164,7 +187,7 @@ const ContactUs = ({
   if (isDrawer) {
     return (
       <div
-        className={`fixed inset-0 z-[120] ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-[200] ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
         aria-hidden={!isOpen}
       >
         <div
@@ -303,6 +326,30 @@ const ContactUs = ({
                 {formLoading ? "Submitting..." : "Contact Us"}
               </button>
             </form>
+
+            <div className="mt-8 space-y-4">
+              {drawerContactDetails.map((contactItem) => {
+                const Icon = contactItem.icon;
+
+                return (
+                  <a
+                    key={contactItem.id}
+                    href={contactItem.href}
+                    className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
+                  >
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
+                      <Icon className="h-4 w-4" />
+                    </span>
+                    <span className="text-[20px] leading-8 md:text-[28px] md:leading-10">
+                      <strong className="font-semibold">
+                        {contactItem.label}:
+                      </strong>{" "}
+                      <span className="font-normal">{contactItem.value}</span>
+                    </span>
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </aside>
       </div>

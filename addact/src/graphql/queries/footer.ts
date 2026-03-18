@@ -44,8 +44,22 @@ const GET_FOOTER = gql`
         ... on ComponentBaseTemplateTitleWithDescription {
           Title
           Description
+          Link {
+            href
+            isExternal
+            label
+            SubDisc
+            target
+            Icon {
+              alternativeText
+              width
+              height
+              url
+            }
+          }
         }
       }
+
       footerlinks {
         NavLink {
           ... on ComponentBaseTemplateTitle {
@@ -100,92 +114,79 @@ const GET_FOOTER = gql`
 `;
 
 export type FooterResponse = {
-  footers: {
-    Logo?: {
-      Image?: {
-        alternativeText?: string;
-        height?: number;
-        name?: string;
-        url?: string;
-        width?: number;
-      };
-    };
-    BackGroundImage?: {
-      Image?: {
-        alternativeText?: string;
-        height?: number;
-        name?: string;
-        url?: string;
-        width?: number;
-      };
-    };
-    BackGroundImageMobile?: {
-      Image?: {
-        alternativeText?: string;
-        height?: number;
-        name?: string;
-        url?: string;
-        width?: number;
-      };
-    };
-    AddressInformationMobileBgImg?: {
-      Image?: {
-        alternativeText?: string;
-        height?: number;
-        name?: string;
-        url?: string;
-        width?: number;
-      };
-    }[];
+  footers: Footer[];
+};
 
-    AddressInformation?: {
+export type Footer = {
+  Logo?: FooterImageBlock | null;
+  BackGroundImage?: FooterImageBlock | null;
+  BackGroundImageMobile?: FooterImageBlock | null;
+  AddressInformationMobileBgImg?: FooterImageBlock | null;
+  AddressInformation?: FooterAddressInformation[];
+  footerlinks?: FooterLinksGroup[];
+  milestonestitle?: FooterMilestonesTitle | null;
+  milestonesimage?: FooterImageBlock[];
+  socialMedia?: FooterSocialLink[];
+  CopyrightText?: string;
+  SiteSlog?: string;
+};
+
+type FooterImage = {
+  alternativeText?: string;
+  height?: number;
+  name?: string;
+  url?: string;
+  width?: number;
+};
+
+type FooterImageBlock = {
+  Image?: FooterImage | null;
+};
+
+type FooterAddressInformation = {
+  Title?: string;
+  Description?: string;
+  Link?: {
+    href?: string;
+    isExternal?: boolean;
+    label?: string;
+    SubDisc?: string;
+    target?: string;
+    Icon?: FooterImage | null;
+  } | null;
+};
+
+type FooterLinksGroup = {
+  NavLink?: FooterNavLink[];
+};
+
+type FooterNavLink =
+  | {
       Title?: string;
-      Description?: string;
-    }[];
-    footerlinks?: {
-      NavLink?: (
-        | { Title?: string }
-        | {
-            id?: string;
-            href?: string;
-            label?: string;
-            target?: string;
-            isExternal?: boolean;
-          }
-      )[];
-    }[];
-    milestonestitle?: {
-      CommonTitle?: {
-        Title?: string;
-        Description?: string;
-      }[];
-    };
-    milestonesimage?: {
-      Image?: {
-        alternativeText?: string;
-        height?: number;
-        name?: string;
-        url?: string;
-        width?: number;
-      } | null;
-    }[];
-    socialMedia?: {
+    }
+  | {
       id?: string;
       href?: string;
       label?: string;
       target?: string;
       isExternal?: boolean;
-      SubDisc?: string;
-      Icon?: {
-        alternativeText?: string;
-        height?: number;
-        url?: string;
-        width?: number;
-      };
-    }[];
-    CopyrightText?: string;
-    SiteSlog?: string;
+    };
+
+type FooterMilestonesTitle = {
+  CommonTitle?: {
+    Title?: string;
+    Description?: string;
   }[];
+};
+
+type FooterSocialLink = {
+  id?: string;
+  href?: string;
+  label?: string;
+  target?: string;
+  isExternal?: boolean;
+  SubDisc?: string;
+  Icon?: FooterImage | null;
 };
 
 // ✅ Fetch footer data safely
@@ -199,16 +200,6 @@ export async function getFooterData() {
     footer.AddressInformation = footer.AddressInformation.filter(
       (item) => item && typeof item.Title === "string",
     );
-  }
-
-  // ✅ Normalize AddressInformationMobileBgImg to always be an array
-  if (
-    footer?.AddressInformationMobileBgImg &&
-    !Array.isArray(footer.AddressInformationMobileBgImg)
-  ) {
-    footer.AddressInformationMobileBgImg = [
-      footer.AddressInformationMobileBgImg,
-    ];
   }
 
   return footer || null;
