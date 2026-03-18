@@ -207,7 +207,7 @@ export const AddactDropdownIcon: React.FC<React.SVGProps<SVGSVGElement>> = (
       {...rest}
     >
       <path
-        d="M30 -1.90735e-06L24.4932 -1.90735e-06L14.9583 21.733L5.42333 -1.90735e-06H0L12.6552 28H17.3036L30 -1.90735e-06Z"
+        d="M30 28L24.4932 28L14.9583 6.26705L5.42333 28H0L12.6552 0L17.3036 0L30 28Z"
         fill="#3C4CFF"
       />
     </svg>

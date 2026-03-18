@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, MouseEvent, TouchEvent } from "react";
+import { useRef, useState, MouseEvent, TouchEvent, useEffect } from "react";
 import Image from "../atom/image";
 import Link from "next/link";
 import RichText from "../atom/richText";
@@ -103,11 +103,39 @@ export default function IndustryMarqueeCards({
   cards = defaultCards,
 }: IndustryMarqueeCardsProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [dragStartTime, setDragStartTime] = useState(0);
+
+  const SCROLL_SPEED = 0.8; // pixels per frame, adjust for desired speed
+
+  // Handle continuous marquee animation
+  useEffect(() => {
+    const marquee = marqueeRef.current;
+    if (!marquee) return;
+
+    const animate = () => {
+      if (!isPaused && !isDragging) {
+        marquee.scrollLeft += SCROLL_SPEED;
+        // Reset scroll position for infinite loop when reaching halfway point
+        if (marquee.scrollLeft >= marquee.scrollWidth / 2) {
+          marquee.scrollLeft = 0;
+        }
+      }
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPaused, isDragging]);
 
   const dynamicCards: IndustryCard[] =
     data?.industry_list
@@ -225,7 +253,7 @@ export default function IndustryMarqueeCards({
           onTouchEnd={handleTouchEnd}
         >
           <div
-            className={`flex gap-5 w-fit ${isPaused ? "paused" : "animate-marquee"}`}
+            className={`flex gap-5 w-fit`}
             style={{
               cursor: isDragging ? "grabbing" : "grab",
             }}
@@ -287,30 +315,6 @@ export default function IndustryMarqueeCards({
       </section>
 
       <style jsx>{`
-        @keyframes marquee-scroll {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
-        }
-
-        .animate-marquee {
-          animation: marquee-scroll 40s linear infinite;
-          will-change: transform;
-        }
-
-        @media (max-width: 768px) {
-          .animate-marquee {
-            animation-duration: 30s;
-          }
-        }
-
-        .paused {
-          animation-play-state: paused !important;
-        }
-
         .group:hover .arrow-icon path {
           stroke: #5865f2;
         }
