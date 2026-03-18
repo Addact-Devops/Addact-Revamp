@@ -38,7 +38,7 @@ const CareerGallery = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [filteredImages, setFilteredImages] = useState<GalleryImageItem[][]>(
-    [],
+    []
   );
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -90,7 +90,7 @@ const CareerGallery = () => {
 
     if (selectedYear !== "All") {
       allImages = allImages.filter(
-        (img) => String(img.Year || currentYear) === selectedYear,
+        (img) => String(img.Year || currentYear) === selectedYear
       );
     }
 
@@ -101,9 +101,9 @@ const CareerGallery = () => {
   const allYears = Array.from(
     new Set(
       categories.flatMap((cat) =>
-        cat.Images.map((img) => img.Year || currentYear),
-      ),
-    ),
+        cat.Images.map((img) => img.Year || currentYear)
+      )
+    )
   ).sort((a, b) => b - a);
 
   // Flattened images array for lightbox slides

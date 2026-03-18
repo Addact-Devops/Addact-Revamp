@@ -1,0 +1,36 @@
+﻿name: UAT Auto Deploy
+
+on:
+  push:
+    branches:
+      - uat
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull latest code
+        run: |
+          cd /d F:\Addact-Revamp
+          git pull origin uat
+
+      - name: Install Backend Dependencies
+        run: |
+          cd /d F:\Addact-Revamp\addact
+          npm install
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd /d F:\Addact-Revamp\addact-cms
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd /d F:\Addact-Revamp\addact-cms
+          npm run build
+
+      - name: Restart Backend
+        run: |
+          taskkill /F /IM node.exe || echo "No node running"
+          start cmd /c "cd /d F:\Addact-Revamp\addact && npm start"
