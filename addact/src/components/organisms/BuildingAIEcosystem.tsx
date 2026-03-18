@@ -21,8 +21,8 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                 <div className='flex flex-col lg:flex-row gap-8 lg:gap-4 2xl:gap-6 items-center'>
                     {/* Left side — Image (hidden on mobile, shown on lg+) */}
                     {(aiData?.firstImage?.url || aiData?.secondImage?.url) && (
-                        <div className='hidden lg:block w-full lg:w-[45%] 2xl:w-[50%]'>
-                            <div className='relative w-full aspect-[3/4] overflow-hidden rounded-[10px]'>
+                        <div className='hidden lg:block w-full lg:w-[45%] 2xl:w-[50%] lg:ml-[calc(50%-50vw)] lg:shrink-0'>
+                            <div className='relative w-full aspect-[3/4] overflow-hidden rounded-[10px] bg-[#0F0F0F]'>
                                 {/* First Image - Base Layer */}
                                 {aiData?.firstImage?.url && (
                                     <motion.div
@@ -36,7 +36,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                             src={aiData.firstImage.url}
                                             alt={aiData.firstImage.alternativeText || "AI Ecosystem First"}
                                             fill
-                                            className='object-cover'
+                                            className='object-contain'
                                             sizes='(min-width: 1024px) 45vw, 50vw'
                                         />
                                     </motion.div>
@@ -55,7 +55,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                             src={aiData.secondImage.url}
                                             alt={aiData.secondImage.alternativeText || "AI Ecosystem Second"}
                                             fill
-                                            className='object-cover'
+                                            className='object-contain'
                                             sizes='(min-width: 1024px) 45vw, 50vw'
                                         />
                                     </motion.div>
@@ -77,8 +77,8 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
 
                         {/* Mobile image between heading and description */}
                         {(aiData?.firstImage?.url || aiData?.secondImage?.url) && (
-                            <div className='relative mb-8 block w-full overflow-hidden lg:hidden rounded-[10px]'>
-                                <div className='relative w-full aspect-[4/5]'>
+                            <div className='relative left-1/2 mb-8 block w-screen -translate-x-1/2 overflow-hidden lg:hidden'>
+                                <div className='relative w-full aspect-[3/4] md:aspect-[4/5] bg-[#0F0F0F]'>
                                     {/* First Image - Base Layer */}
                                     {aiData?.firstImage?.url && (
                                         <motion.div
@@ -92,7 +92,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                                 src={aiData.firstImage.url}
                                                 alt={aiData.firstImage.alternativeText || "AI Ecosystem First"}
                                                 fill
-                                                className='object-cover'
+                                                className='object-cover object-center'
                                                 sizes='100vw'
                                             />
                                         </motion.div>
@@ -111,7 +111,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                                 src={aiData.secondImage.url}
                                                 alt={aiData.secondImage.alternativeText || "AI Ecosystem Second"}
                                                 fill
-                                                className='object-cover'
+                                                className='object-cover object-center'
                                                 sizes='100vw'
                                             />
                                         </motion.div>
