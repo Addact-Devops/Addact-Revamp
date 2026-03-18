@@ -22,6 +22,7 @@ const developmentDesignSlugQuery = gql`
         languageTag
       }
       isUxpage
+
       Banner {
         Banner {
           ... on ComponentBannerBanner {
@@ -164,6 +165,7 @@ const developmentDesignSlugQuery = gql`
           }
         }
       }
+
       faq {
         Title
         FAQ {
@@ -330,6 +332,273 @@ const developmentDesignSlugQuery = gql`
           }
         }
       }
+
+      challenges {
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
+        ProcessData {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
+      designFlow {
+        title
+        description
+        tabsAndFlow {
+          tabTitle
+          flow {
+            title
+            information
+            gif {
+              alternativeText
+              height
+              mime
+              url
+              width
+            }
+            icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
+
+      impactUx {
+        title
+        beforeText
+        afterText
+        beforeImage {
+          alternativeText
+          height
+          url
+          width
+        }
+        afterImage {
+          alternativeText
+          height
+          url
+          width
+        }
+        desktopFrame {
+          alternativeText
+          height
+          url
+          width
+        }
+        mobileFrame {
+          alternativeText
+          height
+          url
+          width
+        }
+      }
+
+      ourService {
+        ... on ComponentHomeCmsListing {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                url
+                width
+                height
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+
+          isCarousel
+        }
+        ... on ComponentHomeServiceList {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                url
+                width
+                height
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+          isCarousel
+        }
+        ... on ComponentHomeUiUxLisitng {
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          isCarousel
+          link {
+            id
+            href
+            label
+            target
+            isExternal
+            SubDisc
+            Icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+          serviceList {
+            listingContext {
+              title
+              description
+              image {
+                alternativeText
+                height
+                url
+                width
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+        }
+      }
+
+      ourWork {
+        serviceTitle
+        serviceVariant {
+          variant
+        }
+        isCarousel
+        serviceList {
+          listingContext {
+            id
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+          tagLine {
+            Title
+          }
+        }
+      }
     }
   }
 `;
@@ -349,28 +618,41 @@ export interface DevelopmentDesignDetail {
   ourService: OurServiceList[];
   industry: Industry;
   ourprocess: OurProcess;
+  challenges: Challenges | null;
+  designFlow: DesignFlow | null;
+  impactUx: ImpactUx | null;
+  ourWork: OurWork | null;
 }
 
 export interface OurServiceList {
-  id: string;
+  id?: string | null;
   isCarousel: boolean | null;
   serviceTitle: string | null;
   serviceVariant: {
     variant: string;
+  } | null;
+  link?: {
+    id: string;
+    href: string;
+    label: string;
+    target: string;
+    isExternal: boolean;
+    SubDisc: string | null;
+    Icon: Image | null;
   } | null;
   serviceList: ServiceListItem[];
 }
 
 export interface ServiceListItem {
   listingContext: {
-    id: string;
+    id?: string | null;
     title: string | null;
     description: string | null;
     image: Image | null;
     link: {
       id: string;
       href: string;
-      label: string;
+      label: string | null;
       target: string;
       isExternal: boolean;
       SubDisc: string | null;
@@ -504,6 +786,88 @@ export interface ProcessDataItem {
   id: string;
   Title: string;
   Description: string;
+}
+
+export interface Challenges {
+  Title: (Heading | ChallengeError)[];
+  ProcessData: ChallengeProcessDataItem[];
+}
+
+export interface ChallengeError {
+  code: string;
+  message: string;
+}
+
+export interface ChallengeProcessDataItem {
+  Title: string;
+  Description: string;
+  Link: {
+    id: string;
+    href: string;
+    label: string;
+    target: string;
+    isExternal: boolean;
+    SubDisc: string | null;
+    Icon: Image | null;
+  } | null;
+}
+
+export interface DesignFlow {
+  title: string;
+  description: string;
+  tabsAndFlow: DesignFlowTab[];
+}
+
+export interface DesignFlowTab {
+  tabTitle: string;
+  flow: DesignFlowItem[];
+}
+
+export interface DesignFlowItem {
+  title: string;
+  information: string;
+  gif: Image | null;
+  icon: Image | null;
+}
+
+export interface ImpactUx {
+  title: string;
+  beforeText: string;
+  afterText: string;
+  beforeImage: Image | null;
+  afterImage: Image | null;
+  desktopFrame: Image | null;
+  mobileFrame: Image | null;
+}
+
+export interface OurWork {
+  serviceTitle: string | null;
+  serviceVariant: {
+    variant: string;
+  } | null;
+  isCarousel: boolean | null;
+  serviceList: OurWorkServiceListItem[];
+}
+
+export interface OurWorkServiceListItem {
+  listingContext: {
+    id: string;
+    title: string | null;
+    description: string | null;
+    image: Image | null;
+    link: {
+      id: string;
+      href: string;
+      label: string | null;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: Image | null;
+    } | null;
+  } | null;
+  tagLine: {
+    Title: string;
+  }[];
 }
 
 // Fetch function
