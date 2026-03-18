@@ -358,7 +358,7 @@ export default function Footer({ data }: FooterProps) {
           </div>
           <div className=" select-none  w-full pt-[40px] md:pt-[60px] lg:pt-[80px] overflow-hidden">
             <div className=" select-none text-left w-full">
-              <div className="text-[#272727] text-center font-bold leading-[0.85] tracking-[-0.03em] whitespace-nowrap text-[50px] sm:text-[80px] md:text-[110px] lg:text-[145px] xl:text-[220px]!">
+              <div className="text-[#272727] text-center font-bold leading-[0.85] tracking-[-0.03em] whitespace-nowrap text-[35px] sm:text-[80px] md:text-[110px] lg:text-[145px] xl:text-[220px]!">
                 We Add Value
               </div>
             </div>

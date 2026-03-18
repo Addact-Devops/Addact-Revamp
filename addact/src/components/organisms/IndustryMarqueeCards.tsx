@@ -263,7 +263,7 @@ export default function IndustryMarqueeCards({
               duplicatedCards?.map((card, index) => (
                 <div
                   key={`${card.id}-${index}`}
-                  className="group relative w-80 h-105 md:w-120 md:h-110 xl:w-129.25! xl:h-154.75! rounded-[10px] overflow-hidden shrink-0 border border-white/20 transition-all duration-300 cursor-pointer select-none hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] bg-neutral-700/30 rounded-bl-[10px] rounded-br-[10px] backdrop-blur-[30px]"
+                  className="group relative w-80 h-105 md:w-[400px] md:h-110 xl:w-129.25! xl:h-154.75! rounded-[10px] overflow-hidden shrink-0 border border-white/20 transition-all duration-300 cursor-pointer select-none hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] bg-neutral-700/30 rounded-bl-[10px] rounded-br-[10px] backdrop-blur-[30px]"
                   draggable={false}
                 >
                   <div className="relative w-full h-full overflow-hidden">
@@ -284,7 +284,7 @@ export default function IndustryMarqueeCards({
                     />
                   </div>
 
-                  <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[220px] lg:h-[271px]! h-67.75 md:h-55 max-md:h-45 backdrop-blur-[30px] bg-[rgba(69,69,69,0.3)] border-t border-white/20 rounded-b-[10px] p-7.5 md:p-6.25 max-md:p-5 flex flex-col justify-start">
+                  <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[220px] lg:h-[230px]! xl:h-[271px]! max-md:h-[220px] backdrop-blur-[30px] bg-[rgba(69,69,69,0.3)] border-t border-white/20 rounded-b-[10px] p-7.5 md:p-6.25 max-md:p-5 flex flex-col justify-start">
                     <div className="w-full h-full flex flex-col gap-5 max-md:gap-3.75">
                       <div className="flex items-center gap-4 shrink-0">
                         <Link
@@ -292,7 +292,7 @@ export default function IndustryMarqueeCards({
                           onClick={handleCardClick}
                           className="no-underline"
                         >
-                          <p className="text-white text-xl! md:text-2xl lg:text-3xl! font-semibold font-['Montserrat'] leading-tight md:leading-snug lg:leading-[18.5px] m-0 whitespace-nowrap transition-colors duration-300">
+                          <p className="text-white text-xl! md:text-2xl lg:text-2xl!  xl:text-3xl! font-semibold font-['Montserrat'] leading-tight md:leading-snug lg:leading-[18.5px] m-0 whitespace-nowrap transition-colors duration-300">
                             {card.title}
                           </p>
                         </Link>
@@ -301,7 +301,7 @@ export default function IndustryMarqueeCards({
                         </div>
                       </div>
 
-                      <div className="font-['Montserrat'] font-normal text-base md:text-xl lg:text-2xl! leading-7 md:leading-9 lg:leading-11! tracking-normal text-white m-0 md:line-clamp-none">
+                      <div className="font-['Montserrat'] font-normal text-base lg:text-base! xl:text-2xl! leading-7 md:leading-9 lg:leading-8! xl:leading-11! tracking-normal text-white m-0 md:line-clamp-none">
                         {card.description ? (
                           <RichText html={card.description} />
                         ) : null}
