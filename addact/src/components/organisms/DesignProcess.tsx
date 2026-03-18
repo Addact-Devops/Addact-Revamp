@@ -1,6 +1,9 @@
-import { useState } from "react";
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { svgPaths } from "../atom/icons";
+import type { DesignFlow } from "@/graphql/queries/getDevelopmentDesignSlug";
 
 // Magnifying glass icon component
 function SearchIcon({ color = "#0F0F0F" }: { color?: string }) {
@@ -74,8 +77,29 @@ const processSteps = [
   },
 ];
 
-export default function DesignProcess() {
-  const [selectedStep, setSelectedStep] = useState("foundation");
+export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
+  const resolvedProcessSteps = useMemo(() => {
+    const dynamicSteps =
+      data?.tabsAndFlow?.map((tab, index) => ({
+        id:
+          tab.tabTitle?.toLowerCase().replace(/\s+/g, "-") ||
+          `step-${index + 1}`,
+        title: tab.tabTitle || `Step ${index + 1}`,
+        subSteps: tab.flow?.map((item) => item.title).filter(Boolean) || [],
+      })) ?? [];
+
+    return dynamicSteps.length > 0 ? dynamicSteps : processSteps;
+  }, [data]);
+
+  const [selectedStep, setSelectedStep] = useState(
+    resolvedProcessSteps[0]?.id ?? "foundation",
+  );
+
+  useEffect(() => {
+    if (!resolvedProcessSteps.some((step) => step.id === selectedStep)) {
+      setSelectedStep(resolvedProcessSteps[0]?.id ?? "foundation");
+    }
+  }, [resolvedProcessSteps, selectedStep]);
 
   // Calculate positions for sub-steps in stair pattern
   const getSubStepPosition = (index: number) => {
@@ -101,11 +125,11 @@ export default function DesignProcess() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-['Montserrat'] font-semibold text-[60px] leading-[74px] text-white mb-4">
-            Where Design Meets Development
+            {data?.title || "Where Design Meets Development"}
           </h2>
           <p className="font-['Montserrat'] text-[18px] leading-[28px] text-white/80 max-w-[700px]">
-            We combine strategic design with structured handoff to ensure great
-            experiences are built exactly as intended.
+            {data?.description ||
+              "We combine strategic design with structured handoff to ensure great experiences are built exactly as intended."}
           </p>
         </motion.div>
 
@@ -114,37 +138,41 @@ export default function DesignProcess() {
           <div className="flex gap-12">
             {/* Left Side - Main Steps */}
             <div className="w-[406px] flex-shrink-0 space-y-4 relative z-20">
-              {processSteps.map((step, index) => {
-                const isSelected = selectedStep === step.id;
+              {resolvedProcessSteps &&
+                resolvedProcessSteps?.length > 0 &&
+                resolvedProcessSteps.map((step, index) => {
+                  const isSelected = selectedStep === step.id;
 
-                return (
-                  <motion.button
-                    key={step.id}
-                    onClick={() => setSelectedStep(step.id)}
-                    className={`relative w-full h-[84px] rounded-[10px] overflow-hidden transition-all duration-300 ${
-                      isSelected
-                        ? "bg-[#3c4cff]"
-                        : "bg-transparent border border-white/20"
-                    }`}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.1 }}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    {/* Icon */}
-                    <div className="absolute left-[15px] top-1/2 -translate-y-1/2 bg-white rounded-[10px] w-[54px] h-[54px]">
-                      <SearchIcon color={isSelected ? "#3C4CFF" : "#0F0F0F"} />
-                    </div>
+                  return (
+                    <motion.button
+                      key={step.id}
+                      onClick={() => setSelectedStep(step.id)}
+                      className={`relative w-full h-[84px] rounded-[10px] overflow-hidden transition-all duration-300 ${
+                        isSelected
+                          ? "bg-[#3c4cff]"
+                          : "bg-transparent border border-white/20"
+                      }`}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      {/* Icon */}
+                      <div className="absolute left-[15px] top-1/2 -translate-y-1/2 bg-white rounded-[10px] w-[54px] h-[54px]">
+                        <SearchIcon
+                          color={isSelected ? "#3C4CFF" : "#0F0F0F"}
+                        />
+                      </div>
 
-                    {/* Text */}
-                    <p className="absolute left-[89px] top-1/2 -translate-y-1/2 font-['Montserrat'] font-semibold text-[24px] leading-[44px] text-white whitespace-nowrap">
-                      {step.title}
-                    </p>
-                  </motion.button>
-                );
-              })}
+                      {/* Text */}
+                      <p className="absolute left-[89px] top-1/2 -translate-y-1/2 font-['Montserrat'] font-semibold text-[24px] leading-[44px] text-white whitespace-nowrap">
+                        {step.title}
+                      </p>
+                    </motion.button>
+                  );
+                })}
             </div>
 
             {/* Right Side - Sub Steps Container */}
@@ -230,7 +258,7 @@ export default function DesignProcess() {
                 {/* Sub Steps */}
                 <AnimatePresence mode="wait">
                   {(() => {
-                    const step = processSteps.find(
+                    const step = resolvedProcessSteps.find(
                       (s) => s.id === selectedStep,
                     );
                     if (!step) return null;
