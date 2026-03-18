@@ -45,50 +45,68 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
           </h2>
 
           {/* Carousel - One card at a time */}
-          <div className="relative" ref={containerRef}>
-            <div className="overflow-hidden">
+          <div className="relative w-full" ref={containerRef}>
+            {/* Outer clip — exactly one card wide */}
+            <div className="overflow-hidden w-full">
               <motion.div
                 className="flex cursor-grab active:cursor-grabbing"
+                /* Total track width = N × 100% of the container */
+                style={{ width: `${items.length * 100}%` }}
                 drag="x"
-                dragConstraints={containerRef}
-                dragElastic={0.1}
-                onDragEnd={(e, { offset }) => {
-                  const cardWidth = containerRef.current?.offsetWidth || 0;
-                  const threshold = cardWidth * 0.2; // 20% swipe threshold
+                dragConstraints={{
+                  left: -(
+                    (containerRef.current?.offsetWidth ?? 0) *
+                    (items.length - 1)
+                  ),
+                  right: 0,
+                }}
+                dragElastic={0.08}
+                dragMomentum={false}
+                onDragEnd={(_e, { offset, velocity }) => {
+                  const cardWidth = containerRef.current?.offsetWidth ?? 0;
+                  const threshold = cardWidth * 0.2;
+                  const fast = Math.abs(velocity.x) > 500;
 
                   if (
-                    offset.x < -threshold &&
+                    (offset.x < -threshold || (fast && offset.x < 0)) &&
                     mobileCardIndex < items.length - 1
                   ) {
-                    // Swiped left - go to next card
                     handleMobileCardChange(mobileCardIndex + 1);
-                  } else if (offset.x > threshold && mobileCardIndex > 0) {
-                    // Swiped right - go to previous card
+                  } else if (
+                    (offset.x > threshold || (fast && offset.x > 0)) &&
+                    mobileCardIndex > 0
+                  ) {
                     handleMobileCardChange(mobileCardIndex - 1);
                   }
                 }}
-                animate={{ x: `-${mobileCardIndex * 100}%` }}
+                /* Translate by card-index × one-card-width (px) */
+                animate={{
+                  x: -(
+                    (containerRef.current?.offsetWidth ?? 0) * mobileCardIndex
+                  ),
+                }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
                 {items.map((item, index) => (
-                  <motion.div
+                  /* Each card occupies exactly 1/N of the track = 100% of the container */
+                  <div
                     key={index}
-                    className="bg-white border border-black/10 rounded-[10px] p-5 w-full shrink-0"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
+                    style={{ width: `${100 / items.length}%` }}
+                    className="shrink-0"
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 className="text-stone-950 text-[20px] font-medium font-['Montserrat'] leading-8">
-                        {item?.title}
-                      </h3>
-                    </div>
-                    {item?.description && (
-                      <div className="text-stone-950 text-sm font-normal font-['Montserrat'] leading-[1.7]">
-                        <RichText html={item?.description} />
+                    <div className="bg-white border border-black/10 rounded-[10px] p-5 h-full">
+                      <div className="flex items-center gap-3 mb-3">
+                        <h3 className="text-stone-950 text-[18px] lg:text-[20px]! font-medium! font-['Montserrat'] leading-8">
+                          {item?.title}
+                        </h3>
                       </div>
-                    )}
-                  </motion.div>
+                      {item?.description && (
+                        <div className="text-stone-950 text-sm font-normal font-['Montserrat'] leading-[1.7]">
+                          <RichText html={item?.description} />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 ))}
               </motion.div>
             </div>
