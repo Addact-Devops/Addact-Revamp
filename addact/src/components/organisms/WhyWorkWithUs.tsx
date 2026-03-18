@@ -3,7 +3,6 @@ import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { RadialDiagram } from "./RadialDiagram";
 import { AccordionItem, AccordionList } from "./AccordionList";
-import Image from "next/image";
 import RichText from "../atom/richText";
 import type { Whyaddact } from "@/graphql/queries/getHomePage";
 
@@ -41,65 +40,73 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
       {/* Mobile View - Cards + Non-clickable SVG */}
       <div className="block lg:hidden">
         <div className="px-6 pb-64 md:pb-72">
-          <h2 className="text-stone-950 text-[26px] font-semibold font-['Montserrat'] leading-normal mb-8">
+          <h2 className="text-stone-950 text-[26px] !font-semibold font-['Montserrat'] leading-normal mb-8">
             {heading}
           </h2>
 
           {/* Carousel - One card at a time */}
-          <div className="relative" ref={containerRef}>
-            <div className="overflow-hidden">
+          <div className="relative w-full" ref={containerRef}>
+            {/* Outer clip — exactly one card wide */}
+            <div className="overflow-hidden w-full">
               <motion.div
                 className="flex cursor-grab active:cursor-grabbing"
+                /* Total track width = N × 100% of the container */
+                style={{ width: `${items.length * 100}%` }}
                 drag="x"
-                dragConstraints={containerRef}
-                dragElastic={0.1}
-                onDragEnd={(e, { offset }) => {
-                  const cardWidth = containerRef.current?.offsetWidth || 0;
-                  const threshold = cardWidth * 0.2; // 20% swipe threshold
+                dragConstraints={{
+                  left: -(
+                    (containerRef.current?.offsetWidth ?? 0) *
+                    (items.length - 1)
+                  ),
+                  right: 0,
+                }}
+                dragElastic={0.08}
+                dragMomentum={false}
+                onDragEnd={(_e, { offset, velocity }) => {
+                  const cardWidth = containerRef.current?.offsetWidth ?? 0;
+                  const threshold = cardWidth * 0.2;
+                  const fast = Math.abs(velocity.x) > 500;
 
                   if (
-                    offset.x < -threshold &&
+                    (offset.x < -threshold || (fast && offset.x < 0)) &&
                     mobileCardIndex < items.length - 1
                   ) {
-                    // Swiped left - go to next card
                     handleMobileCardChange(mobileCardIndex + 1);
-                  } else if (offset.x > threshold && mobileCardIndex > 0) {
-                    // Swiped right - go to previous card
+                  } else if (
+                    (offset.x > threshold || (fast && offset.x > 0)) &&
+                    mobileCardIndex > 0
+                  ) {
                     handleMobileCardChange(mobileCardIndex - 1);
                   }
                 }}
-                animate={{ x: `-${mobileCardIndex * 100}%` }}
+                /* Translate by card-index × one-card-width (px) */
+                animate={{
+                  x: -(
+                    (containerRef.current?.offsetWidth ?? 0) * mobileCardIndex
+                  ),
+                }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
                 {items.map((item, index) => (
-                  <motion.div
+                  /* Each card occupies exactly 1/N of the track = 100% of the container */
+                  <div
                     key={index}
-                    className="bg-white border border-black/10 rounded-[10px] p-5 w-full shrink-0"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
+                    style={{ width: `${100 / items.length}%` }}
+                    className="shrink-0"
                   >
-                    <div className="flex items-center gap-3 mb-3">
-                      {item.image?.url && (
-                        <div className="relative w-10 h-10 shrink-0">
-                          <Image
-                            src={item.image.url}
-                            alt={item.image.alternativeText || item.title}
-                            fill
-                            className="object-contain"
-                          />
+                    <div className="bg-white border border-black/10 rounded-[10px] p-5 h-full">
+                      <div className="flex items-center gap-3 mb-3">
+                        <h3 className="text-stone-950 text-[18px] lg:text-[20px]! font-medium! font-['Montserrat'] leading-8">
+                          {item?.title}
+                        </h3>
+                      </div>
+                      {item?.description && (
+                        <div className="text-stone-950 text-sm font-normal font-['Montserrat'] leading-[1.7]">
+                          <RichText html={item?.description} />
                         </div>
                       )}
-                      <h3 className="text-stone-950 text-[20px] font-medium font-['Montserrat'] leading-8">
-                        {item?.title}
-                      </h3>
                     </div>
-                    {item?.description && (
-                      <div className="text-stone-950 text-sm font-normal font-['Montserrat'] leading-[1.7]">
-                        <RichText html={item?.description} />
-                      </div>
-                    )}
-                  </motion.div>
+                  </div>
                 ))}
               </motion.div>
             </div>
@@ -139,23 +146,25 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
 
       {/* Desktop View - Original Layout */}
       <div className="hidden lg:block">
-        <div className="mx-auto px-4 sm:px-6 md:px-10 lg:px-20! xl:px-32! max-w-[1920px]">
-          <div className="flex flex-col-reverse lg:flex-row! lg:items-start! items-center gap-8 md:gap-12 lg:gap-16! xl:gap-20!">
-            {/* Radial Diagram - responsive positioning */}
+        <div className="mx-auto max-w-[1920px] pl-0 pr-6 lg:pr-10 xl:pr-16 2xl:pr-24">
+          <div className="grid grid-cols-12 items-center gap-8 xl:gap-12 2xl:gap-16">
+            {/* Radial Diagram */}
             <motion.div
-              className="shrink-0 w-full max-w-[320px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[800px]! xl:max-w-[900px]! 2xl:max-w-[1057px]! aspect-square lg:absolute! lg:-left-52! xl:-left-62! 2xl:-left-52! lg:top-20! xl:-top-20!"
+              className="col-span-6 self-center"
               style={{ aspectRatio: "1057/1091" }}
             >
-              <RadialDiagram
-                activeIndex={activeIndex}
-                onSpokeClick={setActiveIndex}
-              />
+              <div className="w-full max-w-[700px] xl:max-w-[860px] 2xl:max-w-[1020px]">
+                <RadialDiagram
+                  activeIndex={activeIndex}
+                  onSpokeClick={setActiveIndex}
+                />
+              </div>
             </motion.div>
 
-            {/* Content - responsive margins */}
-            <div className="flex-1 w-full min-w-0 lg:ml-auto! lg:max-w-[600px] xl:max-w-[700px]! 2xl:max-w-[900px]! lg:pl-8! xl:pl-12!">
+            {/* Content */}
+            <div className="col-span-6 self-center w-full min-w-0">
               <motion.h2
-                className="justify-start text-stone-950 text-2xl md:text-3xl lg:text-5xl! xl:text-6xl! font-semibold! font-['Montserrat'] leading-[85px] mb-10"
+                className="mb-8 text-stone-950 text-4xl xl:text-5xl 2xl:text-6xl !font-semibold font-['Montserrat'] leading-tight"
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
