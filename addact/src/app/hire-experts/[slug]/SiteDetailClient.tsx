@@ -9,7 +9,6 @@ import HeroBanner from "@/components/organisms/HeroBanner";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
-import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 // import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 import {
   getHireExpertsSlug,
