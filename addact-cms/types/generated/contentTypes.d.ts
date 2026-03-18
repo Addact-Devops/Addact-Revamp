@@ -807,9 +807,15 @@ export interface ApiAiServicesDetailAiServicesDetail
     draftAndPublish: true;
   };
   attributes: {
+    aiBenefit: Schema.Attribute.Component<'home.ai-card', false>;
+    aiSolveProblem: Schema.Attribute.Component<'home.ai-solve-problem', false>;
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
     listingContext: Schema.Attribute.Component<'home.base-component', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -817,11 +823,31 @@ export interface ApiAiServicesDetailAiServicesDetail
       'api::ai-services-detail.ai-services-detail'
     > &
       Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<
+      ['home.ai-our-services', 'home.service-list']
+    >;
     publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
     Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
   };
 }
 
@@ -1513,6 +1539,7 @@ export interface ApiContactusContactus extends Struct.SingleTypeSchema {
       false
     >;
     banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    contactInfo: Schema.Attribute.Component<'shared.link', true>;
     contactus: Schema.Attribute.Relation<
       'oneToOne',
       'api::form-field.form-field'
@@ -1672,6 +1699,7 @@ export interface ApiDevelopmentAndDesignDetailDevelopmentAndDesignDetail
     ourService: Schema.Attribute.DynamicZone<
       ['home.cms-listing', 'home.service-list', 'home.ui-ux-lisitng']
     >;
+    ourWork: Schema.Attribute.Component<'home.service-list', false>;
     publishedAt: Schema.Attribute.DateTime;
     ReferenceTitle: Schema.Attribute.String;
     SEO: Schema.Attribute.Component<'shared.seo', false>;
@@ -2061,6 +2089,7 @@ export interface ApiFormFieldFormField extends Struct.CollectionTypeSchema {
   attributes: {
     ButtonLabel: Schema.Attribute.String;
     CompanyName: Schema.Attribute.String;
+    contactInfo: Schema.Attribute.Component<'shared.link', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -3013,6 +3042,7 @@ export interface ApiServiceCardServiceCard extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     ReferenceTitle: Schema.Attribute.String;
+    tagLine: Schema.Attribute.Component<'base-template.title', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

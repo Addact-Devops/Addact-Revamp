@@ -93,6 +93,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::our-process.our-process"
+    },
+    "ourWork": {
+      "type": "component",
+      "component": "home.service-list",
+      "repeatable": false
     }
   }
 }

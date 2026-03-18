@@ -18,6 +18,11 @@
       "type": "component",
       "component": "home.base-component",
       "repeatable": false
+    },
+    "tagLine": {
+      "type": "component",
+      "component": "base-template.title",
+      "repeatable": true
     }
   }
 }
