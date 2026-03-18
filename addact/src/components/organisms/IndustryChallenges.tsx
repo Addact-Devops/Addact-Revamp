@@ -83,10 +83,9 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
         <div className="lg:hidden">
           {/* Full-width title */}
           <div className="mb-[60px] lg:mb-6">
-            <h2 className="!text-white !text-[28px] md:!text-[32px] leading-tight">
+            <h2 className="!text-[#0F0F0F] !text-[28px] md:!text-[32px] leading-tight font-semibold!">
               {data?.Title ?? "Our Challenges"}
             </h2>
-            <div className="w-[120px] h-[4px] bg-[#3C4CFF] mt-4 rounded" />
           </div>
 
           <div className="flex gap-[30px]">
@@ -97,7 +96,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                   className="pointer-events-none select-none text-[72px] lg:text-[64px] leading-none tracking-tight custom-stroke"
                   style={{
                     fontWeight: 900,
-                    WebkitTextStrokeColor: "rgba(255, 255, 255, 0.7)",
+                    WebkitTextStrokeColor: "#3C4CFF",
                     color: "transparent",
                     fontFamily: "Poppins, sans-serif",
                     opacity: 0.5,
@@ -120,11 +119,11 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                         ref={(el) => {
                           headingRefs.current[idx] = el ?? null; // return void -> TS OK
                         }}
-                        className="text-white !font-bold !text-[20px] lg:!text-[26px] mb-[15px]"
+                        className="!text-[#0F0F0F] !font-bold !text-[20px] lg:!text-[26px] mb-[15px]"
                       >
                         {(item?.Title ?? "").trim()}
                       </h3>
-                      <div className="text-white text-[12px] md:text-[15px] lg:text-[18px] leading-[23px] md:leading-[24px] lg:leading-[30px]">
+                      <div className="!text-[#0F0F0F] text-[12px] md:text-[15px] lg:text-[18px] leading-[23px] md:leading-[24px] lg:leading-[30px]">
                         {(item?.Content ?? "").split("\n").map((line, i) => (
                           <div key={i}>{line.trim()}</div>
                         ))}
@@ -160,7 +159,7 @@ const IndustryChallenges: React.FC<Props> = ({ data }) => {
                       style={{
                         fontWeight: 900,
                         WebkitTextStrokeWidth: "2px",
-                        WebkitTextStrokeColor: "#E5E5E5",
+                        WebkitTextStrokeColor: "#3C4CFF",
                         color: "transparent",
                         lineHeight: "0.8",
                         fontFamily: "Poppins, sans-serif",
