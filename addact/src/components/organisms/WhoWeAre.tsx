@@ -100,13 +100,13 @@ const WhoWeAre = () => {
           {data?.whoAreWes[0].Counter.map((item, index) => (
             <div
               key={item.id}
-              className="bg-[#3C4CFF] rounded-[20px] p-6 sm:p-8 md:p-10 flex flex-col justify-between w-full aspect-square max-w-[250px] sm:max-w-[360px] md:max-w-[385px] lg:min-h-[389px]! text-left"
+              className="bg-[#3C4CFF] rounded-[20px] p-6 sm:p-8 md:p-10 flex flex-col justify-between w-full aspect-square max-w-[250px] sm:max-w-[360px] md:max-w-[385px] lg:min-h-[350px]! xl:min-h-[389px]! text-left"
             >
               <h2 className="text-white font-bold! font-montserrat text-[64px]! sm:text-[80px]! md:text-[100px]! lg:text-[110px]! xl:text-[130px]! leading-none tracking-tighter">
                 {`${item.NumberCount}${counterSuffixes[index] || ""}`}
               </h2>
 
-              <p className="text-white text-[25px]! lg:text-[28px]! xl:text-[30px]! font-normal leading-tight mt-4 sm:mt-6">
+              <p className="text-white text-[25px]! lg:text-[25px]! xl:text-[30px]! font-normal leading-tight mt-4 sm:mt-6">
                 {item.CounterTitle}
               </p>
             </div>
