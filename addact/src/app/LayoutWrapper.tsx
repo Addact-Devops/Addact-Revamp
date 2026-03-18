@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import Header from "@/components/templates/header";
 import Footer from "@/components/templates/Footer";
-import ContactUs from "@/components/organisms/ContactUs";
 import type { AddactHeaderData } from "@/graphql/queries/addact-header";
 import type { CONTACTUS } from "@/graphql/queries/getHomePage";
+import ContactUs from "@/components/organisms/ContactUs";
 
 // 🔹 infer Footer prop type directly from Footer component
 type FooterProps = React.ComponentProps<typeof Footer>;
