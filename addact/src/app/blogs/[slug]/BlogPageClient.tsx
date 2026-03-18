@@ -8,6 +8,8 @@ import AuthorCard from "@/components/organisms/AuthorCard";
 import BlogContactCard from "@/components/organisms/BlogContactCard";
 import BlogDetailBanner from "@/components/organisms/BlogDetailBanner";
 import SimilarBlog from "@/components/organisms/SimilarBlogs";
+import Image from "@/components/atom/image";
+import Link from "next/link";
 
 type BlogPageClientProps = {
   blog: BlogBySlugResponse["addactBlogs"][number] | null;
@@ -99,26 +101,26 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
                   if (!link?.href || !iconUrl) return null;
 
                   return (
-                    <a
+                    <Link
                       key={`social-${i}-${j}`}
                       href={link.href}
                       target={link.target === "blank" ? "_blank" : link.target}
                       rel={link.isExternal ? "noopener noreferrer" : undefined}
                       className="group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden"
                     >
-                      <img
+                      <Image
                         src={iconUrl}
                         alt={icon.Icons?.alternativeText || icon.Title || ""}
                         className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
                       />
-                      <img
-                        src={hoverUrl}
+                      <Image
+                        src={hoverUrl || ""}
                         alt={
                           icon.HoverIcon?.alternativeText || icon.Title || ""
                         }
                         className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                       />
-                    </a>
+                    </Link>
                   );
                 },
               );

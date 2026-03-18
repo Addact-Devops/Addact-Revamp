@@ -140,7 +140,11 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
   const sectionDescription =
     data?.listingContext?.description || SECTION_DESCRIPTION;
   const ctaLabel = data?.listingContext?.link?.label || CTA_LABEL;
+  const ctaHref = data?.listingContext?.link?.href || "#";
+  const ctaTarget = data?.listingContext?.link?.target || "_self";
+  const ctaIsExternal = data?.listingContext?.link?.isExternal || false;
 
+  console.log("data?.listingContext?.link?", data?.listingContext?.link);
   return (
     <>
       <section className="bg-white w-full box-border px-4 py-10 md:px-10 md:py-16 lg:hidden!">
@@ -151,10 +155,15 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[14px] leading-[22px] md:text-[16px]! md:leading-[28px]! m-0">
             {sectionDescription}
           </p>
-          <button className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] md:text-[16px]! px-6 py-3 md:px-8! md:py-4! rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none">
+          <Link
+            href={ctaHref}
+            target={ctaIsExternal ? "_blank" : ctaTarget}
+            rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+            className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] md:text-[16px]! px-6 py-3 md:px-8! md:py-4! rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
+          >
             {ctaLabel}
             <ArrowUpRight className="w-4 h-4" />
-          </button>
+          </Link>
         </div>
         <div className="flex flex-col gap-3">
           {servicesToRender.map((service) => (
@@ -181,10 +190,15 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[15px] leading-[26px] xl:text-[20px]! xl:leading-[34px]! m-0 xl:pr-15!">
             {sectionDescription}
           </p>
-          <button className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] xl:text-[16px]! px-7 py-4 rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none">
+          <Link
+            href={ctaHref}
+            target={ctaIsExternal ? "_blank" : ctaTarget}
+            rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+            className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] xl:text-[16px]! px-7 py-4 rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
+          >
             {ctaLabel}
             <ArrowUpRight className="w-5 h-5" />
-          </button>
+          </Link>
         </div>
 
         <div className="flex flex-col gap-[10px] w-[49%] xl:w-[788px]! py-[80px]">

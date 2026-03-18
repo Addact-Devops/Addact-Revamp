@@ -6,6 +6,7 @@ import RichText from "../atom/richText";
 import ReCAPTCHA from "react-google-recaptcha";
 import { usePathname } from "next/navigation";
 import { Mail, Phone, X } from "lucide-react";
+import Link from "next/link";
 
 interface IProps {
   data: CONTACTUS;
@@ -202,17 +203,17 @@ const ContactUs = ({
           aria-modal="true"
           aria-label="Contact us"
           onClick={(event) => event.stopPropagation()}
-          className={`absolute right-0 top-0 h-full w-full max-w-full overflow-y-auto bg-[#0A0A0A] text-white shadow-2xl transition-transform duration-300 ease-out sm:w-[88vw] md:w-[760px] ${
+          className={`absolute right-0 top-0 h-full w-full max-w-full overflow-y-auto bg-[#0f0f0f] text-white shadow-2xl transition-transform duration-300 ease-out sm:w-[88vw] md:w-[760px] ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="px-6 pb-8 pt-7 md:px-10 md:pb-10 md:pt-8">
-            <div className="mb-7 flex items-start justify-between md:mb-9">
+          <div className="px-6 pt-7 pb-8 md:px-10 md:pt-8 md:pb-10 lg:p-[80px]!">
+            <div className="mb-7 flex items-start justify-between md:mb-10">
               <div>
-                <h2 className="!pb-3 !text-[48px] !font-light !leading-[1.05] md:!text-[64px]">
+                <h2 className="!pb-10 !text-[48px] !font-light !leading-[1.05] md:!text-[60px]">
                   {formBlock.Title}
                 </h2>
-                <div className="h-[4px] w-[130px] bg-[#3C4CFF]" />
+                <div className="h-[5px] w-[160px] bg-[#3C4CFF]" />
               </div>
 
               <button
@@ -225,11 +226,11 @@ const ContactUs = ({
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-10">
               <div>
                 <label
                   htmlFor="name"
-                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                  className="mb-2 block text-[20px] font-semibold leading-tight"
                 >
                   Your Name <span className="text-red-500">*</span>
                 </label>
@@ -239,7 +240,7 @@ const ContactUs = ({
                   autoComplete="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
                   placeholder="Type your name here"
                 />
                 {errors.name && (
@@ -250,7 +251,7 @@ const ContactUs = ({
               <div>
                 <label
                   htmlFor="email"
-                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                  className="mb-2 block text-[20px] font-semibold leading-tight"
                 >
                   Email Address <span className="text-red-500">*</span>
                 </label>
@@ -260,7 +261,7 @@ const ContactUs = ({
                   autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
                   placeholder="Type your email here"
                 />
                 {errors.email && (
@@ -271,7 +272,7 @@ const ContactUs = ({
               <div>
                 <label
                   htmlFor="company"
-                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                  className="mb-2 block text-[20px] font-semibold leading-tight"
                 >
                   Company Name <span className="text-red-500">*</span>
                 </label>
@@ -281,7 +282,7 @@ const ContactUs = ({
                   autoComplete="company"
                   value={formData.company}
                   onChange={handleChange}
-                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
                   placeholder="Type your company name here"
                 />
                 {errors.company && (
@@ -292,7 +293,7 @@ const ContactUs = ({
               <div>
                 <label
                   htmlFor="message"
-                  className="mb-2 block text-[26px] font-semibold leading-tight"
+                  className="mb-2 block text-[20px] font-semibold leading-tight"
                 >
                   Describe Your Requirements
                 </label>
@@ -303,7 +304,7 @@ const ContactUs = ({
                   value={formData.message}
                   onChange={handleChange}
                   rows={2}
-                  className="w-full border-b border-gray-700 bg-transparent px-0 py-2 text-[24px] leading-tight placeholder:text-gray-500 focus:outline-none"
+                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
                   placeholder="Type here..."
                 />
               </div>
@@ -321,32 +322,34 @@ const ContactUs = ({
               <button
                 type="submit"
                 disabled={formLoading}
-                className="w-full cursor-pointer rounded bg-[#3C4CFF] py-3 text-lg font-semibold text-white transition-colors hover:bg-[#3440CB]"
+                className="w-full cursor-pointer rounded-[8px] bg-[#3C4CFF] py-3 text-[18px] font-semibold text-white transition-colors hover:bg-[#3440CB] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)]"
               >
                 {formLoading ? "Submitting..." : "Contact Us"}
               </button>
             </form>
 
-            <div className="mt-8 space-y-4">
+            <div className="mt-10 space-y-[28px]">
               {drawerContactDetails.map((contactItem) => {
                 const Icon = contactItem.icon;
 
                 return (
-                  <a
+                  <Link
                     key={contactItem.id}
                     href={contactItem.href}
-                    className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
+                    className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white mb-7.5"
                   >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
                       <Icon className="h-4 w-4" />
                     </span>
                     <span className="text-[20px] leading-8 md:text-[28px] md:leading-10">
-                      <strong className="font-semibold">
+                      <strong className="font-semibold text-[20px]! leading-8 md:text-[28px] md:leading-10">
                         {contactItem.label}:
                       </strong>{" "}
-                      <span className="font-normal">{contactItem.value}</span>
+                      <span className="font-normal text-[20px]! leading-8 md:text-[28px] md:leading-10">
+                        {contactItem.value}
+                      </span>
                     </span>
-                  </a>
+                  </Link>
                 );
               })}
             </div>
