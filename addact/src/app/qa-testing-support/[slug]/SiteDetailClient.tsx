@@ -82,8 +82,7 @@ const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
         </>
       )} */}
 
-      <DetailPageServices title="Our Services Carousel Test" isCaraousl />
-      <DetailPageServices title="Our Services Grid Test" />
+      <DetailPageServices data={data?.ourService} />
 
       <HowEngagementProcessWorks data={pageData?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />

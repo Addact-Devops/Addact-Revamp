@@ -197,75 +197,41 @@ const hireExpertsSlugQuery = gql`
         }
       }
 
-      our_service {
-        FirstTabDisplayName
-        SecondTabDisplayName
-        ForEnterprisesBrands {
-          GlobalCard {
-            ... on ComponentBaseTemplatePromo {
+      ourService {
+        ... on ComponentHomeServiceList {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
               id
-              Title
-              Description
-              Image {
+              title
+              description
+              image {
                 alternativeText
-                height
-                name
                 url
                 width
+                height
               }
-              Link {
+              link {
                 id
                 href
                 label
                 target
                 isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
               }
-              sub_service_page {
-                Slug
-              }
             }
           }
-          Title {
-            ... on ComponentHeadingsH1 {
-              id
-              h1
-            }
-            ... on ComponentHeadingsH2 {
-              id
-              h2
-            }
-            ... on ComponentHeadingsH3 {
-              id
-              h3
-            }
-            ... on ComponentHeadingsH4 {
-              id
-              h5
-            }
-            ... on ComponentHeadingsH5 {
-              id
-              h5
-            }
-            ... on ComponentHeadingsH6 {
-              id
-              h6
-            }
-          }
-        }
-        team_feature {
-          Description
-          Cards {
-            Description
-            Title
-            id
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
+          isCarousel
         }
       }
     }
@@ -283,7 +249,7 @@ export interface HireExpert {
   whyaddact: Whyaddact | null;
   faq: FAQ;
   techStack: TechStack;
-  ourService?: OurServiceList;
+  ourService: OurServiceList[];
   our_service?: OurServiceData;
   industry: Industry | null;
 }
@@ -310,15 +276,20 @@ export interface IndustryListItem {
   } | null;
 }
 export interface OurServiceList {
-  isCarousel: boolean;
-  serviceTitle: string;
+  id: string;
+  isCarousel: boolean | null;
+  serviceTitle: string | null;
+  serviceVariant: {
+    variant: string;
+  } | null;
   serviceList: ServiceListItem[];
 }
 
 export interface ServiceListItem {
   listingContext: {
-    title: string;
-    description: string;
+    id: string;
+    title: string | null;
+    description: string | null;
     image: Image | null;
     link: {
       id: string;
@@ -329,7 +300,7 @@ export interface ServiceListItem {
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
-  };
+  } | null;
 }
 
 export interface OurServiceData {
