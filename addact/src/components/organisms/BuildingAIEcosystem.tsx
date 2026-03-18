@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import type { AIEcoSystem } from "@/graphql/queries/getHomePage";
 
 interface BuildingAIEcosystemProps {
@@ -19,16 +20,46 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
             <div className='container-main'>
                 <div className='flex flex-col lg:flex-row gap-8 lg:gap-4 2xl:gap-6 items-center'>
                     {/* Left side — Image (hidden on mobile, shown on lg+) */}
-                    {aiData?.secondImage?.url && (
+                    {(aiData?.firstImage?.url || aiData?.secondImage?.url) && (
                         <div className='hidden lg:block w-full lg:w-[45%] 2xl:w-[50%]'>
-                            <div className='relative w-full aspect-[3/4] overflow-hidden'>
-                                <Image
-                                    src={aiData.secondImage.url}
-                                    alt={aiData.secondImage.alternativeText || aiData.title || "AI Ecosystem"}
-                                    fill
-                                    className='object-cover'
-                                    sizes='(min-width: 1024px) 45vw, 50vw'
-                                />
+                            <div className='relative w-full aspect-[3/4] overflow-hidden rounded-[10px]'>
+                                {/* First Image - Base Layer */}
+                                {aiData?.firstImage?.url && (
+                                    <motion.div
+                                        className='absolute inset-0'
+                                        initial={{ translateY: "-100%" }}
+                                        whileInView={{ translateY: "0%" }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.8, ease: "easeOut" }}
+                                    >
+                                        <Image
+                                            src={aiData.firstImage.url}
+                                            alt={aiData.firstImage.alternativeText || "AI Ecosystem First"}
+                                            fill
+                                            className='object-cover'
+                                            sizes='(min-width: 1024px) 45vw, 50vw'
+                                        />
+                                    </motion.div>
+                                )}
+
+                                {/* Second Image - Overlay Layer with delay */}
+                                {aiData?.secondImage?.url && (
+                                    <motion.div
+                                        className='absolute inset-0'
+                                        initial={{ translateY: "-100%" }}
+                                        whileInView={{ translateY: "0%" }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.8, ease: "easeOut", delay: 1 }}
+                                    >
+                                        <Image
+                                            src={aiData.secondImage.url}
+                                            alt={aiData.secondImage.alternativeText || "AI Ecosystem Second"}
+                                            fill
+                                            className='object-cover'
+                                            sizes='(min-width: 1024px) 45vw, 50vw'
+                                        />
+                                    </motion.div>
+                                )}
                             </div>
                         </div>
                     )}
@@ -37,7 +68,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                     <div className='w-full lg:w-[55%] 2xl:w-[50%]'>
                         {/* Heading */}
                         {aiData.title && (
-                            <h2 className='text-[32px] md:text-[44px] lg:text-[52px] 2xl:text-[60px] font-bold text-white leading-[1.2] md:leading-[1.3] 2xl:leading-[85px] mb-6 md:mb-8 lg:mb-10 2xl:mb-[50px]'>
+                            <h2 className='text-[32px] md:text-[44px] lg:text-[52px] 2xl:text-[60px] !font-semibold text-white leading-[1.2] md:leading-[1.3] 2xl:leading-[85px] mb-6 md:mb-8 lg:mb-10 2xl:mb-[50px]'>
                                 {aiData.title.split(" ").slice(0, 2).join(" ")}
                                 <br className='hidden lg:block' />
                                 {aiData.title.split(" ").slice(2).join(" ")}
@@ -45,16 +76,46 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                         )}
 
                         {/* Mobile image between heading and description */}
-                        {aiData?.secondImage?.url && (
-                            <div className='relative mb-8 block w-full overflow-hidden lg:hidden'>
+                        {(aiData?.firstImage?.url || aiData?.secondImage?.url) && (
+                            <div className='relative mb-8 block w-full overflow-hidden lg:hidden rounded-[10px]'>
                                 <div className='relative w-full aspect-[4/5]'>
-                                    <Image
-                                        src={aiData.secondImage.url}
-                                        alt={aiData.secondImage.alternativeText || aiData.title || "AI Ecosystem"}
-                                        fill
-                                        className='object-cover'
-                                        sizes='100vw'
-                                    />
+                                    {/* First Image - Base Layer */}
+                                    {aiData?.firstImage?.url && (
+                                        <motion.div
+                                            className='absolute inset-0'
+                                            initial={{ translateY: "-100%" }}
+                                            whileInView={{ translateY: "0%" }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.8, ease: "easeOut" }}
+                                        >
+                                            <Image
+                                                src={aiData.firstImage.url}
+                                                alt={aiData.firstImage.alternativeText || "AI Ecosystem First"}
+                                                fill
+                                                className='object-cover'
+                                                sizes='100vw'
+                                            />
+                                        </motion.div>
+                                    )}
+
+                                    {/* Second Image - Overlay Layer with delay */}
+                                    {aiData?.secondImage?.url && (
+                                        <motion.div
+                                            className='absolute inset-0'
+                                            initial={{ translateY: "-100%" }}
+                                            whileInView={{ translateY: "0%" }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.8, ease: "easeOut", delay: 1 }}
+                                        >
+                                            <Image
+                                                src={aiData.secondImage.url}
+                                                alt={aiData.secondImage.alternativeText || "AI Ecosystem Second"}
+                                                fill
+                                                className='object-cover'
+                                                sizes='100vw'
+                                            />
+                                        </motion.div>
+                                    )}
                                 </div>
                             </div>
                         )}
