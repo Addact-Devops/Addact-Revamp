@@ -112,6 +112,8 @@ export default function OurWork({ data }: { data?: OurWork | null }) {
                       <Image
                         src={project.image}
                         alt={project.title}
+                        width={437}
+                        height={338}
                         className="w-full h-full object-cover"
                       />
                     </div>
