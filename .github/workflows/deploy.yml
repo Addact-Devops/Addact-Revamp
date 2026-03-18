@@ -10,6 +10,10 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Fix Git Safe Directory
+        run: |
+          git config --global --add safe.directory F:/Addact-Revamp
+
       - name: Pull latest code
         run: |
           Set-Location "F:\Addact-Revamp"
@@ -17,20 +21,20 @@ jobs:
 
       - name: Install Backend Dependencies
         run: |
-          Set-Location "F:\Addact-Revamp\addact"
+          Set-Location "F:\Addact-Revamp\addact-cms"
           npm install
 
       - name: Install Frontend Dependencies
         run: |
-          Set-Location "F:\Addact-Revamp\addact-cms"
+          Set-Location "F:\Addact-Revamp\addact"
           npm install
 
       - name: Build Frontend
         run: |
-          Set-Location "F:\Addact-Revamp\addact-cms"
+          Set-Location "F:\Addact-Revamp\addact"
           npm run build
 
       - name: Restart Backend
         run: |
           taskkill /F /IM node.exe
-          Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact && npm start'
+          Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact-cms && npm start'
