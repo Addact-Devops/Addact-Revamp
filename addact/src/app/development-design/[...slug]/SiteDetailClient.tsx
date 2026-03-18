@@ -103,8 +103,7 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
             }}
             backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
           />
-          <DetailPageServices title="Our Services Carousel Test" isCaraousl />
-          <DetailPageServices title="Our Services Grid Test" />
+          <DetailPageServices data={pageData?.ourService} />
           {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
           <OurTechStack data={pageData?.techStack} />
           <HowEngagementProcessWorks data={pageData?.ourprocess} />
@@ -112,7 +111,7 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
           <ClientTestimonials />
           {pageData?.faq && <FAQ data={pageData?.faq} />}
           <OurInsights />
-          {data?.cta && <CtaBanner data={data?.cta} />}
+          {pageData?.cta && <CtaBanner data={pageData?.cta} />}
         </>
       )}
     </main>
