@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { EmailIcon } from "../atom/icons";
+import type { Footer as FooterData } from "@/graphql/queries/footer";
 
 type ImageType = {
   url?: string;
@@ -37,36 +37,48 @@ type AddressInformationItem = {
   __typename?: string;
   Title?: string;
   Description?: string;
+  Link?: {
+    href?: string;
+    isExternal?: boolean;
+    label?: string;
+    SubDisc?: string | null;
+    target?: string;
+    Icon?: ImageType | null;
+  } | null;
 };
 
 type FooterProps = {
-  data: {
-    Logo?: { Image?: ImageType };
-    BackGroundImage?: { Image?: ImageType };
-    BackGroundImageMobile?: { Image?: ImageType };
-    AddressInformationMobileBgImg?: { Image?: ImageType }[];
-    AddressInformation?: AddressInformationItem[];
-    footerlinks?: FooterColumn[];
-    milestonestitle?: {
-      CommonTitle?: {
-        Title?: string;
-        Description?: string;
-      }[];
-    };
-    milestonesimage?: {
-      Image?: ImageType | null;
+  data?:
+    | (FooterData & {
+        contacticons?: {
+          Icon?: ImageType;
+        }[];
+      })
+    | null;
+};
+
+type FooterViewModel = {
+  Logo?: { Image?: ImageType | null } | null;
+  AddressInformation?: AddressInformationItem[];
+  footerlinks?: FooterColumn[];
+  milestonestitle?: {
+    CommonTitle?: {
+      Title?: string;
+      Description?: string;
     }[];
-    socialMedia?: IconLink[];
-    contacticons?: {
-      Icon?: ImageType;
-    }[];
-    CopyrightText?: string;
-    SiteSlog?: string;
-  };
+  } | null;
+  milestonesimage?: {
+    Image?: ImageType | null;
+  }[];
+  socialMedia?: IconLink[];
+  CopyrightText?: string;
+  SiteSlog?: string;
 };
 
 export default function Footer({ data }: FooterProps) {
   if (!data) return null;
+
+  const footer = data as FooterViewModel;
 
   const {
     Logo,
@@ -76,9 +88,8 @@ export default function Footer({ data }: FooterProps) {
     milestonesimage,
     // AddressInformationMobileBgImg,
     socialMedia,
-    contacticons,
     CopyrightText,
-  } = data;
+  } = footer;
 
   const linkColumns = footerlinks?.slice(0, 4) || [];
   const policyColumn = footerlinks?.[4]?.NavLink || [];
@@ -175,24 +186,23 @@ export default function Footer({ data }: FooterProps) {
                 <div className="flex items-center gap-x-18 gap-y-5 xl:gap-y-0 flex-wrap">
                   {topContactItems.map((item, index) => (
                     <div key={index} className="flex items-center gap-2.5">
-                      {contacticons?.[index]?.Icon?.url && (
+                      {item?.Link?.Icon?.url && (
                         <div className="relative w-10 h-10 shrink-0">
                           <Image
-                            src={contacticons[index].Icon.url}
+                            src={item.Link.Icon.url}
                             alt={
-                              contacticons[index].Icon.alternativeText ||
+                              item.Link.Icon.alternativeText ||
                               item?.Title ||
                               "contact icon"
                             }
-                            width={contacticons[index].Icon.width || 40}
-                            height={contacticons[index].Icon.height || 40}
+                            width={item.Link.Icon.width || 40}
+                            height={item.Link.Icon.height || 40}
                             className="w-full h-full object-contain"
                           />
                         </div>
                       )}
 
                       <div className="text-[20px] leading-normal text-white footer-richtext flex gap-2 items-center">
-                        {item?.Title && <EmailIcon />}
                         {item?.Title && (
                           <span className="font-semibold">{item.Title}</span>
                         )}

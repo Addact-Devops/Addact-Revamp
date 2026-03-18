@@ -30,7 +30,7 @@ type ServiceVariant = "twoCard" | "threeCard" | "fourCard";
 
 interface DynamicServiceItem {
   listingContext: {
-    id?: string | null;
+    id: string;
     title: string | null;
     description: string | null;
     image: {
@@ -46,7 +46,7 @@ interface DynamicServiceItem {
 }
 
 interface DynamicServiceSection {
-  id?: string | null;
+  id: string;
   serviceTitle: string | null;
   isCarousel: boolean | null;
   serviceVariant: {
@@ -252,9 +252,9 @@ const mapDynamicItems = (
       (context): context is NonNullable<DynamicServiceItem["listingContext"]> =>
         Boolean(context),
     )
-    .map((context, index): DetailPageServiceItem => {
+    .map((context): DetailPageServiceItem => {
       return {
-        id: context.id ?? `service-${index}`,
+        id: context.id,
         title: context.title ?? "",
         description: context.description ?? "",
         image: context.image
@@ -299,7 +299,7 @@ const DetailPageServices = ({
 }: DetailPageServicesProps) => {
   const sections = data?.length
     ? data.map((section) => ({
-        id: section.id ?? null,
+        id: section.id,
         title: section.serviceTitle ?? "Our Services",
         isCarousel: Boolean(section.isCarousel),
         variant: normalizeVariant(section.serviceVariant?.variant),
@@ -419,9 +419,10 @@ const DetailPageServices = ({
         </div>
       ) : (
         <div className="relative flex h-full min-h-[300px] flex-col overflow-hidden rounded-[14px] border border-[#E5E5E5] bg-white p-5 pb-[136px] md:min-h-[425px] md:p-6 md:pb-[168px] md:transition-[border-color,box-shadow] md:duration-300 md:hover:border-[#3C4CFF] md:hover:shadow-[0_20px_45px_rgba(60,76,255,0.14)] md:focus-visible:border-[#3C4CFF] md:focus-visible:shadow-[0_20px_45px_rgba(60,76,255,0.14)]">
-          <div className="absolute bottom-5 right-5 h-[108px] w-[108px] rounded-full bg-[#3C4CFF] md:bottom-6 md:right-6 md:h-[108px] md:w-[108px] md:origin-center md:transition-transform md:duration-500 md:ease-[cubic-bezier(0.22,1,0.36,1)] md:group-hover:scale-[9] md:group-focus-visible:scale-[9]" />
+          <div className="pointer-events-none absolute inset-0 z-0 bg-[#3C4CFF] [clip-path:circle(0%_at_100%_100%)] md:transition-[clip-path] md:duration-500 md:ease-[cubic-bezier(0.22,1,0.36,1)] md:group-hover:[clip-path:circle(180%_at_100%_100%)] md:group-focus-visible:[clip-path:circle(180%_at_100%_100%)]" />
+          <div className="pointer-events-none absolute bottom-5 right-5 z-10 h-[108px] w-[108px] rounded-full bg-[#3C4CFF] md:bottom-6 md:right-6 md:h-[108px] md:w-[108px]" />
 
-          <div className="relative z-10 max-w-[80%]">
+          <div className="relative z-10 max-w-full">
             <h3 className="min-h-[68px] !text-[24px] !font-semibold !leading-[1.35] text-[#0F0F0F] md:min-h-[78px] md:!text-[28px] md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white">
               {item.title}
             </h3>
@@ -480,7 +481,7 @@ const DetailPageServices = ({
 
           return (
             <section
-              key={`${section.id ?? `section-${sectionIndex}`}-${sectionIndex}`}
+              key={`${section.id}-${sectionIndex}`}
               className="bg-[#F5F5F5] py-[72px] md:py-[88px] xl:py-[110px]"
             >
               <div className="container-main">
