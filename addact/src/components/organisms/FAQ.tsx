@@ -52,14 +52,24 @@ const FAQ = ({ data }: IProps) => {
             return (
               <div
                 key={index}
-                className={`border border-[#E5E5E5] hover:bg-[#3440CB] group mb-5 px-5 py-5 lg:px-10 lg:py-7.5 ${
+                onClick={() => toggleIndex(index)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    toggleIndex(index);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+                aria-expanded={isOpen}
+                className={`border border-[#E5E5E5] hover:bg-[#3C4CFF] group mb-5 px-5 py-5 lg:px-10 lg:py-7.5 cursor-pointer ${
                   isOpen
                     ? "rounded-tl-[10px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-[80px]"
                     : "rounded-[10px]"
                 } ${index === 0 ? "" : ""}`}
               >
                 <button
-                  onClick={() => toggleIndex(index)}
+                  type="button"
                   className="w-full flex items-start text-left transition-colors duration-200"
                 >
                   <span

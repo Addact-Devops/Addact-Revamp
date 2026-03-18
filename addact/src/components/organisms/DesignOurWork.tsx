@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Navigation } from "swiper/modules";
 import type { OurWork } from "@/graphql/queries/getDevelopmentDesignSlug";
+import Image from "../atom/image";
 
 const projectsData = [
   {
@@ -108,7 +109,7 @@ export default function OurWork({ data }: { data?: OurWork | null }) {
                              h-[200px] sm:h-[220px] md:h-full"
                   >
                     <div className="w-full h-full rounded-[8px] overflow-hidden">
-                      <img
+                      <Image
                         src={project.image}
                         alt={project.title}
                         className="w-full h-full object-cover"

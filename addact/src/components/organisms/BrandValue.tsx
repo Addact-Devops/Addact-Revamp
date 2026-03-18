@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "../atom/image";
 
 type BrandValueProps = {
   title: string;
@@ -40,7 +41,7 @@ const BrandValue: React.FC<BrandValueProps> = ({
 
         {/* Right Image */}
         <div className="lg:w-1/2 flex justify-center">
-          <img
+          <Image
             src={image.url}
             alt={image.alternativeText || "Brand Value Image"}
             width={image.width || undefined}
