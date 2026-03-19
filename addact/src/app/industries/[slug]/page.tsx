@@ -221,6 +221,8 @@ export default async function Page({ params }: { params: Params }) {
                                 : undefined
                         }
                         showAnchorLinks={false}
+                        isVideo={Boolean(hero?.isVideo)}
+                        videoUrl={hero?.videoLink ?? ""}
                     />
                 )}
 

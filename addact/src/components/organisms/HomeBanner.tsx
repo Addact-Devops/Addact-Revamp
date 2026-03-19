@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { AnimationBanner } from "@/graphql/queries/getHomePage";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 interface HomeBannerProps {
     data?: AnimationBanner;
@@ -19,7 +20,18 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
     const description = data?.bannerDescription || "";
     const buttonLabel = data?.bannerLink?.label || "";
     const buttonLink = data?.bannerLink?.href || "/";
+    const buttonTarget = data?.bannerLink?.isExternal ? "_blank" : "_self";
+    const useContactDrawer = !data?.bannerLink?.isExternal && shouldOpenContactDrawer(buttonLink);
     const backgroundImage = data?.bannerImage?.url || "";
+
+    const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
+        if (!useContactDrawer) {
+            return;
+        }
+
+        event.preventDefault();
+        openContactDrawer();
+    };
 
     const rotateText = useCallback(() => {
         setAnimState("exit");
@@ -89,24 +101,47 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
                     </p>
 
                     {/* CTA Button */}
-                    <Link
-                        href={buttonLink}
-                        className='inline-flex items-center gap-3 rounded-lg bg-[#3C4CFF] px-6 py-3 text-[18px] font-semibold text-white transition-all duration-300 hover:bg-[#2d3be6] md:px-8 md:py-4 md:text-[20px]'
-                    >
-                        {buttonLabel}
-                        <svg
-                            width='20'
-                            height='20'
-                            viewBox='0 0 24 24'
-                            fill='none'
-                            stroke='currentColor'
-                            strokeWidth='2'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
+                    {useContactDrawer ? (
+                        <button
+                            type='button'
+                            onClick={handleBannerCtaClick}
+                            className='inline-flex items-center gap-3 rounded-lg bg-[#3C4CFF] px-6 py-3 text-[18px] font-semibold text-white transition-all duration-300 hover:bg-[#2d3be6] md:px-8 md:py-4 md:text-[20px]'
                         >
-                            <path d='M5 12h14M12 5l7 7-7 7' />
-                        </svg>
-                    </Link>
+                            {buttonLabel}
+                            <svg
+                                width='20'
+                                height='20'
+                                viewBox='0 0 24 24'
+                                fill='none'
+                                stroke='currentColor'
+                                strokeWidth='2'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                            >
+                                <path d='M5 12h14M12 5l7 7-7 7' />
+                            </svg>
+                        </button>
+                    ) : (
+                        <Link
+                            href={buttonLink}
+                            target={buttonTarget}
+                            className='inline-flex items-center gap-3 rounded-lg bg-[#3C4CFF] px-6 py-3 text-[18px] font-semibold text-white transition-all duration-300 hover:bg-[#2d3be6] md:px-8 md:py-4 md:text-[20px]'
+                        >
+                            {buttonLabel}
+                            <svg
+                                width='20'
+                                height='20'
+                                viewBox='0 0 24 24'
+                                fill='none'
+                                stroke='currentColor'
+                                strokeWidth='2'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                            >
+                                <path d='M5 12h14M12 5l7 7-7 7' />
+                            </svg>
+                        </Link>
+                    )}
                 </div>
             </div>
 

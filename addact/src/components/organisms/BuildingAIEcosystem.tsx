@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, type FocusEvent, type MouseEvent } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState, type FocusEvent, type MouseEvent } from "react";
+import { motion, useInView } from "framer-motion";
 import type { AIEcoSystem } from "@/graphql/queries/getHomePage";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 interface BuildingAIEcosystemProps {
     data: AIEcoSystem;
@@ -12,7 +13,11 @@ interface BuildingAIEcosystemProps {
 
 const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
     const aiData = data?.AIEcoSystem;
+    const consultationHref = "/contact-us";
+    const sectionRef = useRef<HTMLElement | null>(null);
+    const isSectionInView = useInView(sectionRef, { once: true, amount: 0.15 });
     const [activeTooltip, setActiveTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
+    const useContactDrawer = shouldOpenContactDrawer(consultationHref);
 
     const getLogoTooltip = (logo: { tooltip?: string | null; Image?: { alternativeText?: string | null } }) => {
         const tooltip = logo?.tooltip?.trim() || logo?.Image?.alternativeText?.trim();
@@ -52,11 +57,20 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
         setActiveTooltip(null);
     };
 
+    const handleConsultationClick = (event: MouseEvent<HTMLAnchorElement>) => {
+        if (!useContactDrawer) {
+            return;
+        }
+
+        event.preventDefault();
+        openContactDrawer();
+    };
+
     if (!aiData) {
         return null;
     }
     return (
-        <section className='overflow-x-hidden bg-[#0F0F0F] py-12 md:py-16 lg:py-20 2xl:py-[80px]'>
+        <section ref={sectionRef} className='overflow-x-hidden bg-[#0F0F0F] py-12 md:py-16 lg:py-20 2xl:py-[80px]'>
             <div className='container-main'>
                 <div className='flex flex-col lg:flex-row gap-8 lg:gap-4 2xl:gap-6 items-center'>
                     {/* Left side — Image (hidden on mobile, shown on lg+) */}
@@ -87,9 +101,8 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                     <motion.div
                                         className='absolute inset-0'
                                         initial={{ translateY: "100%" }}
-                                        whileInView={{ translateY: "0%" }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.8, ease: "easeOut", delay: 1 }}
+                                        animate={{ translateY: isSectionInView ? "0%" : "100%" }}
+                                        transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                                     >
                                         <Image
                                             src={aiData.secondImage.url}
@@ -143,9 +156,8 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                         <motion.div
                                             className='absolute inset-0'
                                             initial={{ translateY: "100%" }}
-                                            whileInView={{ translateY: "0%" }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 0.8, ease: "easeOut", delay: 1 }}
+                                            animate={{ translateY: isSectionInView ? "0%" : "100%" }}
+                                            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                                         >
                                             <Image
                                                 src={aiData.secondImage.url}
@@ -294,7 +306,8 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
 
                         {/* CTA Button */}
                         <Link
-                            href='/contact-us'
+                            href={consultationHref}
+                            onClick={handleConsultationClick}
                             className='inline-flex items-center gap-3 md:gap-4 lg:gap-5 bg-white text-[#0F0F0F] border border-white text-[14px] md:text-[16px] lg:text-[18px] font-semibold px-5 py-3 md:px-6 md:py-3.5 lg:px-8 lg:py-4 rounded-[8px] md:rounded-[10px] transition-all duration-300 hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:text-white shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)]'
                         >
                             Book Your Free AI Consultation

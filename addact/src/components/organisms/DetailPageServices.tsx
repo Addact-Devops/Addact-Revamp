@@ -68,10 +68,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Low Code/No code Web Development",
         description:
             "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=%3C%2F%3E",
-            alt: "Low code service icon",
-        },
+        image: null,
         link: {
             href: "/sitecore-cms-development",
             target: "_self",
@@ -82,10 +79,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Custom CMS Implementation",
         description:
             "Build scalable digital platforms with structured content, streamlined workflows, and future-ready architecture.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=CMS",
-            alt: "CMS implementation icon",
-        },
+        image: null,
         link: {
             href: "/contentful-cms-development",
             target: "_self",
@@ -96,10 +90,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Headless Commerce Solutions",
         description:
             "Create fast, flexible commerce experiences with API-driven storefronts and tailored integrations.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=API",
-            alt: "Headless commerce icon",
-        },
+        image: null,
         link: {
             href: "/strapi-cms-development",
             target: "_self",
@@ -110,10 +101,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Experience Design and UI Systems",
         description:
             "Design consistent interfaces with reusable UI systems that improve delivery speed and user experience.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=UI",
-            alt: "Experience design icon",
-        },
+        image: null,
         link: {
             href: "/umbraco-cms-development",
             target: "_self",
@@ -124,10 +112,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Migration and Modernization",
         description:
             "Move legacy platforms to modern CMS stacks without losing content integrity, SEO value, or performance.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=MIG",
-            alt: "Migration icon",
-        },
+        image: null,
         link: {
             href: "/kentico-cms-development",
             target: "_self",
@@ -138,10 +123,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Performance Optimization",
         description:
             "Improve Core Web Vitals, delivery speed, and frontend efficiency across content-heavy digital products.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=SPD",
-            alt: "Performance icon",
-        },
+        image: null,
         link: {
             href: "/contentstack-cms-development",
             target: "_self",
@@ -152,10 +134,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Platform Support and Enhancements",
         description:
             "Keep business-critical websites stable with proactive maintenance, updates, and ongoing feature delivery.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=SUP",
-            alt: "Support icon",
-        },
+        image: null,
         link: {
             href: "/about-us",
             target: "_self",
@@ -166,10 +145,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Search and Personalization",
         description:
             "Drive better content discovery and tailored journeys with search, segmentation, and personalization layers.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=SRCH",
-            alt: "Search icon",
-        },
+        image: null,
         link: {
             href: "/industries",
             target: "_self",
@@ -180,10 +156,7 @@ const staticServiceItems: DetailPageServiceItem[] = [
         title: "Analytics and Growth Tracking",
         description:
             "Connect CMS initiatives to measurable outcomes with implementation-ready analytics and reporting support.",
-        image: {
-            url: "https://dummyimage.com/84x84/050505/ffffff&text=ANL",
-            alt: "Analytics icon",
-        },
+        image: null,
         link: {
             href: "/contact-us",
             target: "_self",
@@ -399,7 +372,7 @@ const DetailPageServices = ({ title = "Our Services", items, isCaraousl = false,
                     </div>
 
                     {item.image?.url ? (
-                        <div className='pointer-events-none absolute bottom-4 right-3 z-10 md:bottom-5 md:right-4'>
+                        <div className='pointer-events-none absolute bottom-4 right-3 z-10 md:bottom-10 md:right-20'>
                             <Image
                                 src={item.image.url}
                                 alt={item.image.alt}
@@ -408,7 +381,21 @@ const DetailPageServices = ({ title = "Our Services", items, isCaraousl = false,
                                 className='h-[80px] w-[80px] object-contain md:h-[80px] md:w-[80px]'
                             />
                         </div>
-                    ) : null}
+                    ) : (
+                        <div className='pointer-events-none absolute bottom-4 right-3 z-10 md:bottom-10 md:right-20 h-[80px] w-[80px] flex items-center justify-center'>
+                            <svg
+                                viewBox='0 0 43 40'
+                                fill='none'
+                                xmlns='http://www.w3.org/2000/svg'
+                                className='w-full h-full text-black md:group-hover:text-white md:group-focus-visible:text-white transition-colors duration-300'
+                            >
+                                <path
+                                    d='M43 40H35.107L21.4402 8.95293L7.77344 40H0L18.1392 0L24.8019 0L43 40Z'
+                                    fill='currentColor'
+                                />
+                            </svg>
+                        </div>
+                    )}
                 </div>
             );
 
