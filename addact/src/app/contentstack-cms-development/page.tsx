@@ -15,122 +15,122 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-  return generatePageMetadata("serviceLists", "/contentstack-cms-development");
+    return generatePageMetadata("serviceLists", "/contentstack-cms-development");
 }
 
 export default async function strapiPage() {
-  const service = "contentstack-cms-development";
-  const data = await getServiceListBySlug(service);
-  if (!data) return notFound();
-  const bannerData = data.Banner?.Banner?.[0];
+    const service = "contentstack-cms-development";
+    const data = await getServiceListBySlug(service);
+    if (!data) return notFound();
+    const bannerData = data.Banner?.Banner?.[0];
 
-  return (
-    <main className="bg-dark">
-      {/* ✅ WebSite Schema */}
+    return (
+        <main className='bg-dark'>
+            {/* ✅ WebSite Schema */}
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org/",
-            "@type": "WebSite",
-            name: "Addact Technologies",
-            url: "https://www.addact.net/contentstack-cms-development",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "{search_term_string}",
-              "query-input": "required name=search_term_string",
-            },
-          }),
-        }}
-      />
+            <script
+                type='application/ld+json'
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org/",
+                        "@type": "WebSite",
+                        name: "Addact Technologies",
+                        url: "https://www.addact.net/contentstack-cms-development",
+                        potentialAction: {
+                            "@type": "SearchAction",
+                            target: "{search_term_string}",
+                            "query-input": "required name=search_term_string",
+                        },
+                    }),
+                }}
+            />
 
-      {/* ✅ Organization Schema */}
+            {/* ✅ Organization Schema */}
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Addact Technologies",
-            alternateName: "Addact",
-            url: "https://www.addact.net/",
-            logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
-            contactPoint: {
-              "@type": "ContactPoint",
-              telephone: "94272 37737",
-              contactType: "emergency",
-              contactOption: "TollFree",
-              areaServed: ["US", "IN"],
-              availableLanguage: "en",
-            },
-            sameAs: [
-              "https://www.facebook.com/addacttech/",
-              "https://x.com/AddactTech",
-              "https://www.instagram.com/addacttechnologies/",
-              "https://www.youtube.com/@addact3283",
-              "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all",
-              "https://www.addact.net/",
-            ],
-          }),
-        }}
-      />
+            <script
+                type='application/ld+json'
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Organization",
+                        name: "Addact Technologies",
+                        alternateName: "Addact",
+                        url: "https://www.addact.net/",
+                        logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
+                        contactPoint: {
+                            "@type": "ContactPoint",
+                            telephone: "94272 37737",
+                            contactType: "emergency",
+                            contactOption: "TollFree",
+                            areaServed: ["US", "IN"],
+                            availableLanguage: "en",
+                        },
+                        sameAs: [
+                            "https://www.facebook.com/addacttech/",
+                            "https://x.com/AddactTech",
+                            "https://www.instagram.com/addacttechnologies/",
+                            "https://www.youtube.com/@addact3283",
+                            "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all",
+                            "https://www.addact.net/",
+                        ],
+                    }),
+                }}
+            />
 
-      {/* ✅ FAQPage Schema */}
+            {/* ✅ FAQPage Schema */}
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: "Can I migrate my existing website to Contentstack?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Yes, websites can be migrated to Contentstack while preserving content structure and enabling flexible, API-driven management.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "What makes Contentstack suitable for enterprise websites?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Contentstack is a headless CMS that supports scalable, multi-channel content delivery with robust APIs and enterprise-grade security.",
-                },
-              },
-            ],
-          }),
-        }}
-      />
+            <script
+                type='application/ld+json'
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        mainEntity: [
+                            {
+                                "@type": "Question",
+                                name: "Can I migrate my existing website to Contentstack?",
+                                acceptedAnswer: {
+                                    "@type": "Answer",
+                                    text: "Yes, websites can be migrated to Contentstack while preserving content structure and enabling flexible, API-driven management.",
+                                },
+                            },
+                            {
+                                "@type": "Question",
+                                name: "What makes Contentstack suitable for enterprise websites?",
+                                acceptedAnswer: {
+                                    "@type": "Answer",
+                                    text: "Contentstack is a headless CMS that supports scalable, multi-channel content delivery with robust APIs and enterprise-grade security.",
+                                },
+                            },
+                        ],
+                    }),
+                }}
+            />
 
-      <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      <OurPartners />
-      <OurServicesWithTabs data={data?.our_service} />
-      <IndustriesWeServe />
-      <WhyAddact data={data?.why_addact} />
-      {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
-      <OurProcess data={data?.our_process} />
-      <ClientTestimonials />
-      <OurInsights />
-      <FAQ data={data?.faq} />
-      {data?.cta && <CtaBanner data={data?.cta} />}
-    </main>
-  );
+            <HeroBanner
+                title={bannerData?.BannerTitle ?? ""}
+                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
+                button={{
+                    label: bannerData?.BannerLink?.label ?? "",
+                    url: bannerData?.BannerLink?.href ?? "",
+                }}
+                isVideo={Boolean(bannerData?.isVideo)}
+                videoUrl={bannerData?.videoLink ?? ""}
+                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+            />
+            <OurPartners />
+            <OurServicesWithTabs data={data?.our_service} />
+            <IndustriesWeServe />
+            <WhyAddact data={data?.why_addact} />
+            {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
+            <OurProcess data={data?.our_process} />
+            <ClientTestimonials />
+            <OurInsights />
+            <FAQ data={data?.faq} />
+            {data?.cta && <CtaBanner data={data?.cta} />}
+        </main>
+    );
 }
