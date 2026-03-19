@@ -83,8 +83,8 @@ body {
   // Visually mirrors the 1920 layout — proportionally reduced
   @media (min-width: 1536px) and (max-width: 1600px) {
     max-width: 1502px; // 1600px ÷ 1.25
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 50px;
+    padding-right: 50px;
   }
 
   // 150% scaled laptops (1920 ÷ 1.50 = 1280px effective)
