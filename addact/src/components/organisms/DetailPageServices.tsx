@@ -380,7 +380,7 @@ const DetailPageServices = ({ title = "Our Services", items, isCaraousl = false,
                     <h3 className='!mb-6 !text-[20px] !font-semibold !leading-tight text-[#0F0F0F] md:!text-[30px]'>
                         {item.title}
                     </h3>
-                    <div className='text-[16px] leading-7 text-[#0F0F0F] [&_p]:m-0 [&_p]:text-inherit'>
+                    <div className='line-clamp-5 text-[16px] leading-7 text-[#0F0F0F] [&_p]:m-0 [&_p]:text-inherit'>
                         <RichText html={item.description} />
                     </div>
                 </div>
@@ -393,7 +393,7 @@ const DetailPageServices = ({ title = "Our Services", items, isCaraousl = false,
                         <h3 className='min-h-[68px] !text-[24px] !font-semibold !leading-[1.35] text-[#0F0F0F] md:min-h-[78px] md:!text-[30px] md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white'>
                             {item.title}
                         </h3>
-                        <div className='mt-4 text-[16px] leading-8 text-[#0F0F0F]/80 [&_p]:md:text-[20px]! md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white [&_p]:m-0 [&_p]:text-inherit'>
+                        <div className='mt-4 line-clamp-5 text-[16px] leading-8 text-[#0F0F0F]/80 [&_p]:md:text-[20px]! md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white [&_p]:m-0 [&_p]:text-inherit'>
                             <RichText html={item.description} />
                         </div>
                     </div>
@@ -433,6 +433,8 @@ const DetailPageServices = ({ title = "Our Services", items, isCaraousl = false,
             </Link>
         );
     };
+
+    console.log(sections, "qqqqqqqqqqqqqqqqqqqqqqq");
 
     return (
         <>

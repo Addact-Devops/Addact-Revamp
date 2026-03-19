@@ -115,8 +115,6 @@ export default async function umbracoPage() {
                     label: bannerData?.BannerLink?.label ?? "",
                     url: bannerData?.BannerLink?.href ?? "",
                 }}
-                isVideo={Boolean(bannerData?.isVideo)}
-                videoUrl={bannerData?.videoLink ?? ""}
                 backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
             />
             <OurPartners />
