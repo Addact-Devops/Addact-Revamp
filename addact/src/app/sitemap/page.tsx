@@ -53,8 +53,6 @@ export default async function SitemapPage() {
                 <HeroBanner
                     title={banner.BannerTitle || ""}
                     description={banner.BannerDescription || ""}
-                    isVideo={Boolean(banner?.isVideo)}
-                    videoUrl={banner?.videoLink || ""}
                     backgroundImageUrl={banner.BannerImage?.url || ""}
                 />
             )}

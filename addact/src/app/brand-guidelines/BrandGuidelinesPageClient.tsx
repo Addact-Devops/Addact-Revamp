@@ -40,8 +40,6 @@ const BrandGuidelinesPageClient = () => {
             <HeroBanner
                 title={banner.BannerTitle || ""}
                 description={banner.BannerDescription || ""}
-                isVideo={Boolean(banner?.isVideo)}
-                videoUrl={banner?.videoLink || ""}
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
             <section className='bg-[#f4f4f4] caseStudy-wrapper pb-20'>

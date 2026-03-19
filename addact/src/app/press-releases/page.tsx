@@ -72,8 +72,6 @@ export default async function PressRelease() {
             <HeroBanner
                 title={banner.BannerTitle || ""}
                 description={banner.BannerDescription || ""}
-                isVideo={Boolean(banner?.isVideo)}
-                videoUrl={banner?.videoLink || ""}
                 backgroundImageUrl={banner.BannerImage?.url || ""}
             />
             <div className='pt-24'>

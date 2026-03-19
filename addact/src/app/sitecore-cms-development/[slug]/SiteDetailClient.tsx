@@ -27,8 +27,6 @@ export default function SiteDetailClient({ data }: { data: SubServicePage }) {
                     label: bannerData?.BannerLink?.label ?? "",
                     url: bannerData?.BannerLink?.href ?? "",
                 }}
-                isVideo={Boolean(bannerData?.isVideo)}
-                videoUrl={bannerData?.videoLink ?? ""}
                 backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
             />
             <OurPartners />

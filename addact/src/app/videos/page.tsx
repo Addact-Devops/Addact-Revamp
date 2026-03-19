@@ -97,8 +97,6 @@ export default async function VideosPage() {
             <HeroBanner
                 title={banner?.BannerTitle || ""}
                 description={banner?.BannerDescription || ""}
-                isVideo={Boolean(banner?.isVideo)}
-                videoUrl={banner?.videoLink || ""}
                 backgroundImageUrl={banner?.BannerImage?.url || ""}
                 showAnchorLinks={false} // No anchor links on videos page
             />

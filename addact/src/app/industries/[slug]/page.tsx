@@ -214,8 +214,6 @@ export default async function Page({ params }: { params: Params }) {
                     <HeroBanner
                         title={hero.BannerTitle || ""}
                         description={hero.BannerDescription || ""}
-                        isVideo={Boolean(hero?.isVideo)}
-                        videoUrl={hero?.videoLink || ""}
                         backgroundImageUrl={hero?.BannerImage?.url || ""}
                         button={
                             hero?.BannerLink?.label && hero?.BannerLink?.href
