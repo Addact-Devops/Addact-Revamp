@@ -409,24 +409,24 @@ const DetailPageServices = ({
 
     const content =
       variant === "twoCard" ? (
-        <div className="relative border-l-[5px] border-[#3C4CFF] bg-[#1C1C1C] p-[20px] sm:p-8">
-          <h3 className="!mb-6 !text-[20px] !font-semibold !leading-tight text-white md:!text-[30px]">
+        <div className="relative  border border-[#E5E5E5] bg-white p-[20px] sm:p-8">
+          <h3 className="!mb-6 !text-[20px] !font-semibold !leading-tight text-[#0F0F0F] md:!text-[30px]">
             {item.title}
           </h3>
-          <div className="text-[16px] leading-7 text-white/80 [&_p]:m-0 [&_p]:text-inherit">
+          <div className="text-[16px] leading-7 text-[#0F0F0F] [&_p]:m-0 [&_p]:text-inherit">
             <RichText html={item.description} />
           </div>
         </div>
       ) : (
-        <div className="relative flex h-full min-h-[300px] flex-col overflow-hidden rounded-[14px] border border-[#E5E5E5] bg-white p-5 pb-[136px] md:min-h-[425px] md:p-6 md:pb-[168px] md:transition-[border-color,box-shadow] md:duration-300 md:hover:border-[#3C4CFF] md:hover:shadow-[0_20px_45px_rgba(60,76,255,0.14)] md:focus-visible:border-[#3C4CFF] md:focus-visible:shadow-[0_20px_45px_rgba(60,76,255,0.14)]">
+        <div className="relative flex h-full min-h-[250px] flex-col overflow-hidden rounded-[14px] border border-[#E5E5E5] bg-white p-5 pb-[136px] md:min-h-[250px] md:p-6 md:pb-[168px] md:transition-[border-color,box-shadow] md:duration-300 md:hover:border-[#3C4CFF] md:hover:shadow-[0_20px_45px_rgba(60,76,255,0.14)] md:focus-visible:border-[#3C4CFF] md:focus-visible:shadow-[0_20px_45px_rgba(60,76,255,0.14)]">
           <div className="pointer-events-none absolute inset-0 z-0 bg-[#3C4CFF] [clip-path:circle(0%_at_100%_100%)] md:transition-[clip-path] md:duration-500 md:ease-[cubic-bezier(0.22,1,0.36,1)] md:group-hover:[clip-path:circle(180%_at_100%_100%)] md:group-focus-visible:[clip-path:circle(180%_at_100%_100%)]" />
           <div className="pointer-events-none absolute bottom-5 right-5 z-10 h-[108px] w-[108px] rounded-full bg-[#3C4CFF] md:bottom-6 md:right-6 md:h-[108px] md:w-[108px]" />
 
           <div className="relative z-10 max-w-full">
-            <h3 className="min-h-[68px] !text-[24px] !font-semibold !leading-[1.35] text-[#0F0F0F] md:min-h-[78px] md:!text-[28px] md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white">
+            <h3 className="min-h-[68px] !text-[24px] !font-semibold !leading-[1.35] text-[#0F0F0F] md:min-h-[78px] md:!text-[30px] md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white">
               {item.title}
             </h3>
-            <div className="mt-4 text-[16px] leading-8 text-[#0F0F0F]/80 md:text-[17px] md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white [&_p]:m-0 [&_p]:text-inherit">
+            <div className="mt-4 text-[16px] leading-8 text-[#0F0F0F]/80 [&_p]:md:text-[20px]! md:transition-colors md:duration-300 md:group-hover:text-white md:group-focus-visible:text-white [&_p]:m-0 [&_p]:text-inherit">
               <RichText html={item.description} />
             </div>
           </div>

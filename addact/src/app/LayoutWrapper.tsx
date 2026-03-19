@@ -41,7 +41,7 @@ function LayoutWrapper({
       {!hideHeaderFooter && (
         <Header
           headerData={headerData}
-          onContactClick={() => setContactSidebarOpen(true)}
+          // onContactClick={() => setContactSidebarOpen(true)}
           transparentHeader={isTransparentHeaderPage}
         />
       )}

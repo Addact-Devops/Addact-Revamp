@@ -72,9 +72,11 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
   if (slug.length === 1) {
     data = await getDevelopmentDesignSlug(slug[0]);
   } else if (slug.length === 2) {
-    data = await getDevelopmentDesignDetailsCmsSlug(slug.join("/"));
+    const fullPath = `development-design/${slug.join("/")}`;
+    data = await getDevelopmentDesignDetailsCmsSlug(fullPath);
   } else if (slug.length === 3) {
-    data = await getDevelopmentDesignDetailsSitecoreSlug(slug.join("/"));
+    const fullPath = `development-design/${slug.join("/")}`;
+    data = await getDevelopmentDesignDetailsSitecoreSlug(fullPath);
   }
 
   if (!data) return notFound();
