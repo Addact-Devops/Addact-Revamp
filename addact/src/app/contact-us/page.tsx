@@ -74,8 +74,6 @@ export default async function ContactUsPage() {
                     <HeroBanner
                         title={bannerData.BannerTitle}
                         description={bannerData.BannerDescription}
-                        isVideo={Boolean(bannerData?.isVideo)}
-                        videoUrl={bannerData?.videoLink || ""}
                         backgroundImageUrl={bannerData.BannerImage.url}
                         button={
                             bannerData?.BannerLink?.href && bannerData?.BannerLink?.label
