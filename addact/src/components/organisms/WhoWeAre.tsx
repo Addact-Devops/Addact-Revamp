@@ -95,12 +95,12 @@ const WhoWeAre = () => {
 
                 <div
                     ref={cardsRef}
-                    className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4! gap-4 sm:gap-5 md:gap-4 xl:gap-6 justify-items-center'
+                    className='grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5 md:gap-6 xl:gap-8 justify-items-center'
                 >
                     {data?.whoAreWes[0].Counter.map((item, index) => (
                         <div
                             key={item.id}
-                            className='bg-[#3C4CFF] rounded-[20px] p-6 sm:p-8 md:p-10 flex flex-col justify-between w-full aspect-square max-w-[250px] sm:max-w-[360px] md:max-w-[385px] lg:min-h-[350px]! xl:min-h-[389px]! text-left'
+                            className='bg-[#3C4CFF] rounded-[20px] p-3 sm:p-8 md:p-10 flex flex-col justify-between w-full max-w-[250px] sm:max-w-[360px] md:max-w-[385px] lg:min-h-[350px]! xl:min-h-[389px]! aspect-auto sm:aspect-square text-left'
                         >
                             <h2 className='text-white font-bold! font-montserrat text-[64px]! sm:text-[80px]! md:text-[100px]! lg:text-[110px]! xl:text-[130px]! leading-none tracking-tighter'>
                                 {`${item.NumberCount}${counterSuffixes[index] || ""}`}

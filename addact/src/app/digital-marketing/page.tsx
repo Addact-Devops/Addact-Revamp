@@ -18,7 +18,7 @@ import { getDigitalMarketing } from "@/graphql/queries/getDigitalMarketing";
 // import CtaBanner2 from "@/components/molecules/CtaBanner2";
 
 export async function generateMetadata() {
-    return generatePageMetadata("digital-marketing");
+    return generatePageMetadata("digitalMarketingService");
 }
 export default async function umbracoPage() {
     const data = await getDigitalMarketing();
