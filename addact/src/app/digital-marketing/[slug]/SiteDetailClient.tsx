@@ -13,10 +13,7 @@ import FAQ from "@/components/organisms/FAQ";
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
-import {
-  DigitalMarketingService,
-  getDigitalMarketingSlug,
-} from "@/graphql/queries/getDigitalMarketingSlug";
+import { DigitalMarketingService, getDigitalMarketingSlug } from "@/graphql/queries/getDigitalMarketingSlug";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
 import DetailPageServices from "@/components/organisms/DetailPageServices";
 import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
@@ -28,71 +25,64 @@ import OurTechStack from "@/components/organisms/OurTechStack";
 // );
 
 const SiteDetailClient = ({ data }: { data: DigitalMarketingService }) => {
-  const [pageData, setPageData] = useState<DigitalMarketingService | null>(
-    data,
-  );
-  const [loading, setLoading] = useState(false); // set false, we already have data
+    const [pageData, setPageData] = useState<DigitalMarketingService | null>(data);
+    const [loading, setLoading] = useState(false); // set false, we already have data
 
-  const params = useParams();
-  const slug =
-    typeof params?.slug === "string"
-      ? params.slug
-      : Array.isArray(params?.slug)
-        ? params.slug[0]
-        : "";
+    const params = useParams();
+    const slug = typeof params?.slug === "string" ? params.slug : Array.isArray(params?.slug) ? params.slug[0] : "";
 
-  useEffect(() => {
-    if (!pageData && slug) {
-      setLoading(true);
-      getDigitalMarketingSlug(slug)
-        .then((res) => {
-          setPageData(res);
-        })
-        .catch((err) => {
-          console.error("Error fetching service detail:", err);
-        })
-        .finally(() => setLoading(false));
-    }
-  }, [slug, pageData]);
-
-  if (loading) {
-    return <div className="text-white p-8">Loading...</div>;
-  }
-
-  if (!pageData) {
-    return <div className="text-white p-8">Page Not Found</div>;
-  }
-
-  const bannerData = pageData.Banner?.Banner?.[0];
-
-  return (
-    <main className="bg-dark">
-      <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
+    useEffect(() => {
+        if (!pageData && slug) {
+            setLoading(true);
+            getDigitalMarketingSlug(slug)
+                .then((res) => {
+                    setPageData(res);
+                })
+                .catch((err) => {
+                    console.error("Error fetching service detail:", err);
+                })
+                .finally(() => setLoading(false));
         }
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      <WhoWeAre />
-      <DetailPageServices data={data?.ourService} />
+    }, [slug, pageData]);
 
-      {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
-      {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
-      {/* <OurProcess data={data?.our_process} /> */}
-      <OurTechStack data={data?.techStack} />
-      <HowEngagementProcessWorks data={data?.ourprocess} />
-      <IndustryMarqueeCards data={data?.industry} />
-      <ClientTestimonials />
-      {data?.faq && <FAQ data={data?.faq} />}
-      <OurInsights />
-      {data?.cta && <CtaBanner data={data?.cta} />}
-    </main>
-  );
+    if (loading) {
+        return <div className='text-white p-8'>Loading...</div>;
+    }
+
+    if (!pageData) {
+        return <div className='text-white p-8'>Page Not Found</div>;
+    }
+
+    const bannerData = pageData.Banner?.Banner?.[0];
+
+    return (
+        <main className='bg-dark'>
+            <HeroBanner
+                title={bannerData?.BannerTitle ?? ""}
+                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
+                button={{
+                    label: bannerData?.BannerLink?.label ?? "",
+                    url: bannerData?.BannerLink?.href ?? "",
+                }}
+                isVideo={Boolean(bannerData?.isVideo)}
+                videoUrl={bannerData?.videoLink ?? ""}
+                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+            />
+            <WhoWeAre />
+            <DetailPageServices data={data?.ourService} />
+
+            {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
+            {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
+            {/* <OurProcess data={data?.our_process} /> */}
+            <OurTechStack data={data?.techStack} />
+            <HowEngagementProcessWorks data={data?.ourprocess} />
+            <IndustryMarqueeCards data={data?.industry} />
+            <ClientTestimonials />
+            {data?.faq && <FAQ data={data?.faq} />}
+            <OurInsights />
+            {data?.cta && <CtaBanner data={data?.cta} />}
+        </main>
+    );
 };
 
 export default SiteDetailClient;

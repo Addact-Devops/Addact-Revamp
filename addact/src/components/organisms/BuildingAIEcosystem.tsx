@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState, type FocusEvent, type MouseEvent } from "react";
 import { motion } from "framer-motion";
 import type { AIEcoSystem } from "@/graphql/queries/getHomePage";
 
@@ -11,17 +12,56 @@ interface BuildingAIEcosystemProps {
 
 const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
     const aiData = data?.AIEcoSystem;
+    const [activeTooltip, setActiveTooltip] = useState<{ text: string; x: number; y: number } | null>(null);
+
+    const getLogoTooltip = (logo: { tooltip?: string | null; Image?: { alternativeText?: string | null } }) => {
+        const tooltip = logo?.tooltip?.trim() || logo?.Image?.alternativeText?.trim();
+        return tooltip || null;
+    };
+
+    const showTooltip = (text: string, element: HTMLDivElement) => {
+        const rect = element.getBoundingClientRect();
+        setActiveTooltip({
+            text,
+            x: rect.left + rect.width / 2,
+            y: rect.top - 12,
+        });
+    };
+
+    const handleTooltipMouseEnter = (event: MouseEvent<HTMLDivElement>, text: string) => {
+        showTooltip(text, event.currentTarget);
+    };
+
+    const handleTooltipMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+        setActiveTooltip((current) =>
+            current
+                ? {
+                      ...current,
+                      x: event.clientX,
+                      y: event.clientY - 18,
+                  }
+                : current,
+        );
+    };
+
+    const handleTooltipFocus = (event: FocusEvent<HTMLDivElement>, text: string) => {
+        showTooltip(text, event.currentTarget);
+    };
+
+    const hideTooltip = () => {
+        setActiveTooltip(null);
+    };
 
     if (!aiData) {
         return null;
     }
     return (
-        <section className='bg-[#0F0F0F] py-12 md:py-16 lg:py-20 2xl:py-[160px]'>
+        <section className='overflow-x-hidden bg-[#0F0F0F] py-12 md:py-16 lg:py-20 2xl:py-[80px]'>
             <div className='container-main'>
                 <div className='flex flex-col lg:flex-row gap-8 lg:gap-4 2xl:gap-6 items-center'>
                     {/* Left side — Image (hidden on mobile, shown on lg+) */}
                     {(aiData?.firstImage?.url || aiData?.secondImage?.url) && (
-                        <div className='hidden lg:block w-full lg:w-[45%] 2xl:w-[50%] lg:ml-[calc(50%-50vw)] lg:shrink-0'>
+                        <div className='hidden w-full lg:ml-[calc(50%-50vw)] lg:block lg:min-w-0 lg:flex-1'>
                             <div className='relative w-full aspect-[3/4] overflow-hidden rounded-[10px] bg-[#0F0F0F]'>
                                 {/* First Image - Base Layer */}
                                 {aiData?.firstImage?.url && (
@@ -46,7 +86,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                 {aiData?.secondImage?.url && (
                                     <motion.div
                                         className='absolute inset-0'
-                                        initial={{ translateY: "-100%" }}
+                                        initial={{ translateY: "100%" }}
                                         whileInView={{ translateY: "0%" }}
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.8, ease: "easeOut", delay: 1 }}
@@ -65,7 +105,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                     )}
 
                     {/* Right side — Content */}
-                    <div className='w-full lg:w-[55%] 2xl:w-[50%]'>
+                    <div className='w-full lg:min-w-0 lg:flex-1'>
                         {/* Heading */}
                         {aiData.title && (
                             <h2 className='text-[32px] md:text-[44px] lg:text-[52px] 2xl:text-[60px] !font-semibold text-white leading-[1.2] md:leading-[1.3] 2xl:leading-[85px] mb-6 md:mb-8 lg:mb-10 2xl:mb-[50px]'>
@@ -102,7 +142,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                     {aiData?.secondImage?.url && (
                                         <motion.div
                                             className='absolute inset-0'
-                                            initial={{ translateY: "-100%" }}
+                                            initial={{ translateY: "100%" }}
                                             whileInView={{ translateY: "0%" }}
                                             viewport={{ once: true }}
                                             transition={{ duration: 0.8, ease: "easeOut", delay: 1 }}
@@ -138,33 +178,58 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                 )}
 
                                 {/* Marquee container-main-main — glass effect */}
-                                <div className='border border-white/20 rounded-[10px] overflow-hidden py-8 md:py-10 lg:py-12 2xl:py-[70px] group bg-white/[0.03] backdrop-blur-sm'>
+                                <div className='marquee-hover-pause border border-white/20 rounded-[10px] overflow-hidden py-8 md:py-10 lg:py-12 2xl:py-[70px] group bg-white/[0.03] backdrop-blur-sm'>
                                     {/* Row 1 — Left to Right */}
                                     {aiData.firstLayerlogos && aiData.firstLayerlogos.length > 0 && (
                                         <div className='flex overflow-hidden mb-6 md:mb-8 lg:mb-10 2xl:mb-[69px] marquee-mask'>
-                                            <div className='flex gap-10 md:gap-12 lg:gap-14 2xl:gap-16 items-center animate-marquee-ltr group-hover:[animation-play-state:paused]'>
+                                            <div className='flex gap-[100px] items-center animate-marquee-ltr group-hover:[animation-play-state:paused] hover:[animation-play-state:paused]'>
                                                 {[
                                                     ...aiData.firstLayerlogos,
                                                     ...aiData.firstLayerlogos,
                                                     ...aiData.firstLayerlogos,
                                                     ...aiData.firstLayerlogos,
-                                                ].map(
-                                                    (logo, index) =>
-                                                        logo?.Image?.url && (
-                                                            <div
-                                                                key={`row1-${index}`}
-                                                                className='flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center'
-                                                            >
-                                                                <Image
-                                                                    src={logo.Image.url}
-                                                                    alt={logo.Image.alternativeText || "AI Logo"}
-                                                                    width={80}
-                                                                    height={80}
-                                                                    className='w-full h-full object-contain'
-                                                                />
-                                                            </div>
-                                                        ),
-                                                )}
+                                                ].map((logo, index) => {
+                                                    if (!logo?.Image?.url) {
+                                                        return null;
+                                                    }
+
+                                                    const tooltipText = getLogoTooltip(logo);
+
+                                                    return (
+                                                        <div
+                                                            key={`row1-${index}`}
+                                                            className='group/logo relative flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center outline-none'
+                                                            tabIndex={tooltipText ? 0 : -1}
+                                                            aria-label={
+                                                                tooltipText || logo.Image.alternativeText || "AI Logo"
+                                                            }
+                                                            onMouseEnter={
+                                                                tooltipText
+                                                                    ? (event) =>
+                                                                          handleTooltipMouseEnter(event, tooltipText)
+                                                                    : undefined
+                                                            }
+                                                            onMouseMove={
+                                                                tooltipText ? handleTooltipMouseMove : undefined
+                                                            }
+                                                            onMouseLeave={tooltipText ? hideTooltip : undefined}
+                                                            onFocus={
+                                                                tooltipText
+                                                                    ? (event) => handleTooltipFocus(event, tooltipText)
+                                                                    : undefined
+                                                            }
+                                                            onBlur={tooltipText ? hideTooltip : undefined}
+                                                        >
+                                                            <Image
+                                                                src={logo.Image.url}
+                                                                alt={logo.Image.alternativeText || "AI Logo"}
+                                                                width={80}
+                                                                height={80}
+                                                                className='w-full h-full object-contain'
+                                                            />
+                                                        </div>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     )}
@@ -172,29 +237,54 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                                     {/* Row 2 — Right to Left */}
                                     {aiData.secondLayerlogos && aiData.secondLayerlogos.length > 0 && (
                                         <div className='flex overflow-hidden marquee-mask'>
-                                            <div className='flex gap-10 md:gap-12 lg:gap-14 2xl:gap-16 items-center animate-marquee-rtl group-hover:[animation-play-state:paused]'>
+                                            <div className='flex gap-[100px] items-center animate-marquee-rtl group-hover:[animation-play-state:paused] hover:[animation-play-state:paused]'>
                                                 {[
                                                     ...aiData.secondLayerlogos,
                                                     ...aiData.secondLayerlogos,
                                                     ...aiData.secondLayerlogos,
                                                     ...aiData.secondLayerlogos,
-                                                ].map(
-                                                    (logo, index) =>
-                                                        logo?.Image?.url && (
-                                                            <div
-                                                                key={`row2-${index}`}
-                                                                className='flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center'
-                                                            >
-                                                                <Image
-                                                                    src={logo.Image.url}
-                                                                    alt={logo.Image.alternativeText || "AI Logo"}
-                                                                    width={80}
-                                                                    height={80}
-                                                                    className='w-full h-full object-contain'
-                                                                />
-                                                            </div>
-                                                        ),
-                                                )}
+                                                ].map((logo, index) => {
+                                                    if (!logo?.Image?.url) {
+                                                        return null;
+                                                    }
+
+                                                    const tooltipText = getLogoTooltip(logo);
+
+                                                    return (
+                                                        <div
+                                                            key={`row2-${index}`}
+                                                            className='group/logo relative flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center outline-none'
+                                                            tabIndex={tooltipText ? 0 : -1}
+                                                            aria-label={
+                                                                tooltipText || logo.Image.alternativeText || "AI Logo"
+                                                            }
+                                                            onMouseEnter={
+                                                                tooltipText
+                                                                    ? (event) =>
+                                                                          handleTooltipMouseEnter(event, tooltipText)
+                                                                    : undefined
+                                                            }
+                                                            onMouseMove={
+                                                                tooltipText ? handleTooltipMouseMove : undefined
+                                                            }
+                                                            onMouseLeave={tooltipText ? hideTooltip : undefined}
+                                                            onFocus={
+                                                                tooltipText
+                                                                    ? (event) => handleTooltipFocus(event, tooltipText)
+                                                                    : undefined
+                                                            }
+                                                            onBlur={tooltipText ? hideTooltip : undefined}
+                                                        >
+                                                            <Image
+                                                                src={logo.Image.url}
+                                                                alt={logo.Image.alternativeText || "AI Logo"}
+                                                                width={80}
+                                                                height={80}
+                                                                className='w-full h-full object-contain'
+                                                            />
+                                                        </div>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     )}
@@ -226,6 +316,15 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                 </div>
             </div>
 
+            {activeTooltip && (
+                <div
+                    className='pointer-events-none fixed z-[9999] w-max max-w-[220px] -translate-x-1/2 -translate-y-full rounded-[6px] border border-white/20 bg-white px-2.5 py-1.5 text-center text-[11px] md:text-[12px] font-medium leading-tight text-[#0F0F0F] shadow-[0_8px_24px_rgba(15,15,15,0.2)]'
+                    style={{ left: activeTooltip.x, top: activeTooltip.y }}
+                >
+                    {activeTooltip.text}
+                </div>
+            )}
+
             {/* Marquee animations */}
             <style jsx global>{`
                 @keyframes marquee-ltr {
@@ -247,11 +346,18 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                 }
 
                 .animate-marquee-ltr {
-                    animation: marquee-ltr 25s linear infinite;
+                    animation: marquee-ltr 55s linear infinite;
                 }
 
                 .animate-marquee-rtl {
-                    animation: marquee-rtl 25s linear infinite;
+                    animation: marquee-rtl 65s linear infinite;
+                }
+
+                .marquee-hover-pause:hover .animate-marquee-ltr,
+                .marquee-hover-pause:hover .animate-marquee-rtl,
+                .marquee-hover-pause:focus-within .animate-marquee-ltr,
+                .marquee-hover-pause:focus-within .animate-marquee-rtl {
+                    animation-play-state: paused;
                 }
 
                 .marquee-mask {
@@ -267,10 +373,10 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
 
                 @media (max-width: 768px) {
                     .animate-marquee-ltr {
-                        animation-duration: 18s;
+                        animation-duration: 45s;
                     }
                     .animate-marquee-rtl {
-                        animation-duration: 18s;
+                        animation-duration: 55s;
                     }
                 }
 

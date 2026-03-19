@@ -60,14 +60,14 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
                     {/* Title */}
                     <h1 className='uppercase text-white font-bold mb-6 md:mb-8 2xl:mb-10'>
                         {/* Static line */}
-                        <span className='block font-bold text-[#FFFFFFB2] text-[34px] leading-[1.1] md:text-[55px] lg:text-[70px] xl:text-[85px] 2xl:text-[100px]'>
+                        <span className='block font-bold text-[#FFFFFFB2] text-[34px] leading-[1.1] md:text-[55px] lg:text-[70px]! 2xl:text-[75px]'>
                             {staticTitle}
                         </span>
 
                         {/* Rotating line with underline */}
                         <span className='mt-1 block h-[45px] overflow-hidden md:mt-2 md:h-[70px] lg:h-[90px] xl:h-[105px] 2xl:h-[125px] relative'>
                             <span
-                                className={`block text-[34px] leading-[1.1] md:text-[55px] lg:text-[70px] xl:text-[85px] 2xl:text-[100px] roller-text ${
+                                className={`block text-[34px] leading-[1.1] md:text-[55px] lg:text-[70px]! 2xl:text-[75px] roller-text ${
                                     animState === "exit"
                                         ? "roller-exit"
                                         : animState === "enter"
