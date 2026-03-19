@@ -14,122 +14,122 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 
 export async function generateMetadata() {
-  return generatePageMetadata("serviceLists", "/contentful-cms-development");
+    return generatePageMetadata("serviceLists", "/contentful-cms-development");
 }
 
 export default async function ContentfulPage() {
-  const service = "contentful-cms-development";
-  const data = await getServiceListBySlug(service);
-  if (!data) return notFound();
+    const service = "contentful-cms-development";
+    const data = await getServiceListBySlug(service);
+    if (!data) return notFound();
 
-  const bannerData = data.Banner?.Banner?.[0];
+    const bannerData = data.Banner?.Banner?.[0];
 
-  return (
-    <main className="bg-dark">
-      {/* ✅ WebSite Schema */}
+    return (
+        <main className='bg-dark'>
+            {/* ✅ WebSite Schema */}
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org/",
-            "@type": "WebSite",
-            name: "Addact Technologies",
-            url: "https://www.addact.net/contentful-cms-development",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "{search_term_string}",
-              "query-input": "required name=search_term_string",
-            },
-          }),
-        }}
-      />
+            <script
+                type='application/ld+json'
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org/",
+                        "@type": "WebSite",
+                        name: "Addact Technologies",
+                        url: "https://www.addact.net/contentful-cms-development",
+                        potentialAction: {
+                            "@type": "SearchAction",
+                            target: "{search_term_string}",
+                            "query-input": "required name=search_term_string",
+                        },
+                    }),
+                }}
+            />
 
-      {/* ✅ Organization Schema */}
+            {/* ✅ Organization Schema */}
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Addact Technologies",
-            alternateName: "Addact",
-            url: "https://www.addact.net/",
-            logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
-            contactPoint: {
-              "@type": "ContactPoint",
-              telephone: "94272 37737",
-              contactType: "emergency",
-              contactOption: "TollFree",
-              areaServed: ["US", "IN"],
-              availableLanguage: "en",
-            },
-            sameAs: [
-              "https://www.facebook.com/addacttech/",
-              "https://x.com/AddactTech",
-              "https://www.instagram.com/addacttechnologies/",
-              "https://www.youtube.com/@addact3283",
-              "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all",
-              "https://www.addact.net/",
-            ],
-          }),
-        }}
-      />
+            <script
+                type='application/ld+json'
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Organization",
+                        name: "Addact Technologies",
+                        alternateName: "Addact",
+                        url: "https://www.addact.net/",
+                        logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
+                        contactPoint: {
+                            "@type": "ContactPoint",
+                            telephone: "94272 37737",
+                            contactType: "emergency",
+                            contactOption: "TollFree",
+                            areaServed: ["US", "IN"],
+                            availableLanguage: "en",
+                        },
+                        sameAs: [
+                            "https://www.facebook.com/addacttech/",
+                            "https://x.com/AddactTech",
+                            "https://www.instagram.com/addacttechnologies/",
+                            "https://www.youtube.com/@addact3283",
+                            "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all",
+                            "https://www.addact.net/",
+                        ],
+                    }),
+                }}
+            />
 
-      {/* ✅ FAQPage Schema */}
+            {/* ✅ FAQPage Schema */}
 
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: "Is Contentful suitable for scalable and multi-channel content delivery?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Yes, Contentful is designed for scalable, API-driven content delivery across websites, mobile apps, and other digital platforms.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: "How can I improve Contentful performance?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "You can improve Contentful performance by optimizing content models, reducing unnecessary API calls, using caching and a CDN, and implementing efficient content delivery strategies.",
-                },
-              },
-            ],
-          }),
-        }}
-      />
-      <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      <OurPartners />
-      <OurServicesWithTabs data={data?.our_service} />
-      <IndustriesWeServe />
-      <WhyAddact data={data?.why_addact} />
-      {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
-      <OurProcess data={data?.our_process} />
-      <ClientTestimonials />
-      <OurInsights />
-      <FAQ data={data?.faq} />
-      {data?.cta && <CtaBanner data={data?.cta} />}
-    </main>
-  );
+            <script
+                type='application/ld+json'
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "FAQPage",
+                        mainEntity: [
+                            {
+                                "@type": "Question",
+                                name: "Is Contentful suitable for scalable and multi-channel content delivery?",
+                                acceptedAnswer: {
+                                    "@type": "Answer",
+                                    text: "Yes, Contentful is designed for scalable, API-driven content delivery across websites, mobile apps, and other digital platforms.",
+                                },
+                            },
+                            {
+                                "@type": "Question",
+                                name: "How can I improve Contentful performance?",
+                                acceptedAnswer: {
+                                    "@type": "Answer",
+                                    text: "You can improve Contentful performance by optimizing content models, reducing unnecessary API calls, using caching and a CDN, and implementing efficient content delivery strategies.",
+                                },
+                            },
+                        ],
+                    }),
+                }}
+            />
+            <HeroBanner
+                title={bannerData?.BannerTitle ?? ""}
+                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
+                button={{
+                    label: bannerData?.BannerLink?.label ?? "",
+                    url: bannerData?.BannerLink?.href ?? "",
+                }}
+                isVideo={Boolean(bannerData?.isVideo)}
+                videoUrl={bannerData?.videoLink ?? ""}
+                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+            />
+            <OurPartners />
+            <OurServicesWithTabs data={data?.our_service} />
+            <IndustriesWeServe />
+            <WhyAddact data={data?.why_addact} />
+            {data?.cta2 && <CtaBanner2 data={data?.cta2} />}
+            <OurProcess data={data?.our_process} />
+            <ClientTestimonials />
+            <OurInsights />
+            <FAQ data={data?.faq} />
+            {data?.cta && <CtaBanner data={data?.cta} />}
+        </main>
+    );
 }

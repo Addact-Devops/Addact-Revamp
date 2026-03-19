@@ -14,42 +14,39 @@ import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
 
-const IndustriesWeServe = dynamic(
-  () => import("@/components/organisms/IndustriesWeServe"),
-  { ssr: false },
-);
+const IndustriesWeServe = dynamic(() => import("@/components/organisms/IndustriesWeServe"), { ssr: false });
 
 type SiteDetailClientProps = {
-  data: SubServicePage;
+    data: SubServicePage;
 };
 
 const SiteDetailClient = ({ data }: SiteDetailClientProps) => {
-  const bannerData = data.HeroBanner;
+    const bannerData = data.HeroBanner;
 
-  return (
-    <main className="bg-dark">
-      <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      <OurPartners />
-      <OurServicesWithTabs data={data.our_service} />
-      <IndustriesWeServe />
-      <WhyAddact data={data.why_addact} />
-      <ServiceCtaBanner2 data={data.cta2} />
-      <OurProcess data={data.our_process} />
-      <ClientTestimonials />
-      <OurInsights />
-      <FAQ data={data.faq} />
-    </main>
-  );
+    return (
+        <main className='bg-dark'>
+            <HeroBanner
+                title={bannerData?.BannerTitle ?? ""}
+                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
+                button={{
+                    label: bannerData?.BannerLink?.label ?? "",
+                    url: bannerData?.BannerLink?.href ?? "",
+                }}
+                isVideo={Boolean(bannerData?.isVideo)}
+                videoUrl={bannerData?.videoLink ?? ""}
+                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+            />
+            <OurPartners />
+            <OurServicesWithTabs data={data.our_service} />
+            <IndustriesWeServe />
+            <WhyAddact data={data.why_addact} />
+            <ServiceCtaBanner2 data={data.cta2} />
+            <OurProcess data={data.our_process} />
+            <ClientTestimonials />
+            <OurInsights />
+            <FAQ data={data.faq} />
+        </main>
+    );
 };
 
 export default SiteDetailClient;
