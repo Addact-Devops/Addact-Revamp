@@ -5,54 +5,57 @@ export default () => {
   const bucket = process.env.AWS_BUCKET;
   const cdnUrl = process.env.CDN_URL;
 
-//   console.log('💡 AWS Credentials (sanitized):', {
-//     accessKeyId: accessKeyId?.slice(0, 4) + '****',
-//     secretAccessKey: secretAccessKey ? '****' : null,
-//     region,
-//     bucket,
-//     cdnUrl,
-//   });
+  //   console.log('💡 AWS Credentials (sanitized):', {
+  //     accessKeyId: accessKeyId?.slice(0, 4) + '****',
+  //     secretAccessKey: secretAccessKey ? '****' : null,
+  //     region,
+  //     bucket,
+  //     cdnUrl,
+  //   });
 
   return {
     graphql: {
-      // config: { ... }
+      config: {
+        defaultLimit: 50,
+        maxLimit: 100,
+      },
     },
 
     upload: {
-  config: {
-    provider: "aws-s3",
-    providerOptions: {
-      s3Options: {
-        region,
-        credentials: {
-          accessKeyId,
-          secretAccessKey,
+      config: {
+        provider: "aws-s3",
+        providerOptions: {
+          s3Options: {
+            region,
+            credentials: {
+              accessKeyId,
+              secretAccessKey,
+            },
+            params: {
+              Bucket: bucket,
+            },
+          },
+          httpOptions: {
+            timeout: 30000, // Add this line
+          },
+          baseUrl: cdnUrl,
+          cdn: {
+            url: cdnUrl,
+          },
         },
-        params: {
-          Bucket: bucket,
-        },
-      },
-      httpOptions: {
-        timeout: 30000 // Add this line
-      },
-      baseUrl: cdnUrl,
-      cdn: {
-        url: cdnUrl,
-      },
-    },
 
-    actionOptions: {
-      upload: {
-        beforeUpload(file) {
-          file.url = `${cdnUrl}/${file.hash}${file.ext}`;
-          return file;
+        actionOptions: {
+          upload: {
+            beforeUpload(file) {
+              file.url = `${cdnUrl}/${file.hash}${file.ext}`;
+              return file;
+            },
+          },
+          uploadStream: {},
+          delete: {},
         },
       },
-      uploadStream: {},
-      delete: {},
     },
-  },
-},
     // seo: {
     //   enabled: true,
     // },

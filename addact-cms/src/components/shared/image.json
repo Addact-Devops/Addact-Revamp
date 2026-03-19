@@ -15,6 +15,9 @@
         "videos",
         "audios"
       ]
+    },
+    "tooltip": {
+      "type": "string"
     }
   },
   "config": {}
