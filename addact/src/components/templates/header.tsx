@@ -23,7 +23,7 @@ import { ChevronRightIcon } from "../atom/icons";
 interface HeaderProps {
   headerData: AddactHeaderData;
   transparentHeader?: boolean;
-  onContactClick?: () => void;
+  // onContactClick?: () => void;
 }
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
@@ -362,7 +362,7 @@ function DropdownContent({
 // ─── Main Header ─────────────────────────────────────────────────────────────
 const Header = ({
   headerData,
-  onContactClick,
+  // onContactClick,
   transparentHeader,
 }: HeaderProps) => {
   const pathname = usePathname();
@@ -450,19 +450,19 @@ const Header = ({
     contactBtn?.link?.label ?? contactBtn?.title ?? "Contact us";
   const contactIsExternal = contactBtn?.link?.isExternal ?? false;
   const contactIcon = contactBtn?.link?.Icon?.url ?? contactBtn?.image?.url;
-  const useContactDrawer =
-    !contactIsExternal &&
-    (contactHref === "/contact-us" ||
-      contactHref.startsWith("/contact-us?") ||
-      contactHref.startsWith("/contact-us#"));
+  // const useContactDrawer =
+  //   !contactIsExternal &&
+  //   (contactHref === "/contact-us" ||
+  //     contactHref.startsWith("/contact-us?") ||
+  //     contactHref.startsWith("/contact-us#"));
 
-  const handleContactTrigger = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (useContactDrawer && onContactClick) {
-      e.preventDefault();
-      setMobileMenuOpen(false);
-      onContactClick();
-    }
-  };
+  // const handleContactTrigger = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  //   if (useContactDrawer && onContactClick) {
+  //     e.preventDefault();
+  //     setMobileMenuOpen(false);
+  //     onContactClick();
+  //   }
+  // };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -598,7 +598,7 @@ const Header = ({
           <Link
             href={contactHref}
             target={contactIsExternal ? "_blank" : "_self"}
-            onClick={handleContactTrigger}
+            // onClick={handleContactTrigger}
             className="ml-4 bg-[#3C4CFF] px-5 py-3 rounded-[8px] text-white font-semibold hover:bg-[#3440CB] text-[14px] xl:text-[15px] transition-colors flex items-center gap-2"
           >
             {contactIcon && (
@@ -619,7 +619,7 @@ const Header = ({
           <Link
             href={contactHref}
             target={contactIsExternal ? "_blank" : "_self"}
-            onClick={handleContactTrigger}
+            // onClick={handleContactTrigger}
             className="bg-[#3C4CFF] px-4 py-1.5 rounded-[6px] text-white font-semibold text-[13px] hover:bg-[#3440CB] flex items-center gap-2"
           >
             {contactIcon && (
@@ -865,7 +865,7 @@ const Header = ({
             <Link
               href={contactHref}
               target={contactIsExternal ? "_blank" : "_self"}
-              onClick={handleContactTrigger}
+              // onClick={handleContactTrigger}
               className="w-full bg-[#3C4CFF] py-3.5 rounded-[12px] text-white font-semibold text-[16px] flex items-center justify-center gap-2 font-montserrat shadow-lg hover:bg-[#3440CB] transition-colors"
             >
               {contactIcon && (
