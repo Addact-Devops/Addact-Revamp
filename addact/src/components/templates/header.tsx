@@ -500,7 +500,7 @@ const Header = ({
       )}
 
       {/* Main bar */}
-      <div className="mx-auto w-full flex items-center justify-between container-main px-4 py-4 lg:px-0 lg:py-0 relative">
+      <div className="mx-auto w-full flex items-center justify-between container-main px-3.5 py-3.5 pl-3.5! pr-3.5! md:pl-0 md:pr-0 lg:px-0 lg:py-0 relative">
         <Link href="/">
           {logo?.url && (
             <Image
@@ -644,7 +644,7 @@ const Header = ({
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-[140] bg-[#0F0F0F] text-white flex flex-col overflow-hidden">
           {/* Mobile Header: Top Row (Logo & X) */}
-          <div className="mx-auto w-full flex items-center justify-between container-main px-4 py-4 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
+          <div className="mx-auto w-full flex items-center justify-between container-main px-3.5 py-3.5 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
             <div className="h-full flex items-center">
               <Link href="/">
                 {logo?.url && (
