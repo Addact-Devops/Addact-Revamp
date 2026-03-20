@@ -109,7 +109,7 @@ export default function OurInsights() {
         </h2>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mt-4 md:mt-6 xl:mt-8">
-          <div className="text-[#0F0F0F] font-montserrat text-sm sm:text-base md:text-lg xl:text-xl! 2xl:text-2xl! max-w-full md:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl leading-7! xl:leading-9! 2xl:leading-10!">
+          <div className="text-[#0F0F0F] font-montserrat [&_p]:text-sm [&_p]:sm:text-base [&_p]:md:text-lg [&_p]:xl:text-xl! [&_p]:2xl:text-2xl! max-w-full md:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl leading-7! xl:leading-9! 2xl:leading-10!">
             <RichText html={titleData?.Description || ""} />
           </div>
           <Link
@@ -194,7 +194,7 @@ function InsightCard({ item }: InsightCardProps) {
       target="_self"
       className="flex-1 min-w-[250px] max-w-full md:max-w-[calc(33.333%-14px)]"
     >
-      <div className="border border-[#0F0F0F] rounded-[10px] flex flex-col h-full overflow-hidden">
+      <div className="border border-[#c5c5c5] rounded-[10px] flex flex-col h-full overflow-hidden">
         <div className="w-full aspect-[520/321] overflow-hidden">
           {item.image?.url && (
             <Image

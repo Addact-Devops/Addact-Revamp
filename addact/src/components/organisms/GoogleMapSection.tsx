@@ -8,16 +8,17 @@ interface GoogleMapSectionProps {
     lat: number;
     lng: number;
     address: string;
+    mapUrl?: string;
     title?: string;
     zoom?: number;
 }
 
 const mapLibraries: Array<"places"> = ["places"];
 
-const GoogleMapSection = ({ lat, lng, address, title = "Our Location", zoom = 15 }: GoogleMapSectionProps) => {
+const GoogleMapSection = ({ lat, lng, address, mapUrl, title = "Our Location", zoom = 15 }: GoogleMapSectionProps) => {
     const [isInfoOpen, setIsInfoOpen] = useState(true);
     const mapCenter = useMemo(() => ({ lat, lng }), [lat, lng]);
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY?.trim();
 
     const { isLoaded, loadError } = useJsApiLoader({
         id: "contact-us-google-map",
@@ -26,6 +27,8 @@ const GoogleMapSection = ({ lat, lng, address, title = "Our Location", zoom = 15
     });
 
     const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`;
+    const mapLink = mapUrl?.trim() || directionsUrl;
+    const embedMapUrl = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
 
     return (
         <section className='w-full bg-[#0f0f0f] py-10 md:py-14'>
@@ -35,7 +38,7 @@ const GoogleMapSection = ({ lat, lng, address, title = "Our Location", zoom = 15
                         Find Us on Map
                     </h2>
                     <a
-                        href={directionsUrl}
+                        href={mapLink}
                         target='_blank'
                         rel='noopener noreferrer'
                         className='inline-flex items-center gap-2 rounded-md bg-[#3C4CFF] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#3440CB]'
@@ -56,7 +59,7 @@ const GoogleMapSection = ({ lat, lng, address, title = "Our Location", zoom = 15
                             </p>
                             <p className='max-w-170 text-sm text-white/85'>{address}</p>
                             <a
-                                href={directionsUrl}
+                                href={mapLink}
                                 target='_blank'
                                 rel='noopener noreferrer'
                                 className='mt-2 inline-flex items-center gap-2 rounded-md border border-[#3C4CFF] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#3C4CFF]/20'
@@ -65,8 +68,23 @@ const GoogleMapSection = ({ lat, lng, address, title = "Our Location", zoom = 15
                             </a>
                         </div>
                     ) : loadError ? (
-                        <div className='flex min-h-80 items-center justify-center px-6 py-8 text-center text-red-300 md:min-h-105'>
-                            Unable to load Google Map right now.
+                        <div className='min-h-80 px-6 py-8 md:min-h-105 md:px-8'>
+                            <div className='mb-5 rounded-lg border border-red-300/30 bg-red-500/10 p-4 text-center'>
+                                <p className='text-base font-semibold text-red-200'>
+                                    Unable to load Google Map right now.
+                                </p>
+                                <p className='mt-2 text-sm text-red-100/90'>
+                                    This usually means the API key is restricted for localhost, billing is not enabled,
+                                    or the Maps JavaScript API is disabled in Google Cloud.
+                                </p>
+                            </div>
+                            <iframe
+                                title='Google Maps fallback preview'
+                                src={embedMapUrl}
+                                className='h-80 w-full rounded-lg border border-white/15 md:h-115'
+                                loading='lazy'
+                                referrerPolicy='no-referrer-when-downgrade'
+                            />
                         </div>
                     ) : !isLoaded ? (
                         <div className='min-h-80 animate-pulse bg-white/10 md:min-h-105' />
@@ -90,7 +108,7 @@ const GoogleMapSection = ({ lat, lng, address, title = "Our Location", zoom = 15
                                         <p className='mb-1 text-sm font-semibold text-[#0f0f0f]'>{title}</p>
                                         <p className='mb-3 text-xs leading-5 text-[#272727]'>{address}</p>
                                         <a
-                                            href={directionsUrl}
+                                            href={mapLink}
                                             target='_blank'
                                             rel='noopener noreferrer'
                                             className='inline-flex items-center gap-2 rounded-md bg-[#3C4CFF] px-3 py-1.5 text-xs font-semibold text-white'
