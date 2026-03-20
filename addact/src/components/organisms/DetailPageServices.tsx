@@ -415,12 +415,12 @@ const DetailPageServices = ({
               />
             </div>
           ) : (
-            <div className="pointer-events-none absolute bottom-4 right-3 z-10 md:bottom-10 md:right-20 h-[80px] w-[80px] flex items-center justify-center">
+            <div className="pointer-events-none absolute bottom-10 right-10 z-10 md:bottom-10 md:right-11 h-[70px] w-[70px] flex items-center justify-center">
               <svg
                 viewBox="0 0 43 40"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full text-black md:group-hover:text-white md:group-focus-visible:text-white transition-colors duration-300"
+                className="w-full h-full text-white md:group-hover:text-white md:group-focus-visible:text-white transition-colors duration-300"
               >
                 <path
                   d="M43 40H35.107L21.4402 8.95293L7.77344 40H0L18.1392 0L24.8019 0L43 40Z"

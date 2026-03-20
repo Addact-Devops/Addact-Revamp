@@ -47,7 +47,7 @@ const HowEngagementProcessWorks = ({
   return (
     <section className="bg-[#0F0F0F] py-[72px] md:py-[88px] xl:py-[110px]">
       <div className="container-main">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between flex-wrap items-center mb-10 md:mb-0">
           <h2 className="mb-10 max-w-[660px] !text-[34px] !font-semibold !leading-[1.22] text-white md:mb-14 md:!text-[48px] lg:!text-[56px]">
             {title}
           </h2>
@@ -91,10 +91,10 @@ const HowEngagementProcessWorks = ({
               </span>
 
               <div className="relative z-[1] mt-16">
-                <h3 className="mb-3 min-h-[64px] !text-[30px] !font-semibold !leading-[1.35] text-[#E8EAEE] transition-colors duration-300 group-hover:text-white">
+                <h3 className="mb-3 min-h-[55px] lg:min-h-[64px] !text-[25px] lg:!text-[30px]  !font-semibold !leading-[1.35] text-[#E8EAEE] transition-colors duration-300 group-hover:text-white">
                   {card.title}
                 </h3>
-                <div className="text-[#A7ACB4] transition-colors duration-300 group-hover:text-[#EEF1FF] [&_p]:!text-[22px] [&_p]:!leading-[1.8]">
+                <div className="text-[#A7ACB4] transition-colors duration-300 group-hover:text-[#EEF1FF] [&_p]:text-[18px]! [&_p]:lg:!text-[22px] [&_p]:lg:!leading-[1.8]">
                   <RichText html={card.description} />
                 </div>
               </div>
