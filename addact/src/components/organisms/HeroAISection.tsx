@@ -4,6 +4,10 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Orb from "../Orb";
 import RichText from "../atom/richText";
+import {
+  openContactDrawer,
+  shouldOpenContactDrawer,
+} from "@/lib/contactDrawer";
 
 interface HeroAISectionProps {
   data?: {
@@ -20,7 +24,20 @@ interface HeroAISectionProps {
 
 export default function HeroAISection({ data }: HeroAISectionProps) {
   const banner = data?.[0];
+  const buttonUrl = banner?.BannerLink?.href ?? "/contact-us";
 
+  const buttonTarget = banner?.BannerLink?.isExternal ? "_blank" : "_self";
+  const useContactDrawer =
+    !banner?.BannerLink?.isExternal && shouldOpenContactDrawer(buttonUrl);
+
+  const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!useContactDrawer) {
+      return;
+    }
+
+    event.preventDefault();
+    openContactDrawer();
+  };
   return (
     <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
       {/* Orb Background */}
@@ -45,25 +62,36 @@ export default function HeroAISection({ data }: HeroAISectionProps) {
         </div>
 
         {/* Button needs pointer events */}
-        <Link
-          href={banner?.BannerLink?.href || "#"}
-          target={
-            banner?.BannerLink?.isExternal
-              ? "_blank"
-              : (banner?.BannerLink?.target ?? "_self")
-          }
-          rel={
-            banner?.BannerLink?.isExternal ? "noopener noreferrer" : undefined
-          }
-          className="pointer-events-auto mt-8 inline-flex items-center gap-3
+        {useContactDrawer ? (
+          <button
+            type="button"
+            onClick={handleBannerCtaClick}
+            className="pointer-events-auto mt-8 inline-flex items-center gap-3
           bg-[#4F6EF7] hover:bg-[#3f5ce0]
           text-white px-6 py-3 rounded-lg
           text-[16px] font-medium
           transition-all duration-300"
-        >
-          {banner?.BannerLink?.label}
-          <ArrowRight size={18} />
-        </Link>
+          >
+            {banner?.BannerLink?.label}
+            <ArrowRight size={18} />
+          </button>
+        ) : (
+          <Link
+            href={banner?.BannerLink?.href || "#"}
+            target={buttonTarget}
+            rel={
+              banner?.BannerLink?.isExternal ? "noopener noreferrer" : undefined
+            }
+            className="pointer-events-auto mt-8 inline-flex items-center gap-3
+          bg-[#4F6EF7] hover:bg-[#3f5ce0]
+          text-white px-6 py-3 rounded-lg
+          text-[16px] font-medium
+          transition-all duration-300"
+          >
+            {banner?.BannerLink?.label}
+            <ArrowRight size={18} />
+          </Link>
+        )}
       </div>
     </section>
   );
