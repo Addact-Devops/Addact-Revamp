@@ -20,7 +20,6 @@ export default async function umbracoPage() {
   if (!data) return notFound();
   const bannerData = data.Banner?.Banner?.[0];
 
-  console.log("data", data);
   return (
     <main className="bg-dark">
       {/* ✅ SearchAction Schema */}

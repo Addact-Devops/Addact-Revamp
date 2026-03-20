@@ -72,38 +72,36 @@ const CTA_LABEL = "Get a free AI Consultation";
 const NAVBAR_HEIGHT = 80;
 
 interface ServicesSectionProps {
-  data?:
-    | {
-        listingContext?:
-          | {
-              title?: string;
-              description?: string;
-              link?: {
-                href?: string;
-                label?: string | null;
-                target?: string | null;
-                isExternal?: boolean;
-              } | null;
-            }[]
-          | null;
-
-        serviceTitle?: string;
-
-        serviceList?: {
-          listingContext?: {
-            id?: string | number;
-            title?: string;
-            description?: string;
-            link?: {
-              href?: string;
-              target?: string | null;
-              isExternal?: boolean;
-            } | null;
-          } | null;
-        }[];
-      }[]
-    | null;
+  data?: ServiceSectionData | ServiceSectionData[] | null;
 }
+
+type ListingContextItem = {
+  title?: string;
+  description?: string;
+  link?: {
+    href?: string;
+    label?: string | null;
+    target?: string | null;
+    isExternal?: boolean;
+  } | null;
+};
+
+type ServiceSectionData = {
+  listingContext?: ListingContextItem | ListingContextItem[] | null;
+  serviceTitle?: string;
+  serviceList?: {
+    listingContext?: {
+      id?: string | number;
+      title?: string;
+      description?: string;
+      link?: {
+        href?: string;
+        target?: string | null;
+        isExternal?: boolean;
+      } | null;
+    } | null;
+  }[];
+};
 
 function ArrowUpRight({ className }: { className?: string }) {
   return (
@@ -152,10 +150,16 @@ export function ServiceCard({
 }
 
 export default function ServicesSection({ data }: ServicesSectionProps) {
-  const baseListingContext = data?.[0]?.listingContext;
+  const normalizedData = data ? (Array.isArray(data) ? data : [data]) : [];
+
+  const primaryData = normalizedData[0];
+  const baseListingContext = primaryData?.listingContext;
+  const firstListingContext = Array.isArray(baseListingContext)
+    ? baseListingContext[0]
+    : baseListingContext;
 
   const dynamicServices =
-    data?.[0]?.serviceList
+    primaryData?.serviceList
       ?.map((service, index) => ({
         id: Number(service?.listingContext?.id) || index + 1,
         title: service?.listingContext?.title || "",
@@ -168,16 +172,13 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
 
   const servicesToRender = dynamicServices.length ? dynamicServices : SERVICES;
   const sectionHeading =
-    baseListingContext?.[0]?.title ||
-    data?.[0]?.serviceTitle ||
-    SECTION_HEADING;
+    firstListingContext?.title || primaryData?.serviceTitle || SECTION_HEADING;
   const sectionDescription =
-    baseListingContext?.[0]?.description || SECTION_DESCRIPTION;
-  const ctaLabel = baseListingContext?.[0]?.link?.label || CTA_LABEL;
-  const ctaHref = baseListingContext?.[0]?.link?.href || "#";
-  const ctaTarget = baseListingContext?.[0]?.link?.target || "_self";
-  const ctaIsExternal = baseListingContext?.[0]?.link?.isExternal || false;
-  console.log("dynamicServices", data?.[0]?.serviceList);
+    firstListingContext?.description || SECTION_DESCRIPTION;
+  const ctaLabel = firstListingContext?.link?.label || CTA_LABEL;
+  const ctaHref = firstListingContext?.link?.href || "#";
+  const ctaTarget = firstListingContext?.link?.target || "_self";
+  const ctaIsExternal = firstListingContext?.link?.isExternal || false;
   return (
     <>
       <section className="bg-white w-full box-border px-4 py-10 md:px-10 md:py-16 lg:hidden!">
