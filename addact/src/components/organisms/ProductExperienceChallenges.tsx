@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import type { Challenges } from "@/graphql/queries/getDevelopmentDesignSlug";
+import RichText from "../atom/richText";
 
 const layerPath =
   "M350.065 319.762C351.807 319.066 353.71 318.873 355.556 319.207L694.712 380.531C704.145 382.237 706.005 394.954 697.456 399.29L429.554 535.178C427.61 536.164 425.397 536.488 423.251 536.1L34.4898 465.806C24.6061 464.019 23.2309 450.408 32.5574 446.68L350.065 319.762Z";
@@ -104,41 +105,101 @@ const ProductExperienceChallenges = ({
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-12">
             <div className="relative h-[240px] md:h-[320px]">
               <div className="relative mx-auto h-full w-full max-w-[560px]">
-                {[0, 1, 2, 3].map((layerIndex) => {
-                  const isPast = layerIndex < activeIndex;
-                  const moveRight = layerIndex % 2 === 0;
-                  const fillOpacity = 1 - layerIndex * 0.18;
-                  const xOffset = layerIndex * 2;
-                  const yOffset = layerIndex * 26;
+                {Array.from({ length: challengeList.length }, (_, i) => i).map(
+                  (layerIndex) => {
+                    const isPast = layerIndex < activeIndex;
+                    const moveRight = layerIndex % 2 === 0;
+                    // const fillOpacity =
+                    //   1 - (layerIndex / challengeList.length) * 0.7;
+                    const fillOpacity =
+                      0.3 + (layerIndex / (challengeList.length - 1)) * 0.7;
+                    const xOffset = layerIndex * 2;
+                    const yOffset = layerIndex * 26;
 
-                  return (
-                    <svg
-                      key={layerIndex}
-                      viewBox="20 300 684 240"
-                      className="absolute left-0 top-0 h-[190px] w-[100%] md:h-[220px]"
-                      aria-hidden="true"
-                      style={{
-                        transform: isPast
-                          ? `translate3d(${moveRight ? "240px" : "-240px"}, -36px, 0) rotate(${moveRight ? "-6deg" : "6deg"}) scale(0.92)`
-                          : `translate3d(${xOffset}px, ${yOffset}px, 0)`,
-                        opacity: isPast ? 0 : 1,
-                        zIndex: 50 - layerIndex,
-                        transition:
-                          "transform 720ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 620ms ease",
-                        filter:
-                          "drop-shadow(0 16px 26px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 14px rgba(255, 255, 255, 0.2))",
-                      }}
-                    >
-                      <path
-                        d={layerPath}
-                        fill="#3C4CFF"
-                        fillOpacity={fillOpacity}
-                        stroke="rgba(218, 230, 255, 0.55)"
-                        strokeWidth="1.2"
-                      />
-                    </svg>
-                  );
-                })}
+                    return (
+                      <svg
+                        key={layerIndex}
+                        viewBox="20 300 684 240"
+                        className="absolute left-0 top-0 h-[190px] w-[100%] md:h-[220px]"
+                        aria-hidden="true"
+                        style={{
+                          transform: isPast
+                            ? `translate3d(${moveRight ? "240px" : "-240px"}, -36px, 0) rotate(${moveRight ? "-6deg" : "6deg"}) scale(0.92)`
+                            : `translate3d(${xOffset}px, ${yOffset}px, 0)`,
+                          opacity: isPast ? 0 : 1,
+                          // zIndex: 50 - layerIndex,
+                          zIndex: challengeList.length - layerIndex,
+                          transition:
+                            "transform 720ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 620ms ease",
+                          // filter:
+                          //   "drop-shadow(0 16px 26px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 14px rgba(255, 255, 255, 0.2))",
+                          filter: `drop-shadow(0 18px 28px rgba(0,0,0,0.7)) drop-shadow(0 0 ${8 + layerIndex * 4}px rgba(80,100,255,${0.15 + layerIndex * 0.08}))`,
+                        }}
+                      >
+                        {/* <path
+                          d={layerPath}
+                          fill="#3C4CFF"
+                          fillOpacity={fillOpacity}
+                          stroke="rgba(218, 230, 255, 0.55)"
+                          strokeWidth="1.2"
+                        /> */}
+                        <>
+                          <defs>
+                            <linearGradient
+                              id={`glass-${layerIndex}`}
+                              x1="0%"
+                              y1="0%"
+                              x2="100%"
+                              y2="100%"
+                            >
+                              <stop
+                                offset="0%"
+                                stopColor="#0a0e2e"
+                                stopOpacity={fillOpacity}
+                              />
+                              <stop
+                                offset="50%"
+                                stopColor="#2233cc"
+                                stopOpacity={fillOpacity}
+                              />
+                              <stop
+                                offset="100%"
+                                stopColor="#4455ff"
+                                stopOpacity={fillOpacity}
+                              />
+                            </linearGradient>
+                            <linearGradient
+                              id={`border-${layerIndex}`}
+                              x1="0%"
+                              y1="0%"
+                              x2="100%"
+                              y2="100%"
+                            >
+                              <stop
+                                offset="0%"
+                                stopColor="rgba(255,255,255,0.6)"
+                              />
+                              <stop
+                                offset="50%"
+                                stopColor="rgba(255,255,255,0.15)"
+                              />
+                              <stop
+                                offset="100%"
+                                stopColor="rgba(100,140,255,0.5)"
+                              />
+                            </linearGradient>
+                          </defs>
+                          <path
+                            d={layerPath}
+                            fill={`url(#glass-${layerIndex})`}
+                            stroke={`url(#border-${layerIndex})`}
+                            strokeWidth="1.5"
+                          />
+                        </>
+                      </svg>
+                    );
+                  },
+                )}
               </div>
             </div>
 
@@ -165,12 +226,12 @@ const ProductExperienceChallenges = ({
                       }}
                     >
                       <div className="w-full max-w-[560px]">
-                        <h3 className="mb-4 text-center text-[32px] font-semibold! leading-[1.2] tracking-[-0.02em] md:text-left md:text-[42px]">
+                        <h3 className="mb-4 text-center text-[32px] font-semibold! leading-[1.2] tracking-[-0.02em] md:text-left md:text-[40px]">
                           {index + 1}. {challenge.title}
                         </h3>
-                        <p className="max-w-[590px] text-center text-base leading-8 text-[#C5C7D0] md:text-left md:text-[24px] md:leading-[1.55]">
-                          {challenge.description}
-                        </p>
+                        <div className="max-w-[590px] text-center text-base leading-8 text-[#C5C7D0] md:text-left md:text-[24px] md:leading-[1.55]">
+                          <RichText html={challenge.description} />
+                        </div>
                       </div>
                     </div>
                   );

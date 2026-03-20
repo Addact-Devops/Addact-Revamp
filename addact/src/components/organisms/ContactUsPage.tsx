@@ -5,6 +5,7 @@ import { CONTACTUS } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
 import ReCAPTCHA from "react-google-recaptcha";
 import { usePathname } from "next/navigation";
+import GoogleMapSection from "./GoogleMapSection";
 
 interface IProps {
   data: CONTACTUS;
@@ -267,6 +268,12 @@ const ContactUs = ({ data }: IProps) => {
           </div>
         </div>
       </div>
+      <GoogleMapSection
+        lat={23.0225}
+        lng={72.5714}
+        title="Addact Technologies"
+        address="Addact Technologies, Ahmedabad, Gujarat, India"
+      />
     </section>
   );
 };
