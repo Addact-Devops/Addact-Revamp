@@ -47,28 +47,28 @@ const ContactUs = ({ data }: IProps) => {
     const newErrors: FormErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const strLenRegex = /^.{2,}$/;
-    if (!formData.name) newErrors.name = "Name is required.";
+    if (!formData.name) newErrors.name = "Please enter Name.";
     if (!strLenRegex.test(formData.name)) {
-      newErrors.name = "Please enter at least 2-3 character name";
+      newErrors.name = "Please enter valid name";
     }
     if (!formData.email) {
-      newErrors.email = "Email is required.";
+      newErrors.email = "Please enter email address.";
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-    if (!formData.company) newErrors.company = "Company name is required.";
+    if (!formData.company) newErrors.company = "Please enter company name.";
     if (!strLenRegex.test(formData.company)) {
-      newErrors.company = "Please enter at least 2-3 character company name";
+      newErrors.company = "Please enter valid company name";
     }
     return newErrors;
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!captchaToken) {
-      alert("Please complete the captcha.");
-      return;
-    }
+    // if (!captchaToken) {
+    //   alert("Please complete the captcha.");
+    //   return;
+    // }
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -228,7 +228,7 @@ const ContactUs = ({ data }: IProps) => {
                 </div>
 
                 <div className="flex justify-center">
-                  <div className="recaptcha-wrapper">
+                  <div className="recaptcha-wrapper flex flex-col ">
                     <ReCAPTCHA
                       sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                       onChange={(token: string | null) =>
@@ -236,6 +236,11 @@ const ContactUs = ({ data }: IProps) => {
                       }
                       size="normal"
                     />
+                    {!captchaToken && (
+                      <p className="mt-1 text-sm text-red-500">
+                        Please complete the captcha.
+                      </p>
+                    )}
                   </div>
                 </div>
 

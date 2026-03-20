@@ -234,6 +234,59 @@ const hireExpertsSlugQuery = gql`
           isCarousel
         }
       }
+
+      our_process {
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
+        ProcessData {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -252,6 +305,26 @@ export interface HireExpert {
   ourService: OurServiceList[];
   our_service?: OurServiceData;
   industry: Industry | null;
+  our_process?: OurProcess | null;
+}
+
+export interface OurProcess {
+  Title: Heading[];
+  ProcessData: {
+    Title: string;
+    Description: string;
+    Link: LinkWithIcon;
+  }[];
+}
+
+export interface LinkWithIcon {
+  id: string;
+  href: string;
+  label: string | null;
+  target?: string | null;
+  isExternal: boolean;
+  SubDisc: string | null;
+  Icon: Image | null;
 }
 
 export interface Industry {

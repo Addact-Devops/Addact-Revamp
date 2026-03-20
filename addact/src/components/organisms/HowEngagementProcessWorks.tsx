@@ -1,11 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { OurProcess } from "@/graphql/queries/getDevelopmentDesign";
 import RichText from "@/components/atom/richText";
 
+type Heading = {
+  h1?: string;
+  h2?: string;
+  h3?: string;
+  h4?: string;
+  h5?: string;
+  h6?: string;
+};
+
+type ProcessDataItem = {
+  id?: string | number;
+  Title?: string | null;
+  Description?: string | null;
+  Link?: unknown;
+};
+
+type ProcessInput = {
+  Title?: Heading[];
+  ProcessData?: ProcessDataItem[];
+};
+
 interface HowEngagementProcessWorksProps {
-  data?: OurProcess;
+  data?: ProcessInput;
 }
 
 const HowEngagementProcessWorks = ({
