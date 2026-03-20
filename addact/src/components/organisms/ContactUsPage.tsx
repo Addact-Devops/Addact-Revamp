@@ -120,7 +120,7 @@ const ContactUs = ({ data }: IProps) => {
       className="w-full text-white md:py-12 pb-[100px] px-4"
       id="contact-us"
     >
-      <div className="container mx-auto overflow-hidden !px-[10px] lg:!px-[20px] xl:!px-4">
+      <div className="container-main mx-auto overflow-hidden !px-[10px] lg:!px-[20px] xl:!px-4">
         <div className="border-gray-700 border">
           <div className="flex flex-col justify-between">
             <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0">
