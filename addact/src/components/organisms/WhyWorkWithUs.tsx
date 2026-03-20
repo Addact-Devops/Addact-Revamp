@@ -40,7 +40,7 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
       {/* Mobile View - Cards + Non-clickable SVG */}
       <div className="block lg:hidden">
         <div className="px-6 pb-64 md:pb-72">
-          <h2 className="text-stone-950 text-[26px] !font-semibold font-['Montserrat'] leading-normal mb-8">
+          <h2 className="text-stone-950 text-[24px]! lg:text-[26px]! !font-semibold font-['Montserrat'] leading-normal mb-8">
             {heading}
           </h2>
 
@@ -96,7 +96,7 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
                   >
                     <div className="bg-white border border-black/10 rounded-[10px] p-5 h-full">
                       <div className="flex items-center gap-3 mb-3">
-                        <h3 className="text-stone-950 text-[18px] lg:text-[20px]! font-medium! font-['Montserrat'] leading-8">
+                        <h3 className="text-stone-950 text-[18px]! lg:text-[20px]! font-medium! font-['Montserrat'] leading-8">
                           {item?.title}
                         </h3>
                       </div>

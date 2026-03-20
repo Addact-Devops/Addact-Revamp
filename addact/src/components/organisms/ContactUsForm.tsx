@@ -105,11 +105,10 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log("🚀 ~ handleSubmit ~ captchaToken:", captchaToken);
-    // if (!captchaToken) {
-    //     alert("Please complete the captcha.");
-    //     return;
-    // }
+    if (!captchaToken) {
+      alert("Please complete the captcha.");
+      return;
+    }
 
     setFormLoading(true);
 
