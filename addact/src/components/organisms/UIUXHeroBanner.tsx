@@ -67,13 +67,13 @@ const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
         <div className="pointer-events-none flex flex-col items-center">
           <h1 className="pointer-events-none max-w-[1506px] whitespace-pre-line font-montserrat font-bold uppercase leading-[1.08] tracking-tight text-white ">
             {firstLine && (
-              <span className="block font-bold text-[44px]  sm:text-[58px] md:text-[72px] lg:text-[86px]! xl:text-[100px]!">
+              <span className="block font-bold text-[44px]  sm:text-[58px] md:text-[72px] xl:text-[100px]!">
                 {firstLine}
               </span>
             )}
 
             {secondLine && (
-              <span className="block font-bold text-[44px]  sm:text-[58px] md:text-[72px] lg:text-[86px]! xl:text-[100px]!">
+              <span className="block font-bold text-[44px]  sm:text-[58px] md:text-[72px] xl:text-[100px]!">
                 <span className="relative inline-block">{secondLine}</span>
               </span>
             )}
