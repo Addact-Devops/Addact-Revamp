@@ -266,6 +266,20 @@ const hireExpertsSlugQuery = gql`
             message
           }
         }
+        link {
+          id
+          href
+          label
+          target
+          isExternal
+          SubDisc
+          Icon {
+            alternativeText
+            width
+            url
+            height
+          }
+        }
         ProcessData {
           ... on ComponentBaseTemplateTitleWithDescription {
             Title
@@ -308,13 +322,26 @@ export interface HireExpert {
   our_process?: OurProcess | null;
 }
 
+export interface LinkProps {
+  id: string;
+  href: string;
+  label: string;
+  target: string;
+  isExternal: boolean;
+  SubDisc: string | null;
+  Icon: Image | null;
+}
+
 export interface OurProcess {
   Title: Heading[];
-  ProcessData: {
-    Title: string;
-    Description: string;
-    Link: LinkWithIcon;
-  }[];
+  ProcessData: ProcessDataItem[];
+  link: LinkProps;
+}
+
+export interface ProcessDataItem {
+  id: string;
+  Title: string;
+  Description: string;
 }
 
 export interface LinkWithIcon {
