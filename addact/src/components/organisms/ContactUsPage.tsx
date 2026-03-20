@@ -268,11 +268,13 @@ const ContactUs = ({ data }: IProps) => {
           </div>
         </div>
       </div>
+
       <GoogleMapSection
-        lat={23.0225}
-        lng={72.5714}
+        lat={23.0436193}
+        lng={72.4816712}
         title="Addact Technologies"
-        address="Addact Technologies, Ahmedabad, Gujarat, India"
+        address="Office No 914, Sankalp Square 3B, Sindhu Bhavan Marg, beside Taj skyline, PRL Colony, Thaltej, Ahmedabad, Gujarat 380058"
+        mapUrl="https://www.google.com/maps/place/Addact+Technologies/@23.0436242,72.4790963,1037m/data=!3m2!1e3!4b1!4m6!3m5!1s0x395e9bc437b14a2f:0x6c87dddab10d11f9!8m2!3d23.0436193!4d72.4816712!16s%2Fg%2F11gzpb_mtb?entry=ttu&g_ep=EgoyMDI2MDMxNy4wIKXMDSoASAFQAw%3D%3D%27"
       />
     </section>
   );
