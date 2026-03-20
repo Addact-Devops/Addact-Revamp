@@ -250,7 +250,7 @@ export default function Footer({ data }: FooterProps) {
 
             {/* Navigation Links */}
             <div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-6 lg:gap-y-0 lg:gap-x-8">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-6 lg:gap-y-0 lg:gap-x-8">
                 {linkColumns.map((column, index) => {
                   const links = column.NavLink || [];
                   const titleItem = links[0] as { Title?: string };

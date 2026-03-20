@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  openContactDrawer,
+  shouldOpenContactDrawer,
+} from "@/lib/contactDrawer";
+import Link from "next/link";
 import React from "react";
 
 type CTAImageType = {
@@ -47,6 +52,19 @@ const GenericCTA: React.FC<CTAProps> = ({
 
   const sectionMinHeight = "450px"; // same value reused
 
+  const target = link?.isExternal ? "_blank" : "_self";
+  const useContactDrawer =
+    !link?.isExternal && shouldOpenContactDrawer(link?.href || "");
+
+  const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!useContactDrawer) {
+      return;
+    }
+
+    event.preventDefault();
+    openContactDrawer();
+  };
+
   return (
     <section
       className="relative w-full bg-cover bg-center bg-no-repeat"
@@ -65,16 +83,23 @@ const GenericCTA: React.FC<CTAProps> = ({
 
           {descriptionText && <p className="mb-[15px]">{descriptionText}</p>}
 
-          {link && (
-            <a
-              href={link.href}
-              target={link.isExternal ? "_blank" : "_self"}
-              rel={link.isExternal ? "noopener noreferrer" : undefined}
+          {useContactDrawer ? (
+            <button
+              onClick={handleBannerCtaClick}
+              className="text-[15px] bg-[#3C4CFF] hover:bg-[#3440CB] text-white text-base font-[600] rounded-lg transition h-[41px] inline-flex items-center justify-center px-[16px] mt-[20px] w-fit"
+            >
+              {link?.label}
+            </button>
+          ) : (
+            <Link
+              href={link?.href || "#"}
+              target={target}
+              rel={link?.isExternal ? "noopener noreferrer" : undefined}
               style={{ width: "fit-content" }}
               className="text-[15px] bg-[#3C4CFF] hover:bg-[#3440CB] text-white text-base font-[600] rounded-lg transition h-[41px] inline-flex items-center justify-center px-[16px] mt-[20px]"
             >
-              {link.label}
-            </a>
+              {link?.label}
+            </Link>
           )}
         </div>
       </div>
