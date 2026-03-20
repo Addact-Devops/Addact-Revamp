@@ -85,9 +85,6 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
       )} */}
       <IndustryMarqueeCards data={pageData?.industry} />
       {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
-
-      <HowEngagementProcessWorks />
-
       <ClientTestimonials />
       <OurInsights />
       <FAQ data={pageData.faq} />

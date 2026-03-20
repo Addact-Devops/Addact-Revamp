@@ -139,7 +139,6 @@ export default async function umbracoPage() {
       {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
       {/* <OurProcess data={data?.our_process} /> */}
       <OurTechStack data={data?.techStack} />
-      <HowEngagementProcessWorks />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
       {data?.faq && <FAQ data={data?.faq} />}

@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Navigation } from "swiper/modules";
 import type { OurWork } from "@/graphql/queries/getDevelopmentDesignSlug";
 import Image from "../atom/image";
+import RichText from "../atom/richText";
 
 const projectsData = [
   {
@@ -124,9 +125,9 @@ export default function OurWork({ data }: { data?: OurWork | null }) {
                       <h3 className="!text-[20px] sm:!text-[24px] md:!text-[26px] lg:!text-[28px] xl:!text-[30px] !font-semibold text-white font-[Montserrat,sans-serif] leading-tight">
                         {project.title}
                       </h3>
-                      <p className="!text-[12px] sm:!text-[13px] md:!text-[14px] lg:!text-[16px] xl:!text-[20px] !font-normal text-white font-[Montserrat,sans-serif] leading-[1.65] line-clamp-6">
-                        {project.description}
-                      </p>
+                      <div className="!text-[12px] sm:!text-[13px] md:!text-[14px] lg:!text-[16px] xl:!text-[20px] !font-normal text-white font-[Montserrat,sans-serif] leading-[1.65] line-clamp-6">
+                        <RichText html={project.description} />
+                      </div>
                     </div>
 
                     <div className="flex flex-wrap gap-2 mt-1">

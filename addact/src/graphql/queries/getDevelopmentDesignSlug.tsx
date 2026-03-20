@@ -324,6 +324,20 @@ const developmentDesignSlugQuery = gql`
             h6
           }
         }
+        link {
+          id
+          href
+          label
+          target
+          isExternal
+          SubDisc
+          Icon {
+            alternativeText
+            width
+            url
+            height
+          }
+        }
         ProcessData {
           ... on ComponentBaseTemplateTitleWithDescription {
             id
@@ -777,9 +791,20 @@ export interface IndustryListItem {
   } | null;
 }
 
+export interface LinkProps {
+  id: string;
+  href: string;
+  label: string;
+  target: string;
+  isExternal: boolean;
+  SubDisc: string | null;
+  Icon: Image | null;
+}
+
 export interface OurProcess {
   Title: Heading[];
   ProcessData: ProcessDataItem[];
+  link: LinkProps;
 }
 
 export interface ProcessDataItem {
