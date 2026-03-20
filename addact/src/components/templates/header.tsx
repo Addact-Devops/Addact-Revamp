@@ -18,10 +18,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+// import {
+//   openContactDrawer,
+//   shouldOpenContactDrawer,
+// } from "@/lib/contactDrawer";
 import { ChevronRightIcon } from "../atom/icons";
 
 interface HeaderProps {
@@ -453,18 +453,18 @@ const Header = ({
     contactBtn?.link?.label ?? contactBtn?.title ?? "Contact us";
   const contactIsExternal = contactBtn?.link?.isExternal ?? false;
   const contactIcon = contactBtn?.link?.Icon?.url ?? contactBtn?.image?.url;
-  const useContactDrawer =
-    !contactIsExternal && shouldOpenContactDrawer(contactHref);
+  //   const useContactDrawer =
+  //     !contactIsExternal && shouldOpenContactDrawer(contactHref);
 
-  const handleContactTrigger = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!useContactDrawer) {
-      return;
-    }
+  //   const handleContactTrigger = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  //     if (!useContactDrawer) {
+  //       return;
+  //     }
 
-    e.preventDefault();
-    setMobileMenuOpen(false);
-    openContactDrawer();
-  };
+  //     e.preventDefault();
+  //     setMobileMenuOpen(false);
+  //     openContactDrawer();
+  //   };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -863,7 +863,7 @@ const Header = ({
             <Link
               href={contactHref}
               target={contactIsExternal ? "_blank" : "_self"}
-              onClick={handleContactTrigger}
+              //   onClick={handleContactTrigger}
               className="w-full bg-[#3C4CFF] py-3.5 rounded-[12px] text-white font-semibold text-[16px] flex items-center justify-center gap-2 font-montserrat shadow-lg hover:bg-[#3440CB] transition-colors"
             >
               {contactIcon && (
