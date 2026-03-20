@@ -3,6 +3,10 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import AnimatedBlindsBackground from "./AnimatedBlindsBackground";
 import RichText from "../atom/richText";
+import {
+  openContactDrawer,
+  shouldOpenContactDrawer,
+} from "@/lib/contactDrawer";
 
 type UIUXBannerData = {
   BannerTitle?: string;
@@ -10,6 +14,7 @@ type UIUXBannerData = {
   BannerLink?: {
     label?: string;
     href?: string;
+    isExternal?: boolean;
   } | null;
   chipsText?: {
     Title: string;
@@ -24,6 +29,18 @@ const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
   const buttonUrl = data?.BannerLink?.href ?? "/contact-us";
   const chips = data?.chipsText ?? [];
 
+  const buttonTarget = data?.BannerLink?.isExternal ? "_blank" : "_self";
+  const useContactDrawer =
+    !data?.BannerLink?.isExternal && shouldOpenContactDrawer(buttonUrl);
+
+  const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!useContactDrawer) {
+      return;
+    }
+
+    event.preventDefault();
+    openContactDrawer();
+  };
   const currentTitle = title || "";
 
   const parts = currentTitle
@@ -68,13 +85,25 @@ const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
         </div>
 
         <div className="mt-10 pointer-events-auto">
-          <Link
-            href={buttonUrl}
-            className="inline-flex items-center justify-center gap-5 rounded-[8px] bg-white px-7 py-4 font-montserrat text-[18px] font-semibold leading-none text-[#0f0f0f] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] transition hover:-translate-y-0.5 hover:bg-[#f2f4f7]"
-          >
-            <span>{buttonLabel}</span>
-            <ArrowRight className="h-[22px] w-[22px]" />
-          </Link>
+          {useContactDrawer ? (
+            <button
+              type="button"
+              onClick={handleBannerCtaClick}
+              className="inline-flex items-center justify-center gap-5 rounded-[8px] bg-white px-7 py-4 font-montserrat text-[18px] font-semibold leading-none text-[#0f0f0f] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] transition hover:-translate-y-0.5 hover:bg-[#f2f4f7]"
+            >
+              <span>{buttonLabel}</span>
+              <ArrowRight className="h-[22px] w-[22px]" />
+            </button>
+          ) : (
+            <Link
+              href={buttonUrl}
+              target={buttonTarget}
+              className="inline-flex items-center justify-center gap-5 rounded-[8px] bg-white px-7 py-4 font-montserrat text-[18px] font-semibold leading-none text-[#0f0f0f] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] transition hover:-translate-y-0.5 hover:bg-[#f2f4f7]"
+            >
+              <span>{buttonLabel}</span>
+              <ArrowRight className="h-[22px] w-[22px]" />
+            </Link>
+          )}
         </div>
 
         {chips.length > 0 && (
