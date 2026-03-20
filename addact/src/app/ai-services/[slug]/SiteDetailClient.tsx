@@ -7,7 +7,10 @@ import { useParams } from "next/navigation";
 // import OurProcess from "@/components/organisms/OurProcess";
 
 // import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
-import { AIService, getAIServiceSlug } from "@/graphql/queries/getAIServiceSlug";
+import {
+  AIService,
+  getAIServiceSlug,
+} from "@/graphql/queries/getAIServiceSlug";
 
 import HeroAISection from "@/components/organisms/HeroAISection";
 import SolveProblemsWithAI from "@/components/organisms/SolveProblemsWithAI";
@@ -25,50 +28,59 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 // );
 
 const SiteDetailClient = ({ data }: { data: AIService }) => {
-    const [pageData, setPageData] = useState<AIService | null>(data);
-    const [loading, setLoading] = useState(false); // set false, we already have data
+  const [pageData, setPageData] = useState<AIService | null>(data);
+  const [loading, setLoading] = useState(false); // set false, we already have data
 
-    const params = useParams();
-    const slug = typeof params?.slug === "string" ? params.slug : Array.isArray(params?.slug) ? params.slug[0] : "";
+  const params = useParams();
+  const slug =
+    typeof params?.slug === "string"
+      ? params.slug
+      : Array.isArray(params?.slug)
+        ? params.slug[0]
+        : "";
 
-    useEffect(() => {
-        if (!pageData && slug) {
-            setLoading(true);
-            getAIServiceSlug(slug)
-                .then((res) => {
-                    setPageData(res);
-                })
-                .catch((err) => {
-                    console.error("Error fetching service detail:", err);
-                })
-                .finally(() => setLoading(false));
-        }
-    }, [slug, pageData]);
-
-    if (loading) {
-        return <div className='text-white p-8'>Loading...</div>;
+  useEffect(() => {
+    if (!pageData && slug) {
+      setLoading(true);
+      getAIServiceSlug(slug)
+        .then((res) => {
+          setPageData(res);
+        })
+        .catch((err) => {
+          console.error("Error fetching service detail:", err);
+        })
+        .finally(() => setLoading(false));
     }
+  }, [slug, pageData]);
 
-    if (!pageData) {
-        return <div className='text-white p-8'>Page Not Found</div>;
-    }
+  if (loading) {
+    return <div className="text-white p-8">Loading...</div>;
+  }
 
-    const normalizedOurService = Array.isArray(pageData.ourService) ? pageData.ourService[0] : pageData.ourService;
+  if (!pageData) {
+    return <div className="text-white p-8">Page Not Found</div>;
+  }
 
-    return (
-        <main>
-            <HeroAISection data={pageData?.Banner?.Banner} />
-            <SolveProblemsWithAI data={pageData?.aiSolveProblem} />
-            <BenefitsSection data={pageData?.aiBenefit} />
-            {normalizedOurService && <ServicesSection data={normalizedOurService} />}
-            <AIProcess data={pageData?.ourprocess} />
-            <IndustryMarqueeCards data={pageData?.industry} />
-            <OurTechStack data={pageData?.techStack} />
-            <OurInsights />
-            {pageData?.faq && <FAQ data={pageData?.faq} />}
-            {pageData?.cta && <CtaBanner data={pageData?.cta} />}
-        </main>
-    );
+  const ourServiceArray = pageData.ourService
+    ? Array.isArray(pageData.ourService)
+      ? pageData.ourService
+      : [pageData.ourService]
+    : null;
+
+  return (
+    <main>
+      <HeroAISection data={pageData?.Banner?.Banner} />
+      <SolveProblemsWithAI data={pageData?.aiSolveProblem} />
+      <BenefitsSection data={pageData?.aiBenefit} />
+      {ourServiceArray && <ServicesSection data={ourServiceArray} />}
+      <AIProcess data={pageData?.ourprocess} />
+      <IndustryMarqueeCards data={pageData?.industry} />
+      <OurTechStack data={pageData?.techStack} />
+      <OurInsights />
+      {pageData?.faq && <FAQ data={pageData?.faq} />}
+      {pageData?.cta && <CtaBanner data={pageData?.cta} />}
+    </main>
+  );
 };
 
 export default SiteDetailClient;

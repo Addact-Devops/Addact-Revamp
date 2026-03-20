@@ -115,9 +115,9 @@ export default function OurInsights() {
           <Link
             href={titleData?.Link?.href || ""}
             target={titleData?.Link?.target === "blank" ? "_blank" : "_self"}
-            className="px-4 py-2.5 sm:px-5 sm:py-3 md:py-4 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] outline-1 -outline-offset-1 outline-indigo-600 inline-flex justify-center items-center gap-2 sm:gap-3 md:gap-4 xl:gap-5 overflow-hidden hover:bg-indigo-50 transition-colors flex-shrink-0"
+            className="px-4 py-2.5 sm:px-5 sm:py-3 md:py-4 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] outline-1 -outline-offset-1 outline-[#3C4CFF] inline-flex justify-center items-center gap-2 sm:gap-3 md:gap-4 xl:gap-5 overflow-hidden hover:bg-[#3C4CFF] transition-colors flex-shrink-0 group"
           >
-            <span className="text-indigo-600 text-sm sm:text-base md:text-lg font-semibold font-montserrat leading-5 sm:leading-6 md:leading-7 whitespace-nowrap">
+            <span className="text-[#3C4CFF] text-sm sm:text-base md:text-lg font-semibold font-montserrat leading-5 sm:leading-6 md:leading-7 whitespace-nowrap group-hover:text-white">
               {titleData?.Link?.label || ""}
             </span>
             <svg
@@ -126,11 +126,11 @@ export default function OurInsights() {
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="flex-shrink-0 sm:w-5 sm:h-5"
+              className="flex-shrink-0 sm:w-5 sm:h-5 text-[#3C4CFF] group-hover:text-white transition-colors"
             >
               <path
                 d="M4.16699 10H15.8337M15.8337 10L10.0003 4.16669M15.8337 10L10.0003 15.8334"
-                stroke="#4F46E5"
+                stroke="currentColor"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"

@@ -28,6 +28,82 @@ export interface FormErrors {
   company?: string;
 }
 
+interface DrawerFieldProps {
+  id: string;
+  name: string;
+  label: string;
+  value: string;
+  onChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  error?: string;
+  autoComplete?: string;
+  required?: boolean;
+  multiline?: boolean;
+  rows?: number;
+}
+
+const drawerFieldBaseClass =
+  "peer w-full border-0 border-b border-white/75 bg-transparent px-0 pb-2 pt-7 text-[16px] leading-tight text-white placeholder:text-transparent transition-colors duration-300 focus:border-[#9EDCFF] focus:outline-none";
+
+const DrawerField = ({
+  id,
+  name,
+  label,
+  value,
+  onChange,
+  error,
+  autoComplete,
+  required = false,
+  multiline = false,
+  rows = 3,
+}: DrawerFieldProps) => {
+  const labelContent = (
+    <>
+      {label}
+      {required && <span className="ml-1 text-red-500">*</span>}
+    </>
+  );
+
+  return (
+    <div>
+      <div className="relative">
+        {multiline ? (
+          <textarea
+            id={id}
+            name={name}
+            autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
+            rows={rows}
+            placeholder=" "
+            className={`${drawerFieldBaseClass} min-h-18 resize-none`}
+          />
+        ) : (
+          <input
+            id={id}
+            name={name}
+            autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
+            placeholder=" "
+            className={drawerFieldBaseClass}
+          />
+        )}
+
+        <label
+          htmlFor={id}
+          className="pointer-events-none absolute left-0 top-7 origin-left text-[16px] font-semibold leading-tight text-white transition-all duration-300 ease-out peer-focus:top-0 peer-focus:text-[13px] peer-focus:text-[#9EDCFF] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[13px] peer-[:not(:placeholder-shown)]:text-[#9EDCFF]"
+        >
+          {labelContent}
+        </label>
+      </div>
+
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+    </div>
+  );
+};
+
 const ContactUs = ({
   data,
   isDrawer = false,
@@ -61,13 +137,6 @@ const ContactUs = ({
       value: "+91 94277 22717",
       icon: Phone,
       href: "tel:+919427722717",
-    },
-    {
-      id: "usa",
-      label: "USA",
-      value: "+1 619-738-5955",
-      icon: Phone,
-      href: "tel:+16197385955",
     },
   ];
 
@@ -113,28 +182,28 @@ const ContactUs = ({
     const newErrors: FormErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const strLenRegex = /^.{2,}$/;
-    if (!formData.name) newErrors.name = "Name is required.";
+    if (!formData.name) newErrors.name = "Please enter Name.";
     if (!strLenRegex.test(formData.name)) {
-      newErrors.name = "Please enter at least 2-3 character name";
+      newErrors.name = "Please enter valid name";
     }
     if (!formData.email) {
-      newErrors.email = "Email is required.";
+      newErrors.email = "Please enter email address.";
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-    if (!formData.company) newErrors.company = "Company name is required.";
+    if (!formData.company) newErrors.company = "Please enter company name.";
     if (!strLenRegex.test(formData.company)) {
-      newErrors.company = "Please enter at least 2-3 character company name";
+      newErrors.company = "Please enter valid company name";
     }
     return newErrors;
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!captchaToken) {
-      alert("Please complete the captcha.");
-      return;
-    }
+    // if (!captchaToken) {
+    //   alert("Please complete the captcha.");
+    //   return;
+    // }
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -188,7 +257,7 @@ const ContactUs = ({
   if (isDrawer) {
     return (
       <div
-        className={`fixed inset-0 z-[200] ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
+        className={`fixed inset-0 z-200 ${isOpen ? "pointer-events-auto" : "pointer-events-none"}`}
         aria-hidden={!isOpen}
       >
         <div
@@ -203,17 +272,17 @@ const ContactUs = ({
           aria-modal="true"
           aria-label="Contact us"
           onClick={(event) => event.stopPropagation()}
-          className={`absolute right-0 top-0 h-full w-full max-w-full overflow-y-auto bg-[#0f0f0f] text-white shadow-2xl transition-transform duration-300 ease-out sm:w-[88vw] md:w-[760px] ${
+          className={`absolute right-0 top-0 h-full w-full max-w-full overflow-y-auto bg-[#0f0f0f] text-white shadow-2xl transition-transform duration-300 ease-out sm:w-[82vw] md:w-160 ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="px-6 pt-7 pb-8 md:px-10 md:pt-8 md:pb-10 lg:p-[80px]!">
-            <div className="mb-7 flex items-start justify-between md:mb-10">
+          <div className="px-5 pt-8 pb-6 md:px-8 md:pt-10 md:pb-8 lg:px-12 lg:pt-12 lg:pb-10">
+            <div className="mb-5 flex items-start justify-between gap-4 md:mb-7">
               <div>
-                <h2 className="!pb-10 !text-[48px] !font-light !leading-[1.05] md:!text-[60px]">
+                <h2 className="pb-6! text-[36px]! font-light! leading-[1.05]! md:text-[48px]!">
                   {formBlock.Title}
                 </h2>
-                <div className="h-[5px] w-[160px] bg-[#3C4CFF]" />
+                <div className="h-1 w-30 bg-[#3C4CFF] md:w-37.5" />
               </div>
 
               <button
@@ -222,113 +291,83 @@ const ContactUs = ({
                 aria-label="Close contact form"
                 className="mt-1 rounded-md p-1 text-white transition-colors hover:text-[#3C4CFF]"
               >
-                <X className="h-10 w-10" />
+                <X className="h-8 w-8 md:h-9 md:w-9" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-10">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-[20px] font-semibold leading-tight"
-                >
-                  Your Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  autoComplete="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
-                  placeholder="Type your name here"
-                />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-500">{errors.name}</p>
-                )}
-              </div>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-6 md:gap-7"
+            >
+              <DrawerField
+                id="name"
+                name="name"
+                autoComplete="name"
+                value={formData.name}
+                onChange={handleChange}
+                label="Name"
+                required
+                error={errors.name}
+              />
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-2 block text-[20px] font-semibold leading-tight"
-                >
-                  Email Address <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
-                  placeholder="Type your email here"
-                />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-                )}
-              </div>
+              <DrawerField
+                id="email"
+                name="email"
+                autoComplete="email"
+                value={formData.email}
+                onChange={handleChange}
+                label="Email Address"
+                required
+                error={errors.email}
+              />
 
-              <div>
-                <label
-                  htmlFor="company"
-                  className="mb-2 block text-[20px] font-semibold leading-tight"
-                >
-                  Company Name <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="company"
-                  name="company"
-                  autoComplete="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
-                  placeholder="Type your company name here"
-                />
-                {errors.company && (
-                  <p className="mt-1 text-sm text-red-500">{errors.company}</p>
-                )}
-              </div>
+              <DrawerField
+                id="company"
+                name="company"
+                autoComplete="organization"
+                value={formData.company}
+                onChange={handleChange}
+                label="Company Name"
+                required
+                error={errors.company}
+              />
 
-              <div>
-                <label
-                  htmlFor="message"
-                  className="mb-2 block text-[20px] font-semibold leading-tight"
-                >
-                  Describe Your Requirements
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  autoComplete="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={2}
-                  className="w-full border-b border-[#616161] bg-transparent px-0 py-5 text-[16px] leading-tight placeholder:text-[#616161] focus:outline-none"
-                  placeholder="Type here..."
-                />
-              </div>
+              <DrawerField
+                id="message"
+                name="message"
+                autoComplete="off"
+                value={formData.message}
+                onChange={handleChange}
+                label="Share Your Requirements"
+                multiline
+                rows={2}
+              />
 
               <div className="flex justify-center md:justify-start">
-                <div className="recaptcha-wrapper scale-[0.92] origin-left sm:scale-100">
+                <div className="recaptcha-wrapper flex flex-col scale-[0.92] origin-left sm:scale-100">
                   <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                     onChange={(token: string | null) => setCaptchaToken(token)}
                     size="normal"
                   />
+                  {!captchaToken && (
+                    <p className="mt-1 text-sm text-red-500">
+                      Please complete the captcha.
+                    </p>
+                  )}
                 </div>
               </div>
 
               <button
                 type="submit"
                 disabled={formLoading}
-                className="w-full cursor-pointer rounded-[8px] bg-[#3C4CFF] py-3 text-[18px] font-semibold text-white transition-colors hover:bg-[#3440CB] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)]"
+                className="w-full cursor-pointer rounded-[8px] bg-[#3C4CFF] py-3 text-[17px] font-semibold text-white transition-colors hover:bg-[#3440CB] shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)]"
               >
                 {formLoading ? "Submitting..." : "Contact Us"}
               </button>
             </form>
 
-            <div className="mt-10 space-y-[28px]">
+            <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4 md:mt-9">
               {drawerContactDetails.map((contactItem) => {
                 const Icon = contactItem.icon;
 
@@ -336,16 +375,16 @@ const ContactUs = ({
                   <Link
                     key={contactItem.id}
                     href={contactItem.href}
-                    className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white mb-7.5"
+                    className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
                   >
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
                       <Icon className="h-4 w-4" />
                     </span>
-                    <span className="text-[20px] leading-8 md:text-[28px] md:leading-10">
-                      <strong className="font-semibold text-[20px]! leading-8 md:text-[28px] md:leading-10">
+                    <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8">
+                      <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
                         {contactItem.label}:
                       </strong>{" "}
-                      <span className="font-normal text-[20px]! leading-8 md:text-[28px] md:leading-10">
+                      <span className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8">
                         {contactItem.value}
                       </span>
                     </span>

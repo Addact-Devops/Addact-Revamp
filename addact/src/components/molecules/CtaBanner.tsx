@@ -111,7 +111,7 @@ const CtaBanner = ({ data }: IProps) => {
             {useContactDrawer ? (
               <button
                 onClick={handleBannerCtaClick}
-                className="mt-[24px] md:mt-12 bg-white text-[#3C4CFF] text-[16px] lg:text-lg px-4 py-2 lg:px-5 lg:py-4 rounded hover:bg-gray-200 flex items-center gap-5 font-semibold cursor-pointer"
+                className="mt-[24px] md:mt-12 bg-white text-[#3C4CFF] text-[16px] lg:text-lg px-4 py-2 lg:px-5 lg:py-4 rounded-[8px] md:rounded-[10px]  hover:bg-[#3C4CFF] flex items-center gap-5 font-semibold cursor-pointer hover:text-white"
               >
                 {label}
                 <RightArrowIcon />
