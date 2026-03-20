@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@react-google-maps/api": "^2.20.8",
     "@tailwindcss/typography": "^0.5.16",
     "@vercel/speed-insights": "^1.2.0",
     "aos": "^2.3.4",
