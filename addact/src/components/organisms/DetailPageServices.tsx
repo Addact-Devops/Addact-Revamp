@@ -270,7 +270,6 @@ const DetailPageServices = ({
   isCaraousl = false,
   data,
 }: DetailPageServicesProps) => {
-  console.log("🚀 ~ DetailPageServices ~ data:", data);
   const sections = data?.length
     ? data.map((section) => ({
         id: section.id ?? null,
