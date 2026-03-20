@@ -23,10 +23,11 @@ jobs:
           Set-Location "F:\Addact-Revamp"
           git pull origin uat
 
-      # 🔍 Detect changes (SAFE VERSION)
+      # 🔍 Detect changes (FIXED)
       - name: Detect Changes
         id: changes
         run: |
+          Set-Location "F:\Addact-Revamp"
           if (git rev-parse HEAD~1 2>$null) {
             git diff --name-only HEAD~1 HEAD > changes.txt
           } else {
@@ -35,12 +36,13 @@ jobs:
           Get-Content changes.txt
 
       # =========================
-      # 🔹 BACKEND (addact-cms)
+      # 🔹 BACKEND
       # =========================
 
       - name: Check Backend Changes
         id: backend_check
         run: |
+          Set-Location "F:\Addact-Revamp"
           if (Select-String -Path changes.txt -Pattern "addact-cms/") {
             echo "backend_changed=true" >> $env:GITHUB_OUTPUT
           }
@@ -59,12 +61,13 @@ jobs:
           Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact-cms && npm run develop'
 
       # =========================
-      # 🔹 FRONTEND (addact)
+      # 🔹 FRONTEND
       # =========================
 
       - name: Check Frontend Changes
         id: frontend_check
         run: |
+          Set-Location "F:\Addact-Revamp"
           if (Select-String -Path changes.txt -Pattern "addact/") {
             echo "frontend_changed=true" >> $env:GITHUB_OUTPUT
           }
