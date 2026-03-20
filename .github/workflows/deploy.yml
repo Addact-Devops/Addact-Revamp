@@ -23,7 +23,7 @@ jobs:
           Set-Location "F:\Addact-Revamp"
           git pull origin uat
 
-      # 🔍 Detect changes (FIXED)
+      # 🔍 Detect changes
       - name: Detect Changes
         id: changes
         run: |
@@ -56,8 +56,8 @@ jobs:
       - name: Restart Backend
         if: steps.backend_check.outputs.backend_changed == 'true'
         run: |
-          $pids = netstat -aon | Select-String ":1339" | ForEach-Object { ($_ -split "\s+")[-1] }
-          foreach ($pid in $pids) { taskkill /F /PID $pid }
+          $portPids = netstat -aon | Select-String ":1339" | ForEach-Object { ($_ -split "\s+")[-1] }
+          foreach ($procId in $portPids) { taskkill /F /PID $procId }
           Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact-cms && npm run develop'
 
       # =========================
@@ -87,6 +87,6 @@ jobs:
       - name: Restart Frontend
         if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
-          $pids = netstat -aon | Select-String ":3001" | ForEach-Object { ($_ -split "\s+")[-1] }
-          foreach ($pid in $pids) { taskkill /F /PID $pid }
+          $portPids = netstat -aon | Select-String ":3001" | ForEach-Object { ($_ -split "\s+")[-1] }
+          foreach ($procId in $portPids) { taskkill /F /PID $procId }
           Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact && npm run start'
