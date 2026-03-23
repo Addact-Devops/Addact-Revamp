@@ -136,13 +136,13 @@ export function ServiceCard({
       className="group block w-full rounded-[10px] border border-solid border-[rgba(15,15,15,0.2)] bg-white p-[30px] cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:shadow-[0_4px_20px_rgba(60,76,255,0.12)]"
     >
       <div className="flex items-center justify-between gap-3 mb-5">
-        <h3 className="font-['Montserrat',sans-serif] font-semibold! text-[18px]! leading-[28px] md:text-[20px]! md:leading-[30px]! xl:text-[30px]! xl:leading-[36px]! m-0 text-[#0f0f0f] group-hover:text-white transition-colors duration-200">
+        <h3 className="font-['Montserrat',sans-serif] font-semibold! text-[18px]! leading-[28px] md:text-[20px] md:leading-[30px]! xl:text-[30px]! xl:leading-[36px]! m-0 text-[#0f0f0f] group-hover:text-white transition-colors duration-200">
           {title}
         </h3>
         <ArrowUpRight className="w-6 h-6 shrink-0 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
       </div>
 
-      <p className="font-['Montserrat',sans-serif] font-normal text-[14px] leading-[22px] md:text-[16px]! md:leading-[26px]! xl:text-[17px]! xl:leading-[28px]! m-0 text-[#0f0f0f] group-hover:text-white/90 transition-colors duration-200">
+      <p className="font-['Montserrat',sans-serif] font-normal text-[14px] leading-[22px] md:text-[16px] md:leading-[26px]! xl:text-[20px]! xl:leading-[28px]! m-0 text-[#0f0f0f] group-hover:text-white/90 transition-colors duration-200">
         {description}
       </p>
     </Link>

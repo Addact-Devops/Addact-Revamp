@@ -66,12 +66,12 @@ export function BenefitCard({ number, title, description }: BenefitCardProps) {
           </span>
         </div>
 
-        <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[18px]! leading-[28px] md:text-[22px] md:leading-[34px] lg:text-[24px]! lg:leading-[38px]! xl:text-[30px]! xl:leading-[45px]! text-[#0f0f0f] m-0 pt-1 max-w-96 w-full">
+        <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[18px]! leading-[28px] md:text-[22px] md:leading-[34px] lg:text-[24px]! lg:leading-[38px]! xl:text-[30px]! xl:leading-[45px]! text-[#0f0f0f] m-0 pt-1 max-w-[374px] w-full">
           {title}
         </h2>
       </div>
 
-      <p className="font-['Montserrat',sans-serif] font-normal text-[20px] leading-[34px] text-[#0f0f0f] m-0">
+      <p className="font-['Montserrat',sans-serif] font-normal [&_p]:text-[20px] [&_p]:leading-[34px] text-[#0f0f0f] m-0">
         {description}
       </p>
     </div>
