@@ -49,14 +49,14 @@ export default function HeroAISection({ data }: HeroAISectionProps) {
       <div className="relative z-10 container mx-auto text-center px-6 pointer-events-none">
         <h1
           className="text-white font-bold! uppercase leading-[1.1]
-          text-[34px] md:text-[54px] lg:text-[60px]! xl:text-[100px]!"
+          text-[34px] md:text-[54px] lg:text-[60px]! xl:text-[100px]! max-w-[1234px] mx-auto"
         >
           {banner?.BannerTitle}
         </h1>
 
         <div
-          className="text-white/70 mt-6 max-w-[788px] mx-auto
-          text-[15px] md:text-[18px] xl:text-[24px]!"
+          className="text-white mt-6 max-w-[788px] mx-auto
+          [&_p]:text-[15px] [&_p]:md:text-[18px] [&_p]:xl:text-[24px]!"
         >
           <RichText html={banner?.BannerDescription || ""} />
         </div>

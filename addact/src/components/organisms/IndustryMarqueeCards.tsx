@@ -315,7 +315,7 @@ export default function IndustryMarqueeCards({
               duplicatedCards?.map((card, index) => (
                 <div
                   key={`${card.id}-${index}`}
-                  className="industry-marquee-card group relative w-[82vw] max-w-[320px] overflow-hidden rounded-[10px] border border-white/20 bg-neutral-700/30 backdrop-blur-[30px] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] shrink-0 cursor-pointer select-none aspect-[517/619] md:w-[360px] md:max-w-none xl:w-[517px]"
+                  className="industry-marquee-card group relative w-[82vw] max-w-[320px] overflow-hidden rounded-[10px] border border-white/20 bg-neutral-700/30 backdrop-blur-[30px] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] shrink-0 cursor-pointer select-none aspect-[517/619] md:w-[360px] md:max-w-none xl:w-[517px]!"
                   draggable={false}
                 >
                   <div className="relative w-full h-full overflow-hidden">

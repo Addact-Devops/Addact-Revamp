@@ -317,7 +317,11 @@ const Cubes: React.FC<CubesProps> = ({
 
   return (
     <div className="relative w-full h-full" style={wrapperStyle}>
-      <div ref={sceneRef} className="grid w-full h-full" style={sceneStyle}>
+      <div
+        ref={sceneRef}
+        className="grid w-full h-full p-2.5"
+        style={sceneStyle}
+      >
         {cells.map((_, r) =>
           cells.map((__, c) => (
             <div
