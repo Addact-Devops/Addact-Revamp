@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_home_design_tabs",
+  "info": {
+    "displayName": "design Tabs"
+  },
+  "options": {},
+  "attributes": {
+    "tabTitle": {
+      "type": "string"
+    },
+    "flow": {
+      "type": "component",
+      "component": "home.ux-flow",
+      "repeatable": true
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

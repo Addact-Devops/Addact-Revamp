@@ -1,0 +1,77 @@
+{
+  "kind": "collectionType",
+  "collectionName": "digital_marketing_details",
+  "info": {
+    "singularName": "digital-marketing-detail",
+    "pluralName": "digital-marketing-details",
+    "displayName": "Digital Marketing Detail"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
+    },
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "Banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "Slug": {
+      "type": "string"
+    },
+    "cta": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cta.cta"
+    },
+    "industry": {
+      "type": "component",
+      "component": "home.industry-listing",
+      "repeatable": false
+    },
+    "ourprocess": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-process.our-process"
+    },
+    "whyaddact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "ourInshightsTitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
+    },
+    "faq": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::faq.faq"
+    },
+    "techStack": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tech-stack.tech-stack"
+    },
+    "ReferenceTitle": {
+      "type": "string"
+    },
+    "ourService": {
+      "type": "dynamiczone",
+      "components": [
+        "home.service-list"
+      ]
+    }
+  }
+}

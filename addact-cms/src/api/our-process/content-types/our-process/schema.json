@@ -30,6 +30,11 @@
       "components": [
         "base-template.title-with-description"
       ]
+    },
+    "link": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
     }
   }
 }

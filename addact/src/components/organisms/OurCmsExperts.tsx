@@ -120,7 +120,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
 
   return (
     <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] cms-list">
-      <div className="container">
+      <div className="container-main">
         <div className="flex gap-10 md:gap-20 lg:gap-[100px] flex-wrap lg:flex-nowrap items-center">
           <h2 className="w-full lg:w-[40%] border-after !text-[36px] xl:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
             {data?.ourExpertises[0]?.ExpertiseTitle[0]?.Title}

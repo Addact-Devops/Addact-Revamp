@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_home_ai_our_services",
+  "info": {
+    "displayName": "AI Our Services"
+  },
+  "options": {},
+  "attributes": {
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
+      "repeatable": false
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::ai-services-detail.ai-services-detail"
+    }
+  },
+  "config": {}
+}

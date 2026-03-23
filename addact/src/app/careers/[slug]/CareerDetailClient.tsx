@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { CareerDetailResponse } from "@/graphql/queries/getCareerDetails";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
-import "../../../styles/components/caseStudy-detail.scss";
+// import "../../../styles/components/caseStudy-detail.scss";
 import HeroBanner from "@/components/organisms/HeroBanner";
 import { CareerFormState, CareerFormErrors, validateCareerForm } from "@/utils/validateCareerForm";
 import Loader from "@/components/atom/loader";
@@ -185,7 +185,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
             )}
 
             <section className='bg-[#f4f4f4] py-[40px]'>
-                <div className='container'>
+                <div className='container-main'>
                     <div className='caseStudy-wrapper mt-16 text-black'>
                         <BlogContentRenderer blocks={data.JobDescription} />
                     </div>

@@ -747,6 +747,166 @@ export interface ApiAddactWebinarAddactWebinar
   };
 }
 
+export interface ApiAiServiceAiService extends Struct.SingleTypeSchema {
+  collectionName: 'ai_services';
+  info: {
+    displayName: 'AI Service';
+    pluralName: 'ai-services';
+    singularName: 'ai-service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aiBenefit: Schema.Attribute.Component<'home.ai-card', false>;
+    aiSolveProblem: Schema.Attribute.Component<'home.ai-solve-problem', false>;
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-service.ai-service'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.ai-our-services']>;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAiServicesDetailAiServicesDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'ai_services_details';
+  info: {
+    displayName: 'AI Services Detail';
+    pluralName: 'ai-services-details';
+    singularName: 'ai-services-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    aiBenefit: Schema.Attribute.Component<'home.ai-card', false>;
+    aiSolveProblem: Schema.Attribute.Component<'home.ai-solve-problem', false>;
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-services-detail.ai-services-detail'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<
+      ['home.ai-our-services', 'home.service-list']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
+export interface ApiAiSolveProblemListAiSolveProblemList
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'ai_solve_problem_lists';
+  info: {
+    displayName: 'AI Solve Problem List';
+    pluralName: 'ai-solve-problem-lists';
+    singularName: 'ai-solve-problem-list';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    list: Schema.Attribute.Component<'home.ai-solve-problem-card', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-solve-problem-list.ai-solve-problem-list'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAiAi extends Struct.CollectionTypeSchema {
+  collectionName: 'ais';
+  info: {
+    displayName: 'AI ';
+    pluralName: 'ais';
+    singularName: 'ai';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AIEcoSystem: Schema.Attribute.Component<'home.ai-eco-system', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::ai.ai'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    referenceTitle: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAuthorDesignationAuthorDesignation
   extends Struct.CollectionTypeSchema {
   collectionName: 'author_designations';
@@ -1122,6 +1282,7 @@ export interface ApiClientTestimonialClientTestimonial
     draftAndPublish: true;
   };
   attributes: {
+    bgText: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1136,10 +1297,68 @@ export interface ApiClientTestimonialClientTestimonial
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    rating: Schema.Attribute.String;
+    ratingImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     Title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiCmsDetailCmsDetail extends Struct.CollectionTypeSchema {
+  collectionName: 'cms_details';
+  info: {
+    displayName: 'CMS Detail';
+    pluralName: 'cms-details';
+    singularName: 'cms-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cms-detail.cms-detail'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<
+      ['home.sitecore-listing', 'home.service-list']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
   };
 }
 
@@ -1320,6 +1539,7 @@ export interface ApiContactusContactus extends Struct.SingleTypeSchema {
       false
     >;
     banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    contactInfo: Schema.Attribute.Component<'shared.link', true>;
     contactus: Schema.Attribute.Relation<
       'oneToOne',
       'api::form-field.form-field'
@@ -1392,6 +1612,272 @@ export interface ApiCtaCta extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDesignDevelopmentFlowDesignDevelopmentFlow
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'design_development_flows';
+  info: {
+    displayName: 'Design Development Flow';
+    pluralName: 'design-development-flows';
+    singularName: 'design-development-flow';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::design-development-flow.design-development-flow'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tabsAndFlow: Schema.Attribute.Component<'home.design-tabs', true>;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiDevelopmentAndDesignDetailDevelopmentAndDesignDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'development_and_design_details';
+  info: {
+    displayName: 'development and Design Detail';
+    pluralName: 'development-and-design-details';
+    singularName: 'development-and-design-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    challenges: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    designFlow: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::design-development-flow.design-development-flow'
+    >;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    impactUx: Schema.Attribute.Component<'home.impact-ux', false>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    isUxpage: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::development-and-design-detail.development-and-design-detail'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<
+      ['home.cms-listing', 'home.service-list', 'home.ui-ux-lisitng']
+    >;
+    ourWork: Schema.Attribute.Component<'home.service-list', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
+export interface ApiDevelopmentAndDesignDevelopmentAndDesign
+  extends Struct.SingleTypeSchema {
+  collectionName: 'development_and_designs';
+  info: {
+    displayName: 'Development and Design';
+    pluralName: 'development-and-designs';
+    singularName: 'development-and-design';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::development-and-design.development-and-design'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<
+      ['home.service-list', 'home.development-and-design-listing']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
+export interface ApiDigitalMarketingDetailDigitalMarketingDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'digital_marketing_details';
+  info: {
+    displayName: 'Digital Marketing Detail';
+    pluralName: 'digital-marketing-details';
+    singularName: 'digital-marketing-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::digital-marketing-detail.digital-marketing-detail'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.service-list']>;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
+export interface ApiDigitalMarketingServiceDigitalMarketingService
+  extends Struct.SingleTypeSchema {
+  collectionName: 'digital_marketing_services';
+  info: {
+    displayName: 'Digital Marketing Service';
+    pluralName: 'digital-marketing-services';
+    singularName: 'digital-marketing-service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::digital-marketing-service.digital-marketing-service'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<
+      ['home.digital-marketing-listing', 'home.service-list']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whoarewe: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::who-are-we.who-are-we'
+    >;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
   };
 }
 
@@ -1583,6 +2069,7 @@ export interface ApiFooterFooter extends Struct.CollectionTypeSchema {
     >;
     publishedAt: Schema.Attribute.DateTime;
     SiteSlog: Schema.Attribute.String;
+    socialMedia: Schema.Attribute.Component<'shared.link', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1602,6 +2089,7 @@ export interface ApiFormFieldFormField extends Struct.CollectionTypeSchema {
   attributes: {
     ButtonLabel: Schema.Attribute.String;
     CompanyName: Schema.Attribute.String;
+    contactInfo: Schema.Attribute.Component<'shared.link', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1859,6 +2347,121 @@ export interface ApiHireDeveloperHireDeveloper
   };
 }
 
+export interface ApiHireExpertDetailHireExpertDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'hire_expert_details';
+  info: {
+    displayName: 'Hire Expert Detail';
+    pluralName: 'hire-expert-details';
+    singularName: 'hire-expert-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    client_testimonial: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::client-testimonial.client-testimonial'
+    >;
+    contact_us: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::form-field.form-field'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industries_we_serve: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::industries-we-serve.industries-we-serve'
+    >;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hire-expert-detail.hire-expert-detail'
+    > &
+      Schema.Attribute.Private;
+    our_partner: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-partner.our-partner'
+    >;
+    our_process: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.service-list']>;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
+export interface ApiHireExpertHireExpert extends Struct.SingleTypeSchema {
+  collectionName: 'hire_experts';
+  info: {
+    displayName: 'hire-expert';
+    pluralName: 'hire-experts';
+    singularName: 'hire-expert';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hire-expert.hire-expert'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.hire-service-list']>;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
 export interface ApiHomeHome extends Struct.SingleTypeSchema {
   collectionName: 'homes';
   info: {
@@ -1870,6 +2473,8 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    aiEcoSystem: Schema.Attribute.Relation<'oneToOne', 'api::ai.ai'>;
+    animationBanner: Schema.Attribute.Component<'home.animation-banner', false>;
     banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
     contactus: Schema.Attribute.Relation<
       'oneToOne',
@@ -1883,12 +2488,21 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
       'base-template.globe-animation',
       false
     >;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::home.home'> &
       Schema.Attribute.Private;
+    ourCapabilitiy: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-capabilitiy.our-capabilitiy'
+    >;
     ourexpertise: Schema.Attribute.Relation<
       'oneToOne',
       'api::our-expertise.our-expertise'
+    >;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
     >;
     ourpartner: Schema.Attribute.Relation<
       'oneToOne',
@@ -1983,6 +2597,7 @@ export interface ApiIndustryDetailPageIndustryDetailPage
       'api::global-card.global-card'
     >;
     HeroBanner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -2006,10 +2621,40 @@ export interface ApiIndustryDetailPageIndustryDetailPage
     ReferenceTitle: Schema.Attribute.Text & Schema.Attribute.Required;
     SEO: Schema.Attribute.Component<'shared.seo', false>;
     Slug: Schema.Attribute.Text & Schema.Attribute.Required;
-    Tech_Stack: Schema.Attribute.Relation<
+    techStack: Schema.Attribute.Relation<
       'oneToOne',
-      'api::our-expertise.our-expertise'
+      'api::tech-stack.tech-stack'
     >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiOurCapabilitiyOurCapabilitiy
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'our_capabilitiys';
+  info: {
+    displayName: 'Our Capabilitiy';
+    pluralName: 'our-capabilitiys';
+    singularName: 'our-capabilitiy';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    capabilities: Schema.Attribute.Component<'home.capabilities', true>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    heading: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::our-capabilitiy.our-capabilitiy'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2104,6 +2749,7 @@ export interface ApiOurProcessOurProcess extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    link: Schema.Attribute.Component<'shared.link', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -2270,6 +2916,140 @@ export interface ApiProjectCostEstimatorProjectCostEstimator
   };
 }
 
+export interface ApiQaTestingAndSupportQaTestingAndSupport
+  extends Struct.SingleTypeSchema {
+  collectionName: 'qa_testing_and_supports';
+  info: {
+    displayName: 'QA Testing and Support';
+    pluralName: 'qa-testing-and-supports';
+    singularName: 'qa-testing-and-support';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::qa-testing-and-support.qa-testing-and-support'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.qa-testing-listing']>;
+    publishedAt: Schema.Attribute.DateTime;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
+export interface ApiQaTestingDetailQaTestingDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'qa_testing_details';
+  info: {
+    displayName: 'QA Testing Detail';
+    pluralName: 'qa-testing-details';
+    singularName: 'qa-testing-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::qa-testing-detail.qa-testing-detail'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.service-list']>;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
+  };
+}
+
+export interface ApiServiceCardServiceCard extends Struct.CollectionTypeSchema {
+  collectionName: 'service_cards';
+  info: {
+    displayName: 'Service Card';
+    pluralName: 'service-cards';
+    singularName: 'service-card';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-card.service-card'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    tagLine: Schema.Attribute.Component<'base-template.title', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiServiceListServiceList extends Struct.CollectionTypeSchema {
   collectionName: 'service_lists';
   info: {
@@ -2371,6 +3151,59 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+  };
+}
+
+export interface ApiSitecoreDetailSitecoreDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'sitecore_details';
+  info: {
+    displayName: 'Sitecore Detail';
+    pluralName: 'sitecore-details';
+    singularName: 'sitecore-detail';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Banner: Schema.Attribute.Relation<'oneToOne', 'api::banner.banner'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta: Schema.Attribute.Relation<'oneToOne', 'api::cta.cta'>;
+    faq: Schema.Attribute.Relation<'oneToOne', 'api::faq.faq'>;
+    industry: Schema.Attribute.Component<'home.industry-listing', false>;
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sitecore-detail.sitecore-detail'
+    > &
+      Schema.Attribute.Private;
+    ourInshightsTitle: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::common-title.common-title'
+    >;
+    ourprocess: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::our-process.our-process'
+    >;
+    ourService: Schema.Attribute.DynamicZone<['home.service-list']>;
+    publishedAt: Schema.Attribute.DateTime;
+    ReferenceTitle: Schema.Attribute.String;
+    SEO: Schema.Attribute.Component<'shared.seo', false>;
+    Slug: Schema.Attribute.String;
+    techStack: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack.tech-stack'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    whyaddact: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::global-card.global-card'
+    >;
   };
 }
 
@@ -2533,6 +3366,71 @@ export interface ApiTeamFeatureTeamFeature extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiTechStackCategoryTechStackCategory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'tech_stack_categories';
+  info: {
+    displayName: 'Tech Stack Category';
+    pluralName: 'tech-stack-categories';
+    singularName: 'tech-stack-category';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    categoryTitle: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tech-stack-category.tech-stack-category'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTechStackTechStack extends Struct.CollectionTypeSchema {
+  collectionName: 'tech_stacks';
+  info: {
+    displayName: 'Tech Stack';
+    pluralName: 'tech-stacks';
+    singularName: 'tech-stack';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tech-stack.tech-stack'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    tab: Schema.Attribute.Component<'home.tech-stack-component', true>;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTermsConditionsTermsConditions
   extends Struct.SingleTypeSchema {
   collectionName: 'terms_condition';
@@ -2564,6 +3462,37 @@ export interface ApiTermsConditionsTermsConditions
     >;
     publishedAt: Schema.Attribute.DateTime;
     SEO: Schema.Attribute.Component<'shared.seo', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTestTest extends Struct.SingleTypeSchema {
+  collectionName: 'tests';
+  info: {
+    displayName: 'test';
+    pluralName: 'tests';
+    singularName: 'test';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -3460,6 +4389,10 @@ declare module '@strapi/strapi' {
       'api::addact-header.addact-header': ApiAddactHeaderAddactHeader;
       'api::addact-press-release.addact-press-release': ApiAddactPressReleaseAddactPressRelease;
       'api::addact-webinar.addact-webinar': ApiAddactWebinarAddactWebinar;
+      'api::ai-service.ai-service': ApiAiServiceAiService;
+      'api::ai-services-detail.ai-services-detail': ApiAiServicesDetailAiServicesDetail;
+      'api::ai-solve-problem-list.ai-solve-problem-list': ApiAiSolveProblemListAiSolveProblemList;
+      'api::ai.ai': ApiAiAi;
       'api::author-designation.author-designation': ApiAuthorDesignationAuthorDesignation;
       'api::author.author': ApiAuthorAuthor;
       'api::banner.banner': ApiBannerBanner;
@@ -3471,6 +4404,7 @@ declare module '@strapi/strapi' {
       'api::careers.careers': ApiCareersCareers;
       'api::case-study.case-study': ApiCaseStudyCaseStudy;
       'api::client-testimonial.client-testimonial': ApiClientTestimonialClientTestimonial;
+      'api::cms-detail.cms-detail': ApiCmsDetailCmsDetail;
       'api::common-title.common-title': ApiCommonTitleCommonTitle;
       'api::contact-card.contact-card': ApiContactCardContactCard;
       'api::contact-form-field.contact-form-field': ApiContactFormFieldContactFormField;
@@ -3478,6 +4412,11 @@ declare module '@strapi/strapi' {
       'api::contact.contact': ApiContactContact;
       'api::contactus.contactus': ApiContactusContactus;
       'api::cta.cta': ApiCtaCta;
+      'api::design-development-flow.design-development-flow': ApiDesignDevelopmentFlowDesignDevelopmentFlow;
+      'api::development-and-design-detail.development-and-design-detail': ApiDevelopmentAndDesignDetailDevelopmentAndDesignDetail;
+      'api::development-and-design.development-and-design': ApiDevelopmentAndDesignDevelopmentAndDesign;
+      'api::digital-marketing-detail.digital-marketing-detail': ApiDigitalMarketingDetailDigitalMarketingDetail;
+      'api::digital-marketing-service.digital-marketing-service': ApiDigitalMarketingServiceDigitalMarketingService;
       'api::event-category.event-category': ApiEventCategoryEventCategory;
       'api::event-year.event-year': ApiEventYearEventYear;
       'api::event.event': ApiEventEvent;
@@ -3491,9 +4430,12 @@ declare module '@strapi/strapi' {
       'api::header-sub-nav.header-sub-nav': ApiHeaderSubNavHeaderSubNav;
       'api::header.header': ApiHeaderHeader;
       'api::hire-developer.hire-developer': ApiHireDeveloperHireDeveloper;
+      'api::hire-expert-detail.hire-expert-detail': ApiHireExpertDetailHireExpertDetail;
+      'api::hire-expert.hire-expert': ApiHireExpertHireExpert;
       'api::home.home': ApiHomeHome;
       'api::industries-we-serve.industries-we-serve': ApiIndustriesWeServeIndustriesWeServe;
       'api::industry-detail-page.industry-detail-page': ApiIndustryDetailPageIndustryDetailPage;
+      'api::our-capabilitiy.our-capabilitiy': ApiOurCapabilitiyOurCapabilitiy;
       'api::our-expertise.our-expertise': ApiOurExpertiseOurExpertise;
       'api::our-partner.our-partner': ApiOurPartnerOurPartner;
       'api::our-process.our-process': ApiOurProcessOurProcess;
@@ -3501,13 +4443,20 @@ declare module '@strapi/strapi' {
       'api::press-release.press-release': ApiPressReleasePressRelease;
       'api::privacy-policy.privacy-policy': ApiPrivacyPolicyPrivacyPolicy;
       'api::project-cost-estimator.project-cost-estimator': ApiProjectCostEstimatorProjectCostEstimator;
+      'api::qa-testing-and-support.qa-testing-and-support': ApiQaTestingAndSupportQaTestingAndSupport;
+      'api::qa-testing-detail.qa-testing-detail': ApiQaTestingDetailQaTestingDetail;
+      'api::service-card.service-card': ApiServiceCardServiceCard;
       'api::service-list.service-list': ApiServiceListServiceList;
       'api::service.service': ApiServiceService;
+      'api::sitecore-detail.sitecore-detail': ApiSitecoreDetailSitecoreDetail;
       'api::sitemap.sitemap': ApiSitemapSitemap;
       'api::social-icon.social-icon': ApiSocialIconSocialIcon;
       'api::sub-service-page.sub-service-page': ApiSubServicePageSubServicePage;
       'api::team-feature.team-feature': ApiTeamFeatureTeamFeature;
+      'api::tech-stack-category.tech-stack-category': ApiTechStackCategoryTechStackCategory;
+      'api::tech-stack.tech-stack': ApiTechStackTechStack;
       'api::terms-conditions.terms-conditions': ApiTermsConditionsTermsConditions;
+      'api::test.test': ApiTestTest;
       'api::thank-you.thank-you': ApiThankYouThankYou;
       'api::thankyou-page.thankyou-page': ApiThankyouPageThankyouPage;
       'api::video-listing.video-listing': ApiVideoListingVideoListing;

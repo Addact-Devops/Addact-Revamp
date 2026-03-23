@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_home_development_and_design_listings",
+  "info": {
+    "displayName": "development and Design Listing"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::development-and-design-detail.development-and-design-detail"
+    },
+    "isCarousel": {
+      "type": "boolean"
+    },
+    "serviceVariant": {
+      "type": "component",
+      "component": "home.card-variant",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

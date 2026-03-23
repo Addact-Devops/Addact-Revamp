@@ -36,7 +36,7 @@ const CaseStudyListing = () => {
       const dateA: Date = new Date(a?.HeroBanner?.[0]?.PublishDate || 0);
       const dateB: Date = new Date(b?.HeroBanner?.[0]?.PublishDate || 0);
       return dateB.getTime() - dateA.getTime();
-    }
+    },
   );
 
   return (
@@ -55,7 +55,7 @@ const CaseStudyListing = () => {
             priority
             className="absolute inset-0 z-0"
           />
-          <div className="relative container z-10 px-4">
+          <div className="relative container-main z-10 px-4">
             <h1 className="text-white mb-[20px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] xl:max-w-[60%]">
               {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
             </h1>
@@ -71,7 +71,7 @@ const CaseStudyListing = () => {
       )}
 
       {/* Listing Section */}
-      <div className="container mx-auto px-4 py-12 grid gap-[60px]">
+      <div className="container-main mx-auto px-4 py-12 grid gap-[60px]">
         {sortedData.map((item) => (
           <div
             key={item.documentId}
@@ -99,7 +99,7 @@ const CaseStudyListing = () => {
                       day: "2-digit",
                       month: "long",
                       year: "numeric",
-                    }
+                    },
                   )}
                 </p>
                 <p className="text-base text-gray-300">

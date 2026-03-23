@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_home_cms_listings",
+  "info": {
+    "displayName": "CMS Listing"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cms-detail.cms-detail"
+    },
+    "isCarousel": {
+      "type": "boolean"
+    },
+    "serviceVariant": {
+      "type": "component",
+      "component": "home.card-variant",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

@@ -261,8 +261,12 @@ export interface BannerBanner extends Struct.ComponentSchema {
       'images' | 'files' | 'videos' | 'audios'
     >;
     BannerTitle: Schema.Attribute.String;
+    chipsText: Schema.Attribute.Component<'base-template.title', true>;
+    isTextAlignCenter: Schema.Attribute.Boolean;
+    isVideo: Schema.Attribute.Boolean;
     show_searchbox: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
+    videoLink: Schema.Attribute.String;
   };
 }
 
@@ -612,6 +616,384 @@ export interface HeadingsH6 extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeAiCard extends Struct.ComponentSchema {
+  collectionName: 'components_home_ai_cards';
+  info: {
+    displayName: 'AI Card';
+  };
+  attributes: {
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-card.service-card'
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeAiEcoSystem extends Struct.ComponentSchema {
+  collectionName: 'components_home_ai_eco_systems';
+  info: {
+    displayName: 'AI Eco System';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    firstImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    firstLayerlogos: Schema.Attribute.Component<'shared.image', true>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    secondImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    secondLayerlogos: Schema.Attribute.Component<'shared.image', true>;
+    tagLine: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeAiOurServices extends Struct.ComponentSchema {
+  collectionName: 'components_home_ai_our_services';
+  info: {
+    displayName: 'AI Our Services';
+  };
+  attributes: {
+    listingContext: Schema.Attribute.Component<'home.base-component', false>;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-services-detail.ai-services-detail'
+    >;
+  };
+}
+
+export interface HomeAiSolveProblem extends Struct.ComponentSchema {
+  collectionName: 'components_home_ai_solve_problems';
+  info: {
+    displayName: 'AI Solve Problem';
+  };
+  attributes: {
+    aiSolveProblemList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::ai-solve-problem-list.ai-solve-problem-list'
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeAiSolveProblemCard extends Struct.ComponentSchema {
+  collectionName: 'components_home_ai_solve_problem_cards';
+  info: {
+    displayName: 'AI Solve Problem Card';
+  };
+  attributes: {
+    bgImage: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeAnimationBanner extends Struct.ComponentSchema {
+  collectionName: 'components_home_animation_banners';
+  info: {
+    displayName: 'Animation Banner';
+  };
+  attributes: {
+    animationTitle: Schema.Attribute.String;
+    bannerDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    bannerImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    bannerLink: Schema.Attribute.Component<'shared.link', false>;
+    bannerSubTitle: Schema.Attribute.Component<'base-template.title', true>;
+    bannerTitle: Schema.Attribute.String;
+    firstAnimationImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    secondAnimationImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+  };
+}
+
+export interface HomeBaseComponent extends Struct.ComponentSchema {
+  collectionName: 'components_home_base_components';
+  info: {
+    displayName: 'Base Component';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeCapabilities extends Struct.ComponentSchema {
+  collectionName: 'components_home_capabilities';
+  info: {
+    displayName: 'Capabilities';
+  };
+  attributes: {
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultMarkdown';
+        }
+      >;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    sublinks: Schema.Attribute.Component<'shared.link', true>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeCardVariant extends Struct.ComponentSchema {
+  collectionName: 'components_home_card_variants';
+  info: {
+    displayName: 'cardVariant';
+  };
+  attributes: {
+    variant: Schema.Attribute.Enumeration<['twoCard', 'threeCard', 'fourCard']>;
+  };
+}
+
+export interface HomeCmsListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_cms_listings';
+  info: {
+    displayName: 'CMS Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::cms-detail.cms-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeDesignTabs extends Struct.ComponentSchema {
+  collectionName: 'components_home_design_tabs';
+  info: {
+    displayName: 'design Tabs';
+  };
+  attributes: {
+    flow: Schema.Attribute.Component<'home.ux-flow', true>;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    tabTitle: Schema.Attribute.String;
+  };
+}
+
+export interface HomeDevelopmentAndDesignListing
+  extends Struct.ComponentSchema {
+  collectionName: 'components_home_development_and_design_listings';
+  info: {
+    displayName: 'development and Design Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::development-and-design-detail.development-and-design-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeDigitalMarketingListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_digital_marketing_listings';
+  info: {
+    displayName: 'Digital Marketing Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::digital-marketing-detail.digital-marketing-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeHireServiceList extends Struct.ComponentSchema {
+  collectionName: 'components_home_hire_service_lists';
+  info: {
+    displayName: 'hireServiceList';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hire-expert-detail.hire-expert-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeImpactUx extends Struct.ComponentSchema {
+  collectionName: 'components_home_impact_uxes';
+  info: {
+    displayName: 'impactUx';
+  };
+  attributes: {
+    afterImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    afterText: Schema.Attribute.String;
+    beforeImage: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    beforeText: Schema.Attribute.String;
+    desktopFrame: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    mobileFrame: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeIndustryListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_industry_listings';
+  info: {
+    displayName: 'Industry Listing';
+  };
+  attributes: {
+    industry_list: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::industry-detail-page.industry-detail-page'
+    >;
+    industryListTitle: Schema.Attribute.String;
+  };
+}
+
+export interface HomeLogo extends Struct.ComponentSchema {
+  collectionName: 'components_home_logos';
+  info: {
+    displayName: 'logo';
+  };
+  attributes: {
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface HomeQaTestingListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_qa_testing_listings';
+  info: {
+    displayName: 'QA Testing Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::qa-testing-detail.qa-testing-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeServiceList extends Struct.ComponentSchema {
+  collectionName: 'components_home_service_lists';
+  info: {
+    displayName: 'serviceList';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-card.service-card'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeSitecoreListing extends Struct.ComponentSchema {
+  collectionName: 'components_home_sitecore_listings';
+  info: {
+    displayName: 'Sitecore Listing';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sitecore-detail.sitecore-detail'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeTechStackComponent extends Struct.ComponentSchema {
+  collectionName: 'components_home_tech_stack_components';
+  info: {
+    displayName: 'Tech Stack Component';
+  };
+  attributes: {
+    category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::tech-stack-category.tech-stack-category'
+    >;
+    tabContent: Schema.Attribute.Component<'home.logo', true>;
+  };
+}
+
+export interface HomeUiUxLisitng extends Struct.ComponentSchema {
+  collectionName: 'components_home_ui_ux_lisitngs';
+  info: {
+    displayName: 'UI UX Lisitng';
+  };
+  attributes: {
+    isCarousel: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    link: Schema.Attribute.Component<'shared.link', false>;
+    serviceList: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::service-card.service-card'
+    >;
+    serviceTitle: Schema.Attribute.String;
+    serviceVariant: Schema.Attribute.Component<'home.card-variant', false>;
+  };
+}
+
+export interface HomeUxFlow extends Struct.ComponentSchema {
+  collectionName: 'components_home_ux_flows';
+  info: {
+    displayName: 'Ux Flow';
+  };
+  attributes: {
+    gif: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    information: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface ReuseCard extends Struct.ComponentSchema {
   collectionName: 'components_reuse_cards';
   info: {
@@ -736,6 +1118,7 @@ export interface SharedImage extends Struct.ComponentSchema {
   };
   attributes: {
     Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    tooltip: Schema.Attribute.String;
   };
 }
 
@@ -922,6 +1305,29 @@ declare module '@strapi/strapi' {
       'headings.h4': HeadingsH4;
       'headings.h5': HeadingsH5;
       'headings.h6': HeadingsH6;
+      'home.ai-card': HomeAiCard;
+      'home.ai-eco-system': HomeAiEcoSystem;
+      'home.ai-our-services': HomeAiOurServices;
+      'home.ai-solve-problem': HomeAiSolveProblem;
+      'home.ai-solve-problem-card': HomeAiSolveProblemCard;
+      'home.animation-banner': HomeAnimationBanner;
+      'home.base-component': HomeBaseComponent;
+      'home.capabilities': HomeCapabilities;
+      'home.card-variant': HomeCardVariant;
+      'home.cms-listing': HomeCmsListing;
+      'home.design-tabs': HomeDesignTabs;
+      'home.development-and-design-listing': HomeDevelopmentAndDesignListing;
+      'home.digital-marketing-listing': HomeDigitalMarketingListing;
+      'home.hire-service-list': HomeHireServiceList;
+      'home.impact-ux': HomeImpactUx;
+      'home.industry-listing': HomeIndustryListing;
+      'home.logo': HomeLogo;
+      'home.qa-testing-listing': HomeQaTestingListing;
+      'home.service-list': HomeServiceList;
+      'home.sitecore-listing': HomeSitecoreListing;
+      'home.tech-stack-component': HomeTechStackComponent;
+      'home.ui-ux-lisitng': HomeUiUxLisitng;
+      'home.ux-flow': HomeUxFlow;
       'reuse.card': ReuseCard;
       'reuse.number-title-content': ReuseNumberTitleContent;
       'reuse.projects-slider': ReuseProjectsSlider;

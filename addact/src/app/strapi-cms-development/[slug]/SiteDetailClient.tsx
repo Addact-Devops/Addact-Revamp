@@ -13,7 +13,6 @@ import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
 import OurServicesWithTabs from "@/components/organisms/OurServicesWithTabs";
 import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
-import ContactUs from "@/components/organisms/ContactUs";
 
 const IndustriesWeServe = dynamic(() => import("@/components/organisms/IndustriesWeServe"), { ssr: false });
 
@@ -44,7 +43,6 @@ const SiteDetailClient = ({ data }: SiteDetailClientProps) => {
             <ClientTestimonials />
             <OurInsights />
             <FAQ data={data.faq} />
-            <ContactUs data={data.contact_us} />
         </main>
     );
 };

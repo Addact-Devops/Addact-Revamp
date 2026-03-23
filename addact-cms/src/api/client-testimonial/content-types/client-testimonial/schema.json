@@ -18,6 +18,22 @@
       "type": "component",
       "component": "addact-component.client-testimonial-items",
       "repeatable": true
+    },
+    "bgText": {
+      "type": "string"
+    },
+    "rating": {
+      "type": "string"
+    },
+    "ratingImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

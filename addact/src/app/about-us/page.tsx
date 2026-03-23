@@ -40,7 +40,7 @@ export default async function AboutUsPage() {
         <>
             {structuredData && (
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     suppressHydrationWarning
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(structuredData),
@@ -48,35 +48,39 @@ export default async function AboutUsPage() {
                 />
             )}
 
-            <main className="bg-[#f4f4f4]">
+            <main className='bg-[#f4f4f4]'>
                 <HeroBanner
                     title={banner?.BannerTitle || ""}
                     description={banner?.BannerDescription || ""}
                     backgroundImageUrl={banner?.BannerImage?.url || ""}
                     showAnchorLinks={true}
                 />
-               {about && <AboutUsContent
-                    subtitle={about.SubTitle}
-                    title={about.Title}
-                    content={about.Description}
-                    image={about.Image}
-                />}
+                {about && (
+                    <AboutUsContent
+                        subtitle={about.SubTitle}
+                        title={about.Title}
+                        content={about.Description}
+                        image={about.Image}
+                    />
+                )}
                 <OurVisionMission data={visionMission} />
+                {weAreAddactData && (
+                    <WeAreAddact
+                        subtitle={weAreAddactData.SubTitle}
+                        title={weAreAddactData.Title}
+                        content={weAreAddactData.Content}
+                        image={weAreAddactData.Image}
+                        {...(weAreAddactData.NumberContent && {
+                            numberContent: weAreAddactData.NumberContent,
+                        })}
+                    />
+                )}
                 <GenericCTA
                     title={cta?.Title || []}
                     description={cta?.CTADescription || []}
                     image={cta?.CTAImage?.[0]?.Image || null}
                     link={cta?.CTALink?.[0] || null}
                 />
-                {weAreAddactData && <WeAreAddact
-                    subtitle={weAreAddactData.SubTitle}
-                    title={weAreAddactData.Title}
-                    content={weAreAddactData.Content}
-                    image={weAreAddactData.Image}
-                    {...(weAreAddactData.NumberContent && {
-                        numberContent: weAreAddactData.NumberContent,
-                    })}
-                />}
             </main>
         </>
     );

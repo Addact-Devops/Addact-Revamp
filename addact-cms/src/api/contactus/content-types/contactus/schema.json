@@ -64,6 +64,11 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::form-field.form-field"
+    },
+    "contactInfo": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
     }
   }
 }

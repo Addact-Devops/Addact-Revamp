@@ -44,10 +44,10 @@
       "component": "reuse.title-with-card",
       "repeatable": false
     },
-    "Tech_Stack": {
+    "techStack": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::our-expertise.our-expertise"
+      "target": "api::tech-stack.tech-stack"
     },
     "global_card": {
       "type": "relation",
@@ -77,6 +77,11 @@
     "ProjectHighlights": {
       "type": "component",
       "component": "reuse.projects-slider",
+      "repeatable": false
+    },
+    "listingContext": {
+      "type": "component",
+      "component": "home.base-component",
       "repeatable": false
     }
   }

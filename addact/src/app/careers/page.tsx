@@ -26,7 +26,7 @@ export default async function CareersPage() {
         <>
             {structuredData && (
                 <script
-                    type="application/ld+json"
+                    type='application/ld+json'
                     suppressHydrationWarning
                     dangerouslySetInnerHTML={{
                         __html: JSON.stringify(structuredData),
@@ -34,7 +34,7 @@ export default async function CareersPage() {
                 />
             )}
 
-            <main className="bg-[#f4f4f4] pb-[60px] sm:pb-[100px]">
+            <main className='bg-[#f4f4f4] pb-[60px] sm:pb-[100px]'>
                 {banner && (
                     <HeroBanner
                         title={banner.BannerTitle || ""}

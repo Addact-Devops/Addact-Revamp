@@ -58,6 +58,11 @@
       "type": "component",
       "component": "shared.image",
       "repeatable": true
+    },
+    "socialMedia": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
     }
   }
 }

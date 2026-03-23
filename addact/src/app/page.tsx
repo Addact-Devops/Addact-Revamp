@@ -1,21 +1,9 @@
 import { getHOmePageData } from "@/graphql/queries/getHomePage";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
-
-import OurPartners from "@/components/organisms/OurPartners";
-import WhoWeAre from "@/components/organisms/WhoWeAre";
-import OurServices from "@/components/organisms/OurServices";
-import OurCmsExperts from "@/components/organisms/OurCmsExperts";
-import WhyAddact from "@/components/organisms/WhyAddact";
-import CtaBanner from "@/components/molecules/CtaBanner";
-import OurProcess from "@/components/organisms/OurProcess";
-import ClientTestimonials from "@/components/organisms/ClientTestimonials";
-import OurInsights from "@/components/organisms/OurInsights";
-import ContactUs from "@/components/organisms/ContactUs";
-import HomeHeroBanner from "@/components/organisms/HomeHeroBanner";
-import GlobeAnimation from "@/components/organisms/GlobeAnimation";
-
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import Script from "next/script";
+
+import HomePageFlow from "@/components/templates/HomePageFlow";
 
 export async function generateMetadata() {
   return generatePageMetadata("home");
@@ -193,20 +181,7 @@ export default async function HomePage() {
       />
 
       {/*  End Markup schema */}
-      <main className="bg-dark">
-        <HomeHeroBanner data={homeData?.banner} />
-        <OurPartners />
-        <WhoWeAre />
-        <OurServices data={homeData?.ourservices} />
-        <OurCmsExperts />
-        <WhyAddact data={homeData?.whyaddact} />
-        <CtaBanner data={homeData?.cta} />
-        {homeData?.ourprocess && <OurProcess data={homeData?.ourprocess} />}
-        <ClientTestimonials />
-        <OurInsights />
-        <GlobeAnimation data={homeData?.GlobeAnimation} />
-        <ContactUs data={homeData?.contactus} />
-      </main>
+      <HomePageFlow homeData={homeData} />
     </>
   );
 }

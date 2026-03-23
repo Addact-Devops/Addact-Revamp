@@ -43,6 +43,11 @@
     },
     "GeneralText": {
       "type": "string"
+    },
+    "contactInfo": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": true
     }
   }
 }

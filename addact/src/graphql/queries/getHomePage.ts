@@ -255,6 +255,156 @@ const GET_HOME_PAGE = gql`
                     height
                 }
             }
+            animationBanner {
+                animationTitle
+                firstAnimationImage {
+                    alternativeText
+                    height
+                    url
+                    width
+                }
+                secondAnimationImage {
+                    alternativeText
+                    height
+                    url
+                    width
+                }
+                bannerTitle
+                bannerDescription
+                bannerSubTitle {
+                    Title
+                }
+                bannerImage {
+                    alternativeText
+                    height
+                    url
+                    width
+                }
+                bannerLink {
+                    Icon {
+                        alternativeText
+                        height
+                        url
+                        width
+                    }
+                    SubDisc
+                    href
+                    id
+                    isExternal
+                    label
+                    target
+                }
+            }
+
+            ourCapabilitiy {
+                heading
+                capabilities {
+                    title
+                    description
+                    link {
+                        id
+                        href
+                        label
+                        target
+                        isExternal
+                        SubDisc
+                        Icon {
+                            alternativeText
+                            height
+                            url
+                            width
+                        }
+                    }
+                    image {
+                        alternativeText
+                        height
+                        url
+                        width
+                    }
+                    sublinks {
+                        id
+                        href
+                        label
+                        target
+                        isExternal
+                        SubDisc
+                        Icon {
+                            alternativeText
+                            height
+                            url
+                            width
+                        }
+                    }
+                }
+            }
+
+            aiEcoSystem {
+                AIEcoSystem {
+                    title
+                    description
+                    tagLine
+                    firstImage {
+                        alternativeText
+                        height
+                        url
+                        width
+                    }
+                    secondImage {
+                        alternativeText
+                        height
+                        url
+                        width
+                    }
+                    firstLayerlogos {
+                        tooltip
+                        Image {
+                            alternativeText
+                            height
+                            url
+                            width
+                        }
+                    }
+                    secondLayerlogos {
+                        tooltip
+                        Image {
+                            alternativeText
+                            height
+                            url
+                            width
+                        }
+                    }
+                }
+            }
+
+            industry {
+                industryListTitle
+                industry_list {
+                    Slug
+                    listingContext {
+                        title
+                        description
+                        image {
+                            alternativeText
+                            height
+                            url
+                            width
+                        }
+                        link {
+                            id
+                            href
+                            label
+                            isExternal
+                            SubDisc
+                            Icon {
+                                alternativeText
+                                url
+                                width
+                                height
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 `;
@@ -263,7 +413,7 @@ const GET_HOME_PAGE = gql`
 export interface Image {
     alternativeText: string | null;
     height: number;
-    name: string;
+    name?: string;
     url: string;
     width: number;
 }
@@ -271,9 +421,11 @@ export interface Image {
 export interface Link {
     id: string;
     href: string;
-    label: string;
-    target: string;
+    label: string | null;
+    target?: string | null;
     isExternal: boolean;
+    SubDisc?: string | null;
+    Icon?: Image | null;
 }
 
 export interface Heading {
@@ -366,9 +518,92 @@ export interface OurProcessData {
         Description: string;
     }[];
 }
+
+export interface AnimationBanner {
+    animationTitle: string;
+    firstAnimationImage: Image;
+    secondAnimationImage: Image;
+    bannerTitle: string;
+    bannerDescription: string;
+    bannerSubTitle: {
+        Title: string;
+    }[];
+    bannerImage: Image;
+    bannerLink: {
+        Icon: Image | null;
+        SubDisc: string | null;
+        href: string;
+        id: string;
+        isExternal: boolean;
+        label: string;
+        target: string;
+    };
+}
+
+export interface LinkWithIcon {
+    id: string;
+    href: string;
+    label: string | null;
+    target: string;
+    isExternal: boolean;
+    SubDisc: string | null;
+    Icon: Image | null;
+}
+
+export interface Capability {
+    title: string;
+    description: string;
+    link: LinkWithIcon;
+    image: Image;
+    sublinks: LinkWithIcon[];
+}
+
+export interface OurCapabilitiy {
+    heading: string;
+    capabilities: Capability[];
+}
+
+export interface LogoLayer {
+    tooltip?: string | null;
+    Image: Image;
+}
+
+export interface AIEcoSystemData {
+    title: string;
+    description: string;
+    tagLine: string;
+    firstImage: Image;
+    secondImage: Image;
+    firstLayerlogos: LogoLayer[];
+    secondLayerlogos: LogoLayer[];
+}
+
+export interface AIEcoSystem {
+    AIEcoSystem: AIEcoSystemData;
+}
+
+export interface Industry {
+    industryListTitle: string;
+    industry_list: IndustryListItem[];
+}
+
+export interface IndustryListItem {
+    Slug: string;
+    listingContext: {
+        title: string;
+        description: string;
+        image: Image | null;
+        link: LinkWithIcon | null;
+    } | null;
+}
+
 // Main interface
 export interface HomeItems {
     documentId: string;
+    PageHeading?: {
+        PageTitle: string;
+        Slug: string;
+    }[];
     pageHeading: {
         PageTitle: string;
         Slug: string;
@@ -381,6 +616,10 @@ export interface HomeItems {
     whyaddact: Whyaddact;
     faq: Faq;
     GlobeAnimation: GloabeAnimation;
+    animationBanner: AnimationBanner;
+    ourCapabilitiy: OurCapabilitiy;
+    aiEcoSystem: AIEcoSystem;
+    industry?: Industry;
 }
 
 export interface HomeResponse {

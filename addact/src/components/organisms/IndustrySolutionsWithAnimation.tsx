@@ -7,167 +7,169 @@ import "slick-carousel/slick/slick-theme.css";
 import RichText from "../atom/richText";
 
 type SolutionCard = {
-  Title?: string | null;
-  Description?: string | null; // HTML
+    Title?: string | null;
+    Description?: string | null; // HTML
 };
 
 type IndustrySolutionsWithAnimationData = {
-  Title?: string | null;
-  SolutionsCards?: SolutionCard[] | null;
+    Title?: string | null;
+    SolutionsCards?: SolutionCard[] | null;
 };
 
 type Props = {
-  data?: IndustrySolutionsWithAnimationData | null;
+    data?: IndustrySolutionsWithAnimationData | null;
 };
 
 const IndustrySolutionsWithAnimation: React.FC<Props> = ({ data }) => {
-  const cards = Array.isArray(data?.SolutionsCards)
-    ? data!.SolutionsCards!
-    : [];
+    const cards = Array.isArray(data?.SolutionsCards) ? data!.SolutionsCards! : [];
 
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [animate, setAnimate] = useState(false);
-  const sectionRef = useRef<HTMLElement | null>(null);
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [animate, setAnimate] = useState(false);
+    const sectionRef = useRef<HTMLElement | null>(null);
 
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
+    useEffect(() => {
+        const el = sectionRef.current;
+        if (!el) return;
 
-    if (!("IntersectionObserver" in window)) {
-      setAnimate(true);
-      return;
-    }
-
-    const obs = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setAnimate(true);
-          obs.disconnect();
+        if (!("IntersectionObserver" in window)) {
+            setAnimate(true);
+            return;
         }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
-    );
 
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  const sliderSettings = {
-    dots: false,
-    arrows: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    beforeChange: (_: number, next: number) => setCurrentSlide(next),
-  };
-
-  const chunkArray = <T,>(arr: T[], size: number): T[][] => {
-    const out: T[][] = [];
-    for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-    return out;
-  };
-
-  const getIndicatorStyle = (totalSlides: number) => {
-    const segmentWidth = 100 / (totalSlides || 1);
-    return {
-      width: `${segmentWidth}%`,
-      left: `${currentSlide * segmentWidth}%`,
-    };
-  };
-
-  return (
-    <section
-      ref={sectionRef}
-      className="my-[80px] lg:my-[100px] 2xl:my-[200px] solutionscards-wrapper overflow-hidden"
-    >
-      <div className="container">
-        <div className="flex flex-col">
-          {/* Title */}
-          <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">
-            {data?.Title ?? "Our Solutions"}
-          </h2>
-
-          {/* Desktop grid with sequential opacity reveal */}
-          <div className="desktop-grid hidden md:grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {cards.map((card, idx) => (
-              <div
-                key={idx}
-                className={`group relative md:bg-[#1C1C1C] border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px] ${
-                  animate ? "show" : ""
-                }`}
-                style={
-                  animate
-                    ? {
-                        transition: "opacity 500ms ease-out",
-                        transitionDelay: `${idx * 180}ms`, // ⚡ faster reveal
-                        willChange: "opacity",
-                      }
-                    : undefined
+        const obs = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setAnimate(true);
+                    obs.disconnect();
                 }
-              >
-                <h3 className="text-white !text-[20px] md:!text-[27px] 2xl:!text-[30px] mb-[30px]">
-                  {card?.Title ?? ""}
-                </h3>
-                <RichText html={card?.Description ?? ""} />
-              </div>
-            ))}
-          </div>
+            },
+            { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
+        );
 
-          {/* Mobile slider unchanged */}
-          <div className="md:hidden">
-            <Slider {...sliderSettings}>
-              {chunkArray<SolutionCard>(cards, 2).map((group, i) => (
-                <div key={i} className="space-y-[16px]">
-                  {group.map((card, j) => (
-                    <div
-                      key={`${i}-${j}`}
-                      className="relative group bg-[#1C1C1C] pb-15 border-l-[3px] border-[#3C4CFF] p-[16px]"
-                    >
-                      <h3 className="text-white !text-[17px] md:!text-[30px] mb-3">
-                        {card?.Title ?? ""}
-                      </h3>
-                      <RichText html={card?.Description ?? ""} />
+        obs.observe(el);
+        return () => obs.disconnect();
+    }, []);
+
+    const sliderSettings = {
+        dots: false,
+        arrows: false,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        beforeChange: (_: number, next: number) => setCurrentSlide(next),
+    };
+
+    const chunkArray = <T,>(arr: T[], size: number): T[][] => {
+        const out: T[][] = [];
+        for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
+        return out;
+    };
+
+    const getIndicatorStyle = (totalSlides: number) => {
+        const segmentWidth = 100 / (totalSlides || 1);
+        return {
+            width: `${segmentWidth}%`,
+            left: `${currentSlide * segmentWidth}%`,
+        };
+    };
+
+    return (
+        <section
+            ref={sectionRef}
+            className='py-16 md:py-20 lg:py-24 2xl:py-[80px] solutionscards-wrapper overflow-hidden bg-white'
+        >
+            <div className='container-main'>
+                <div className='flex flex-col'>
+                    {/* Title */}
+                    <h2 className='!text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24 text-[#0F0F0F] font-montserrat font-semibold'>
+                        {data?.Title ?? "Our Solutions"}
+                    </h2>
+
+                    {/* Desktop grid with sequential opacity reveal */}
+                    <div className='desktop-grid hidden md:grid grid-cols-1 lg:grid-cols-3 gap-6'>
+                        {cards.map((card, idx) => (
+                            <div
+                                key={idx}
+                                className={`group relative border-l-[3px] md:border-l-[5px] border-[#3C4CFF] sm:py-8 sm:px-8 px-[30px] py-[40px] ${
+                                    animate ? "show" : ""
+                                }`}
+                                style={
+                                    animate
+                                        ? {
+                                              transition: "opacity 500ms ease-out",
+                                              transitionDelay: `${idx * 180}ms`, // ⚡ faster reveal
+                                              willChange: "opacity",
+                                          }
+                                        : undefined
+                                }
+                            >
+                                <h3 className='text-[#0F0F0F] !text-[20px] md:!text-[27px] 2xl:!text-[30px] mb-[30px]'>
+                                    {card?.Title ?? ""}
+                                </h3>
+                                <div className='text-[#0F0F0F]'>
+                                    <RichText html={card?.Description ?? ""} />
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                  ))}
+
+                    {/* Mobile slider unchanged */}
+                    <div className='md:hidden'>
+                        <Slider {...sliderSettings}>
+                            {chunkArray<SolutionCard>(cards, 2).map((group, i) => (
+                                <div key={i} className='space-y-[16px]'>
+                                    {group.map((card, j) => (
+                                        <div
+                                            key={`${i}-${j}`}
+                                            className='relative group pb-15 border-l-[3px] border-[#3C4CFF] p-[16px]'
+                                        >
+                                            <h3 className='text-[#0F0F0F] !text-[17px] md:!text-[30px] mb-3'>
+                                                {card?.Title ?? ""}
+                                            </h3>
+                                            <div className='text-[#0F0F0F]'>
+                                                <RichText html={card?.Description ?? ""} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </Slider>
+
+                        {/* Tiny progress indicator */}
+                        <div className='relative mt-[40px] h-[4px] flex items-center justify-center'>
+                            {/* Center gray line */}
+                            <div className='absolute left-0 right-0 top-1/2 h-[1px] bg-[#D9D9D9] -translate-y-1/2'></div>
+
+                            {/* Blue indicator bar */}
+                            <div
+                                className='absolute top-0 left-0 h-[4px] bg-[#3C4CFF] transition-all duration-300'
+                                style={getIndicatorStyle(Math.ceil(cards.length / 2) || 1)}
+                            />
+                        </div>
+                    </div>
                 </div>
-              ))}
-            </Slider>
-
-            {/* Tiny progress indicator */}
-            <div className="relative mt-[40px] h-[4px] flex items-center justify-center">
-              {/* Center gray line */}
-              <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-[#D9D9D9] -translate-y-1/2"></div>
-
-              {/* Blue indicator bar */}
-              <div
-                className="absolute top-0 left-0 h-[4px] bg-[#3C4CFF] transition-all duration-300"
-                style={getIndicatorStyle(Math.ceil(cards.length / 2) || 1)}
-              />
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Scoped animation style */}
-      <style jsx global>{`
-        .solutionscards-wrapper .desktop-grid .group {
-          opacity: 0;
-        }
-        .solutionscards-wrapper .desktop-grid .group.show {
-          opacity: 1;
-        }
+            {/* Scoped animation style */}
+            <style jsx global>{`
+                .solutionscards-wrapper .desktop-grid .group {
+                    opacity: 0;
+                }
+                .solutionscards-wrapper .desktop-grid .group.show {
+                    opacity: 1;
+                }
 
-        @media (prefers-reduced-motion: reduce) {
-          .solutionscards-wrapper .desktop-grid .group,
-          .solutionscards-wrapper .desktop-grid .group.show {
-            transition: none !important;
-            opacity: 1 !important;
-          }
-        }
-      `}</style>
-    </section>
-  );
+                @media (prefers-reduced-motion: reduce) {
+                    .solutionscards-wrapper .desktop-grid .group,
+                    .solutionscards-wrapper .desktop-grid .group.show {
+                        transition: none !important;
+                        opacity: 1 !important;
+                    }
+                }
+            `}</style>
+        </section>
+    );
 };
 
 export default IndustrySolutionsWithAnimation;

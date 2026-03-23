@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_home_qa_testing_listings",
+  "info": {
+    "displayName": "QA Testing Listing"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::qa-testing-detail.qa-testing-detail"
+    },
+    "isCarousel": {
+      "type": "boolean"
+    },
+    "serviceVariant": {
+      "type": "component",
+      "component": "home.card-variant",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

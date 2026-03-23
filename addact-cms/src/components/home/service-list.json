@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_home_service_lists",
+  "info": {
+    "displayName": "serviceList"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::service-card.service-card"
+    },
+    "isCarousel": {
+      "type": "boolean"
+    },
+    "serviceVariant": {
+      "type": "component",
+      "component": "home.card-variant",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

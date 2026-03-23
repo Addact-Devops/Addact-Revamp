@@ -54,7 +54,7 @@ const IndustrySolutions: React.FC<Props> = ({ data }) => {
 
   return (
     <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] solutionscards-wrapper">
-      <div className="container">
+      <div className="container-main">
         <div className="flex flex-col">
           {/* Title (same size treatment as reference) */}
           <h2 className="border-after !text-[28px] lg:!text-[38px] 2xl:!text-[60px] !pb-4 xl:!pb-10 max-w-[60%] 2xl:max-w-[50%] mb-[55px] lg:mb-14 2xl:mb-24">

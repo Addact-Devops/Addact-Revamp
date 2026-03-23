@@ -1,0 +1,69 @@
+{
+  "kind": "singleType",
+  "collectionName": "hire_experts",
+  "info": {
+    "singularName": "hire-expert",
+    "pluralName": "hire-experts",
+    "displayName": "hire-expert"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "SEO": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
+    },
+    "Banner": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::banner.banner"
+    },
+    "Slug": {
+      "type": "string"
+    },
+    "cta": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::cta.cta"
+    },
+    "industry": {
+      "type": "component",
+      "component": "home.industry-listing",
+      "repeatable": false
+    },
+    "ourprocess": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-process.our-process"
+    },
+    "whyaddact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
+    },
+    "ourInshightsTitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
+    },
+    "faq": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::faq.faq"
+    },
+    "techStack": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::tech-stack.tech-stack"
+    },
+    "ourService": {
+      "type": "dynamiczone",
+      "components": [
+        "home.hire-service-list"
+      ]
+    }
+  }
+}

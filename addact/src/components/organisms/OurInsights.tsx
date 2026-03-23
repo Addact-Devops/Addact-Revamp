@@ -1,10 +1,14 @@
 "use client";
 
-import { getOurInsights } from "@/graphql/queries/getOurInsights";
+import {
+  getOurInsights,
+  getHomeOurInsightsTitle,
+  type HomeResponse,
+} from "@/graphql/queries/getOurInsights";
 import Image from "next/image";
 import Link from "next/link";
-import { RightArrowUpIcon } from "../atom/icons";
 import { useEffect, useState } from "react";
+import RichText from "../atom/richText";
 
 export interface BlogBanner {
   PublishDate?: string;
@@ -46,6 +50,7 @@ interface InsightCardData {
   type: "Blog" | "Case study";
   title: string;
   date: string;
+  readTime: string;
   image?: {
     url: string;
     width: number;
@@ -59,16 +64,17 @@ interface InsightCardData {
 
 interface InsightCardProps {
   item: InsightCardData;
-  big?: boolean;
 }
 
 export default function OurInsights() {
   const [data, setData] = useState<OurInsightsData | null>(null);
-
+  const [homeData, setHomeData] = useState<HomeResponse | null>(null);
   useEffect(() => {
     (async () => {
       const result = await getOurInsights();
       setData(result);
+      const homeResult = await getHomeOurInsightsTitle();
+      setHomeData(homeResult);
     })();
   }, []);
 
@@ -94,21 +100,49 @@ export default function OurInsights() {
     mapCaseStudyToCard(caseStudy),
   ];
 
+  const titleData = homeData?.home?.ourInshightsTitle?.CommonTitle?.[0];
   return (
-    <section className="my-[60px] xl:mt-[100px] 2xl:mt-[200px] mb-[100px]">
-      <div className="container mx-auto px-4">
-        <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
-          Our Insights
+    <section className="py-10 md:py-20 xl:py-[80px] bg-white">
+      <div className="container-main mx-auto px-4">
+        <h2 className="text-[#0F0F0F] font-montserrat font-semibold! text-[28px] md:text-[40px] 2xl:text-[60px] leading-[40px] md:leading-[60px] 2xl:leading-[85px] pb-4 xl:pb-10">
+          {titleData?.Title || "Our Insights"}
         </h2>
 
-        <div className="grid gap-6 mt-10 sm:mt-14 lg:mt-24 grid-cols-1 md:grid-cols-2 lg:grid-cols-[45%_55%] 2xl:grid-cols-[40.67%_59.33%]">
-          <InsightCard item={items[0]} big />
-          <div className="flex flex-col gap-4">
-            <div className="hidden lg:block">
-              <InsightCard item={items[1]} />
-            </div>
-            <InsightCard item={items[2]} />
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mt-4 md:mt-6 xl:mt-8">
+          <div className="text-[#0F0F0F] font-montserrat [&_p]:text-sm [&_p]:sm:text-base [&_p]:md:text-lg [&_p]:xl:text-xl! [&_p]:2xl:text-2xl! max-w-full md:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl leading-7! xl:leading-9! 2xl:leading-10!">
+            <RichText html={titleData?.Description || ""} />
           </div>
+          <Link
+            href={titleData?.Link?.href || ""}
+            target={titleData?.Link?.target === "blank" ? "_blank" : "_self"}
+            className="px-4 py-2.5 sm:px-5 sm:py-3 md:py-4 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] outline-1 -outline-offset-1 outline-[#3C4CFF] inline-flex justify-center items-center gap-2 sm:gap-3 md:gap-4 xl:gap-5 overflow-hidden hover:bg-[#3C4CFF] transition-colors flex-shrink-0 group"
+          >
+            <span className="text-[#3C4CFF] text-sm sm:text-base md:text-lg font-semibold font-montserrat leading-5 sm:leading-6 md:leading-7 whitespace-nowrap group-hover:text-white">
+              {titleData?.Link?.label || ""}
+            </span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="flex-shrink-0 sm:w-5 sm:h-5 text-[#3C4CFF] group-hover:text-white transition-colors"
+            >
+              <path
+                d="M4.16699 10H15.8337M15.8337 10L10.0003 4.16669M15.8337 10L10.0003 15.8334"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
+        </div>
+
+        <div className="flex flex-wrap gap-5 mt-10 sm:mt-14 lg:mt-24">
+          {items.map((item, index) => (
+            <InsightCard key={index} item={item} />
+          ))}
         </div>
       </div>
     </section>
@@ -127,6 +161,7 @@ function mapBlogToCard(blog: Blog): InsightCardData {
           day: "numeric",
         })
       : "Unknown Date",
+    readTime: "5 min read",
     image: banner?.BannerImage,
     description: banner?.BannerDescription ?? "",
     link: "/blogs" + blog.Slug || "/blogs" + banner?.ReadNow?.href,
@@ -145,56 +180,59 @@ function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
           day: "numeric",
         })
       : "Unknown Date",
+    readTime: "3 min read",
     image: banner?.BannerImage,
     description: banner?.BannerDescription ?? "",
     link: "/portfolio" + cs.Slug,
   };
 }
 
-function InsightCard({ item, big = false }: InsightCardProps) {
+function InsightCard({ item }: InsightCardProps) {
   return (
-    <div
-      className={`border border-gray-700 p-[10px] md:p-7 relative ${
-        big ? "flex flex-col h-full" : "flex flex-col lg:flex-row gap-7 flex-1"
-      }`}
+    <Link
+      href={item.link}
+      target="_self"
+      className="flex-1 min-w-[250px] max-w-full md:max-w-[calc(33.333%-14px)]"
     >
-      <div
-        className={`bg-gray-300 rounded overflow-hidden ${
-          big ? "w-full mb-7" : "w-full xl:max-w-[250px] 2xl:max-w-[320px]"
-        }`}
-      >
-        {item.image?.url && (
-          <Image
-            src={item.image?.url}
-            alt={item.image.alternativeText || item.image.name}
-            width={item.image.width}
-            height={item.image.height}
-            className="w-full h-full object-cover rounded"
-          />
-        )}
-      </div>
+      <div className="border border-[#c5c5c5] rounded-[10px] flex flex-col h-full overflow-hidden">
+        <div className="w-full aspect-[520/321] overflow-hidden">
+          {item.image?.url && (
+            <Image
+              src={item.image.url}
+              alt={item.image.alternativeText || item.image.name}
+              width={520}
+              height={321}
+              className="w-full h-full object-cover"
+            />
+          )}
+        </div>
 
-      <div className="flex flex-col flex-1 justify-center">
-        <span className="px-5 py-2 bg-[#3C4CFF] md:bg-[#3f4040] border border-[#3C4CFF] text-white rounded-lg w-fit text-[12px] md:text-[14px] font-medium mb-[12px] md:mb-[20px]">
-          {item.type}
-        </span>
-        <h4 className="!text-[18px] !leading-[30px] md:!text-[22px] 2xl:!text-3xl font-medium mb-4 md:!leading-[44px] line-clamp-3">
-          {item.title}
-        </h4>
-        {item.date != "Unknown Date" && (
-          <p className="!text-[12px] md:!text-[16px] text-white mb-4">
-            {item.date}
-          </p>
-        )}
-      </div>
-
-      <div className="mt-auto self-end">
-        <Link href={item?.link} target="_self">
-          <div className="group w-[40px] h-[40px] md:w-14 md:h-14 bg-[#3C4CFF] text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16 p-[6px] md:p-[0]">
-            <RightArrowUpIcon className="transition-transform duration-300 group-hover:scale-110" />
+        <div className="px-5 py-[30px]">
+          <div className="inline-flex justify-center items-center h-10 px-5 py-3 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] outline-1 -outline-offset-1 outline-indigo-600 mb-5">
+            <span className="text-stone-950 text-sm font-medium font-montserrat leading-6">
+              {item.type}
+            </span>
           </div>
-        </Link>
+
+          <p className="text-stone-950 text-lg sm:text-xl lg:text-2xl! xl:text-3xl! font-medium! font-montserrat leading-7 sm:leading-8 md:leading-9 lg:leading-[48px] mb-3 md:mb-4 line-clamp-2">
+            {item.title}
+          </p>
+
+          {item.date !== "Unknown Date" && (
+            <div className="flex items-center gap-2">
+              <p className="text-stone-950 text-base font-medium font-montserrat mb-0!">
+                {item.date}
+              </p>
+              <span className="text-stone-950 text-base font-medium font-montserrat">
+                •
+              </span>
+              <p className="text-stone-950 text-base font-medium font-montserrat">
+                {item.readTime}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }

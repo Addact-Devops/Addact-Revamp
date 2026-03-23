@@ -1,0 +1,63 @@
+{
+  "collectionName": "components_home_animation_banners",
+  "info": {
+    "displayName": "Animation Banner"
+  },
+  "options": {},
+  "attributes": {
+    "firstAnimationImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "secondAnimationImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "animationTitle": {
+      "type": "string"
+    },
+    "bannerTitle": {
+      "type": "string"
+    },
+    "bannerSubTitle": {
+      "type": "component",
+      "component": "base-template.title",
+      "repeatable": true
+    },
+    "bannerDescription": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultMarkdown"
+      }
+    },
+    "bannerLink": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
+    },
+    "bannerImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

@@ -71,6 +71,31 @@
       "type": "component",
       "component": "base-template.globe-animation",
       "repeatable": false
+    },
+    "aiEcoSystem": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::ai.ai"
+    },
+    "industry": {
+      "type": "component",
+      "component": "home.industry-listing",
+      "repeatable": false
+    },
+    "animationBanner": {
+      "type": "component",
+      "component": "home.animation-banner",
+      "repeatable": false
+    },
+    "ourCapabilitiy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-capabilitiy.our-capabilitiy"
+    },
+    "ourInshightsTitle": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::common-title.common-title"
     }
   }
 }

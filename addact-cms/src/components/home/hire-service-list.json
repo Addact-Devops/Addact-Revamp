@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_home_hire_service_lists",
+  "info": {
+    "displayName": "hireServiceList"
+  },
+  "options": {},
+  "attributes": {
+    "serviceTitle": {
+      "type": "string"
+    },
+    "serviceList": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hire-expert-detail.hire-expert-detail"
+    },
+    "isCarousel": {
+      "type": "boolean"
+    },
+    "serviceVariant": {
+      "type": "component",
+      "component": "home.card-variant",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}
