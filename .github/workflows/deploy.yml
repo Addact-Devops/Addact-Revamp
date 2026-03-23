@@ -56,8 +56,19 @@ jobs:
       - name: Restart Backend
         if: steps.backend_check.outputs.backend_changed == 'true'
         run: |
-          $portPids = netstat -aon | Select-String ":1339" | ForEach-Object { ($_ -split "\s+")[-1] } | Where-Object { $_ -ne "0" }
-          foreach ($procId in $portPids) { taskkill /F /PID $procId }
+          $portPids = netstat -aon | Select-String ":1339" |
+            ForEach-Object { ($_ -split "\s+")[-1] } |
+            Where-Object { $_ -ne "0" } |
+            Sort-Object -Unique
+
+          foreach ($procId in $portPids) {
+            try {
+              taskkill /F /PID $procId
+            } catch {
+              Write-Host "Process already stopped: $procId"
+            }
+          }
+
           Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact-cms && npm run develop'
 
       # =========================
@@ -87,6 +98,17 @@ jobs:
       - name: Restart Frontend
         if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
-          $portPids = netstat -aon | Select-String ":3001" | ForEach-Object { ($_ -split "\s+")[-1] } | Where-Object { $_ -ne "0" }
-          foreach ($procId in $portPids) { taskkill /F /PID $procId }
+          $portPids = netstat -aon | Select-String ":3001" |
+            ForEach-Object { ($_ -split "\s+")[-1] } |
+            Where-Object { $_ -ne "0" } |
+            Sort-Object -Unique
+
+          foreach ($procId in $portPids) {
+            try {
+              taskkill /F /PID $procId
+            } catch {
+              Write-Host "Process already stopped: $procId"
+            }
+          }
+
           Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact && npm run start'
