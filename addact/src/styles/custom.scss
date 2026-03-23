@@ -493,3 +493,25 @@ footer {
     -webkit-text-stroke-width: 1px;
   }
 }
+
+.design-process-board {
+  --step-card-offset: 88px;
+}
+
+@media (min-width: 1440px) {
+  .design-process-board {
+    --step-card-offset: 96px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .design-process-board {
+    --step-card-offset: 108px;
+  }
+}
+
+@media (min-width: 768px) {
+  .design-process-board {
+    --step-card-offset-compact: 84px;
+  }
+}
