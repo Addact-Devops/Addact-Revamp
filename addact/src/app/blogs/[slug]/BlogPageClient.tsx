@@ -104,7 +104,9 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
                     <Link
                       key={`social-${i}-${j}`}
                       href={link.href}
-                      target={link.target === "blank" ? "_blank" : link.target}
+                      target={
+                        link.target === "blank" ? "_blank" : `_${link.target}`
+                      }
                       rel={link.isExternal ? "noopener noreferrer" : undefined}
                       className="group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden"
                     >

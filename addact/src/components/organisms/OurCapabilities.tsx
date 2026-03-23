@@ -299,9 +299,9 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                     {item?.link?.href && (
                       <Link
                         href={item.link.href}
-                        target={item.link.target ?? "_self"}
+                        target={getLinkTarget(item?.link?.target)}
                         rel={
-                          item.link.target === "_blank"
+                          getLinkTarget(item?.link?.target) === "_blank"
                             ? "noopener noreferrer"
                             : undefined
                         }
