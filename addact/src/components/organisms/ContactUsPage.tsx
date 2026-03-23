@@ -24,6 +24,82 @@ export interface FormErrors {
   company?: string;
 }
 
+interface ContactFieldProps {
+  id: string;
+  name: string;
+  label: string;
+  value: string;
+  onChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  error?: string;
+  autoComplete?: string;
+  required?: boolean;
+  multiline?: boolean;
+  rows?: number;
+}
+
+const contactFieldBaseClass =
+  "peer w-full border-0 border-b border-gray-700 bg-transparent px-0 pb-2 pt-7 text-base leading-tight text-white placeholder:text-transparent transition-colors duration-300 focus:border-[#9EDCFF] focus:outline-none";
+
+const ContactField = ({
+  id,
+  name,
+  label,
+  value,
+  onChange,
+  error,
+  autoComplete,
+  required = false,
+  multiline = false,
+  rows = 3,
+}: ContactFieldProps) => {
+  const labelContent = (
+    <>
+      {label}
+      {required && <span className="ml-1 text-red-500">*</span>}
+    </>
+  );
+
+  return (
+    <div>
+      <div className="relative">
+        {multiline ? (
+          <textarea
+            id={id}
+            name={name}
+            autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
+            rows={rows}
+            placeholder=" "
+            className={`${contactFieldBaseClass} min-h-18 resize-none`}
+          ></textarea>
+        ) : (
+          <input
+            id={id}
+            name={name}
+            autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
+            placeholder=" "
+            className={contactFieldBaseClass}
+          />
+        )}
+
+        <label
+          htmlFor={id}
+          className="pointer-events-none absolute left-0 top-7 origin-left text-base font-semibold leading-tight text-white transition-all duration-300 ease-out peer-focus:top-0 peer-focus:text-[13px] peer-focus:text-[#9EDCFF] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[13px] peer-[:not(:placeholder-shown)]:text-[#9EDCFF]"
+        >
+          {labelContent}
+        </label>
+      </div>
+
+      {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+    </div>
+  );
+};
+
 const ContactUs = ({ data }: IProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<ContactFormData>({
@@ -142,90 +218,52 @@ const ContactUs = ({ data }: IProps) => {
                 className="space-y-6 w-full lg:w-1/2 px-6 md:px-11 py-10 md:py-12 border-t border-gray-700 flex flex-col"
               >
                 <div className="grid md:grid-cols-2 gap-6 mb-[40px]">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-base md:text-xl font-semibold mb-1"
-                    >
-                      Your Name <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      id="name"
-                      name="name"
-                      autoComplete="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                      placeholder="Type your name here"
-                    />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                    )}
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-base md:text-xl font-semibold mb-1"
-                    >
-                      Email Address <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      id="email"
-                      name="email"
-                      autoComplete="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                      placeholder="Type your email here"
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
+                  <ContactField
+                    id="name"
+                    name="name"
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    label="Your Name"
+                    required
+                    error={errors.name}
+                  />
+                  <ContactField
+                    id="email"
+                    name="email"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    label="Email Address"
+                    required
+                    error={errors.email}
+                  />
                 </div>
 
                 <div className="mb-[40px]">
-                  <label
-                    htmlFor="company"
-                    className="block text-base md:text-xl font-semibold mb-1"
-                  >
-                    Company Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
+                  <ContactField
                     id="company"
                     name="company"
-                    autoComplete="company"
+                    autoComplete="organization"
                     value={formData.company}
                     onChange={handleChange}
-                    className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                    placeholder="Type your company name here"
+                    label="Company Name"
+                    required
+                    error={errors.company}
                   />
-                  {errors.company && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.company}
-                    </p>
-                  )}
                 </div>
 
                 <div className="mb-[40px]">
-                  <label
-                    htmlFor="message"
-                    className="block text-base md:text-xl font-semibold mb-1"
-                  >
-                    Describe Your Requirements
-                  </label>
-                  <textarea
+                  <ContactField
                     id="message"
                     name="message"
-                    autoComplete="message"
+                    autoComplete="off"
                     value={formData.message}
                     onChange={handleChange}
-                    rows={1}
-                    className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
-                    placeholder="Type here..."
-                  ></textarea>
+                    label="Describe Your Requirements"
+                    multiline
+                    rows={2}
+                  />
                 </div>
 
                 <div className="flex justify-center">
