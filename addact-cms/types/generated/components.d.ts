@@ -799,6 +799,7 @@ export interface HomeDesignTabs extends Struct.ComponentSchema {
   };
   attributes: {
     flow: Schema.Attribute.Component<'home.ux-flow', true>;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     tabTitle: Schema.Attribute.String;
   };
 }
