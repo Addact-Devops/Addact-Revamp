@@ -2749,6 +2749,7 @@ export interface ApiOurProcessOurProcess extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    link: Schema.Attribute.Component<'shared.link', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -3461,6 +3462,37 @@ export interface ApiTermsConditionsTermsConditions
     >;
     publishedAt: Schema.Attribute.DateTime;
     SEO: Schema.Attribute.Component<'shared.seo', false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTestTest extends Struct.SingleTypeSchema {
+  collectionName: 'tests';
+  info: {
+    displayName: 'test';
+    pluralName: 'tests';
+    singularName: 'test';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -4424,6 +4456,7 @@ declare module '@strapi/strapi' {
       'api::tech-stack-category.tech-stack-category': ApiTechStackCategoryTechStackCategory;
       'api::tech-stack.tech-stack': ApiTechStackTechStack;
       'api::terms-conditions.terms-conditions': ApiTermsConditionsTermsConditions;
+      'api::test.test': ApiTestTest;
       'api::thank-you.thank-you': ApiThankYouThankYou;
       'api::thankyou-page.thankyou-page': ApiThankyouPageThankyouPage;
       'api::video-listing.video-listing': ApiVideoListingVideoListing;

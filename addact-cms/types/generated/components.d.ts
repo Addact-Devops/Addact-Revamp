@@ -736,9 +736,10 @@ export interface HomeBaseComponent extends Struct.ComponentSchema {
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
         {
-          preset: 'defaultMarkdown';
+          preset: 'defaultHtml';
         }
       >;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     link: Schema.Attribute.Component<'shared.link', false>;
     title: Schema.Attribute.String;
@@ -798,6 +799,7 @@ export interface HomeDesignTabs extends Struct.ComponentSchema {
   };
   attributes: {
     flow: Schema.Attribute.Component<'home.ux-flow', true>;
+    icon: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     tabTitle: Schema.Attribute.String;
   };
 }

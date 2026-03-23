@@ -1,4 +1,4 @@
-﻿name: UAT Auto Deploy
+name: UAT Frontend Deploy
 
 on:
   push:
@@ -6,57 +6,54 @@ on:
       - uat
     paths:
       - 'addact/**'
-      - 'addact-cms/**'
 
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-      # 🔧 Fix Git permission issue
-      - name: Fix Git Safe Directory
-        run: git config --global --add safe.directory F:/Addact-Revamp
-
-      # 🔄 Pull latest code
-      - name: Pull latest code
+      # =========================
+      # 🔹 SAFE CODE SYNC
+      # =========================
+      - name: Sync Code Safely
         run: |
           Set-Location "F:\Addact-Revamp"
-          git pull origin uat
+          git config --global --add safe.directory F:/Addact-Revamp
+          git fetch origin uat
+          git reset --hard origin/uat
+          git clean -fd
 
       # =========================
-      # 🔹 BACKEND (addact-cms)
+      # 🔹 CHECK FRONTEND CHANGES
       # =========================
-
-      - name: Install Backend Dependencies
-        if: contains(github.event.head_commit.message, 'backend')
+      - name: Detect Frontend Changes
+        id: frontend_check
         run: |
-          Set-Location "F:\Addact-Revamp\addact-cms"
-          npm install
+          Set-Location "F:\Addact-Revamp"
+          if (git rev-parse HEAD~1 2>$null) {
+            git diff --name-only HEAD~1 HEAD > changes.txt
+          } else {
+            git ls-files > changes.txt
+          }
 
-      - name: Restart Backend
-        if: contains(github.event.head_commit.message, 'backend')
-        run: |
-          for /f "tokens=5" %%a in ('netstat -aon ^| findstr :1339') do taskkill /F /PID %%a
-          start /B cmd /c "cd /d F:\Addact-Revamp\addact-cms && npm run develop"
+          if (Select-String -Path changes.txt -Pattern "addact/") {
+            echo "frontend_changed=true" >> $env:GITHUB_OUTPUT
+          }
 
       # =========================
-      # 🔹 FRONTEND (addact)
+      # 🔹 INSTALL + BUILD
       # =========================
-
-      - name: Install Frontend Dependencies
-        if: contains(github.event.head_commit.message, 'frontend')
-        run: |
-          Set-Location "F:\Addact-Revamp\addact"
-          npm install
-
       - name: Build Frontend
-        if: contains(github.event.head_commit.message, 'frontend')
+        if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
           Set-Location "F:\Addact-Revamp\addact"
+          npm ci
           npm run build
 
+      # =========================
+      # 🔹 RESTART SERVICE
+      # =========================
       - name: Restart Frontend
-        if: contains(github.event.head_commit.message, 'frontend')
+        if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
-          for /f "tokens=5" %%a in ('netstat -aon ^| findstr :3001') do taskkill /F /PID %%a
-          start /B cmd /c "cd /d F:\Addact-Revamp\addact && npm run start"
+          nssm restart addact-frontend
