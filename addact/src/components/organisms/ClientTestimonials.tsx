@@ -57,7 +57,7 @@ export default function ClientTestimonials() {
             <div className="bg-white border border-[rgba(15,15,15,0.1)] rounded-full px-4 md:px-6 lg:px-8 py-3 md:py-5 lg:py-6 inline-flex items-center justify-center lg:justify-start gap-4 md:gap-6 shadow-sm max-w-full xl:max-w-[517px] mx-auto lg:mx-0">
               <Image
                 src={data.ratingImage?.url}
-                alt={data.ratingImage?.alternativeText}
+                alt={data.ratingImage?.alternativeText || "clutch rating"}
                 width={data.ratingImage?.width}
                 height={data.ratingImage?.height}
                 className="w-auto max-w-[120px] h-[20px] md:h-[32px] lg:h-[45px] object-contain"

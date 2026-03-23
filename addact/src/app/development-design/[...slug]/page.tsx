@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Params }) {
     const fullPath = `development-design/${slug.join("/")}`;
     data = await getDevelopmentDesignDetailsCmsSlug(fullPath);
   } else if (slug.length === 3) {
-    const fullPath = `development-design/${slug.join("/")}`;
+    const fullPath = `${slug[2]}`;
     data = await getDevelopmentDesignDetailsSitecoreSlug(fullPath);
   }
 
@@ -77,7 +77,7 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
     const fullPath = `development-design/${slug.join("/")}`;
     data = await getDevelopmentDesignDetailsCmsSlug(fullPath);
   } else if (slug.length === 3) {
-    const fullPath = `development-design/${slug.join("/")}`;
+    const fullPath = `${slug[2]}`;
     data = await getDevelopmentDesignDetailsSitecoreSlug(fullPath);
   }
 
