@@ -101,7 +101,6 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
     resolvedProcessSteps[0]?.id ?? "foundation",
   );
 
-  console.log("dynamicSteps", resolvedProcessSteps, "data", data);
   useEffect(() => {
     if (!resolvedProcessSteps.some((step) => step.id === selectedStep)) {
       setSelectedStep(resolvedProcessSteps[0]?.id ?? "foundation");

@@ -8,7 +8,7 @@ import { getContactUsData } from "@/graphql/queries/getContactUs";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ScrollToTop from "@/components/atom/scrollToTop";
 import LayoutWrapper from "./LayoutWrapper";
-import TawkTo from "@/components/organisms/TwakTo";
+import TidioChat from "@/components/organisms/TidioChat";
 
 // import SnowfallWrapper from "@/components/organisms/SnowfallWrapper";
 
@@ -97,7 +97,7 @@ export default async function RootLayout({
         >
           {/* <SnowfallWrapper /> */}
           {children}
-          <TawkTo />
+          <TidioChat />
         </LayoutWrapper>
 
         <SpeedInsights />
