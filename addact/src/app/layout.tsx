@@ -5,7 +5,7 @@ import "../styles/custom.scss";
 import { getAddactHeaderData } from "@/graphql/queries/addact-header";
 import { getFooterData } from "@/graphql/queries/footer";
 import { getContactUsData } from "@/graphql/queries/getContactUs";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+// import { SpeedInsights } from "@vercel/speed-insights/next";
 import ScrollToTop from "@/components/atom/scrollToTop";
 import LayoutWrapper from "./LayoutWrapper";
 import TidioChat from "@/components/organisms/TidioChat";
@@ -100,7 +100,7 @@ export default async function RootLayout({
           <TidioChat />
         </LayoutWrapper>
 
-        <SpeedInsights />
+        {/* <SpeedInsights /> */}
 
         {/* ✅ Google Tag Manager */}
         <Script
