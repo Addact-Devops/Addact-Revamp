@@ -269,7 +269,7 @@ export default function Footer({ data }: FooterProps) {
                               target={
                                 link?.isExternal
                                   ? "_blank"
-                                  : link.target || "_self"
+                                  : `_${link.target}` || "_self"
                               }
                               rel={
                                 link.isExternal
@@ -303,7 +303,9 @@ export default function Footer({ data }: FooterProps) {
                       <Link
                         href={item.href || "/"}
                         target={
-                          item?.isExternal ? "_blank" : item.target || "_self"
+                          item?.isExternal
+                            ? "_blank"
+                            : `_${item?.target}` || "_self"
                         }
                         rel={
                           item.isExternal ? "noopener noreferrer" : undefined
@@ -325,7 +327,9 @@ export default function Footer({ data }: FooterProps) {
                         key={icon.id || index}
                         href={icon.href || "/"}
                         target={
-                          icon?.isExternal ? "_blank" : icon.target || "_self"
+                          icon?.isExternal
+                            ? "_blank"
+                            : `_${icon?.target}` || "_self"
                         }
                         rel={
                           icon.isExternal ? "noopener noreferrer" : undefined

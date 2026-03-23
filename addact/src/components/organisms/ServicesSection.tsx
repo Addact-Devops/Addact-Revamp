@@ -2,6 +2,10 @@
 
 import Link from "next/link";
 import RichText from "../atom/richText";
+import {
+  openContactDrawer,
+  shouldOpenContactDrawer,
+} from "@/lib/contactDrawer";
 
 interface ServiceCardProps {
   title: string;
@@ -132,7 +136,7 @@ export function ServiceCard({
   return (
     <Link
       href={href || "#"}
-      target={isExternal ? "_blank" : target || "_self"}
+      target={isExternal ? "_blank" : `_${target}` || "_self"}
       rel={isExternal ? "noopener noreferrer" : undefined}
       className="group block w-full rounded-[10px] border border-solid border-[rgba(15,15,15,0.2)] bg-white p-[30px] cursor-pointer transition-all duration-200 ease-in-out hover:bg-[#3C4CFF] hover:border-[#3C4CFF] hover:shadow-[0_4px_20px_rgba(60,76,255,0.12)]"
     >
@@ -180,6 +184,17 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
   const ctaHref = firstListingContext?.link?.href || "#";
   const ctaTarget = firstListingContext?.link?.target || "_self";
   const ctaIsExternal = firstListingContext?.link?.isExternal || false;
+  const useContactDrawer = !ctaIsExternal && shouldOpenContactDrawer(ctaHref);
+
+  const handleServicesCtaClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!useContactDrawer) {
+      return;
+    }
+
+    event.preventDefault();
+    openContactDrawer();
+  };
+
   return (
     <>
       <section className="bg-white w-full box-border px-4 py-10 md:px-10 md:py-16 lg:hidden!">
@@ -190,15 +205,26 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[14px] leading-[22px] md:text-[16px]! md:leading-[28px]! m-0">
             {sectionDescription}
           </p>
-          <Link
-            href={ctaHref}
-            target={ctaIsExternal ? "_blank" : ctaTarget}
-            rel={ctaIsExternal ? "noopener noreferrer" : undefined}
-            className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] md:text-[16px]! px-6 py-3 md:px-8! md:py-4! rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
-          >
-            {ctaLabel}
-            <ArrowUpRight className="w-4 h-4" />
-          </Link>
+          {useContactDrawer ? (
+            <button
+              type="button"
+              onClick={handleServicesCtaClick}
+              className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] md:text-[16px]! px-6 py-3 md:px-8! md:py-4! rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
+            >
+              {ctaLabel}
+              <ArrowUpRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <Link
+              href={ctaHref}
+              target={ctaIsExternal ? "_blank" : `_${ctaTarget}`}
+              rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+              className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] md:text-[16px]! px-6 py-3 md:px-8! md:py-4! rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
+            >
+              {ctaLabel}
+              <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          )}
         </div>
         <div className="flex flex-col gap-3">
           {servicesToRender.map((service) => (
@@ -225,15 +251,26 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[15px] leading-[26px] xl:text-[20px]! xl:leading-[34px]! m-0 xl:pr-15!">
             {sectionDescription}
           </p>
-          <Link
-            href={ctaHref}
-            target={ctaIsExternal ? "_blank" : ctaTarget}
-            rel={ctaIsExternal ? "noopener noreferrer" : undefined}
-            className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] xl:text-[16px]! px-7 py-4 rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
-          >
-            {ctaLabel}
-            <ArrowUpRight className="w-5 h-5" />
-          </Link>
+          {useContactDrawer ? (
+            <button
+              type="button"
+              onClick={handleServicesCtaClick}
+              className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] xl:text-[16px]! px-7 py-4 rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
+            >
+              {ctaLabel}
+              <ArrowUpRight className="w-5 h-5" />
+            </button>
+          ) : (
+            <Link
+              href={ctaHref}
+              target={ctaIsExternal ? "_blank" : `_${ctaTarget}`}
+              rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+              className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] xl:text-[16px]! px-7 py-4 rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
+            >
+              {ctaLabel}
+              <ArrowUpRight className="w-5 h-5" />
+            </Link>
+          )}
         </div>
 
         <div className="flex flex-col gap-[10px] w-[49%] xl:w-[788px]! py-[80px]">
