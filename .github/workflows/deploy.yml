@@ -24,7 +24,7 @@ jobs:
           git clean -fd
 
       # =========================
-      # 🔹 CHECK FRONTEND CHANGES
+      # 🔹 DETECT FRONTEND CHANGES
       # =========================
       - name: Detect Frontend Changes
         id: frontend_check
@@ -41,19 +41,19 @@ jobs:
           }
 
       # =========================
-      # 🔹 INSTALL + BUILD
+      # 🔹 INSTALL + BUILD FRONTEND
       # =========================
       - name: Build Frontend
         if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
           Set-Location "F:\Addact-Revamp\addact"
-          npm ci
+          npm i
           npm run build
 
       # =========================
-      # 🔹 RESTART SERVICE
+      # 🔹 RESTART FRONTEND SERVICE
       # =========================
       - name: Restart Frontend
         if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
-          nssm restart addact-frontend
+          C:\nssm\win64\nssm.exe restart addact-frontend
