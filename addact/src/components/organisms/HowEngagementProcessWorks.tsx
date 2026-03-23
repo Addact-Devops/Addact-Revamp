@@ -164,10 +164,10 @@ const HowEngagementProcessWorks = ({
               </span>
 
               <div className="relative z-[1] mt-16">
-                <h3 className="mb-3 min-h-[55px] lg:min-h-[64px] !text-[25px] lg:!text-[30px]  !font-semibold !leading-[1.35] text-[#E8EAEE] transition-colors duration-300 group-hover:text-white">
+                <h3 className="mb-3 min-h-[55px] lg:min-h-[64px] !text-[25px] xl:!text-[30px]  !font-semibold !leading-[1.35] text-[#E8EAEE] transition-colors duration-300 group-hover:text-white">
                   {card.title}
                 </h3>
-                <div className="text-[#A7ACB4] transition-colors duration-300 group-hover:text-[#EEF1FF] [&_p]:text-[18px]! [&_p]:lg:!text-[22px] [&_p]:lg:!leading-[1.8]">
+                <div className="text-[#A7ACB4] transition-colors duration-300 group-hover:text-[#EEF1FF] [&_p]:text-[18px]! [&_p]:xl:!text-[22px] [&_p]:lg:!leading-[1.8]">
                   <RichText html={card.description} />
                 </div>
               </div>
