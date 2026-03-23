@@ -1,4 +1,4 @@
-name: UAT Auto Deploy
+name: UAT Frontend Deploy
 
 on:
   push:
@@ -6,26 +6,28 @@ on:
       - uat
     paths:
       - 'addact/**'
-      - 'addact-cms/**'
 
 jobs:
   deploy:
     runs-on: self-hosted
 
     steps:
-      # 🔧 Fix Git permission issue
-      - name: Fix Git Safe Directory
-        run: git config --global --add safe.directory F:/Addact-Revamp
-
-      # 🔄 Pull latest code
-      - name: Pull latest code
+      # =========================
+      # 🔹 SAFE CODE SYNC
+      # =========================
+      - name: Sync Code Safely
         run: |
           Set-Location "F:\Addact-Revamp"
-          git pull origin uat
+          git config --global --add safe.directory F:/Addact-Revamp
+          git fetch origin uat
+          git reset --hard origin/uat
+          git clean -fd
 
-      # 🔍 Detect changes
-      - name: Detect Changes
-        id: changes
+      # =========================
+      # 🔹 CHECK FRONTEND CHANGES
+      # =========================
+      - name: Detect Frontend Changes
+        id: frontend_check
         run: |
           Set-Location "F:\Addact-Revamp"
           if (git rev-parse HEAD~1 2>$null) {
@@ -33,82 +35,25 @@ jobs:
           } else {
             git ls-files > changes.txt
           }
-          Get-Content changes.txt
 
-      # =========================
-      # 🔹 BACKEND
-      # =========================
-
-      - name: Check Backend Changes
-        id: backend_check
-        run: |
-          Set-Location "F:\Addact-Revamp"
-          if (Select-String -Path changes.txt -Pattern "addact-cms/") {
-            echo "backend_changed=true" >> $env:GITHUB_OUTPUT
-          }
-
-      - name: Install Backend Dependencies
-        if: steps.backend_check.outputs.backend_changed == 'true'
-        run: |
-          Set-Location "F:\Addact-Revamp\addact-cms"
-          npm install
-
-      - name: Restart Backend
-        if: steps.backend_check.outputs.backend_changed == 'true'
-        run: |
-          $portPids = netstat -aon | Select-String ":1339" |
-            ForEach-Object { ($_ -split "\s+")[-1] } |
-            Where-Object { $_ -ne "0" } |
-            Sort-Object -Unique
-
-          foreach ($procId in $portPids) {
-            try {
-              taskkill /F /PID $procId
-            } catch {
-              Write-Host "Process already stopped: $procId"
-            }
-          }
-
-          Start-Process "cmd.exe" -ArgumentList "/k cd /d F:\Addact-Revamp\addact-cms && npm run develop"
-
-      # =========================
-      # 🔹 FRONTEND
-      # =========================
-
-      - name: Check Frontend Changes
-        id: frontend_check
-        run: |
-          Set-Location "F:\Addact-Revamp"
           if (Select-String -Path changes.txt -Pattern "addact/") {
             echo "frontend_changed=true" >> $env:GITHUB_OUTPUT
           }
 
-      - name: Install Frontend Dependencies
-        if: steps.frontend_check.outputs.frontend_changed == 'true'
-        run: |
-          Set-Location "F:\Addact-Revamp\addact"
-          npm install
-
+      # =========================
+      # 🔹 INSTALL + BUILD
+      # =========================
       - name: Build Frontend
         if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
           Set-Location "F:\Addact-Revamp\addact"
+          npm ci
           npm run build
 
+      # =========================
+      # 🔹 RESTART SERVICE
+      # =========================
       - name: Restart Frontend
         if: steps.frontend_check.outputs.frontend_changed == 'true'
         run: |
-          $portPids = netstat -aon | Select-String ":3001" |
-            ForEach-Object { ($_ -split "\s+")[-1] } |
-            Where-Object { $_ -ne "0" } |
-            Sort-Object -Unique
-
-          foreach ($procId in $portPids) {
-            try {
-              taskkill /F /PID $procId
-            } catch {
-              Write-Host "Process already stopped: $procId"
-            }
-          }
-
-          Start-Process "cmd.exe" -ArgumentList "/k cd /d F:\Addact-Revamp\addact && npm run start"
+          nssm restart addact-frontend
