@@ -69,7 +69,7 @@ jobs:
             }
           }
 
-          Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact-cms && npm run develop'
+          Start-Process "cmd.exe" -ArgumentList "/k cd /d F:\Addact-Revamp\addact-cms && npm run develop"
 
       # =========================
       # 🔹 FRONTEND
@@ -111,4 +111,4 @@ jobs:
             }
           }
 
-          Start-Process cmd -ArgumentList '/c cd /d F:\Addact-Revamp\addact && npm run start'
+          Start-Process "cmd.exe" -ArgumentList "/k cd /d F:\Addact-Revamp\addact && npm run start"
