@@ -12,14 +12,16 @@ const getChallengesTitle = (titleList?: Challenges["Title"]) => {
     return "Product Experience Challenges\nCaused By Poor UX";
   }
 
-  const first = titleList[0] as Record<string, unknown>;
+  const first = titleList[0] as
+    | Partial<Record<"h1" | "h2" | "h3" | "h4" | "h5" | "h6", string>>
+    | undefined;
   return (
-    (first.h1 as string | undefined) ??
-    (first.h2 as string | undefined) ??
-    (first.h3 as string | undefined) ??
-    (first.h4 as string | undefined) ??
-    (first.h5 as string | undefined) ??
-    (first.h6 as string | undefined) ??
+    first?.h2 ??
+    first?.h1 ??
+    first?.h3 ??
+    first?.h4 ??
+    first?.h5 ??
+    first?.h6 ??
     "Product Experience Challenges\nCaused By Poor UX"
   );
 };
@@ -93,7 +95,7 @@ const ProductExperienceChallenges = ({
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[320vh] bg-black text-white md:min-h-[400vh]"
+      className="relative min-h-[320vh] bg-[#0F0F0F] text-white md:min-h-[400vh]"
     >
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         <div className="mx-auto w-full container-main px-6 md:px-10">

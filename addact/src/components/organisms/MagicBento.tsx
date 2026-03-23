@@ -743,7 +743,7 @@ const MagicBento: React.FC<BentoProps> = ({
                   alt="AI analytics illustration"
                   width={1480}
                   height={807}
-                  className="h-auto w-full object-contain"
+                  className="h-auto w-full object-contain mix-blend-lighten"
                 />
               </div>
             </div>
@@ -764,15 +764,15 @@ const MagicBento: React.FC<BentoProps> = ({
                 {problemTitles[3] ||
                   "Make smarter business decisions with AI-driven demand forecasting that predicts future trends."}
               </p>
-              <div className="relative min-h-48 overflow-hidden">
-                <div className="solve-ai-forecast-left" />
-                <div className="solve-ai-forecast-right" />
+              <div className="relative w-full h-full overflow-hidden">
+                {/* <div className="solve-ai-forecast-left" />
+                <div className="solve-ai-forecast-right" /> */}
                 <Image
                   src={ASSETS.forecastArrow}
                   alt=""
                   width={153}
                   height={185}
-                  className="pointer-events-none absolute bottom-[16%] left-[32%] h-auto w-[28%] min-w-24"
+                  className="pointer-events-none absolute bottom-[16%] w-auto"
                 />
               </div>
             </div>

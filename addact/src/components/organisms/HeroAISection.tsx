@@ -39,7 +39,7 @@ export default function HeroAISection({ data }: HeroAISectionProps) {
     openContactDrawer();
   };
   return (
-    <section className="relative min-h-screen bg-black flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen bg-[#0F0F0F] flex items-center justify-center overflow-hidden">
       {/* Orb Background */}
       <div className="absolute inset-0 z-0">
         <Orb hoverIntensity={1.1} backgroundColor={"#0F0F0F"} />
