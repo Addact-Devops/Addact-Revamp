@@ -217,7 +217,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           ) : (
             <Link
               href={ctaHref}
-              target={ctaIsExternal ? "_blank" : `_${ctaTarget}`}
+              target={ctaIsExternal ? "_blank" : ctaTarget}
               rel={ctaIsExternal ? "noopener noreferrer" : undefined}
               className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] md:text-[16px]! px-6 py-3 md:px-8! md:py-4! rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
             >
@@ -263,7 +263,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           ) : (
             <Link
               href={ctaHref}
-              target={ctaIsExternal ? "_blank" : `_${ctaTarget}`}
+              target={ctaIsExternal ? "_blank" : ctaTarget}
               rel={ctaIsExternal ? "noopener noreferrer" : undefined}
               className="flex items-center gap-2 bg-[#3C4CFF] text-white font-['Montserrat',sans-serif] font-semibold! text-[14px] xl:text-[16px]! px-7 py-4 rounded-[6px] w-fit hover:opacity-90 transition-opacity duration-200 cursor-pointer border-none"
             >
