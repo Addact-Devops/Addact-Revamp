@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import RichText from "../atom/richText";
 
 interface ServiceCardProps {
   title: string;
@@ -142,9 +143,9 @@ export function ServiceCard({
         <ArrowUpRight className="w-6 h-6 shrink-0 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
       </div>
 
-      <p className="font-['Montserrat',sans-serif] font-normal text-[14px] leading-[22px] md:text-[16px] md:leading-[26px]! xl:text-[20px]! xl:leading-[28px]! m-0 text-[#0f0f0f] group-hover:text-white/90 transition-colors duration-200">
-        {description}
-      </p>
+      <div className="font-['Montserrat',sans-serif] font-normal text-[14px] leading-[22px] md:text-[16px] md:leading-[26px]! xl:text-[20px]! xl:leading-[28px]! m-0 text-[#0f0f0f] group-hover:text-white/90 transition-colors duration-200">
+        <RichText html={description} />
+      </div>
     </Link>
   );
 }

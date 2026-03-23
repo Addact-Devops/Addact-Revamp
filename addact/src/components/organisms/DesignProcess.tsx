@@ -114,23 +114,18 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
 
   // Desktop stair positions (xl+ only)
   const getDesktopSubStepPosition = (index: number) => {
-    const horizontalOffset = index * 15.5;
-    const verticalOffset = index * 96;
-
+    const horizontalOffset = index * 14;
     return {
-      left: `${2 + horizontalOffset}%`,
-      top: `${86 + verticalOffset}px`,
+      left: `${5 + horizontalOffset}%`,
+      top: `calc(${index} * var(--step-card-offset, 92px) + 72px)`,
     };
   };
 
-  // Compact stair positions (<xl)
+  // Compact stair positions (sm to <xl)
   const getCompactSubStepPosition = (index: number) => {
-    const horizontalOffset = index * 11;
-    const verticalOffset = index * 72;
-
     return {
-      left: `${2 + horizontalOffset}%`,
-      top: `${72 + verticalOffset}px`,
+      left: `${4 + index * 11}%`,
+      top: `calc(${index} * var(--step-card-offset-compact, 80px) + 60px)`,
     };
   };
 
@@ -182,10 +177,15 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                     >
                       {/* Icon */}
                       <div className="absolute left-3 top-1/2 h-[44px] w-[44px] -translate-y-1/2 rounded-[10px] bg-white md:left-[14px] md:h-[50px] md:w-[50px] 2xl:left-[15px] 2xl:h-[54px] 2xl:w-[54px] flex items-center justify-center overflow-hidden">
-                        {step.flowItems && step.flowItems.length > 0 && step.flowItems[0]?.icon?.url ? (
+                        {step.flowItems &&
+                        step.flowItems.length > 0 &&
+                        step.flowItems[0]?.icon?.url ? (
                           <Image
                             src={step.flowItems[0].icon.url}
-                            alt={step.flowItems[0].icon.alternativeText || step.title}
+                            alt={
+                              step.flowItems[0].icon.alternativeText ||
+                              step.title
+                            }
                             width={54}
                             height={54}
                             className="w-full h-full object-contain"
@@ -228,10 +228,15 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                       whileTap={{ scale: 0.98 }}
                     >
                       <div className="absolute left-3 top-1/2 h-[40px] w-[40px] -translate-y-1/2 rounded-[10px] bg-white md:h-[44px] md:w-[44px] flex items-center justify-center overflow-hidden">
-                        {step.flowItems && step.flowItems.length > 0 && step.flowItems[0]?.icon?.url ? (
+                        {step.flowItems &&
+                        step.flowItems.length > 0 &&
+                        step.flowItems[0]?.icon?.url ? (
                           <Image
                             src={step.flowItems[0].icon.url}
-                            alt={step.flowItems[0].icon.alternativeText || step.title}
+                            alt={
+                              step.flowItems[0].icon.alternativeText ||
+                              step.title
+                            }
                             width={44}
                             height={44}
                             className="w-full h-full object-contain"
@@ -251,8 +256,8 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
               </div>
             </div>
 
-            {/* Right Side - Sub Steps Container (Desktop) */}
-            <div className="relative hidden min-h-[620px] flex-1 xl:block 2xl:min-h-[700px]">
+            {/* Right Side - Sub Steps Container (Desktop xl+) */}
+            <div className="design-process-board relative hidden min-h-[620px] flex-1 xl:block 2xl:min-h-[700px]">
               {/* Border Box with Grid Background */}
               <div className="absolute inset-0 overflow-hidden rounded-[10px] border-2 border-white/20">
                 {/* Grid Background with Radial Gradients */}
@@ -263,7 +268,6 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                     preserveAspectRatio="none"
                     viewBox="0 0 1174 735.281"
                   >
-                    {/* Grid Lines */}
                     <defs>
                       <radialGradient
                         id="grid-gradient"
@@ -277,7 +281,6 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                         <stop offset="1" stopColor="#0F0F0F" />
                       </radialGradient>
                     </defs>
-                    {/* Vertical lines */}
                     {Array.from({ length: 20 }).map((_, i) => (
                       <line
                         key={`v-${i}`}
@@ -290,7 +293,6 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                         opacity="0.3"
                       />
                     ))}
-                    {/* Horizontal lines */}
                     {Array.from({ length: 15 }).map((_, i) => (
                       <line
                         key={`h-${i}`}
@@ -360,12 +362,15 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                             stiffness: 200,
                           }}
                         >
-                          {/* Icon */}
                           <div className="absolute left-3 top-1/2 h-[44px] w-[44px] -translate-y-1/2 rounded-[10px] bg-white 2xl:left-[14px] 2xl:h-[54px] 2xl:w-[54px] flex items-center justify-center overflow-hidden">
-                            {step.flowItems && step.flowItems[index]?.icon?.url ? (
+                            {step.flowItems &&
+                            step.flowItems[index]?.icon?.url ? (
                               <Image
                                 src={step.flowItems[index].icon.url}
-                                alt={step.flowItems[index].icon.alternativeText || step.flowItems[index].title}
+                                alt={
+                                  step.flowItems[index].icon.alternativeText ||
+                                  step.flowItems[index].title
+                                }
                                 width={54}
                                 height={54}
                                 className="w-full h-full object-contain"
@@ -374,8 +379,6 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                               <SearchIcon />
                             )}
                           </div>
-
-                          {/* Text */}
                           <p className="absolute left-[68px] top-1/2 -translate-y-1/2 whitespace-nowrap font-['Montserrat'] text-[18px] font-semibold leading-[1.2] text-white 2xl:left-[88px] 2xl:text-[24px]">
                             {subStep}
                           </p>
@@ -387,8 +390,59 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
               </div>
             </div>
 
-            {/* Right Side - Sub Steps Container (<xl, same board style) */}
-            <div className="relative mt-0 min-h-[470px] w-full xl:hidden md:mt-8 md:min-h-[560px] lg:mt-10 lg:min-h-[620px]">
+            {/* ============================================================ */}
+            {/* MOBILE ONLY (<sm): stacked vertically, centered, no text cut  */}
+            {/* ============================================================ */}
+            <div className="xl:hidden sm:hidden flex flex-col gap-3 xl:hidden">
+              <div className="overflow-hidden rounded-[10px] border border-white/20 p-4 flex flex-col gap-3">
+                <AnimatePresence mode="wait">
+                  {selectedProcessStep?.subSteps.map((subStep, index) => (
+                    <motion.div
+                      key={`mobile-${selectedProcessStep.id}-${index}`}
+                      className="flex items-center h-[62px] w-full overflow-hidden rounded-[10px] border border-white/20 bg-[#272727]"
+                      initial={{ opacity: 0, y: 14 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -12 }}
+                      transition={{
+                        duration: 0.3,
+                        delay: index * 0.07,
+                        type: "spring",
+                        stiffness: 180,
+                      }}
+                    >
+                      {/* Icon */}
+                      <div className="ml-3 h-[38px] w-[38px] shrink-0 rounded-[10px] bg-white flex items-center justify-center overflow-hidden relative">
+                        {selectedProcessStep?.flowItems &&
+                        selectedProcessStep.flowItems[index]?.icon?.url ? (
+                          <Image
+                            src={selectedProcessStep.flowItems[index].icon.url}
+                            alt={
+                              selectedProcessStep.flowItems[index].icon
+                                .alternativeText ||
+                              selectedProcessStep.flowItems[index].title
+                            }
+                            width={38}
+                            height={38}
+                            className="w-full h-full object-contain"
+                          />
+                        ) : (
+                          <SearchIcon />
+                        )}
+                      </div>
+                      {/* Text — no whitespace-nowrap so it wraps if needed, pr-3 prevents edge clash */}
+                      <p className="ml-3 pr-3 font-['Montserrat'] text-[15px] font-semibold leading-[1.2] text-white">
+                        {subStep}
+                      </p>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </div>
+
+            {/* ============================================================ */}
+            {/* SM TO <XL: stair-step board layout (unchanged behaviour)      */}
+            {/* ============================================================ */}
+            <div className="hidden sm:block relative mt-0 min-h-[470px] w-full xl:hidden md:mt-8 md:min-h-[560px] lg:mt-10 lg:min-h-[620px]">
               <div className="absolute inset-0 overflow-hidden rounded-[10px] border border-white/20">
                 <div className="absolute inset-0 opacity-15">
                   <svg
@@ -471,10 +525,17 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                         }}
                       >
                         <div className="absolute left-2.5 top-1/2 h-[38px] w-[38px] -translate-y-1/2 rounded-[10px] bg-white md:left-3 md:h-[40px] md:w-[40px] flex items-center justify-center overflow-hidden">
-                          {selectedProcessStep?.flowItems && selectedProcessStep.flowItems[index]?.icon?.url ? (
+                          {selectedProcessStep?.flowItems &&
+                          selectedProcessStep.flowItems[index]?.icon?.url ? (
                             <Image
-                              src={selectedProcessStep.flowItems[index].icon.url}
-                              alt={selectedProcessStep.flowItems[index].icon.alternativeText || selectedProcessStep.flowItems[index].title}
+                              src={
+                                selectedProcessStep.flowItems[index].icon.url
+                              }
+                              alt={
+                                selectedProcessStep.flowItems[index].icon
+                                  .alternativeText ||
+                                selectedProcessStep.flowItems[index].title
+                              }
                               width={40}
                               height={40}
                               className="w-full h-full object-contain"

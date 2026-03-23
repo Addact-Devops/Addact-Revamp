@@ -2,6 +2,7 @@
 
 import { Fragment } from "react";
 import type { AIBenefit } from "@/graphql/queries/getAIService";
+import RichText from "../atom/richText";
 
 interface BenefitCardProps {
   number: number;
@@ -60,7 +61,7 @@ export function BenefitCard({ number, title, description }: BenefitCardProps) {
       className={`flex flex-col gap-[18px] w-full md:w-[calc(50%-8px)] lg:w-[calc(33.333%-14px)]! rounded-[10px] p-[30px] border border-solid transition-all duration-200 ease-in-out cursor-default border-[rgba(15,15,15,0.2)] bg-white shadow-none`}
     >
       <div className="flex items-start gap-4">
-        <div className="flex items-center justify-center w-[44px] h-[70px] md:w-[52px] md:h-[88px] xl:min-w-[60px]! xl:h-[107px]! rounded-[10px] bg-[#3C4CFF] shrink-0">
+        <div className="flex items-center justify-center w-[44px] h-[50px] md:w-[52px] md:h-[88px] xl:min-w-[60px]! xl:h-[107px]! rounded-[10px] bg-[#3C4CFF] shrink-0">
           <span className="font-['Montserrat',sans-serif] font-semibold text-2xl leading-[34px] text-white select-none">
             {String(number).padStart(2, "0")}
           </span>
@@ -71,9 +72,9 @@ export function BenefitCard({ number, title, description }: BenefitCardProps) {
         </h2>
       </div>
 
-      <p className="font-['Montserrat',sans-serif] font-normal [&_p]:text-[20px] [&_p]:leading-[34px] text-[#0f0f0f] m-0">
-        {description}
-      </p>
+      <div className="font-['Montserrat',sans-serif] font-normal [&_p]:text-[20px] [&_p]:leading-[34px] text-[#0f0f0f] m-0">
+        <RichText html={description} />
+      </div>
     </div>
   );
 }

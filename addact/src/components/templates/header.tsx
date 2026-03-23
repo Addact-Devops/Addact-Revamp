@@ -573,7 +573,7 @@ const Header = ({
                     }}
                     className="fixed z-[140] overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
                     style={{
-                      top: "130px",
+                      top: "115px",
                       background: "#0F0F0F",
                       border: "1px solid #2E2E2E",
                       borderRadius: "20px",
