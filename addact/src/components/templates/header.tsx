@@ -326,36 +326,43 @@ function DropdownContent({
           className="flex w-full items-stretch border-t border-[#2E2E2E] h-[80px]"
           style={{ background: "#3C4CFF" }}
         >
-          {contactDetails.slice(0, 3).map((detail, idx) => (
-            <Link
-              key={detail.id ?? idx}
-              href={formatContactHref(detail.href ?? "#")}
-              target={detail.isExternal ? "_blank" : "_self"}
-              className={`flex-1 flex items-center justify-between px-10 group ${
-                idx < 2 ? "border-r border-white/10" : ""
-              }`}
-            >
-              <div className="flex gap-2">
-                <span className="text-white text-[20px] font-semibold font-montserrat">
-                  {detail.label}
-                </span>
-                <span className="text-white text-[20px] font-montserrat">
-                  {detail?.SubDisc}
-                </span>
-              </div>
-              {detail.Icon?.url && (
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white transition-all">
-                  <Image
-                    src={detail.Icon.url}
-                    alt=""
-                    width={16}
-                    height={16}
-                    className="w-4 h-4 object-contain invert-0"
-                  />
+          {contactDetails.slice(0, 3).map((detail, idx) => {
+            const rawHref = detail.href?.trim();
+            if (!rawHref || rawHref === "#") {
+              return null;
+            }
+
+            return (
+              <Link
+                key={detail.id ?? idx}
+                href={formatContactHref(rawHref)}
+                target={detail.isExternal ? "_blank" : "_self"}
+                className={`flex-1 flex items-center justify-between px-10 group ${
+                  idx < 2 ? "border-r border-white/10" : ""
+                }`}
+              >
+                <div className="flex gap-2">
+                  <span className="text-white text-[20px] font-semibold font-montserrat">
+                    {detail.label}
+                  </span>
+                  <span className="text-white text-[20px] font-montserrat">
+                    {detail?.SubDisc}
+                  </span>
                 </div>
-              )}
-            </Link>
-          ))}
+                {detail.Icon?.url && (
+                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white transition-all">
+                    <Image
+                      src={detail.Icon.url}
+                      alt=""
+                      width={16}
+                      height={16}
+                      className="w-4 h-4 object-contain invert-0"
+                    />
+                  </div>
+                )}
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>
@@ -817,18 +824,15 @@ const Header = ({
               contactDetails.length > 0 && (
                 <div className="px-5 pb-10 flex flex-col gap-3 mt-6">
                   {contactDetails.map((details, i) => {
-                    // const isEmail =
-                    //   details.label?.toLowerCase().includes("email") ||
-                    //   details.href?.startsWith("mailto:");
-                    // const isPhone =
-                    //   details.label?.toLowerCase().includes("india") ||
-                    //   details.label?.toLowerCase().includes("usa") ||
-                    //   details.href?.startsWith("tel:");
+                    const rawHref = details.href?.trim();
+                    if (!rawHref || rawHref === "#") {
+                      return null;
+                    }
 
                     return (
                       <Link
                         key={details.id ?? i}
-                        href={formatContactHref(details.href ?? "#")}
+                        href={formatContactHref(rawHref)}
                         target={details.isExternal ? "_blank" : "_self"}
                         className="flex items-center justify-between py-2.75 px-4 rounded-[8px] border border-[#2E2E2E] bg-transparent transition-colors group/contact"
                       >
