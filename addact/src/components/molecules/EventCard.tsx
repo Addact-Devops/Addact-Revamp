@@ -66,8 +66,8 @@ export default function EventCard({
           )}
 
           {location && (
-            <div className="flex font-medium items-center gap-2 text-base text-white mb-6">
-              <MapPin size={18} className="text-[#3C4CFF]" />
+            <div className="flex font-medium items-center gap-2 text-base text-white mb-6 ">
+              <MapPin size={18} className="text-[#3C4CFF] shrink-0" />
               <span>{location}</span>
             </div>
           )}

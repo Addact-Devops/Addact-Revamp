@@ -38,6 +38,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeLoading, setResumeLoading] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const redirectUrl = `${pathname}/thank-you-career`;
@@ -168,13 +169,14 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
           hyperlink: "",
         });
         setResumeFile(null);
+        setSubmitError(null);
         window.location.href = redirectUrl;
       } else {
-        alert(result.error || "Submission failed.");
+        setSubmitError(result.error || "Submission failed. Please try again.");
       }
     } catch (err) {
       console.error("Failed to submit form:", err);
-      alert("Something went wrong.");
+      setSubmitError("Something went wrong. Please try again.");
     } finally {
       setFormLoading(false);
     }
@@ -275,6 +277,14 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                       onChange={(e) => {
                         if (e.target.files?.[0]) {
                           const file = e.target.files[0];
+                          if (file.size > 5 * 1024 * 1024) {
+                            setErrors((prev) => ({
+                              ...prev,
+                              resume: "Resume file size must be 5MB or less.",
+                            }));
+                            e.target.value = "";
+                            return;
+                          }
                           setResumeFile(file);
                           setErrors((prev) => ({ ...prev, resume: "" }));
                           handleResumeUpload(file);
@@ -467,6 +477,11 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                     </p>
                   )}
 
+                  {submitError && (
+                    <p className="text-red-600 text-sm rounded-md bg-red-50 border border-red-200 px-4 py-2">
+                      {submitError}
+                    </p>
+                  )}
                   <button
                     type="submit"
                     disabled={formLoading || !captchaToken}
