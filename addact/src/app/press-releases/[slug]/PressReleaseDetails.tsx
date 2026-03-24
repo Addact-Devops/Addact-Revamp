@@ -13,6 +13,7 @@ import {
 } from "@/graphql/queries/getRecentPressRelease";
 import "../../../styles/components/caseStudy-detail.scss";
 import Loader from "@/components/atom/loader";
+import { notFound } from "next/navigation";
 
 export default function PressReleaseDetails({ slug }: { slug: string }) {
   const [pressReleaseData, setPressReleaseData] =
@@ -43,13 +44,11 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
     return <Loader />;
   }
 
-  if (!pressReleaseData) {
-    return (
-      <p className="p-6 text-red-600 mt-32">Press Release Details not found.</p>
-    );
+  if (!pressReleaseData || pressReleaseData?.addactPressReleases.length === 0) {
+    return notFound();
   }
 
-  const eventData = pressReleaseData.addactPressReleases[0];
+  const eventData = pressReleaseData?.addactPressReleases[0];
 
   return (
     <div className="flex flex-col pt-[60px] md:pt-[120px]">
@@ -58,17 +57,19 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mx-auto py-[40px] md:py-24">
           <div>
             <h1 className="!text-3xl md:!text-5xl !font-bold mt-2">
-              {eventData.HeroBanner[0].BannerTitle}
+              {eventData?.HeroBanner[0]?.BannerTitle}
             </h1>
           </div>
           <div className="relative aspect-[16/9] md:aspect-auto w-full md:h-auto">
-            <Image
-              src={eventData.HeroBanner[0].BannerImage.url}
-              alt={eventData.HeroBanner[0].BannerImage.name}
-              width={eventData.HeroBanner[0].BannerImage.width}
-              height={eventData.HeroBanner[0].BannerImage.height}
-              className="object-cover rounded-lg"
-            />
+            {eventData?.HeroBanner[0]?.BannerImage?.url && (
+              <Image
+                src={eventData?.HeroBanner[0]?.BannerImage?.url}
+                alt={eventData?.HeroBanner[0]?.BannerImage?.name || ""}
+                width={eventData?.HeroBanner[0]?.BannerImage?.width || 0}
+                height={eventData?.HeroBanner[0]?.BannerImage?.height || 0}
+                className="object-cover rounded-lg"
+              />
+            )}
           </div>
         </div>
       </section>
@@ -90,10 +91,10 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
                         <div key={index} className="flex gap-4">
                           <div className="relative flex-shrink-0">
                             <Image
-                              src={item.HeroBanner[0].BannerImage.url}
+                              src={item?.HeroBanner[0]?.BannerImage?.url || ""}
                               alt={
-                                item.HeroBanner[0].BannerImage
-                                  .alternativeText || "Banner image"
+                                item?.HeroBanner[0]?.BannerImage
+                                  ?.alternativeText || ""
                               }
                               width={120}
                               height={80}
@@ -105,7 +106,7 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
                               href={`/press-releases/${item.Slug}`}
                               className="!no-underline"
                             >
-                              {item.HeroBanner[0].BannerTitle}
+                              {item?.HeroBanner[0]?.BannerTitle || ""}
                             </a>
                           </h5>
                         </div>
@@ -120,19 +121,20 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
                     Share it with your friends
                   </p>
                   <div className="flex gap-6 text-white text-xl justify-center">
-                    {eventData.social_icons.map((icon, index) => (
+                    {eventData?.social_icons?.map((icon, index) => (
                       <a
                         key={index}
-                        href={icon.SocialIcon[0].Links.href}
+                        href={icon?.SocialIcon[0]?.Links?.href || "#"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:opacity-80 transition font-bold"
                       >
                         <Image
-                          src={icon.SocialIcon[0].Icons.url}
+                          src={icon?.SocialIcon[0]?.Icons?.url || ""}
                           alt={
-                            icon.SocialIcon[0].Icons.alternativeText ||
-                            icon.SocialIcon[0].Title
+                            icon?.SocialIcon[0]?.Icons?.alternativeText ||
+                            icon?.SocialIcon[0]?.Title ||
+                            ""
                           }
                           width={30}
                           height={32}

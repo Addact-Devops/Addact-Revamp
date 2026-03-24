@@ -10,6 +10,7 @@ import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
 import Loader from "@/components/atom/loader";
+import { notFound } from "next/navigation";
 
 export default function PortfolioDetailClient({ slug }: { slug: string }) {
   const [caseStudy, setCaseStudy] =
@@ -31,8 +32,7 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
     return <Loader />;
   }
 
-  if (!caseStudy)
-    return <p className="p-6 text-red-600 mt-32">Case Study not found.</p>;
+  if (!caseStudy) return notFound();
 
   const hero = caseStudy.HeroBanner[0];
   const formTitle = caseStudy.FormTitle.CommonTitle[0];
