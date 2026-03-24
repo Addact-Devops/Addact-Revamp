@@ -8,6 +8,7 @@ import { WebinarDetailResponse } from "@/graphql/queries/getWebinarDetail";
 import { getEventStatus } from "@/utils/getEventStatus";
 import "../../../styles/components/caseStudy-detail.scss";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default function WebinarDetailClient({
   initialData,
@@ -16,12 +17,12 @@ export default function WebinarDetailClient({
 }) {
   const [webinarDetailData] = useState(initialData);
 
-  if (!webinarDetailData)
-    return <p className="p-6 text-red-600 mt-32">Event Details not found.</p>;
+  if (!webinarDetailData || webinarDetailData?.addactWebinars?.length === 0)
+    return notFound();
 
-  const webinarData = webinarDetailData.addactWebinars[0].HeroBanner[0];
+  const webinarData = webinarDetailData?.addactWebinars[0]?.HeroBanner[0];
   const status = getEventStatus(
-    webinarDetailData.addactWebinars[0].HeroBanner[0].PublishDate,
+    webinarDetailData?.addactWebinars[0]?.HeroBanner[0]?.PublishDate,
     "Webinar",
   );
 
@@ -34,12 +35,12 @@ export default function WebinarDetailClient({
               {status}
             </span>
             <h1 className="!text-3xl md:!text-5xl !font-bold mt-2">
-              {webinarData.BannerTitle}
+              {webinarData?.BannerTitle}
             </h1>
             <p className="text-lg text-white/80 mb-6 mt-6">
               {
-                webinarDetailData.addactWebinars[0].HeroBanner[0]
-                  .BannerDescription
+                webinarDetailData?.addactWebinars[0]?.HeroBanner[0]
+                  ?.BannerDescription
               }
               !
             </p>
@@ -47,7 +48,8 @@ export default function WebinarDetailClient({
               <CalendarDays size={20} />
               <p className="text-base font-medium">
                 {new Date(
-                  webinarDetailData.addactWebinars[0].HeroBanner[0].PublishDate,
+                  webinarDetailData?.addactWebinars[0]?.HeroBanner[0]
+                    ?.PublishDate,
                 ).toLocaleDateString("en-US", {
                   day: "2-digit",
                   month: "short",
@@ -57,7 +59,8 @@ export default function WebinarDetailClient({
             </div>
             <Link
               href={
-                webinarDetailData.addactWebinars[0].HeroBanner[0].ReadNow.href
+                webinarDetailData?.addactWebinars[0]?.HeroBanner[0]?.ReadNow
+                  ?.href || "#"
               }
               className="flex items-center gap-2 w-44 bg-[#3C4CFF] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#3440CB] transition-colors"
             >
@@ -67,10 +70,10 @@ export default function WebinarDetailClient({
           </div>
           <div className="relative aspect-[16/9] md:aspect-auto w-full md:h-auto">
             <Image
-              src={webinarData.BannerImage.url}
-              alt={webinarData.BannerImage.name}
-              width={webinarData.BannerImage.width}
-              height={webinarData.BannerImage.height}
+              src={webinarData?.BannerImage?.url || ""}
+              alt={webinarData?.BannerImage?.name || ""}
+              width={webinarData?.BannerImage?.width || 0}
+              height={webinarData?.BannerImage?.height || 0}
               className="object-cover rounded-lg"
             />
           </div>
@@ -138,7 +141,7 @@ export default function WebinarDetailClient({
 
             <div className="caseStudy-wrapper">
               <BlogContentRenderer
-                blocks={webinarDetailData.addactWebinars[0].WebinarContent}
+                blocks={webinarDetailData?.addactWebinars[0]?.WebinarContent}
               />
             </div>
           </div>

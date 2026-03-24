@@ -9,6 +9,7 @@ import {
 } from "@/graphql/queries/getAllCaseStudy";
 import RichText from "@/components/atom/richText";
 import Loader from "@/components/atom/loader";
+import { notFound } from "next/navigation";
 
 const CaseStudyListing = () => {
   const [caseStudyBanner, setCaseStudyBanner] =
@@ -28,8 +29,7 @@ const CaseStudyListing = () => {
   }, []);
 
   if (loading) return <Loader />;
-  if (!caseStudyListing)
-    return <p className="p-6 text-red-600 mt-32">Case-Study List not found.</p>;
+  if (!caseStudyListing) return notFound();
 
   const sortedData: IAllCaseStudy["addactCaseStudies"] = caseStudyListing.sort(
     (a, b) => {

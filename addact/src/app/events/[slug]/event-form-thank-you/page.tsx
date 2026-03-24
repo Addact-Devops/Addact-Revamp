@@ -77,6 +77,7 @@
 import { Metadata } from "next";
 import { getThankYouPageBySlug } from "@/graphql/queries/getThankYouPageBySlug";
 import EventThankYouClient from "./EventThankYouClient";
+import { notFound } from "next/navigation";
 
 // Define JsonValue types (make sure it matches your client component definition)
 type JsonPrimitive = string | number | boolean | null;
@@ -130,7 +131,7 @@ export default async function EventFormThankYouPage() {
   const page = data?.thankyouPages?.[0];
 
   if (!page) {
-    return <p className="p-6 text-red-600 mt-32">Thank You Page not found.</p>;
+    return notFound();
   }
 
   // Cast structuredData to JsonValue to satisfy the client component type
