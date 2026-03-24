@@ -150,7 +150,7 @@ const HowEngagementProcessWorks = ({
             ))}
         </div>
 
-        <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-4 lg:justify-items-stretch lg:gap-5">
+        <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 lg:justify-items-stretch lg:gap-5 2xl:grid-cols-4">
           {resolvedCards.map((card) => (
             <article
               key={card.id}
