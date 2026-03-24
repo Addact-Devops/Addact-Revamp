@@ -106,7 +106,7 @@ const WhoWeAre = () => {
                 {`${item.NumberCount}${counterSuffixes[index] || ""}`}
               </h2>
 
-              <p className="text-white text-[12px]! md:text-[16px]! lg:text-[20px]! xl:text-[30px]! font-normal leading-tight mt-4 sm:mt-6">
+              <p className="text-white text-[12px] md:text-[16px] lg:text-[20px]! xl:text-[30px]! font-normal leading-tight mt-4 sm:mt-6">
                 {item.CounterTitle}
               </p>
             </div>
