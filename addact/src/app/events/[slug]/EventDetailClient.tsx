@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useParams, usePathname } from "next/navigation";
+import { notFound, useParams, usePathname } from "next/navigation";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import {
@@ -53,8 +53,7 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
     return <Loader />;
   }
 
-  if (!eventDetailData)
-    return <p className="p-6 text-red-600 mt-32">Event Details not found.</p>;
+  if (!eventDetailData) return notFound();
 
   const eventData = eventDetailData?.addactsEvents[0];
   const status = getEventStatus(eventData.EventBanner[0].PublishDate, "Event");

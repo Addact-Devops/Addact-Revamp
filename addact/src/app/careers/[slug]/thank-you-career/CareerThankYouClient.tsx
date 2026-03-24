@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import RichText from "@/components/atom/richText";
 
 interface SEO {
@@ -47,7 +47,7 @@ const CareerThankYouClient: React.FC<CareerThankYouClientProps> = ({
   const router = useRouter();
 
   if (!thankYouData) {
-    return <p className="p-6 text-red-600 mt-32">Thank You Page not found.</p>;
+    return notFound();
   }
 
   const { AnimationVideo } = thankYouData;

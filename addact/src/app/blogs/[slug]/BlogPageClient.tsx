@@ -10,6 +10,7 @@ import BlogDetailBanner from "@/components/organisms/BlogDetailBanner";
 import SimilarBlog from "@/components/organisms/SimilarBlogs";
 import Image from "@/components/atom/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type BlogPageClientProps = {
   blog: BlogBySlugResponse["addactBlogs"][number] | null;
@@ -25,7 +26,7 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (!blog) return <p className="p-6 text-red-600 mt-32">Blog not found.</p>;
+  if (!blog) return notFound();
 
   return (
     <main className="blogdetail-wrapper bg-white">
@@ -112,11 +113,15 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
                     >
                       <Image
                         src={iconUrl}
+                        width={19}
+                        height={19}
                         alt={icon.Icons?.alternativeText || icon.Title || ""}
                         className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
                       />
                       <Image
                         src={hoverUrl || ""}
+                        width={19}
+                        height={19}
                         alt={
                           icon.HoverIcon?.alternativeText || icon.Title || ""
                         }
