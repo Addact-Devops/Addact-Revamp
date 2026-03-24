@@ -194,10 +194,10 @@ const getGridColumnsClass = (variant: ServiceVariant) => {
   }
 
   if (variant === "threeCard") {
-    return "grid-cols-1 md:grid-cols-3";
+    return "grid-cols-1 md:grid-cols-2 lg:grid-cols-3!";
   }
 
-  return "grid-cols-1 sm:grid-cols-2 md:grid-cols-4";
+  return "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3! xl:grid-cols-4!";
 };
 
 const getCarouselCardBasisClass = (variant: ServiceVariant) => {
@@ -206,10 +206,10 @@ const getCarouselCardBasisClass = (variant: ServiceVariant) => {
   }
 
   if (variant === "threeCard") {
-    return "basis-[84%] sm:basis-[calc(50%_-_8px)] md:basis-[calc(33.333%_-_14px)]";
+    return "basis-[84%] sm:basis-[calc(50%_-_8px)] md:basis-[calc(50%_-_12px)] lg:basis-[calc(33.333%_-_14px)]!";
   }
 
-  return "basis-[84%] sm:basis-[calc(50%_-_8px)] md:basis-[calc(25%_-_16px)]";
+  return "basis-[84%] sm:basis-[calc(50%_-_8px)] md:basis-[calc(50%_-_12px)] lg:basis-[calc(33.333%_-_14px)]! xl:basis-[calc(25%_-_16px)]!";
 };
 
 const normalizeLinkTarget = (
@@ -383,7 +383,7 @@ const DetailPageServices = ({
     const content =
       variant === "twoCard" ? (
         <div className="relative  border border-[#E5E5E5] bg-white p-[20px] sm:p-8 h-full flex flex-col">
-          <h3 className="!mb-6 !text-[20px] !font-semibold !leading-tight text-[#0F0F0F] md:!text-[30px] line-clamp-2 min-h-[60px] md:min-h-[80px]">
+          <h3 className="!mb-6 !text-[20px] !font-semibold !leading-tight text-[#0F0F0F] md:!text-[30px] sm:line-clamp-2 min-h-[60px] md:min-h-[80px]">
             {item.title}
           </h3>
           <div
@@ -511,7 +511,7 @@ const DetailPageServices = ({
                   </h2>
 
                   {shouldEnableCarousel && (
-                    <div className="shrink-0 items-center gap-2 hidden md:flex">
+                    <div className="shrink-0 items-center gap-2 hidden lg:flex">
                       <button
                         type="button"
                         aria-label="Previous services"
