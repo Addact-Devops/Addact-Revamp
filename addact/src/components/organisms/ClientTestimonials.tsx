@@ -120,7 +120,7 @@ export default function ClientTestimonials() {
       <div className="hidden lg:block absolute top-0 left-0 right-0 h-[120px] md:h-[150px] bg-gradient-to-b from-[#FAFAFA] via-[rgba(250,250,250,0.8)] to-transparent z-10 pointer-events-none" />
 
       {/* Bottom Gradient */}
-      <div className="absolute bottom-0 left-0 right-0 h-[80px] md:h-[120px] bg-gradient-to-t from-[#FAFAFA] via-[rgba(250,250,250,0.8)] to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-[80px] md:h-[70px] bg-gradient-to-t from-[#FAFAFA] via-[rgba(250,250,250,0.8)] to-transparent z-10 pointer-events-none" />
 
       {/* Watermark */}
       <div className="absolute bottom-0 pointer-events-none w-full z-0 opacity-40 md:opacity-60">

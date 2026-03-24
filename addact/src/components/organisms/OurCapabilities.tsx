@@ -41,7 +41,7 @@ const getLinkTarget = (target?: string | null) => {
 };
 
 const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
   const mobileContentRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -62,7 +62,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
   }, [activeIndex, capabilities]);
 
   const handleTabClick = (index: number) => {
-    setActiveIndex(index);
+    setActiveIndex((currentIndex) => (currentIndex === index ? null : index));
   };
 
   const visibleDesktopIndex = hoveredIndex ?? activeIndex;
@@ -144,7 +144,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                           contentRefs.current[index] = el;
                         }}
                       >
-                        <p className="text-[#0F0F0F]/70 !text-[18px] !lg:text-[20px] !2xl:text-[22px] leading-8 pb-4 2xl:pb-6">
+                        <p className="text-[#0F0F0F] !text-[18px] !lg:text-[20px] !2xl:text-[22px] leading-8 pb-4 2xl:pb-6">
                           {item.description}
                         </p>
 
