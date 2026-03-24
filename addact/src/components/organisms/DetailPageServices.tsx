@@ -14,6 +14,8 @@ interface DetailPageServiceImage {
 interface DetailPageServiceLink {
   href: string;
   target?: "_self" | "_blank";
+  isExternal?: boolean;
+  label?: string;
 }
 
 type DetailPageServiceTarget = NonNullable<DetailPageServiceLink["target"]>;
@@ -375,20 +377,48 @@ const DetailPageServices = ({
       "group relative overflow-hidden focus:outline-none",
       isCarouselCard
         ? `shrink-0 snap-start ${getCarouselCardBasisClass(variant)}`
-        : "w-full",
+        : "w-full h-full",
     ].join(" ");
 
     const content =
       variant === "twoCard" ? (
-        <div className="relative  border border-[#E5E5E5] bg-white p-[20px] sm:p-8">
-          <h3 className="!mb-6 !text-[20px] !font-semibold !leading-tight text-[#0F0F0F] md:!text-[30px]">
+        <div className="relative  border border-[#E5E5E5] bg-white p-[20px] sm:p-8 h-full flex flex-col">
+          <h3 className="!mb-6 !text-[20px] !font-semibold !leading-tight text-[#0F0F0F] md:!text-[30px] line-clamp-2 min-h-[60px] md:min-h-[80px]">
             {item.title}
           </h3>
           <div
-            className={`${item.link?.href ? "line-clamp-5" : ""} text-[16px] leading-7 text-[#0F0F0F] [&_p]:m-0 [&_p]:text-inherit`}
+            className={`${item.link?.href ? "line-clamp-5" : ""} text-[16px] leading-7 text-[#0F0F0F] [&_p]:m-0 [&_p]:text-inherit flex-grow`}
           >
             <RichText html={item.description} />
           </div>
+          {item?.link?.href && (
+            <Link
+              href={item?.link?.href || "#"}
+              target={item?.link?.isExternal ? "_blank" : "_self"}
+              rel={item?.link?.isExternal ? "noopener noreferrer" : undefined}
+            >
+              <button className="bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-[600] transition text-lg text-[16px] md:text-[15px] flex items-center gap-5 mt-8 ">
+                <span className="text-sm sm:text-base md:text-lg font-semibold font-montserrat leading-5 sm:leading-6 md:leading-7 whitespace-nowrap group-hover:text-white">
+                  {item?.link?.label || ""}
+                </span>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="flex-shrink-0 sm:w-5 sm:h-5 stroke-white transition-colors"
+                >
+                  <path
+                    d="M4.16699 10H15.8337M15.8337 10L10.0003 4.16669M15.8337 10L10.0003 15.8334"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </Link>
+          )}
         </div>
       ) : (
         <div className="relative flex h-full min-h-[250px] flex-col overflow-hidden rounded-[14px] border border-[#E5E5E5] bg-white p-5 pb-[136px] md:min-h-[250px] md:p-6 md:pb-[168px] md:transition-[border-color,box-shadow] md:duration-300 md:hover:border-[#3C4CFF] md:hover:shadow-[0_20px_45px_rgba(60,76,255,0.14)] md:focus-visible:border-[#3C4CFF] md:focus-visible:shadow-[0_20px_45px_rgba(60,76,255,0.14)]">
