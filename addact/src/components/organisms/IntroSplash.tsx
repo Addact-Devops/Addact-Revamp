@@ -224,9 +224,9 @@ const IntroSplash = ({
   const restOfSecondLine = secondLineWords.join(" ");
 
   return (
-    <div className="fixed inset-x-0 bottom-0 top-[72px] z-[110] lg:top-[86px]">
+    <div className="fixed inset-x-0 bottom-0 top-[60px] lg:top-[100px]! z-[110] lg:top-[86px]">
       <div
-        className="absolute inset-0 overflow-hidden bg-black z-40"
+        className="absolute inset-0 overflow-hidden bg-[#0F0F0F] z-40"
         style={{
           opacity: wrapperOpacity,
           transform: `translateY(${wrapperTranslateY}px)`,

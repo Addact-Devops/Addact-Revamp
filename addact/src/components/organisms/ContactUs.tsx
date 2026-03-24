@@ -343,8 +343,11 @@ const ContactUs = ({
                 rows={2}
               />
 
-              <div className="flex justify-center md:justify-start">
-                <div className="recaptcha-wrapper flex flex-col scale-[0.92] origin-left sm:scale-100">
+              <div className="flex justify-center sm:justify-start overflow-visible">
+                <div
+                  className="recaptcha-wrapper flex flex-col overflow-visible"
+                  style={{ width: 304, minWidth: 304 }}
+                >
                   <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                     onChange={(token: string | null) => setCaptchaToken(token)}
@@ -403,7 +406,7 @@ const ContactUs = ({
       className="w-full text-white md:py-12 pb-[100px] px-4"
       id="contact-us"
     >
-      <div className="container-main mx-auto overflow-hidden !px-[10px] lg:!px-[20px] xl:!px-4">
+      <div className="container-main mx-auto !px-[10px] lg:!px-[20px] xl:!px-4">
         <div className="border-gray-700 border">
           <div className="flex flex-col justify-between">
             <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0">
@@ -510,8 +513,11 @@ const ContactUs = ({
                   ></textarea>
                 </div>
 
-                <div className="flex justify-center">
-                  <div className="recaptcha-wrapper">
+                <div className="flex justify-start overflow-visible">
+                  <div
+                    className="recaptcha-wrapper overflow-visible"
+                    style={{ width: 304, minWidth: 304 }}
+                  >
                     <ReCAPTCHA
                       sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
                       onChange={(token: string | null) =>
