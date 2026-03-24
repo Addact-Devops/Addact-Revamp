@@ -199,24 +199,13 @@ export default function IndustryMarqueeCards({
 
   const handleMouseUp = () => {
     const dragDuration = dragStartTime ? Date.now() - dragStartTime : 0;
+    setIsDragging(false);
+    setIsPaused(false);
+    setDragStartTime(null);
+
+    // If it was a quick drag, re-enable animation after a short delay
     if (dragDuration < 200) {
-      setIsDragging(false);
-      setIsPaused(false);
-      setDragStartTime(null);
       return;
-    }
-
-    setTimeout(() => {
-      setIsDragging(false);
-      setIsPaused(false);
-      setDragStartTime(null);
-    }, 100);
-  };
-
-  const handleCardClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    const dragDuration = dragStartTime ? Date.now() - dragStartTime : 0;
-    if (isDragging || dragDuration > 200) {
-      e.preventDefault();
     }
   };
 
@@ -255,7 +244,7 @@ export default function IndustryMarqueeCards({
   const handleTouchEnd = () => {
     if (!isMobileRef.current || !marqueeRef.current) return;
     const marquee = marqueeRef.current;
-    let velocity = touchVelocityRef.current * 1.5; // amplify for natural feel
+    let velocity = touchVelocityRef.current * 1.5;
     const friction = 0.92;
 
     const runMomentum = () => {
@@ -313,54 +302,54 @@ export default function IndustryMarqueeCards({
             {duplicatedCards &&
               duplicatedCards?.length > 0 &&
               duplicatedCards?.map((card, index) => (
-                <div
+                <Link
                   key={`${card.id}-${index}`}
-                  className="industry-marquee-card group relative w-[82vw] max-w-[320px] overflow-hidden rounded-[10px] border border-white/20 bg-neutral-700/30 backdrop-blur-[30px] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] shrink-0 cursor-pointer select-none aspect-[517/619] md:w-[360px] md:max-w-none xl:w-[517px]!"
-                  draggable={false}
+                  href={card.slug}
+                  className="no-underline"
                 >
-                  <div className="relative w-full h-full overflow-hidden">
-                    <Image
-                      src={card.imageUrl}
-                      alt={card.title}
-                      width={517}
-                      height={619}
-                      className="w-full h-full object-cover pointer-events-none select-none"
-                      draggable={false}
-                    />
-                    <div
-                      className="absolute bottom-0 left-0 right-0 h-[60%] pointer-events-none"
-                      style={{
-                        background:
-                          "linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%)",
-                      }}
-                    />
-                  </div>
+                  <div
+                    className="industry-marquee-card group relative w-[82vw] max-w-[320px] overflow-hidden rounded-[10px] border border-white/20 bg-neutral-700/30 backdrop-blur-[30px] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] shrink-0 cursor-pointer select-none aspect-[517/619] md:w-[360px] md:max-w-none xl:w-[517px]!"
+                    draggable={false}
+                  >
+                    <div className="relative w-full h-full overflow-hidden">
+                      <Image
+                        src={card.imageUrl}
+                        alt={card.title}
+                        width={517}
+                        height={619}
+                        className="w-full h-full object-cover pointer-events-none select-none"
+                        draggable={false}
+                      />
+                      <div
+                        className="absolute bottom-0 left-0 right-0 h-[60%] pointer-events-none"
+                        style={{
+                          background:
+                            "linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%)",
+                        }}
+                      />
+                    </div>
 
-                  <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[220px] lg:h-[240px]! xl:h-[271px]! max-md:h-[220px] backdrop-blur-[30px] bg-[rgba(69,69,69,0.3)] border-t border-white/20 rounded-b-[10px] p-7.5 md:p-6.25 max-md:p-5 flex flex-col justify-start">
-                    <div className="w-full h-full flex flex-col gap-5 max-md:gap-3.75">
-                      <div className="flex items-center gap-4 shrink-0">
-                        <Link
-                          href={card.slug}
-                          onClick={handleCardClick}
-                          className="no-underline"
-                        >
-                          <p className="text-white text-xl! md:text-2xl lg:text-xl!  xl:text-3xl! font-semibold font-['Montserrat'] leading-tight md:leading-snug lg:leading-[18.5px] m-0 whitespace-nowrap transition-colors duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[220px] lg:h-[240px]! xl:h-[271px]! max-md:h-[220px] backdrop-blur-[30px] bg-[rgba(69,69,69,0.3)] border-t border-white/20 rounded-b-[10px] p-7.5 md:p-6.25 max-md:p-5 flex flex-col justify-start">
+                      <div className="w-full h-full flex flex-col gap-5 max-md:gap-3.75">
+                        <div className="flex items-center gap-4 shrink-0">
+                          <p className="text-white md:text-2xl lg:text-xl!  xl:text-3xl! font-semibold font-['Montserrat'] leading-tight md:leading-snug lg:leading-[18.5px] m-0 whitespace-nowrap transition-colors duration-300">
                             {card.title}
                           </p>
-                        </Link>
-                        <div className="w-10 h-10 max-md:w-8 max-md:h-8 shrink-0">
-                          <ArrowIcon />
-                        </div>
-                      </div>
 
-                      <div className="font-['Montserrat'] font-normal text-base lg:text-base! xl:text-2xl! leading-5 md:leading-7 lg:leading-8 xl:leading-11 tracking-normal text-white m-0 md:line-clamp-none">
-                        {card.description ? (
-                          <RichText html={card.description} />
-                        ) : null}
+                          <div className="w-10 h-10 max-md:w-8 max-md:h-8 shrink-0">
+                            <ArrowIcon />
+                          </div>
+                        </div>
+
+                        <div className="font-['Montserrat'] font-normal text-base lg:text-base! xl:text-2xl! leading-5 md:leading-7 lg:leading-8 xl:leading-11 tracking-normal text-white m-0 md:line-clamp-none">
+                          {card.description ? (
+                            <RichText html={card.description} />
+                          ) : null}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
           </div>
         </div>

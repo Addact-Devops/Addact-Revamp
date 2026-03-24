@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "../atom/image";
+import Link from "next/link";
 
 // Inline types
 type HeadingBlock =
@@ -83,6 +84,8 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
                   {card.Image?.url && (
                     <Image
                       src={card.Image.url}
+                      width={20}
+                      height={20}
                       alt={card.Image.alternativeText || ""}
                       className="inline mr-[10px] w-[20px] md:w-[25px]"
                     />
@@ -103,12 +106,12 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
 
                 {/* Optional Link */}
                 {card.Link?.href && (
-                  <a
+                  <Link
                     href={card.Link.href}
                     className="text-[#3C4CFF] underline mt-2 block"
                   >
                     Learn more
-                  </a>
+                  </Link>
                 )}
               </div>
             ))}
