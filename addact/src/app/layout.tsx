@@ -7,7 +7,7 @@ import { getFooterData } from "@/graphql/queries/footer";
 import { getContactUsData } from "@/graphql/queries/getContactUs";
 import ScrollToTop from "@/components/atom/scrollToTop";
 import LayoutWrapper from "./LayoutWrapper";
-import TidioChat from "@/components/organisms/TidioChat";
+import TidioWrapper from "@/components/organisms/TidioWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,13 +90,13 @@ export default async function RootLayout({
           contactSidebarData={contactSidebarData}
         >
           {children}
-          <TidioChat />
+          <TidioWrapper />
         </LayoutWrapper>
 
         {/* ✅ Google Tag Manager */}
         <Script
           id="gtm-script"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -111,7 +111,7 @@ export default async function RootLayout({
         {/* ✅ Microsoft Clarity */}
         <Script
           id="clarity-script"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `
               (function(c,l,a,r,i,t,y){
