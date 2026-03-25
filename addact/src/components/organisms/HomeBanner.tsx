@@ -64,8 +64,8 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
           alt="Hero Banner"
           fill
           className="object-cover object-[72%_top] md:object-center"
-          // priority={true}
           fetchPriority="high"
+          loading="lazy"
         />
       </div>
 
