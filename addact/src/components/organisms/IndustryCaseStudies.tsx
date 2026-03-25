@@ -245,6 +245,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
 
         <Link
           href={href}
+          aria-label={`Read case study: ${theTitle || "Case study"}`}
           className="absolute bottom-0 right-0 w-[40px] h-[40px] lg:w-14 lg:h-14 bg-[#3C4CFF] text-white flex items-center justify-center"
         >
           <RightArrowUpIcon />

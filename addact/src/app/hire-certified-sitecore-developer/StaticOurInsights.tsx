@@ -132,7 +132,11 @@ function InsightCard({ item, big = false }: InsightCardProps) {
 
       {/* Arrow link */}
       <div className="mt-auto self-end">
-        <Link href={item.link} target="_self">
+        <Link
+          href={item.link}
+          target="_self"
+          aria-label={`Read ${item.type}: ${item.title}`}
+        >
           <div className="group w-[40px] h-[40px] md:w-14 md:h-14 bg-[#3C4CFF] text-white flex items-center justify-center absolute bottom-0 right-0 transition-all duration-300 hover:w-16 hover:h-16 p-[6px] md:p-[0]">
             <RightArrowUpIcon className="transition-transform duration-300 group-hover:scale-110" />
           </div>

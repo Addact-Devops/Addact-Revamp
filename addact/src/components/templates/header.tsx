@@ -100,6 +100,7 @@ function FeaturedCard({
           <Link
             href={lnk.href ?? "#"}
             target={lnk.isExternal ? "_blank" : "_self"}
+            aria-label={lnk.label ?? card.title ?? "Read more"}
             className="inline-flex items-center bg-white text-[#3C4CFF] px-5 py-[17px] rounded-[8px] font-semibold text-[18px] hover:bg-gray-100 transition-all w-fit shadow-lg shadow-black/20 group/btn"
           >
             {lnk.label ?? "Read More"}
@@ -149,6 +150,7 @@ function DropdownContent({
               <Link
                 href={sub.link?.href ?? "#"}
                 target={sub.link?.isExternal ? "_blank" : "_self"}
+                aria-label={sub.link?.label ?? `Category ${idx + 1}`}
                 key={sub.id ?? idx}
               >
                 <button
@@ -187,6 +189,7 @@ function DropdownContent({
                   <Link
                     key={deep.id ?? di}
                     href={deepLink.href ?? "#"}
+                    aria-label={deepLink.label ?? `Sub-category ${di + 1}`}
                     target={deepLink.isExternal ? "_blank" : "_self"}
                     className="flex items-center gap-3 group"
                   >
@@ -253,6 +256,9 @@ function DropdownContent({
                   href={href}
                   target={lnk?.isExternal ? "_blank" : "_self"}
                   className="flex items-center gap-3 text-[#B7B7B7] hover:text-white transition-colors py-0.5 group"
+                  aria-label={
+                    lnk?.label ?? sub.card?.title ?? `Category ${si + 1}`
+                  }
                 >
                   {lnk?.Icon?.url && (
                     <span className="text-[#E3E3E3] transition-colors shrink-0">
@@ -336,6 +342,7 @@ function DropdownContent({
               <Link
                 key={detail.id ?? idx}
                 href={formatContactHref(rawHref)}
+                aria-label={`${detail.label || "Contact"} ${detail.SubDisc || ""}`.trim()}
                 target={detail.isExternal ? "_blank" : "_self"}
                 className={`flex-1 flex items-center justify-between px-10 group ${
                   idx < 2 ? "border-r border-white/10" : ""
@@ -498,6 +505,7 @@ const Header = ({
             </span>
             <Link
               href="/project-cost-estimators"
+              aria-label="Get My Estimation"
               className="ml-6 hover:bg-white text-white px-3 rounded-[8px] border border-white font-semibold hover:text-[#3c4cff] text-[14px] h-10 flex items-center"
             >
               Get My Estimation
@@ -508,7 +516,7 @@ const Header = ({
 
       {/* Main bar */}
       <div className="mx-auto w-full flex items-center justify-between container-main px-3.5 py-3.5 pl-3.5! pr-3.5! md:pl-0 md:pr-0 lg:px-0 lg:py-0 relative">
-        <Link href="/">
+        <Link href="/" aria-label="Home">
           {logo?.url && (
             <Image
               src={logo.url}
@@ -546,6 +554,7 @@ const Header = ({
                   {hasDrop ? (
                     <Link
                       href={href}
+                      aria-label={label || "Open dropdown"}
                       data-nav-btn
                       className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] focus:outline-none transition-colors cursor-pointer py-5 lg:py-[40px]"
                     >
@@ -559,6 +568,7 @@ const Header = ({
                   ) : (
                     <Link
                       href={href}
+                      aria-label={label || "Open dropdown"}
                       className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] transition-colors py-5 lg:py-[40px]"
                     >
                       {label}
@@ -603,6 +613,7 @@ const Header = ({
           <Link
             href={contactHref}
             target={contactIsExternal ? "_blank" : "_self"}
+            aria-label={contactLabel || "Contact"}
             // onClick={handleContactTrigger}
             className="ml-4 bg-[#3C4CFF] px-5 py-3 rounded-[8px] text-white font-semibold hover:bg-[#3440CB] text-[14px] xl:text-[15px] transition-colors flex items-center gap-2"
           >
@@ -624,6 +635,7 @@ const Header = ({
           <Link
             href={contactHref}
             target={contactIsExternal ? "_blank" : "_self"}
+            aria-label={contactLabel || "Contact"}
             // onClick={handleContactTrigger}
             className="bg-[#3C4CFF] px-4 py-1.5 rounded-[6px] text-white font-semibold text-[13px] hover:bg-[#3440CB] flex items-center gap-2"
           >
@@ -653,7 +665,7 @@ const Header = ({
           {/* Mobile Header: Top Row (Logo & X) */}
           <div className="mx-auto w-full flex items-center justify-between container-main px-3.5 py-3.5 lg:px-0 lg:py-0 relative border-b border-[#2E2E2E]">
             <div className="h-full flex items-center">
-              <Link href="/">
+              <Link href="/" aria-label="Home">
                 {logo?.url && (
                   <Image
                     src={logo.url}
@@ -706,7 +718,11 @@ const Header = ({
                     <div key={item.id}>
                       {hasDrop ? (
                         <div className="w-full flex justify-between items-center px-6 py-5 text-[18px] font-medium font-montserrat group">
-                          <Link href={getMenuHref(item)} className="flex-1">
+                          <Link
+                            href={getMenuHref(item)}
+                            className="flex-1"
+                            aria-label={label}
+                          >
                             {label}
                           </Link>
                           <button
@@ -723,6 +739,7 @@ const Header = ({
                       ) : (
                         <Link
                           href={getMenuHref(item)}
+                          aria-label={label}
                           className="flex items-center px-6 py-5 text-[18px] font-medium font-montserrat"
                         >
                           {label}
@@ -751,6 +768,7 @@ const Header = ({
                           >
                             <Link
                               href={sub.link?.href ?? "#"}
+                              aria-label={subLabel}
                               className="flex items-center gap-3 flex-1"
                             >
                               {iconUrl && (
@@ -787,6 +805,9 @@ const Header = ({
                                   key={l3.id ?? l3i}
                                   href={l3.link?.href ?? "#"}
                                   className="block px-10 py-4 text-[16px] font-medium text-white hover:text-white font-montserrat"
+                                  aria-label={
+                                    l3.link?.label ?? `Sub-category ${l3i + 1}`
+                                  }
                                 >
                                   {l3.link?.label}
                                 </Link>
@@ -798,6 +819,7 @@ const Header = ({
                         /* Direct Link for Level 2 */
                         <Link
                           href={sub.link?.href ?? "#"}
+                          aria-label={subLabel}
                           className="flex items-center gap-3 px-6 py-5 text-[18px] font-medium font-montserrat"
                         >
                           {iconUrl && (
@@ -833,6 +855,7 @@ const Header = ({
                       <Link
                         key={details.id ?? i}
                         href={formatContactHref(rawHref)}
+                        aria-label={`${details.label || "Contact"} ${details.SubDisc || ""}`.trim()}
                         target={details.isExternal ? "_blank" : "_self"}
                         className="flex items-center justify-between py-2.75 px-4 rounded-[8px] border border-[#2E2E2E] bg-transparent transition-colors group/contact"
                       >
@@ -867,6 +890,7 @@ const Header = ({
             <Link
               href={contactHref}
               target={contactIsExternal ? "_blank" : "_self"}
+              aria-label={`${contactLabel || "Contact"}`}
               //   onClick={handleContactTrigger}
               className="w-full bg-[#3C4CFF] py-3.5 rounded-[12px] text-white font-semibold text-[16px] flex items-center justify-center gap-2 font-montserrat shadow-lg hover:bg-[#3440CB] transition-colors"
             >
