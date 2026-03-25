@@ -118,6 +118,7 @@ const ContactUs = ({
     message: "",
   });
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
   const [formLoading, setFormLoading] = useState(false);
 
@@ -200,15 +201,15 @@ const ContactUs = ({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // if (!captchaToken) {
-    //   alert("Please complete the captcha.");
-    //   return;
-    // }
     const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
+    const isCaptchaMissing = !captchaToken;
+    setCaptchaError(isCaptchaMissing);
+
+    if (Object.keys(validationErrors).length > 0 || isCaptchaMissing) {
       setErrors(validationErrors);
       return;
     }
+
     setErrors({});
 
     setFormLoading(true);
@@ -350,10 +351,15 @@ const ContactUs = ({
                 >
                   <ReCAPTCHA
                     sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                    onChange={(token: string | null) => setCaptchaToken(token)}
+                    onChange={(token: string | null) => {
+                      setCaptchaToken(token);
+                      if (token) {
+                        setCaptchaError(false);
+                      }
+                    }}
                     size="normal"
                   />
-                  {!captchaToken && (
+                  {captchaError && !captchaToken && (
                     <p className="mt-1 text-sm text-red-500">
                       Please complete the captcha.
                     </p>
@@ -520,11 +526,19 @@ const ContactUs = ({
                   >
                     <ReCAPTCHA
                       sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                      onChange={(token: string | null) =>
-                        setCaptchaToken(token)
-                      }
+                      onChange={(token: string | null) => {
+                        setCaptchaToken(token);
+                        if (token) {
+                          setCaptchaError(false);
+                        }
+                      }}
                       size="normal"
                     />
+                    {captchaError && !captchaToken && (
+                      <p className="mt-1 text-sm text-red-500">
+                        Please complete the captcha.
+                      </p>
+                    )}
                   </div>
                 </div>
 

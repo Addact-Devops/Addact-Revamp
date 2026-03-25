@@ -102,7 +102,7 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
           </h1>
 
           {/* Description */}
-          <p className="mb-8 max-w-[340px] text-white !text-[14px] leading-[1.55] md:mb-10 md:max-w-[500px] md:!text-[20px] md:leading-[1.7] lg:!text-[24px] 2xl:mb-12 2xl:max-w-[550px]">
+          <p className="mb-8 max-w-[340px] text-white !text-[14px] leading-[1.55] md:mb-10 md:max-w-[500px] md:text-[20px] md:leading-[1.7] lg:!text-[24px] 2xl:mb-12 2xl:max-w-[550px]">
             {description}
           </p>
 

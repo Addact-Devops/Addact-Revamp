@@ -90,6 +90,7 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
     companyName: "",
     requirements: "",
   });
+  const [captchaError, setCaptchaError] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [formLoading, setFormLoading] = useState(false);
 
@@ -105,8 +106,9 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!captchaToken) {
-      alert("Please complete the captcha.");
+    const isCaptchaMissing = !captchaToken;
+    setCaptchaError(isCaptchaMissing);
+    if (isCaptchaMissing) {
       return;
     }
 
@@ -128,7 +130,6 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
       });
 
       if (res.ok) {
-        alert("Form submitted successfully!");
         setFormData({
           fullName: "",
           email: "",
@@ -139,11 +140,10 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
         window.location.href = redirectUrl;
       } else {
         const { error } = await res.json();
-        alert(error || "Submission failed.");
+        console.error("Form submission error:", error);
       }
     } catch (err) {
       console.error("Failed to submit form:", err);
-      alert("Something went wrong.");
     } finally {
       setFormLoading(false);
     }
@@ -272,9 +272,19 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
               <div className="recaptcha-wrapper">
                 <ReCAPTCHA
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                  onChange={(token: string | null) => setCaptchaToken(token)}
+                  onChange={(token: string | null) => {
+                    setCaptchaToken(token);
+                    if (token) {
+                      setCaptchaError(false);
+                    }
+                  }}
                   size="normal"
                 />
+                {captchaError && !captchaToken && (
+                  <p className="mt-1 text-sm text-red-500">
+                    Please complete the captcha.
+                  </p>
+                )}
               </div>
             </div>
 
