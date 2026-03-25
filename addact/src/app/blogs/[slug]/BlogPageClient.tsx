@@ -105,6 +105,9 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
                     <Link
                       key={`social-${i}-${j}`}
                       href={link.href}
+                      aria-label={
+                        link.label || icon.Title || `Open social link ${j + 1}`
+                      }
                       target={
                         link.target === "blank" ? "_blank" : `_${link.target}`
                       }
