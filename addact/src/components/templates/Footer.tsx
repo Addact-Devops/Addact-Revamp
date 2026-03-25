@@ -172,6 +172,7 @@ export default function Footer({ data }: FooterProps) {
                   <Link
                     href="/"
                     className="cursor-pointer inline-block mb-6 lg:mb-8"
+                    aria-label="Home"
                   >
                     <Image
                       src={Logo.Image.url}
@@ -334,15 +335,12 @@ export default function Footer({ data }: FooterProps) {
                         rel={
                           icon.isExternal ? "noopener noreferrer" : undefined
                         }
+                        aria-label={icon.label || "social media"}
                         className="w-10 h-10 rounded-full bg-transparent border-0 flex items-center justify-center hover:scale-110 transition-transform"
                       >
                         <Image
                           src={icon.Icon!.url!}
-                          alt={
-                            icon.Icon!.alternativeText ||
-                            icon.label ||
-                            "social icon"
-                          }
+                          alt={icon.Icon!.alternativeText || "social icon"}
                           width={icon.Icon!.width || 40}
                           height={icon.Icon!.height || 40}
                           className="w-10 h-10 object-contain"

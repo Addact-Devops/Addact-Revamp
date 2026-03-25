@@ -257,6 +257,7 @@ const IntroSplash = ({
               src={firstAnimationImage.url}
               alt="Left hand"
               fill
+              sizes="(max-width: 768px) 60vw, (max-width: 1200px) 60vw, 50vw"
               className="object-contain object-left-bottom"
               priority
             />
@@ -275,6 +276,7 @@ const IntroSplash = ({
               src={secondAnimationImage.url}
               alt="Right hand"
               fill
+              sizes="(max-width: 768px) 60vw, (max-width: 1200px) 60vw, 50vw"
               className="object-contain object-right-top"
               priority
             />

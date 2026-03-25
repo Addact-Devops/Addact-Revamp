@@ -64,7 +64,8 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
           alt="Hero Banner"
           fill
           className="object-cover object-[72%_top] md:object-center"
-          priority
+          // priority={true}
+          fetchPriority="high"
         />
       </div>
 
@@ -112,6 +113,7 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
               type="button"
               onClick={handleBannerCtaClick}
               className="inline-flex items-center gap-3 rounded-lg bg-[#3C4CFF] px-6 py-3 text-[12px] font-semibold text-white transition-all duration-300 hover:bg-[#2d3be6] md:px-8 md:py-4 md:text-[20px]"
+              aria-label={buttonLabel}
             >
               {buttonLabel}
               <svg
