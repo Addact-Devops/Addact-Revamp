@@ -181,6 +181,11 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
                 <Link
                   key={service?.id}
                   href={service?.Links?.href}
+                  aria-label={
+                    service?.Links?.label ||
+                    service?.Title ||
+                    "Open CMS service"
+                  }
                   target={service?.Links?.isExternal ? "_blank" : "_self"}
                   // 🔥 Animate the ENTIRE card (0 → 1) when grid enters view
                   className={`card-zoom ${

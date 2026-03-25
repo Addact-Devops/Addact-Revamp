@@ -152,6 +152,11 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                   className={`bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
                   key={service?.id}
                   href={service?.Links?.href}
+                  aria-label={
+                    service?.Links?.label ||
+                    service?.Title ||
+                    "Open CMS service"
+                  }
                   target={service?.Links?.isExternal ? "_blank" : "_self"}
                 >
                   {/* 🔥 Animate ONLY the logo image */}
