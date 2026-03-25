@@ -1,16 +1,13 @@
-import { Geist, Geist_Mono, Montserrat } from "next/font/google";
+import { Geist, Geist_Mono, Montserrat, Poppins } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import "../styles/custom.scss";
 import { getAddactHeaderData } from "@/graphql/queries/addact-header";
 import { getFooterData } from "@/graphql/queries/footer";
 import { getContactUsData } from "@/graphql/queries/getContactUs";
-// import { SpeedInsights } from "@vercel/speed-insights/next";
 import ScrollToTop from "@/components/atom/scrollToTop";
 import LayoutWrapper from "./LayoutWrapper";
 import TidioChat from "@/components/organisms/TidioChat";
-
-// import SnowfallWrapper from "@/components/organisms/SnowfallWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +22,14 @@ const geistMono = Geist_Mono({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export default async function RootLayout({
@@ -35,6 +40,7 @@ export default async function RootLayout({
   let headerRes;
   let footerData;
   let contactSidebarData;
+
   try {
     headerRes = await getAddactHeaderData();
   } catch (e) {
@@ -58,26 +64,15 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* ✅ Preconnect and Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet"
-        />
-
         {/* ✅ Google site verification */}
         <meta
           name="google-site-verification"
           content="YqKQYm1Ppyy0SPQ6Fs2swuVEI9kcjqLNc1Ovys8rQlA"
         />
       </head>
+      {/* ✅ Added poppins.variable to the body classes */}
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${poppins.variable} antialiased`}
       >
         <noscript>
           <iframe
@@ -89,18 +84,14 @@ export default async function RootLayout({
         </noscript>
 
         <ScrollToTop />
-        {/* ✅ Wrap children in LayoutWrapper (from current code) */}
         <LayoutWrapper
           headerData={headerRes.addactHeader}
           footerData={footerData}
           contactSidebarData={contactSidebarData}
         >
-          {/* <SnowfallWrapper /> */}
           {children}
           <TidioChat />
         </LayoutWrapper>
-
-        {/* <SpeedInsights /> */}
 
         {/* ✅ Google Tag Manager */}
         <Script
@@ -108,12 +99,12 @@ export default async function RootLayout({
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-                          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                          })(window,document,'script','dataLayer','GTM-M4B35B8');
-                        `,
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-M4B35B8');
+            `,
           }}
         />
 
@@ -123,12 +114,12 @@ export default async function RootLayout({
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-                          (function(c,l,a,r,i,t,y){
-                              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-                              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-                              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                          })(window, document, "clarity", "script", "mxup522myc");
-                        `,
+              (function(c,l,a,r,i,t,y){
+                  c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+              })(window, document, "clarity", "script", "mxup522myc");
+            `,
           }}
         />
       </body>

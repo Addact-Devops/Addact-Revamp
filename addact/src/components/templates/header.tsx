@@ -150,25 +150,20 @@ function DropdownContent({
               <Link
                 href={sub.link?.href ?? "#"}
                 target={sub.link?.isExternal ? "_blank" : "_self"}
-                aria-label={sub.link?.label ?? `Category ${idx + 1}`}
+                aria-label={`Navigate to ${label} page`}
                 key={sub.id ?? idx}
+                onMouseEnter={() => {
+                  setActiveIdx(idx);
+                }}
+                className={`w-full text-left text-white px-5 py-7.5 text-[20px] font-medium font-montserrat transition-all flex justify-between items-center gap-2 border-b h-[84px] border-[#2E2E2E] ${
+                  isActive ? "bg-[#3C4CFF]" : ""
+                }`}
               >
-                <button
-                  key={sub.id ?? idx}
-                  onMouseEnter={() => {
-                    setActiveIdx(idx);
-                  }}
-                  className={`w-full text-left text-white px-5 py-7.5 text-[20px] font-medium font-montserrat transition-all flex justify-between items-center gap-2 border-b h-[84px] border-[#2E2E2E] ${
-                    isActive ? "bg-[#3C4CFF]" : ""
-                  }`}
-                >
-                  <span className="flex-1 leading-snug">{label}</span>
-                  <ChevronRight
-                    size={24}
-                    className={`shrink-0 ${isActive ? "opacity-100" : "opacity-30"}`}
-                  />
-                  {/* <ChevronRightIcon className={`shrink-0 `} /> */}
-                </button>
+                <span className="flex-1 leading-snug">{label}</span>
+                <ChevronRight
+                  size={24}
+                  className={`shrink-0 ${isActive ? "opacity-100" : "opacity-30"}`}
+                />
               </Link>
             );
           })}
@@ -721,7 +716,7 @@ const Header = ({
                           <Link
                             href={getMenuHref(item)}
                             className="flex-1"
-                            aria-label={label}
+                            aria-label={label || "Menu item"}
                           >
                             {label}
                           </Link>
@@ -739,7 +734,7 @@ const Header = ({
                       ) : (
                         <Link
                           href={getMenuHref(item)}
-                          aria-label={label}
+                          aria-label={label || "Menu item"}
                           className="flex items-center px-6 py-5 text-[18px] font-medium font-montserrat"
                         >
                           {label}
@@ -768,7 +763,7 @@ const Header = ({
                           >
                             <Link
                               href={sub.link?.href ?? "#"}
-                              aria-label={subLabel}
+                              aria-label={subLabel || `Sub-category ${idx + 1}`}
                               className="flex items-center gap-3 flex-1"
                             >
                               {iconUrl && (
@@ -819,7 +814,7 @@ const Header = ({
                         /* Direct Link for Level 2 */
                         <Link
                           href={sub.link?.href ?? "#"}
-                          aria-label={subLabel}
+                          aria-label={subLabel || `Sub-category ${idx + 1}`}
                           className="flex items-center gap-3 px-6 py-5 text-[18px] font-medium font-montserrat"
                         >
                           {iconUrl && (
