@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import SlickImageCompare from "slick-image-compare";
+import "./UIUXImpactSlider.css";
 import type { ImpactUx } from "@/graphql/queries/getDevelopmentDesignSlug";
 
 const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
