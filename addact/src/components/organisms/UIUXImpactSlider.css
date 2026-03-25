@@ -1,0 +1,63 @@
+@import "slick-image-compare/style";
+
+.sic-main .sic-circle {
+  background-color: white !important;
+}
+
+.sic-main .sic-arrow-1 svg {
+  stroke: #0f0f0f !important;
+}
+
+.sic-main .sic-arrow-2 svg {
+  stroke: #0f0f0f !important;
+}
+
+.sic-main .sic-circle {
+  width: 60px !important;
+  height: 60px !important;
+  border: 1px solid #0f0f0f !important;
+  margin-left: -29px !important;
+}
+
+.sic-main .sic-arrow-1 {
+  left: 4px !important;
+  top: 15px !important;
+}
+
+.sic-main .sic-arrow-2 {
+  right: -17px !important;
+  top: 15px !important;
+}
+
+.sic-main .sic-line:before {
+  background-color: #0f0f0f !important;
+}
+
+.uiux-impact-slider.sic-main img,
+.uiux-impact-slider .sic-clip img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.uiux-impact-slider.sic-main > img {
+  position: relative !important;
+}
+
+.uiux-impact-slider.sic-main > img {
+  object-position: left center !important;
+}
+
+.uiux-impact-slider .sic-clip img {
+  object-position: right center !important;
+}
+
+.uiux-impact-slider {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.uiux-impact-slider .sic-main,
+.uiux-impact-slider .sic-clip {
+  border-radius: inherit;
+}
