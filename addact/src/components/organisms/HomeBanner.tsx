@@ -65,7 +65,6 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
           fill
           className="object-cover object-[72%_top] md:object-center"
           fetchPriority="high"
-          loading="lazy"
         />
       </div>
 
