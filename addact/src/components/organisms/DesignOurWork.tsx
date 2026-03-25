@@ -1,5 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
 import type { OurWork } from "@/graphql/queries/getDevelopmentDesignSlug";
 import Image from "../atom/image";
 import RichText from "../atom/richText";
