@@ -15,6 +15,7 @@ function escapeHtml(unsafe: string) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    const honeypot = body.honeypot || "";
 
     // 1. Extract the Turnstile token from the request
     const turnstileToken = body.turnstileToken;
@@ -23,6 +24,13 @@ export async function POST(req: NextRequest) {
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       req.headers.get("x-real-ip") ||
       "Unknown";
+
+    if (honeypot.trim() !== "") {
+      return NextResponse.json(
+        { message: "Bot submission detected" },
+        { status: 400 },
+      );
+    }
 
     // 2. Perform Turnstile Validation BEFORE anything else
     if (!turnstileToken) {
