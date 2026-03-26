@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Params }) {
   if (slug.length === 1) {
     data = await getDevelopmentDesignSlug(slug[0]);
   } else if (slug.length === 2) {
-    const fullPath = `development-design/${slug.join("/")}`;
+    const fullPath = `${slug.join("/")}`;
     data = await getDevelopmentDesignDetailsCmsSlug(fullPath);
   } else if (slug.length === 3) {
     const fullPath = `${slug[2]}`;
@@ -74,7 +74,7 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
   if (slug.length === 1) {
     data = await getDevelopmentDesignSlug(slug[0]);
   } else if (slug.length === 2) {
-    const fullPath = `development-design/${slug.join("/")}`;
+    const fullPath = `${slug.join("/")}`;
     data = await getDevelopmentDesignDetailsCmsSlug(fullPath);
   } else if (slug.length === 3) {
     const fullPath = `${slug[2]}`;
