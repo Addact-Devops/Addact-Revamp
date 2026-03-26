@@ -54,10 +54,7 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
                 style={{ width: `${items.length * 100}%` }}
                 drag="x"
                 dragConstraints={{
-                  left: -(
-                    (containerRef.current?.offsetWidth ?? 0) *
-                    (items.length - 1)
-                  ),
+                  left: -((containerRef.current?.offsetWidth ?? 0) * (items.length - 1)),
                   right: 0,
                 }}
                 dragElastic={0.08}
@@ -81,19 +78,13 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
                 }}
                 /* Translate by card-index × one-card-width (px) */
                 animate={{
-                  x: -(
-                    (containerRef.current?.offsetWidth ?? 0) * mobileCardIndex
-                  ),
+                  x: -((containerRef.current?.offsetWidth ?? 0) * mobileCardIndex),
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
                 {items.map((item, index) => (
                   /* Each card occupies exactly 1/N of the track = 100% of the container */
-                  <div
-                    key={index}
-                    style={{ width: `${100 / items.length}%` }}
-                    className="shrink-0"
-                  >
+                  <div key={index} style={{ width: `${100 / items.length}%` }} className="shrink-0">
                     <div className="bg-white border border-black/10 rounded-[10px] p-5 h-full">
                       <div className="flex items-center gap-3 mb-3">
                         <h3 className="text-stone-950 text-[18px]! lg:text-[20px]! font-medium! font-['Montserrat'] leading-8">
@@ -118,9 +109,7 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
                   key={index}
                   onClick={() => handleMobileCardChange(index)}
                   className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    index === mobileCardIndex
-                      ? "bg-[#3C4CFF] w-8"
-                      : "bg-black/20"
+                    index === mobileCardIndex ? "bg-[#3C4CFF] w-8" : "bg-black/20"
                   }`}
                   aria-label={`Go to card ${index + 1}`}
                 />
@@ -149,15 +138,9 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
         <div className="mx-auto max-w-[1920px] pl-0 pr-6 lg:pr-10 xl:pr-16 2xl:pr-24">
           <div className="grid grid-cols-12 items-center gap-8 xl:gap-12 2xl:gap-16">
             {/* Radial Diagram */}
-            <motion.div
-              className="col-span-6 self-center"
-              style={{ aspectRatio: "1057/1091" }}
-            >
+            <motion.div className="col-span-6 self-center" style={{ aspectRatio: "1057/1091" }}>
               <div className="w-full max-w-[700px] xl:max-w-[860px] 2xl:max-w-[1020px]">
-                <RadialDiagram
-                  activeIndex={activeIndex}
-                  onSpokeClick={setActiveIndex}
-                />
+                <RadialDiagram activeIndex={activeIndex} onSpokeClick={setActiveIndex} />
               </div>
             </motion.div>
 
@@ -173,11 +156,7 @@ export default function WhyWorkWithUs({ data }: WhyWorkWithUsProps) {
                 {heading}
               </motion.h2>
 
-              <AccordionList
-                items={items}
-                activeIndex={activeIndex}
-                onItemClick={setActiveIndex}
-              />
+              <AccordionList items={items} activeIndex={activeIndex} onItemClick={setActiveIndex} />
             </div>
           </div>
         </div>

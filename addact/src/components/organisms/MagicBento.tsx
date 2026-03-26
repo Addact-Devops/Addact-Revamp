@@ -147,14 +147,11 @@ const GlobalSpotlight: React.FC<{
           duration: 0.3,
           ease: "power2.out",
         });
-        cards.forEach((card) =>
-          (card as HTMLElement).style.setProperty("--glow-intensity", "0"),
-        );
+        cards.forEach((card) => (card as HTMLElement).style.setProperty("--glow-intensity", "0"));
         return;
       }
 
-      const { proximity, fadeDistance } =
-        calculateSpotlightValues(spotlightRadius);
+      const { proximity, fadeDistance } = calculateSpotlightValues(spotlightRadius);
       let minDistance = Infinity;
 
       cards.forEach((card) => {
@@ -172,8 +169,7 @@ const GlobalSpotlight: React.FC<{
         if (effectiveDistance <= proximity) {
           glowIntensity = 1;
         } else if (effectiveDistance <= fadeDistance) {
-          glowIntensity =
-            (fadeDistance - effectiveDistance) / (fadeDistance - proximity);
+          glowIntensity = (fadeDistance - effectiveDistance) / (fadeDistance - proximity);
         }
 
         updateCardGlowProperties(
@@ -210,9 +206,7 @@ const GlobalSpotlight: React.FC<{
       if (!gridRef.current || !spotlightRef.current) return;
       gridRef.current
         .querySelectorAll(".magic-bento-card")
-        .forEach((card) =>
-          (card as HTMLElement).style.setProperty("--glow-intensity", "0"),
-        );
+        .forEach((card) => (card as HTMLElement).style.setProperty("--glow-intensity", "0"));
       gsap.to(spotlightRef.current, {
         opacity: 0,
         duration: 0.3,
@@ -268,11 +262,7 @@ const InteractiveCard: React.FC<{
     if (particlesInitialized.current || !cardRef.current) return;
     const { width, height } = cardRef.current.getBoundingClientRect();
     memoizedParticles.current = Array.from({ length: particleCount }, () =>
-      createParticleElement(
-        Math.random() * width,
-        Math.random() * height,
-        glowColor,
-      ),
+      createParticleElement(Math.random() * width, Math.random() * height, glowColor),
     );
     particlesInitialized.current = true;
   }, [particleCount, glowColor]);
@@ -328,14 +318,8 @@ const InteractiveCard: React.FC<{
 
     const setGlow = (pointerX: number, pointerY: number, intensity: number) => {
       const rect = element.getBoundingClientRect();
-      element.style.setProperty(
-        "--glow-x",
-        `${((pointerX - rect.left) / rect.width) * 100}%`,
-      );
-      element.style.setProperty(
-        "--glow-y",
-        `${((pointerY - rect.top) / rect.height) * 100}%`,
-      );
+      element.style.setProperty("--glow-x", `${((pointerX - rect.left) / rect.width) * 100}%`);
+      element.style.setProperty("--glow-y", `${((pointerY - rect.top) / rect.height) * 100}%`);
       element.style.setProperty("--glow-intensity", intensity.toString());
     };
 
@@ -452,9 +436,7 @@ const InteractiveCard: React.FC<{
       style={style}
     >
       {/* overflow-hidden lives here so card content clips correctly */}
-      <div className="relative h-full w-full overflow-hidden rounded-[10px]">
-        {children}
-      </div>
+      <div className="relative h-full w-full overflow-hidden rounded-[10px]">{children}</div>
     </div>
   );
 };
@@ -734,8 +716,7 @@ const MagicBento: React.FC<BentoProps> = ({
           >
             <div className="relative z-1 flex h-full flex-col justify-between gap-8">
               <p className="solve-ai-copy-small w-full max-w-full text-white md:max-w-[12ch]">
-                {problemTitles[2] ||
-                  "Understand your customers better with AI-driven analytics."}
+                {problemTitles[2] || "Understand your customers better with AI-driven analytics."}
               </p>
               <div className="relative mx-auto w-full max-w-76">
                 <Image

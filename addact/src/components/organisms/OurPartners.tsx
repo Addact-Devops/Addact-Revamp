@@ -1,11 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "../atom/image";
-import {
-  getOurPartners,
-  PartnerImage,
-  PartnerTitle,
-} from "@/graphql/queries/getOurPartners";
+import { getOurPartners, PartnerImage, PartnerTitle } from "@/graphql/queries/getOurPartners";
 import "../../styles/components/ourPartners.scss";
 
 type PartnerItem = {
@@ -90,16 +86,11 @@ export default function OurPartners(/* ✅ ADDED */ props: OurPartnersProps) {
             ...(props?.images || partnerData?.Image || []),
             ...(props?.images || partnerData?.Image || []),
           ].map((item, index) => (
-            <div
-              key={index}
-              className="min-w-[160px] flex items-center justify-center"
-            >
+            <div key={index} className="min-w-[160px] flex items-center justify-center">
               {item?.Image?.url && (
                 <Image
                   src={item?.Image?.url}
-                  alt={
-                    item.Image.alternativeText || `Partner Logo ${index + 1}`
-                  }
+                  alt={item.Image.alternativeText || `Partner Logo ${index + 1}`}
                   width={164}
                   height={64}
                   className="max-w-full w-full h-[64px] object-contain"

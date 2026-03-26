@@ -3,13 +3,12 @@
 import Snowfall from "react-snowfall";
 
 export default function SnowfallWrapper() {
-
   return (
     <Snowfall
       snowflakeCount={100}
       speed={[0.5, 1.5]}
       wind={[-0.5, 1.5]}
-      radius={[0.5,1.5]}
+      radius={[0.5, 1.5]}
       style={{
         position: "fixed",
         width: "100vw",

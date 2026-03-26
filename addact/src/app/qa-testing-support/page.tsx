@@ -59,18 +59,7 @@ export default async function QATestingSupport() {
               telephone: "94272 37737",
               contactType: "emergency",
               contactOption: "TollFree",
-              areaServed: [
-                "SA",
-                "YE",
-                "KW",
-                "OM",
-                "QA",
-                "AE",
-                "BH",
-                "IL",
-                "JO",
-                "SY",
-              ],
+              areaServed: ["SA", "YE", "KW", "OM", "QA", "AE", "BH", "IL", "JO", "SY"],
               availableLanguage: "en",
             },
             sameAs: [
@@ -87,9 +76,7 @@ export default async function QATestingSupport() {
 
       <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
+        description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
         button={{
           label: bannerData?.BannerLink?.label ?? "",
           url: bannerData?.BannerLink?.href ?? "",

@@ -10,10 +10,7 @@ import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
 // import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
-import {
-  getHireExpertsSlug,
-  HireExpert,
-} from "@/graphql/queries/getHireExpertSlug";
+import { getHireExpertsSlug, HireExpert } from "@/graphql/queries/getHireExpertSlug";
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
@@ -65,9 +62,7 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
     <main className="bg-dark">
       <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
+        description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
         button={{
           label: bannerData?.BannerLink?.label ?? "",
           url: bannerData?.BannerLink?.href ?? "",
@@ -77,9 +72,7 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
       <DetailPageServices data={pageData?.ourService} />
-      {pageData?.our_process && (
-        <HowEngagementProcessWorks data={pageData?.our_process} />
-      )}
+      {pageData?.our_process && <HowEngagementProcessWorks data={pageData?.our_process} />}
       {/* {pageData?.our_service && (
         <OurServicesWithTabs data={pageData.our_service} />
       )} */}

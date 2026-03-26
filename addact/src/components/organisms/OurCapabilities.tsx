@@ -10,13 +10,7 @@ interface OurCapabilitiesProps {
 }
 
 const ArrowIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M6.82112 5.72616L18.2737 5.72617L18.2737 17.1787"
       stroke="#3C4CFF"
@@ -50,12 +44,8 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
   const { heading, capabilities } = data;
 
   useEffect(() => {
-    const measured = contentRefs.current.map((el) =>
-      el ? el.scrollHeight : 0,
-    );
-    const mobileMeasured = mobileContentRefs.current.map((el) =>
-      el ? el.scrollHeight : 0,
-    );
+    const measured = contentRefs.current.map((el) => (el ? el.scrollHeight : 0));
+    const mobileMeasured = mobileContentRefs.current.map((el) => (el ? el.scrollHeight : 0));
 
     setHeights(measured);
     setMobileHeights(mobileMeasured);
@@ -75,11 +65,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
     <section className="-mt-0.5 bg-white">
       <div className="container-main">
         {/* Mobile heading */}
-        {heading && (
-          <h2 className="!pb-5 !text-[28px] !text-[#0F0F0F] md:hidden">
-            {heading}
-          </h2>
-        )}
+        {heading && <h2 className="!pb-5 !text-[28px] !text-[#0F0F0F] md:hidden">{heading}</h2>}
 
         {/* Desktop / Tablet layout */}
         <div className="hidden md:flex gap-2 lg:gap-4 2xl:gap-6">
@@ -93,10 +79,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
             {capabilities.map((item, index) => {
               const isOpen = visibleDesktopIndex === index;
               return (
-                <div
-                  key={item?.link?.id}
-                  className="border-t border-[#e0e0e0] last:border-b"
-                >
+                <div key={item?.link?.id} className="border-t border-[#e0e0e0] last:border-b">
                   <div className="pl-5 2xl:pl-6">
                     <div
                       onMouseEnter={() => {
@@ -108,14 +91,8 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                     >
                       <Link
                         href={item?.link?.href || "#"}
-                        target={
-                          item?.link?.target ? `_${item.link.target}` : "_self"
-                        }
-                        rel={
-                          item?.link?.target === "_blank"
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
+                        target={item?.link?.target ? `_${item.link.target}` : "_self"}
+                        rel={item?.link?.target === "_blank" ? "noopener noreferrer" : undefined}
                         className="!text-[20px] lg:!text-[24px] 2xl:!text-[36px] !font-medium transition-colors duration-300 text-[#0F0F0F] hover:text-[#3C4CFF] inline-flex items-center gap-2"
                       >
                         {item?.title}
@@ -133,9 +110,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                     <div
                       className="overflow-hidden transition-all duration-500 ease-in-out"
                       style={{
-                        maxHeight: isOpen
-                          ? `${heights[index] || 600}px`
-                          : "0px",
+                        maxHeight: isOpen ? `${heights[index] || 600}px` : "0px",
                         opacity: isOpen ? 1 : 0,
                       }}
                     >
@@ -156,11 +131,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                                 key={sublink?.id}
                                 href={sublink?.href || "#"}
                                 target={getLinkTarget(sublink?.target)}
-                                rel={
-                                  sublink?.isExternal
-                                    ? "noopener noreferrer"
-                                    : undefined
-                                }
+                                rel={sublink?.isExternal ? "noopener noreferrer" : undefined}
                                 className="flex items-center gap-2 text-[#0F0F0F] hover:text-[#3C4CFF] transition-colors"
                               >
                                 <span className="flex-shrink-0">
@@ -188,9 +159,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                 <div
                   key={item?.link?.id}
                   className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                    visibleDesktopIndex === index
-                      ? "opacity-100"
-                      : "opacity-0 pointer-events-none"
+                    visibleDesktopIndex === index ? "opacity-100" : "opacity-0 pointer-events-none"
                   }`}
                 >
                   {item.image?.url && (
@@ -214,10 +183,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
             const isActive = activeIndex === index;
 
             return (
-              <div
-                key={item?.link?.id}
-                className="border-t border-[#D9D9D9] last:border-b"
-              >
+              <div key={item?.link?.id} className="border-t border-[#D9D9D9] last:border-b">
                 {isActive && item?.image?.url && (
                   <div className="relative mb-5 mt-5 aspect-[247/200] w-full overflow-hidden rounded-tl-[72px]">
                     <Image
@@ -246,20 +212,14 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
 
                 <div
                   className="overflow-hidden transition-all duration-500 ease-in-out"
                   style={{
-                    maxHeight: isActive
-                      ? `${mobileHeights[index] || 900}px`
-                      : "0px",
+                    maxHeight: isActive ? `${mobileHeights[index] || 900}px` : "0px",
                     opacity: isActive ? 1 : 0,
                   }}
                 >
@@ -280,11 +240,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                             key={sublink?.id}
                             href={sublink?.href || "#"}
                             target={getLinkTarget(sublink?.target)}
-                            rel={
-                              sublink?.isExternal
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
+                            rel={sublink?.isExternal ? "noopener noreferrer" : undefined}
                             className="flex items-center gap-3 text-[#0F0F0F] hover:text-[#3C4CFF] transition-colors"
                           >
                             <span className="flex h-5 w-5 shrink-0 items-center justify-center">

@@ -3,9 +3,7 @@ import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const developmentDesignSlugQuery = gql`
-  query DevelopmentDesignSlug(
-    $filters: DevelopmentAndDesignDetailFiltersInput
-  ) {
+  query DevelopmentDesignSlug($filters: DevelopmentAndDesignDetailFiltersInput) {
     developmentAndDesignDetails(filters: $filters) {
       SEO {
         metaTitle
@@ -899,16 +897,13 @@ export interface OurWorkServiceListItem {
 export async function getDevelopmentDesignSlug(
   slug: string,
 ): Promise<DevelopmentDesignDetail | null> {
-  const data = await client.request<DevelopmentDesignSlugResponse>(
-    developmentDesignSlugQuery,
-    {
-      filters: {
-        Slug: {
-          eq: `/${slug}`,
-        },
+  const data = await client.request<DevelopmentDesignSlugResponse>(developmentDesignSlugQuery, {
+    filters: {
+      Slug: {
+        eq: `/${slug}`,
       },
     },
-  );
+  });
 
   return data.developmentAndDesignDetails?.[0] ?? null;
 }

@@ -38,26 +38,17 @@ export async function POST(req: NextRequest) {
       "Unknown";
 
     if (honeypot.trim() !== "") {
-      return NextResponse.json(
-        { message: "Bot submission detected" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: "Bot submission detected" }, { status: 400 });
     }
 
     if (!turnstileToken) {
-      return NextResponse.json(
-        { message: "Captcha token is missing" },
-        { status: 400 },
-      );
+      return NextResponse.json({ message: "Captcha token is missing" }, { status: 400 });
     }
 
     const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
     if (!turnstileSecret) {
       console.error("Missing TURNSTILE_SECRET_KEY in environment variables");
-      return NextResponse.json(
-        { message: "Server configuration error" },
-        { status: 500 },
-      );
+      return NextResponse.json({ message: "Server configuration error" }, { status: 500 });
     }
 
     const verifyFormData = new FormData();
@@ -65,13 +56,10 @@ export async function POST(req: NextRequest) {
     verifyFormData.append("response", turnstileToken);
     verifyFormData.append("remoteip", ip);
 
-    const turnstileRes = await fetch(
-      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-      {
-        method: "POST",
-        body: verifyFormData,
-      },
-    );
+    const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body: verifyFormData,
+    });
 
     const turnstileOutcome = await turnstileRes.json();
 
@@ -92,10 +80,7 @@ export async function POST(req: NextRequest) {
     const smtpPass = process.env.SMTP_PASS;
 
     if (!clientEmail || !privateKey || !spreadsheetId) {
-      return NextResponse.json(
-        { message: "Missing Google Sheets credentials" },
-        { status: 500 },
-      );
+      return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
     }
 
     const auth = new google.auth.JWT({
@@ -1208,10 +1193,7 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Google Sheets API error:", error.message);
-      return NextResponse.json(
-        { message: "Error", error: error.message },
-        { status: 500 },
-      );
+      return NextResponse.json({ message: "Error", error: error.message }, { status: 500 });
     } else {
       console.error("Unknown error:", error);
       return NextResponse.json({ message: "Unknown error" }, { status: 500 });

@@ -1,12 +1,7 @@
 import React, { useRef } from "react";
 import Image from "next/image";
 import type { OurProcess } from "@/graphql/queries/getDevelopmentDesignSlug";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import RichText from "../atom/richText";
 
 type UXPoint = {

@@ -184,7 +184,7 @@ export async function getInitialBlogs(): Promise<InitialDataResponse> {
 
 // Fetch next page of blogs
 export async function getNextBlogs(
-  page: number
+  page: number,
 ): Promise<{ blogs: AddactBlogsResponse["addactBlogs"]; hasMore: boolean }> {
   const pageSize = 50;
   const sort = ["createdAt:desc"];

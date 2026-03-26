@@ -37,9 +37,7 @@ function AccordionRow({
       transition={{ duration: 0.38, delay: index * 0.07 }}
       onClick={onClick}
     >
-      <div
-        className={`flex items-center gap-5 py-5 px-6 select-none ${isActive ? "pb-0" : ""}`}
-      >
+      <div className={`flex items-center gap-5 py-5 px-6 select-none ${isActive ? "pb-0" : ""}`}>
         <motion.div transition={{ duration: 0.3 }}>
           {isActive ? <AddactDropdownIcon /> : <AddactRightIcon />}
         </motion.div>
@@ -79,11 +77,7 @@ function AccordionRow({
   );
 }
 
-export function AccordionList({
-  items,
-  activeIndex,
-  onItemClick,
-}: AccordionListProps) {
+export function AccordionList({ items, activeIndex, onItemClick }: AccordionListProps) {
   return (
     <div>
       {items.map((item, index) => (

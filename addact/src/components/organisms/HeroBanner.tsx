@@ -3,10 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation"; // ✅ new import
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 type HeroBannerProps = {
   title: string;
@@ -45,8 +42,7 @@ const HeroBanner = ({
   };
 
   const target = button?.isExternal ? "_blank" : "_self";
-  const useContactDrawer =
-    !button?.isExternal && shouldOpenContactDrawer(button?.url || "");
+  const useContactDrawer = !button?.isExternal && shouldOpenContactDrawer(button?.url || "");
   const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
     if (!useContactDrawer) {
       return;
@@ -128,9 +124,7 @@ const HeroBanner = ({
                 <button
                   onClick={() => {
                     const targetId = button.url.replace("#", "");
-                    document
-                      .getElementById(targetId)
-                      ?.scrollIntoView({ behavior: "smooth" });
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
                   }}
                   className="inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-[600] transition text-lg text-[16px] md:text-[15px]"
                 >
@@ -157,61 +151,37 @@ const HeroBanner = ({
                 <a href="#perks" onClick={(e) => handleScroll(e, "perks")}>
                   Perks
                 </a>
-                <a
-                  href="#open-positions"
-                  onClick={(e) => handleScroll(e, "open-positions")}
-                >
+                <a href="#open-positions" onClick={(e) => handleScroll(e, "open-positions")}>
                   Open positions
                 </a>
-                <a
-                  href="#life-at-addact"
-                  onClick={(e) => handleScroll(e, "life-at-addact")}
-                >
+                <a href="#life-at-addact" onClick={(e) => handleScroll(e, "life-at-addact")}>
                   Life at Addact
                 </a>
               </>
             ) : pathname === "/about-us" ? (
               <>
-                <a
-                  href="#overview"
-                  onClick={(e) => handleScroll(e, "overview")}
-                >
+                <a href="#overview" onClick={(e) => handleScroll(e, "overview")}>
                   Overview
                 </a>
-                <a
-                  href="#vision-mission"
-                  onClick={(e) => handleScroll(e, "vision-mission")}
-                >
+                <a href="#vision-mission" onClick={(e) => handleScroll(e, "vision-mission")}>
                   Vision & Mission
                 </a>
                 {/* <a href='#brand-values' onClick={(e) => handleScroll(e, "brand-values")}>
                                     Brand Values
                                 </a> */}
-                <a
-                  href="#who-we-are"
-                  onClick={(e) => handleScroll(e, "who-we-are")}
-                >
+                <a href="#who-we-are" onClick={(e) => handleScroll(e, "who-we-are")}>
                   Who are we
                 </a>
               </>
             ) : pathname === "/contact-us" ? (
               <>
-                <a
-                  href="#weekday-component"
-                  onClick={(e) => handleScroll(e, "weekday-component")}
-                >
+                <a href="#weekday-component" onClick={(e) => handleScroll(e, "weekday-component")}>
                   Availability
                 </a>
-                <a
-                  href="#maps-component"
-                  onClick={(e) => handleScroll(e, "maps-component")}
-                >
+                <a href="#maps-component" onClick={(e) => handleScroll(e, "maps-component")}>
                   Our offices
                 </a>
-                <a
-                  href="#contact-page-form"
-                  onClick={(e) => handleScroll(e, "contact-page-form")}
-                >
+                <a href="#contact-page-form" onClick={(e) => handleScroll(e, "contact-page-form")}>
                   Get in touch
                 </a>
               </>

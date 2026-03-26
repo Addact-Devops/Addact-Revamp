@@ -37,9 +37,7 @@ const CareerGallery = () => {
   const [subtitle, setSubtitle] = useState("Gallery");
   const [isOpen, setIsOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
-  const [filteredImages, setFilteredImages] = useState<GalleryImageItem[][]>(
-    []
-  );
+  const [filteredImages, setFilteredImages] = useState<GalleryImageItem[][]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   // Lightbox state
@@ -89,9 +87,7 @@ const CareerGallery = () => {
     }
 
     if (selectedYear !== "All") {
-      allImages = allImages.filter(
-        (img) => String(img.Year || currentYear) === selectedYear
-      );
+      allImages = allImages.filter((img) => String(img.Year || currentYear) === selectedYear);
     }
 
     const chunked = chunkArray(allImages, 9);
@@ -99,11 +95,7 @@ const CareerGallery = () => {
   }, [categories, activeCategory, selectedYear]);
 
   const allYears = Array.from(
-    new Set(
-      categories.flatMap((cat) =>
-        cat.Images.map((img) => img.Year || currentYear)
-      )
-    )
+    new Set(categories.flatMap((cat) => cat.Images.map((img) => img.Year || currentYear))),
   ).sort((a, b) => b - a);
 
   // Flattened images array for lightbox slides
@@ -119,10 +111,7 @@ const CareerGallery = () => {
   };
 
   return (
-    <section
-      className="container-main mt-[60px] md:mt-[100px]"
-      id="life-at-addact"
-    >
+    <section className="container-main mt-[60px] md:mt-[100px]" id="life-at-addact">
       <div className="text-[20px] text-[#3C4CFF] mb-[10px] md:mb-[23px] leading-[26px] font-[600] text-center">
         {subtitle}
       </div>
@@ -137,9 +126,7 @@ const CareerGallery = () => {
             <li
               onClick={() => setActiveCategory("Addact")}
               className={`cursor-pointer ${
-                activeCategory === "Addact"
-                  ? "text-[#3C4CFF] font-bold"
-                  : "text-black"
+                activeCategory === "Addact" ? "text-[#3C4CFF] font-bold" : "text-black"
               }`}
             >
               Addact
@@ -149,9 +136,7 @@ const CareerGallery = () => {
                 key={idx}
                 onClick={() => setActiveCategory(cat.Name)}
                 className={`cursor-pointer ${
-                  activeCategory === cat.Name
-                    ? "text-[#3C4CFF] font-bold"
-                    : "text-black"
+                  activeCategory === cat.Name ? "text-[#3C4CFF] font-bold" : "text-black"
                 }`}
               >
                 {cat.Name}
@@ -173,22 +158,13 @@ const CareerGallery = () => {
                     value={activeCategory}
                     onChange={(e) => setActiveCategory(e.target.value)}
                     onClick={() => setIsCategoryOpen((prev) => !prev)}
-                    onBlur={() =>
-                      setTimeout(() => setIsCategoryOpen(false), 150)
-                    }
+                    onBlur={() => setTimeout(() => setIsCategoryOpen(false), 150)}
                   >
-                    <option
-                      value="Addact"
-                      className="bg-[white] text-[#3C4CFF]"
-                    >
+                    <option value="Addact" className="bg-[white] text-[#3C4CFF]">
                       Addact
                     </option>
                     {categories.map((cat, idx) => (
-                      <option
-                        key={idx}
-                        value={cat.Name}
-                        className="text-[#3C4CFF] bg-white"
-                      >
+                      <option key={idx} value={cat.Name} className="text-[#3C4CFF] bg-white">
                         {cat.Name}
                       </option>
                     ))}
@@ -207,11 +183,7 @@ const CareerGallery = () => {
                       stroke="currentColor"
                       strokeWidth={2}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
                 </div>
@@ -225,10 +197,7 @@ const CareerGallery = () => {
                     onClick={() => setIsOpen((prev) => !prev)}
                     onBlur={() => setTimeout(() => setIsOpen(false), 150)}
                   >
-                    <option
-                      style={{ backgroundColor: "white", color: "#3C4CFF" }}
-                      value="All"
-                    >
+                    <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value="All">
                       All
                     </option>
                     {allYears.map((year, idx) => (
@@ -255,11 +224,7 @@ const CareerGallery = () => {
                       stroke="currentColor"
                       strokeWidth={2}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
                 </div>
@@ -328,10 +293,7 @@ const CareerGallery = () => {
                   onClick={() => setIsOpen((prev) => !prev)}
                   onBlur={() => setTimeout(() => setIsOpen(false), 150)}
                 >
-                  <option
-                    style={{ backgroundColor: "white", color: "#3C4CFF" }}
-                    value="All"
-                  >
+                  <option style={{ backgroundColor: "white", color: "#3C4CFF" }} value="All">
                     All
                   </option>
                   {allYears.map((year, idx) => (
@@ -358,11 +320,7 @@ const CareerGallery = () => {
                     stroke="currentColor"
                     strokeWidth={2}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
               </div>

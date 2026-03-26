@@ -39,12 +39,7 @@ export default function EventCard({
     <div className="container-main flex flex-col md:flex-row gap-6 mb-24 rounded-2xl shadow-md overflow-hidden">
       {/* Image */}
       <div className="md:w-1/3 px-3 w-full h-64 md:h-auto relative">
-        <Image
-          src={imageUrl}
-          alt={title}
-          fill
-          className="object-cover md:rounded-xl rounded-xl"
-        />
+        <Image src={imageUrl} alt={title} fill className="object-cover md:rounded-xl rounded-xl" />
       </div>
 
       {/* Content */}
@@ -72,9 +67,7 @@ export default function EventCard({
             </div>
           )}
 
-          <p className="!text-base font-light line-clamp-4 text-white mb-4">
-            {description}
-          </p>
+          <p className="!text-base font-light line-clamp-4 text-white mb-4">{description}</p>
         </div>
 
         <div className="mt-4">

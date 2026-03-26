@@ -491,16 +491,13 @@ export interface ProcessDataItem {
 export async function getDevelopmentDesignDetailsSitecoreSlug(
   slug: string,
 ): Promise<SitecoreDetail | null> {
-  const data = await client.request<SitecoreDetailResponse>(
-    developmentDesignDetailsSlugQuery,
-    {
-      filters: {
-        Slug: {
-          eq: `/${slug}`,
-        },
+  const data = await client.request<SitecoreDetailResponse>(developmentDesignDetailsSlugQuery, {
+    filters: {
+      Slug: {
+        eq: `/${slug}`,
       },
     },
-  );
+  });
 
   return data.sitecoreDetails?.[0] ?? null;
 }

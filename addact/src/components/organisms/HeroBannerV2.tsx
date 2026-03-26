@@ -35,10 +35,7 @@ const HeroBannerV2 = ({
           <h1 className="text-white mb-[10px] md:mb-[20px] !font-bold !text-[33px] md:!text-[45px] xl:!text-[50px] leading-[55px] 2xl:!text-[78px] xl:!leading-[70px] 2xl:!leading-[100px] uppercase">
             {title}
           </h1>
-          <div
-            className="title-head uppercase"
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
+          <div className="title-head uppercase" dangerouslySetInnerHTML={{ __html: description }} />
         </div>
 
         {/* Right: Logo */}

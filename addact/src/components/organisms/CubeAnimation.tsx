@@ -72,32 +72,30 @@ const Cubes: React.FC<CubesProps> = ({
   const tiltAt = useCallback(
     (rowCenter: number, colCenter: number) => {
       if (!sceneRef.current) return;
-      sceneRef.current
-        .querySelectorAll<HTMLDivElement>(".cube")
-        .forEach((cube) => {
-          const r = +cube.dataset.row!;
-          const c = +cube.dataset.col!;
-          const dist = Math.hypot(r - rowCenter, c - colCenter);
-          if (dist <= radius) {
-            const pct = 1 - dist / radius;
-            const angle = pct * maxAngle;
-            gsap.to(cube, {
-              duration: enterDur,
-              ease: easing,
-              overwrite: true,
-              rotateX: -angle,
-              rotateY: angle,
-            });
-          } else {
-            gsap.to(cube, {
-              duration: leaveDur,
-              ease: "power3.out",
-              overwrite: true,
-              rotateX: 0,
-              rotateY: 0,
-            });
-          }
-        });
+      sceneRef.current.querySelectorAll<HTMLDivElement>(".cube").forEach((cube) => {
+        const r = +cube.dataset.row!;
+        const c = +cube.dataset.col!;
+        const dist = Math.hypot(r - rowCenter, c - colCenter);
+        if (dist <= radius) {
+          const pct = 1 - dist / radius;
+          const angle = pct * maxAngle;
+          gsap.to(cube, {
+            duration: enterDur,
+            ease: easing,
+            overwrite: true,
+            rotateX: -angle,
+            rotateY: angle,
+          });
+        } else {
+          gsap.to(cube, {
+            duration: leaveDur,
+            ease: "power3.out",
+            overwrite: true,
+            rotateX: 0,
+            rotateY: 0,
+          });
+        }
+      });
     },
     [radius, maxAngle, enterDur, leaveDur, easing],
   );
@@ -114,9 +112,7 @@ const Cubes: React.FC<CubesProps> = ({
       const rowCenter = (e.clientY - rect.top) / cellH;
 
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() =>
-        tiltAt(rowCenter, colCenter),
-      );
+      rafRef.current = requestAnimationFrame(() => tiltAt(rowCenter, colCenter));
 
       idleTimerRef.current = setTimeout(() => {
         userActiveRef.current = false;
@@ -151,9 +147,7 @@ const Cubes: React.FC<CubesProps> = ({
       const rowCenter = (touch.clientY - rect.top) / cellH;
 
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(() =>
-        tiltAt(rowCenter, colCenter),
-      );
+      rafRef.current = requestAnimationFrame(() => tiltAt(rowCenter, colCenter));
 
       idleTimerRef.current = setTimeout(() => {
         userActiveRef.current = false;
@@ -197,16 +191,14 @@ const Cubes: React.FC<CubesProps> = ({
       const holdTime = baseHold / rippleSpeed;
 
       const rings: Record<number, HTMLDivElement[]> = {};
-      sceneRef.current
-        .querySelectorAll<HTMLDivElement>(".cube")
-        .forEach((cube) => {
-          const r = +cube.dataset.row!;
-          const c = +cube.dataset.col!;
-          const dist = Math.hypot(r - rowHit, c - colHit);
-          const ring = Math.round(dist);
-          if (!rings[ring]) rings[ring] = [];
-          rings[ring].push(cube);
-        });
+      sceneRef.current.querySelectorAll<HTMLDivElement>(".cube").forEach((cube) => {
+        const r = +cube.dataset.row!;
+        const c = +cube.dataset.col!;
+        const dist = Math.hypot(r - rowHit, c - colHit);
+        const ring = Math.round(dist);
+        if (!rings[ring]) rings[ring] = [];
+        rings[ring].push(cube);
+      });
 
       Object.keys(rings)
         .map(Number)
@@ -293,9 +285,7 @@ const Cubes: React.FC<CubesProps> = ({
     gridTemplateColumns: cubeSize
       ? `repeat(${gridSize}, ${cubeSize}px)`
       : `repeat(${gridSize}, 1fr)`,
-    gridTemplateRows: cubeSize
-      ? `repeat(${gridSize}, ${cubeSize}px)`
-      : `repeat(${gridSize}, 1fr)`,
+    gridTemplateRows: cubeSize ? `repeat(${gridSize}, ${cubeSize}px)` : `repeat(${gridSize}, 1fr)`,
     columnGap: colGap,
     rowGap: rowGap,
     perspective: "99999999px",
@@ -305,8 +295,7 @@ const Cubes: React.FC<CubesProps> = ({
   const wrapperStyle = {
     "--cube-face-border": borderStyle,
     "--cube-face-bg": faceColor,
-    "--cube-face-shadow":
-      shadow === true ? "0 0 6px rgba(0,0,0,.5)" : shadow || "none",
+    "--cube-face-shadow": shadow === true ? "0 0 6px rgba(0,0,0,.5)" : shadow || "none",
     ...(cubeSize
       ? {
           width: `${gridSize * cubeSize}px`,
@@ -317,11 +306,7 @@ const Cubes: React.FC<CubesProps> = ({
 
   return (
     <div className="relative w-full h-full" style={wrapperStyle}>
-      <div
-        ref={sceneRef}
-        className="grid w-full h-full p-2.5"
-        style={sceneStyle}
-      >
+      <div ref={sceneRef} className="grid w-full h-full p-2.5" style={sceneStyle}>
         {cells.map((_, r) =>
           cells.map((__, c) => (
             <div

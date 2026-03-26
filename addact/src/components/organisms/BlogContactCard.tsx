@@ -39,14 +39,10 @@ export default function BlogContactCard({ card }: { card?: ContactCard }) {
       )}
 
       {CardTitle && (
-        <div className="text-white text-[30px] font-bold mb-10 relative">
-          {CardTitle}
-        </div>
+        <div className="text-white text-[30px] font-bold mb-10 relative">{CardTitle}</div>
       )}
 
-      {CardDescription && (
-        <p className="!text-white !mb-[40px] relative">{CardDescription}</p>
-      )}
+      {CardDescription && <p className="!text-white !mb-[40px] relative">{CardDescription}</p>}
 
       {CardLink?.href && CardLink?.label && (
         <Link
