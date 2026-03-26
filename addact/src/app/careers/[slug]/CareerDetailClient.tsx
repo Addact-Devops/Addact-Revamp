@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useState, useRef, useMemo } from "react";
 import { notFound, usePathname } from "next/navigation";
-import ReCAPTCHA from "react-google-recaptcha";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { CareerDetailResponse } from "@/graphql/queries/getCareerDetails";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 // import "../../../styles/components/caseStudy-detail.scss";
@@ -36,6 +36,8 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
 
   const [errors, setErrors] = useState<CareerFormErrors>({});
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaError, setCaptchaError] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [resumeLoading, setResumeLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -46,10 +48,6 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
     () => pathname.split("/").filter(Boolean).pop(),
     [pathname],
   );
-
-  const onReCAPTCHAChange = useCallback((token: string | null) => {
-    setCaptchaToken(token);
-  }, []);
 
   if (!data) return notFound();
 
@@ -111,10 +109,18 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (honeypot.trim() !== "") {
+      console.warn("Honeypot field was filled - potential bot detected");
+      return;
+    }
+
+    const isCaptchaMissing = !captchaToken;
+    setCaptchaError(isCaptchaMissing);
+
     const validationErrors = validateCareerForm(form, resumeFile, captchaToken);
     setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length > 0) return;
+    if (Object.keys(validationErrors).length > 0 || isCaptchaMissing) return;
 
     setFormLoading(true);
 
@@ -141,6 +147,8 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
       data.careers_form.FormFields.RecipientEmails,
     );
     formData.append("pageTitle", `"${pageTitle}"`);
+    formData.append("honeypot", honeypot);
+    formData.append("turnstileToken", captchaToken || "");
 
     // Resume
     if (resumeFile) {
@@ -168,6 +176,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
           remarks: "",
           hyperlink: "",
         });
+        setHoneypot("");
         setResumeFile(null);
         setSubmitError(null);
         window.location.href = redirectUrl;
@@ -461,21 +470,43 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                     onChange={handleChange}
                   />
 
+                  <input
+                    type="text"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
+
                   <div className="flex justify-start w-full overflow-hidden">
-                    <div className="scale-90 origin-top sm:scale-100">
-                      <ReCAPTCHA
-                        sitekey={
-                          process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""
+                    <div className="recaptcha-wrapper flex flex-col overflow-visible">
+                      <Turnstile
+                        siteKey={
+                          process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
                         }
-                        onChange={onReCAPTCHAChange}
+                        onSuccess={(token) => {
+                          setCaptchaToken(token);
+                          setCaptchaError(false);
+                        }}
+                        onExpire={() => {
+                          setCaptchaToken(null);
+                        }}
+                        onError={() => {
+                          setCaptchaToken(null);
+                        }}
+                        options={{
+                          size: "normal",
+                        }}
                       />
+                      {captchaError && !captchaToken && (
+                        <p className="mt-1 text-sm text-red-500">
+                          Please complete the captcha.
+                        </p>
+                      )}
                     </div>
                   </div>
-                  {errors.captcha && (
-                    <p className="text-red-600 text-sm mt-2">
-                      {errors.captcha}
-                    </p>
-                  )}
 
                   {submitError && (
                     <p className="text-red-600 text-sm rounded-md bg-red-50 border border-red-200 px-4 py-2">
@@ -484,7 +515,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                   )}
                   <button
                     type="submit"
-                    disabled={formLoading || !captchaToken}
+                    disabled={formLoading}
                     className="bg-[#3C4CFF] text-white px-6 py-2 rounded-md hover:bg-[#3440CB] shadow-sm mt-4 disabled:!cursor-not-allowed disabled:opacity-50 transition-all duration-200"
                   >
                     {formLoading
