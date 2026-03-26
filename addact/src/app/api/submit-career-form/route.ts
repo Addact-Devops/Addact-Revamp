@@ -4,106 +4,159 @@ import nodemailer from "nodemailer";
 import { formatDateTime } from "@/utils/dateFormatter";
 
 export const config = {
-    api: {
-        bodyParser: false,
-    },
+  api: {
+    bodyParser: false,
+  },
 };
 
 export async function POST(req: NextRequest) {
-    try {
-        const formData = await req.formData();
-        const name = formData.get("name") as string;
-        const email = formData.get("email") as string;
-        const phone = formData.get("phone") as string;
-        const currentCTC = formData.get("currentCTC") as string;
-        const expectedCTC = formData.get("expectedCTC") as string;
-        const experience = formData.get("experience") as string;
-        const cityName = formData.get("cityName") as string;
-        const linkedInProfile = formData.get("linkedInProfile") as string;
-        const remarks = formData.get("remarks") as string;
-        const hyperlink = formData.get("hyperlink") as string;
-        const sheetName = formData.get("sheetName") as string;
-        const RecipientEmails = formData.get("RecipientEmails") as string;
-        const pageTitle = formData.get("pageTitle") as string;
+  try {
+    const formData = await req.formData();
+    const turnstileToken = formData.get("turnstileToken") as string;
+    const honeypot = (formData.get("honeypot") as string) || "";
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const phone = formData.get("phone") as string;
+    const currentCTC = formData.get("currentCTC") as string;
+    const expectedCTC = formData.get("expectedCTC") as string;
+    const experience = formData.get("experience") as string;
+    const cityName = formData.get("cityName") as string;
+    const linkedInProfile = formData.get("linkedInProfile") as string;
+    const remarks = formData.get("remarks") as string;
+    const hyperlink = formData.get("hyperlink") as string;
+    const sheetName = formData.get("sheetName") as string;
+    const RecipientEmails = formData.get("RecipientEmails") as string;
+    const pageTitle = formData.get("pageTitle") as string;
 
-        const file = formData.get("resume") as File | null;
+    const file = formData.get("resume") as File | null;
 
-        const arrayBuffer = file ? await file.arrayBuffer() : null;
+    const arrayBuffer = file ? await file.arrayBuffer() : null;
 
-        const ip =
-            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "Unknown";
 
-        const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-        const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+    if (honeypot.trim() !== "") {
+      return NextResponse.json(
+        { message: "Bot submission detected" },
+        { status: 400 },
+      );
+    }
 
-        const smtpHost = process.env.SMTP_HOST;
-        const smtpUser = process.env.SMTP_USER;
-        const smtpPass = process.env.SMTP_PASS;
+    if (!turnstileToken) {
+      return NextResponse.json(
+        { message: "Captcha token is missing" },
+        { status: 400 },
+      );
+    }
 
-        if (!clientEmail || !privateKey || !spreadsheetId) {
-            return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
-        }
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+    if (!turnstileSecret) {
+      console.error("Missing TURNSTILE_SECRET_KEY in environment variables");
+      return NextResponse.json(
+        { message: "Server configuration error" },
+        { status: 500 },
+      );
+    }
 
-        const auth = new google.auth.JWT({
-            email: clientEmail,
-            key: privateKey,
-            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-        });
+    const verifyFormData = new FormData();
+    verifyFormData.append("secret", turnstileSecret);
+    verifyFormData.append("response", turnstileToken);
+    verifyFormData.append("remoteip", ip);
 
-        const sheets = google.sheets({ version: "v4", auth });
+    const turnstileRes = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        body: verifyFormData,
+      },
+    );
 
-        const now = new Date();
-        await sheets.spreadsheets.values.append({
-            spreadsheetId,
-            range: sheetName,
-            valueInputOption: "RAW",
-            insertDataOption: "INSERT_ROWS",
-            requestBody: {
-                values: [
-                    [
-                        name,
-                        email,
-                        phone,
-                        currentCTC,
-                        expectedCTC,
-                        experience,
-                        cityName,
-                        linkedInProfile,
-                        hyperlink,
-                        remarks,
-                        pageTitle,
-                        formatDateTime(now),
-                        ip,
-                    ],
-                ],
-            },
-        });
+    const turnstileOutcome = await turnstileRes.json();
 
-        // Send Email
-        const transporter = nodemailer.createTransport({
-            host: smtpHost,
-            port: 587,
-            secure: false,
-            auth: {
-                user: smtpUser,
-                pass: smtpPass,
-            },
-        });
+    if (!turnstileOutcome.success) {
+      console.error("Turnstile validation failed:", turnstileOutcome);
+      return NextResponse.json(
+        { message: "Captcha validation failed. Are you a bot?" },
+        { status: 403 },
+      );
+    }
 
-        const recipientList = RecipientEmails
-            ? RecipientEmails.split(",")
-                  .map((email: string) => email.trim())
-                  .filter(Boolean)
-            : [];
+    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
-        const currentYear = new Date().getFullYear();
+    const smtpHost = process.env.SMTP_HOST;
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
 
-        await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
-            to: recipientList,
-            subject: `Application for ${pageTitle} `,
-            html: `
+    if (!clientEmail || !privateKey || !spreadsheetId) {
+      return NextResponse.json(
+        { message: "Missing Google Sheets credentials" },
+        { status: 500 },
+      );
+    }
+
+    const auth = new google.auth.JWT({
+      email: clientEmail,
+      key: privateKey,
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
+    const sheets = google.sheets({ version: "v4", auth });
+
+    const now = new Date();
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: sheetName,
+      valueInputOption: "RAW",
+      insertDataOption: "INSERT_ROWS",
+      requestBody: {
+        values: [
+          [
+            name,
+            email,
+            phone,
+            currentCTC,
+            expectedCTC,
+            experience,
+            cityName,
+            linkedInProfile,
+            hyperlink,
+            remarks,
+            pageTitle,
+            formatDateTime(now),
+            ip,
+          ],
+        ],
+      },
+    });
+
+    // Send Email
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: 587,
+      secure: false,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+
+    const recipientList = RecipientEmails
+      ? RecipientEmails.split(",")
+          .map((email: string) => email.trim())
+          .filter(Boolean)
+      : [];
+
+    const currentYear = new Date().getFullYear();
+
+    await transporter.sendMail({
+      from: `"Addact Technologies" <info@addact.net>`,
+      to: recipientList,
+      subject: `Application for ${pageTitle} `,
+      html: `
            <html>
                     <head>
                         <title>Addact - New Candidate Application Received</title>
@@ -631,21 +684,21 @@ export async function POST(req: NextRequest) {
     </div>
   </body>
                 </html>`,
-            attachments:
-                file && arrayBuffer
-                    ? [
-                          {
-                              filename: file.name,
-                              content: Buffer.from(arrayBuffer),
-                          },
-                      ]
-                    : [],
-        });
-        await transporter.sendMail({
-          from: `"Addact Technologies" <info@addact.net>`,
-          to: email,
-          subject: "Thanks for Your Submission!",
-          html: `
+      attachments:
+        file && arrayBuffer
+          ? [
+              {
+                filename: file.name,
+                content: Buffer.from(arrayBuffer),
+              },
+            ]
+          : [],
+    });
+    await transporter.sendMail({
+      from: `"Addact Technologies" <info@addact.net>`,
+      to: email,
+      subject: "Thanks for Your Submission!",
+      html: `
                  <html>
                     <head>
                         <title>Addact - Career Form Submission</title>
@@ -1149,16 +1202,19 @@ export async function POST(req: NextRequest) {
   </body>
                 </html>
             `,
-        });
+    });
 
-        return NextResponse.json({ message: "Success" });
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            console.error("Google Sheets API error:", error.message);
-            return NextResponse.json({ message: "Error", error: error.message }, { status: 500 });
-        } else {
-            console.error("Unknown error:", error);
-            return NextResponse.json({ message: "Unknown error" }, { status: 500 });
-        }
+    return NextResponse.json({ message: "Success" });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Google Sheets API error:", error.message);
+      return NextResponse.json(
+        { message: "Error", error: error.message },
+        { status: 500 },
+      );
+    } else {
+      console.error("Unknown error:", error);
+      return NextResponse.json({ message: "Unknown error" }, { status: 500 });
     }
+  }
 }

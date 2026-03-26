@@ -20,6 +20,7 @@ export interface ContactFormData {
   email: string;
   company: string;
   message: string;
+  honeypot: string;
 }
 
 export interface FormErrors {
@@ -116,6 +117,7 @@ const ContactUs = ({
     email: "",
     company: "",
     message: "",
+    honeypot: "",
   });
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaError, setCaptchaError] = useState(false);
@@ -201,6 +203,13 @@ const ContactUs = ({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // Honeypot validation - reject if filled (indicates bot)
+    if (formData.honeypot.trim() !== "") {
+      console.warn("Honeypot field was filled - potential bot detected");
+      return;
+    }
+
     const validationErrors = validate();
     const isCaptchaMissing = !captchaToken;
     setCaptchaError(isCaptchaMissing);
@@ -231,6 +240,7 @@ const ContactUs = ({
         description: formData.message,
         pageTitle,
         recipientEmails: data.RecipientEmails,
+        honeypot: formData.honeypot,
         turnstileToken: captchaToken,
       };
 
@@ -242,7 +252,13 @@ const ContactUs = ({
         body: JSON.stringify(payload),
       });
       if (res.ok) {
-        setFormData({ name: "", email: "", company: "", message: "" });
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          message: "",
+          honeypot: "",
+        });
         window.location.href = redirectUrl;
       }
     } catch (err) {
@@ -343,6 +359,18 @@ const ContactUs = ({
                 label="Share Your Requirements"
                 multiline
                 rows={2}
+              />
+
+              {/* Honeypot field - hidden from users */}
+              <input
+                type="text"
+                name="honeypot"
+                value={formData.honeypot}
+                onChange={handleChange}
+                className="hidden"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
               />
 
               <div className="flex justify-center sm:justify-start overflow-visible">
@@ -525,6 +553,18 @@ const ContactUs = ({
                     placeholder="Type here..."
                   ></textarea>
                 </div>
+
+                {/* Honeypot field - hidden from users */}
+                <input
+                  type="text"
+                  name="honeypot"
+                  value={formData.honeypot}
+                  onChange={handleChange}
+                  style={{ display: "none" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
 
                 <div className="flex justify-start overflow-visible">
                   <div

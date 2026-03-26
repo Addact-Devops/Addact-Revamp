@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { Turnstile } from "@marsidev/react-turnstile";
 import RichText from "../atom/richText";
 
 type DownloadFormProps = {
@@ -39,12 +39,22 @@ const DownloadForm = ({
 }: DownloadFormProps) => {
   const [captchaError, setCaptchaError] = useState(false);
 
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    honeypot: "",
+  });
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (formData.honeypot.trim() !== "") {
+      console.warn("Honeypot field was filled - potential bot detected");
+      return;
+    }
 
     const isCaptchaMissing = !captchaToken;
     setCaptchaError(isCaptchaMissing);
@@ -62,6 +72,7 @@ const DownloadForm = ({
           sheetName,
           RecipientEmails,
           pageTitle,
+          turnstileToken: captchaToken,
         }),
       });
 
@@ -71,6 +82,9 @@ const DownloadForm = ({
         console.error("Submission failed:", result.message);
         return;
       }
+
+      setFormData({ name: "", email: "", phone: "", honeypot: "" });
+      setCaptchaToken(null);
 
       if (redirectUrl) {
         window.location.href = redirectUrl;
@@ -135,17 +149,33 @@ const DownloadForm = ({
         className="w-full p-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-red-400"
       />
 
+      <input
+        type="text"
+        value={formData.honeypot}
+        onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
+        className="hidden"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+      />
+
       <div className="flex justify-center">
-        <div className="recaptcha-wrapper">
-          <ReCAPTCHA
-            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-            onChange={(token: string | null) => {
+        <div className="recaptcha-wrapper flex flex-col overflow-visible">
+          <Turnstile
+            siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+            onSuccess={(token) => {
               setCaptchaToken(token);
-              if (token) {
-                setCaptchaError(false);
-              }
+              setCaptchaError(false);
             }}
-            size="normal"
+            onExpire={() => {
+              setCaptchaToken(null);
+            }}
+            onError={() => {
+              setCaptchaToken(null);
+            }}
+            options={{
+              size: "normal",
+            }}
           />
           {captchaError && !captchaToken && (
             <p className="mt-1 text-sm text-red-500">
