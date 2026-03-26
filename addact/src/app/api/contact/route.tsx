@@ -4,96 +4,155 @@ import nodemailer from "nodemailer";
 import { formatDateTime } from "@/utils/dateFormatter";
 
 function escapeHtml(unsafe: string) {
-    return unsafe
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+  return unsafe
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 export async function POST(req: NextRequest) {
-    try {
-        const body = await req.json();
+  try {
+    const body = await req.json();
 
-        // Required fields
-        const name = body.name || "N/A";
-        const email = body.email || "N/A";
-        const companyName = body.companyName || "";
-        const descriptionRaw = body.description || "";
-        const pageTitle = body.pageTitle || "";
-        const recipientEmails = body.recipientEmails || "";
+    // 1. Extract the Turnstile token from the request
+    const turnstileToken = body.turnstileToken;
 
-        const ip =
-            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "Unknown";
 
-        const plainTextForSheets = descriptionRaw
-            .replace(/\{TAB\}/g, "\t")
-            .replace(/\{ENTER\}/g, "\n")
-            .replace(/\{EOL\}/g, "\n");
+    // 2. Perform Turnstile Validation BEFORE anything else
+    if (!turnstileToken) {
+      return NextResponse.json(
+        { message: "Captcha token is missing" },
+        { status: 400 },
+      );
+    }
 
-        const escaped = escapeHtml(plainTextForSheets);
-        const htmlForEmail = escaped
-            .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;") // 4 spaces per tab
-            .replace(/\n/g, "<br/>");
+    const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+    if (!turnstileSecret) {
+      console.error("Missing TURNSTILE_SECRET_KEY in environment variables");
+      return NextResponse.json(
+        { message: "Server configuration error" },
+        { status: 500 },
+      );
+    }
 
-        const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-        const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+    // Verify the token with Cloudflare
+    const verifyFormData = new FormData();
+    verifyFormData.append("secret", turnstileSecret);
+    verifyFormData.append("response", turnstileToken);
+    verifyFormData.append("remoteip", ip); // Passing the IP adds an extra layer of security
 
-        if (!clientEmail || !privateKey || !spreadsheetId) {
-            return NextResponse.json({ message: "Missing Google Sheets credentials" }, { status: 500 });
-        }
+    const turnstileRes = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        body: verifyFormData,
+      },
+    );
 
-        const auth = new google.auth.JWT({
-            email: clientEmail,
-            key: privateKey,
-            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-        });
+    const turnstileOutcome = await turnstileRes.json();
 
-        const sheets = google.sheets({ version: "v4", auth });
+    if (!turnstileOutcome.success) {
+      console.error("Turnstile validation failed:", turnstileOutcome);
+      return NextResponse.json(
+        { message: "Captcha validation failed. Are you a bot?" },
+        { status: 403 },
+      );
+    }
+    // --- End of Turnstile Validation ---
 
-        const now = new Date();
-        const currentYear = new Date().getFullYear();
-        const rowValues = [name, email, companyName, , plainTextForSheets, pageTitle, formatDateTime(now), ip];
+    // Required fields
+    const name = body.name || "N/A";
+    const email = body.email || "N/A";
+    const companyName = body.companyName || "";
+    const descriptionRaw = body.description || "";
+    const pageTitle = body.pageTitle || "";
+    const recipientEmails = body.recipientEmails || "";
 
-        await sheets.spreadsheets.values.append({
-            spreadsheetId,
-            range: "Contact_US",
-            valueInputOption: "RAW",
-            insertDataOption: "INSERT_ROWS",
-            requestBody: {
-                values: [rowValues],
-            },
-        });
+    const plainTextForSheets = descriptionRaw
+      .replace(/\{TAB\}/g, "\t")
+      .replace(/\{ENTER\}/g, "\n")
+      .replace(/\{EOL\}/g, "\n");
 
-        const smtpHost = process.env.SMTP_HOST;
-        const smtpUser = process.env.SMTP_USER;
-        const smtpPass = process.env.SMTP_PASS;
+    const escaped = escapeHtml(plainTextForSheets);
+    const htmlForEmail = escaped
+      .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;") // 4 spaces per tab
+      .replace(/\n/g, "<br/>");
 
-        const transporter = nodemailer.createTransport({
-            host: smtpHost,
-            port: 587,
-            secure: false,
-            auth: {
-                user: smtpUser,
-                pass: smtpPass,
-            },
-        });
+    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
-        const recipientList = recipientEmails
-            ? recipientEmails
-                  .split(",")
-                  .map((mail: string) => mail.trim())
-                  .filter(Boolean)
-            : [];
+    if (!clientEmail || !privateKey || !spreadsheetId) {
+      return NextResponse.json(
+        { message: "Missing Google Sheets credentials" },
+        { status: 500 },
+      );
+    }
 
-        // Send confirmation email
-        await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
-            to: recipientList,
-            subject: "Addact - Business Inquiry",
-            html: `
+    const auth = new google.auth.JWT({
+      email: clientEmail,
+      key: privateKey,
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
+    const sheets = google.sheets({ version: "v4", auth });
+
+    const now = new Date();
+    const currentYear = new Date().getFullYear();
+    const rowValues = [
+      name,
+      email,
+      companyName,
+      ,
+      plainTextForSheets,
+      pageTitle,
+      formatDateTime(now),
+      ip,
+    ];
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: "Contact_US",
+      valueInputOption: "RAW",
+      insertDataOption: "INSERT_ROWS",
+      requestBody: {
+        values: [rowValues],
+      },
+    });
+
+    const smtpHost = process.env.SMTP_HOST;
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+
+    const transporter = nodemailer.createTransport({
+      host: smtpHost,
+      port: 587,
+      secure: false,
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    });
+
+    const recipientList = recipientEmails
+      ? recipientEmails
+          .split(",")
+          .map((mail: string) => mail.trim())
+          .filter(Boolean)
+      : [];
+
+    // Send confirmation email
+    await transporter.sendMail({
+      from: `"Addact Technologies" <info@addact.net>`,
+      to: recipientList,
+      subject: "Addact - Business Inquiry",
+      html: `
         <html>
         <head>
              <style>
@@ -413,12 +472,12 @@ export async function POST(req: NextRequest) {
   </body>
         </html>
       `,
-        });
-        await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
-            to: email,
-            subject: "Addact - Thank You for Your Inquiry",
-            html: `
+    });
+    await transporter.sendMail({
+      from: `"Addact Technologies" <info@addact.net>`,
+      to: email,
+      subject: "Addact - Thank You for Your Inquiry",
+      html: `
         <html>
          <head>
              <style>
@@ -620,8 +679,8 @@ export async function POST(req: NextRequest) {
                     </td>
                   </tr>
                   ${
-                      plainTextForSheets
-                          ? `
+                    plainTextForSheets
+                      ? `
                   <tr>
                     <td
                       valign="top"
@@ -649,7 +708,7 @@ export async function POST(req: NextRequest) {
                     </td>
                   </tr>
                   `
-                          : ""
+                      : ""
                   }
                 </table>
               </td>
@@ -740,16 +799,19 @@ export async function POST(req: NextRequest) {
 </body>
         </html>
       `,
-        });
+    });
 
-        return NextResponse.json({ message: "Success" });
-    } catch (error: unknown) {
-        if (error instanceof Error) {
-            console.error("Google Sheets API error:", error.message);
-            return NextResponse.json({ message: "Error", error: error.message }, { status: 500 });
-        } else {
-            console.error("Unknown error:", error);
-            return NextResponse.json({ message: "Unknown error" }, { status: 500 });
-        }
+    return NextResponse.json({ message: "Success" });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Google Sheets API error:", error.message);
+      return NextResponse.json(
+        { message: "Error", error: error.message },
+        { status: 500 },
+      );
+    } else {
+      console.error("Unknown error:", error);
+      return NextResponse.json({ message: "Unknown error" }, { status: 500 });
     }
+  }
 }
