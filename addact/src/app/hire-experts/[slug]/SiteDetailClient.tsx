@@ -23,63 +23,68 @@ import DetailPageServices from "@/components/organisms/DetailPageServices";
 // );
 
 const SiteDetailClient = ({ data }: { data: HireExpert }) => {
-    const [pageData, setPageData] = useState<HireExpert | null>(data);
-    const [loading, setLoading] = useState(false); // set false, we already have data
+  const [pageData, setPageData] = useState<HireExpert | null>(data);
+  const [loading, setLoading] = useState(false); // set false, we already have data
 
-    const params = useParams();
-    const slug = typeof params?.slug === "string" ? params.slug : Array.isArray(params?.slug) ? params.slug[0] : "";
+  const params = useParams();
+  const slug =
+    typeof params?.slug === "string"
+      ? params.slug
+      : Array.isArray(params?.slug)
+        ? params.slug[0]
+        : "";
 
-    useEffect(() => {
-        if (!pageData && slug) {
-            setLoading(true);
-            getHireExpertsSlug(slug)
-                .then((res) => {
-                    setPageData(res);
-                })
-                .catch((err) => {
-                    console.error("Error fetching service detail:", err);
-                })
-                .finally(() => setLoading(false));
-        }
-    }, [slug, pageData]);
-
-    if (loading) {
-        return <div className='text-white p-8'>Loading...</div>;
+  useEffect(() => {
+    if (!pageData && slug) {
+      setLoading(true);
+      getHireExpertsSlug(slug)
+        .then((res) => {
+          setPageData(res);
+        })
+        .catch((err) => {
+          console.error("Error fetching service detail:", err);
+        })
+        .finally(() => setLoading(false));
     }
+  }, [slug, pageData]);
 
-    if (!pageData) {
-        return <div className='text-white p-8'>Page Not Found</div>;
-    }
+  if (loading) {
+    return <div className="text-white p-8">Loading...</div>;
+  }
 
-    const bannerData = pageData.Banner?.Banner?.[0];
+  if (!pageData) {
+    return <div className="text-white p-8">Page Not Found</div>;
+  }
 
-    return (
-        <main className='bg-dark'>
-            <HeroBanner
-                title={bannerData?.BannerTitle ?? ""}
-                description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
-                button={{
-                    label: bannerData?.BannerLink?.label ?? "",
-                    url: bannerData?.BannerLink?.href ?? "",
-                }}
-                isVideo={Boolean(bannerData?.isVideo)}
-                videoUrl={bannerData?.videoLink ?? ""}
-                isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
-                backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-            />
-            <DetailPageServices data={pageData?.ourService} />
-            {pageData?.our_process && <HowEngagementProcessWorks data={pageData?.our_process} />}
-            {/* {pageData?.our_service && (
+  const bannerData = pageData.Banner?.Banner?.[0];
+
+  return (
+    <main className="bg-dark">
+      <HeroBanner
+        title={bannerData?.BannerTitle ?? ""}
+        description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
+        button={{
+          label: bannerData?.BannerLink?.label ?? "",
+          url: bannerData?.BannerLink?.href ?? "",
+        }}
+        isVideo={Boolean(bannerData?.isVideo)}
+        videoUrl={bannerData?.videoLink ?? ""}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
+        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+      />
+      <DetailPageServices data={pageData?.ourService} />
+      {pageData?.our_process && <HowEngagementProcessWorks data={pageData?.our_process} />}
+      {/* {pageData?.our_service && (
         <OurServicesWithTabs data={pageData.our_service} />
       )} */}
-            <IndustryMarqueeCards data={pageData?.industry} />
-            {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
-            <ClientTestimonials />
-            <OurInsights />
-            <FAQ data={pageData.faq} />
-            {data?.cta && <CtaBanner data={data?.cta} />}
-        </main>
-    );
+      <IndustryMarqueeCards data={pageData?.industry} />
+      {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
+      <ClientTestimonials />
+      <OurInsights />
+      <FAQ data={pageData.faq} />
+      {data?.cta && <CtaBanner data={data?.cta} />}
+    </main>
+  );
 };
 
 export default SiteDetailClient;

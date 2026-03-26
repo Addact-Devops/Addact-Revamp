@@ -30,10 +30,7 @@ export default async function ProjectCostEstimatorPage() {
             <h2 className="text-[28px] md:text-[40px] 2xl:text-[60px] text-[#0F0F0F] !font-[900] mb-[20px]">
               {content?.Title}
             </h2>
-            <div
-              className="subtext"
-              dangerouslySetInnerHTML={{ __html: content?.Description }}
-            />
+            <div className="subtext" dangerouslySetInnerHTML={{ __html: content?.Description }} />
           </div>
         </div>
       </section>

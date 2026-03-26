@@ -400,19 +400,14 @@ export interface OurServiceData {
 }
 
 // Fetch function
-export async function getServiceDetailBySlug(
-  slug: string,
-): Promise<SubServicePage> {
-  const data = await client.request<ServiceDetailResponse>(
-    ServiceDetailBySlug,
-    {
-      filters: {
-        Slug: {
-          eq: `/${slug}`,
-        },
+export async function getServiceDetailBySlug(slug: string): Promise<SubServicePage> {
+  const data = await client.request<ServiceDetailResponse>(ServiceDetailBySlug, {
+    filters: {
+      Slug: {
+        eq: `/${slug}`,
       },
     },
-  );
+  });
 
   return data.subServicePages?.[0];
 }

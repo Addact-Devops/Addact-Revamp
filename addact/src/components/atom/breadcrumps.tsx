@@ -19,9 +19,7 @@ const Breadcrumps: FC<Props> = ({ crumbs, className }) => {
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`${
-        className ?? ""
-      } lg:mt-16  sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar`}
+      className={`${className ?? ""} lg:mt-16  sm:mx-0 sm:px-0 overflow-x-auto no-scrollbar`}
     >
       <ol className="flex items-center gap-2 sm:gap-3 text-sm text-white !list-none !pl-0 whitespace-nowrap !mt-0 !mb-0">
         {crumbs.map((crumb, idx) => {
@@ -55,12 +53,8 @@ const Breadcrumps: FC<Props> = ({ crumbs, className }) => {
                 ) : (
                   <span
                     aria-current={crumb.isCurrent ? "page" : undefined}
-                    className={`!text-white ${
-                      crumb.isCurrent ? "font-medium" : ""
-                    } truncate ${
-                      isLast
-                        ? "max-w-[60vw] sm:max-w-[40ch] !text-[14px]"
-                        : "!text-[14px]"
+                    className={`!text-white ${crumb.isCurrent ? "font-medium" : ""} truncate ${
+                      isLast ? "max-w-[60vw] sm:max-w-[40ch] !text-[14px]" : "!text-[14px]"
                     }`}
                   >
                     {crumb.label}

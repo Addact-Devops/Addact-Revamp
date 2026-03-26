@@ -51,9 +51,10 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
             );
           }
 
-          const [tag, content] = Object.entries(block).find(
-            ([key]) => key !== "id",
-          ) as [string, string];
+          const [tag, content] = Object.entries(block).find(([key]) => key !== "id") as [
+            string,
+            string,
+          ];
 
           const tagName: TagName | "div" = allowedTags.includes(tag as TagName)
             ? (tag as TagName)
@@ -106,10 +107,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
 
                 {/* Optional Link */}
                 {card.Link?.href && (
-                  <Link
-                    href={card.Link.href}
-                    className="text-[#3C4CFF] underline mt-2 block"
-                  >
+                  <Link href={card.Link.href} className="text-[#3C4CFF] underline mt-2 block">
                     Learn more
                   </Link>
                 )}

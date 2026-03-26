@@ -524,9 +524,7 @@ export interface ProcessDataItem {
 
 // Fetch function
 export async function getDigitalMarketing(): Promise<DigitalMarketingService> {
-  const data = await client.request<DigitalMarketingResponse>(
-    digitalMarketingQuery,
-  );
+  const data = await client.request<DigitalMarketingResponse>(digitalMarketingQuery);
 
   return data.digitalMarketingService;
 }

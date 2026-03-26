@@ -34,9 +34,7 @@ interface DrawerFieldProps {
   name: string;
   label: string;
   value: string;
-  onChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   error?: string;
   autoComplete?: string;
   required?: boolean;
@@ -105,12 +103,7 @@ const DrawerField = ({
   );
 };
 
-const ContactUs = ({
-  data,
-  isDrawer = false,
-  isOpen = false,
-  onClose,
-}: IProps) => {
+const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose }: IProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -175,9 +168,7 @@ const ContactUs = ({
     return () => document.removeEventListener("keydown", handleEsc);
   }, [isDrawer, isOpen, onClose]);
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -313,10 +304,7 @@ const ContactUs = ({
               </button>
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col gap-6 md:gap-7"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:gap-7">
               <DrawerField
                 id="name"
                 name="name"
@@ -395,9 +383,7 @@ const ContactUs = ({
                     }}
                   />
                   {captchaError && !captchaToken && (
-                    <p className="mt-1 text-sm text-red-500">
-                      Please complete the captcha.
-                    </p>
+                    <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
                   )}
                 </div>
               </div>
@@ -443,10 +429,7 @@ const ContactUs = ({
   }
 
   return (
-    <section
-      className="w-full text-white md:py-12 pb-[100px] px-4"
-      id="contact-us"
-    >
+    <section className="w-full text-white md:py-12 pb-[100px] px-4" id="contact-us">
       <div className="container-main mx-auto !px-[10px] lg:!px-[20px] xl:!px-4">
         <div className="border-gray-700 border">
           <div className="flex flex-col justify-between">
@@ -469,10 +452,7 @@ const ContactUs = ({
               >
                 <div className="grid md:grid-cols-2 gap-6 mb-[40px]">
                   <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-base md:text-xl font-semibold mb-1"
-                    >
+                    <label htmlFor="name" className="block text-base md:text-xl font-semibold mb-1">
                       Your Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -484,9 +464,7 @@ const ContactUs = ({
                       className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
                       placeholder="Type your name here"
                     />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                    )}
+                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                   </div>
                   <div>
                     <label
@@ -504,11 +482,7 @@ const ContactUs = ({
                       className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
                       placeholder="Type your email here"
                     />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.email}
-                      </p>
-                    )}
+                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                   </div>
                 </div>
 
@@ -528,11 +502,7 @@ const ContactUs = ({
                     className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
                     placeholder="Type your company name here"
                   />
-                  {errors.company && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.company}
-                    </p>
-                  )}
+                  {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company}</p>}
                 </div>
 
                 <div className="mb-[40px]">
@@ -588,9 +558,7 @@ const ContactUs = ({
                       }}
                     />
                     {captchaError && !captchaToken && (
-                      <p className="mt-1 text-sm text-red-500">
-                        Please complete the captcha.
-                      </p>
+                      <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
                     )}
                   </div>
                 </div>

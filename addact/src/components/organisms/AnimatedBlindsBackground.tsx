@@ -31,10 +31,7 @@ const hexToRGB = (hex: string): [number, number, number] => {
   return [r, g, b];
 };
 const prepStops = (stops?: string[]) => {
-  const base = (stops && stops.length ? stops : ["#FF9FFC", "#5227FF"]).slice(
-    0,
-    MAX_COLORS,
-  );
+  const base = (stops && stops.length ? stops : ["#FF9FFC", "#5227FF"]).slice(0, MAX_COLORS);
   if (base.length === 1) base.push(base[0]);
   while (base.length < MAX_COLORS) base.push(base[base.length - 1]);
   const arr: [number, number, number][] = [];
@@ -76,9 +73,7 @@ const AnimatedBlindsBackground: React.FC<GradientBlindsProps> = ({
     if (!container) return;
 
     const renderer = new Renderer({
-      dpr:
-        dpr ??
-        (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1),
+      dpr: dpr ?? (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1),
       alpha: true,
       antialias: true,
     });
@@ -278,20 +273,11 @@ void main() {
     const resize = () => {
       const rect = container.getBoundingClientRect();
       renderer.setSize(rect.width, rect.height);
-      uniforms.iResolution.value = [
-        gl.drawingBufferWidth,
-        gl.drawingBufferHeight,
-        1,
-      ];
+      uniforms.iResolution.value = [gl.drawingBufferWidth, gl.drawingBufferHeight, 1];
 
       if (blindMinWidth && blindMinWidth > 0) {
-        const maxByMinWidth = Math.max(
-          1,
-          Math.floor(rect.width / blindMinWidth),
-        );
-        const effective = blindCount
-          ? Math.min(blindCount, maxByMinWidth)
-          : maxByMinWidth;
+        const maxByMinWidth = Math.max(1, Math.floor(rect.width / blindMinWidth));
+        const effective = blindCount ? Math.min(blindCount, maxByMinWidth) : maxByMinWidth;
         uniforms.uBlindCount.value = Math.max(1, effective);
       } else {
         uniforms.uBlindCount.value = Math.max(1, blindCount);
@@ -356,10 +342,7 @@ void main() {
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }
-      const callIfFn = <T extends object, K extends keyof T>(
-        obj: T | null,
-        key: K,
-      ) => {
+      const callIfFn = <T extends object, K extends keyof T>(obj: T | null, key: K) => {
         if (obj && typeof obj[key] === "function") {
           (obj[key] as unknown as () => void).call(obj);
         }
@@ -367,10 +350,7 @@ void main() {
       callIfFn(programRef.current, "remove");
       callIfFn(geometryRef.current, "remove");
       callIfFn(meshRef.current as unknown as { remove?: () => void }, "remove");
-      callIfFn(
-        rendererRef.current as unknown as { destroy?: () => void },
-        "destroy",
-      );
+      callIfFn(rendererRef.current as unknown as { destroy?: () => void }, "destroy");
       programRef.current = null;
       geometryRef.current = null;
       meshRef.current = null;

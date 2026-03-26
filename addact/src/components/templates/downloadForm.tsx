@@ -178,9 +178,7 @@ const DownloadForm = ({
             }}
           />
           {captchaError && !captchaToken && (
-            <p className="mt-1 text-sm text-red-500">
-              Please complete the captcha.
-            </p>
+            <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
           )}
         </div>
       </div>

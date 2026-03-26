@@ -3,10 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CTA } from "@/graphql/queries/getHomePage";
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 import { RightArrowIcon } from "../atom/icons";
 import type { CSSProperties } from "react";
 
@@ -22,8 +19,7 @@ const CtaBanner = ({ data }: IProps) => {
   const isIndustriesPage = pathname?.startsWith("/industries/");
 
   const desktopUrl = data?.CTAImage?.[0]?.Image?.url ?? "";
-  const staticMobileUrl =
-    "https://d3l7d9gtq0bnch.cloudfront.net/cta_bg_mobile_dc22d2edd3.png";
+  const staticMobileUrl = "https://d3l7d9gtq0bnch.cloudfront.net/cta_bg_mobile_dc22d2edd3.png";
 
   // On industries/* use static image for mobile, else use desktop image for both
   const mobileUrl = isIndustriesPage ? staticMobileUrl : desktopUrl;
@@ -62,12 +58,7 @@ const CtaBanner = ({ data }: IProps) => {
             fill="none"
             className="w-[619px] h-auto"
           >
-            <foreignObject
-              x="-13.3538"
-              y="-13.3538"
-              width="725.11"
-              height="679.708"
-            >
+            <foreignObject x="-13.3538" y="-13.3538" width="725.11" height="679.708">
               <div
                 style={{
                   backdropFilter: "blur(6.68px)",
@@ -91,10 +82,7 @@ const CtaBanner = ({ data }: IProps) => {
               />
             </g>
             <defs>
-              <clipPath
-                id="bgblur_0_18204_4552_clip_path"
-                transform="translate(13.3538 13.3538)"
-              >
+              <clipPath id="bgblur_0_18204_4552_clip_path" transform="translate(13.3538 13.3538)">
                 <path d="M698.403 653H570.205L348.23 146.156L126.256 653H0L294.615 0H402.831L698.403 653Z" />
               </clipPath>
             </defs>

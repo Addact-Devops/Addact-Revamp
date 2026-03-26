@@ -54,22 +54,14 @@ export default function ConnectNowThankYouClient({ thankYouData }: Props) {
     <>
       <Head>
         {metaTitle && <title>{metaTitle}</title>}
-        {metaDescription && (
-          <meta name="description" content={metaDescription} />
-        )}
+        {metaDescription && <meta name="description" content={metaDescription} />}
         {metaRobots && <meta name="robots" content={metaRobots} />}
         {canonicalURL && <link rel="canonical" href={canonicalURL} />}
         {ogTitle && <meta property="og:title" content={ogTitle} />}
-        {ogDescription && (
-          <meta property="og:description" content={ogDescription} />
-        )}
+        {ogDescription && <meta property="og:description" content={ogDescription} />}
         {ogImage && <meta property="og:image" content={ogImage} />}
-        {twitterCardTitle && (
-          <meta name="twitter:title" content={twitterCardTitle} />
-        )}
-        {languageTag && (
-          <meta httpEquiv="Content-Language" content={languageTag} />
-        )}
+        {twitterCardTitle && <meta name="twitter:title" content={twitterCardTitle} />}
+        {languageTag && <meta httpEquiv="Content-Language" content={languageTag} />}
         {structuredData && (
           <script
             type="application/ld+json"

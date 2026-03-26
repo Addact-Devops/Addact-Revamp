@@ -6,10 +6,7 @@ import Image from "next/image";
 import { notFound, useParams, usePathname } from "next/navigation";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
-import {
-  EventDetailResponse,
-  getEventDetailBySlug,
-} from "@/graphql/queries/getEventDetail";
+import { EventDetailResponse, getEventDetailBySlug } from "@/graphql/queries/getEventDetail";
 import { getEventStatus } from "@/utils/getEventStatus";
 import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
@@ -25,15 +22,11 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
   const pathname = usePathname();
 
   // initialize state with server data if provided, otherwise undefined
-  const [eventDetailData, setEventDetailData] = useState<
-    EventDetailResponse | undefined
-  >(() => {
+  const [eventDetailData, setEventDetailData] = useState<EventDetailResponse | undefined>(() => {
     return serverData ?? undefined;
   });
   // loading is false if server provided data, otherwise true until client fetch finishes
-  const [loading, setLoading] = useState<boolean>(() =>
-    serverData ? false : true,
-  );
+  const [loading, setLoading] = useState<boolean>(() => (serverData ? false : true));
 
   useEffect(() => {
     // if server provided data, skip client fetch (keeps original UI intact)
@@ -57,10 +50,8 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
 
   const eventData = eventDetailData?.addactsEvents[0];
   const status = getEventStatus(eventData.EventBanner[0].PublishDate, "Event");
-  const formTitle =
-    eventDetailData.addactsEvents[0].contact_us_card.Form[0].Title;
-  const formDescription =
-    eventDetailData.addactsEvents[0].contact_us_card.Form[0].Description;
+  const formTitle = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Title;
+  const formDescription = eventDetailData.addactsEvents[0].contact_us_card.Form[0].Description;
   const formFields = eventDetailData.addactsEvents[0].contact_us_card;
 
   return (
@@ -83,9 +74,7 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
               <div className="flex items-center gap-2">
                 <CalendarDays size={20} />
                 <p className="text-base font-medium">
-                  {new Date(
-                    eventData.EventBanner[0].PublishDate,
-                  ).toLocaleDateString("en-US", {
+                  {new Date(eventData.EventBanner[0].PublishDate).toLocaleDateString("en-US", {
                     day: "2-digit",
                     month: "short",
                     year: "numeric",
@@ -94,9 +83,7 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
               </div>
               <div className="flex items-center gap-2">
                 <MapPin size={20} />
-                <p className="text-base font-medium">
-                  {eventData.EventBanner[0].eventLocation}
-                </p>
+                <p className="text-base font-medium">{eventData.EventBanner[0].eventLocation}</p>
               </div>
             </div>
 

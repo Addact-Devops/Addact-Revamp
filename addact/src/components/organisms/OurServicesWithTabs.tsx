@@ -48,9 +48,9 @@ const OurServicesWithTabs = ({ data }: Props) => {
   const pathname = usePathname();
   const currentPath = pathname.replace(/\/$/, "");
 
-  const [activeTab, setActiveTab] = useState<
-    "ForEnterprisesBrands" | "team_feature"
-  >("ForEnterprisesBrands");
+  const [activeTab, setActiveTab] = useState<"ForEnterprisesBrands" | "team_feature">(
+    "ForEnterprisesBrands",
+  );
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -161,9 +161,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                             href={`${currentPath}${card?.sub_service_page?.Slug}`}
                             target={card.Link?.isExternal ? "_blank" : "_self"}
                             aria-label={
-                              card?.sub_service_page?.Slug ||
-                              card?.Title ||
-                              "Open service tab"
+                              card?.sub_service_page?.Slug || card?.Title || "Open service tab"
                             }
                           >
                             <div className="w-14 h-14 bg-[#3C4CFF] text-[#0F0F0F] flex items-center justify-center">
@@ -196,9 +194,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                               <div className="absolute bottom-0 right-0">
                                 <Link
                                   href={`${currentPath}${card?.sub_service_page?.Slug}`}
-                                  target={
-                                    card.Link?.isExternal ? "_blank" : "_self"
-                                  }
+                                  target={card.Link?.isExternal ? "_blank" : "_self"}
                                   aria-label={
                                     card?.sub_service_page?.Slug ||
                                     card?.Title ||
@@ -221,9 +217,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                   <div className="relative mt-[40px] h-[1px] bg-gray-600">
                     <div
                       className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
-                      style={getIndicatorStyle(
-                        Math.ceil(enterprisesCards.length / 2),
-                      )}
+                      style={getIndicatorStyle(Math.ceil(enterprisesCards.length / 2))}
                     />
                   </div>
                 </div>
@@ -256,9 +250,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                         <a
                           href={card.Link.href}
                           target={card.Link.isExternal ? "_blank" : "_self"}
-                          rel={
-                            card.Link.isExternal ? "noopener noreferrer" : ""
-                          }
+                          rel={card.Link.isExternal ? "noopener noreferrer" : ""}
                           className="mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white bg-[#3440CB] hover:border-[#3C4CFF] transition"
                         >
                           {card.Link.label}
@@ -285,11 +277,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                             <a
                               href={card.Link.href}
                               target={card.Link.isExternal ? "_blank" : "_self"}
-                              rel={
-                                card.Link.isExternal
-                                  ? "noopener noreferrer"
-                                  : ""
-                              }
+                              rel={card.Link.isExternal ? "noopener noreferrer" : ""}
                               className="mt-8 inline-flex items-center justify-center gap-[20px] w-[180px] h-[60px] border border-white rounded-[8px] px-[20px] py-[16px] font-semibold text-[18px] leading-[28px] text-white bg-[#3440CB] hover:border-[#3C4CFF] transition"
                             >
                               {card.Link.label}

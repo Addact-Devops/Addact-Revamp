@@ -8,42 +8,42 @@ import client from "../client";
 // -----------------------------
 
 export type VideoBannerType = {
-    BannerTitle?: string;
-    BannerDescription?: string;
-    BannerImage?: {
-        url?: string;
-        width?: number;
-        height?: number;
-        alternativeText?: string | null;
-    };
+  BannerTitle?: string;
+  BannerDescription?: string;
+  BannerImage?: {
+    url?: string;
+    width?: number;
+    height?: number;
+    alternativeText?: string | null;
+  };
 };
 
 export type VideoContentType = {
-    Content: {
-        Title: string;
-        Description: string;
-        Link: {
-            isExternal: boolean;
-            href: string;
-            label: string;
-        };
+  Content: {
+    Title: string;
+    Description: string;
+    Link: {
+      isExternal: boolean;
+      href: string;
+      label: string;
     };
-    Iframe: {
-        Richtext: string;
-    };
+  };
+  Iframe: {
+    Richtext: string;
+  };
 };
 
 export type VideoPageResponse = {
-    videoListing: {
-        PageHeading: {
-            PageTitle: string;
-            Slug: string;
-        };
-        banner: {
-            Banner: VideoBannerType[];
-        };
-        VideoList: VideoContentType[];
+  videoListing: {
+    PageHeading: {
+      PageTitle: string;
+      Slug: string;
     };
+    banner: {
+      Banner: VideoBannerType[];
+    };
+    VideoList: VideoContentType[];
+  };
 };
 
 // -----------------------------
@@ -51,42 +51,42 @@ export type VideoPageResponse = {
 // -----------------------------
 
 const videosQuery = gql`
-    query VideoListing {
-        videoListing {
-            PageHeading {
-                PageTitle
-                Slug
+  query VideoListing {
+    videoListing {
+      PageHeading {
+        PageTitle
+        Slug
+      }
+      banner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerTitle
+            BannerDescription
+            BannerImage {
+              url
+              width
+              height
+              alternativeText
             }
-            banner {
-                Banner {
-                    ... on ComponentBannerBanner {
-                        BannerTitle
-                        BannerDescription
-                        BannerImage {
-                            url
-                            width
-                            height
-                            alternativeText
-                        }
-                    }
-                }
-            }
-            VideoList(pagination: { limit: -1 }) {
-                Content {
-                    Title
-                    Description
-                    Link {
-                        isExternal
-                        href
-                        label
-                    }
-                }
-                Iframe {
-                    Richtext
-                }
-            }
+          }
         }
+      }
+      VideoList(pagination: { limit: -1 }) {
+        Content {
+          Title
+          Description
+          Link {
+            isExternal
+            href
+            label
+          }
+        }
+        Iframe {
+          Richtext
+        }
+      }
     }
+  }
 `;
 
 // -----------------------------
@@ -94,6 +94,6 @@ const videosQuery = gql`
 // -----------------------------
 
 export const getVideosPageData = async (): Promise<VideoPageResponse> => {
-    const data = await client.request(videosQuery);
-    return data as VideoPageResponse;
+  const data = await client.request(videosQuery);
+  return data as VideoPageResponse;
 };

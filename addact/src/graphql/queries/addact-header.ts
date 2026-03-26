@@ -201,8 +201,8 @@ export interface HeaderCard {
 // Layer 3 — deepest level
 export interface HeaderSubLayer2 {
   id?: string;
-  link?: HeaderLink;  // SINGLE (repeatable: false)
-  card?: HeaderCard;  // SINGLE (repeatable: false)
+  link?: HeaderLink; // SINGLE (repeatable: false)
+  card?: HeaderCard; // SINGLE (repeatable: false)
   isCardShow?: boolean;
   isNavHide?: boolean;
 }
@@ -210,8 +210,8 @@ export interface HeaderSubLayer2 {
 // Layer 2
 export interface HeaderSubLayer {
   id?: string;
-  link?: HeaderLink;           // SINGLE (repeatable: false)
-  card?: HeaderCard;           // SINGLE (repeatable: false)
+  link?: HeaderLink; // SINGLE (repeatable: false)
+  card?: HeaderCard; // SINGLE (repeatable: false)
   subLayers?: HeaderSubLayer2[]; // ARRAY (repeatable: true)
   isCardShow?: boolean;
   isNavHide?: boolean;
@@ -220,8 +220,8 @@ export interface HeaderSubLayer {
 // Layer 1 — top-level menu item
 export interface HeaderMenuItem {
   id?: string;
-  link?: HeaderLink;           // SINGLE (repeatable: false)
-  card?: HeaderCard;           // SINGLE (repeatable: false)
+  link?: HeaderLink; // SINGLE (repeatable: false)
+  card?: HeaderCard; // SINGLE (repeatable: false)
   subLayers?: HeaderSubLayer[]; // ARRAY (repeatable: true)
   isCardShow?: boolean;
   isNavHide?: boolean;
@@ -230,8 +230,8 @@ export interface HeaderMenuItem {
 // contactButton is a single Card (repeatable: false)
 export interface AddactHeaderData {
   logo?: HeaderImage;
-  contactButton?: HeaderCard;   // SINGLE (repeatable: false)
-  menu?: HeaderMenuItem[];      // ARRAY (repeatable: true)
+  contactButton?: HeaderCard; // SINGLE (repeatable: false)
+  menu?: HeaderMenuItem[]; // ARRAY (repeatable: true)
   additionalText?: string;
   contactDetails?: HeaderLink[]; // ARRAY (repeatable: true)
 }

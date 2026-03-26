@@ -26,11 +26,7 @@ const getChallengesTitle = (titleList?: Challenges["Title"]) => {
   );
 };
 
-const ProductExperienceChallenges = ({
-  data,
-}: {
-  data?: Challenges | null;
-}) => {
+const ProductExperienceChallenges = ({ data }: { data?: Challenges | null }) => {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -63,8 +59,7 @@ const ProductExperienceChallenges = ({
       description: item.Description,
     })) ?? [];
 
-  const challengeList =
-    dynamicChallenges.length > 0 ? dynamicChallenges : challenges;
+  const challengeList = dynamicChallenges.length > 0 ? dynamicChallenges : challenges;
   const heading = getChallengesTitle(data?.Title);
 
   useEffect(() => {
@@ -107,101 +102,77 @@ const ProductExperienceChallenges = ({
           <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-2 md:gap-12">
             <div className="relative h-[240px] md:h-[320px]">
               <div className="relative mx-auto h-full w-full max-w-[560px]">
-                {Array.from({ length: challengeList.length }, (_, i) => i).map(
-                  (layerIndex) => {
-                    const isPast = layerIndex < activeIndex;
-                    const moveRight = layerIndex % 2 === 0;
-                    // const fillOpacity =
-                    //   1 - (layerIndex / challengeList.length) * 0.7;
-                    const fillOpacity =
-                      0.3 + (layerIndex / (challengeList.length - 1)) * 0.7;
-                    const xOffset = layerIndex * 2;
-                    const yOffset = layerIndex * 26;
+                {Array.from({ length: challengeList.length }, (_, i) => i).map((layerIndex) => {
+                  const isPast = layerIndex < activeIndex;
+                  const moveRight = layerIndex % 2 === 0;
+                  // const fillOpacity =
+                  //   1 - (layerIndex / challengeList.length) * 0.7;
+                  const fillOpacity = 0.3 + (layerIndex / (challengeList.length - 1)) * 0.7;
+                  const xOffset = layerIndex * 2;
+                  const yOffset = layerIndex * 26;
 
-                    return (
-                      <svg
-                        key={layerIndex}
-                        viewBox="20 300 684 240"
-                        className="absolute left-0 top-0 h-[190px] w-[100%] md:h-[220px]"
-                        aria-hidden="true"
-                        style={{
-                          transform: isPast
-                            ? `translate3d(${moveRight ? "240px" : "-240px"}, -36px, 0) rotate(${moveRight ? "-6deg" : "6deg"}) scale(0.92)`
-                            : `translate3d(${xOffset}px, ${yOffset}px, 0)`,
-                          opacity: isPast ? 0 : 1,
-                          // zIndex: 50 - layerIndex,
-                          zIndex: challengeList.length - layerIndex,
-                          transition:
-                            "transform 720ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 620ms ease",
-                          // filter:
-                          //   "drop-shadow(0 16px 26px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 14px rgba(255, 255, 255, 0.2))",
-                          filter: `drop-shadow(0 18px 28px rgba(0,0,0,0.7)) drop-shadow(0 0 ${8 + layerIndex * 4}px rgba(80,100,255,${0.15 + layerIndex * 0.08}))`,
-                        }}
-                      >
-                        {/* <path
+                  return (
+                    <svg
+                      key={layerIndex}
+                      viewBox="20 300 684 240"
+                      className="absolute left-0 top-0 h-[190px] w-[100%] md:h-[220px]"
+                      aria-hidden="true"
+                      style={{
+                        transform: isPast
+                          ? `translate3d(${moveRight ? "240px" : "-240px"}, -36px, 0) rotate(${moveRight ? "-6deg" : "6deg"}) scale(0.92)`
+                          : `translate3d(${xOffset}px, ${yOffset}px, 0)`,
+                        opacity: isPast ? 0 : 1,
+                        // zIndex: 50 - layerIndex,
+                        zIndex: challengeList.length - layerIndex,
+                        transition:
+                          "transform 720ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 620ms ease",
+                        // filter:
+                        //   "drop-shadow(0 16px 26px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 14px rgba(255, 255, 255, 0.2))",
+                        filter: `drop-shadow(0 18px 28px rgba(0,0,0,0.7)) drop-shadow(0 0 ${8 + layerIndex * 4}px rgba(80,100,255,${0.15 + layerIndex * 0.08}))`,
+                      }}
+                    >
+                      {/* <path
                           d={layerPath}
                           fill="#3C4CFF"
                           fillOpacity={fillOpacity}
                           stroke="rgba(218, 230, 255, 0.55)"
                           strokeWidth="1.2"
                         /> */}
-                        <>
-                          <defs>
-                            <linearGradient
-                              id={`glass-${layerIndex}`}
-                              x1="0%"
-                              y1="0%"
-                              x2="100%"
-                              y2="100%"
-                            >
-                              <stop
-                                offset="0%"
-                                stopColor="#0a0e2e"
-                                stopOpacity={fillOpacity}
-                              />
-                              <stop
-                                offset="50%"
-                                stopColor="#2233cc"
-                                stopOpacity={fillOpacity}
-                              />
-                              <stop
-                                offset="100%"
-                                stopColor="#4455ff"
-                                stopOpacity={fillOpacity}
-                              />
-                            </linearGradient>
-                            <linearGradient
-                              id={`border-${layerIndex}`}
-                              x1="0%"
-                              y1="0%"
-                              x2="100%"
-                              y2="100%"
-                            >
-                              <stop
-                                offset="0%"
-                                stopColor="rgba(255,255,255,0.6)"
-                              />
-                              <stop
-                                offset="50%"
-                                stopColor="rgba(255,255,255,0.15)"
-                              />
-                              <stop
-                                offset="100%"
-                                stopColor="rgba(100,140,255,0.5)"
-                              />
-                            </linearGradient>
-                          </defs>
-                          <path
-                            d={layerPath}
-                            fill={`url(#glass-${layerIndex})`}
-                            stroke={`url(#border-${layerIndex})`}
-                            strokeWidth="1.5"
-                          />
-                        </>
-                      </svg>
-                    );
-                  },
-                )}
+                      <>
+                        <defs>
+                          <linearGradient
+                            id={`glass-${layerIndex}`}
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                          >
+                            <stop offset="0%" stopColor="#0a0e2e" stopOpacity={fillOpacity} />
+                            <stop offset="50%" stopColor="#2233cc" stopOpacity={fillOpacity} />
+                            <stop offset="100%" stopColor="#4455ff" stopOpacity={fillOpacity} />
+                          </linearGradient>
+                          <linearGradient
+                            id={`border-${layerIndex}`}
+                            x1="0%"
+                            y1="0%"
+                            x2="100%"
+                            y2="100%"
+                          >
+                            <stop offset="0%" stopColor="rgba(255,255,255,0.6)" />
+                            <stop offset="50%" stopColor="rgba(255,255,255,0.15)" />
+                            <stop offset="100%" stopColor="rgba(100,140,255,0.5)" />
+                          </linearGradient>
+                        </defs>
+                        <path
+                          d={layerPath}
+                          fill={`url(#glass-${layerIndex})`}
+                          stroke={`url(#border-${layerIndex})`}
+                          strokeWidth="1.5"
+                        />
+                      </>
+                    </svg>
+                  );
+                })}
               </div>
             </div>
 

@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import RichText from "../atom/richText";
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 interface ServiceCardProps {
   title: string;
@@ -126,13 +123,7 @@ function ArrowUpRight({ className }: { className?: string }) {
   );
 }
 
-export function ServiceCard({
-  title,
-  description,
-  href,
-  target,
-  isExternal,
-}: ServiceCardProps) {
+export function ServiceCard({ title, description, href, target, isExternal }: ServiceCardProps) {
   return (
     <Link
       href={href || "#"}
@@ -176,10 +167,8 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
       .filter((service) => service.title || service.description) ?? [];
 
   const servicesToRender = dynamicServices.length ? dynamicServices : SERVICES;
-  const sectionHeading =
-    firstListingContext?.title || primaryData?.serviceTitle || SECTION_HEADING;
-  const sectionDescription =
-    firstListingContext?.description || SECTION_DESCRIPTION;
+  const sectionHeading = firstListingContext?.title || primaryData?.serviceTitle || SECTION_HEADING;
+  const sectionDescription = firstListingContext?.description || SECTION_DESCRIPTION;
   const ctaLabel = firstListingContext?.link?.label || CTA_LABEL;
   const ctaHref = firstListingContext?.link?.href || "#";
   const ctaTarget = firstListingContext?.link?.target || "_self";
