@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import ReCAPTCHA from "react-google-recaptcha";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { usePathname } from "next/navigation";
 
 type RichTextBlock = {
@@ -89,6 +89,7 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
     email: "",
     companyName: "",
     requirements: "",
+    honeypot: "",
   });
   const [captchaError, setCaptchaError] = useState(false);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -106,6 +107,11 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (formData.honeypot.trim() !== "") {
+      console.warn("Honeypot field was filled - potential bot detected");
+      return;
+    }
+
     const isCaptchaMissing = !captchaToken;
     setCaptchaError(isCaptchaMissing);
     if (isCaptchaMissing) {
@@ -121,6 +127,8 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
         companyName: formData.companyName,
         requirements: formData.requirements,
         recipientEmails: RecipientEmails,
+        honeypot: formData.honeypot,
+        turnstileToken: captchaToken,
       };
 
       const res = await fetch("/api/submit-form", {
@@ -135,6 +143,7 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
           email: "",
           companyName: "",
           requirements: "",
+          honeypot: "",
         });
         setCaptchaToken(null);
         window.location.href = redirectUrl;
@@ -268,17 +277,34 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
               </label>
             </div>
 
+            <input
+              type="text"
+              id="honeypot"
+              value={formData.honeypot}
+              onChange={handleChange}
+              className="hidden"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+            />
+
             <div className="flex justify-center">
-              <div className="recaptcha-wrapper">
-                <ReCAPTCHA
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                  onChange={(token: string | null) => {
+              <div className="recaptcha-wrapper flex flex-col overflow-visible">
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                  onSuccess={(token) => {
                     setCaptchaToken(token);
-                    if (token) {
-                      setCaptchaError(false);
-                    }
+                    setCaptchaError(false);
                   }}
-                  size="normal"
+                  onExpire={() => {
+                    setCaptchaToken(null);
+                  }}
+                  onError={() => {
+                    setCaptchaToken(null);
+                  }}
+                  options={{
+                    size: "normal",
+                  }}
                 />
                 {captchaError && !captchaToken && (
                   <p className="mt-1 text-sm text-red-500">
