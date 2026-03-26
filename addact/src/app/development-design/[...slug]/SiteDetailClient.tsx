@@ -56,9 +56,7 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
       } else if (slugArray.length === 2) {
         fetchPromise = getDevelopmentDesignDetailsCmsSlug(slugArray.join("/"));
       } else if (slugArray.length === 3) {
-        fetchPromise = getDevelopmentDesignDetailsSitecoreSlug(
-          slugArray.join("/"),
-        );
+        fetchPromise = getDevelopmentDesignDetailsSitecoreSlug(slugArray.join("/"));
       } else {
         setLoading(false);
         return;
@@ -94,9 +92,7 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
         <>
           <HeroBanner
             title={bannerData?.BannerTitle ?? ""}
-            description={
-              bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-            }
+            description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
             button={{
               label: bannerData?.BannerLink?.label ?? "",
               url: bannerData?.BannerLink?.href ?? "",

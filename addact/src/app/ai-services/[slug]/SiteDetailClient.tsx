@@ -7,10 +7,7 @@ import { useParams } from "next/navigation";
 // import OurProcess from "@/components/organisms/OurProcess";
 
 // import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
-import {
-  AIService,
-  getAIServiceSlug,
-} from "@/graphql/queries/getAIServiceSlug";
+import { AIService, getAIServiceSlug } from "@/graphql/queries/getAIServiceSlug";
 
 import HeroAISection from "@/components/organisms/HeroAISection";
 import SolveProblemsWithAI from "@/components/organisms/SolveProblemsWithAI";

@@ -374,19 +374,14 @@ export interface ProcessDataItem {
 }
 
 // Fetch function
-export async function getQATestingSupportSlug(
-  slug: string,
-): Promise<QATestingDetail | null> {
-  const data = await client.request<QATestingDetailResponse>(
-    qaTestingSupportSlugQuery,
-    {
-      filters: {
-        Slug: {
-          eq: `/${slug}`,
-        },
+export async function getQATestingSupportSlug(slug: string): Promise<QATestingDetail | null> {
+  const data = await client.request<QATestingDetailResponse>(qaTestingSupportSlugQuery, {
+    filters: {
+      Slug: {
+        eq: `/${slug}`,
       },
     },
-  );
+  });
 
   return data.qaTestingDetails?.[0] ?? null;
 }

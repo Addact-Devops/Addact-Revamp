@@ -3,80 +3,87 @@ import { google } from "googleapis";
 import nodemailer from "nodemailer";
 
 export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { email, answers } = body;
+
+    // 🔹 Get IP from request headers
+    const ip =
+      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+      req.headers.get("x-real-ip") ||
+      "Unknown";
+
+    // 🔹 Default values
+    let country = "Unknown";
+    let countryCode = "Unknown";
+
+    // 🔹 Fetch geo info using ipapi
     try {
-        const body = await req.json();
-        const { email, answers } = body;
-
-        // 🔹 Get IP from request headers
-        const ip =
-            req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || req.headers.get("x-real-ip") || "Unknown";
-
-        // 🔹 Default values
-        let country = "Unknown";
-        let countryCode = "Unknown";
-
-        // 🔹 Fetch geo info using ipapi
-        try {
-            if (ip && ip !== "Unknown" && !ip.startsWith("127.") && ip !== "::1") {
-                const res = await fetch(`https://ipapi.co/${ip}/json/`);
-                if (res.ok) {
-                    const data = await res.json();
-                    country = data.country_name || "Unknown";
-                    countryCode = data.country_code || "Unknown";
-                }
-            }
-        } catch (err) {
-            console.error("Geo lookup failed", err);
+      if (ip && ip !== "Unknown" && !ip.startsWith("127.") && ip !== "::1") {
+        const res = await fetch(`https://ipapi.co/${ip}/json/`);
+        if (res.ok) {
+          const data = await res.json();
+          country = data.country_name || "Unknown";
+          countryCode = data.country_code || "Unknown";
         }
+      }
+    } catch (err) {
+      console.error("Geo lookup failed", err);
+    }
 
-        // 📌 Google Sheets Setup
-        const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-        const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
-        const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+    // 📌 Google Sheets Setup
+    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+    const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
 
-        if (!clientEmail || !privateKey || !spreadsheetId) {
-            return NextResponse.json({ success: false, error: "Missing Google Sheets credentials" }, { status: 500 });
-        }
+    if (!clientEmail || !privateKey || !spreadsheetId) {
+      return NextResponse.json(
+        { success: false, error: "Missing Google Sheets credentials" },
+        { status: 500 },
+      );
+    }
 
-        const auth = new google.auth.JWT({
-            email: clientEmail,
-            key: privateKey,
-            scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-        });
+    const auth = new google.auth.JWT({
+      email: clientEmail,
+      key: privateKey,
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
 
-        const sheets = google.sheets({ version: "v4", auth });
+    const sheets = google.sheets({ version: "v4", auth });
 
-        const now = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-        const summary = answers.map((a: { label: string; value: string }) => `${a.label}: ${a.value}`).join(" | ");
+    const now = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+    const summary = answers
+      .map((a: { label: string; value: string }) => `${a.label}: ${a.value}`)
+      .join(" | ");
 
-        // Row values must match: Email, Date, Summary, Country, Country Code, IP Address
-        const rowValues = [email, now, summary, country, countryCode, ip];
+    // Row values must match: Email, Date, Summary, Country, Country Code, IP Address
+    const rowValues = [email, now, summary, country, countryCode, ip];
 
-        await sheets.spreadsheets.values.append({
-            spreadsheetId,
-            range: "Project Cost Estimator",
-            valueInputOption: "RAW",
-            insertDataOption: "INSERT_ROWS",
-            requestBody: {
-                values: [rowValues],
-            },
-        });
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: "Project Cost Estimator",
+      valueInputOption: "RAW",
+      insertDataOption: "INSERT_ROWS",
+      requestBody: {
+        values: [rowValues],
+      },
+    });
 
-        // 📌 Email Transport Setup
-        const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: 587,
-            secure: false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
-            },
-        });
+    // 📌 Email Transport Setup
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    });
 
-        const currentYear = new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
 
-        // 📩 Admin Email (with new UI)
-        const adminHtml = `
+    // 📩 Admin Email (with new UI)
+    const adminHtml = `
   <html>
                     <head>
                         <title>Addact - Cost Estimation Submission</title>
@@ -334,8 +341,8 @@ export async function POST(req: NextRequest) {
                     "
                   >
                    ${answers
-                       .map(
-                           (a: { label: string; value: string }) => `
+                     .map(
+                       (a: { label: string; value: string }) => `
             <tr>
               <td  valign="top"
                         width="35%"
@@ -356,9 +363,9 @@ export async function POST(req: NextRequest) {
                           font-weight: 400;
                         ">${a.value}</td>
             </tr>
-          `
-                       )
-                       .join("")}
+          `,
+                     )
+                     .join("")}
                   </table>
                 </td>
               </tr>
@@ -454,15 +461,15 @@ export async function POST(req: NextRequest) {
                 </html>
 `;
 
-        await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
-            to: ["jayesh@addact.net", "mitesh@addact.net"],
-            subject: "New Cost Estimator Submission",
-            html: adminHtml,
-        });
+    await transporter.sendMail({
+      from: `"Addact Technologies" <info@addact.net>`,
+      to: ["jayesh@addact.net", "mitesh@addact.net"],
+      subject: "New Cost Estimator Submission",
+      html: adminHtml,
+    });
 
-        // 📩 User Email (with new UI)
-        const userHtml = `
+    // 📩 User Email (with new UI)
+    const userHtml = `
   <html>
   <head>
     <title>Addact - Cost Estimation Submission</title>
@@ -616,8 +623,8 @@ export async function POST(req: NextRequest) {
                       </td>
                     </tr>
                     ${answers
-                        .map(
-                            (a: { label: string; value: string }) => `
+                      .map(
+                        (a: { label: string; value: string }) => `
                     <tr>
                       <td
                         valign="top"
@@ -646,9 +653,9 @@ export async function POST(req: NextRequest) {
                         ${a.value}
                       </td>
                     </tr>
-                    `
-                        )
-                        .join("")}
+                    `,
+                      )
+                      .join("")}
                   </table>
                 </td>
               </tr>
@@ -743,21 +750,21 @@ export async function POST(req: NextRequest) {
 </html>
 `;
 
-        await transporter.sendMail({
-            from: `"Addact Technologies" <info@addact.net>`,
-            to: email,
-            subject: "Thank you for your inquiry - Addact Technologies",
-            html: userHtml,
-        });
+    await transporter.sendMail({
+      from: `"Addact Technologies" <info@addact.net>`,
+      to: email,
+      subject: "Thank you for your inquiry - Addact Technologies",
+      html: userHtml,
+    });
 
-        return NextResponse.json({ success: true });
-    } catch (err: unknown) {
-        console.error("Email/Sheet error", err);
+    return NextResponse.json({ success: true });
+  } catch (err: unknown) {
+    console.error("Email/Sheet error", err);
 
-        if (err instanceof Error) {
-            return NextResponse.json({ success: false, error: err.message }, { status: 500 });
-        }
-
-        return NextResponse.json({ success: false, error: "Unknown error occurred" }, { status: 500 });
+    if (err instanceof Error) {
+      return NextResponse.json({ success: false, error: err.message }, { status: 500 });
     }
+
+    return NextResponse.json({ success: false, error: "Unknown error occurred" }, { status: 500 });
+  }
 }

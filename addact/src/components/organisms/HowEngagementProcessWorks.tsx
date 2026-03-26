@@ -2,10 +2,7 @@
 
 import Link from "next/link";
 import RichText from "@/components/atom/richText";
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 type Heading = {
   h1?: string;
@@ -38,14 +35,11 @@ interface HowEngagementProcessWorksProps {
   data?: ProcessInput;
 }
 
-const HowEngagementProcessWorks = ({
-  data,
-}: HowEngagementProcessWorksProps) => {
+const HowEngagementProcessWorks = ({ data }: HowEngagementProcessWorksProps) => {
   const href = data?.link?.href || "";
   const ctaLabel = data?.link?.label || "";
   const target = data?.link?.isExternal ? "_blank" : "_self";
-  const useContactDrawer =
-    !data?.link?.isExternal && shouldOpenContactDrawer(href);
+  const useContactDrawer = !data?.link?.isExternal && shouldOpenContactDrawer(href);
 
   const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
     if (!useContactDrawer) {

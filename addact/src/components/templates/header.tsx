@@ -6,14 +6,7 @@ import type {
   HeaderMenuItem,
   HeaderSubLayer,
 } from "@/graphql/queries/addact-header";
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Menu,
-  X,
-} from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -64,13 +57,7 @@ function formatContactHref(href: string): string {
 
 // ─── Featured Card ────────────────────────────────────────────────────────────────────────────
 
-function FeaturedCard({
-  card,
-  className,
-}: {
-  card: HeaderCard;
-  className?: string;
-}) {
+function FeaturedCard({ card, className }: { card: HeaderCard; className?: string }) {
   const lnk = card.link;
   const imgUrl = card.image?.url;
 
@@ -213,10 +200,7 @@ function DropdownContent({
 
         {/* Card Section */}
         {showCard && (
-          <div
-            className="shrink-0 pr-[30px] pt-[30px]"
-            style={{ background: "#0F0F0F" }}
-          >
+          <div className="shrink-0 pr-[30px] pt-[30px]" style={{ background: "#0F0F0F" }}>
             <FeaturedCard card={activeSub.card!} />
           </div>
         )}
@@ -225,8 +209,7 @@ function DropdownContent({
   }
 
   // ── Layout B: Flat grid (Industry/Resources/Company) ──
-  const showCard =
-    (item.isCardShow && item.card) || (isLastItem && !!additionalText);
+  const showCard = (item.isCardShow && item.card) || (isLastItem && !!additionalText);
 
   return (
     <div className="flex flex-col w-full min-h-[336px]">
@@ -236,9 +219,7 @@ function DropdownContent({
           className={`flex-1 min-w-0 px-10 py-7.5 ${showCard ? "w-full max-w-[1066px]" : ""}`}
           style={{ background: "#0F0F0F" }}
         >
-          <div
-            className={`grid ${showCard ? "grid-cols-2" : "grid-cols-3"} gap-x-8 gap-y-7`}
-          >
+          <div className={`grid ${showCard ? "grid-cols-2" : "grid-cols-3"} gap-x-8 gap-y-7`}>
             {subs.map((sub, si) => {
               const lnk = sub.link ?? sub.card?.link;
               const label = lnk?.label ?? sub.card?.title;
@@ -251,9 +232,7 @@ function DropdownContent({
                   href={href}
                   target={lnk?.isExternal ? "_blank" : "_self"}
                   className="flex items-center gap-3 text-[#B7B7B7] hover:text-white transition-colors py-0.5 group"
-                  aria-label={
-                    lnk?.label ?? sub.card?.title ?? `Category ${si + 1}`
-                  }
+                  aria-label={lnk?.label ?? sub.card?.title ?? `Category ${si + 1}`}
                 >
                   {lnk?.Icon?.url && (
                     <span className="text-[#E3E3E3] transition-colors shrink-0">
@@ -286,9 +265,7 @@ function DropdownContent({
                   {(() => {
                     const words = additionalText.split(" ");
                     if (words.length > 2) {
-                      const firstPart = words
-                        .slice(0, words.length - 1)
-                        .join(" ");
+                      const firstPart = words.slice(0, words.length - 1).join(" ");
                       const secondPart = words[words.length - 1];
                       return [firstPart, secondPart].map((line, index) => (
                         <span
@@ -312,9 +289,7 @@ function DropdownContent({
               </div>
             ) : (
               <div className="pr-7.5">
-                {item.card && (
-                  <FeaturedCard card={item.card} className="w-full" />
-                )}
+                {item.card && <FeaturedCard card={item.card} className="w-full" />}
               </div>
             )}
           </div>
@@ -347,9 +322,7 @@ function DropdownContent({
                   <span className="text-white text-[20px] font-semibold font-montserrat">
                     {detail.label}
                   </span>
-                  <span className="text-white text-[20px] font-montserrat">
-                    {detail?.SubDisc}
-                  </span>
+                  <span className="text-white text-[20px] font-montserrat">{detail?.SubDisc}</span>
                 </div>
                 {detail.Icon?.url && (
                   <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white transition-all">
@@ -381,8 +354,7 @@ const Header = ({
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const [activeMobileItem, setActiveMobileItem] =
-    useState<HeaderMenuItem | null>(null); // Level 1 active
+  const [activeMobileItem, setActiveMobileItem] = useState<HeaderMenuItem | null>(null); // Level 1 active
   const [expandedLevel2, setExpandedLevel2] = useState<string | null>(null); // Level 2 accordion
   const [bannerVisible, setBannerVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -458,8 +430,7 @@ const Header = ({
   const contactDetails = headerData?.contactDetails ?? [];
 
   const contactHref = contactBtn?.link?.href ?? "/contact-us";
-  const contactLabel =
-    contactBtn?.link?.label ?? contactBtn?.title ?? "Contact us";
+  const contactLabel = contactBtn?.link?.label ?? contactBtn?.title ?? "Contact us";
   const contactIsExternal = contactBtn?.link?.isExternal ?? false;
   const contactIcon = contactBtn?.link?.Icon?.url ?? contactBtn?.image?.url;
   //   const useContactDrawer =
@@ -495,8 +466,8 @@ const Header = ({
         >
           <div className="container-main text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
             <span className="text-[14px] 2xl:text-[18px]">
-              Need An Accurate Estimate For Your Sitecore XM Cloud Migration
-              Project? Kickstart Your Journey Here!
+              Need An Accurate Estimate For Your Sitecore XM Cloud Migration Project? Kickstart Your
+              Journey Here!
             </span>
             <Link
               href="/project-cost-estimators"
@@ -554,11 +525,7 @@ const Header = ({
                       className="flex items-center gap-1 text-[14px] xl:text-[16px] font-medium text-white hover:text-[#3C4CFF] focus:outline-none transition-colors cursor-pointer py-5 lg:py-[40px]"
                     >
                       {label}
-                      {isActive ? (
-                        <ChevronUp size={14} />
-                      ) : (
-                        <ChevronDown size={14} />
-                      )}
+                      {isActive ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                     </Link>
                   ) : (
                     <Link
@@ -589,8 +556,7 @@ const Header = ({
                       background: "#0F0F0F",
                       border: "1px solid #2E2E2E",
                       borderRadius: "20px",
-                      boxShadow:
-                        "0 8px 34px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4)",
+                      boxShadow: "0 8px 34px rgba(0,0,0,0.7), 0 2px 8px rgba(0,0,0,0.4)",
                     }}
                   >
                     <DropdownContent
@@ -645,10 +611,7 @@ const Header = ({
             )}
             {contactLabel}
           </Link>
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
-          >
+          <button onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
             <Menu className="w-6 h-6 text-white" />
           </button>
         </div>
@@ -779,9 +742,7 @@ const Header = ({
                             </Link>
                             <button
                               onClick={() =>
-                                setExpandedLevel2(
-                                  isExpanded ? null : (sub.id ?? `sub-${idx}`),
-                                )
+                                setExpandedLevel2(isExpanded ? null : (sub.id ?? `sub-${idx}`))
                               }
                               aria-label={`Toggle ${subLabel} submenu`}
                               className="ml-3"
@@ -800,9 +761,7 @@ const Header = ({
                                   key={l3.id ?? l3i}
                                   href={l3.link?.href ?? "#"}
                                   className="block px-10 py-4 text-[16px] font-medium text-white hover:text-white font-montserrat"
-                                  aria-label={
-                                    l3.link?.label ?? `Sub-category ${l3i + 1}`
-                                  }
+                                  aria-label={l3.link?.label ?? `Sub-category ${l3i + 1}`}
                                 >
                                   {l3.link?.label}
                                 </Link>

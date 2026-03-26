@@ -168,8 +168,7 @@ const IntroSplash = ({
           : isMiniDesktop
             ? -20
             : 8;
-  const leftHandRotate =
-    phase >= 1 ? (isMobile ? -14 : isTablet ? -15 : -16) : -16;
+  const leftHandRotate = phase >= 1 ? (isMobile ? -14 : isTablet ? -15 : -16) : -16;
 
   const rightHandX =
     phase >= 1
@@ -203,8 +202,7 @@ const IntroSplash = ({
           : isMiniDesktop
             ? 10
             : -13;
-  const rightHandRotate =
-    phase >= 1 ? (isMobile ? -14 : isTablet ? -15 : -16) : -15;
+  const rightHandRotate = phase >= 1 ? (isMobile ? -14 : isTablet ? -15 : -16) : -15;
   const wrapperOpacity = phase >= 2 ? 0 : 1;
   const wrapperTranslateY = phase >= 2 ? -80 : 0;
   const sideOverlayOpacity = phase >= 1 ? 1 : 0;
@@ -287,8 +285,7 @@ const IntroSplash = ({
           className="absolute inset-y-0 left-0 w-[22%] z-[3] pointer-events-none"
           style={{
             opacity: sideOverlayOpacity,
-            background:
-              "linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0))",
+            background: "linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0))",
             transition: "opacity 500ms ease",
           }}
         />
@@ -296,8 +293,7 @@ const IntroSplash = ({
           className="absolute inset-y-0 right-0 w-[22%] z-[3] pointer-events-none"
           style={{
             opacity: sideOverlayOpacity,
-            background:
-              "linear-gradient(to left, rgba(0,0,0,0.85), rgba(0,0,0,0))",
+            background: "linear-gradient(to left, rgba(0,0,0,0.85), rgba(0,0,0,0))",
             transition: "opacity 500ms ease",
           }}
         />

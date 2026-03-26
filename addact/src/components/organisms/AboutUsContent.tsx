@@ -15,12 +15,8 @@ const AboutUsContent = ({ subtitle, title, content, image }: Props) => {
   return (
     <section className="my-[60px] sm:my-[60px]" id="overview">
       <div className="container-main">
-        <p className="text-[#3C4CFF] text-[17px] mb-[15px] leading-[26px]">
-          {subtitle}
-        </p>
-        <h3 className="text-[#000] font-[400] 2xl:mb-[40px] mb-[30px]">
-          {title}
-        </h3>
+        <p className="text-[#3C4CFF] text-[17px] mb-[15px] leading-[26px]">{subtitle}</p>
+        <h3 className="text-[#000] font-[400] 2xl:mb-[40px] mb-[30px]">{title}</h3>
         <RichText html={content} />
         <Image
           src={image.url}

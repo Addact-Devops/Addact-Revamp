@@ -16,9 +16,7 @@ const Header = ({ headers }: HeaderProps) => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(
-    null,
-  );
+  const [openMobileDropdown, setOpenMobileDropdown] = useState<string | null>(null);
 
   const handleDropdownToggle = (title: string) => {
     setOpenDropdown((prev) => (prev === title ? null : title));
@@ -104,16 +102,10 @@ const Header = ({ headers }: HeaderProps) => {
                     }`}
                   >
                     {item.ReferenceTitle}
-                    {isActive ? (
-                      <ChevronUp size={16} />
-                    ) : (
-                      <ChevronDown size={16} />
-                    )}
+                    {isActive ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                   </button>
 
-                  {isActive && (
-                    <div className="absolute bottom-0 w-[45px] h-[5px] bg-white" />
-                  )}
+                  {isActive && <div className="absolute bottom-0 w-[45px] h-[5px] bg-white" />}
                 </div>
 
                 {/* Only render dropdown once, positioned at far-left */}
@@ -147,10 +139,7 @@ const Header = ({ headers }: HeaderProps) => {
                           key={child.id}
                           className="hover:text-blue-400 cursor-pointer text-lg font-medium leading-7 mb-4"
                         >
-                          <Link
-                            href={child.href}
-                            target={child?.isExternal ? "_blank" : "_self"}
-                          >
+                          <Link href={child.href} target={child?.isExternal ? "_blank" : "_self"}>
                             {child.label}
                           </Link>
                         </li>
@@ -202,9 +191,7 @@ const Header = ({ headers }: HeaderProps) => {
             <div className="flex items-center space-x-4">
               <Link
                 href={headerData?.contact_us[0]?.href}
-                target={
-                  headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"
-                }
+                target={headerData?.contact_us[0]?.isExternal ? "_blank" : "_self"}
                 className="bg-[#3C4CFF] mr- px-[12px] py-[3px] rounded-[6px] text-white font-[600] text-[12px]"
               >
                 {headerData?.contact_us[0]?.label}
@@ -222,9 +209,7 @@ const Header = ({ headers }: HeaderProps) => {
               return (
                 <div key={item.ReferenceTitle}>
                   <button
-                    onClick={() =>
-                      setOpenMobileDropdown(isOpen ? null : item.ReferenceTitle)
-                    }
+                    onClick={() => setOpenMobileDropdown(isOpen ? null : item.ReferenceTitle)}
                     className="w-full flex justify-between items-center px-4 py-5 text-base font-medium cursor-pointer"
                   >
                     {item.ReferenceTitle}
@@ -238,14 +223,8 @@ const Header = ({ headers }: HeaderProps) => {
                   {isOpen && (
                     <ul className="px-4 pb-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm bg-black">
                       {item.SubNavLink.map((child) => (
-                        <li
-                          key={child.id}
-                          className="hover:text-blue-400 cursor-pointer py-1"
-                        >
-                          <Link
-                            href={child.href}
-                            target={child.isExternal ? "_blank" : "_self"}
-                          >
+                        <li key={child.id} className="hover:text-blue-400 cursor-pointer py-1">
+                          <Link href={child.href} target={child.isExternal ? "_blank" : "_self"}>
                             {child.label}
                           </Link>
                         </li>

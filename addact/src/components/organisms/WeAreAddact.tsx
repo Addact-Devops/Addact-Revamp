@@ -32,13 +32,7 @@ type Props = {
   numberContent?: NumberItem[];
 };
 
-const WeAreAddact: React.FC<Props> = ({
-  subtitle,
-  title,
-  content,
-  image,
-  numberContent = [],
-}) => {
+const WeAreAddact: React.FC<Props> = ({ subtitle, title, content, image, numberContent = [] }) => {
   const sectionRef = useRef(null);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [counts, setCounts] = useState<number[]>(numberContent.map(() => 0));
@@ -130,9 +124,7 @@ const WeAreAddact: React.FC<Props> = ({
             <div className="flex flex-col sm:flex-row gap-8 mt-4 text-center sm:text-left">
               {numberContent.map((item, index) => (
                 <div key={index}>
-                  <h3 className="font-semibold text-[#3c4cff] mb-1">
-                    {counts[index]}+
-                  </h3>
+                  <h3 className="font-semibold text-[#3c4cff] mb-1">{counts[index]}+</h3>
                   <p className="text-sm text-black leading-snug whitespace-pre-line sm:max-w-[65%]">
                     {item.Content}
                   </p>

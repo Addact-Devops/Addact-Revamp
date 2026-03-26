@@ -111,21 +111,14 @@ const NumberInput = ({
           type="button"
           aria-label="Increase"
           onClick={() => {
-            const next =
-              (typeof value === "number" ? value : Math.max(min, 0)) + 1;
+            const next = (typeof value === "number" ? value : Math.max(min, 0)) + 1;
             setText(String(next));
             onChange(next);
             onTouch?.();
           }}
           className="rounded-[6px] bg-white flex items-center justify-center"
         >
-          <svg
-            width="14"
-            height="9"
-            viewBox="0 0 14 9"
-            fill="none"
-            className="!w-[12px]"
-          >
+          <svg width="14" height="9" viewBox="0 0 14 9" fill="none" className="!w-[12px]">
             <path
               d="M1 7.5L7 1.5L13 7.5"
               stroke="#3C4CFF"
@@ -147,13 +140,7 @@ const NumberInput = ({
           }}
           className="bg-white flex items-center justify-center"
         >
-          <svg
-            width="14"
-            height="9"
-            viewBox="0 0 14 9"
-            fill="none"
-            className="!w-[12px]"
-          >
+          <svg width="14" height="9" viewBox="0 0 14 9" fill="none" className="!w-[12px]">
             <path
               d="M1 1.5L7 7.5L13 1.5"
               stroke="#3C4CFF"
@@ -169,13 +156,7 @@ const NumberInput = ({
 };
 
 /* ---------- Reusable Question Title (Absolute blue number + 15px left padding) ---------- */
-const QTitle = ({
-  num,
-  children,
-}: {
-  num: number;
-  children: React.ReactNode;
-}) => (
+const QTitle = ({ num, children }: { num: number; children: React.ReactNode }) => (
   <div className="relative pl-[28px] md:pl-[40px] 2xl:pl-[60px] text-[14px] md:text-[20px] xl:text-[23px] 2xl:text-[28px] text-[#23272A] font-[600]">
     <span className="absolute left-0 top-0 text-[#3C4CFF]">{`${String(num).padStart(2, "0")}.`}</span>
     {children}
@@ -183,23 +164,14 @@ const QTitle = ({
 );
 
 /* ---------- NEW ProgressRing (300px, 1px base ring, 28.08px gradient arc, center icon) ---------- */
-const ProgressRing = ({
-  percent,
-  label,
-}: {
-  percent: number;
-  label: string;
-}) => {
+const ProgressRing = ({ percent, label }: { percent: number; label: string }) => {
   // 250px below 2xl (1536px), 300px at/above 2xl
   const [size, setSize] = React.useState<number>(250);
   const [stroke, setStroke] = React.useState<number>(20); // default 20 below 2xl
 
   React.useEffect(() => {
     const apply = () => {
-      if (
-        typeof window !== "undefined" &&
-        window.matchMedia("(min-width: 1536px)").matches
-      ) {
+      if (typeof window !== "undefined" && window.matchMedia("(min-width: 1536px)").matches) {
         setSize(300);
         setStroke(28.08);
       } else {
@@ -224,14 +196,10 @@ const ProgressRing = ({
 
   const circumference = 2 * Math.PI * r;
   const dash = circumference;
-  const offset =
-    circumference * (1 - Math.min(Math.max(percent, 0), 100) / 100);
+  const offset = circumference * (1 - Math.min(Math.max(percent, 0), 100) / 100);
 
   // unique gradient id to avoid DOM clashes if multiple rings render
-  const gradId = React.useMemo(
-    () => `ringGrad-${Math.random().toString(36).slice(2)}`,
-    [],
-  );
+  const gradId = React.useMemo(() => `ringGrad-${Math.random().toString(36).slice(2)}`, []);
 
   // scale the center icon a bit when size is 250 (proportional to the 300px baseline)
   const iconScale = size / 300; // 1 at 300px, ~0.833 at 250px
@@ -297,9 +265,7 @@ const ProgressRing = ({
           />
         </svg>
 
-        <div className="mt-3 md:text-[22px] 2xl:text-[30px] font-[500]">
-          {label}
-        </div>
+        <div className="mt-3 md:text-[22px] 2xl:text-[30px] font-[500]">{label}</div>
       </div>
     </div>
   );
@@ -544,10 +510,7 @@ const CostEstimatorForm = () => {
 
       items.push({
         id: `${String(id++).padStart(2, "0")}.`,
-        text:
-          languageCount !== ""
-            ? `Languages: ${languageCount}`
-            : `Languages: ${languageCount}`,
+        text: languageCount !== "" ? `Languages: ${languageCount}` : `Languages: ${languageCount}`,
       });
 
       const customText =
@@ -608,8 +571,7 @@ const CostEstimatorForm = () => {
   /* ---------- Progress ---------- */
   const BASE_TOTAL = 10; // S1(4) + S2(3) + S3(3)
   const hostingValid =
-    hostingProvider !== "" &&
-    (hostingProvider !== "Other" || hostingOther.trim().length > 0);
+    hostingProvider !== "" && (hostingProvider !== "Other" || hostingOther.trim().length > 0);
   const emailValid = isEmail(email);
 
   const answeredBase = useMemo(() => {
@@ -631,8 +593,7 @@ const CostEstimatorForm = () => {
   }, [s1Visible, s2Visible, s3Visible, languageCount, hostingValid]);
 
   const percent = Math.round(
-    ((answeredBase + (s3Visible && emailValid ? 1 : 0)) / (BASE_TOTAL + 1)) *
-      100,
+    ((answeredBase + (s3Visible && emailValid ? 1 : 0)) / (BASE_TOTAL + 1)) * 100,
   );
 
   /* ---------- Validation ---------- */
@@ -657,10 +618,7 @@ const CostEstimatorForm = () => {
   };
 
   /* ---------- Handlers ---------- */
-  const handleSliderChange = (
-    value: number,
-    type: "pages" | "components" | "timeline",
-  ) => {
+  const handleSliderChange = (value: number, type: "pages" | "components" | "timeline") => {
     if (type === "pages") {
       setPagesIndex(value);
       setTouchedPages(true);
@@ -684,27 +642,21 @@ const CostEstimatorForm = () => {
   ) => {
     if (type === "pages") {
       setPagesIndex((v) =>
-        direction === "prev"
-          ? Math.max(0, v - 1)
-          : Math.min(pageOptions.length - 1, v + 1),
+        direction === "prev" ? Math.max(0, v - 1) : Math.min(pageOptions.length - 1, v + 1),
       );
       setTouchedPages(true);
       markS1();
     }
     if (type === "components") {
       setComponentsIndex((v) =>
-        direction === "prev"
-          ? Math.max(0, v - 1)
-          : Math.min(componentOptions.length - 1, v + 1),
+        direction === "prev" ? Math.max(0, v - 1) : Math.min(componentOptions.length - 1, v + 1),
       );
       setTouchedComponents(true);
       markS1();
     }
     if (type === "timeline") {
       setTimelineIndex((v) =>
-        direction === "prev"
-          ? Math.max(0, v - 1)
-          : Math.min(timelineOptions.length - 1, v + 1),
+        direction === "prev" ? Math.max(0, v - 1) : Math.min(timelineOptions.length - 1, v + 1),
       );
       setTouchedTimeline(true);
       markS3();
@@ -842,8 +794,7 @@ const CostEstimatorForm = () => {
               {/* Q3 - Pages */}
               <div className="mb-[30px] lg:mb-[40px] 2xl:mb-[60px]">
                 <QTitle num={3}>
-                  How many pages does your website have?{" "}
-                  <span className="text-red-500">*</span>
+                  How many pages does your website have? <span className="text-red-500">*</span>
                 </QTitle>
                 <div className="flex items-center gap-[10px] md:gap-4 mt-[15px] md:mt-[20px] 2xl:mt-[40px] flex-wrap">
                   {/* Prev button */}
@@ -875,9 +826,7 @@ const CostEstimatorForm = () => {
                     max={pageOptions.length - 1}
                     step={1}
                     value={pagesIndex}
-                    onChange={(e) =>
-                      handleSliderChange(Number(e.target.value), "pages")
-                    }
+                    onChange={(e) => handleSliderChange(Number(e.target.value), "pages")}
                     className={smoothRange}
                   />
 
@@ -949,9 +898,7 @@ const CostEstimatorForm = () => {
                     max={componentOptions.length - 1}
                     step={1}
                     value={componentsIndex}
-                    onChange={(e) =>
-                      handleSliderChange(Number(e.target.value), "components")
-                    }
+                    onChange={(e) => handleSliderChange(Number(e.target.value), "components")}
                     className={smoothRange}
                   />
 
@@ -1015,9 +962,7 @@ const CostEstimatorForm = () => {
               {/* Slide 2 Q1 */}
               <div className="mb-[30px] lg:mb-[40px] 2xl:mb-[60px]">
                 <div className="flex gap-[20px] justify-between">
-                  <QTitle num={1}>
-                    Do you have sub-websites that need to be migrated?
-                  </QTitle>
+                  <QTitle num={1}>Do you have sub-websites that need to be migrated?</QTitle>
                   <ToggleLeftLabel
                     checked={hasSubsites}
                     onChange={(v) => {
@@ -1052,13 +997,11 @@ const CostEstimatorForm = () => {
                         min={0}
                         placeholder="Enter Number"
                       />
-                      {hasSubsites &&
-                        touchedSubsites &&
-                        subsiteCount === "" && (
-                          <div className="text-red-500 text-[12px] md:text-sm mt-[5px]">
-                            Sub-website count is mandatory
-                          </div>
-                        )}
+                      {hasSubsites && touchedSubsites && subsiteCount === "" && (
+                        <div className="text-red-500 text-[12px] md:text-sm mt-[5px]">
+                          Sub-website count is mandatory
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
@@ -1092,9 +1035,7 @@ const CostEstimatorForm = () => {
               {/* Slide 2 Q3 */}
               <div className="mb-[30px] lg:mb-[40px] 2xl:mb-[60px]">
                 <div className="flex gap-[20px] items-baseline">
-                  <QTitle num={3}>
-                    Do you use any custom modules/pipelines or integrations?
-                  </QTitle>
+                  <QTitle num={3}>Do you use any custom modules/pipelines or integrations?</QTitle>
                   <ToggleLeftLabel
                     checked={hasCustom}
                     onChange={(v) => {
@@ -1114,8 +1055,7 @@ const CostEstimatorForm = () => {
                     <div className="flex items-start gap-[10px] 2xl:gap-[20px]">
                       <span className="w-[10px] 2xl:w-[20px] h-[10px] 2xl:h-[20px] rounded-full bg-[#3C4CFF] pr-[10px] md:pr-[5px] 2xl:pr-[20px] mt-[5px] md:mt-[10px]" />
                       <span className="text-[14px] md:text-[20px] xl:text-[22px] 2xl:text-[28px] text-[#23272A] font-[600]">
-                        How many custom modules/Pipeline/integrations does your
-                        website include?
+                        How many custom modules/Pipeline/integrations does your website include?
                       </span>
                     </div>
                     <div>
@@ -1165,9 +1105,7 @@ const CostEstimatorForm = () => {
                   onClick={tryGoToStep3}
                   disabled={!slide2Valid}
                   aria-disabled={!slide2Valid}
-                  className={
-                    slide2Valid ? primaryEnabledClass : primaryDisabledClass
-                  }
+                  className={slide2Valid ? primaryEnabledClass : primaryDisabledClass}
                 >
                   Next
                   <svg
@@ -1211,8 +1149,7 @@ const CostEstimatorForm = () => {
                       if (e.target.value !== "Other") setHostingOther("");
                     }}
                     className={`w-full md:w-[280px] 2xl:w-[345px] h-[40px] md:h-[50px] 2xl:h-[70px] px-4 pr-10 border rounded-md text-[14px] md:text-[20px] 2xl:text-[25px] outline-none appearance-none ${
-                      hostingProvider === "Other" &&
-                      hostingOther.trim().length === 0
+                      hostingProvider === "Other" && hostingOther.trim().length === 0
                         ? "border-red-500"
                         : "border-[#3C4CFF66] focus:border-[#3C4CFF]"
                     } text-[#23272A] bg-white`}
@@ -1288,8 +1225,7 @@ const CostEstimatorForm = () => {
               {/* Slide 3 Q2 */}
               <div className="mb-[40px] 2xl:mb-[60px] flex gap-[20px] items-start">
                 <QTitle num={2}>
-                  Do you currently use or plan to set up personalization rules
-                  in Sitecore?
+                  Do you currently use or plan to set up personalization rules in Sitecore?
                 </QTitle>
                 <ToggleLeftLabel
                   checked={usePersonalization}
@@ -1308,8 +1244,8 @@ const CostEstimatorForm = () => {
               {/* Slide 3 Q3 */}
               <div className="mb-[60px] flex items-start gap-[10px] 2xl:gap-[20px]">
                 <QTitle num={3}>
-                  Does your website need to comply with accessibility standards
-                  (e.g., WCAG 2.1) or other regulations (e.g., GDPR)?
+                  Does your website need to comply with accessibility standards (e.g., WCAG 2.1) or
+                  other regulations (e.g., GDPR)?
                 </QTitle>
                 <ToggleLeftLabel
                   checked={needsAccessibility}
@@ -1328,8 +1264,7 @@ const CostEstimatorForm = () => {
               {/* Slide 3 Q4 - Timeline */}
               <div className="mb-[30px] lg:mb-[40px] 2xl:mb-[60px]">
                 <QTitle num={4}>
-                  What is your desired migration timeline?{" "}
-                  <span className="text-red-500">*</span>
+                  What is your desired migration timeline? <span className="text-red-500">*</span>
                 </QTitle>
                 <div className="flex items-center gap-[10px] md:gap-4 mt-[15px] md:mt-[20px] 2xl:mt-[40px] flex-wrap">
                   <button
@@ -1359,9 +1294,7 @@ const CostEstimatorForm = () => {
                     max={timelineOptions.length - 1}
                     step={1}
                     value={timelineIndex}
-                    onChange={(e) =>
-                      handleSliderChange(Number(e.target.value), "timeline")
-                    }
+                    onChange={(e) => handleSliderChange(Number(e.target.value), "timeline")}
                     className={smoothRange}
                   />
 
@@ -1454,9 +1387,7 @@ const CostEstimatorForm = () => {
                   onClick={trySubmit}
                   disabled={!allValid}
                   aria-disabled={!allValid}
-                  className={
-                    allValid ? primaryEnabledClass : primaryDisabledClass
-                  }
+                  className={allValid ? primaryEnabledClass : primaryDisabledClass}
                 >
                   Get Your Estimation Cost
                 </button>
@@ -1471,8 +1402,7 @@ const CostEstimatorForm = () => {
             <div className="w-auto xl:w-[350px] 2xl:w-[400px] bg-[#3C4CFF] text-white rounded-lg flex flex-col items-center justify-center py-[40px] px-[20px]">
               <ProgressRing percent={0} label={`0% Done`} />
               <p className="text-center text-[14px] mb-[30px]">
-                <div className="font-[600]">Bored with Questions?</div> Want
-                direct Estimation?
+                <div className="font-[600]">Bored with Questions?</div> Want direct Estimation?
               </p>
               <button className="bg-white rounded-full px-[15px] 2xl:px-[20px] py-[10px] 2xl:py-[18px] text-[17px] font-[400] text-[#000000] mb-[20px]">
                 Contact Our Experts
@@ -1506,8 +1436,7 @@ const CostEstimatorForm = () => {
 
               <div className="mt-[15px] md:mt-[20px] 2xl:mt-[40px] text-center">
                 <p className="text-center text-[14px] mb-[30px]">
-                  <div className="font-[600]">Bored with Questions?</div> Want
-                  direct Estimation?
+                  <div className="font-[600]">Bored with Questions?</div> Want direct Estimation?
                 </p>
                 <button className="bg-white rounded-full px-[15px] 2xl:px-[20px] py-[10px] 2xl:py-[18px] text-[17px] font-[400] text-[#000000] mb-[20px]">
                   Contact Our Experts

@@ -2,10 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  CaseStudyBySlugResponse,
-  getCaseStudyBySlug,
-} from "@/graphql/queries/getCaseStudyBySlug";
+import { CaseStudyBySlugResponse, getCaseStudyBySlug } from "@/graphql/queries/getCaseStudyBySlug";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import DownloadForm from "@/components/templates/downloadForm";
 import "../../../styles/components/caseStudy-detail.scss";
@@ -47,9 +44,7 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
             <p className="text-lg text-white mb-2.5 border rounded max-w-none inline-block px-2 border-[#676767]">
               {hero.PublishDate}
             </p>
-            <h1 className="text-3xl md:text-5xl font-bold mt-2">
-              {hero.BannerTitle}
-            </h1>
+            <h1 className="text-3xl md:text-5xl font-bold mt-2">{hero.BannerTitle}</h1>
           </div>
           <div className="relative aspect-[16/9] md:aspect-auto w-full h-60 md:h-auto">
             <Image

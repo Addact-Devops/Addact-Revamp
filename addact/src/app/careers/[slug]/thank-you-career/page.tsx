@@ -34,9 +34,7 @@ export async function generateMetadata() {
     alternates: seo.canonicalURL ? { canonical: seo.canonicalURL } : undefined,
     other: {
       twitterCardTitle: seo.twitterCardTitle || "",
-      structuredData: seo.structuredData
-        ? JSON.stringify(seo.structuredData)
-        : "",
+      structuredData: seo.structuredData ? JSON.stringify(seo.structuredData) : "",
       languageTag: seo.languageTag || "",
     },
   };

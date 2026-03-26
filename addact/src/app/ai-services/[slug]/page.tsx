@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation";
 import SiteDetailClient from "./SiteDetailClient";
-import {
-  AIService,
-  getAIServiceSlug,
-} from "@/graphql/queries/getAIServiceSlug";
+import { AIService, getAIServiceSlug } from "@/graphql/queries/getAIServiceSlug";
 
 type Params = Promise<{ slug: string }>;
 

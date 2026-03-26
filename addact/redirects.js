@@ -1723,5 +1723,10 @@ module.exports = [
     "source": "/kentico-cms-development/hire-kentico-developer",
     "destination": "/hire-experts/kentico-developer",
     "permanent": true
+  },
+  {
+    "source": "/hire-certified-sitecore-developer",
+    "destination": "/development-design/cms-development/sitecore",
+    "permanent": true
   }
 ];

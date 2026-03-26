@@ -524,19 +524,14 @@ export interface ProcessDataItem {
 }
 
 // Fetch function
-export async function getDevelopmentDesignDetailsCmsSlug(
-  slug: string,
-): Promise<CmsDetail | null> {
-  const data = await client.request<CmsDetailResponse>(
-    developmentDesignDetailsSlugQuery,
-    {
-      filters: {
-        Slug: {
-          eq: `/${slug}`,
-        },
+export async function getDevelopmentDesignDetailsCmsSlug(slug: string): Promise<CmsDetail | null> {
+  const data = await client.request<CmsDetailResponse>(developmentDesignDetailsSlugQuery, {
+    filters: {
+      Slug: {
+        eq: `/${slug}`,
       },
     },
-  );
+  });
 
   return data.cmsDetails?.[0] ?? null;
 }

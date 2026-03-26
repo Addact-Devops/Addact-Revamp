@@ -18,19 +18,11 @@ type BrandValueProps = {
   };
 };
 
-const BrandValue: React.FC<BrandValueProps> = ({
-  title,
-  subtitle,
-  content,
-  image,
-}) => {
+const BrandValue: React.FC<BrandValueProps> = ({ title, subtitle, content, image }) => {
   const paragraph = content?.[0]?.children?.[0]?.text || "";
 
   return (
-    <section
-      className="container-main my-[60px] sm:my-[60px]"
-      id="brand-values"
-    >
+    <section className="container-main my-[60px] sm:my-[60px]" id="brand-values">
       <div className="bg-black rounded-xl p-[30px] sm:px-[60px] sm:py-[70px] lg:flex items-center justify-between">
         {/* Left Text Content */}
         <div className="text-white lg:w-1/2 space-y-4 mb-10 lg:mb-0">

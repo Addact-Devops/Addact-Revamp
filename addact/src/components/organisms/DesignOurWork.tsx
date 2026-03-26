@@ -13,8 +13,7 @@ const projectsData = [
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution. At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution and digital transformation.",
     tags: ["Law firm", "Legal Tech", "AI"],
-    image:
-      "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80",
   },
   {
     id: 2,
@@ -22,8 +21,7 @@ const projectsData = [
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution. At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution and digital transformation.",
     tags: ["Healthcare", "MedTech", "AI"],
-    image:
-      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80",
   },
   {
     id: 3,
@@ -31,8 +29,7 @@ const projectsData = [
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution. At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution and digital transformation.",
     tags: ["Finance", "FinTech", "Banking"],
-    image:
-      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80",
   },
   {
     id: 4,
@@ -40,8 +37,7 @@ const projectsData = [
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution. At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution and digital transformation.",
     tags: ["Retail", "E-Commerce", "AI"],
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80",
   },
   {
     id: 5,
@@ -49,8 +45,7 @@ const projectsData = [
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution. At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution and digital transformation.",
     tags: ["PropTech", "Real Estate", "AI"],
-    image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80",
   },
 ];
 

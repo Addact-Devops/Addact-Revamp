@@ -28,13 +28,7 @@ type BlogDetailBannerProps = {
 export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
   if (!banner) return null;
 
-  const {
-    BannerTitle,
-    BannerDescription,
-    BannerImage,
-    PublishDate,
-    blogcategory,
-  } = banner;
+  const { BannerTitle, BannerDescription, BannerImage, PublishDate, blogcategory } = banner;
 
   const imageUrl = BannerImage?.url
     ? BannerImage.url.startsWith("http")
@@ -76,9 +70,7 @@ export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
                   {BannerTitle}
                 </h1>
               )}
-              {BannerDescription && (
-                <p className="!text-white">{BannerDescription}</p>
-              )}
+              {BannerDescription && <p className="!text-white">{BannerDescription}</p>}
               {formattedDate && (
                 <p className="!text-white !mt-[40px] ">
                   <b>Published:</b> {formattedDate}
@@ -88,26 +80,20 @@ export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
 
             {imageUrl && (
               <div className="w-full min-[992px]:w-1/2:w-1/2 relative order-2">
-                {BannerImage?.url &&
-                  BannerImage?.width &&
-                  BannerImage?.height && (
-                    <Image
-                      src={
-                        BannerImage.url.startsWith("http")
-                          ? BannerImage.url
-                          : `${process.env.NEXT_PUBLIC_STRAPI_URL}${BannerImage.url}`
-                      }
-                      alt={
-                        BannerImage.alternativeText ||
-                        BannerImage.name ||
-                        "Banner"
-                      }
-                      width={BannerImage.width}
-                      height={BannerImage.height}
-                      className="object-cover rounded-xl max-w-full h-auto !m-0 !w-full"
-                      priority
-                    />
-                  )}
+                {BannerImage?.url && BannerImage?.width && BannerImage?.height && (
+                  <Image
+                    src={
+                      BannerImage.url.startsWith("http")
+                        ? BannerImage.url
+                        : `${process.env.NEXT_PUBLIC_STRAPI_URL}${BannerImage.url}`
+                    }
+                    alt={BannerImage.alternativeText || BannerImage.name || "Banner"}
+                    width={BannerImage.width}
+                    height={BannerImage.height}
+                    className="object-cover rounded-xl max-w-full h-auto !m-0 !w-full"
+                    priority
+                  />
+                )}
               </div>
             )}
           </div>

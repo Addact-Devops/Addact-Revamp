@@ -93,17 +93,13 @@ export default function Footer({ data }: FooterProps) {
 
   const linkColumns = footerlinks?.slice(0, 4) || [];
   const policyColumn = footerlinks?.[4]?.NavLink || [];
-  const policyLinks = (policyColumn as FooterLink[]).filter(
-    (item) => item?.label && item?.href,
-  );
+  const policyLinks = (policyColumn as FooterLink[]).filter((item) => item?.label && item?.href);
   const fallbackPolicyLinks: FooterLink[] = [
     { label: "Sitemap", href: "/sitemap" },
     { label: "T & C", href: "/terms-of-use" },
     { label: "Privacy Policy", href: "/privacy-policy" },
   ];
-  const finalPolicyLinks = policyLinks.length
-    ? policyLinks
-    : fallbackPolicyLinks;
+  const finalPolicyLinks = policyLinks.length ? policyLinks : fallbackPolicyLinks;
 
   const topContactItems = AddressInformation?.slice(0, 2) || [];
 
@@ -191,11 +187,7 @@ export default function Footer({ data }: FooterProps) {
                         <div className="relative w-10 h-10 shrink-0">
                           <Image
                             src={item.Link.Icon.url}
-                            alt={
-                              item.Link.Icon.alternativeText ||
-                              item?.Title ||
-                              "contact icon"
-                            }
+                            alt={item.Link.Icon.alternativeText || item?.Title || "contact icon"}
                             width={item.Link.Icon.width || 40}
                             height={item.Link.Icon.height || 40}
                             className="w-full h-full object-contain"
@@ -204,9 +196,7 @@ export default function Footer({ data }: FooterProps) {
                       )}
 
                       <div className="text-[20px] leading-normal text-white footer-richtext flex gap-2 items-center">
-                        {item?.Title && (
-                          <span className="font-semibold">{item.Title}</span>
-                        )}
+                        {item?.Title && <span className="font-semibold">{item.Title}</span>}
 
                         {item?.Description && (
                           <span
@@ -267,16 +257,8 @@ export default function Footer({ data }: FooterProps) {
                           <li key={link.id || i}>
                             <Link
                               href={link.href || "/"}
-                              target={
-                                link?.isExternal
-                                  ? "_blank"
-                                  : `_${link.target}` || "_self"
-                              }
-                              rel={
-                                link.isExternal
-                                  ? "noopener noreferrer"
-                                  : undefined
-                              }
+                              target={link?.isExternal ? "_blank" : `_${link.target}` || "_self"}
+                              rel={link.isExternal ? "noopener noreferrer" : undefined}
                               className="text-[16px]! xl:text-[20px]! leading-[26px] text-[#AEAEAE] font-medium hover:text-white transition-colors"
                             >
                               {link.label}
@@ -296,21 +278,12 @@ export default function Footer({ data }: FooterProps) {
                 {/* Policy Links - Left */}
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 text-[14px] lg:text-[18px] font-medium text-white/80">
                   {finalPolicyLinks.map((item, index) => (
-                    <div
-                      key={item.id || item.label || index}
-                      className="flex items-center gap-2.5"
-                    >
+                    <div key={item.id || item.label || index} className="flex items-center gap-2.5">
                       {index > 0 && <span className="text-white/50">•</span>}
                       <Link
                         href={item.href || "/"}
-                        target={
-                          item?.isExternal
-                            ? "_blank"
-                            : `_${item?.target}` || "_self"
-                        }
-                        rel={
-                          item.isExternal ? "noopener noreferrer" : undefined
-                        }
+                        target={item?.isExternal ? "_blank" : `_${item?.target}` || "_self"}
+                        rel={item.isExternal ? "noopener noreferrer" : undefined}
                         className="hover:text-white transition-colors"
                       >
                         {item.label}
@@ -327,14 +300,8 @@ export default function Footer({ data }: FooterProps) {
                       <Link
                         key={icon.id || index}
                         href={icon.href || "/"}
-                        target={
-                          icon?.isExternal
-                            ? "_blank"
-                            : `_${icon?.target}` || "_self"
-                        }
-                        rel={
-                          icon.isExternal ? "noopener noreferrer" : undefined
-                        }
+                        target={icon?.isExternal ? "_blank" : `_${icon?.target}` || "_self"}
+                        rel={icon.isExternal ? "noopener noreferrer" : undefined}
                         aria-label={icon.label || "social media"}
                         className="w-10 h-10 rounded-full bg-transparent border-0 flex items-center justify-center hover:scale-110 transition-transform"
                       >

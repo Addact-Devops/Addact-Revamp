@@ -9,8 +9,7 @@ type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
-  const data: DigitalMarketingService | null =
-    await getDigitalMarketingSlug(slug);
+  const data: DigitalMarketingService | null = await getDigitalMarketingSlug(slug);
 
   if (!data || !data.SEO) return {};
 
@@ -52,8 +51,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 
 const SiteDetailPage = async ({ params }: { params: Params }) => {
   const { slug } = await params;
-  const data: DigitalMarketingService | null =
-    await getDigitalMarketingSlug(slug);
+  const data: DigitalMarketingService | null = await getDigitalMarketingSlug(slug);
 
   if (!data) return notFound();
 

@@ -61,11 +61,7 @@ type FaqRawItem = {
 // ): "self" | "blank" | "parent" | "top" =>
 //   t === "blank" || t === "parent" || t === "top" ? t : "self";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const industry = await getIndustryBySlug(slug);
 
@@ -193,21 +189,18 @@ export default async function Page({ params }: { params: Params }) {
     ? {
         ReferenceTitle: faqRaw.ReferenceTitle ?? "",
         Title: faqRaw.Title ?? "",
-        FAQ: (Array.isArray(faqRaw.FAQ)
-          ? (faqRaw.FAQ as FaqRawItem[])
-          : []
-        ).map((q): { Title: string; Description: string } => ({
-          Title: q?.Title ?? "",
-          Description: q?.Description ?? "",
-        })),
+        FAQ: (Array.isArray(faqRaw.FAQ) ? (faqRaw.FAQ as FaqRawItem[]) : []).map(
+          (q): { Title: string; Description: string } => ({
+            Title: q?.Title ?? "",
+            Description: q?.Description ?? "",
+          }),
+        ),
       }
     : null;
 
   // ✅ Project Highlights items directly from industry query (new)
-  const projectHighlightItems =
-    industry?.ProjectHighlights?.addact_case_studies ?? [];
-  const projectHighlightsTitle =
-    industry?.ProjectHighlights?.Title ?? "Project Highlights";
+  const projectHighlightItems = industry?.ProjectHighlights?.addact_case_studies ?? [];
+  const projectHighlightsTitle = industry?.ProjectHighlights?.Title ?? "Project Highlights";
 
   return (
     <>
@@ -241,14 +234,10 @@ export default async function Page({ params }: { params: Params }) {
           images={normalizedPartnerImages}
         /> */}
 
-        {industry?.OurChallenges && (
-          <IndustryChallenges data={industry.OurChallenges as never} />
-        )}
+        {industry?.OurChallenges && <IndustryChallenges data={industry.OurChallenges as never} />}
 
         {industry?.OurSolutions && (
-          <IndustrySolutionsWithAnimation
-            data={industry.OurSolutions as never}
-          />
+          <IndustrySolutionsWithAnimation data={industry.OurSolutions as never} />
         )}
 
         {/* ✅ CMS Experts from this industry */}

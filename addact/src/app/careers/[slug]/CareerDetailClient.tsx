@@ -7,11 +7,7 @@ import { CareerDetailResponse } from "@/graphql/queries/getCareerDetails";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 // import "../../../styles/components/caseStudy-detail.scss";
 import HeroBanner from "@/components/organisms/HeroBanner";
-import {
-  CareerFormState,
-  CareerFormErrors,
-  validateCareerForm,
-} from "@/utils/validateCareerForm";
+import { CareerFormState, CareerFormErrors, validateCareerForm } from "@/utils/validateCareerForm";
 import Loader from "@/components/atom/loader";
 
 interface CareerDetailClientProps {
@@ -44,16 +40,11 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const redirectUrl = `${pathname}/thank-you-career`;
-  const pageTitle = useMemo(
-    () => pathname.split("/").filter(Boolean).pop(),
-    [pathname],
-  );
+  const pageTitle = useMemo(() => pathname.split("/").filter(Boolean).pop(), [pathname]);
 
   if (!data) return notFound();
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -142,10 +133,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
 
     // Metadata
     formData.append("sheetName", "CareerForm");
-    formData.append(
-      "RecipientEmails",
-      data.careers_form.FormFields.RecipientEmails,
-    );
+    formData.append("RecipientEmails", data.careers_form.FormFields.RecipientEmails);
     formData.append("pageTitle", `"${pageTitle}"`);
     formData.append("honeypot", honeypot);
     formData.append("turnstileToken", captchaToken || "");
@@ -198,9 +186,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
       {data && (
         <HeroBanner
           title={bannerData?.BannerTitle ?? ""}
-          description={
-            bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-          }
+          description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
           button={{
             label: bannerData?.BannerLink?.label ?? "",
             url: bannerData?.BannerLink?.href ?? "",
@@ -215,10 +201,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
             <BlogContentRenderer blocks={data.JobDescription} />
           </div>
 
-          <section
-            id="form"
-            className="bg-[#f4f4f4] py-10 scroll-mt-20 md:scroll-mt-32"
-          >
+          <section id="form" className="bg-[#f4f4f4] py-10 scroll-mt-20 md:scroll-mt-32">
             <div className="max-w-[1200px] mx-auto bg-white rounded-[20px] overflow-hidden flex flex-col md:flex-row shadow-lg">
               {/* Left Image Block */}
               <div
@@ -264,8 +247,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                     <div
                       className="prose prose-sm prose-invert text-white max-w-none !text-lg"
                       dangerouslySetInnerHTML={{
-                        __html:
-                          data.careers_form.FormFields.Form[1]?.Description,
+                        __html: data.careers_form.FormFields.Form[1]?.Description,
                       }}
                     />
                   </div>
@@ -275,8 +257,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                       onClick={() => fileInputRef.current?.click()}
                       className="bg-[#3C4CFF] text-white text-sm px-5 py-2 rounded-md hover:bg-[#3440CB] transition-all duration-200"
                     >
-                      {data.careers_form.FormFields.Form[1]?.Link?.label ||
-                        "Apply with Resume*"}
+                      {data.careers_form.FormFields.Form[1]?.Link?.label || "Apply with Resume*"}
                     </button>
                     <input
                       ref={fileInputRef}
@@ -305,11 +286,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         {resumeFile.name}
                       </p>
                     )}
-                    {errors.resume && (
-                      <p className="text-red-600 text-sm mt-2">
-                        {errors.resume}
-                      </p>
-                    )}
+                    {errors.resume && <p className="text-red-600 text-sm mt-2">{errors.resume}</p>}
                   </div>
                 </div>
 
@@ -330,9 +307,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                       onChange={handleChange}
                     />
                     {errors.fullName && (
-                      <p className="text-red-600 text-sm mt-1">
-                        {errors.fullName}
-                      </p>
+                      <p className="text-red-600 text-sm mt-1">{errors.fullName}</p>
                     )}
                   </div>
                   <div className="flex flex-col md:flex-row gap-4">
@@ -345,11 +320,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         value={form.email}
                         onChange={handleChange}
                       />
-                      {errors.email && (
-                        <p className="text-red-600 text-sm mt-1">
-                          {errors.email}
-                        </p>
-                      )}
+                      {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email}</p>}
                     </div>
 
                     <div className="w-full">
@@ -361,11 +332,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         value={form.phone}
                         onChange={handleChange}
                       />
-                      {errors.phone && (
-                        <p className="text-red-600 text-sm mt-1">
-                          {errors.phone}
-                        </p>
-                      )}
+                      {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone}</p>}
                     </div>
                   </div>
                   <div className="flex flex-col md:flex-row gap-4">
@@ -379,9 +346,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         onChange={handleChange}
                       />
                       {errors.currentCTC && (
-                        <p className="text-red-600 text-sm mt-1">
-                          {errors.currentCTC}
-                        </p>
+                        <p className="text-red-600 text-sm mt-1">{errors.currentCTC}</p>
                       )}
                     </div>
 
@@ -395,9 +360,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         onChange={handleChange}
                       />
                       {errors.expectedCTC && (
-                        <p className="text-red-600 text-sm mt-1">
-                          {errors.expectedCTC}
-                        </p>
+                        <p className="text-red-600 text-sm mt-1">{errors.expectedCTC}</p>
                       )}
                     </div>
                   </div>
@@ -412,9 +375,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         onChange={handleChange}
                       />
                       {errors.experience && (
-                        <p className="text-red-600 text-sm mt-1">
-                          {errors.experience}
-                        </p>
+                        <p className="text-red-600 text-sm mt-1">{errors.experience}</p>
                       )}
                     </div>
 
@@ -440,9 +401,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         onChange={handleChange}
                       />
                       {errors.hyperlink && (
-                        <p className="text-red-600 text-sm mt-1">
-                          {errors.hyperlink}
-                        </p>
+                        <p className="text-red-600 text-sm mt-1">{errors.hyperlink}</p>
                       )}
                     </div>
                     <div className="w-full">
@@ -455,9 +414,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         onChange={handleChange}
                       />
                       {errors.linkedInProfile && (
-                        <p className="text-red-600 text-sm mt-1">
-                          {errors.linkedInProfile}
-                        </p>
+                        <p className="text-red-600 text-sm mt-1">{errors.linkedInProfile}</p>
                       )}
                     </div>
                   </div>
@@ -483,9 +440,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                   <div className="flex justify-start w-full overflow-hidden">
                     <div className="recaptcha-wrapper flex flex-col overflow-visible">
                       <Turnstile
-                        siteKey={
-                          process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""
-                        }
+                        siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
                         onSuccess={(token) => {
                           setCaptchaToken(token);
                           setCaptchaError(false);
@@ -501,9 +456,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                         }}
                       />
                       {captchaError && !captchaToken && (
-                        <p className="mt-1 text-sm text-red-500">
-                          Please complete the captcha.
-                        </p>
+                        <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
                       )}
                     </div>
                   </div>
@@ -518,9 +471,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                     disabled={formLoading}
                     className="bg-[#3C4CFF] text-white px-6 py-2 rounded-md hover:bg-[#3440CB] shadow-sm mt-4 disabled:!cursor-not-allowed disabled:opacity-50 transition-all duration-200"
                   >
-                    {formLoading
-                      ? "Submitting..."
-                      : data.careers_form.FormFields.ButtonLabel}
+                    {formLoading ? "Submitting..." : data.careers_form.FormFields.ButtonLabel}
                   </button>
                 </form>
               </div>
