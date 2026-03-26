@@ -3,7 +3,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from "react";
 import Image from "next/image";
 import { CONTACTUS } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
-import ReCAPTCHA from "react-google-recaptcha";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { usePathname } from "next/navigation";
 import { Mail, Phone, X } from "lucide-react";
 import Link from "next/link";
@@ -231,6 +231,7 @@ const ContactUs = ({
         description: formData.message,
         pageTitle,
         recipientEmails: data.RecipientEmails,
+        turnstileToken: captchaToken,
       };
 
       const res = await fetch("/api/contact", {
@@ -349,15 +350,21 @@ const ContactUs = ({
                   className="recaptcha-wrapper flex flex-col overflow-visible"
                   style={{ width: 304, minWidth: 304 }}
                 >
-                  <ReCAPTCHA
-                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                    onChange={(token: string | null) => {
+                  <Turnstile
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                    onSuccess={(token) => {
                       setCaptchaToken(token);
-                      if (token) {
-                        setCaptchaError(false);
-                      }
+                      setCaptchaError(false);
                     }}
-                    size="normal"
+                    onExpire={() => {
+                      setCaptchaToken(null);
+                    }}
+                    onError={() => {
+                      setCaptchaToken(null);
+                    }}
+                    options={{
+                      size: "normal",
+                    }}
                   />
                   {captchaError && !captchaToken && (
                     <p className="mt-1 text-sm text-red-500">
@@ -524,15 +531,21 @@ const ContactUs = ({
                     className="recaptcha-wrapper overflow-visible"
                     style={{ width: 304, minWidth: 304 }}
                   >
-                    <ReCAPTCHA
-                      sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}
-                      onChange={(token: string | null) => {
+                    <Turnstile
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                      onSuccess={(token) => {
                         setCaptchaToken(token);
-                        if (token) {
-                          setCaptchaError(false);
-                        }
+                        setCaptchaError(false);
                       }}
-                      size="normal"
+                      onExpire={() => {
+                        setCaptchaToken(null);
+                      }}
+                      onError={() => {
+                        setCaptchaToken(null);
+                      }}
+                      options={{
+                        size: "normal",
+                      }}
                     />
                     {captchaError && !captchaToken && (
                       <p className="mt-1 text-sm text-red-500">
