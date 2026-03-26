@@ -69,16 +69,20 @@ export async function generateMetadata({ params }: { params: Params }) {
 
 const SiteDetailPage = async ({ params }: { params: Params }) => {
   const { slug } = await params;
+
   let data: DevelopmentDesignDetail | CmsDetail | SitecoreDetail | null = null;
 
-  if (slug.length === 1) {
-    data = await getDevelopmentDesignSlug(slug[0]);
-  } else if (slug.length === 2) {
-    const fullPath = `${slug.join("/")}`;
-    data = await getDevelopmentDesignDetailsCmsSlug(fullPath);
-  } else if (slug.length === 3) {
-    const fullPath = `${slug[2]}`;
-    data = await getDevelopmentDesignDetailsSitecoreSlug(fullPath);
+  const apiMap = [
+    getDevelopmentDesignSlug,
+    getDevelopmentDesignDetailsCmsSlug,
+    getDevelopmentDesignDetailsSitecoreSlug,
+  ];
+
+  const handler = apiMap[slug.length - 1];
+  const lastSlug = slug.at(-1);
+
+  if (handler && lastSlug) {
+    data = await handler(lastSlug);
   }
 
   if (!data) return notFound();
