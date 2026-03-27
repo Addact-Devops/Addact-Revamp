@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 import Link from "next/link";
 import React from "react";
 
@@ -40,21 +37,14 @@ const getHeadingValue = (heading: CtaTitle): string => {
   return "";
 };
 
-const GenericCTA: React.FC<CTAProps> = ({
-  title,
-  description,
-  image,
-  link,
-}) => {
-  const headingText =
-    title && title.length > 0 ? getHeadingValue(title[0]) : "";
+const GenericCTA: React.FC<CTAProps> = ({ title, description, image, link }) => {
+  const headingText = title && title.length > 0 ? getHeadingValue(title[0]) : "";
   const descriptionText = description?.[0]?.children?.[0]?.text || "";
 
   const sectionMinHeight = "450px"; // same value reused
 
   const target = link?.isExternal ? "_blank" : "_self";
-  const useContactDrawer =
-    !link?.isExternal && shouldOpenContactDrawer(link?.href || "");
+  const useContactDrawer = !link?.isExternal && shouldOpenContactDrawer(link?.href || "");
 
   const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
     if (!useContactDrawer) {

@@ -7,19 +7,14 @@ import {
   getPressReleaseDetailBySlug,
   PressReleaseDetailResponse,
 } from "@/graphql/queries/getPressReleaseDetail";
-import {
-  getRecentPressRelease,
-  RecentPressRelease,
-} from "@/graphql/queries/getRecentPressRelease";
+import { getRecentPressRelease, RecentPressRelease } from "@/graphql/queries/getRecentPressRelease";
 import "../../../styles/components/caseStudy-detail.scss";
 import Loader from "@/components/atom/loader";
 import { notFound } from "next/navigation";
 
 export default function PressReleaseDetails({ slug }: { slug: string }) {
-  const [pressReleaseData, setPressReleaseData] =
-    useState<PressReleaseDetailResponse>();
-  const [recentPressReleaseData, setRecentPressReleaseData] =
-    useState<RecentPressRelease>();
+  const [pressReleaseData, setPressReleaseData] = useState<PressReleaseDetailResponse>();
+  const [recentPressReleaseData, setRecentPressReleaseData] = useState<RecentPressRelease>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -86,32 +81,24 @@ export default function PressReleaseDetails({ slug }: { slug: string }) {
                     Recent Press Releases
                   </h2>
                   <div className="space-y-6">
-                    {recentPressReleaseData?.addactPressReleases.map(
-                      (item, index) => (
-                        <div key={index} className="flex gap-4">
-                          <div className="relative flex-shrink-0">
-                            <Image
-                              src={item?.HeroBanner[0]?.BannerImage?.url || ""}
-                              alt={
-                                item?.HeroBanner[0]?.BannerImage
-                                  ?.alternativeText || ""
-                              }
-                              width={120}
-                              height={80}
-                              className="object-cover rounded-md"
-                            />
-                          </div>
-                          <h5 className="!text-[15px] !font-medium leading-snug !m-0">
-                            <a
-                              href={`/press-releases/${item.Slug}`}
-                              className="!no-underline"
-                            >
-                              {item?.HeroBanner[0]?.BannerTitle || ""}
-                            </a>
-                          </h5>
+                    {recentPressReleaseData?.addactPressReleases.map((item, index) => (
+                      <div key={index} className="flex gap-4">
+                        <div className="relative flex-shrink-0">
+                          <Image
+                            src={item?.HeroBanner[0]?.BannerImage?.url || ""}
+                            alt={item?.HeroBanner[0]?.BannerImage?.alternativeText || ""}
+                            width={120}
+                            height={80}
+                            className="object-cover rounded-md"
+                          />
                         </div>
-                      ),
-                    )}
+                        <h5 className="!text-[15px] !font-medium leading-snug !m-0">
+                          <a href={`/press-releases/${item.Slug}`} className="!no-underline">
+                            {item?.HeroBanner[0]?.BannerTitle || ""}
+                          </a>
+                        </h5>
+                      </div>
+                    ))}
                   </div>
                 </div>
 

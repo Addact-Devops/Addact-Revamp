@@ -3,9 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { OurProcessData } from "@/graphql/queries/getOurProcess";
 
-export default function OurProcess(props: {
-  data?: OurProcessData["home"]["ourprocess"];
-}) {
+export default function OurProcess(props: { data?: OurProcessData["home"]["ourprocess"] }) {
   const [data, setData] = useState<OurProcessData["home"]["ourprocess"]>();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const timelineRef = useRef<HTMLDivElement | null>(null);
@@ -29,12 +27,9 @@ export default function OurProcess(props: {
   useEffect(() => {
     const updateActiveStep = () => {
       const offset = window.innerHeight * 0.6;
-      const positions = stepRefs.current.map(
-        (ref) => ref?.getBoundingClientRect().top ?? 9999,
-      );
+      const positions = stepRefs.current.map((ref) => ref?.getBoundingClientRect().top ?? 9999);
       const activeIndex = positions.findIndex((pos) => pos > offset);
-      const isAtBottom =
-        window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
+      const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
 
       const finalActive = isAtBottom
         ? positions.length - 1
@@ -141,22 +136,11 @@ export default function OurProcess(props: {
 
   const getTitle = () => {
     const title = data?.Title?.[0];
-    return (
-      title?.h1 ||
-      title?.h2 ||
-      title?.h3 ||
-      title?.h4 ||
-      title?.h5 ||
-      title?.h6 ||
-      ""
-    );
+    return title?.h1 || title?.h2 || title?.h3 || title?.h4 || title?.h5 || title?.h6 || "";
   };
 
   return (
-    <section
-      className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]"
-      ref={containerRef}
-    >
+    <section className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]" ref={containerRef}>
       <div>
         {getTitle() && (
           <h2 className="border-after !text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10">
@@ -165,10 +149,7 @@ export default function OurProcess(props: {
         )}
 
         {/* timeline wrapper — attach timelineRef here so line & dots are relative to same parent */}
-        <div
-          className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]"
-          ref={timelineRef}
-        >
+        <div className="relative flex mt-[40px] md:mt-[60px] lg:mt-[100px]" ref={timelineRef}>
           {/* Background gray line */}
           <div className="absolute left-1 md:left-1/2 transform -translate-x-1/2 top-0 w-[2px] h-full bg-gray-600 opacity-40 z-0" />
 
@@ -182,8 +163,7 @@ export default function OurProcess(props: {
           {data?.ProcessData &&
             stepCenters.length === data.ProcessData.length &&
             data.ProcessData.map((_, i) => {
-              const isMobile =
-                typeof window !== "undefined" && window.innerWidth < 768;
+              const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
               const dotSize = isMobile ? 16 : 24;
               const dotRadius = dotSize / 2;
               const center = stepCenters[i] ?? 0;

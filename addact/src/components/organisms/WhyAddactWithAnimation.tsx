@@ -85,9 +85,7 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
   return (
     <section
       ref={sectionRef}
-      className={`my-[80px] lg:my-[100px] 2xl:my-[200px] whyaddact-anim ${
-        play ? "play" : ""
-      }`}
+      className={`my-[80px] lg:my-[100px] 2xl:my-[200px] whyaddact-anim ${play ? "play" : ""}`}
     >
       <div className="container-main">
         <div className="flex flex-col">
@@ -100,9 +98,7 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
             {cards.slice(0, 6).map((service: CardItem, index: number) => (
               <div
                 key={service?.id ?? index}
-                className={`${
-                  index === 0 ? "border-t" : ""
-                } border-b border-gray-700`}
+                className={`${index === 0 ? "border-t" : ""} border-b border-gray-700`}
               >
                 <button
                   onClick={() => toggleAccordion(index)}
@@ -120,20 +116,14 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 {openIndex === index && (
                   <div className="pb-4 px-6">
                     <div className="text-[16px] text-white">
                       <RichText
-                        html={(service?.Description ?? "")
-                          .toString()
-                          .replace(/^<p>|<\/p>$/g, "")}
+                        html={(service?.Description ?? "").toString().replace(/^<p>|<\/p>$/g, "")}
                       />
                     </div>
                   </div>
@@ -167,9 +157,7 @@ const WhyAddactWithAnimation = ({ data }: IProps) => {
 
                     <div className="slide-x text-[18px] 2xl:text-[20px] text-white">
                       <RichText
-                        html={(service?.Description ?? "")
-                          .toString()
-                          .replace(/^<p>|<\/p>$/g, "")}
+                        html={(service?.Description ?? "").toString().replace(/^<p>|<\/p>$/g, "")}
                       />
                     </div>
                   </div>

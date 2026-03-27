@@ -2,10 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import {
-  CMSResponse,
-  getCMSExpertiseData,
-} from "@/graphql/queries/getCmsExperts";
+import { CMSResponse, getCMSExpertiseData } from "@/graphql/queries/getCmsExperts";
 import Image from "../atom/image";
 import RichText from "../atom/richText";
 
@@ -45,10 +42,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
       setData(response);
     }
     // ✅ FETCH ONLY if no industry overrides were provided
-    const hasOverrides = !!(
-      props?.title ||
-      (props?.items && props.items.length)
-    );
+    const hasOverrides = !!(props?.title || (props?.items && props.items.length));
     if (!hasOverrides) {
       fetchData();
     }
@@ -74,8 +68,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                 id: s.Links?.id ?? String(idx),
                 href: s.Links?.href ?? "#",
                 label: s.Links?.label ?? s.Title ?? "Learn more",
-                target:
-                  s.Links?.target ?? (s.Links?.isExternal ? "blank" : "self"),
+                target: s.Links?.target ?? (s.Links?.isExternal ? "blank" : "self"),
                 isExternal: s.Links?.isExternal ?? s.Links?.target === "blank",
               },
               Icons: s.Icons
@@ -102,11 +95,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
       setData(synthetic);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    props?.title,
-    props?.descriptionHtml,
-    JSON.stringify(props?.items || []),
-  ]);
+  }, [props?.title, props?.descriptionHtml, JSON.stringify(props?.items || [])]);
 
   // ▶️ Start the logo animation once after first paint (prevents SSR flash)
   useEffect(() => {
@@ -127,9 +116,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
           </h2>
 
           <div className="w-full text-left">
-            <RichText
-              html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description}
-            />
+            <RichText html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description} />
           </div>
         </div>
 
@@ -144,19 +131,14 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
                 Contentful: "hover:bg-[#1773EB]",
                 Contentstack: "hover:bg-[#7C4DFF]",
               };
-              const hoverColorClass =
-                hoverColorMap[service?.Title] || "hover:bg-[#EE3524]";
+              const hoverColorClass = hoverColorMap[service?.Title] || "hover:bg-[#EE3524]";
 
               return (
                 <Link
                   className={`bg-[#1C1C1C] border border-gray-700 text-white py-4 px-4 md:py-14 md:px-14 2xl:py-20 2xl:px-14 flex justify-center items-center transition-colors duration-300 ${hoverColorClass}`}
                   key={service?.id}
                   href={service?.Links?.href}
-                  aria-label={
-                    service?.Links?.label ||
-                    service?.Title ||
-                    "Open CMS service"
-                  }
+                  aria-label={service?.Links?.label || service?.Title || "Open CMS service"}
                   target={service?.Links?.isExternal ? "_blank" : "_self"}
                 >
                   {/* 🔥 Animate ONLY the logo image */}

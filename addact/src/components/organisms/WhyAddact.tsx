@@ -64,8 +64,7 @@ const WhyAddact = ({ data }: IProps) => {
 
   // ✅ Title (works for both shapes)
   const heading = getHeading(
-    (data as IndustryWhyAddact | undefined)?.Title ??
-      (data as Whyaddact | undefined)?.Title,
+    (data as IndustryWhyAddact | undefined)?.Title ?? (data as Whyaddact | undefined)?.Title,
   );
 
   // ✅ Cards (works for both shapes)
@@ -102,11 +101,7 @@ const WhyAddact = ({ data }: IProps) => {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
                 </button>
                 {openIndex === index && (
@@ -114,9 +109,7 @@ const WhyAddact = ({ data }: IProps) => {
                     {/* Icon removed in mobile */}
                     <div className="text-[16px] text-white">
                       <RichText
-                        html={(service?.Description ?? "")
-                          .toString()
-                          .replace(/^<p>|<\/p>$/g, "")}
+                        html={(service?.Description ?? "").toString().replace(/^<p>|<\/p>$/g, "")}
                       />
                     </div>
                   </div>
@@ -147,9 +140,7 @@ const WhyAddact = ({ data }: IProps) => {
                     </h3>
                     <div className="text-[18px] 2xl:text-[20px] text-white">
                       <RichText
-                        html={(service?.Description ?? "")
-                          .toString()
-                          .replace(/^<p>|<\/p>$/g, "")}
+                        html={(service?.Description ?? "").toString().replace(/^<p>|<\/p>$/g, "")}
                       />
                     </div>
                   </div>

@@ -375,8 +375,6 @@ export interface ProcessDataItem {
 }
 
 export async function getQATestingSupport(): Promise<QATestingSupport> {
-  const data = await client.request<QATestingSupportResponse>(
-    GET_PRESS_RELEASE_LIST_PAGE,
-  );
+  const data = await client.request<QATestingSupportResponse>(GET_PRESS_RELEASE_LIST_PAGE);
   return data.qaTestingAndSupport;
 }

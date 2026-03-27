@@ -558,9 +558,7 @@ export interface TabContent {
 }
 
 // Fetch function
-export async function getHireExpertsSlug(
-  slug: string,
-): Promise<HireExpert | null> {
+export async function getHireExpertsSlug(slug: string): Promise<HireExpert | null> {
   const data = await client.request<HireExpertResponse>(hireExpertsSlugQuery, {
     filters: {
       Slug: {

@@ -41,17 +41,12 @@ type SimilarBlogProps = {
   };
 };
 
-export default function SimilarBlog({
-  similarBlogs,
-  similarstorytitle,
-}: SimilarBlogProps) {
+export default function SimilarBlog({ similarBlogs, similarstorytitle }: SimilarBlogProps) {
   if (!Array.isArray(similarBlogs) || similarBlogs.length === 0) return null;
 
   const flattenedBlogs =
     similarBlogs
-      ?.flatMap((item) =>
-        Array.isArray(item?.BlogBanner) ? item.BlogBanner : [],
-      )
+      ?.flatMap((item) => (Array.isArray(item?.BlogBanner) ? item.BlogBanner : []))
       ?.filter((b) => b?.BannerTitle && b?.BannerImage?.url && b?.ReadNow?.href)
       ?.slice(0, 3) || [];
 
@@ -95,17 +90,11 @@ export default function SimilarBlog({
               key={index}
               className={`border border-[#3c4cff59] p-7 relative flex flex-col h-full`}
             >
-              <div
-                className={`bg-gray-300 overflow-hidden w-full mb-7 max-h-[350px]`}
-              >
+              <div className={`bg-gray-300 overflow-hidden w-full mb-7 max-h-[350px]`}>
                 {imageUrl && (
                   <Image
                     src={imageUrl}
-                    alt={
-                      blog.BannerImage?.alternativeText ||
-                      blog.BannerImage?.name ||
-                      ""
-                    }
+                    alt={blog.BannerImage?.alternativeText || blog.BannerImage?.name || ""}
                     width={blog.BannerImage?.width}
                     height={blog.BannerImage?.height}
                     className=" object-cover !m-0"

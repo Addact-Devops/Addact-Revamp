@@ -31,9 +31,7 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
   return (
     <main className="blogdetail-wrapper bg-white">
       {/* ✅ Blog Banner */}
-      {blog?.BlogBanner?.[0] && (
-        <BlogDetailBanner banner={blog.BlogBanner[0]} />
-      )}
+      {blog?.BlogBanner?.[0] && <BlogDetailBanner banner={blog.BlogBanner[0]} />}
 
       <div className="container-main !mt-[70px] !mb-[70px] blogdetail-container-main">
         <div className="flex gap-[100px] max-[1400px]:gap-[50px] relative">
@@ -65,78 +63,70 @@ export default function BlogPageClient({ blog }: BlogPageClientProps) {
       </div>
 
       {/* ✅ Fixed Social Icons (Desktop only) */}
-      {Array.isArray(blog?.socialicons) &&
-        blog.socialicons.length > 0 &&
-        windowWidth >= 992 && (
-          <div className="flex flex-col gap-[15px] fixed top-1/2 left-[5px] 2xl:left-[1%] -translate-y-1/2 z-[3]">
-            {blog.socialicons.flatMap((item, i: number) => {
-              const icons = item?.SocialIcon ?? [];
+      {Array.isArray(blog?.socialicons) && blog.socialicons.length > 0 && windowWidth >= 992 && (
+        <div className="flex flex-col gap-[15px] fixed top-1/2 left-[5px] 2xl:left-[1%] -translate-y-1/2 z-[3]">
+          {blog.socialicons.flatMap((item, i: number) => {
+            const icons = item?.SocialIcon ?? [];
 
-              return icons.map(
-                (
-                  icon: {
-                    Title?: string;
-                    ClassName?: string;
-                    Links?: {
-                      id?: string;
-                      href?: string;
-                      label?: string;
-                      target?: string;
-                      isExternal?: boolean;
-                    };
-                    Icons?: {
-                      alternativeText?: string;
-                      url?: string;
-                    };
-                    HoverIcon?: {
-                      alternativeText?: string;
-                      url?: string;
-                    };
-                  },
-                  j: number,
-                ) => {
-                  const link = icon?.Links;
-                  const iconUrl = icon?.Icons?.url;
-                  const hoverUrl = icon?.HoverIcon?.url || iconUrl;
-
-                  if (!link?.href || !iconUrl) return null;
-
-                  return (
-                    <Link
-                      key={`social-${i}-${j}`}
-                      href={link.href}
-                      aria-label={
-                        link.label || icon.Title || `Open social link ${j + 1}`
-                      }
-                      target={
-                        link.target === "blank" ? "_blank" : `_${link.target}`
-                      }
-                      rel={link.isExternal ? "noopener noreferrer" : undefined}
-                      className="group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden"
-                    >
-                      <Image
-                        src={iconUrl}
-                        width={19}
-                        height={19}
-                        alt={icon.Icons?.alternativeText || icon.Title || ""}
-                        className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
-                      />
-                      <Image
-                        src={hoverUrl || ""}
-                        width={19}
-                        height={19}
-                        alt={
-                          icon.HoverIcon?.alternativeText || icon.Title || ""
-                        }
-                        className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      />
-                    </Link>
-                  );
+            return icons.map(
+              (
+                icon: {
+                  Title?: string;
+                  ClassName?: string;
+                  Links?: {
+                    id?: string;
+                    href?: string;
+                    label?: string;
+                    target?: string;
+                    isExternal?: boolean;
+                  };
+                  Icons?: {
+                    alternativeText?: string;
+                    url?: string;
+                  };
+                  HoverIcon?: {
+                    alternativeText?: string;
+                    url?: string;
+                  };
                 },
-              );
-            })}
-          </div>
-        )}
+                j: number,
+              ) => {
+                const link = icon?.Links;
+                const iconUrl = icon?.Icons?.url;
+                const hoverUrl = icon?.HoverIcon?.url || iconUrl;
+
+                if (!link?.href || !iconUrl) return null;
+
+                return (
+                  <Link
+                    key={`social-${i}-${j}`}
+                    href={link.href}
+                    aria-label={link.label || icon.Title || `Open social link ${j + 1}`}
+                    target={link.target === "blank" ? "_blank" : `_${link.target}`}
+                    rel={link.isExternal ? "noopener noreferrer" : undefined}
+                    className="group w-[25px] h-[25px] bg-black rounded-full relative overflow-hidden"
+                  >
+                    <Image
+                      src={iconUrl}
+                      width={19}
+                      height={19}
+                      alt={icon.Icons?.alternativeText || icon.Title || ""}
+                      className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 group-hover:opacity-0 transition-opacity duration-300"
+                    />
+                    <Image
+                      src={hoverUrl || ""}
+                      width={19}
+                      height={19}
+                      alt={icon.HoverIcon?.alternativeText || icon.Title || ""}
+                      className="w-[19px] h-[19px] !m-0 object-contain absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    />
+                  </Link>
+                );
+              },
+            );
+          })}
+        </div>
+      )}
     </main>
   );
 }

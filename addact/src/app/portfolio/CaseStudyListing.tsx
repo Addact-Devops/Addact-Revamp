@@ -3,19 +3,14 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  getAllCaseStudyData,
-  IAllCaseStudy,
-} from "@/graphql/queries/getAllCaseStudy";
+import { getAllCaseStudyData, IAllCaseStudy } from "@/graphql/queries/getAllCaseStudy";
 import RichText from "@/components/atom/richText";
 import Loader from "@/components/atom/loader";
 import { notFound } from "next/navigation";
 
 const CaseStudyListing = () => {
-  const [caseStudyBanner, setCaseStudyBanner] =
-    useState<IAllCaseStudy["caseStudy"]>();
-  const [caseStudyListing, setCaseStudyListing] =
-    useState<IAllCaseStudy["addactCaseStudies"]>();
+  const [caseStudyBanner, setCaseStudyBanner] = useState<IAllCaseStudy["caseStudy"]>();
+  const [caseStudyListing, setCaseStudyListing] = useState<IAllCaseStudy["addactCaseStudies"]>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,13 +26,11 @@ const CaseStudyListing = () => {
   if (loading) return <Loader />;
   if (!caseStudyListing) return notFound();
 
-  const sortedData: IAllCaseStudy["addactCaseStudies"] = caseStudyListing.sort(
-    (a, b) => {
-      const dateA: Date = new Date(a?.HeroBanner?.[0]?.PublishDate || 0);
-      const dateB: Date = new Date(b?.HeroBanner?.[0]?.PublishDate || 0);
-      return dateB.getTime() - dateA.getTime();
-    },
-  );
+  const sortedData: IAllCaseStudy["addactCaseStudies"] = caseStudyListing.sort((a, b) => {
+    const dateA: Date = new Date(a?.HeroBanner?.[0]?.PublishDate || 0);
+    const dateB: Date = new Date(b?.HeroBanner?.[0]?.PublishDate || 0);
+    return dateB.getTime() - dateA.getTime();
+  });
 
   return (
     <div>
@@ -46,10 +39,7 @@ const CaseStudyListing = () => {
         <div className="relative w-full flex items-center justify-center text-white">
           <Image
             src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url}
-            alt={
-              caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage
-                ?.alternativeText
-            }
+            alt={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.alternativeText}
             layout="fill"
             objectFit="cover"
             priority
@@ -60,11 +50,7 @@ const CaseStudyListing = () => {
               {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
             </h1>
             <div className="mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl">
-              <RichText
-                html={
-                  caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription
-                }
-              />
+              <RichText html={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription} />
             </div>
           </div>
         </div>
@@ -93,18 +79,13 @@ const CaseStudyListing = () => {
                   {item.HeroBanner[0].BannerTitle}
                 </h2>
                 <p className="text-lg text-white mb-2.5 border rounded max-w-none inline-block px-2 border-[#676767]">
-                  {new Date(item.HeroBanner[0].PublishDate).toLocaleDateString(
-                    "en-GB",
-                    {
-                      day: "2-digit",
-                      month: "long",
-                      year: "numeric",
-                    },
-                  )}
+                  {new Date(item.HeroBanner[0].PublishDate).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
                 </p>
-                <p className="text-base text-gray-300">
-                  {item.caseStudySummary}
-                </p>
+                <p className="text-base text-gray-300">{item.caseStudySummary}</p>
               </div>
 
               <div className="mt-4">

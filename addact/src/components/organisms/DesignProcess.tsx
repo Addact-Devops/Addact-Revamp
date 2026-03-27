@@ -86,9 +86,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
   const resolvedProcessSteps = useMemo(() => {
     const dynamicSteps =
       data?.tabsAndFlow?.map((tab, index) => ({
-        id:
-          tab.tabTitle?.toLowerCase().replace(/\s+/g, "-") ||
-          `step-${index + 1}`,
+        id: tab.tabTitle?.toLowerCase().replace(/\s+/g, "-") || `step-${index + 1}`,
         title: tab.tabTitle || `Step ${index + 1}`,
         subSteps: tab.flow?.map((item) => item.title).filter(Boolean) || [],
         flowItems: tab.flow || [],
@@ -97,9 +95,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
     return dynamicSteps.length > 0 ? dynamicSteps : processSteps;
   }, [data]);
 
-  const [selectedStep, setSelectedStep] = useState(
-    resolvedProcessSteps[0]?.id ?? "foundation",
-  );
+  const [selectedStep, setSelectedStep] = useState(resolvedProcessSteps[0]?.id ?? "foundation");
 
   useEffect(() => {
     if (!resolvedProcessSteps.some((step) => step.id === selectedStep)) {
@@ -108,8 +104,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
   }, [resolvedProcessSteps, selectedStep]);
 
   const selectedProcessStep =
-    resolvedProcessSteps.find((step) => step.id === selectedStep) ??
-    resolvedProcessSteps[0];
+    resolvedProcessSteps.find((step) => step.id === selectedStep) ?? resolvedProcessSteps[0];
 
   // Desktop stair positions (xl+ only)
   const getDesktopSubStepPosition = (index: number) => {
@@ -163,9 +158,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                       key={step.id}
                       onClick={() => setSelectedStep(step.id)}
                       className={`relative h-[68px] w-full overflow-hidden rounded-[10px] transition-all duration-300 md:h-[76px] 2xl:h-[84px] ${
-                        isSelected
-                          ? "bg-[#3c4cff]"
-                          : "bg-transparent border border-white/20"
+                        isSelected ? "bg-[#3c4cff]" : "bg-transparent border border-white/20"
                       }`}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -181,18 +174,13 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                         step.flowItems[0]?.icon?.url ? (
                           <Image
                             src={step.flowItems[0].icon.url}
-                            alt={
-                              step.flowItems[0].icon.alternativeText ||
-                              step.title
-                            }
+                            alt={step.flowItems[0].icon.alternativeText || step.title}
                             width={54}
                             height={54}
                             className="w-full h-full object-contain"
                           />
                         ) : (
-                          <SearchIcon
-                            color={isSelected ? "#3C4CFF" : "#0F0F0F"}
-                          />
+                          <SearchIcon color={isSelected ? "#3C4CFF" : "#0F0F0F"} />
                         )}
                       </div>
 
@@ -216,9 +204,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                       key={step.id}
                       onClick={() => setSelectedStep(step.id)}
                       className={`relative h-[62px] min-w-[252px] overflow-hidden rounded-[10px] px-3 transition-all duration-300 sm:min-w-[280px] md:h-[68px] md:min-w-[300px] ${
-                        isSelected
-                          ? "bg-[#3c4cff]"
-                          : "border border-white/20 bg-transparent"
+                        isSelected ? "bg-[#3c4cff]" : "border border-white/20 bg-transparent"
                       }`}
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -232,18 +218,13 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                         step.flowItems[0]?.icon?.url ? (
                           <Image
                             src={step.flowItems[0].icon.url}
-                            alt={
-                              step.flowItems[0].icon.alternativeText ||
-                              step.title
-                            }
+                            alt={step.flowItems[0].icon.alternativeText || step.title}
                             width={44}
                             height={44}
                             className="w-full h-full object-contain"
                           />
                         ) : (
-                          <SearchIcon
-                            color={isSelected ? "#3C4CFF" : "#0F0F0F"}
-                          />
+                          <SearchIcon color={isSelected ? "#3C4CFF" : "#0F0F0F"} />
                         )}
                       </div>
                       <p className="absolute left-[64px] top-1/2 -translate-y-1/2 whitespace-nowrap font-['Montserrat'] text-[17px] font-semibold leading-[1.2] text-white md:left-[72px] md:text-[20px]">
@@ -335,9 +316,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                 {/* Sub Steps */}
                 <AnimatePresence mode="wait">
                   {(() => {
-                    const step = resolvedProcessSteps.find(
-                      (s) => s.id === selectedStep,
-                    );
+                    const step = resolvedProcessSteps.find((s) => s.id === selectedStep);
                     if (!step) return null;
 
                     return step.subSteps.map((subStep, index) => {
@@ -362,8 +341,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                           }}
                         >
                           <div className="absolute left-3 top-1/2 h-[44px] w-[44px] -translate-y-1/2 rounded-[10px] bg-white 2xl:left-[14px] 2xl:h-[54px] 2xl:w-[54px] flex items-center justify-center overflow-hidden">
-                            {step.flowItems &&
-                            step.flowItems[index]?.icon?.url ? (
+                            {step.flowItems && step.flowItems[index]?.icon?.url ? (
                               <Image
                                 src={step.flowItems[index].icon.url}
                                 alt={
@@ -416,8 +394,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                           <Image
                             src={selectedProcessStep.flowItems[index].icon.url}
                             alt={
-                              selectedProcessStep.flowItems[index].icon
-                                .alternativeText ||
+                              selectedProcessStep.flowItems[index].icon.alternativeText ||
                               selectedProcessStep.flowItems[index].title
                             }
                             width={38}
@@ -527,12 +504,9 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
                           {selectedProcessStep?.flowItems &&
                           selectedProcessStep.flowItems[index]?.icon?.url ? (
                             <Image
-                              src={
-                                selectedProcessStep.flowItems[index].icon.url
-                              }
+                              src={selectedProcessStep.flowItems[index].icon.url}
                               alt={
-                                selectedProcessStep.flowItems[index].icon
-                                  .alternativeText ||
+                                selectedProcessStep.flowItems[index].icon.alternativeText ||
                                 selectedProcessStep.flowItems[index].title
                               }
                               width={40}

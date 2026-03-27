@@ -8,51 +8,51 @@ import client from "../client";
 // -----------------------------
 
 export type AboutUsBannerType = {
-    BannerTitle?: string;
-    BannerDescription?: string;
-    BannerImage?: {
-        url?: string;
-        height?: number;
-        width?: number;
-    } | null;
+  BannerTitle?: string;
+  BannerDescription?: string;
+  BannerImage?: {
+    url?: string;
+    height?: number;
+    width?: number;
+  } | null;
 };
 
 export type AboutUsHeroBannerResponse = {
-    aboutUs?: {
-        HeroBanner?: {
-            Banner?: AboutUsBannerType[];
-        };
+  aboutUs?: {
+    HeroBanner?: {
+      Banner?: AboutUsBannerType[];
     };
+  };
 };
 
 const bannerQuery = gql`
-    query AboutUs {
-        aboutUs {
-            HeroBanner {
-                Banner {
-                    ... on ComponentBannerBanner {
-                        BannerTitle
-                        BannerDescription
-                        BannerImage {
-                            url
-                            height
-                            width
-                        }
-                    }
-                }
+  query AboutUs {
+    aboutUs {
+      HeroBanner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerTitle
+            BannerDescription
+            BannerImage {
+              url
+              height
+              width
             }
+          }
         }
+      }
     }
+  }
 `;
 
 export const getAboutUsHeroBanner = async (): Promise<AboutUsBannerType | null> => {
-    try {
-        const res = await client.request<AboutUsHeroBannerResponse>(bannerQuery);
-        return res?.aboutUs?.HeroBanner?.Banner?.[0] || null;
-    } catch (error) {
-        console.error("Error fetching About Us banner:", error);
-        return null;
-    }
+  try {
+    const res = await client.request<AboutUsHeroBannerResponse>(bannerQuery);
+    return res?.aboutUs?.HeroBanner?.Banner?.[0] || null;
+  } catch (error) {
+    console.error("Error fetching About Us banner:", error);
+    return null;
+  }
 };
 
 // -----------------------------
@@ -60,36 +60,36 @@ export const getAboutUsHeroBanner = async (): Promise<AboutUsBannerType | null> 
 // -----------------------------
 
 export type QuoteData = {
-    aboutUs: {
-        Quote: {
-            AuthorName: string;
-            AuthorMessage: string;
-            AuthorImage: {
-                url: string;
-                alternativeText: string | null;
-            };
-        };
+  aboutUs: {
+    Quote: {
+      AuthorName: string;
+      AuthorMessage: string;
+      AuthorImage: {
+        url: string;
+        alternativeText: string | null;
+      };
     };
+  };
 };
 
 const quoteQuery = gql`
-    query AboutUs {
-        aboutUs {
-            Quote {
-                AuthorImage {
-                    alternativeText
-                    url
-                }
-                AuthorMessage
-                AuthorName
-            }
+  query AboutUs {
+    aboutUs {
+      Quote {
+        AuthorImage {
+          alternativeText
+          url
         }
+        AuthorMessage
+        AuthorName
+      }
     }
+  }
 `;
 
 export const getAboutUsQuote = async (): Promise<QuoteData> => {
-    const data = await client.request(quoteQuery);
-    return data as QuoteData;
+  const data = await client.request(quoteQuery);
+  return data as QuoteData;
 };
 
 // -----------------------------
@@ -97,46 +97,46 @@ export const getAboutUsQuote = async (): Promise<QuoteData> => {
 // -----------------------------
 
 type ParagraphBlock = {
-    type: "paragraph";
-    children: {
-        type: string;
-        text: string;
-    }[];
+  type: "paragraph";
+  children: {
+    type: string;
+    text: string;
+  }[];
 };
 
 export type AboutUsContentData = {
-    aboutUs: {
-        AboutUsContent: {
-            SubTitle: string;
-            Title: string;
-            Description: string;
-            Image: {
-                url: string;
-                alternativeText?: string | null;
-            };
-        };
+  aboutUs: {
+    AboutUsContent: {
+      SubTitle: string;
+      Title: string;
+      Description: string;
+      Image: {
+        url: string;
+        alternativeText?: string | null;
+      };
     };
+  };
 };
 
 const aboutContentQuery = gql`
-    query AboutUs {
-        aboutUs {
-            AboutUsContent {
-                SubTitle
-                Title
-                Description
-                Image {
-                    url
-                    alternativeText
-                }
-            }
+  query AboutUs {
+    aboutUs {
+      AboutUsContent {
+        SubTitle
+        Title
+        Description
+        Image {
+          url
+          alternativeText
         }
+      }
     }
+  }
 `;
 
 export const getAboutUsContent = async (): Promise<AboutUsContentData> => {
-    const data = await client.request(aboutContentQuery);
-    return data as AboutUsContentData;
+  const data = await client.request(aboutContentQuery);
+  return data as AboutUsContentData;
 };
 
 // -----------------------------
@@ -144,40 +144,40 @@ export const getAboutUsContent = async (): Promise<AboutUsContentData> => {
 // -----------------------------
 
 export type VisionMissionItem = {
-    SubTitle: string;
-    Title: string;
-    Description: ParagraphBlock[];
-    Image: {
-        url: string;
-        alternativeText?: string | null;
-    };
+  SubTitle: string;
+  Title: string;
+  Description: ParagraphBlock[];
+  Image: {
+    url: string;
+    alternativeText?: string | null;
+  };
 };
 
 export type OurVisionMissionData = {
-    aboutUs: {
-        OurVisionMission: VisionMissionItem[];
-    };
+  aboutUs: {
+    OurVisionMission: VisionMissionItem[];
+  };
 };
 
 const visionQuery = gql`
-    query AboutUs {
-        aboutUs {
-            OurVisionMission {
-                SubTitle
-                Title
-                Description
-                Image {
-                    alternativeText
-                    url
-                }
-            }
+  query AboutUs {
+    aboutUs {
+      OurVisionMission {
+        SubTitle
+        Title
+        Description
+        Image {
+          alternativeText
+          url
         }
+      }
     }
+  }
 `;
 
 export const getOurVisionMission = async (): Promise<OurVisionMissionData> => {
-    const data = await client.request(visionQuery);
-    return data as OurVisionMissionData;
+  const data = await client.request(visionQuery);
+  return data as OurVisionMissionData;
 };
 
 // -----------------------------
@@ -185,81 +185,81 @@ export const getOurVisionMission = async (): Promise<OurVisionMissionData> => {
 // -----------------------------
 
 export type CTAImageType = {
-    url: string;
-    alternativeText: string | null;
-    width: number | null;
-    height: number | null;
+  url: string;
+  alternativeText: string | null;
+  width: number | null;
+  height: number | null;
 };
 
 export type CTALinkType = {
-    label: string;
-    href: string;
-    target: string | null;
-    isExternal: boolean;
+  label: string;
+  href: string;
+  target: string | null;
+  isExternal: boolean;
 };
 
 export type CtaTitle = { h1?: string } | { h2?: string } | { h3?: string };
 
 export type DescriptionNode = {
-    type: string;
-    children: { text: string }[];
+  type: string;
+  children: { text: string }[];
 };
 
 export type CTAType = {
-    Title: CtaTitle[];
-    CTADescription: DescriptionNode[];
-    CTAImage: { Image: CTAImageType }[];
-    CTALink: CTALinkType[];
+  Title: CtaTitle[];
+  CTADescription: DescriptionNode[];
+  CTAImage: { Image: CTAImageType }[];
+  CTALink: CTALinkType[];
 };
 
 type AboutUsCTAResponse = {
-    aboutUs: {
-        aboutUsCTA: CTAType;
-    };
+  aboutUs: {
+    aboutUsCTA: CTAType;
+  };
 };
 
 const ctaQuery = gql`
-    query GetAboutUsCTA {
-        aboutUs {
-            aboutUsCTA {
-                Title {
-                    ... on ComponentHeadingsH1 {
-                        h1
-                    }
-                    ... on ComponentHeadingsH2 {
-                        h2
-                    }
-                    ... on ComponentHeadingsH3 {
-                        h3
-                    }
-                }
-                CTADescription
-                CTAImage {
-                    ... on ComponentSharedImage {
-                        Image {
-                            url
-                            alternativeText
-                            width
-                            height
-                        }
-                    }
-                }
-                CTALink {
-                    ... on ComponentSharedLink {
-                        label
-                        href
-                        target
-                        isExternal
-                    }
-                }
-            }
+  query GetAboutUsCTA {
+    aboutUs {
+      aboutUsCTA {
+        Title {
+          ... on ComponentHeadingsH1 {
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            h3
+          }
         }
+        CTADescription
+        CTAImage {
+          ... on ComponentSharedImage {
+            Image {
+              url
+              alternativeText
+              width
+              height
+            }
+          }
+        }
+        CTALink {
+          ... on ComponentSharedLink {
+            label
+            href
+            target
+            isExternal
+          }
+        }
+      }
     }
+  }
 `;
 
 export const getAboutUsCTA = async (): Promise<CTAType | null> => {
-    const res = await client.request<AboutUsCTAResponse>(ctaQuery);
-    return res?.aboutUs?.aboutUsCTA || null;
+  const res = await client.request<AboutUsCTAResponse>(ctaQuery);
+  return res?.aboutUs?.aboutUsCTA || null;
 };
 
 // -----------------------------
@@ -267,47 +267,47 @@ export const getAboutUsCTA = async (): Promise<CTAType | null> => {
 // -----------------------------
 
 export type BrandValueType = {
-    Title: string;
-    SubTitle: string;
-    Content: {
-        type: string;
-        children: { text: string }[];
-    }[];
-    Image: {
-        url: string;
-        alternativeText: string | null;
-        width: number | null;
-        height: number | null;
-    };
+  Title: string;
+  SubTitle: string;
+  Content: {
+    type: string;
+    children: { text: string }[];
+  }[];
+  Image: {
+    url: string;
+    alternativeText: string | null;
+    width: number | null;
+    height: number | null;
+  };
 };
 
 type BrandValueQueryResponse = {
-    aboutUs: {
-        BrandValue: BrandValueType;
-    };
+  aboutUs: {
+    BrandValue: BrandValueType;
+  };
 };
 
 const brandValueQuery = gql`
-    query AboutUs {
-        aboutUs {
-            BrandValue {
-                Title
-                SubTitle
-                Content
-                Image {
-                    url
-                    alternativeText
-                    width
-                    height
-                }
-            }
+  query AboutUs {
+    aboutUs {
+      BrandValue {
+        Title
+        SubTitle
+        Content
+        Image {
+          url
+          alternativeText
+          width
+          height
         }
+      }
     }
+  }
 `;
 
 export const getBrandValue = async (): Promise<BrandValueType> => {
-    const res = await client.request<BrandValueQueryResponse>(brandValueQuery);
-    return res?.aboutUs?.BrandValue;
+  const res = await client.request<BrandValueQueryResponse>(brandValueQuery);
+  return res?.aboutUs?.BrandValue;
 };
 
 // -----------------------------
@@ -315,53 +315,53 @@ export const getBrandValue = async (): Promise<BrandValueType> => {
 // -----------------------------
 
 type ContentChild = {
-    text: string;
+  text: string;
 };
 
 type ContentBlock = {
-    type: string;
-    children: ContentChild[];
+  type: string;
+  children: ContentChild[];
 };
 
 export type WeAreAddactType = {
-    Image: {
-        url: string;
-        alternativeText: string | null;
-        height: number;
-        width: number;
-    };
-    SubTitle: string;
-    Title: string;
-    Content: ContentBlock[];
-    NumberContent: {
-        Number: string;
-        Content: string;
-    }[];
+  Image: {
+    url: string;
+    alternativeText: string | null;
+    height: number;
+    width: number;
+  };
+  SubTitle: string;
+  Title: string;
+  Content: ContentBlock[];
+  NumberContent: {
+    Number: string;
+    Content: string;
+  }[];
 };
 
 const addactQuery = gql`
-    query AboutUs {
-        aboutUs {
-            WeAreAddact {
-                Image {
-                    url
-                    alternativeText
-                    height
-                    width
-                }
-                SubTitle
-                Title
-                Content
-                NumberContent {
-                    Number
-                    Content
-                }
-            }
+  query AboutUs {
+    aboutUs {
+      WeAreAddact {
+        Image {
+          url
+          alternativeText
+          height
+          width
         }
+        SubTitle
+        Title
+        Content
+        NumberContent {
+          Number
+          Content
+        }
+      }
     }
+  }
 `;
 
 export const getWeAreAddact = async (): Promise<WeAreAddactType> => {
-    const res = await client.request<{ aboutUs: { WeAreAddact: WeAreAddactType } }>(addactQuery);
-    return res?.aboutUs?.WeAreAddact;
+  const res = await client.request<{ aboutUs: { WeAreAddact: WeAreAddactType } }>(addactQuery);
+  return res?.aboutUs?.WeAreAddact;
 };

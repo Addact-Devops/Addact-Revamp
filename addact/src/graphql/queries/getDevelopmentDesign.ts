@@ -523,9 +523,7 @@ export interface ProcessDataItem {
 
 // Fetch function
 export async function getDevelopmentDesign(): Promise<DevelopmentDesign> {
-  const data = await client.request<DevelopmentDesignResponse>(
-    developementDesignQuery,
-  );
+  const data = await client.request<DevelopmentDesignResponse>(developementDesignQuery);
 
   return data.developmentAndDesign;
 }

@@ -3,10 +3,7 @@ import client from "../client";
 
 const ourInsights_Query = gql`
   query AddactBlogsAndCaseStudy {
-    addactBlogs(
-      pagination: { page: 1, pageSize: 2 }
-      sort: ["publishedAt:desc"]
-    ) {
+    addactBlogs(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
       documentId
       Slug
       createdAt
@@ -38,10 +35,7 @@ const ourInsights_Query = gql`
         }
       }
     }
-    addactCaseStudies(
-      pagination: { page: 1, pageSize: 2 }
-      sort: ["publishedAt:desc"]
-    ) {
+    addactCaseStudies(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
       ReferenceTitle
       Slug
       HeroBanner {
@@ -123,8 +117,7 @@ export interface ReadNowLink {
 }
 
 export async function getOurInsights(): Promise<AddactBlogsAndCaseStudyResponse> {
-  const data =
-    await client.request<AddactBlogsAndCaseStudyResponse>(ourInsights_Query);
+  const data = await client.request<AddactBlogsAndCaseStudyResponse>(ourInsights_Query);
   return data;
 }
 

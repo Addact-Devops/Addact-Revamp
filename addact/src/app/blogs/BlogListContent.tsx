@@ -118,10 +118,7 @@ export default function BlogListContent({}: Props) {
 
         if (banner?.BannerDescription) {
           const parser = new DOMParser();
-          const parsed = parser.parseFromString(
-            banner.BannerDescription,
-            "text/html",
-          );
+          const parsed = parser.parseFromString(banner.BannerDescription, "text/html");
           setDescription(parsed.body.textContent || "");
         }
 
@@ -132,9 +129,7 @@ export default function BlogListContent({}: Props) {
 
         setCategories(categoryList);
         const blogs = data.addactBlogs || [];
-        const sorted = blogs
-          .slice()
-          .sort((a, b) => getBlogDate(b) - getBlogDate(a));
+        const sorted = blogs.slice().sort((a, b) => getBlogDate(b) - getBlogDate(a));
 
         setAddactBlogs(sorted);
         setFilteredBlogs(sorted);
@@ -184,11 +179,7 @@ export default function BlogListContent({}: Props) {
         blog.blog_category?.Category?.CategoryTitle?.toLowerCase() ||
         "";
 
-      return (
-        title.includes(query) ||
-        author.includes(query) ||
-        category.includes(query)
-      );
+      return title.includes(query) || author.includes(query) || category.includes(query);
     });
 
     if (selectedCategory !== "All Blogs") {
@@ -197,9 +188,7 @@ export default function BlogListContent({}: Props) {
           blog.BlogBanner?.[0]?.blogcategory?.Category?.CategoryTitle ||
           blog.blog_category?.Category?.CategoryTitle ||
           "";
-        return (
-          blogCategory.trim().toLowerCase() === selectedCategory.toLowerCase()
-        );
+        return blogCategory.trim().toLowerCase() === selectedCategory.toLowerCase();
       });
     }
 
@@ -263,9 +252,7 @@ export default function BlogListContent({}: Props) {
             const imageUrl = banner.BannerImage?.url
               ? banner.BannerImage.url.startsWith("http")
                 ? banner.BannerImage.url
-                : `${process.env.NEXT_PUBLIC_STRAPI_URL || ""}${
-                    banner.BannerImage.url
-                  }`
+                : `${process.env.NEXT_PUBLIC_STRAPI_URL || ""}${banner.BannerImage.url}`
               : "";
 
             const title = banner.BannerTitle?.trim() || "Untitled";
@@ -277,19 +264,11 @@ export default function BlogListContent({}: Props) {
               banner.blogcategory?.Category?.CategoryTitle ||
               blog.blog_category?.Category?.CategoryTitle;
 
-            const author =
-              typeof rawAuthor === "string"
-                ? rawAuthor.trim()
-                : "Addact Technologies";
-            const category =
-              typeof rawCategory === "string" ? rawCategory.trim() : "General";
+            const author = typeof rawAuthor === "string" ? rawAuthor.trim() : "Addact Technologies";
+            const category = typeof rawCategory === "string" ? rawCategory.trim() : "General";
 
             return (
-              <Link
-                key={blog.Slug || blog.documentId}
-                href={blogLink}
-                className="group"
-              >
+              <Link key={blog.Slug || blog.documentId} href={blogLink} className="group">
                 <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
                   {imageUrl && (
                     <div className="relative blogitem-h rounded-xl overflow-hidden mb-4">
@@ -315,9 +294,7 @@ export default function BlogListContent({}: Props) {
                     {title}
                   </h2>
 
-                  <p className="text-white !text-[14px] xl:!text-[18px]">
-                    {author}
-                  </p>
+                  <p className="text-white !text-[14px] xl:!text-[18px]">{author}</p>
                 </div>
               </Link>
             );
@@ -326,10 +303,7 @@ export default function BlogListContent({}: Props) {
 
         {/* Load more trigger */}
         {hasMore && (
-          <div
-            ref={loadMoreRef}
-            className="h-10 flex justify-center items-center m-8"
-          >
+          <div ref={loadMoreRef} className="h-10 flex justify-center items-center m-8">
             {loadingMore && <Loader />}
           </div>
         )}

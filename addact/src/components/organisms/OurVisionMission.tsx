@@ -60,9 +60,7 @@ const OurVisionMission = ({ data }: Props) => {
                     <p className="text-[#3C4CFF] text-[17px] mb-[15px] leading-[26px]">
                       {item.SubTitle}
                     </p>
-                    <h3 className="text-[#000] font-[400] 2xl:mb-[40px] mb-[20px]">
-                      {item.Title}
-                    </h3>
+                    <h3 className="text-[#000] font-[400] 2xl:mb-[40px] mb-[20px]">{item.Title}</h3>
                     <div>{renderText(item.Description)}</div>
                   </div>
 

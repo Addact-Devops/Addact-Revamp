@@ -13,8 +13,7 @@ const FAQ = ({ data }: IProps) => {
   const [openIndexes, setOpenIndexes] = useState<number[] | null>(null);
 
   useEffect(() => {
-    const stored =
-      typeof window !== "undefined" && sessionStorage.getItem("faq-open");
+    const stored = typeof window !== "undefined" && sessionStorage.getItem("faq-open");
     if (stored) {
       setOpenIndexes(JSON.parse(stored));
     } else {

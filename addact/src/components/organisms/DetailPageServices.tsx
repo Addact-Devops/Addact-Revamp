@@ -169,19 +169,11 @@ const staticServiceItems: DetailPageServiceItem[] = [
 const normalizeVariant = (variant?: string | null): ServiceVariant => {
   const normalized = (variant ?? "").trim().toLowerCase();
 
-  if (
-    normalized === "twocard" ||
-    normalized === "two_card" ||
-    normalized === "two-card"
-  ) {
+  if (normalized === "twocard" || normalized === "two_card" || normalized === "two-card") {
     return "twoCard";
   }
 
-  if (
-    normalized === "threecard" ||
-    normalized === "three_card" ||
-    normalized === "three-card"
-  ) {
+  if (normalized === "threecard" || normalized === "three_card" || normalized === "three-card") {
     return "threeCard";
   }
 
@@ -212,20 +204,15 @@ const getCarouselCardBasisClass = (variant: ServiceVariant) => {
   return "basis-[84%] sm:basis-[calc(50%_-_8px)] md:basis-[calc(50%_-_12px)] lg:basis-[calc(33.333%_-_14px)]! xl:basis-[calc(25%_-_16px)]!";
 };
 
-const normalizeLinkTarget = (
-  target?: string | null,
-): DetailPageServiceTarget => {
+const normalizeLinkTarget = (target?: string | null): DetailPageServiceTarget => {
   return target === "_blank" ? "_blank" : "_self";
 };
 
-const mapDynamicItems = (
-  section: DynamicServiceSection,
-): DetailPageServiceItem[] => {
+const mapDynamicItems = (section: DynamicServiceSection): DetailPageServiceItem[] => {
   return section.serviceList
     .map((serviceItem) => serviceItem.listingContext)
-    .filter(
-      (context): context is NonNullable<DynamicServiceItem["listingContext"]> =>
-        Boolean(context),
+    .filter((context): context is NonNullable<DynamicServiceItem["listingContext"]> =>
+      Boolean(context),
     )
     .map((context, index): DetailPageServiceItem => {
       return {
@@ -235,10 +222,7 @@ const mapDynamicItems = (
         image: context.image
           ? {
               url: context.image.url,
-              alt:
-                context.image.alternativeText ??
-                context.title ??
-                "Service image",
+              alt: context.image.alternativeText ?? context.title ?? "Service image",
             }
           : null,
         link: context.link
@@ -353,12 +337,8 @@ const DetailPageServices = ({
       return;
     }
 
-    const firstCard = container.querySelector<HTMLElement>(
-      "[data-service-card='true']",
-    );
-    const gap = Number.parseFloat(
-      window.getComputedStyle(container).columnGap || "0",
-    );
+    const firstCard = container.querySelector<HTMLElement>("[data-service-card='true']");
+    const gap = Number.parseFloat(window.getComputedStyle(container).columnGap || "0");
     const cardWidth = firstCard?.offsetWidth ?? container.clientWidth;
     const scrollAmount = cardWidth + gap;
 
@@ -491,11 +471,8 @@ const DetailPageServices = ({
       {sections
         .filter((section) => section.items.length > 0)
         .map((section, sectionIndex) => {
-          const visibleItems = section.isCarousel
-            ? section.items
-            : section.items.slice(0, 8);
-          const shouldEnableCarousel =
-            section.isCarousel && visibleItems.length > 1;
+          const visibleItems = section.isCarousel ? section.items : section.items.slice(0, 8);
+          const shouldEnableCarousel = section.isCarousel && visibleItems.length > 1;
           const mobileTwoCardSlides = chunkItems(visibleItems, 2);
 
           return (
@@ -550,9 +527,7 @@ const DetailPageServices = ({
                       ref={scrollContainerRef}
                       className="flex gap-4 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden lg:gap-5"
                     >
-                      {visibleItems.map((item) =>
-                        renderCard(item, true, section.variant),
-                      )}
+                      {visibleItems.map((item) => renderCard(item, true, section.variant))}
                     </div>
                     {/* 
                     <button
@@ -589,9 +564,7 @@ const DetailPageServices = ({
                 ) : section.variant === "twoCard" ? (
                   <>
                     <div className="hidden md:grid grid-cols-1 gap-6 sm:grid-cols-2">
-                      {visibleItems.map((item) =>
-                        renderCard(item, false, section.variant),
-                      )}
+                      {visibleItems.map((item) => renderCard(item, false, section.variant))}
                     </div>
 
                     <div className="md:hidden">
@@ -625,12 +598,8 @@ const DetailPageServices = ({
                     </div>
                   </>
                 ) : (
-                  <div
-                    className={`grid gap-4 lg:gap-5 ${getGridColumnsClass(section.variant)}`}
-                  >
-                    {visibleItems.map((item) =>
-                      renderCard(item, false, section.variant),
-                    )}
+                  <div className={`grid gap-4 lg:gap-5 ${getGridColumnsClass(section.variant)}`}>
+                    {visibleItems.map((item) => renderCard(item, false, section.variant))}
                   </div>
                 )}
               </div>

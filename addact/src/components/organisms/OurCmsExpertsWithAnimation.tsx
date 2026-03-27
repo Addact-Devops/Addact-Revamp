@@ -2,10 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import {
-  CMSResponse,
-  getCMSExpertiseData,
-} from "@/graphql/queries/getCmsExperts";
+import { CMSResponse, getCMSExpertiseData } from "@/graphql/queries/getCmsExperts";
 import Image from "../atom/image";
 import RichText from "../atom/richText";
 
@@ -48,10 +45,7 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
       const response = await getCMSExpertiseData();
       setData(response);
     }
-    const hasOverrides = !!(
-      props?.title ||
-      (props?.items && props.items.length)
-    );
+    const hasOverrides = !!(props?.title || (props?.items && props.items.length));
     if (!hasOverrides) {
       fetchData();
     }
@@ -77,8 +71,7 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
                 id: s.Links?.id ?? String(idx),
                 href: s.Links?.href ?? "#",
                 label: s.Links?.label ?? s.Title ?? "Learn more",
-                target:
-                  s.Links?.target ?? (s.Links?.isExternal ? "blank" : "self"),
+                target: s.Links?.target ?? (s.Links?.isExternal ? "blank" : "self"),
                 isExternal: s.Links?.isExternal ?? s.Links?.target === "blank",
               },
               Icons: s.Icons
@@ -105,11 +98,7 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
       setData(synthetic);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    props?.title,
-    props?.descriptionHtml,
-    JSON.stringify(props?.items || []),
-  ]);
+  }, [props?.title, props?.descriptionHtml, JSON.stringify(props?.items || [])]);
 
   // 👀 Start animation ONLY after the grid is rendered and enters viewport
   useEffect(() => {
@@ -154,9 +143,7 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
           </h2>
 
           <div className="w-full text-left">
-            <RichText
-              html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description}
-            />
+            <RichText html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description} />
           </div>
         </div>
 
@@ -174,18 +161,13 @@ const OurCmsExpertsWithAnimation = (props: OurCmsExpertsWithAnimationProps) => {
                 Contentful: "hover:bg-[#1773EB]",
                 Contentstack: "hover:bg-[#7C4DFF]",
               };
-              const hoverColorClass =
-                hoverColorMap[service?.Title] || "hover:bg-[#EE3524]";
+              const hoverColorClass = hoverColorMap[service?.Title] || "hover:bg-[#EE3524]";
 
               return (
                 <Link
                   key={service?.id}
                   href={service?.Links?.href}
-                  aria-label={
-                    service?.Links?.label ||
-                    service?.Title ||
-                    "Open CMS service"
-                  }
+                  aria-label={service?.Links?.label || service?.Title || "Open CMS service"}
                   target={service?.Links?.isExternal ? "_blank" : "_self"}
                   // 🔥 Animate the ENTIRE card (0 → 1) when grid enters view
                   className={`card-zoom ${

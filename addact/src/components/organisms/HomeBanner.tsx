@@ -4,10 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { AnimationBanner } from "@/graphql/queries/getHomePage";
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 interface HomeBannerProps {
   data?: AnimationBanner;
@@ -15,9 +12,7 @@ interface HomeBannerProps {
 
 const HomeBanner = ({ data }: HomeBannerProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [animState, setAnimState] = useState<"visible" | "exit" | "enter">(
-    "visible",
-  );
+  const [animState, setAnimState] = useState<"visible" | "exit" | "enter">("visible");
 
   // Use data from props
   const staticTitle = data?.bannerTitle || "";
@@ -26,8 +21,7 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
   const buttonLabel = data?.bannerLink?.label || "";
   const buttonLink = data?.bannerLink?.href || "/";
   const buttonTarget = data?.bannerLink?.isExternal ? "_blank" : "_self";
-  const useContactDrawer =
-    !data?.bannerLink?.isExternal && shouldOpenContactDrawer(buttonLink);
+  const useContactDrawer = !data?.bannerLink?.isExternal && shouldOpenContactDrawer(buttonLink);
   const backgroundImage = data?.bannerImage?.url || "";
 
   const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {

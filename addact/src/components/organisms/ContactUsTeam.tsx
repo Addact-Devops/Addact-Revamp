@@ -70,9 +70,7 @@ const ContactUsTeam = ({
                   <span className="text-black">{item.Days}</span>
                   <span
                     className={
-                      item.Availability.toLowerCase() === "online"
-                        ? "text-[#155dfc]"
-                        : "text-black"
+                      item.Availability.toLowerCase() === "online" ? "text-[#155dfc]" : "text-black"
                     }
                   >
                     {item.Availability}
