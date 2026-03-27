@@ -56,8 +56,6 @@ const HeroBanner = ({
     openContactDrawer();
   };
 
-  console.log();
-
   return (
     <section className="relative text-white overflow-hidden">
       {/* ✅ Background Image or Video */}
