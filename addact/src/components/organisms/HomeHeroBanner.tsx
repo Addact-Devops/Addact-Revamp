@@ -33,9 +33,7 @@ const HomeHeroBanner = ({ data }: IProps) => {
       </div>
       <div className="relative z-20 md:max-w-[80%] 2xl:max-w-[1234px] w-full">
         <div className="text-white px-10 xl:px-0">
-          <h1 className="uppercase banner-title">
-            {data?.Banner?.[0]?.BannerTitle}
-          </h1>
+          <h1 className="uppercase banner-title">{data?.Banner?.[0]?.BannerTitle}</h1>
 
           <div className="flex flex-col sm:flex-row sm:items-center lg:gap-9">
             <div className="text-base sm:!text-base lg:!text-2xl font-medium max-w-[910px] hero-subtext">

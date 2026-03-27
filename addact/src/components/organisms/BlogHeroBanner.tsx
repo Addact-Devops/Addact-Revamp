@@ -65,9 +65,7 @@ export default function BlogHeroBanner({
       style={{ backgroundImage: bgImageUrl ? `url(${bgImageUrl})` : "none" }}
     >
       <div className="container-main text-center pt-[80px]">
-        <h1 className="text-[42px] md:text-[60px] font-bold mb-[20px] leading-[1.2]">
-          {title}
-        </h1>
+        <h1 className="text-[42px] md:text-[60px] font-bold mb-[20px] leading-[1.2]">{title}</h1>
         <p className="!text-[18px] !md:text-[20px] max-w-[800px] mx-auto mb-[40px] font-medium">
           {description}
         </p>

@@ -30,9 +30,7 @@ interface ContactFieldProps {
   name: string;
   label: string;
   value: string;
-  onChange: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   error?: string;
   autoComplete?: string;
   required?: boolean;
@@ -117,9 +115,7 @@ const ContactUs = ({ data }: IProps) => {
 
   const redirectUrl = "/contact-us/connect-now-thank-you";
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -211,10 +207,7 @@ const ContactUs = ({ data }: IProps) => {
   };
 
   return (
-    <section
-      className="w-full text-white md:py-12 pb-[100px] px-4"
-      id="contact-us"
-    >
+    <section className="w-full text-white md:py-12 pb-[100px] px-4" id="contact-us">
       <div className="container-main mx-auto overflow-hidden !px-[10px] lg:!px-[20px] xl:!px-4">
         <div className="border-gray-700 border">
           <div className="flex flex-col justify-between">
@@ -315,9 +308,7 @@ const ContactUs = ({ data }: IProps) => {
                       }}
                     />
                     {captchaError && !captchaToken && (
-                      <p className="mt-1 text-sm text-red-500">
-                        Please complete the captcha.
-                      </p>
+                      <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
                     )}
                   </div>
                 </div>

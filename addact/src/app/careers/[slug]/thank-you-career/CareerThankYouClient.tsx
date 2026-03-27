@@ -41,9 +41,7 @@ interface CareerThankYouClientProps {
   thankYouData: ThankYouPage | undefined;
 }
 
-const CareerThankYouClient: React.FC<CareerThankYouClientProps> = ({
-  thankYouData,
-}) => {
+const CareerThankYouClient: React.FC<CareerThankYouClientProps> = ({ thankYouData }) => {
   const router = useRouter();
 
   if (!thankYouData) {
@@ -82,9 +80,7 @@ const CareerThankYouClient: React.FC<CareerThankYouClientProps> = ({
               muted
               playsInline
               className="w-[260px] md:w-[500px] h-auto"
-              aria-label={
-                AnimationVideo.alternativeText || "Thank You Animation"
-              }
+              aria-label={AnimationVideo.alternativeText || "Thank You Animation"}
             />
           ) : (
             <div className="w-[260px] md:w-[400px] h-[260px] bg-gray-200 rounded-lg flex items-center justify-center">

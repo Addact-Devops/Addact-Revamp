@@ -536,16 +536,13 @@ export interface ProcessDataItem {
 export async function getDigitalMarketingSlug(
   slug: string,
 ): Promise<DigitalMarketingService | null> {
-  const data = await client.request<DigitalMarketingResponse>(
-    digitalMarketingQuerySlugQuery,
-    {
-      filters: {
-        Slug: {
-          eq: `/${slug}`,
-        },
+  const data = await client.request<DigitalMarketingResponse>(digitalMarketingQuerySlugQuery, {
+    filters: {
+      Slug: {
+        eq: `/${slug}`,
       },
     },
-  );
+  });
 
   return data.digitalMarketingDetails?.[0] ?? null;
 }

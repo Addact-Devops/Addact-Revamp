@@ -3,10 +3,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import AnimatedBlindsBackground from "./AnimatedBlindsBackground";
 import RichText from "../atom/richText";
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 type UIUXBannerData = {
   BannerTitle?: string;
@@ -23,15 +20,13 @@ type UIUXBannerData = {
 
 const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
   const title = data?.BannerTitle ?? "";
-  const description =
-    data?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? "";
+  const description = data?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? "";
   const buttonLabel = data?.BannerLink?.label ?? "Start a Project";
   const buttonUrl = data?.BannerLink?.href ?? "/contact-us";
   const chips = data?.chipsText ?? [];
 
   const buttonTarget = data?.BannerLink?.isExternal ? "_blank" : "_self";
-  const useContactDrawer =
-    !data?.BannerLink?.isExternal && shouldOpenContactDrawer(buttonUrl);
+  const useContactDrawer = !data?.BannerLink?.isExternal && shouldOpenContactDrawer(buttonUrl);
 
   const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
     if (!useContactDrawer) {

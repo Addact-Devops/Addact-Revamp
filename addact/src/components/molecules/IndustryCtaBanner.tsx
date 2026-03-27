@@ -18,10 +18,8 @@ const IndustryCtaBanner = ({ data }: IProps) => {
   const isIndustriesPage = pathname?.startsWith("/industries/");
 
   const desktopUrl = data?.CTAImage?.[0]?.Image?.url ?? "";
-  const tabletUrl =
-    "https://d3l7d9gtq0bnch.cloudfront.net/Tablet_CTA_eaa3f98736.png";
-  const staticMobileUrl =
-    "https://d3l7d9gtq0bnch.cloudfront.net/cta_bg_mobile_dc22d2edd3.png";
+  const tabletUrl = "https://d3l7d9gtq0bnch.cloudfront.net/Tablet_CTA_eaa3f98736.png";
+  const staticMobileUrl = "https://d3l7d9gtq0bnch.cloudfront.net/cta_bg_mobile_dc22d2edd3.png";
 
   // On industries/* use static image for mobile, else use desktop image for both
   const mobileUrl = isIndustriesPage ? staticMobileUrl : desktopUrl;

@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation";
 import SiteDetailClient from "./SiteDetailClient";
-import {
-  getHireExpertsSlug,
-  HireExpert,
-} from "@/graphql/queries/getHireExpertSlug";
+import { getHireExpertsSlug, HireExpert } from "@/graphql/queries/getHireExpertSlug";
 
 type Params = Promise<{ slug: string }>;
 

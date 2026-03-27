@@ -27,8 +27,7 @@ const SWITCH_OFFSET = 80; // px from top of viewport
 
 const IndustryChallenges: React.FC<Props> = ({ data }) => {
   const items = useMemo(
-    () =>
-      Array.isArray(data?.NumberTitleContent) ? data!.NumberTitleContent! : [],
+    () => (Array.isArray(data?.NumberTitleContent) ? data!.NumberTitleContent! : []),
     [data],
   );
 

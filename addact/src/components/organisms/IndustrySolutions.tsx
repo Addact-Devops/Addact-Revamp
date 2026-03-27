@@ -21,9 +21,7 @@ type Props = {
 };
 
 const IndustrySolutions: React.FC<Props> = ({ data }) => {
-  const cards = Array.isArray(data?.SolutionsCards)
-    ? data!.SolutionsCards!
-    : [];
+  const cards = Array.isArray(data?.SolutionsCards) ? data!.SolutionsCards! : [];
 
   // mobile slider state
   const [currentSlide, setCurrentSlide] = useState(0);

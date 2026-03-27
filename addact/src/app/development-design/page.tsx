@@ -59,18 +59,7 @@ export default async function umbracoPage() {
               telephone: "94272 37737",
               contactType: "emergency",
               contactOption: "TollFree",
-              areaServed: [
-                "SA",
-                "YE",
-                "KW",
-                "OM",
-                "QA",
-                "AE",
-                "BH",
-                "IL",
-                "JO",
-                "SY",
-              ],
+              areaServed: ["SA", "YE", "KW", "OM", "QA", "AE", "BH", "IL", "JO", "SY"],
               availableLanguage: "en",
             },
 
@@ -119,15 +108,14 @@ export default async function umbracoPage() {
 
       <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
-        description={
-          bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""
-        }
+        description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
         button={{
           label: bannerData?.BannerLink?.label ?? "",
           url: bannerData?.BannerLink?.href ?? "",
         }}
         isVideo={Boolean(bannerData?.isVideo)}
         videoUrl={bannerData?.videoLink ?? ""}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
       <DetailPageServices data={data?.ourService} />

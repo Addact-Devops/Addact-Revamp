@@ -223,9 +223,7 @@ function InsightCard({ item }: InsightCardProps) {
               <p className="text-stone-950 text-base font-medium font-montserrat mb-0!">
                 {item.date}
               </p>
-              <span className="text-stone-950 text-base font-medium font-montserrat">
-                •
-              </span>
+              <span className="text-stone-950 text-base font-medium font-montserrat">•</span>
               <p className="text-stone-950 text-base font-medium font-montserrat">
                 {item.readTime}
               </p>

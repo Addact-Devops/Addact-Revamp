@@ -4,10 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Orb from "../Orb";
 import RichText from "../atom/richText";
-import {
-  openContactDrawer,
-  shouldOpenContactDrawer,
-} from "@/lib/contactDrawer";
+import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 
 interface HeroAISectionProps {
   data?: {
@@ -27,8 +24,7 @@ export default function HeroAISection({ data }: HeroAISectionProps) {
   const buttonUrl = banner?.BannerLink?.href ?? "/contact-us";
 
   const buttonTarget = banner?.BannerLink?.isExternal ? "_blank" : "_self";
-  const useContactDrawer =
-    !banner?.BannerLink?.isExternal && shouldOpenContactDrawer(buttonUrl);
+  const useContactDrawer = !banner?.BannerLink?.isExternal && shouldOpenContactDrawer(buttonUrl);
 
   const handleBannerCtaClick = (event: React.MouseEvent<HTMLElement>) => {
     if (!useContactDrawer) {
@@ -79,9 +75,7 @@ export default function HeroAISection({ data }: HeroAISectionProps) {
           <Link
             href={banner?.BannerLink?.href || "#"}
             target={buttonTarget}
-            rel={
-              banner?.BannerLink?.isExternal ? "noopener noreferrer" : undefined
-            }
+            rel={banner?.BannerLink?.isExternal ? "noopener noreferrer" : undefined}
             className="pointer-events-auto mt-8 inline-flex items-center gap-3
           bg-[#4F6EF7] hover:bg-[#3f5ce0]
           text-white px-6 py-3 rounded-lg

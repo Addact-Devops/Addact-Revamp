@@ -4,16 +4,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RichText from "../atom/richText";
-import {
-  getIndustriesWeServe,
-  IndustriesResponse,
-} from "@/graphql/queries/getIndustries";
+import { getIndustriesWeServe, IndustriesResponse } from "@/graphql/queries/getIndustries";
 import Loader from "../atom/loader";
 
 export default function IndustriesWeServe() {
-  const [data, setData] = useState<
-    IndustriesResponse["industriesWeServes"][0] | null
-  >(null);
+  const [data, setData] = useState<IndustriesResponse["industriesWeServes"][0] | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -70,8 +65,7 @@ export default function IndustriesWeServe() {
                   />
                 )}
                 <h3 className="text-white !text-[12px] md:!text-base leading-snug">
-                  {(item.Title ||
-                    icon?.name?.replace(".svg", "").replace(/[-_]/g, " ")) ??
+                  {(item.Title || icon?.name?.replace(".svg", "").replace(/[-_]/g, " ")) ??
                     "Untitled"}
                 </h3>
               </>

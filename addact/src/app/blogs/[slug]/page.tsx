@@ -7,11 +7,7 @@ import { Suspense } from "react";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const blog = await getBlogBySlug(slug);
   const seo = blog?.SEO;

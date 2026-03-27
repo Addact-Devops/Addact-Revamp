@@ -17,8 +17,7 @@ export default function WebinarDetailClient({
 }) {
   const [webinarDetailData] = useState(initialData);
 
-  if (!webinarDetailData || webinarDetailData?.addactWebinars?.length === 0)
-    return notFound();
+  if (!webinarDetailData || webinarDetailData?.addactWebinars?.length === 0) return notFound();
 
   const webinarData = webinarDetailData?.addactWebinars[0]?.HeroBanner[0];
   const status = getEventStatus(
@@ -34,22 +33,15 @@ export default function WebinarDetailClient({
             <span className="inline-block px-3 py-1 text-sm text-white bg-white/10 border border-white/20 rounded mb-3">
               {status}
             </span>
-            <h1 className="!text-3xl md:!text-5xl !font-bold mt-2">
-              {webinarData?.BannerTitle}
-            </h1>
+            <h1 className="!text-3xl md:!text-5xl !font-bold mt-2">{webinarData?.BannerTitle}</h1>
             <p className="text-lg text-white/80 mb-6 mt-6">
-              {
-                webinarDetailData?.addactWebinars[0]?.HeroBanner[0]
-                  ?.BannerDescription
-              }
-              !
+              {webinarDetailData?.addactWebinars[0]?.HeroBanner[0]?.BannerDescription}!
             </p>
             <div className="flex items-center gap-2 mb-6">
               <CalendarDays size={20} />
               <p className="text-base font-medium">
                 {new Date(
-                  webinarDetailData?.addactWebinars[0]?.HeroBanner[0]
-                    ?.PublishDate,
+                  webinarDetailData?.addactWebinars[0]?.HeroBanner[0]?.PublishDate,
                 ).toLocaleDateString("en-US", {
                   day: "2-digit",
                   month: "short",
@@ -58,10 +50,7 @@ export default function WebinarDetailClient({
               </p>
             </div>
             <Link
-              href={
-                webinarDetailData?.addactWebinars[0]?.HeroBanner[0]?.ReadNow
-                  ?.href || "#"
-              }
+              href={webinarDetailData?.addactWebinars[0]?.HeroBanner[0]?.ReadNow?.href || "#"}
               className="flex items-center gap-2 w-44 bg-[#3C4CFF] text-white font-semibold px-6 py-3 rounded-full hover:bg-[#3440CB] transition-colors"
             >
               Watch Now
@@ -140,9 +129,7 @@ export default function WebinarDetailClient({
                         </div> */}
 
             <div className="caseStudy-wrapper">
-              <BlogContentRenderer
-                blocks={webinarDetailData?.addactWebinars[0]?.WebinarContent}
-              />
+              <BlogContentRenderer blocks={webinarDetailData?.addactWebinars[0]?.WebinarContent} />
             </div>
           </div>
         </div>

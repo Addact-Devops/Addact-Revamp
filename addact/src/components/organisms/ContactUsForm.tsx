@@ -43,10 +43,7 @@ const renderRichText = (blocks: RichTextBlock[] | string[], isLeft = false) => {
 
   if (typeof blocks[0] === "string") {
     return (blocks as string[]).map((text, index) => (
-      <p
-        key={index}
-        className={`text-[#000000] ${isLeft ? "text-white" : "text-[#000000]"}`}
-      >
+      <p key={index} className={`text-[#000000] ${isLeft ? "text-white" : "text-[#000000]"}`}>
         {text}
       </p>
     ));
@@ -97,9 +94,7 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
 
   const redirectUrl = `${pathname}/connect-now-thank-you`;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
@@ -307,9 +302,7 @@ const ContactUsForm = ({ ContactUsFormBlock }: ContactUsFormProps) => {
                   }}
                 />
                 {captchaError && !captchaToken && (
-                  <p className="mt-1 text-sm text-red-500">
-                    Please complete the captcha.
-                  </p>
+                  <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
                 )}
               </div>
             </div>

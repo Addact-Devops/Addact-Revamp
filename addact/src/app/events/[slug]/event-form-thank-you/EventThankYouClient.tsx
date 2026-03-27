@@ -48,9 +48,7 @@ interface EventThankYouClientProps {
   thankYouData: ThankYouPage;
 }
 
-const EventThankYouClient: React.FC<EventThankYouClientProps> = ({
-  thankYouData,
-}) => {
+const EventThankYouClient: React.FC<EventThankYouClientProps> = ({ thankYouData }) => {
   const router = useRouter();
 
   const { AnimationVideo } = thankYouData;
@@ -85,9 +83,7 @@ const EventThankYouClient: React.FC<EventThankYouClientProps> = ({
               muted
               playsInline
               className="w-[260px] md:w-[500px] h-auto"
-              aria-label={
-                AnimationVideo.alternativeText || "Thank You Animation"
-              }
+              aria-label={AnimationVideo.alternativeText || "Thank You Animation"}
             />
           ) : (
             <div className="w-[260px] md:w-[400px] h-[260px] bg-gray-200 rounded-lg flex items-center justify-center">

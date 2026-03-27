@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useMemo,
-  useRef,
-  useState,
-  useCallback,
-  useEffect,
-} from "react";
+import React, { useMemo, useRef, useState, useCallback, useEffect } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider, { Settings } from "react-slick";
@@ -47,11 +41,7 @@ const formatDate = (iso?: string | null) => {
   });
 };
 
-const IndustryCaseStudies: React.FC<Props> = ({
-  title,
-  items = [],
-  limit = 8,
-}) => {
+const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) => {
   // ❌ was: early return here — this caused hooks to be “conditional”
   // if (!items || items.length === 0) return null;
 
@@ -74,13 +64,10 @@ const IndustryCaseStudies: React.FC<Props> = ({
   const startXRef = useRef<number | null>(null);
   const draggingRef = useRef(false);
 
-  const onTouchStartCapture = useCallback(
-    (e: React.TouchEvent<HTMLDivElement>) => {
-      startXRef.current = e.touches[0].clientX;
-      draggingRef.current = true;
-    },
-    [],
-  );
+  const onTouchStartCapture = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    startXRef.current = e.touches[0].clientX;
+    draggingRef.current = true;
+  }, []);
 
   const onTouchMoveCapture = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
@@ -100,13 +87,10 @@ const IndustryCaseStudies: React.FC<Props> = ({
     startXRef.current = null;
   }, []);
 
-  const onMouseDownCapture = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      startXRef.current = e.clientX;
-      draggingRef.current = true;
-    },
-    [],
-  );
+  const onMouseDownCapture = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    startXRef.current = e.clientX;
+    draggingRef.current = true;
+  }, []);
 
   const onMouseMoveCapture = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -171,9 +155,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
           setCurrentIndex(secondLast);
         }
       },
-      appendDots: (dots: React.ReactNode) => (
-        <ul style={{ marginTop: "24px" }}>{dots}</ul>
-      ),
+      appendDots: (dots: React.ReactNode) => <ul style={{ marginTop: "24px" }}>{dots}</ul>,
       responsive: [
         {
           breakpoint: 1024,
@@ -236,9 +218,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
             </h3>
 
             {dateText && (
-              <div className="text-white text-[12px] md:text-[16px] leading-[18px]">
-                {dateText}
-              </div>
+              <div className="text-white text-[12px] md:text-[16px] leading-[18px]">{dateText}</div>
             )}
           </div>
         </div>
@@ -308,10 +288,7 @@ const IndustryCaseStudies: React.FC<Props> = ({
               <div style={{ paddingLeft: padLeft }}>
                 <Slider ref={sliderRef} {...settings}>
                   {sortedLimited.map((cs, idx) => (
-                    <div
-                      key={`${cs?.Slug || idx}`}
-                      className="px-[12px] h-full"
-                    >
+                    <div key={`${cs?.Slug || idx}`} className="px-[12px] h-full">
                       <Card item={cs} />
                     </div>
                   ))}

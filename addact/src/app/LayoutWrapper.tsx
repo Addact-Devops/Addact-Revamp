@@ -13,63 +13,63 @@ import { CONTACT_DRAWER_EVENT } from "@/lib/contactDrawer";
 type FooterProps = React.ComponentProps<typeof Footer>;
 
 function LayoutWrapper({
-    children,
-    headerData,
-    footerData,
-    contactSidebarData,
+  children,
+  headerData,
+  footerData,
+  contactSidebarData,
 }: {
-    children: React.ReactNode;
-    headerData: AddactHeaderData;
-    footerData?: FooterProps["data"];
-    contactSidebarData?: CONTACTUS;
+  children: React.ReactNode;
+  headerData: AddactHeaderData;
+  footerData?: FooterProps["data"];
+  contactSidebarData?: CONTACTUS;
 }) {
-    const pathname = usePathname();
-    const [isContactSidebarOpen, setContactSidebarOpen] = React.useState(false);
-    const hideHeaderFooter = pathname === "/hire-certified-sitecore-developer";
+  const pathname = usePathname();
+  const [isContactSidebarOpen, setContactSidebarOpen] = React.useState(false);
+  const hideHeaderFooter = pathname === "/hire-certified-sitecore-developer";
 
-    const isAIPage = pathname === "/ai-services";
-    const isUIUXPage = pathname === "/ui-ux-service";
-    const isHomePage = pathname === "/";
+  const isAIPage = pathname === "/ai-services";
+  const isUIUXPage = pathname === "/ui-ux-service";
+  const isHomePage = pathname === "/";
 
-    const isTransparentHeaderPage = isAIPage || isUIUXPage || isHomePage;
+  const isTransparentHeaderPage = isAIPage || isUIUXPage || isHomePage;
 
-    React.useEffect(() => {
-        setContactSidebarOpen(false);
-    }, [pathname]);
+  React.useEffect(() => {
+    setContactSidebarOpen(false);
+  }, [pathname]);
 
-    React.useEffect(() => {
-        const handleOpenContactDrawer = () => {
-            setContactSidebarOpen(true);
-        };
+  React.useEffect(() => {
+    const handleOpenContactDrawer = () => {
+      setContactSidebarOpen(true);
+    };
 
-        window.addEventListener(CONTACT_DRAWER_EVENT, handleOpenContactDrawer as EventListener);
+    window.addEventListener(CONTACT_DRAWER_EVENT, handleOpenContactDrawer as EventListener);
 
-        return () => {
-            window.removeEventListener(CONTACT_DRAWER_EVENT, handleOpenContactDrawer as EventListener);
-        };
-    }, []);
+    return () => {
+      window.removeEventListener(CONTACT_DRAWER_EVENT, handleOpenContactDrawer as EventListener);
+    };
+  }, []);
 
-    return (
-        <>
-            {!hideHeaderFooter && (
-                <Header
-                    headerData={headerData}
-                    // onContactClick={() => setContactSidebarOpen(true)}
-                    transparentHeader={isTransparentHeaderPage}
-                />
-            )}
-            {children}
-            {!hideHeaderFooter && footerData && <Footer data={footerData} />}
-            {!hideHeaderFooter && contactSidebarData && (
-                <ContactUs
-                    data={contactSidebarData}
-                    isDrawer
-                    isOpen={isContactSidebarOpen}
-                    onClose={() => setContactSidebarOpen(false)}
-                />
-            )}
-        </>
-    );
+  return (
+    <>
+      {!hideHeaderFooter && (
+        <Header
+          headerData={headerData}
+          // onContactClick={() => setContactSidebarOpen(true)}
+          transparentHeader={isTransparentHeaderPage}
+        />
+      )}
+      {children}
+      {!hideHeaderFooter && footerData && <Footer data={footerData} />}
+      {!hideHeaderFooter && contactSidebarData && (
+        <ContactUs
+          data={contactSidebarData}
+          isDrawer
+          isOpen={isContactSidebarOpen}
+          onClose={() => setContactSidebarOpen(false)}
+        />
+      )}
+    </>
+  );
 }
 
 export default LayoutWrapper;

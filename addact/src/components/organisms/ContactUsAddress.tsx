@@ -9,14 +9,10 @@ type Props = {
 };
 
 export default function ContactUsAddress({ addressContent }: Props) {
-  const { OfficeCountry, OfficeCity, Address, ContactUsEmailPhone, MapIframe } =
-    addressContent;
+  const { OfficeCountry, OfficeCity, Address, ContactUsEmailPhone, MapIframe } = addressContent;
 
   return (
-    <section
-      className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]"
-      id="maps-component"
-    >
+    <section className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]" id="maps-component">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-[50px] md:gap-20 lg:gap-30 items-start">
         {/* Left Side Content */}
         <div className="text-[#0A0A0A] space-y-5">
@@ -45,13 +41,11 @@ export default function ContactUsAddress({ addressContent }: Props) {
 
         {/* Right Side Map Iframe */}
         <div className="border-[3px] border-[#155dfc] rounded-[20px] md:rounded-[30px] overflow-hidden h-full">
-          {MapIframe &&
-            MapIframe.length > 0 &&
-            MapIframe[0].children.length > 0 && (
-              <div className="[&>iframe]:w-full [&>iframe]:h-[350px] w-full h-full">
-                {parse(MapIframe[0].children[0].text)}
-              </div>
-            )}
+          {MapIframe && MapIframe.length > 0 && MapIframe[0].children.length > 0 && (
+            <div className="[&>iframe]:w-full [&>iframe]:h-[350px] w-full h-full">
+              {parse(MapIframe[0].children[0].text)}
+            </div>
+          )}
         </div>
       </div>
     </section>

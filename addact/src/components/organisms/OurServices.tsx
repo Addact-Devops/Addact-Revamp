@@ -32,9 +32,7 @@ const OurServices = ({ data }: IProps) => {
                     />
                   )}
 
-                  <h3 className="!text-[25px] 2xl:!text-3xl my-[30px]">
-                    {service.Title}
-                  </h3>
+                  <h3 className="!text-[25px] 2xl:!text-3xl my-[30px]">{service.Title}</h3>
                   <RichText html={service.Description} />
                 </div>
               ))}

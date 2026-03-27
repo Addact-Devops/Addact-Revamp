@@ -135,11 +135,7 @@ import { notFound } from "next/navigation";
 
 type Params = Promise<{ slug: string }>;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params;
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const res = await getEventDetailBySlug(slug);
   const event = res?.addactsEvents?.[0];

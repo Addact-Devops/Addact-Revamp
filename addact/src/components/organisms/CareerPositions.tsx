@@ -66,18 +66,13 @@ export default function CareerPositions({ positions, positionsTitle }: Props) {
   };
 
   return (
-    <section
-      className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]"
-      id="open-positions"
-    >
+    <section className="container-main my-[80px] lg:my-[100px] 2xl:my-[200px]" id="open-positions">
       {/* Title Section */}
       <div className="mb-[26px] md:mb-[60px]">
         {positionsTitle?.map((item, index) => (
           <div key={index} className="text-left">
             {item.Title && (
-              <p className="text-[#3C4CFF] text-[20px] font-medium mb-2">
-                {stripTags(item.Title)}
-              </p>
+              <p className="text-[#3C4CFF] text-[20px] font-medium mb-2">{stripTags(item.Title)}</p>
             )}
             {item.Description && (
               <>
@@ -137,10 +132,7 @@ export default function CareerPositions({ positions, positionsTitle }: Props) {
                 {/* Info Rows */}
                 <div className="space-y-[16px] text-[14px] md:text-[18px] font-[500] mb-[5px] text-[#0F0F0F]">
                   {card.TitleIcon?.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-[8px] md:gap-[20px]"
-                    >
+                    <div key={index} className="flex items-center gap-[8px] md:gap-[20px]">
                       {item.Icon?.url && (
                         <Image
                           src={item.Icon.url}

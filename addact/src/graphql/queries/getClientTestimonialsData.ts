@@ -56,8 +56,6 @@ export type ClientTestimonialResponse = {
 export async function getClientTestimonialsData(): Promise<
   ClientTestimonialResponse["clientTestimonials"][0] | null
 > {
-  const data = await client.request<ClientTestimonialResponse>(
-    GET_CLIENT_TESTIMONIALS,
-  );
+  const data = await client.request<ClientTestimonialResponse>(GET_CLIENT_TESTIMONIALS);
   return data.clientTestimonials?.[0] || null;
 }

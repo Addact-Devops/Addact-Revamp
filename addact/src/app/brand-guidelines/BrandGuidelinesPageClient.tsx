@@ -3,10 +3,7 @@
 
 import { useEffect, useState } from "react";
 import HeroBanner from "@/components/organisms/HeroBanner";
-import {
-  BrandGuidelinesResponse,
-  getBrandGuidelines,
-} from "@/graphql/queries/getBrandGuidelines";
+import { BrandGuidelinesResponse, getBrandGuidelines } from "@/graphql/queries/getBrandGuidelines";
 import BlogContentRenderer from "@/components/organisms/BlogContentRenderer";
 import DownloadForm from "@/components/templates/downloadForm";
 import Loader from "@/components/atom/loader";
@@ -14,8 +11,7 @@ import "../../styles/components/caseStudy-detail.scss";
 import { notFound } from "next/navigation";
 
 const BrandGuidelinesPageClient = () => {
-  const [brandGuideline, setBrandGuideline] =
-    useState<BrandGuidelinesResponse>();
+  const [brandGuideline, setBrandGuideline] = useState<BrandGuidelinesResponse>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -67,9 +63,7 @@ const BrandGuidelinesPageClient = () => {
               </div>
             </div>
             <div className="lg:pl-[40px]">
-              <BlogContentRenderer
-                blocks={brandGuideline.brandGuideline.Content}
-              />
+              <BlogContentRenderer blocks={brandGuideline.brandGuideline.Content} />
             </div>
           </div>
         </div>
