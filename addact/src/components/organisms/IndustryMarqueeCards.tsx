@@ -43,8 +43,7 @@ const defaultCards: IndustryCard[] = [
     title: "Healthcare",
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800",
+    imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800",
     slug: "/industries/healthcare",
   },
   {
@@ -52,8 +51,7 @@ const defaultCards: IndustryCard[] = [
     title: "Education & E-Learning",
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
+    imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800",
     slug: "/industries/education",
   },
   {
@@ -61,8 +59,7 @@ const defaultCards: IndustryCard[] = [
     title: "Automobile",
     description:
       "At ADDACT, we are dedicated center of excellence, to help enterprises navigate the AI revolution.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800",
+    imageUrl: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800",
     slug: "/industries/automobile",
   },
   {
@@ -302,11 +299,7 @@ export default function IndustryMarqueeCards({
             {duplicatedCards &&
               duplicatedCards?.length > 0 &&
               duplicatedCards?.map((card, index) => (
-                <Link
-                  key={`${card.id}-${index}`}
-                  href={card.slug}
-                  className="no-underline"
-                >
+                <Link key={`${card.id}-${index}`} href={card.slug} className="no-underline">
                   <div
                     className="industry-marquee-card group relative w-[82vw] max-w-[320px] overflow-hidden rounded-[10px] border border-white/20 bg-neutral-700/30 backdrop-blur-[30px] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] shrink-0 cursor-pointer select-none aspect-[517/619] md:w-[360px] md:max-w-none xl:w-[517px]!"
                     draggable={false}
@@ -342,9 +335,7 @@ export default function IndustryMarqueeCards({
                         </div>
 
                         <div className="font-['Montserrat'] font-normal text-base lg:text-base! xl:text-2xl! leading-5 md:leading-7 lg:leading-8 xl:leading-11 tracking-normal text-white m-0 md:line-clamp-none">
-                          {card.description ? (
-                            <RichText html={card.description} />
-                          ) : null}
+                          {card.description ? <RichText html={card.description} /> : null}
                         </div>
                       </div>
                     </div>
