@@ -447,6 +447,20 @@ const Header = ({
   //   };
 
   useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add("menu-scroll-lock");
+      document.documentElement.classList.add("menu-scroll-lock");
+    } else {
+      document.body.classList.remove("menu-scroll-lock");
+      document.documentElement.classList.remove("menu-scroll-lock");
+    }
+    return () => {
+      document.body.classList.remove("menu-scroll-lock");
+      document.documentElement.classList.remove("menu-scroll-lock");
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
