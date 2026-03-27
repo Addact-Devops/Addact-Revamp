@@ -1,15 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 
 export default function ScrollToTop() {
-  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
-
-  // Scroll to top on route change
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [pathname]);
 
   // Show/hide button based on scroll position
   useEffect(() => {
