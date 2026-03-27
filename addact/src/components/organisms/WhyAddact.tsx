@@ -71,7 +71,7 @@ const WhyAddact = ({ data }: IProps) => {
   const cards = getCards(data as { GlobalCard?: CardItem[] | null } | null);
 
   return (
-    <section className="pb-16 md:pb-20 lg:pb-24 2xl:pb-[160px]">
+    <section className="py-16 md:py-20 lg:py-24 2xl:py-[160px]">
       <div className="container-main">
         <div className="flex flex-col">
           <h2 className="text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 font-semibold!">
