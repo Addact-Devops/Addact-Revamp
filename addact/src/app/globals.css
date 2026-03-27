@@ -52,6 +52,12 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* Scroll-lock classes — each component owns its own class; they compose safely */
+.intro-scroll-lock,
+.menu-scroll-lock {
+  overflow: hidden !important;
+}
+
 /* Utility to hide horizontal scrollbars on small, scrollable elements */
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
