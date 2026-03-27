@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import clsx from "clsx";
 import type { Image as GQLImage } from "@/graphql/queries/getHomePage";
 
 // Static data — will be replaced with GraphQL data later
@@ -30,6 +31,7 @@ const IntroSplash = ({
   const completionTimeoutRef = useRef<number | null>(null);
   const transitionTimeoutRef = useRef<number | null>(null);
   const autoAdvanceTimeoutRef = useRef<number | null>(null);
+  const [isLandscape, setIsLandscape] = useState(false);
 
   const goToNextPhase = useCallback(() => {
     if (hasCompletedRef.current || isTransitioningRef.current) return;
@@ -78,7 +80,12 @@ const IntroSplash = ({
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
 
-    const syncViewport = () => setViewportWidth(window.innerWidth);
+    const syncViewport = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      setViewportWidth(width);
+      setIsLandscape(height < 768 && window.innerHeight < window.innerWidth);
+    };
     syncViewport();
 
     const handleWheel = (event: WheelEvent) => {
@@ -106,6 +113,7 @@ const IntroSplash = ({
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchend", handleTouchEnd, { passive: true });
     window.addEventListener("resize", syncViewport);
+    window.addEventListener("orientationchange", syncViewport);
 
     return () => {
       document.body.style.overflow = previousOverflow;
@@ -125,6 +133,7 @@ const IntroSplash = ({
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("resize", syncViewport);
+      window.removeEventListener("orientationchange", syncViewport);
     };
   }, [goToNextPhase]);
 
@@ -329,7 +338,10 @@ const IntroSplash = ({
           type="button"
           aria-label="Start intro animation"
           onClick={handleScrollIndicatorClick}
-          className="absolute bottom-8 md:bottom-12 left-1/2 z-[5] flex -translate-x-1/2 flex-col items-center gap-2 cursor-pointer"
+          className={clsx(
+            "absolute left-1/2 z-[5] flex -translate-x-1/2 flex-col items-center gap-2 cursor-pointer",
+            isLandscape ? "bottom-4.5" : "bottom-8 md:bottom-12",
+          )}
           style={{
             opacity: scrollIndicatorOpacity,
             transition: "opacity 250ms ease",
