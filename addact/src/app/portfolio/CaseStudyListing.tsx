@@ -45,7 +45,7 @@ const CaseStudyListing = () => {
             priority
             className="absolute inset-0 z-0"
           />
-          <div className="relative container-main mt-[68px] lg:mt-[120px] min-h-[200px] md:h-[300px] lg:h-[500px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
+          <div className="relative container-main mt-[68px] lg:mt-[120px] min-h-[200px] md:h-[300px] lg:h-[500px]! flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
             <h1 className="text-white mb-[20px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] xl:max-w-[60%]">
               {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
             </h1>

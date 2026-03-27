@@ -237,7 +237,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
             </div>
 
             {/* Right Side - Sub Steps Container (Desktop xl+) */}
-            <div className="design-process-board relative hidden min-h-[620px] flex-1 xl:block 2xl:min-h-[700px]">
+            <div className="design-process-board relative hidden min-h-[500px] flex-1 xl:block 2xl:min-h-[580px]">
               {/* Border Box with Grid Background */}
               <div className="absolute inset-0 overflow-hidden rounded-[10px] border-2 border-white/20">
                 {/* Grid Background with Radial Gradients */}
@@ -418,7 +418,7 @@ export default function DesignProcess({ data }: { data?: DesignFlow | null }) {
             {/* ============================================================ */}
             {/* SM TO <XL: stair-step board layout (unchanged behaviour)      */}
             {/* ============================================================ */}
-            <div className="hidden sm:block relative mt-0 min-h-[470px] w-full xl:hidden md:mt-8 md:min-h-[560px] lg:mt-10 lg:min-h-[620px]">
+            <div className="hidden sm:block relative mt-0 min-h-[400px] w-full xl:hidden md:mt-8 md:min-h-[480px] lg:mt-10 lg:min-h-[520px]">
               <div className="absolute inset-0 overflow-hidden rounded-[10px] border border-white/20">
                 <div className="absolute inset-0 opacity-15">
                   <svg
