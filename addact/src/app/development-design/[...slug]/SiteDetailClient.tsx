@@ -99,6 +99,7 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
             }}
             isVideo={Boolean(bannerData?.isVideo)}
             videoUrl={bannerData?.videoLink ?? ""}
+            isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
             backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
           />
           <DetailPageServices data={pageData?.ourService} />

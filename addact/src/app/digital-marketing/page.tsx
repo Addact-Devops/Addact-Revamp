@@ -119,6 +119,7 @@ export default async function umbracoPage() {
           url: bannerData?.BannerLink?.href ?? "",
         }}
         isVideo={Boolean(bannerData?.isVideo)}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         videoUrl={bannerData?.videoLink ?? ""}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />

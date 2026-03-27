@@ -69,6 +69,7 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
         }}
         isVideo={Boolean(bannerData?.isVideo)}
         videoUrl={bannerData?.videoLink ?? ""}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
       <DetailPageServices data={pageData?.ourService} />

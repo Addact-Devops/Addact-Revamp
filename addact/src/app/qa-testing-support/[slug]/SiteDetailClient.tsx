@@ -67,6 +67,7 @@ const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
           url: bannerData?.BannerLink?.href ?? "",
         }}
         isVideo={Boolean(bannerData?.isVideo)}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         videoUrl={bannerData?.videoLink ?? ""}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />

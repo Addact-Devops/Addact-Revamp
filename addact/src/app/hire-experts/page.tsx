@@ -20,6 +20,7 @@ export default async function umbracoPage() {
   if (!data) return notFound();
   const bannerData = data.Banner?.Banner?.[0];
 
+  console.log(bannerData);
   return (
     <main className="bg-dark">
       {/* ✅ SearchAction Schema */}
@@ -116,6 +117,7 @@ export default async function umbracoPage() {
         }}
         isVideo={Boolean(bannerData?.isVideo)}
         videoUrl={bannerData?.videoLink ?? ""}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
       <DetailPageServices data={data?.ourService} />

@@ -83,6 +83,7 @@ export default async function QATestingSupport() {
         }}
         isVideo={Boolean(bannerData?.isVideo)}
         videoUrl={bannerData?.videoLink ?? ""}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
 

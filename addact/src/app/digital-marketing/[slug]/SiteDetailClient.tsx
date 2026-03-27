@@ -74,6 +74,7 @@ const SiteDetailClient = ({ data }: { data: DigitalMarketingService }) => {
         }}
         isVideo={Boolean(bannerData?.isVideo)}
         videoUrl={bannerData?.videoLink ?? ""}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
       <WhoWeAre />

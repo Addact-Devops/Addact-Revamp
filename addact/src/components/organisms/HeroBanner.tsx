@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation"; // ✅ new import
 import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
+import { RightArrowIcon } from "../atom/icons";
 
 type HeroBannerProps = {
   title: string;
@@ -17,6 +18,7 @@ type HeroBannerProps = {
     isExternal?: boolean;
   };
   showAnchorLinks?: boolean;
+  isTextAlignCenter?: boolean;
 };
 
 const HeroBanner = ({
@@ -27,9 +29,11 @@ const HeroBanner = ({
   videoUrl = "",
   button,
   showAnchorLinks = false,
+  isTextAlignCenter = false,
 }: HeroBannerProps) => {
   const pathname = usePathname(); // ✅ get current path
   const shouldRenderVideo = isVideo && Boolean(videoUrl);
+  const textAlignmentClasses = isTextAlignCenter ? "text-center items-center" : "text-left";
 
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
@@ -51,6 +55,8 @@ const HeroBanner = ({
     event.preventDefault();
     openContactDrawer();
   };
+
+  console.log();
 
   return (
     <section className="relative text-white overflow-hidden">
@@ -79,13 +85,17 @@ const HeroBanner = ({
 
       {/* Content */}
       <div className="relative container-main mt-[68px] lg:mt-[120px] min-h-[400px] lg:min-h-[500px] 2xl:min-h-[659px] flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
-        <div className="text-left max-w-[95%]">
-          <h1 className="text-white mb-[20px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] xl:max-w-[60%]">
+        <div
+          className={`max-w-[95%] ${textAlignmentClasses} ${isTextAlignCenter ? "mx-auto" : ""}`}
+        >
+          <h1
+            className={`text-white mb-[20px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] xl:max-w-[60%] ${isTextAlignCenter ? "mx-auto" : ""}`}
+          >
             {title}
           </h1>
 
           <div
-            className="text-white text-[16px] leading-[25px] lg:text-[17px] lg:leading-[30px] font-normal mt-0 xl:max-w-[50%]"
+            className={`text-white text-[16px] leading-[25px] lg:text-[17px] lg:leading-[30px] font-normal mt-0 xl:max-w-[50%] ${isTextAlignCenter ? "mx-auto text-center" : ""}`}
             dangerouslySetInnerHTML={{ __html: description }}
           />
 
@@ -112,13 +122,14 @@ const HeroBanner = ({
                         </div>
                     )} */}
           {button?.label && button?.url && (
-            <div className="mt-[30px] md:mt-10">
+            <div className={`mt-[30px] md:mt-10 ${isTextAlignCenter ? "flex justify-center" : ""}`}>
               {useContactDrawer ? (
                 <button
                   onClick={handleBannerCtaClick}
-                  className="inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-[600] transition text-lg text-[16px] md:text-[15px]"
+                  className="flex gap-5 bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[20px] py-[17px] rounded-md font-[600] transition md:text-lg text-[15px]"
                 >
-                  {button.label}
+                  <span>{button.label}</span>
+                  <RightArrowIcon />
                 </button>
               ) : button.url.includes("#") ? (
                 <button

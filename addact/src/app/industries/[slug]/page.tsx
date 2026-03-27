@@ -247,13 +247,6 @@ export default async function Page({ params }: { params: Params }) {
         /> */}
         {industry?.techStack && <OurTechStack data={industry?.techStack} />}
 
-        {!!projectHighlightItems.length && (
-          <IndustryCaseStudies
-            title={projectHighlightsTitle}
-            items={projectHighlightItems as never}
-          />
-        )}
-
         {/* ✅ Why Addact from this industry */}
         {whyAddactData && <WhyAddact data={whyAddactData as never} />}
 
@@ -264,7 +257,12 @@ export default async function Page({ params }: { params: Params }) {
 
         {/* ✅ FAQ from this industry – adapted to home shape */}
         {faqAdapted && <FAQ data={faqAdapted as never} />}
-
+        {!!projectHighlightItems.length && (
+          <IndustryCaseStudies
+            title={projectHighlightsTitle}
+            items={projectHighlightItems as never}
+          />
+        )}
         {industry?.cta && <CtaBanner data={industry?.cta as never} />}
       </main>
     </>
