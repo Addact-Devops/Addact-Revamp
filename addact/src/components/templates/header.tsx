@@ -256,7 +256,7 @@ function DropdownContent({
 
         {showCard && (
           <div
-            className="w-[474px] min-w-[474px] max-w-[474px] shrink-0 relative overflow-hidden flex flex-col justify-center"
+            className="w-[474px] min-w-[474px] max-w-[474px] shrink-0 relative overflow-hidden flex flex-col "
             style={{ background: "#0F0F0F" }}
           >
             {isLastItem && additionalText ? (
@@ -270,7 +270,7 @@ function DropdownContent({
                       return [firstPart, secondPart].map((line, index) => (
                         <span
                           key={index}
-                          className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter"
+                          className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-wide"
                         >
                           {line}
                         </span>
@@ -279,7 +279,7 @@ function DropdownContent({
                     return words.map((word, index) => (
                       <span
                         key={index}
-                        className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter"
+                        className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-wide"
                       >
                         {word}
                       </span>
