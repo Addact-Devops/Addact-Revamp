@@ -237,7 +237,7 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
   const hasItems = sortedLimited.length > 0;
 
   return (
-    <section className="my-[80px] lg:my-[100px] 2xl:my-[200px] item-slider-wrapper">
+    <section className="py-16 md:py-24 lg:py-40! item-slider-wrapper">
       <div className="overflow-hidden lg:pb-[55px]">
         <div className="max-w-[1920px] m-auto">
           <div className="container-main" ref={containerRef}>
