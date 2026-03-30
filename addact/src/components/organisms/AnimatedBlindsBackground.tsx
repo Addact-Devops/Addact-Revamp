@@ -67,6 +67,7 @@ const AnimatedBlindsBackground: React.FC<GradientBlindsProps> = ({
   const mouseTargetRef = useRef<[number, number]>([0, 0]);
   const lastTimeRef = useRef<number>(0);
   const firstResizeRef = useRef<boolean>(true);
+  const isVisibleRef = useRef<boolean>(true);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -309,6 +310,10 @@ void main() {
     window.addEventListener("pointermove", onPointerMove);
 
     const loop = (t: number) => {
+      if (!isVisibleRef.current) {
+        rafRef.current = null;
+        return; // RAF stops; IntersectionObserver will restart it when visible
+      }
       rafRef.current = requestAnimationFrame(loop);
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
@@ -335,10 +340,22 @@ void main() {
     };
     rafRef.current = requestAnimationFrame(loop);
 
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+        if (entry.isIntersecting && rafRef.current === null) {
+          rafRef.current = requestAnimationFrame(loop);
+        }
+      },
+      { threshold: 0, rootMargin: "200px" },
+    );
+    io.observe(container);
+
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("pointermove", onPointerMove);
       ro.disconnect();
+      io.disconnect();
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }

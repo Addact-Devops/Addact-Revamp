@@ -115,6 +115,7 @@ export default function OurInsights() {
           <Link
             href={titleData?.Link?.href || ""}
             target={titleData?.Link?.target === "blank" ? "_blank" : "_self"}
+            aria-label={titleData?.Link?.label || "See more Blogs"}
             className="px-4 py-2.5 sm:px-5 sm:py-3 md:py-4 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.05)] outline-1 -outline-offset-1 outline-[#3C4CFF] inline-flex justify-center items-center gap-2 sm:gap-3 md:gap-4 xl:gap-5 overflow-hidden hover:bg-[#3C4CFF] transition-colors flex-shrink-0 group"
           >
             <span className="text-[#3C4CFF] text-sm sm:text-base md:text-lg font-semibold font-montserrat leading-5 sm:leading-6 md:leading-7 whitespace-nowrap group-hover:text-white">
