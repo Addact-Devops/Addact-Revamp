@@ -68,19 +68,19 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
       <div className="absolute inset-0 z-[1] bg-[linear-gradient(180deg,rgba(0,0,0,0.96)_0%,rgba(0,0,0,0.92)_34%,rgba(0,0,0,0.7)_52%,rgba(0,0,0,0.08)_100%)] md:hidden" />
 
       {/* Content */}
-      <div className="relative z-10 w-full pt-10 pb-12 md:py-0 container-main">
+      <div className="relative z-10 w-full pt-15 pb-12 md:py-0 container-main">
         <div className="max-w-[900px] 2xl:max-w-[1100px]">
           {/* Title */}
           <h1 className="uppercase text-white font-bold mb-6 md:mb-8 2xl:mb-10">
             {/* Static line */}
-            <span className="block font-bold text-[#FFFFFFB2] text-[34px] leading-[1.1] md:text-[55px] lg:text-[70px]! 2xl:text-[75px]">
+            <span className="block font-bold text-[#FFFFFFB2] text-[25px] leading-[1.1] md:text-[55px] lg:text-[70px]! 2xl:text-[75px]">
               {staticTitle}
             </span>
 
             {/* Rotating line with underline */}
-            <span className="mt-1 block h-[45px] overflow-hidden md:mt-2 md:h-[70px] lg:h-[90px] xl:h-[105px] 2xl:h-[125px] relative">
+            <span className="mt-1 block h-[45px] overflow-hidden md:mt-2 md:h-[80px] lg:h-[96px] xl:h-[105px] 2xl:h-[125px] relative">
               <span
-                className={`block text-[20px] leading-[1.1] md:text-[55px] lg:text-[70px]! 2xl:text-[75px] roller-text ${
+                className={`block text-[25px] leading-[1.1] md:text-[55px] lg:text-[70px]! 2xl:text-[75px] roller-text ${
                   animState === "exit"
                     ? "roller-exit"
                     : animState === "enter"
@@ -88,9 +88,8 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
                       : "roller-visible"
                 }`}
               >
-                <span className="relative font-bold text-white inline-block pb-2 md:pb-3">
+                <span className="font-bold text-white inline-block border-b-[2px] md:border-b-[3px] border-white">
                   {rotatingTexts[currentIndex]}
-                  <span className="absolute bottom-0 left-0 w-full h-[2px] md:h-[3px] bg-white" />
                 </span>
               </span>
             </span>
