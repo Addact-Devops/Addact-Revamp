@@ -95,18 +95,18 @@ const WhoWeAre = () => {
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6 xl:gap-8 justify-items-center"
+          className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:grid-cols-4 xl:gap-6"
         >
           {data?.whoAreWes[0].Counter.map((item, index) => (
             <div
               key={item.id}
-              className="bg-[#3C4CFF] rounded-[20px] p-3 sm:p-8 md:p-10 flex flex-col justify-between w-full max-w-[250px] lg:max-w-[385px] lg:min-h-[320px]! xl:min-h-[389px]! aspect-auto sm:aspect-square text-left"
+              className="bg-[#3C4CFF] rounded-[10px] p-3 sm:p-8 md:p-10 flex flex-col justify-between w-full min-h-[180px] sm:min-h-[220px] md:min-h-[240px] lg:min-h-[320px]! xl:min-h-[389px]! text-left"
             >
-              <span className="text-white font-bold! font-montserrat text-[40px] sm:text-[80px] md:text-[60px] lg:text-[65px]! xl:text-[80px]! 2xl:text-[100px]! leading-none tracking-tighter">
+              <span className="text-white font-bold! font-montserrat text-[40px] sm:text-[80px] lg:text-[65px]! xl:text-[80px]! 2xl:text-[100px]! leading-none tracking-tighter">
                 {`${item.NumberCount}${counterSuffixes[index] || ""}`}
               </span>
 
-              <p className="text-white text-[12px] md:text-[16px] lg:text-[20px]! xl:text-[24px]! 2xl:text-[30px]! font-normal leading-tight mt-4 sm:mt-6">
+              <p className="text-white text-[12px] md:text-[18px] lg:text-[20px]! xl:text-[24px]! 2xl:text-[30px]! font-normal leading-tight mt-4 sm:mt-6">
                 {item.CounterTitle}
               </p>
             </div>
