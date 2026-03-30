@@ -310,18 +310,18 @@ void main() {
         uniforms.iMouse.value = [x, y];
       }
     };
-    container.addEventListener("pointermove", onPointerMove as EventListener, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
 
     const onVisibilityChange = () => {
       if (document.hidden) {
-        isVisibleRef.current = false;
         if (rafRef.current) {
           cancelAnimationFrame(rafRef.current);
           rafRef.current = null;
         }
         return;
       }
-      if (!document.hidden && rafRef.current === null && isVisibleRef.current) {
+      // Tab became visible again — restart loop if it was stopped and hero is in view
+      if (rafRef.current === null && isVisibleRef.current) {
         rafRef.current = requestAnimationFrame(loop);
       }
     };
@@ -377,7 +377,7 @@ void main() {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      container.removeEventListener("pointermove", onPointerMove as EventListener);
+      window.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("visibilitychange", onVisibilityChange);
       ro.disconnect();
       io.disconnect();
