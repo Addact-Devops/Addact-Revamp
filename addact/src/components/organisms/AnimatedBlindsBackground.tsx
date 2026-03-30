@@ -66,6 +66,7 @@ const AnimatedBlindsBackground: React.FC<GradientBlindsProps> = ({
   const rendererRef = useRef<Renderer | null>(null);
   const mouseTargetRef = useRef<[number, number]>([0, 0]);
   const lastTimeRef = useRef<number>(0);
+  const lastRenderTimeRef = useRef<number>(0);
   const firstResizeRef = useRef<boolean>(true);
   const isVisibleRef = useRef<boolean>(true);
 
@@ -73,8 +74,10 @@ const AnimatedBlindsBackground: React.FC<GradientBlindsProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
+    const requestedDpr = dpr ?? (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1);
+    const cappedDpr = Math.min(requestedDpr, 1.25);
     const renderer = new Renderer({
-      dpr: dpr ?? (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1),
+      dpr: cappedDpr,
       alpha: true,
       antialias: true,
     });
@@ -307,10 +310,25 @@ void main() {
         uniforms.iMouse.value = [x, y];
       }
     };
-    window.addEventListener("pointermove", onPointerMove);
+    container.addEventListener("pointermove", onPointerMove as EventListener, { passive: true });
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        isVisibleRef.current = false;
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        }
+        return;
+      }
+      if (!document.hidden && rafRef.current === null && isVisibleRef.current) {
+        rafRef.current = requestAnimationFrame(loop);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     const loop = (t: number) => {
-      if (!isVisibleRef.current) {
+      if (!isVisibleRef.current || document.hidden) {
         rafRef.current = null;
         return; // RAF stops; IntersectionObserver will restart it when visible
       }
@@ -330,6 +348,12 @@ void main() {
       } else {
         lastTimeRef.current = t;
       }
+      const TARGET_FRAME_MS = 1000 / 24;
+      if (t - lastRenderTimeRef.current < TARGET_FRAME_MS) {
+        return;
+      }
+      lastRenderTimeRef.current = t;
+
       if (!paused && programRef.current && meshRef.current) {
         try {
           renderer.render({ scene: meshRef.current });
@@ -343,7 +367,7 @@ void main() {
     const io = new IntersectionObserver(
       ([entry]) => {
         isVisibleRef.current = entry.isIntersecting;
-        if (entry.isIntersecting && rafRef.current === null) {
+        if (entry.isIntersecting && !document.hidden && rafRef.current === null) {
           rafRef.current = requestAnimationFrame(loop);
         }
       },
@@ -353,7 +377,8 @@ void main() {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("pointermove", onPointerMove);
+      container.removeEventListener("pointermove", onPointerMove as EventListener);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       ro.disconnect();
       io.disconnect();
       if (canvas.parentElement === container) {
