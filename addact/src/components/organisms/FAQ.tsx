@@ -71,9 +71,7 @@ const FAQ = ({ data }: IProps) => {
                   type="button"
                   className="w-full flex items-start text-left transition-colors duration-200"
                 >
-                  <span
-                    className={`font-montserrat text-base md:text-2xl font-semibold leading-normal lg:leading-none! text-[#0F0F0F] group-hover:text-white transition-colors duration-200 ${isOpen ? "pb-5 lg:pb-7.5" : ""}`}
-                  >
+                  <span className="font-montserrat text-base md:text-2xl font-semibold leading-normal lg:leading-none! text-[#0F0F0F] group-hover:text-white transition-colors duration-200">
                     {faq.Title}
                   </span>
 
@@ -87,13 +85,18 @@ const FAQ = ({ data }: IProps) => {
                 </button>
 
                 <div
-                  className={`overflow-hidden transition-[max-height] duration-500 ease-in-out`}
-                  style={{
-                    maxHeight: isOpen ? "500px" : "0px",
-                  }}
+                  className={`grid overflow-hidden transition-[grid-template-rows,opacity] duration-500 ease-in-out ${
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  }`}
                 >
-                  <div className="text-base md:text-xl font-normal font-montserrat leading-[34px] text-[#0F0F0F] group-hover:text-white transition-colors duration-200 max-w-[1085px] w-full">
-                    <RichText html={String(faq.Description)} />
+                  <div
+                    className={`min-h-0 transition-[padding] duration-500 ease-in-out ${
+                      isOpen ? "pt-5 lg:pt-7.5" : "pt-0"
+                    }`}
+                  >
+                    <div className="text-base md:text-xl font-normal font-montserrat leading-[34px] text-[#0F0F0F] group-hover:text-white transition-colors duration-200 max-w-[1085px] w-full">
+                      <RichText html={String(faq.Description)} />
+                    </div>
                   </div>
                 </div>
               </div>
