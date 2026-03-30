@@ -189,7 +189,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
   return (
     <section
       ref={sectionRef}
-      className="overflow-x-hidden bg-[#0F0F0F] py-12 md:py-16 lg:py-20 2xl:py-[80px]"
+      className="overflow-x-hidden bg-[#0F0F0F] py-10 md:py-16 lg:py-20 2xl:py-[80px]"
     >
       <div className="container-main">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-4 2xl:gap-6 items-center">
@@ -244,7 +244,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
           <div className="w-full lg:min-w-0 lg:flex-1">
             {/* Heading */}
             {aiData.title && (
-              <h2 className="text-[25px]! md:text-[44px] lg:text-[52px]! 2xl:text-[60px]! !font-semibold text-white leading-[1.2] md:leading-[1.3] 2xl:leading-[85px] mb-6 md:mb-8 lg:mb-10 2xl:mb-[50px]">
+              <h2 className="text-[25px]! md:text-[44px] lg:text-[52px]! 2xl:text-[60px]! !font-semibold text-white leading-[1.2] md:leading-[1.3] 2xl:leading-[85px] mb-10 2xl:mb-[50px]">
                 {aiData.title.split(" ").slice(0, 2).join(" ")}
                 <br className="block" />
                 {aiData.title.split(" ").slice(2).join(" ")}
@@ -304,7 +304,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
 
             {/* Description */}
             {aiData.description && (
-              <p className="text-white text-[16px] md:text-[18px] lg:text-[20px]! 2xl:text-[24px]! leading-[1.6] md:leading-[1.7] 2xl:leading-[44px] mb-10 md:mb-12 lg:mb-14 2xl:mb-[70px] max-w-[788px]">
+              <p className="text-white text-[16px] md:text-[18px] lg:text-[20px]! 2xl:text-[24px]! leading-[1.6] md:leading-[1.7] 2xl:leading-[44px] mb-5 md:mb-12 lg:mb-14 2xl:mb-[70px] max-w-[788px]">
                 {aiData.description}
               </p>
             )}
