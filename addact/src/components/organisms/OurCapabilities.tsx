@@ -65,7 +65,9 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
     <section className="-mt-0.5 bg-white pb-6 md:pb-0">
       <div className="container-main">
         {/* Mobile heading */}
-        {heading && <h2 className="!pb-5 !text-[28px] !text-[#0F0F0F] md:hidden">{heading}</h2>}
+        {heading && (
+          <h2 className="!pb-5 !text-[28px] !text-[#0F0F0F] md:hidden font-semibold!">{heading}</h2>
+        )}
 
         {/* Desktop / Tablet layout */}
         <div className="hidden md:flex gap-2 lg:gap-4 2xl:gap-6">
@@ -183,7 +185,10 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
             const isActive = activeIndex === index;
 
             return (
-              <div key={item?.link?.id} className="border-t border-[#D9D9D9] last:border-b-0">
+              <div
+                key={item?.link?.id}
+                className="border-y border-[#D9D9D9] first:border-t-0 last:border-b-0"
+              >
                 {isActive && item?.image?.url && (
                   <div className="relative mb-5 mt-5 aspect-[247/200] w-full overflow-hidden rounded-tl-[72px]">
                     <Image
@@ -263,7 +268,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        className="inline-flex items-center gap-3 rounded-[6px] border border-[#3C4CFF] px-5 py-3 text-[18px] font-semibold leading-none text-[#3C4CFF] transition-colors duration-300 hover:bg-[#3C4CFF] hover:text-white"
+                        className="inline-flex items-center gap-3 rounded-[6px] border border-[#3C4CFF] px-4 py-2 text-[16px] font-semibold leading-none text-[#3C4CFF] transition-colors duration-300 hover:bg-[#3C4CFF] hover:text-white"
                       >
                         {item.link.label || "Learn More"}
                         <svg
