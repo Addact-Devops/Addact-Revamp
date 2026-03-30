@@ -48,7 +48,7 @@ const OurTechStack = ({ data }: OurTechStackProps) => {
         </div>
 
         <div className="mt-10 border-b border-[#D7D7D7] md:mt-14">
-          <div className="flex gap-6 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:justify-center md:gap-8 xl:gap-10">
+          <div className="flex justify-start gap-6 overflow-x-auto px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:gap-8 xl:justify-center xl:gap-10">
             {tabs.map((tab, index) => {
               const isActive = index === activeTabIndex;
 
