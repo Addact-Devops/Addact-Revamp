@@ -62,7 +62,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
   }
 
   return (
-    <section className="-mt-0.5 bg-white">
+    <section className="-mt-0.5 bg-white pb-6 md:pb-0">
       <div className="container-main">
         {/* Mobile heading */}
         {heading && <h2 className="!pb-5 !text-[28px] !text-[#0F0F0F] md:hidden">{heading}</h2>}
@@ -183,7 +183,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
             const isActive = activeIndex === index;
 
             return (
-              <div key={item?.link?.id} className="border-t border-[#D9D9D9] last:border-b">
+              <div key={item?.link?.id} className="border-t border-[#D9D9D9] last:border-b-0">
                 {isActive && item?.image?.url && (
                   <div className="relative mb-5 mt-5 aspect-[247/200] w-full overflow-hidden rounded-tl-[72px]">
                     <Image
