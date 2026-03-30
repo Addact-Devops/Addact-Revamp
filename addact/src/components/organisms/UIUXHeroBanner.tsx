@@ -18,6 +18,8 @@ type UIUXBannerData = {
   }[];
 };
 
+const HERO_BLIND_GRADIENT = ["#3c4cff", "#3c4cff"];
+
 const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
   const title = data?.BannerTitle ?? "";
   const description = data?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? "";
@@ -49,7 +51,7 @@ const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
     <section className="relative isolate min-h-[720px] overflow-hidden border-b border-white/30 bg-[#050505] text-white lg:min-h-[920px]">
       <AnimatedBlindsBackground
         className="absolute inset-0 z-30"
-        gradientColors={["#3c4cff", "#3c4cff"]}
+        gradientColors={HERO_BLIND_GRADIENT}
         angle={25}
         blindCount={16}
         blindMinWidth={75}
