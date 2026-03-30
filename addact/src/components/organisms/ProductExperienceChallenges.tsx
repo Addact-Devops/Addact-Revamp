@@ -81,10 +81,20 @@ const ProductExperienceChallenges = ({ data }: { data?: Challenges | null }) => 
       setActiveIndex(newIndex);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    let rafPending = false;
+    const onScroll = () => {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(() => {
+        handleScroll();
+        rafPending = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     handleScroll();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [challengeList.length]);
 
   return (
