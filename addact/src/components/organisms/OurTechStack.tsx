@@ -36,7 +36,7 @@ const OurTechStack = ({ data }: OurTechStackProps) => {
     "Our operations are backed by a robust and versatile tech stack, ensuring seamless functionality and innovation.";
 
   return (
-    <section className="bg-[#F5F5F5] py-[72px] md:py-[88px] xl:py-[110px]">
+    <section className="bg-[#F5F5F5] py-[48px] md:py-[72px] xl:py-[110px]">
       <div className="container-main">
         <div className="max-w-[720px]">
           <h2 className="!text-[32px] !font-semibold !leading-[1.2] text-[#111111] md:!text-[44px] xl:!text-[58px]">
