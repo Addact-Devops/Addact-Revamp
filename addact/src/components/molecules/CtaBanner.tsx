@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { CTA } from "@/graphql/queries/getHomePage";
 import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
 import { RightArrowIcon } from "../atom/icons";
@@ -15,14 +14,7 @@ interface IProps {
 type CSSVars = CSSProperties & Record<`--${string}`, string>;
 
 const CtaBanner = ({ data }: IProps) => {
-  const pathname = usePathname();
-  const isIndustriesPage = pathname?.startsWith("/industries/");
-
   const desktopUrl = data?.CTAImage?.[0]?.Image?.url ?? "";
-  const staticMobileUrl = "https://d3l7d9gtq0bnch.cloudfront.net/cta_bg_mobile_dc22d2edd3.png";
-
-  // On industries/* use static image for mobile, else use desktop image for both
-  const mobileUrl = isIndustriesPage ? staticMobileUrl : desktopUrl;
 
   const cta = data?.CTALink[0];
   const href = cta?.href || "";
@@ -39,7 +31,7 @@ const CtaBanner = ({ data }: IProps) => {
     openContactDrawer();
   };
   const bgVars: CSSVars = {
-    "--cta-bg-mobile": `url(${mobileUrl})`,
+    "--cta-bg-mobile": `url(${desktopUrl})`,
     "--cta-bg-desktop": `url(${desktopUrl})`,
   };
 
