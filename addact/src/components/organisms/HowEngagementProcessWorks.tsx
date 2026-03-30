@@ -84,7 +84,7 @@ const HowEngagementProcessWorks = ({ data }: HowEngagementProcessWorksProps) => 
   }
 
   return (
-    <section className="bg-[#0F0F0F] py-[72px] md:py-[88px] xl:py-[110px]">
+    <section className="bg-[#0F0F0F] py-[48px] md:py-[72px] xl:py-[110px]">
       <div className="container-main">
         <div className="flex justify-between flex-wrap items-center mb-10 md:mb-14 gap-5 mb:gap-0">
           <h2 className="max-w-[660px] !text-[34px] !font-semibold !leading-[1.22] text-white md:!text-[48px] lg:!text-[56px]">

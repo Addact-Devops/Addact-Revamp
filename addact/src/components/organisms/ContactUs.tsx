@@ -360,34 +360,33 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose }: IProps) 
                 autoComplete="off"
                 aria-hidden="true"
               />
-
-              <div className="flex justify-center sm:justify-start overflow-visible">
-                <div
-                  className="recaptcha-wrapper flex flex-col overflow-visible"
-                  style={{ width: 304, minWidth: 304 }}
-                >
-                  <Turnstile
-                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
-                    onSuccess={(token) => {
-                      setCaptchaToken(token);
-                      setCaptchaError(false);
-                    }}
-                    onExpire={() => {
-                      setCaptchaToken(null);
-                    }}
-                    onError={() => {
-                      setCaptchaToken(null);
-                    }}
-                    options={{
-                      size: "normal",
-                    }}
-                  />
-                  {captchaError && !captchaToken && (
-                    <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
-                  )}
+              {isOpen && (
+                <div className="flex justify-center sm:justify-start overflow-visible">
+                  <div className="recaptcha-wrapper flex flex-col overflow-visible w-full max-w-[400px] ">
+                    <Turnstile
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                      onSuccess={(token) => {
+                        setCaptchaToken(token);
+                        setCaptchaError(false);
+                      }}
+                      onExpire={() => {
+                        setCaptchaToken(null);
+                      }}
+                      onError={() => {
+                        setCaptchaToken(null);
+                      }}
+                      options={{
+                        theme: "auto",
+                        size: "flexible",
+                        language: "en",
+                      }}
+                    />
+                    {captchaError && !captchaToken && (
+                      <p className="mt-1 text-sm text-red-500">Please complete the captcha.</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-
+              )}
               <button
                 type="submit"
                 disabled={formLoading}
@@ -554,7 +553,9 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose }: IProps) 
                         setCaptchaToken(null);
                       }}
                       options={{
-                        size: "normal",
+                        theme: "dark",
+                        size: "flexible",
+                        language: "en",
                       }}
                     />
                     {captchaError && !captchaToken && (

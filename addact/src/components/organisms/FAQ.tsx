@@ -72,8 +72,7 @@ const FAQ = ({ data }: IProps) => {
                   className="w-full flex items-start text-left transition-colors duration-200"
                 >
                   <span
-                    className={`font-montserrat text-lg md:text-2xl font-semibold leading-none text-[#0F0F0F] group-hover:text-white transition-colors duration-200 ${isOpen ? "pb-5 lg:pb-7.5" : ""}`}
-                    style={{ lineHeight: "100%" }}
+                    className={`font-montserrat text-base md:text-2xl font-semibold leading-normal lg:leading-none! text-[#0F0F0F] group-hover:text-white transition-colors duration-200 ${isOpen ? "pb-5 lg:pb-7.5" : ""}`}
                   >
                     {faq.Title}
                   </span>
