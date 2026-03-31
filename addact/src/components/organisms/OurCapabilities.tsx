@@ -62,7 +62,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
   }
 
   return (
-    <section className="-mt-0.5 bg-white pb-6 md:pb-0">
+    <section className="-mt-0.5 bg-white pb-6 md:pb-0 overflow-x-hidden">
       <div className="container-main">
         {/* Mobile heading */}
         {heading && (
@@ -72,7 +72,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
         {/* Desktop / Tablet layout */}
         <div className="hidden lg:flex gap-2 lg:gap-4 2xl:gap-6">
           {/* Left side — Heading + Tabs */}
-          <div className="w-full md:w-[55%] lg:w-[50%] max-w-[1059px]">
+          <div className="w-full md:w-[55%] lg:w-[60%] max-w-[1059px]">
             {heading && (
               <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !text-[#0F0F0F]">
                 {heading}
@@ -155,8 +155,8 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
           </div>
 
           {/* Right side — Image */}
-          <div className="w-full md:w-[45%] lg:w-[50%] flex justify-end items-end">
-            <div className="relative w-full h-[520px] lg:h-[620px] xl:h-[700px] 2xl:h-[820px] overflow-hidden rounded-tl-[240px]">
+          <div className="w-full md:w-[45%] lg:flex-1 lg:min-w-0 lg:mr-[calc(50%-50vw)] flex justify-end items-end">
+            <div className="relative w-full max-w-[677px] h-[520px] lg:h-[620px] xl:h-[700px] 2xl:h-[820px] overflow-hidden rounded-tl-[240px]">
               {capabilities?.map((item, index) => (
                 <div
                   key={item?.link?.id}
