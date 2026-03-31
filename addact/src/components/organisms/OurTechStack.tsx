@@ -75,7 +75,7 @@ const OurTechStack = ({ data }: OurTechStackProps) => {
           {activeTab?.tabContent?.map((item, index) => (
             <article
               key={index}
-              className="flex h-[164px] w-[156px] flex-col items-center justify-center rounded-[10px] border border-[#D7D7D7] bg-white px-4 py-5 sm:w-[170px] lg:w-[182px] xl:w-[194px]"
+              className="flex h-[164px] w-[145px] flex-col items-center justify-center rounded-[10px] border border-[#D7D7D7] bg-white px-4 py-5 sm:w-[170px] lg:w-[182px] xl:w-[194px]"
             >
               <Image
                 src={item?.logo?.url ?? createIconDataUrl()}
