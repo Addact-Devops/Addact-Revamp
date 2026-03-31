@@ -78,7 +78,7 @@ const HomeBanner = ({ data }: HomeBannerProps) => {
             </span>
 
             {/* Rotating line with underline */}
-            <span className="mt-1 block h-[45px] overflow-hidden md:mt-2 md:h-[80px] lg:h-[96px] xl:h-[105px] 2xl:h-[125px] relative">
+            <span className="mt-1 block h-[60px] overflow-hidden md:mt-2 md:h-[80px] lg:h-[96px] xl:h-[105px] 2xl:h-[125px] relative">
               <span
                 className={`block text-[25px] leading-[1.1] md:text-[55px] lg:text-[70px]! 2xl:text-[75px] roller-text ${
                   animState === "exit"
