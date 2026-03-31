@@ -211,6 +211,7 @@ function DropdownContent({
   // ── Layout B: Flat grid (Industry/Resources/Company) ──
   const showCard = (item.isCardShow && item.card) || (isLastItem && !!additionalText);
 
+  console.log("isLastItem && additionalText", isLastItem, "additionalText", additionalText);
   return (
     <div className="flex flex-col w-full min-h-[336px]">
       <div className="flex w-full items-stretch flex-1 gap-5">
@@ -255,44 +256,56 @@ function DropdownContent({
         </div>
 
         {showCard && (
-          <div
-            className="w-[474px] min-w-[474px] max-w-[474px] shrink-0 relative overflow-hidden flex flex-col justify-center"
-            style={{ background: "#0F0F0F" }}
-          >
-            {isLastItem && additionalText ? (
-              <div className="relative z-10 text-right font-montserrat pt-[30px]">
-                <div className="flex flex-col items-end">
-                  {(() => {
-                    const words = additionalText.split(" ");
-                    if (words.length > 2) {
-                      const firstPart = words.slice(0, words.length - 1).join(" ");
-                      const secondPart = words[words.length - 1];
-                      return [firstPart, secondPart].map((line, index) => (
+          <>
+            {isLastItem && additionalText && (
+              <div
+                className="w-[474px] min-w-[474px] max-w-[474px] shrink-0 relative overflow-hidden flex flex-col"
+                style={{ background: "#0F0F0F" }}
+              >
+                <div className="relative z-10 text-right font-montserrat pt-[30px]">
+                  <div className="flex flex-col items-end">
+                    {(() => {
+                      const words = additionalText.split(" ");
+                      if (words.length > 2) {
+                        const firstPart = words.slice(0, words.length - 1).join(" ");
+                        const secondPart = words[words.length - 1];
+                        return [firstPart, secondPart].map((line, index) => (
+                          <span
+                            key={index}
+                            className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-wide"
+                          >
+                            {line}
+                          </span>
+                        ));
+                      }
+                      return words.map((word, index) => (
                         <span
                           key={index}
-                          className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter"
+                          className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-wide"
                         >
-                          {line}
+                          {word}
                         </span>
                       ));
-                    }
-                    return words.map((word, index) => (
-                      <span
-                        key={index}
-                        className="text-[72px] xl:text-[80px] font-bold leading-[0.85] text-white opacity-20 uppercase tracking-tighter"
-                      >
-                        {word}
-                      </span>
-                    ));
-                  })()}
+                    })()}
+                  </div>
                 </div>
               </div>
-            ) : (
-              <div className="pr-7.5">
-                {item.card && <FeaturedCard card={item.card} className="w-full" />}
+            )}
+          </>
+        )}
+        {showCard && (
+          <>
+            {!isLastItem && (
+              <div
+                className="w-[474px] min-w-[474px] max-w-[474px] shrink-0 relative overflow-hidden flex flex-col justify-center"
+                style={{ background: "#0F0F0F" }}
+              >
+                <div className="pr-7.5">
+                  {item.card && <FeaturedCard card={item.card} className="w-full" />}
+                </div>
               </div>
             )}
-          </div>
+          </>
         )}
       </div>
 
