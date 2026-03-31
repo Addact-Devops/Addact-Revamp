@@ -10,16 +10,7 @@ interface IProps {
 }
 
 const FAQ = ({ data }: IProps) => {
-  const [openIndexes, setOpenIndexes] = useState<number[] | null>(null);
-
-  useEffect(() => {
-    const stored = typeof window !== "undefined" && sessionStorage.getItem("faq-open");
-    if (stored) {
-      setOpenIndexes(JSON.parse(stored));
-    } else {
-      setOpenIndexes([0]); // default open first one
-    }
-  }, []);
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   useEffect(() => {
     if (openIndexes !== null) {
@@ -35,7 +26,6 @@ const FAQ = ({ data }: IProps) => {
   };
 
   if (!data || !Array.isArray(data.FAQ) || data.FAQ.length === 0) return null;
-  if (openIndexes === null) return null;
 
   return (
     <section className="py-5 md:py-10 2xl:py-[80px] bg-white">
