@@ -66,11 +66,11 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
       <div className="container-main">
         {/* Mobile heading */}
         {heading && (
-          <h2 className="!pb-5 !text-[28px] !text-[#0F0F0F] md:hidden font-semibold!">{heading}</h2>
+          <h2 className="!pb-5 !text-[28px] !text-[#0F0F0F] lg:hidden font-semibold!">{heading}</h2>
         )}
 
         {/* Desktop / Tablet layout */}
-        <div className="hidden md:flex gap-2 lg:gap-4 2xl:gap-6">
+        <div className="hidden lg:flex gap-2 lg:gap-4 2xl:gap-6">
           {/* Left side — Heading + Tabs */}
           <div className="w-full md:w-[55%] lg:w-[50%] max-w-[1059px]">
             {heading && (
@@ -155,8 +155,8 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
           </div>
 
           {/* Right side — Image */}
-          <div className="w-full md:w-[45%] lg:w-[50%] flex items-start">
-            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-tl-[240px]">
+          <div className="w-full md:w-[45%] lg:w-[50%] flex justify-end items-end">
+            <div className="relative w-full h-[520px] lg:h-[620px] xl:h-[700px] 2xl:h-[820px] overflow-hidden rounded-tl-[240px]">
               {capabilities?.map((item, index) => (
                 <div
                   key={item?.link?.id}
@@ -180,7 +180,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
         </div>
 
         {/* Mobile layout — Accordion */}
-        <div className="mt-4 block md:hidden">
+        <div className="mt-4 block lg:hidden">
           {capabilities?.map((item, index) => {
             const isActive = activeIndex === index;
 
