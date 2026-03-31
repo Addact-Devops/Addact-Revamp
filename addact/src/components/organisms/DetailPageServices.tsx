@@ -478,7 +478,7 @@ const DetailPageServices = ({
           return (
             <section
               key={`${section.id ?? `section-${sectionIndex}`}-${sectionIndex}`}
-              className="bg-[#F5F5F5] py-[72px] md:py-[88px] xl:py-[110px]"
+              className="bg-[#F5F5F5] py-[48px] md:py-[72px] xl:py-[110px]"
             >
               <div className="container-main">
                 {/* UPDATED: added mobile arrow buttons beside title */}

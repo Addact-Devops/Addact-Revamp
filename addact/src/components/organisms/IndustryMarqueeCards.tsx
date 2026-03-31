@@ -99,9 +99,11 @@ export default function IndustryMarqueeCards({
   title = "Solving Complex Industry Challenges",
   cards = defaultCards,
 }: IndustryMarqueeCardsProps) {
+  const sectionRef = useRef<HTMLElement | null>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const animationRef = useRef<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const [isSectionInView, setIsSectionInView] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -117,10 +119,26 @@ export default function IndustryMarqueeCards({
 
   const SCROLL_SPEED = 0.8; // pixels per frame, adjust for desired speed
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsSectionInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   // Handle continuous marquee animation
   useEffect(() => {
     const marquee = marqueeRef.current;
-    if (!marquee) return;
+    if (!marquee || !isSectionInView) return;
 
     const animate = () => {
       if (!isPaused && !isDragging) {
@@ -140,7 +158,7 @@ export default function IndustryMarqueeCards({
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isPaused, isDragging]);
+  }, [isPaused, isDragging, isSectionInView]);
 
   // --- ADDED: detect mobile on mount ---
   useEffect(() => {
@@ -151,6 +169,14 @@ export default function IndustryMarqueeCards({
     const mql = window.matchMedia("(max-width: 1023px)");
     mql.addEventListener("change", handler);
     return () => mql.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (momentumAnimRef.current) {
+        cancelAnimationFrame(momentumAnimRef.current);
+      }
+    };
   }, []);
 
   const dynamicCards: IndustryCard[] =
@@ -267,7 +293,10 @@ export default function IndustryMarqueeCards({
 
   return (
     <>
-      <section className="relative w-full bg-[#0f0f0f] py-12.5 md:py-20 overflow-hidden">
+      <section
+        ref={sectionRef}
+        className="relative w-full bg-[#0f0f0f] py-12.5 md:py-20 overflow-hidden"
+      >
         <div className="container-main">
           <h2 className="text-[32px] md:text-[44px] lg:text-[60px] font-semibold! leading-[1.4] text-white mb-12.5 md:mb-20 max-w-169.25">
             {displayTitle}
@@ -301,7 +330,7 @@ export default function IndustryMarqueeCards({
               duplicatedCards?.map((card, index) => (
                 <Link key={`${card.id}-${index}`} href={card.slug} className="no-underline">
                   <div
-                    className="industry-marquee-card group relative w-[82vw] max-w-[320px] overflow-hidden rounded-[10px] border border-white/20 bg-neutral-700/30 backdrop-blur-[30px] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] shrink-0 cursor-pointer select-none aspect-[517/619] md:w-[360px] md:max-w-none xl:w-[517px]!"
+                    className="industry-marquee-card group relative w-[78vw] max-w-[300px] overflow-hidden rounded-[10px] border border-white/20 bg-neutral-700/30 backdrop-blur-[30px] transition-all duration-300 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)] shrink-0 cursor-pointer select-none aspect-[517/619] md:w-[330px] md:max-w-none"
                     draggable={false}
                   >
                     <div className="relative w-full h-full overflow-hidden">
@@ -322,19 +351,19 @@ export default function IndustryMarqueeCards({
                       />
                     </div>
 
-                    <div className="absolute bottom-0 left-0 right-0 h-[180px] md:h-[220px] lg:h-[240px]! xl:h-[271px]! max-md:h-[220px] backdrop-blur-[30px] bg-[rgba(69,69,69,0.3)] border-t border-white/20 rounded-b-[10px] p-7.5 md:p-6.25 max-md:p-5 flex flex-col justify-start">
-                      <div className="w-full h-full flex flex-col gap-5 max-md:gap-3.75">
-                        <div className="flex items-center gap-4 shrink-0">
-                          <p className="text-white md:text-2xl lg:text-xl!  xl:text-3xl! font-semibold font-['Montserrat'] leading-tight md:leading-snug lg:leading-[18.5px] m-0 whitespace-nowrap transition-colors duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 h-[170px] md:h-[200px] lg:h-[215px]! xl:h-[240px]! max-md:h-[200px] backdrop-blur-[30px] bg-[rgba(69,69,69,0.3)] border-t border-white/20 rounded-b-[10px] p-5 md:p-5.5 max-md:p-4.5 flex flex-col justify-start">
+                      <div className="w-full h-full flex flex-col gap-4 max-md:gap-3">
+                        <div className="flex items-center gap-3 shrink-0">
+                          <p className="text-white text-[20px] md:text-[22px] lg:text-[20px]! xl:text-[26px]! font-semibold font-['Montserrat'] leading-[1.2] md:leading-[1.3] m-0 whitespace-nowrap transition-colors duration-300">
                             {card.title}
                           </p>
 
-                          <div className="w-10 h-10 max-md:w-8 max-md:h-8 shrink-0">
+                          <div className="w-8 h-8 md:w-9 md:h-9 max-md:w-7 max-md:h-7 shrink-0">
                             <ArrowIcon />
                           </div>
                         </div>
 
-                        <div className="font-['Montserrat'] font-normal text-base lg:text-base! xl:text-2xl! leading-5 md:leading-7 lg:leading-8 xl:leading-11 tracking-normal text-white m-0 md:line-clamp-none">
+                        <div className="font-['Montserrat'] font-normal [&_p]:text-[14px] md:[&_p]:text-[15px] lg:[&_p]:text-[15px]! xl:[&_p]:text-[20px]! leading-5 md:[&_p]:leading-6 lg:[&_p]:leading-6! 2xl:[&_p]:leading-8! tracking-normal text-white m-0 md:line-clamp-none">
                           {card.description ? <RichText html={card.description} /> : null}
                         </div>
                       </div>
@@ -366,10 +395,17 @@ export default function IndustryMarqueeCards({
           }
         }
 
-        @media (min-width: 1400px) and (max-width: 1699px) {
+        @media (min-width: 1024px) and (max-width: 1279px) {
           .industry-marquee-card {
-            width: calc((100vw - 60px) / 3.5);
-            max-width: none;
+            width: calc((100vw - 80px) / 2.8) !important;
+            max-width: none !important;
+          }
+        }
+
+        @media (min-width: 1280px) {
+          .industry-marquee-card {
+            width: calc((100vw - 60px) / 3.5) !important;
+            max-width: none !important;
           }
         }
 

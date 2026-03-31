@@ -75,10 +75,8 @@ const IntroSplash = ({
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const previousOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
+    document.body.classList.add("intro-scroll-lock");
+    document.documentElement.classList.add("intro-scroll-lock");
 
     const syncViewport = () => {
       const width = window.innerWidth;
@@ -89,16 +87,19 @@ const IntroSplash = ({
     syncViewport();
 
     const handleWheel = (event: WheelEvent) => {
+      if (document.body.classList.contains("menu-scroll-lock")) return;
       if (event.deltaY <= 10) return;
       event.preventDefault();
       goToNextPhase();
     };
 
     const handleTouchStart = (event: TouchEvent) => {
+      if (document.body.classList.contains("menu-scroll-lock")) return;
       touchStartYRef.current = event.touches[0]?.clientY ?? null;
     };
 
     const handleTouchEnd = (event: TouchEvent) => {
+      if (document.body.classList.contains("menu-scroll-lock")) return;
       if (touchStartYRef.current === null) return;
       const endY = event.changedTouches[0]?.clientY ?? touchStartYRef.current;
       const delta = touchStartYRef.current - endY;
@@ -116,8 +117,8 @@ const IntroSplash = ({
     window.addEventListener("orientationchange", syncViewport);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
-      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.classList.remove("intro-scroll-lock");
+      document.documentElement.classList.remove("intro-scroll-lock");
 
       if (completionTimeoutRef.current) {
         window.clearTimeout(completionTimeoutRef.current);

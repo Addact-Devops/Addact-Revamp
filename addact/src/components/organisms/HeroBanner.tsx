@@ -74,7 +74,7 @@ const HeroBanner = ({
           alt={title || "Hero Image"}
           fill
           className="object-cover object-center z-0"
-          priority
+          fetchPriority="high"
         />
       ) : null}
 

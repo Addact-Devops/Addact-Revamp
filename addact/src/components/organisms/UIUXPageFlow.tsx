@@ -1,11 +1,7 @@
 import type { PageData } from "@/app/development-design/[...slug]/SiteDetailClient";
 import React from "react";
+import dynamic from "next/dynamic";
 import UIUXHeroBanner from "./UIUXHeroBanner";
-import UIUXWhyImportant from "./UIUXWhyImportant";
-import UIUXImpactSlider from "./UIUXImpactSlider";
-import DesignProcess from "./DesignProcess";
-import ProductExperienceChallenges from "./ProductExperienceChallenges";
-import DesignOurWork from "./DesignOurWork";
 import ClientTestimonials from "./ClientTestimonials";
 import OurInsights from "./OurInsights";
 import CtaBanner from "../molecules/CtaBanner";
@@ -13,6 +9,15 @@ import IndustryMarqueeCards from "./IndustryMarqueeCards";
 import DetailPageServices from "./DetailPageServices";
 import OurTechStack from "./OurTechStack";
 import WhyWorkWithUs from "./WhyWorkWithUs";
+
+// Heavy below-fold components — lazy-loaded to keep initial main-thread work low
+const UIUXWhyImportant = dynamic(() => import("./UIUXWhyImportant"), { ssr: false });
+const UIUXImpactSlider = dynamic(() => import("./UIUXImpactSlider"), { ssr: false });
+const DesignProcess = dynamic(() => import("./DesignProcess"), { ssr: false });
+const ProductExperienceChallenges = dynamic(() => import("./ProductExperienceChallenges"), {
+  ssr: false,
+});
+const DesignOurWork = dynamic(() => import("./DesignOurWork"), { ssr: false });
 
 const UIUXPageFlow = ({ data }: { data: PageData }) => {
   const bannerData = data?.Banner?.Banner?.[0] ?? null;

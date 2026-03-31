@@ -66,14 +66,18 @@ const AnimatedBlindsBackground: React.FC<GradientBlindsProps> = ({
   const rendererRef = useRef<Renderer | null>(null);
   const mouseTargetRef = useRef<[number, number]>([0, 0]);
   const lastTimeRef = useRef<number>(0);
+  const lastRenderTimeRef = useRef<number>(0);
   const firstResizeRef = useRef<boolean>(true);
+  const isVisibleRef = useRef<boolean>(true);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
+    const requestedDpr = dpr ?? (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1);
+    const cappedDpr = Math.min(requestedDpr, 1.25);
     const renderer = new Renderer({
-      dpr: dpr ?? (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1),
+      dpr: cappedDpr,
       alpha: true,
       antialias: true,
     });
@@ -306,9 +310,28 @@ void main() {
         uniforms.iMouse.value = [x, y];
       }
     };
-    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        if (rafRef.current) {
+          cancelAnimationFrame(rafRef.current);
+          rafRef.current = null;
+        }
+        return;
+      }
+      // Tab became visible again — restart loop if it was stopped and hero is in view
+      if (rafRef.current === null && isVisibleRef.current) {
+        rafRef.current = requestAnimationFrame(loop);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     const loop = (t: number) => {
+      if (!isVisibleRef.current || document.hidden) {
+        rafRef.current = null;
+        return; // RAF stops; IntersectionObserver will restart it when visible
+      }
       rafRef.current = requestAnimationFrame(loop);
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
@@ -325,6 +348,12 @@ void main() {
       } else {
         lastTimeRef.current = t;
       }
+      const TARGET_FRAME_MS = 1000 / 24;
+      if (t - lastRenderTimeRef.current < TARGET_FRAME_MS) {
+        return;
+      }
+      lastRenderTimeRef.current = t;
+
       if (!paused && programRef.current && meshRef.current) {
         try {
           renderer.render({ scene: meshRef.current });
@@ -335,10 +364,23 @@ void main() {
     };
     rafRef.current = requestAnimationFrame(loop);
 
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+        if (entry.isIntersecting && !document.hidden && rafRef.current === null) {
+          rafRef.current = requestAnimationFrame(loop);
+        }
+      },
+      { threshold: 0, rootMargin: "200px" },
+    );
+    io.observe(container);
+
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       ro.disconnect();
+      io.disconnect();
       if (canvas.parentElement === container) {
         container.removeChild(canvas);
       }

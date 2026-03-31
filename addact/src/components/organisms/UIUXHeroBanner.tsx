@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import AnimatedBlindsBackground from "./AnimatedBlindsBackground";
@@ -18,7 +20,31 @@ type UIUXBannerData = {
   }[];
 };
 
+const HERO_BLIND_GRADIENT = ["#3c4cff", "#3c4cff"];
+
 const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
+  const [showWebGL, setShowWebGL] = useState(false);
+
+  useEffect(() => {
+    // Skip WebGL on reduced-motion or save-data preferences
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const saveData =
+      (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData ===
+      true;
+    if (prefersReducedMotion || saveData) return;
+
+    // Mount WebGL background after browser is idle (post-LCP)
+    const schedule =
+      typeof requestIdleCallback !== "undefined"
+        ? (cb: () => void) => requestIdleCallback(cb, { timeout: 2000 })
+        : (cb: () => void) => setTimeout(cb, 300);
+
+    const id = schedule(() => setShowWebGL(true));
+    return () => {
+      if (typeof requestIdleCallback !== "undefined") cancelIdleCallback(id as number);
+      else clearTimeout(id as ReturnType<typeof setTimeout>);
+    };
+  }, []);
   const title = data?.BannerTitle ?? "";
   const description = data?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? "";
   const buttonLabel = data?.BannerLink?.label ?? "Start a Project";
@@ -47,16 +73,18 @@ const UIUXHeroBanner = ({ data }: { data: UIUXBannerData | null }) => {
   const secondLine = parts[1] ? parts[1] + "." : "";
   return (
     <section className="relative isolate min-h-[720px] overflow-hidden border-b border-white/30 bg-[#050505] text-white lg:min-h-[920px]">
-      <AnimatedBlindsBackground
-        className="absolute inset-0 z-30"
-        gradientColors={["#3c4cff", "#3c4cff"]}
-        angle={25}
-        blindCount={16}
-        blindMinWidth={75}
-        mouseDampening={0.2}
-        spotlightRadius={0.4}
-        noise={0.05}
-      />
+      {showWebGL && (
+        <AnimatedBlindsBackground
+          className="absolute inset-0 z-30"
+          gradientColors={HERO_BLIND_GRADIENT}
+          angle={25}
+          blindCount={16}
+          blindMinWidth={75}
+          mouseDampening={0.2}
+          spotlightRadius={0.4}
+          noise={0.05}
+        />
+      )}
 
       <div className="relative z-20 mx-auto flex min-h-[720px] w-full  flex-col items-center justify-center px-4 pb-18 pt-26 text-center sm:px-8 lg:min-h-[920px] lg:px-10 lg:pb-20 lg:pt-30">
         <div className="pointer-events-none flex flex-col items-center">

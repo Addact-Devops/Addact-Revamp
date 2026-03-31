@@ -93,11 +93,6 @@ export default function BenefitsSection({ data }: BenefitsSectionProps) {
 
   return (
     <Fragment>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
-        rel="stylesheet"
-      />
-
       <section className="bg-white w-full box-border px-4 py-10 md:px-10 md:py-14 xl:px-[160px]! xl:py-20!">
         <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[#0f0f0f] m-0 text-[28px] leading-[38px] md:text-[40px] md:leading-[56px] xl:text-[60px]! xl:leading-[85px]! mb-8 lg:mb-[50px]!">
           {data?.title || SECTION_HEADING}
