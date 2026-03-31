@@ -1,10 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation"; // ✅ new import
 import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
-import { RightArrowIcon } from "../atom/icons";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation"; // ✅ new import
 
 type HeroBannerProps = {
   title: string;
@@ -97,37 +96,26 @@ const HeroBanner = ({
             dangerouslySetInnerHTML={{ __html: description }}
           />
 
-          {/* {button?.label && button?.url && (
-                        <div className='mt-[30px] md:mt-10'>
-                            {button.url.includes("#") ? (
-                                <button
-                                    onClick={() => {
-                                        const targetId = button.url.replace("#", "");
-                                        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
-                                    }}
-                                    className='inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-[600] transition text-lg text-[16px] md:text-[15px]'
-                                >
-                                    {button.label}
-                                </button>
-                            ) : (
-                                <Link
-                                    href={button.url}
-                                    className='inline-block bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[10px] py-[10px] rounded-md font-semibold transition text-lg text-[15px]'
-                                >
-                                    {button.label}
-                                </Link>
-                            )}
-                        </div>
-                    )} */}
           {button?.label && button?.url && (
             <div className={`mt-[30px] md:mt-10 ${isTextAlignCenter ? "flex justify-center" : ""}`}>
               {useContactDrawer ? (
                 <button
                   onClick={handleBannerCtaClick}
-                  className="flex gap-5 bg-[#3C4CFF] hover:bg-[#3440CB] text-white px-[20px] py-[17px] rounded-md font-[600] transition md:text-lg text-[15px]"
+                  className="inline-flex items-center gap-3 rounded-[6px] bg-[#3C4CFF] px-6 py-3 text-[16px] font-semibold text-white transition-all duration-300 hover:bg-[#2d3be6] md:px-8 md:py-4 md:text-[20px]"
                 >
                   <span>{button.label}</span>
-                  <RightArrowIcon />
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </button>
               ) : button.url.includes("#") ? (
                 <button
