@@ -405,6 +405,23 @@ const GET_HOME_PAGE = gql`
           }
         }
       }
+
+      whoarewe {
+        Counter {
+          ... on ComponentCounterCounter {
+            CounterTitle
+            NumberCount
+            id
+          }
+        }
+        Title {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Description
+            Title
+          }
+        }
+        pageReference
+      }
     }
   }
 `;
@@ -620,6 +637,18 @@ export interface HomeItems {
   ourCapabilitiy: OurCapabilitiy;
   aiEcoSystem: AIEcoSystem;
   industry?: Industry;
+  whoarewe: {
+    Counter: {
+      CounterTitle: string;
+      NumberCount: number;
+      id: string;
+    }[];
+    Title: {
+      Description: string;
+      Title: string;
+    }[];
+    pageReference: string;
+  };
 }
 
 export interface HomeResponse {
