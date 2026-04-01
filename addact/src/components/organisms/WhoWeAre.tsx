@@ -1,20 +1,35 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import "@/styles/components/whoweare.scss";
-import { getWhoAreWe, WhoAreWeResponse } from "@/graphql/queries/whoAreWe";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const WhoWeAre = () => {
-  const [data, setData] = useState<WhoAreWeResponse>();
+type WhoWeAreData = {
+  Counter: {
+    CounterTitle: string;
+    NumberCount: number;
+    id: string;
+  }[];
+  Title: {
+    Description: string;
+    Title: string;
+  }[];
+  pageReference: string;
+};
+
+interface WhoWeAreProps {
+  data?: WhoWeAreData;
+}
+
+const WhoWeAre = ({ data }: WhoWeAreProps) => {
   const counterSuffixes = useMemo(() => ["%", "+", "", "+"], []);
   const descriptionRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
   const descriptionWords = useMemo(() => {
-    const html = data?.whoAreWes[0]?.Title[0]?.Description ?? "";
+    const html = data?.Title?.[0]?.Description ?? "";
     const plain = html
       .replace(/<[^>]+>/g, " ")
       .replace(/&nbsp;/g, " ")
@@ -23,13 +38,6 @@ const WhoWeAre = () => {
 
     return plain ? plain.split(" ") : [];
   }, [data]);
-
-  useEffect(() => {
-    (async () => {
-      const res = await getWhoAreWe();
-      setData(res);
-    })();
-  }, []);
 
   useEffect(() => {
     if (!descriptionRef.current || descriptionWords.length === 0) return;
@@ -97,7 +105,7 @@ const WhoWeAre = () => {
           ref={cardsRef}
           className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:grid-cols-4 xl:gap-6"
         >
-          {data?.whoAreWes[0].Counter.map((item, index) => (
+          {data?.Counter?.map((item, index) => (
             <div
               key={item.id}
               className="bg-[#3C4CFF] rounded-[4px] lg:rounded-[10px]! p-3 sm:p-8 md:p-10 flex flex-col justify-between w-full min-h-[180px] sm:min-h-[220px] md:min-h-[240px] lg:min-h-[320px]! xl:min-h-[389px]! text-left"
