@@ -17,7 +17,6 @@ import {
   DigitalMarketingService,
   getDigitalMarketingSlug,
 } from "@/graphql/queries/getDigitalMarketingSlug";
-import WhoWeAre from "@/components/organisms/WhoWeAre";
 import DetailPageServices from "@/components/organisms/DetailPageServices";
 import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 import OurTechStack from "@/components/organisms/OurTechStack";
@@ -77,7 +76,6 @@ const SiteDetailClient = ({ data }: { data: DigitalMarketingService }) => {
         isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
-      <WhoWeAre />
       <DetailPageServices data={data?.ourService} />
 
       {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
