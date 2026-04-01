@@ -4,6 +4,7 @@ import { useRef, useState, MouseEvent, useEffect, TouchEvent } from "react";
 import Image from "../atom/image";
 import Link from "next/link";
 import RichText from "../atom/richText";
+import { useCursor } from "@/lib/useCursor";
 
 type IndustryData = {
   industryListTitle?: string | null;
@@ -291,6 +292,8 @@ export default function IndustryMarqueeCards({
     momentumAnimRef.current = requestAnimationFrame(runMomentum);
   };
 
+  const dragCursor = useCursor("drag");
+
   return (
     <>
       <section
@@ -305,10 +308,14 @@ export default function IndustryMarqueeCards({
 
         <div
           className="industry-marquee-scroll relative w-full overflow-x-auto overflow-y-visible py-5 select-none lg:overflow-x-hidden"
-          onMouseEnter={handleMouseEnter}
+          onMouseEnter={() => {
+            handleMouseEnter();
+            dragCursor.onMouseEnter();
+          }}
           onMouseLeave={() => {
             handleMouseUp();
             handleMouseLeave();
+            dragCursor.onMouseLeave();
           }}
           ref={marqueeRef}
           onMouseDown={handleMouseDown}

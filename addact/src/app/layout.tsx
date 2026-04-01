@@ -8,6 +8,7 @@ import { getContactUsData } from "@/graphql/queries/getContactUs";
 import ScrollToTop from "@/components/atom/scrollToTop";
 import LayoutWrapper from "./LayoutWrapper";
 import TidioWrapper from "@/components/organisms/TidioWrapper";
+import CustomCursor from "@/components/atom/Customcursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,6 +71,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${poppins.variable} antialiased`}
       >
+        <CustomCursor />
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-M4B35B8"

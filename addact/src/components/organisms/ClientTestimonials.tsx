@@ -43,7 +43,7 @@ export default function ClientTestimonials() {
   const duplicatedItems = [...data.Item, ...data.Item, ...data.Item];
 
   return (
-    <section className="relative bg-[#FAFAFA] overflow-hidden flex items-center pt-16 lg:py-0">
+    <section className="relative bg-[#F5F5F5] overflow-hidden flex items-center pt-16 lg:py-0">
       <div className="container-main mx-auto px-4 relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative">
           {/* LEFT SIDE */}
