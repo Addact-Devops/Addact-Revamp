@@ -67,7 +67,6 @@ export default function VideoList({ videoList }: VideoListProps) {
                   ? `https://img.youtube.com/vi/${ytId}/hqdefault.jpg` // Fallback (480p)
                   : `https://img.youtube.com/vi/${ytId}/maxresdefault.jpg` // Primary (1080p/720p)
                 : "";
-              console.log("thumbnailUrl", thumbnailUrl);
               return (
                 <div key={index} className="overflow-hidden">
                   <div className="relative w-full h-[200px] md:h-[250px] rounded-xl overflow-hidden group bg-gray-900">

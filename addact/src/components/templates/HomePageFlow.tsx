@@ -48,7 +48,7 @@ const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
       <main className="bg-dark">
         <HomeBanner data={homeData?.animationBanner} />
         {/* <OurPartners /> */}
-        <WhoWeAre />
+        <WhoWeAre data={homeData?.whoarewe} />
         <OurCapabilities data={homeData?.ourCapabilitiy} />
         <BuildingAIEcosystem data={homeData?.aiEcoSystem} />
         <IndustryMarqueeCards data={homeData?.industry} />
