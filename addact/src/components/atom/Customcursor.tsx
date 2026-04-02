@@ -1,12 +1,15 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type CursorVariant = "default" | "drag" | "read";
 
+const CURSOR_DESKTOP_BREAKPOINT = 1024;
+
 export default function CustomCursor() {
   const pathname = usePathname();
+  const [cursorEnabled, setCursorEnabled] = useState(false);
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLDivElement>(null);
@@ -18,10 +21,26 @@ export default function CustomCursor() {
   const isVisible = useRef(false);
 
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent<CursorVariant>("cursor-variant", { detail: "default" }));
-  }, [pathname]);
+    const media = window.matchMedia(`(min-width: ${CURSOR_DESKTOP_BREAKPOINT + 1}px)`);
+    const updateCursorAvailability = () => {
+      setCursorEnabled(media.matches);
+    };
+
+    updateCursorAvailability();
+    media.addEventListener("change", updateCursorAvailability);
+
+    return () => {
+      media.removeEventListener("change", updateCursorAvailability);
+    };
+  }, []);
 
   useEffect(() => {
+    if (!cursorEnabled) return;
+    window.dispatchEvent(new CustomEvent<CursorVariant>("cursor-variant", { detail: "default" }));
+  }, [pathname, cursorEnabled]);
+
+  useEffect(() => {
+    if (!cursorEnabled) return;
     const dot = dotRef.current;
     const ringEl = ringRef.current;
     const label = labelRef.current;
@@ -148,7 +167,11 @@ export default function CustomCursor() {
       document.removeEventListener("mouseenter", onMouseEnter);
       window.removeEventListener("cursor-variant", onVariantChange as EventListener);
     };
-  }, []);
+  }, [cursorEnabled]);
+
+  if (!cursorEnabled) {
+    return null;
+  }
 
   return (
     <>
