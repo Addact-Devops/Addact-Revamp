@@ -324,7 +324,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                   {/* Row 1 — Left to Right */}
                   {aiData.firstLayerlogos && aiData.firstLayerlogos.length > 0 && (
                     <div className="flex overflow-hidden mb-6 md:mb-8 lg:mb-10 2xl:mb-[69px] marquee-mask">
-                      <div className="flex gap-[100px] items-center animate-marquee-ltr group-hover:[animation-play-state:paused] hover:[animation-play-state:paused]">
+                      <div className="flex gap-[50px] md:gap-[100px] items-center animate-marquee-ltr group-hover:[animation-play-state:paused] hover:[animation-play-state:paused]">
                         {[
                           ...aiData.firstLayerlogos,
                           ...aiData.firstLayerlogos,
@@ -340,7 +340,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                           return (
                             <div
                               key={`row1-${index}`}
-                              className="group/logo relative flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center outline-none"
+                              className="group/logo relative flex-shrink-0 w-[31px] h-[31px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center outline-none"
                               tabIndex={tooltipText ? 0 : -1}
                               aria-label={tooltipText || logo.Image.alternativeText || "AI Logo"}
                               onMouseEnter={
@@ -374,7 +374,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                   {/* Row 2 — Right to Left */}
                   {aiData.secondLayerlogos && aiData.secondLayerlogos.length > 0 && (
                     <div className="flex overflow-hidden marquee-mask">
-                      <div className="flex gap-[100px] items-center animate-marquee-rtl group-hover:[animation-play-state:paused] hover:[animation-play-state:paused]">
+                      <div className="flex gap-[50px] md:gap-[100px] items-center animate-marquee-rtl group-hover:[animation-play-state:paused] hover:[animation-play-state:paused]">
                         {[
                           ...aiData.secondLayerlogos,
                           ...aiData.secondLayerlogos,
@@ -390,7 +390,7 @@ const BuildingAIEcosystem = ({ data }: BuildingAIEcosystemProps) => {
                           return (
                             <div
                               key={`row2-${index}`}
-                              className="group/logo relative flex-shrink-0 w-[60px] h-[60px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center outline-none"
+                              className="group/logo relative flex-shrink-0 w-[31px] h-[31px] md:w-[70px] md:h-[70px] lg:w-[75px] lg:h-[75px] 2xl:w-[80px] 2xl:h-[80px] flex items-center justify-center outline-none"
                               tabIndex={tooltipText ? 0 : -1}
                               aria-label={tooltipText || logo.Image.alternativeText || "AI Logo"}
                               onMouseEnter={

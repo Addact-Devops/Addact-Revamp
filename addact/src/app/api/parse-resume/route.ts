@@ -24,7 +24,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const formData = await req.formData();
     const file = formData.get("file");
-
     if (!(file instanceof File)) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
@@ -48,7 +47,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 // ---- Gemini ----
 async function handleGemini(file: File): Promise<ResumeFields> {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const prompt =
     "Extract fullName, email, phone, yearsOfExperience, city, linkedin. Return ONLY valid JSON, no explanations, no markdown.";

@@ -123,7 +123,7 @@ export default async function umbracoPage() {
         videoUrl={bannerData?.videoLink ?? ""}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
-      <WhoWeAre />
+      <WhoWeAre data={data?.whoarewe} />
       <DetailPageServices data={data?.ourService} />
 
       {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}

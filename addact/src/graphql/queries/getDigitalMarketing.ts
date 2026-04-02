@@ -339,6 +339,23 @@ const digitalMarketingQuery = gql`
           }
         }
       }
+
+      whoarewe {
+        Counter {
+          ... on ComponentCounterCounter {
+            CounterTitle
+            NumberCount
+            id
+          }
+        }
+        Title {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Description
+            Title
+          }
+        }
+        pageReference
+      }
     }
   }
 `;
@@ -357,6 +374,18 @@ export interface DigitalMarketingService {
   ourService: OurServiceList[];
   industry: Industry | null;
   ourprocess: OurProcess;
+  whoarewe: {
+    Counter: {
+      CounterTitle: string;
+      NumberCount: number;
+      id: string;
+    }[];
+    Title: {
+      Description: string;
+      Title: string;
+    }[];
+    pageReference: string;
+  };
 }
 
 export interface OurServiceList {
