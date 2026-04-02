@@ -79,6 +79,8 @@ body {
   // Original 1920px design target
   @media (min-width: 1601px) {
     max-width: 1600px;
+    padding-left: 0px;
+    padding-right: 0px;
   }
 
   // 125% scaled laptops (1920 ÷ 1.25 = 1536px effective)
