@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import SlickImageCompare from "slick-image-compare";
 import "./UIUXImpactSlider.css";
 import type { ImpactUx } from "@/graphql/queries/getDevelopmentDesignSlug";
 
 const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
   const sliderRef = useRef<HTMLDivElement | null>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+
   const beforeImageUrl = data?.beforeImage?.url ?? "/figma/before.png";
   const afterImageUrl = data?.afterImage?.url ?? "/figma/after.png";
   const title = data?.title ?? "See The Impact Of Better UX";
@@ -14,12 +16,13 @@ const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
   const afterText = data?.afterText ?? "After UX";
 
   useEffect(() => {
-    if (!sliderRef.current) return;
+    const el = sliderRef.current;
+    if (!el) return;
 
     const instance = new (SlickImageCompare as unknown as new (
       target: Element | string,
       options?: Record<string, unknown>,
-    ) => { destroy?: () => void })(sliderRef.current, {
+    ) => { destroy?: () => void })(el, {
       beforeImage: beforeImageUrl,
       afterImage: afterImageUrl,
       startPos: 50,
@@ -29,10 +32,42 @@ const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
       handleMinDistance: 40,
     });
 
+    const handleStart = () => setIsInteracting(true);
+    const handleEnd = () => setIsInteracting(false);
+
+    // Listen on the circle element directly once slick renders it
+    const attachCircleListeners = () => {
+      const circle = el.querySelector<HTMLElement>(".sic-circle");
+      if (circle) {
+        circle.addEventListener("mousedown", handleStart);
+        circle.addEventListener("touchstart", handleStart, { passive: true });
+      } else {
+        // fallback: listen on the whole slider
+        el.addEventListener("mousedown", handleStart);
+        el.addEventListener("touchstart", handleStart, { passive: true });
+      }
+    };
+
+    // slick-image-compare renders synchronously, so this runs right after init
+    attachCircleListeners();
+
+    window.addEventListener("mouseup", handleEnd);
+    window.addEventListener("touchend", handleEnd);
+
     return () => {
       if (instance && typeof instance.destroy === "function") {
         instance.destroy();
       }
+      const circle = el.querySelector<HTMLElement>(".sic-circle");
+      if (circle) {
+        circle.removeEventListener("mousedown", handleStart);
+        circle.removeEventListener("touchstart", handleStart);
+      } else {
+        el.removeEventListener("mousedown", handleStart);
+        el.removeEventListener("touchstart", handleStart);
+      }
+      window.removeEventListener("mouseup", handleEnd);
+      window.removeEventListener("touchend", handleEnd);
     };
   }, [beforeImageUrl, afterImageUrl]);
 
@@ -58,6 +93,7 @@ const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
 
           <div
             ref={sliderRef}
+            data-interacting={isInteracting ? "true" : "false"}
             className="uiux-impact-slider aspect-[1138/700] w-full overflow-hidden bg-white"
           />
         </div>

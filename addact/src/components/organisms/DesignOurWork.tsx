@@ -7,6 +7,7 @@ import "swiper/css/effect-coverflow";
 import type { OurWork } from "@/graphql/queries/getDevelopmentDesignSlug";
 import Image from "../atom/image";
 import RichText from "../atom/richText";
+import { useCursor } from "@/lib/useCursor";
 
 const projectsData = [
   {
@@ -52,6 +53,7 @@ const projectsData = [
 ];
 
 export default function OurWork({ data }: { data?: OurWork | null }) {
+  const dragCursor = useCursor("drag");
   const dynamicProjects =
     data?.serviceList?.map((item, index) => ({
       id: item.listingContext?.id ?? index + 1,
@@ -74,7 +76,7 @@ export default function OurWork({ data }: { data?: OurWork | null }) {
         </h2>
       </div>
 
-      <div className="relative w-full">
+      <div {...dragCursor} className="relative w-full">
         <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-[15%] bg-gradient-to-r from-[#0f0f0f] to-transparent" />
         <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-[15%] bg-gradient-to-l from-[#0f0f0f] to-transparent" />
 

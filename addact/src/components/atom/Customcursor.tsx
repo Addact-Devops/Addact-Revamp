@@ -38,11 +38,14 @@ export default function CustomCursor() {
       // labelPos.current.y += (my - labelPos.current.y) * 0.1;
       const cx = cursorPos.current.x;
       const cy = cursorPos.current.y;
-      label.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
 
       dot.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
       ringEl.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
       // label.style.transform = `translate(${labelPos.current.x}px, ${labelPos.current.y}px) translate(-50%, -50%)`;
+
+      if (variantRef.current !== "default") {
+        label.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+      }
 
       rafRef.current = requestAnimationFrame(animate);
     };
@@ -57,8 +60,8 @@ export default function CustomCursor() {
       if (variant === "default") {
         // Restore small dot
         dot.style.opacity = "1";
-        dot.style.width = "7px";
-        dot.style.height = "7px";
+        dot.style.width = "8px";
+        dot.style.height = "8px";
         dot.style.backgroundColor = "#4D5DFB";
 
         // Restore ring to normal 50px border style
@@ -70,41 +73,39 @@ export default function CustomCursor() {
 
         // Hide label
         label.style.opacity = "0";
-        label.style.scale = "0.6";
       } else if (variant === "drag") {
-        // Expand dot to 80px filled circle
         dot.style.opacity = "1";
         dot.style.width = "80px";
         dot.style.height = "80px";
         dot.style.backgroundColor = "#4D5DFB";
-
-        // Hide the ring (dot is now the filled circle)
         ringEl.style.opacity = "0";
         ringEl.style.border = "none";
-
-        // Show "Drag" label centered inside the expanded dot
-        label.style.opacity = "1";
-        label.style.scale = "1";
-
-        dragContent.style.display = "flex";
-        readContent.style.display = "none";
+        // ✅ Snap position first, then animate
+        label.style.transition = "none";
+        label.style.transform = `translate(${mouse.current.x}px, ${mouse.current.y}px) translate(-50%, -50%)`;
+        requestAnimationFrame(() => {
+          label.style.transition = "opacity 0.25s ease, scale 0.25s ease";
+          label.style.opacity = "1";
+          readContent.style.display = "none";
+          dragContent.style.display = "flex";
+        });
       } else {
         // read variant — same 80px expand, different label
         dot.style.opacity = "1";
         dot.style.width = "80px";
         dot.style.height = "80px";
         dot.style.backgroundColor = "#4D5DFB";
-
-        // Hide the ring (dot is now the filled circle)
         ringEl.style.opacity = "0";
         ringEl.style.border = "none";
-
-        // Show "Read" label centered inside the expanded dot
-        label.style.opacity = "1";
-        label.style.scale = "1";
-
-        dragContent.style.display = "none";
-        readContent.style.display = "flex";
+        // ✅ Snap position first, then animate
+        label.style.transition = "none";
+        label.style.transform = `translate(${mouse.current.x}px, ${mouse.current.y}px) translate(-50%, -50%)`;
+        requestAnimationFrame(() => {
+          label.style.transition = "opacity 0.25s ease, scale 0.25s ease";
+          label.style.opacity = "1";
+          dragContent.style.display = "none";
+          readContent.style.display = "flex";
+        });
       }
     };
 
@@ -157,8 +158,8 @@ export default function CustomCursor() {
         aria-hidden="true"
         className="fixed top-0 left-0 z-[99999] pointer-events-none rounded-full bg-[#4D5DFB] opacity-0"
         style={{
-          width: "7px",
-          height: "7px",
+          width: "8px",
+          height: "8px",
           willChange: "transform, width, height",
           transition:
             "opacity 0.2s ease, width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)",
@@ -186,7 +187,7 @@ export default function CustomCursor() {
         className="fixed top-0 left-0 z-[100000] pointer-events-none opacity-0"
         style={{
           willChange: "transform",
-          transition: "opacity 0.25s ease, scale 0.25s ease",
+          transition: "opacity 0.25s ease",
         }}
       >
         {/* Drag label */}
