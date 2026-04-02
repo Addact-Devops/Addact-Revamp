@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import RichText from "../atom/richText";
+import { useCursor } from "@/lib/useCursor";
 
 export interface BlogBanner {
   PublishDate?: string;
@@ -189,11 +190,13 @@ function mapCaseStudyToCard(cs: CaseStudy): InsightCardData {
 }
 
 function InsightCard({ item }: InsightCardProps) {
+  const readCursor = useCursor("read");
   return (
     <Link
       href={item.link}
       target="_self"
       className="flex-1 min-w-[250px] max-w-full md:max-w-[calc(33.333%-14px)]"
+      {...readCursor}
     >
       <div className="border border-[#c5c5c5] rounded-[10px] flex flex-col h-full overflow-hidden">
         <div className="w-full aspect-[520/321] overflow-hidden">
