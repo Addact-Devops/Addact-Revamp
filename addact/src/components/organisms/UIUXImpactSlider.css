@@ -70,6 +70,38 @@
   transition: stroke 0.2s ease !important;
 }
 
+@media (max-width: 500px) {
+  .sic-main .sic-circle {
+    width: 50px !important;
+    height: 50px !important;
+    margin-left: -24px !important;
+  }
+
+  .sic-main .sic-circle::before {
+    font-size: 7px !important;
+  }
+
+  .sic-main .sic-arrow-1 {
+    width: 12px !important;
+    height: 12px !important;
+    top: 115% !important;
+    left: 0px !important;
+  }
+
+  .sic-main .sic-arrow-2 {
+    width: 12px !important;
+    height: 12px !important;
+    right: -42px !important;
+    top: 115% !important;
+  }
+
+  .sic-main .sic-arrows {
+    width: 6px;
+    height: 21px;
+    position: absolute;
+  }
+}
+
 /* ── Active (interacting) state — blue circle ── */
 .uiux-impact-slider[data-interacting="true"] .sic-circle {
   background-color: #3c4cff !important;
