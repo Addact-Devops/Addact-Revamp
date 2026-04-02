@@ -8,7 +8,7 @@ export default function TidioChat() {
     <Fragment>
       <Script
         id="tidio-chat"
-        src="//code.tidio.co/4b6kabbasns1b4k2ccn43s27qzbegiau.js"
+        src="//code.tidio.co/oghyzejza1z3jgu2jqoitsvdh10ki6us.js"
         strategy="afterInteractive"
         async
       />
