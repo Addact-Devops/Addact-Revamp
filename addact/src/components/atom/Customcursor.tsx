@@ -34,15 +34,15 @@ export default function CustomCursor() {
       cursorPos.current.x += (mx - cursorPos.current.x) * 0.25;
       cursorPos.current.y += (my - cursorPos.current.y) * 0.25;
 
-      labelPos.current.x += (mx - labelPos.current.x) * 0.1;
-      labelPos.current.y += (my - labelPos.current.y) * 0.1;
-
+      // labelPos.current.x += (mx - labelPos.current.x) * 0.1;
+      // labelPos.current.y += (my - labelPos.current.y) * 0.1;
       const cx = cursorPos.current.x;
       const cy = cursorPos.current.y;
+      label.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
 
       dot.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
       ringEl.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
-      label.style.transform = `translate(${labelPos.current.x}px, ${labelPos.current.y}px) translate(-50%, -50%)`;
+      // label.style.transform = `translate(${labelPos.current.x}px, ${labelPos.current.y}px) translate(-50%, -50%)`;
 
       rafRef.current = requestAnimationFrame(animate);
     };
@@ -192,14 +192,33 @@ export default function CustomCursor() {
         {/* Drag label */}
         <div
           data-drag
-          className="hidden items-center justify-center w-[80px] h-[80px] rounded-full"
+          className="hidden items-center justify-center w-[80px] h-[80px] rounded-full gap-1.5"
         >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="6"
+            height="7"
+            viewBox="0 0 6 7"
+            fill="none"
+          >
+            <path d="M0 3.46411L6 6.92821V9.77516e-06L0 3.46411Z" fill="white" />
+          </svg>
           <span
             className="text-white font-semibold text-[11px] uppercase select-none"
             style={{ fontFamily: "Montserrat, sans-serif", letterSpacing: "0.12em" }}
           >
             Drag
           </span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="6"
+            height="7"
+            viewBox="0 0 6 7"
+            fill="none"
+          >
+            <path d="M6 3.46411L0 6.92821V9.77516e-06L6 3.46411Z" fill="white" />
+          </svg>
         </div>
 
         {/* Read label */}
