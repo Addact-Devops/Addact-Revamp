@@ -48,29 +48,30 @@ const OurTechStack = ({ data }: OurTechStackProps) => {
         </div>
 
         <div className="mt-10 border-b border-[#D7D7D7] md:mt-14">
-          <div className="flex justify-start gap-6 overflow-x-auto px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:gap-8 xl:justify-center xl:gap-10">
-            {tabs.map((tab, index) => {
-              const isActive = index === activeTabIndex;
+          <div className="overflow-x-auto px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex w-max min-w-full justify-center gap-6 md:gap-8 xl:gap-10">
+              {tabs.map((tab, index) => {
+                const isActive = index === activeTabIndex;
 
-              return (
-                <button
-                  key={index}
-                  type="button"
-                  className={[
-                    "relative shrink-0 border-b-2 px-1 pb-4 !text-[20px] !font-medium transition-colors duration-200 md:!text-[22px]",
-                    isActive
-                      ? "border-[#3C4CFF] text-[#111111]"
-                      : "border-transparent text-[#7E7E7E]",
-                  ].join(" ")}
-                  onClick={() => setActiveTabIndex(index)}
-                >
-                  {tab?.category?.categoryTitle}
-                </button>
-              );
-            })}
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    className={[
+                      "relative shrink-0 border-b-2 px-1 pb-4 !text-[20px] !font-medium transition-colors duration-200 md:!text-[22px]",
+                      isActive
+                        ? "border-[#3C4CFF] text-[#111111]"
+                        : "border-transparent text-[#7E7E7E]",
+                    ].join(" ")}
+                    onClick={() => setActiveTabIndex(index)}
+                  >
+                    {tab?.category?.categoryTitle}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-
         <div className="mx-auto mt-8 flex w-full flex-wrap justify-center gap-4 md:mt-10 md:gap-5">
           {activeTab?.tabContent?.map((item, index) => (
             <article
