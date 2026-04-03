@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { HomeItems } from "@/graphql/queries/getHomePage";
 
 import HomeBanner from "@/components/organisms/HomeBanner";
@@ -28,9 +28,16 @@ interface HomePageFlowProps {
 const HomePageFlow = ({ homeData }: HomePageFlowProps) => {
   const [isIntroVisible, setIsIntroVisible] = useState(true);
 
+  useEffect(() => {
+    // Disable browser scroll restoration so refresh always starts at top.
+    if (typeof window !== "undefined" && "scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleIntroComplete = useCallback(() => {
     setIsIntroVisible(false);
-    // Ensure user lands at the first section of main content.
     window.scrollTo(0, 0);
   }, []);
 
