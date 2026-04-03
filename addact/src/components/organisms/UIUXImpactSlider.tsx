@@ -79,14 +79,14 @@ const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
         </h2>
 
         <div className="relative mx-auto mt-10 w-full max-w-[1138px] lg:mt-14">
-          <div className="pointer-events-none absolute left-[-2px] top-1/2 z-20 -translate-y-1/2 sm:left-[-46px]">
-            <span className="inline-flex items-center justify-center rounded-[10px] bg-[#3c4cff] px-4 py-2 font-montserrat text-[16px] font-semibold text-white sm:text-[24px]">
+          <div className="pointer-events-none absolute left-[-2px] top-1/2 z-20 -translate-y-1/2 lg:left-[-46px]!">
+            <span className="inline-flex items-center justify-center rounded-[10px] bg-[#3c4cff] px-4 py-2 font-montserrat text-[10px] sm:text-[16px] font-semibold text-white lg:text-[24px]!">
               {beforeText}
             </span>
           </div>
 
-          <div className="pointer-events-none absolute right-[-2px] top-1/2 z-20 -translate-y-1/2 sm:right-[-46px]">
-            <span className="inline-flex items-center justify-center rounded-[10px] bg-[#3c4cff] px-4 py-2 font-montserrat text-[16px] font-semibold text-white sm:text-[24px]">
+          <div className="pointer-events-none absolute right-[-2px] top-1/2 z-20 -translate-y-1/2 lg:right-[-46px]!">
+            <span className="inline-flex items-center justify-center rounded-[10px] bg-[#3c4cff] px-4 py-2 font-montserrat text-[10px] sm:text-[16px] font-semibold text-white lg:text-[24px]!">
               {afterText}
             </span>
           </div>
