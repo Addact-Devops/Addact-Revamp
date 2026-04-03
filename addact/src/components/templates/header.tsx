@@ -369,10 +369,10 @@ const Header = ({
   const [activeMobileItem, setActiveMobileItem] = useState<HeaderMenuItem | null>(null); // Level 1 active
   const [expandedLevel2, setExpandedLevel2] = useState<string | null>(null); // Level 2 accordion
   const [bannerVisible, setBannerVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [headerHidden, setHeaderHidden] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const closeDropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastScrollYRef = useRef(0);
   const [scrolled, setScrolled] = React.useState(true);
 
   const clearCloseDropdownTimer = () => {
@@ -392,27 +392,33 @@ const Header = ({
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
-      const isDesktop = window.innerWidth >= 1024;
+      const previousScrollY = lastScrollYRef.current;
 
-      if (!isDesktop || isMobileMenuOpen) {
+      setScrolled(y <= 20);
+
+      if (isMobileMenuOpen) {
         setBannerVisible(true);
         setHeaderHidden(false);
-        setLastScrollY(y);
+        lastScrollYRef.current = y;
         return;
       }
 
-      const scrollingDown = y > lastScrollY;
+      const scrollingDown = y > previousScrollY;
       setBannerVisible(!scrollingDown);
+
       if (y > 80) {
         setHeaderHidden(scrollingDown);
       } else {
         setHeaderHidden(false);
       }
-      setLastScrollY(y);
+
+      lastScrollYRef.current = y;
     };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMobileMenuOpen, lastScrollY]);
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     setOpenDropdown(null);
@@ -490,25 +496,16 @@ const Header = ({
     };
   }, [isMobileMenuOpen]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY <= 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <header
       className={`fixed top-0 w-full z-[130] transition-all duration-300
   ${transparentHeader && scrolled ? "bg-transparent border-transparent" : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"}
-  ${headerHidden ? "lg:-translate-y-full" : "lg:translate-y-0"}`}
+  ${headerHidden && !isMobileMenuOpen ? "-translate-y-full" : ""}`}
     >
       {/* Banner */}
       {showBanner && (
         <div
-          className={`bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${bannerVisible ? "max-h-[60px]" : "max-h-0"}`}
+          className={`hidden lg:block bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${bannerVisible ? "max-h-[60px]" : "max-h-0"}`}
         >
           <div className="container-main text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
             <span className="text-[14px] 2xl:text-[18px]">
@@ -527,7 +524,7 @@ const Header = ({
       )}
 
       {/* Main bar */}
-      <div className="mx-auto w-full flex items-center justify-between container-main px-3.5 py-3.5 pl-3.5! pr-3.5! md:pl-0 md:pr-0 lg:px-0! lg:py-0! relative">
+      <div className="mx-auto w-full flex items-center justify-between container-main px-3.5 py-3.5 lg:py-0! relative">
         <Link href="/" aria-label="Home">
           {logo?.url && (
             <Image
@@ -657,7 +654,14 @@ const Header = ({
             )}
             {contactLabel}
           </Link>
-          <button onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
+          <button
+            onClick={() => {
+              setHeaderHidden(false);
+              setBannerVisible(true);
+              setMobileMenuOpen(true);
+            }}
+            aria-label="Open menu"
+          >
             <Menu className="w-6 h-6 text-white" />
           </button>
         </div>
