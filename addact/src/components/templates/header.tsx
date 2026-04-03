@@ -392,6 +392,15 @@ const Header = ({
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
+      const isDesktop = window.innerWidth >= 1024;
+
+      if (!isDesktop || isMobileMenuOpen) {
+        setBannerVisible(true);
+        setHeaderHidden(false);
+        setLastScrollY(y);
+        return;
+      }
+
       const scrollingDown = y > lastScrollY;
       setBannerVisible(!scrollingDown);
       if (y > 80) {
@@ -403,7 +412,7 @@ const Header = ({
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
+  }, [isMobileMenuOpen, lastScrollY]);
 
   useEffect(() => {
     setOpenDropdown(null);
@@ -467,6 +476,8 @@ const Header = ({
 
   useEffect(() => {
     if (isMobileMenuOpen) {
+      setHeaderHidden(false);
+      setBannerVisible(true);
       document.body.classList.add("menu-scroll-lock");
       document.documentElement.classList.add("menu-scroll-lock");
     } else {
@@ -492,7 +503,7 @@ const Header = ({
     <header
       className={`fixed top-0 w-full z-[130] transition-all duration-300
   ${transparentHeader && scrolled ? "bg-transparent border-transparent" : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"}
-  ${headerHidden ? "-translate-y-full" : "translate-y-0"}`}
+  ${headerHidden ? "lg:-translate-y-full" : "lg:translate-y-0"}`}
     >
       {/* Banner */}
       {showBanner && (
