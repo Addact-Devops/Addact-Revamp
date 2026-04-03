@@ -254,9 +254,8 @@ export default function OurWork({ data }: { data?: OurWork | null }) {
         <div ref={wrapperRef} className="w-full select-none touch-pan-y">
           <div
             ref={trackRef}
-            className="relative flex items-center justify-center"
+            className="relative flex items-center justify-center  h-[520px] md:h-[350px] lg:h-[520px]!"
             style={{
-              height: "520px",
               perspective: "1200px",
               perspectiveOrigin: "50% 50%",
             }}
