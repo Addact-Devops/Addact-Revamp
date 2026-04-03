@@ -211,7 +211,6 @@ function DropdownContent({
   // ── Layout B: Flat grid (Industry/Resources/Company) ──
   const showCard = (item.isCardShow && item.card) || (isLastItem && !!additionalText);
 
-  console.log("isLastItem && additionalText", isLastItem, "additionalText", additionalText);
   return (
     <div className="flex flex-col w-full min-h-[336px]">
       <div className="flex w-full items-stretch flex-1 gap-5">
@@ -371,9 +370,10 @@ const Header = ({
   const [expandedLevel2, setExpandedLevel2] = useState<string | null>(null); // Level 2 accordion
   const [bannerVisible, setBannerVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [headerHidden, setHeaderHidden] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const closeDropdownTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [scrolled, setScrolled] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(true);
 
   const clearCloseDropdownTimer = () => {
     if (closeDropdownTimer.current) {
@@ -392,7 +392,13 @@ const Header = ({
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
-      setBannerVisible(y <= lastScrollY);
+      const scrollingDown = y > lastScrollY;
+      setBannerVisible(!scrollingDown);
+      if (y > 80) {
+        setHeaderHidden(scrollingDown);
+      } else {
+        setHeaderHidden(false);
+      }
       setLastScrollY(y);
     };
     window.addEventListener("scroll", handleScroll);
@@ -475,16 +481,18 @@ const Header = ({
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY <= 20);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
   return (
     <header
       className={`fixed top-0 w-full z-[130] transition-all duration-300
-  ${transparentHeader && !scrolled ? "bg-transparent border-transparent" : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"}`}
+  ${transparentHeader && !scrolled ? "bg-transparent border-transparent" : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"}
+  ${headerHidden ? "-translate-y-full" : "translate-y-0"}`}
     >
       {/* Banner */}
       {showBanner && (
@@ -579,7 +587,7 @@ const Header = ({
                     }}
                     className="fixed z-[140] overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
                     style={{
-                      top: `${showBanner && !scrolled ? "190px" : "115px"}`,
+                      top: `${showBanner && bannerVisible ? "190px" : "115px"}`,
                       background: "#0F0F0F",
                       border: "1px solid #2E2E2E",
                       borderRadius: "20px",
