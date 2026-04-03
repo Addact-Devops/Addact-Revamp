@@ -491,7 +491,7 @@ const Header = ({
   return (
     <header
       className={`fixed top-0 w-full z-[130] transition-all duration-300
-  ${transparentHeader && !scrolled ? "bg-transparent border-transparent" : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"}
+  ${transparentHeader && scrolled ? "bg-transparent border-transparent" : "bg-[#0F0F0F] border-b border-b-[#2e2e2e]"}
   ${headerHidden ? "-translate-y-full" : "translate-y-0"}`}
     >
       {/* Banner */}
