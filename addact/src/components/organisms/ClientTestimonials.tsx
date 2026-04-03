@@ -77,11 +77,11 @@ export default function ClientTestimonials() {
           <div className="lg:col-span-7 relative z-10">
             <div className="block lg:hidden absolute top-0 left-0 right-0 h-[120px] md:h-[150px] bg-gradient-to-b from-[#FAFAFA] via-[rgba(250,250,250,0.8)] to-transparent z-10 pointer-events-none" />
             <div className="h-[500px] md:h-[600px] lg:h-[684px] overflow-hidden relative group">
-              <div className="marquee-vertical space-y-6">
+              <div className="marquee-vertical space-y-6 flex flex-col items-end">
                 {duplicatedItems.map((testimonial, index) => (
                   <div
                     key={index}
-                    className="bg-white border border-[rgba(15,15,15,0.1)] rounded-[10px] p-6 md:p-8 lg:p-10 relative mx-auto flex flex-col justify-between w-full max-w-[786px] min-h-[260px] md:min-h-[320px] lg:min-h-[364px]"
+                    className="bg-white border border-[rgba(15,15,15,0.1)] rounded-[10px] p-6 md:p-8 lg:p-10 relative flex flex-col justify-end w-full max-w-[786px] min-h-[260px] md:min-h-[320px] lg:min-h-[364px]"
                   >
                     {/* Quote */}
                     <p className="text-[#0F0F0F] text-[18px]! md:text-[25px]! lg:text-[30px]! font-medium leading-[30px] md:leading-[36px] lg:leading-[48px]">
