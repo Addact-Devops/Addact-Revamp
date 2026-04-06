@@ -1728,5 +1728,15 @@ module.exports = [
     "source": "/hire-certified-sitecore-developer",
     "destination": "/development-design/cms-development/sitecore",
     "permanent": true
+  },
+  {
+    "source": "/contact",
+    "destination": "/contact-us",
+    "permanent": true
+  },
+  {
+    "source": "/project-cost-estimator",
+    "destination": "/project-cost-estimators",
+    "permanent": true
   }
 ];
