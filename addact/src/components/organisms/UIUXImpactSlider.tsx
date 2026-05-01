@@ -55,15 +55,10 @@ const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
     window.addEventListener("touchend", handleEnd);
 
     const setAltText = () => {
-      const beforeImg = el.querySelector(".sic-before img");
-      const afterImg = el.querySelector(".sic-after img");
-
-      if (beforeImg) {
-        beforeImg.setAttribute("alt", "ui ux design services");
-      }
-
-      if (afterImg) {
-        afterImg.setAttribute("alt", "ui ux design services company");
+      const images = el.querySelectorAll("img");
+      if (images.length >= 2) {
+        images[0].setAttribute("alt", "ui ux design services");
+        images[1].setAttribute("alt", "ui ux design services company");
       }
     };
 
