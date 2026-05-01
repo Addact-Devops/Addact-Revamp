@@ -264,7 +264,7 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
                     href="/portfolio"
                     className="px-6 py-3 text-white bg-[#3C4CFF] transition-colors"
                   >
-                    See More
+                    View More
                   </Link>
                 </div>
               </>
