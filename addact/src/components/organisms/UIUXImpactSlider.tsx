@@ -54,6 +54,21 @@ const UIUXImpactSlider = ({ data }: { data?: ImpactUx | null }) => {
     window.addEventListener("mouseup", handleEnd);
     window.addEventListener("touchend", handleEnd);
 
+    const setAltText = () => {
+      const beforeImg = el.querySelector(".sic-before img");
+      const afterImg = el.querySelector(".sic-after img");
+
+      if (beforeImg) {
+        beforeImg.setAttribute("alt", "ui ux design services");
+      }
+
+      if (afterImg) {
+        afterImg.setAttribute("alt", "ui ux design services company");
+      }
+    };
+
+    // Run after DOM updates
+    requestAnimationFrame(setAltText);
     return () => {
       if (instance && typeof instance.destroy === "function") {
         instance.destroy();
