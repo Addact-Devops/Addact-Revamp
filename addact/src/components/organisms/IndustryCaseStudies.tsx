@@ -301,7 +301,7 @@ const IndustryCaseStudies: React.FC<Props> = ({ title, items = [], limit = 8 }) 
                         className="h-full w-full max-w-[382px] hover:bg-[#3C4CFF] transition-colors text-white text-[22px] md:text-[28px] 2xl:text-[30px] font-[500] flex items-center justify-center mdmin-h-[260px] md:min-h-[300px] 2xl:min-h-[300px]"
                         style={{ border: "1px solid rgb(255 255 255 / 20%)" }}
                       >
-                        See More
+                        View More
                       </Link>
                     </div>
                   </div>
