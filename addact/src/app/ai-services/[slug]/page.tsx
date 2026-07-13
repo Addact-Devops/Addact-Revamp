@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import SiteDetailClient from "./SiteDetailClient";
 import { AIService, getAIServiceSlug } from "@/graphql/queries/getAIServiceSlug";
+import Script from "next/script";
 
 type Params = Promise<{ slug: string }>;
 
@@ -19,7 +20,6 @@ export async function generateMetadata({ params }: { params: Params }) {
     metaRobots,
     twitterCardTitle,
     canonicalURL,
-    structuredData,
   } = data.SEO;
 
   return {
@@ -38,11 +38,6 @@ export async function generateMetadata({ params }: { params: Params }) {
     },
     robots: metaRobots || undefined,
     metadataBase: new URL("https://www.addact.net"),
-    ...(structuredData && {
-      other: {
-        structuredData: JSON.stringify(structuredData),
-      },
-    }),
   };
 }
 
@@ -52,7 +47,22 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
 
   if (!data) return notFound();
 
-  return <SiteDetailClient data={data} />;
+  return (
+    <>
+      {data.SEO?.structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(item),
+          }}
+        />
+      ))}
+      <SiteDetailClient data={data} />
+    </>
+  );
 };
 
 export default SiteDetailPage;

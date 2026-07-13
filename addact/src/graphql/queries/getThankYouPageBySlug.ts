@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { StructuredData } from "@/types/common";
 
 const GET_THANK_YOU_PAGE = gql`
   query ThankyouPages($filters: ThankyouPageFiltersInput) {
@@ -85,7 +86,7 @@ export interface ThankYouPageResponse {
       metaRobots?: string;
       twitterCardTitle?: string;
       canonicalURL?: string;
-      structuredData?: Record<string, unknown>;
+      structuredData?: StructuredData[] | null;
       languageTag?: string;
     } | null;
   }[];

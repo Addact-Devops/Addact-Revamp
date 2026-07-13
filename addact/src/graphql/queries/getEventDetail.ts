@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { Heading, Image } from "@/types/common";
+import { Heading, Image, StructuredData } from "@/types/common";
 
 const GET_EVENT_DETAIL_PAGE = gql`
   query AddactsEvents($filters: AddactEventsFiltersInput) {
@@ -139,7 +139,7 @@ export interface EventDetailResponse {
       metaRobots?: string;
       twitterCardTitle?: string;
       canonicalURL?: string;
-      structuredData?: Record<string, unknown>;
+      structuredData?: StructuredData[] | null;
       languageTag?: string;
     } | null;
   }[];

@@ -23,3 +23,5 @@ export interface Heading {
   h5?: string;
   h6?: string;
 }
+
+export type StructuredData = Record<string, unknown>;

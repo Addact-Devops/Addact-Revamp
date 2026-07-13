@@ -1,6 +1,7 @@
 import { getThankYouPageBySlug } from "@/graphql/queries/getThankYouPageBySlug";
 import CareerThankYouClient from "./CareerThankYouClient";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 
 export async function generateMetadata() {
   // Hardcoded slug for SEO metadata
@@ -34,7 +35,7 @@ export async function generateMetadata() {
     alternates: seo.canonicalURL ? { canonical: seo.canonicalURL } : undefined,
     other: {
       twitterCardTitle: seo.twitterCardTitle || "",
-      structuredData: seo.structuredData ? JSON.stringify(seo.structuredData) : "",
+
       languageTag: seo.languageTag || "",
     },
   };
@@ -53,14 +54,17 @@ export default async function CareerThankYouPage() {
 
   return (
     <>
-      {page.SEO?.structuredData && (
-        <script
+      {page.SEO?.structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
           type="application/ld+json"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(page.SEO.structuredData),
+            __html: JSON.stringify(item),
           }}
         />
-      )}
+      ))}
       <CareerThankYouClient thankYouData={page} />
     </>
   );

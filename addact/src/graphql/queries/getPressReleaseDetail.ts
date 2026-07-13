@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { Heading, Image, Link } from "@/types/common";
+import { Heading, Image, Link, StructuredData } from "@/types/common";
 
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
   query AddactPressReleases($filters: AddactPressReleaseFiltersInput) {
@@ -120,7 +120,7 @@ export interface PressReleaseDetailResponse {
       metaRobots: string | null;
       twitterCardTitle: string | null;
       canonicalURL: string | null;
-      structuredData: Record<string, unknown> | null;
+      structuredData: StructuredData[] | null;
       languageTag: string | null;
     } | null;
     HeroBanner: {

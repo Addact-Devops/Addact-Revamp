@@ -3,6 +3,7 @@
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import BrandGuidelinesPageClient from "./BrandGuidelinesPageClient";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
+import Script from "next/script";
 
 export async function generateMetadata() {
   return generatePageMetadata("brandGuideline");
@@ -14,15 +15,17 @@ export default async function Page() {
 
   return (
     <>
-      {structuredData && (
-        <script
+      {structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
           type="application/ld+json"
-          suppressHydrationWarning
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
+            __html: JSON.stringify(item),
           }}
         />
-      )}
+      ))}
 
       <BrandGuidelinesPageClient />
     </>

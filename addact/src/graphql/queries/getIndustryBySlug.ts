@@ -2,6 +2,7 @@
 import { gql } from "graphql-request";
 import client from "../client";
 import { Heading, Image } from "./getHomePage";
+import { StructuredData } from "@/types/common";
 
 /**
  * Main detail query — filtered by slug.
@@ -344,7 +345,7 @@ export type IndustryDetail = {
     metaRobots?: string | null;
     twitterCardTitle?: string | null;
     canonicalURL?: string | null;
-    structuredData?: Record<string, unknown> | null;
+    structuredData?: StructuredData[] | null;
     languageTag?: string | null;
   } | null;
 

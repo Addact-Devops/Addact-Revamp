@@ -1,4 +1,4 @@
-import { Image } from "@/types/common";
+import { Image, StructuredData } from "@/types/common";
 import client from "../client";
 import { gql } from "graphql-request";
 import { Heading, Link } from "./getHomePage";
@@ -256,7 +256,7 @@ export interface SEO {
   metaRobots: string;
   twitterCardTitle: string;
   canonicalURL: string;
-  structuredData: string | null;
+  structuredData: StructuredData[] | null;
   languageTag: string;
 }
 

@@ -6,6 +6,7 @@ import { getCareersData } from "@/graphql/queries/getCareers";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
+import Script from "next/script";
 
 export async function generateMetadata() {
   return generatePageMetadata("careers");
@@ -24,15 +25,17 @@ export default async function CareersPage() {
 
   return (
     <>
-      {structuredData && (
-        <script
+      {structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
           type="application/ld+json"
-          suppressHydrationWarning
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
+            __html: JSON.stringify(item),
           }}
         />
-      )}
+      ))}
 
       <main className="bg-[#f4f4f4] pb-[60px] sm:pb-[100px]">
         {banner && (

@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 import RichText from "@/components/atom/richText";
+import { StructuredData } from "@/types/common";
 
 type Props = {
   thankYouData: {
@@ -25,7 +26,7 @@ type Props = {
       metaRobots?: string;
       twitterCardTitle?: string;
       canonicalURL?: string;
-      structuredData?: Record<string, unknown>;
+      structuredData?: StructuredData[] | null;
       languageTag?: string;
     } | null;
   };

@@ -204,11 +204,17 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
-      {structuredData && (
-        <Script id="structured-data" type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </Script>
-      )}
+      {structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(item),
+          }}
+        />
+      ))}
 
       <main className="industry-detail-page">
         {/* ✅ Hero Banner (image/video auto) */}

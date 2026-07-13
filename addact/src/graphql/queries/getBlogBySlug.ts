@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { StructuredData } from "@/types/common";
 
 const GET_BLOG_BY_SLUG = gql`
   query GetBlogBySlug($filters: AddactBlogFiltersInput) {
@@ -251,7 +252,7 @@ export type BlogBySlugResponse = {
       metaRobots?: string;
       twitterCardTitle?: string;
       canonicalURL?: string;
-      structuredData?: Record<string, unknown>; // ✅ fixed: replaced `any` with valid type
+      structuredData?: StructuredData[] | null; // ✅ fixed: replaced `any` with valid type
       languageTag?: string;
     } | null;
 

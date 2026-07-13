@@ -12,6 +12,7 @@ import OurTechStack from "@/components/organisms/OurTechStack";
 import DetailPageServices from "@/components/organisms/DetailPageServices";
 import WhoWeAre from "@/components/organisms/WhoWeAre";
 import { getDigitalMarketing } from "@/graphql/queries/getDigitalMarketing";
+import Script from "next/script";
 // import OurProcess from "@/components/organisms/OurProcess";
 // import IndustriesWeServe from "@/components/organisms/IndustriesWeServe";
 // import OurPartners from "@/components/organisms/OurPartners";
@@ -26,90 +27,17 @@ export default async function umbracoPage() {
   const bannerData = data.Banner?.Banner?.[0];
   return (
     <main className="bg-dark">
-      {/* ✅ SearchAction Schema */}
-
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org/",
-            "@type": "WebSite",
-            name: "Addact Technologies",
-            url: " https://www.addact.net/umbraco-cms-development",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "{search_term_string}",
-              "query-input": "required name=search_term_string",
-            },
-          }),
-        }}
-      />
-
-      {/* ✅ Organization Schema */}
-
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Addact Technologies",
-            alternateName: "Addact",
-            url: "https://www.addact.net/",
-            logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
-            contactPoint: {
-              "@type": "ContactPoint",
-              telephone: "94272 37737",
-              contactType: "emergency",
-              contactOption: "TollFree",
-              areaServed: ["SA", "YE", "KW", "OM", "QA", "AE", "BH", "IL", "JO", "SY"],
-              availableLanguage: "en",
-            },
-
-            sameAs: [
-              "https://www.facebook.com/addacttech/",
-              "https://x.com/AddactTech",
-              "https://www.instagram.com/addacttechnologies/",
-              "https://www.youtube.com/@addact3283",
-              "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all",
-              "https://www.addact.net/",
-            ],
-          }),
-        }}
-      />
-
-      {/* ✅ FAQPage Schema */}
-
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            mainEntity: [
-              {
-                "@type": "Question",
-                name: " Can you migrate our website from another CMS to Umbraco?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: "Definitely. Whether you're moving from WordPress, Drupal, Sitecore, or any other CMS, we handle complete end-to-end migration to Umbraco. This includes content restructuring, SEO preservation, custom functionality replication, and platform optimization.",
-                },
-              },
-              {
-                "@type": "Question",
-                name: " Is Umbraco suitable for enterprise-level and scalable websites?",
-                acceptedAnswer: {
-                  "@type": "Answer",
-                  text: " Yes, Umbraco is suitable for scalable and enterprise-level websites due to its flexible architecture, extensibility, and efficient content management capabilities.",
-                },
-              },
-            ],
-          }),
-        }}
-      />
+      {data.SEO?.structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(item),
+          }}
+        />
+      ))}
 
       <HeroBanner
         title={bannerData?.BannerTitle ?? ""}

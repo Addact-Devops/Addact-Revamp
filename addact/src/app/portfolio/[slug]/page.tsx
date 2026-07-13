@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getCaseStudyBySlug } from "@/graphql/queries/getCaseStudyBySlug";
 import PortfolioDetailClient from "./PortfolioDetailClient";
+import Script from "next/script";
 
 type Params = Promise<{ slug: string }>;
 
@@ -29,15 +30,18 @@ export default async function PortfolioDetailPage({ params }: { params: Params }
 
   return (
     <>
-      {structuredData && (
-        <script
+      {structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
           type="application/ld+json"
-          suppressHydrationWarning
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
+            __html: JSON.stringify(item),
           }}
         />
-      )}
+      ))}
+
       <PortfolioDetailClient slug={slug} />
     </>
   );

@@ -1,6 +1,7 @@
 import { gql } from "graphql-request";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
+import { StructuredData } from "@/types/common";
 
 const digitalMarketingQuerySlugQuery = gql`
   query DigitalMarketingDetails($filters: DigitalMarketingDetailFiltersInput) {
@@ -430,7 +431,7 @@ export interface SEO {
   metaRobots: string;
   twitterCardTitle: string;
   canonicalURL: string;
-  structuredData: string | null;
+  structuredData: StructuredData[] | null;
   languageTag: string;
 }
 

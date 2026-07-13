@@ -5,6 +5,7 @@ import { getContactUsData } from "@/graphql/queries/getContactUs";
 // import ContactUsAddress from "@/components/organisms/ContactUsAddress";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
+import Script from "next/script";
 
 export async function generateMetadata() {
   return generatePageMetadata("contactus");
@@ -18,58 +19,17 @@ export default async function ContactUsPage() {
   return (
     <>
       <main>
-        {/* ✅ SearchAction Schema */}
-
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org/",
-              "@type": "WebSite",
-              name: "Addact Technologies",
-              url: "https://www.addact.net/contact-us",
-              potentialAction: {
-                "@type": "SearchAction",
-                target: "{search_term_string}",
-                "query-input": "required name=search_term_string",
-              },
-            }),
-          }}
-        />
-
-        {/* ✅ Organization Schema */}
-
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Addact Technologies",
-              alternateName: "Addact",
-              url: "https://www.addact.net/",
-              logo: "https://d3l7d9gtq0bnch.cloudfront.net/Logo_1_ffdf03e2d1.png",
-              contactPoint: {
-                "@type": "ContactPoint",
-                telephone: "94272 37737",
-                contactType: "emergency",
-                contactOption: "TollFree",
-                areaServed: ["US", "IN"],
-                availableLanguage: "en",
-              },
-              sameAs: [
-                "https://www.facebook.com/addacttech/",
-                "https://x.com/AddactTech",
-                "https://www.instagram.com/addacttechnologies/",
-                "https://www.youtube.com/@addact3283",
-                "https://www.linkedin.com/company/addact-technologies/posts/?feedView=all",
-                "https://www.addact.net/",
-              ],
-            }),
-          }}
-        />
+        {contactus?.SEO?.structuredData?.map((item, index) => (
+          <Script
+            key={index}
+            id={`structured-data-${index}`}
+            type="application/ld+json"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(item),
+            }}
+          />
+        ))}
         {bannerData?.BannerTitle &&
         bannerData?.BannerDescription &&
         bannerData?.BannerImage?.url ? (
@@ -103,16 +63,6 @@ export default async function ContactUsPage() {
           ""
         )} */}
       </main>
-
-      {/* ✅ Inline Structured Data */}
-      {contactus?.SEO?.structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(contactus.SEO.structuredData),
-          }}
-        />
-      )}
     </>
   );
 }

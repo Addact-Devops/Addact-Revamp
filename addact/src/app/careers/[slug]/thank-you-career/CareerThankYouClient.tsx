@@ -3,6 +3,7 @@
 import React from "react";
 import { notFound, useRouter } from "next/navigation";
 import RichText from "@/components/atom/richText";
+import { StructuredData } from "@/types/common";
 
 interface SEO {
   metaTitle?: string | null;
@@ -13,7 +14,7 @@ interface SEO {
   metaRobots?: string | null;
   twitterCardTitle?: string | null;
   canonicalURL?: string | null;
-  structuredData?: Record<string, unknown> | null;
+  structuredData?: StructuredData[] | null;
   languageTag?: string | null;
 }
 

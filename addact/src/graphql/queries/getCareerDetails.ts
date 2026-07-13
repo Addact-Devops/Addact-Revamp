@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { Image, Link } from "@/types/common";
+import { Image, Link, StructuredData } from "@/types/common";
 
 const GET_CAREER_DETAIL = gql`
   query careerDetailBySlug($filters: CareerDetailFiltersInput) {
@@ -197,7 +197,7 @@ export interface CareerDetailResponse {
       metaRobots: string;
       twitterCardTitle: string;
       canonicalURL: string;
-      structuredData: string;
+      structuredData: StructuredData[] | null;
       languageTag: string;
     };
   }[];

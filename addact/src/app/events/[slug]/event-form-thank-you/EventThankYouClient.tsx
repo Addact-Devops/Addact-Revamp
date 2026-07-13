@@ -3,13 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import RichText from "@/components/atom/richText";
-
-type JsonPrimitive = string | number | boolean | null;
-type JsonArray = JsonValue[];
-interface JsonObject {
-  [key: string]: JsonValue;
-}
-type JsonValue = JsonPrimitive | JsonObject | JsonArray;
+import { StructuredData } from "@/types/common";
 
 interface SEO {
   metaTitle?: string | null;
@@ -20,7 +14,7 @@ interface SEO {
   metaRobots?: string | null;
   twitterCardTitle?: string | null;
   canonicalURL?: string | null;
-  structuredData?: JsonValue | null; // <-- no 'any', uses JsonValue type
+  structuredData?: StructuredData[] | null;
   languageTag?: string | null;
 }
 

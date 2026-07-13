@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { StructuredData } from "@/types/common";
 
 const GET_CASE_STUDY_BY_SLUG = gql`
   query AddactCaseStudies($filters: AddactCaseStudyFiltersInput) {
@@ -148,7 +149,7 @@ export type CaseStudyBySlugResponse = {
       metaRobots: string | null;
       twitterCardTitle: string | null;
       canonicalURL: string | null;
-      structuredData: Record<string, unknown> | null;
+      structuredData: StructuredData[] | null;
       languageTag: string | null;
     } | null;
     Slug: string;

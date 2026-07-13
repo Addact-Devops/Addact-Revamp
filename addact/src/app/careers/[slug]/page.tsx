@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getCareerDetailsData } from "@/graphql/queries/getCareerDetails";
 import CareerDetailClient from "./CareerDetailClient";
+import Script from "next/script";
 
 type Params = Promise<{ slug: string }>;
 
@@ -33,7 +34,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     alternates: seo.canonicalURL ? { canonical: seo.canonicalURL } : undefined,
     other: {
       twitterCardTitle: seo.twitterCardTitle || "",
-      structuredData: seo.structuredData || "",
       languageTag: seo.languageTag || "",
     },
   };
@@ -49,12 +49,17 @@ export default async function CareerDetailPage({ params }: { params: Params }) {
 
   return (
     <>
-      {seo?.structuredData && (
-        <script
+      {seo?.structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(seo.structuredData) }}
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(item),
+          }}
         />
-      )}
+      ))}
       <CareerDetailClient data={career} />
     </>
   );

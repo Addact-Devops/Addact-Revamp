@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client"; // Adjust path if needed
-import { Image, Link } from "@/types/common";
+import { Image, Link, StructuredData } from "@/types/common";
 
 export const GET_CONTACT_US = gql`
   query Contactus {
@@ -174,7 +174,7 @@ export interface ContactUsResponse {
       metaRobots?: string;
       twitterCardTitle?: string;
       canonicalURL?: string;
-      structuredData?: Record<string, unknown>;
+      structuredData?: StructuredData[] | null;
       languageTag?: string;
     } | null;
   };

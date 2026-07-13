@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getPressReleaseDetailBySlug } from "@/graphql/queries/getPressReleaseDetail";
 import PressReleaseDetails from "./PressReleaseDetails";
+import Script from "next/script";
 
 type Params = Promise<{ slug: string }>;
 
@@ -29,15 +30,17 @@ export default async function PressReleasePage({ params }: { params: Params }) {
 
   return (
     <>
-      {structuredData && (
-        <script
+      {structuredData?.map((item, index) => (
+        <Script
+          key={index}
+          id={`structured-data-${index}`}
           type="application/ld+json"
-          suppressHydrationWarning
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
+            __html: JSON.stringify(item),
           }}
         />
-      )}
+      ))}
 
       <PressReleaseDetails slug={slug} />
     </>

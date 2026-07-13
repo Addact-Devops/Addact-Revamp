@@ -136,7 +136,6 @@ export default async function EventFormThankYouPage() {
   const seo = page.SEO
     ? {
         ...page.SEO,
-        structuredData: page.SEO.structuredData as JsonValue | null,
       }
     : null;
 
