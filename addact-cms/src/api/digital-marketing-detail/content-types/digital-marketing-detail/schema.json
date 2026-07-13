@@ -70,8 +70,33 @@
     "ourService": {
       "type": "dynamiczone",
       "components": [
-        "home.service-list"
+        "home.service-list",
+        "home.ui-ux-lisitng"
       ]
+    },
+    "impactUx": {
+      "type": "component",
+      "component": "home.impact-ux",
+      "repeatable": false
+    },
+    "isUxpage": {
+      "type": "boolean",
+      "default": false
+    },
+    "designFlow": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::design-development-flow.design-development-flow"
+    },
+    "challenges": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::our-process.our-process"
+    },
+    "ourWork": {
+      "type": "component",
+      "component": "home.service-list",
+      "repeatable": false
     }
   }
 }
