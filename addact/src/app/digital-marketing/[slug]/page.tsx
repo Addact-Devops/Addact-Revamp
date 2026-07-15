@@ -54,7 +54,6 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
   const data: DigitalMarketingService | null = await getDigitalMarketingSlug(slug);
 
   if (!data) return notFound();
-
   return <SiteDetailClient data={data} />;
 };
 
