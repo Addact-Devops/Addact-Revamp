@@ -20,6 +20,7 @@ import {
 import DetailPageServices from "@/components/organisms/DetailPageServices";
 import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 import OurTechStack from "@/components/organisms/OurTechStack";
+import UIUXPageFlow from "@/components/organisms/UIUXPageFlow";
 
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
@@ -61,33 +62,41 @@ const SiteDetailClient = ({ data }: { data: DigitalMarketingService }) => {
   }
 
   const bannerData = pageData.Banner?.Banner?.[0];
-
+  const isUxPage = ("isUxpage" in pageData && Boolean(pageData.isUxpage));
+  
+  
   return (
     <main className="bg-dark">
-      <HeroBanner
-        title={bannerData?.BannerTitle ?? ""}
-        description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
-        button={{
-          label: bannerData?.BannerLink?.label ?? "",
-          url: bannerData?.BannerLink?.href ?? "",
-        }}
-        isVideo={Boolean(bannerData?.isVideo)}
-        videoUrl={bannerData?.videoLink ?? ""}
-        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
-        backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
-      />
-      <DetailPageServices data={data?.ourService} />
+      {isUxPage ? (
+        <UIUXPageFlow data={pageData} />
+      ) : (
+        <>
+          <HeroBanner
+            title={bannerData?.BannerTitle ?? ""}
+            description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
+            button={{
+              label: bannerData?.BannerLink?.label ?? "",
+              url: bannerData?.BannerLink?.href ?? "",
+            }}
+            isVideo={Boolean(bannerData?.isVideo)}
+            videoUrl={bannerData?.videoLink ?? ""}
+            isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
+            backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
+          />
+          <DetailPageServices data={data?.ourService} />
 
-      {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
-      {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
-      {/* <OurProcess data={data?.our_process} /> */}
-      <OurTechStack data={data?.techStack} />
-      <HowEngagementProcessWorks data={data?.ourprocess} />
-      <IndustryMarqueeCards data={data?.industry} />
-      <ClientTestimonials />
-      {data?.faq && <FAQ data={data?.faq} />}
-      <OurInsights />
-      {data?.cta && <CtaBanner data={data?.cta} />}
+          {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
+          {/* {data?.cta2 && <CtaBanner2 data={data?.cta2} />} */}
+          {/* <OurProcess data={data?.our_process} /> */}
+          <OurTechStack data={data?.techStack} />
+          <HowEngagementProcessWorks data={data?.ourprocess} />
+          <IndustryMarqueeCards data={data?.industry} />
+          <ClientTestimonials />
+          {data?.faq && <FAQ data={data?.faq} />}
+          <OurInsights />
+          {data?.cta && <CtaBanner data={data?.cta} />}
+        </>
+      )}
     </main>
   );
 };
