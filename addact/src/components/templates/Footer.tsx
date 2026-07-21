@@ -121,7 +121,7 @@ export default function Footer({ data }: FooterProps) {
     { label: "T & C", href: "/terms-of-use" },
     { label: "Privacy Policy", href: "/privacy-policy" },
   ];
-  const finalPolicyLinks = policyLinks.length ? policyLinks : fallbackPolicyLinks;
+  const finalPolicyLinks = policyLinks?.length ? policyLinks : fallbackPolicyLinks;
 
   return (
     <>

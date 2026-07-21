@@ -210,17 +210,17 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
     const newErrors: FormErrors = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     const strLenRegex = /^.{2,}$/;
-    if (!formData.name) newErrors.name = "Please enter Name.";
-    if (!strLenRegex.test(formData.name)) {
+    if (!formData?.name) newErrors.name = "Please enter Name.";
+    if (!strLenRegex.test(formData?.name || "")) {
       newErrors.name = "Please enter valid name";
     }
-    if (!formData.email) {
+    if (!formData?.email) {
       newErrors.email = "Please enter email address.";
-    } else if (!emailRegex.test(formData.email)) {
+    } else if (!emailRegex.test(formData?.email || "")) {
       newErrors.email = "Please enter a valid email address.";
     }
-    if (!formData.company) newErrors.company = "Please enter company name.";
-    if (!strLenRegex.test(formData.company)) {
+    if (!formData?.company) newErrors.company = "Please enter company name.";
+    if (!strLenRegex.test(formData?.company || "")) {
       newErrors.company = "Please enter valid company name";
     }
     return newErrors;
@@ -230,7 +230,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
     e.preventDefault();
 
     // Honeypot validation - reject if filled (indicates bot)
-    if (formData.honeypot.trim() !== "") {
+    if (formData?.honeypot?.trim() !== "") {
       console.warn("Honeypot field was filled - potential bot detected");
       return;
     }
@@ -239,7 +239,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
     const isCaptchaMissing = !captchaToken;
     setCaptchaError(isCaptchaMissing);
 
-    if (Object.keys(validationErrors).length > 0 || isCaptchaMissing) {
+    if (Object.keys(validationErrors || {})?.length > 0 || isCaptchaMissing) {
       setErrors(validationErrors);
       return;
     }
@@ -255,17 +255,17 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
       } else if (pathname === "/contact-us") {
         pageTitle = "Contact Us";
       } else {
-        pageTitle = pathname.replace("/", "").replace("-", " ");
-        pageTitle = pageTitle.charAt(0).toUpperCase() + pageTitle.slice(1);
+        pageTitle = pathname?.replace("/", "").replace("-", " ");
+        pageTitle = pageTitle?.charAt(0)?.toUpperCase() + pageTitle?.slice(1);
       }
       const payload = {
-        name: formData.name,
-        email: formData.email,
-        companyName: formData.company,
-        description: formData.message,
+        name: formData?.name,
+        email: formData?.email,
+        companyName: formData?.company,
+        description: formData?.message,
         pageTitle,
         recipientEmails: data?.RecipientEmails,
-        honeypot: formData.honeypot,
+        honeypot: formData?.honeypot,
         turnstileToken: captchaToken,
       };
 
@@ -343,40 +343,40 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                 id="name"
                 name="name"
                 autoComplete="name"
-                value={formData.name}
+                value={formData?.name || ""}
                 onChange={handleChange}
                 label="Name"
                 required
-                error={errors.name}
+                error={errors?.name}
               />
 
               <DrawerField
                 id="email"
                 name="email"
                 autoComplete="email"
-                value={formData.email}
+                value={formData?.email || ""}
                 onChange={handleChange}
                 label="Email Address"
                 required
-                error={errors.email}
+                error={errors?.email}
               />
 
               <DrawerField
                 id="company"
                 name="company"
                 autoComplete="organization"
-                value={formData.company}
+                value={formData?.company || ""}
                 onChange={handleChange}
                 label="Company Name"
                 required
-                error={errors.company}
+                error={errors?.company}
               />
 
               <DrawerField
                 id="message"
                 name="message"
                 autoComplete="off"
-                value={formData.message}
+                value={formData?.message || ""}
                 onChange={handleChange}
                 label="Share Your Requirements"
                 multiline
@@ -387,7 +387,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
               <input
                 type="text"
                 name="honeypot"
-                value={formData.honeypot}
+                value={formData?.honeypot || ""}
                 onChange={handleChange}
                 className="hidden"
                 tabIndex={-1}
@@ -398,7 +398,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                 <div className="flex justify-center sm:justify-start overflow-visible">
                   <div className="recaptcha-wrapper flex flex-col overflow-visible w-full max-w-[400px] ">
                     <Turnstile
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                      siteKey={process?.env?.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
                       onSuccess={(token) => {
                         setCaptchaToken(token);
                         setCaptchaError(false);
@@ -440,8 +440,8 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                     {item?.Link?.Icon?.url && (
                       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
                         <Image
-                          src={item.Link.Icon.url}
-                          alt={item.Link.Icon.alternativeText || item?.Title || "contact icon"}
+                          src={item?.Link?.Icon?.url}
+                          alt={item?.Link?.Icon?.alternativeText || item?.Title || "contact icon"}
                           width={16}
                           height={16}
                           className="h-4 w-4 object-contain brightness-0 invert"
@@ -457,7 +457,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                       {item?.Description && (
                         <span
                           className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8 [&_a]:text-inherit [&_a]:hover:text-white [&_a]:transition-colors [&_p]:m-0"
-                          dangerouslySetInnerHTML={{ __html: item.Description }}
+                          dangerouslySetInnerHTML={{ __html: item?.Description }}
                         />
                       )}
                     </span>
@@ -525,12 +525,12 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                       id="name"
                       name="name"
                       autoComplete="name"
-                      value={formData.name}
+                      value={formData?.name || ""}
                       onChange={handleChange}
                       className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
                       placeholder="Type your name here"
                     />
-                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                    {errors?.name && <p className="text-red-500 text-sm mt-1">{errors?.name}</p>}
                   </div>
                   <div>
                     <label
@@ -543,12 +543,12 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                       id="email"
                       name="email"
                       autoComplete="email"
-                      value={formData.email}
+                      value={formData?.email || ""}
                       onChange={handleChange}
                       className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
                       placeholder="Type your email here"
                     />
-                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                    {errors?.email && <p className="text-red-500 text-sm mt-1">{errors?.email}</p>}
                   </div>
                 </div>
 
@@ -563,12 +563,12 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                     id="company"
                     name="company"
                     autoComplete="company"
-                    value={formData.company}
+                    value={formData?.company || ""}
                     onChange={handleChange}
                     className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
                     placeholder="Type your company name here"
                   />
-                  {errors.company && <p className="text-red-500 text-sm mt-1">{errors.company}</p>}
+                  {errors?.company && <p className="text-red-500 text-sm mt-1">{errors?.company}</p>}
                 </div>
 
                 <div className="mb-[40px]">
@@ -582,7 +582,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                     id="message"
                     name="message"
                     autoComplete="message"
-                    value={formData.message}
+                    value={formData?.message || ""}
                     onChange={handleChange}
                     rows={1}
                     className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
@@ -594,7 +594,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                 <input
                   type="text"
                   name="honeypot"
-                  value={formData.honeypot}
+                  value={formData?.honeypot || ""}
                   onChange={handleChange}
                   style={{ display: "none" }}
                   tabIndex={-1}
@@ -608,7 +608,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                     style={{ width: 304, minWidth: 304 }}
                   >
                     <Turnstile
-                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                      siteKey={process?.env?.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
                       onSuccess={(token) => {
                         setCaptchaToken(token);
                         setCaptchaError(false);

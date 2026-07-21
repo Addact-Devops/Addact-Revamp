@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import SiteDetailClient from "@/app/hire-experts/[slug]/SiteDetailClient";
+import ServiceDetailClient from "./ServiceDetailClient";
 import { getServicesDetailSlug, ServicesDetail } from "@/graphql/queries/getServicesDetailSlug";
 
 type Params = Promise<{ slug: string }>;
@@ -52,8 +52,7 @@ const ServiceDetailPage = async ({ params }: { params: Params }) => {
 
   if (!data) return notFound();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return <SiteDetailClient data={data as any} />;
+  return <ServiceDetailClient data={data} />;
 };
 
 export default ServiceDetailPage;
