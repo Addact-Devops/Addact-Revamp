@@ -63,6 +63,7 @@ function LayoutWrapper({
       {!hideHeaderFooter && contactSidebarData && (
         <ContactUs
           data={contactSidebarData}
+          addressInformation={footerData?.AddressInformation}
           isDrawer
           isOpen={isContactSidebarOpen}
           onClose={() => setContactSidebarOpen(false)}

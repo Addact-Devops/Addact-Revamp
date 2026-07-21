@@ -1,5 +1,5 @@
 "use client";
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
+import { useState, ChangeEvent, FormEvent, useEffect, useMemo } from "react";
 import Image from "next/image";
 import { CONTACTUS } from "@/graphql/queries/getHomePage";
 import RichText from "../atom/richText";
@@ -8,11 +8,27 @@ import { usePathname } from "next/navigation";
 import { Mail, Phone, X } from "lucide-react";
 import Link from "next/link";
 
+export interface AddressInformationItem {
+  __typename?: string;
+  Title?: string;
+  Description?: string;
+  urlKeyword?: string;
+  Link?: {
+    href?: string;
+    isExternal?: boolean;
+    label?: string;
+    SubDisc?: string | null;
+    target?: string;
+    Icon?: { url?: string; alternativeText?: string } | null;
+  } | null;
+}
+
 interface IProps {
   data: CONTACTUS;
   isDrawer?: boolean;
   isOpen?: boolean;
   onClose?: () => void;
+  addressInformation?: AddressInformationItem[];
 }
 
 export interface ContactFormData {
@@ -103,7 +119,7 @@ const DrawerField = ({
   );
 };
 
-const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose }: IProps) => {
+const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInformation }: IProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -135,6 +151,24 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose }: IProps) 
       href: "tel:+919427722717",
     },
   ];
+
+  const dynamicContactDetails = useMemo(() => {
+    if (!addressInformation || addressInformation.length === 0) return null;
+
+    const matchedItems = addressInformation.filter((item) => {
+      const keyword = item.urlKeyword;
+      return keyword && keyword !== "default" && pathname?.includes(keyword);
+    });
+
+    let itemsToUse = matchedItems;
+    if (itemsToUse.length === 0) {
+      itemsToUse = addressInformation.filter((item) => item.urlKeyword === "default" || !item.urlKeyword);
+    }
+
+    if (itemsToUse.length === 0) return null;
+
+    return itemsToUse.slice(0, 2);
+  }, [addressInformation, pathname]);
 
   useEffect(() => {
     if (!isDrawer || !isOpen) {
@@ -397,29 +431,62 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose }: IProps) 
             </form>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4 md:mt-9">
-              {drawerContactDetails.map((contactItem) => {
-                const Icon = contactItem.icon;
-
-                return (
-                  <Link
-                    key={contactItem.id}
-                    href={contactItem.href}
+              {dynamicContactDetails ? (
+                dynamicContactDetails.map((item: AddressInformationItem, index: number) => (
+                  <div
+                    key={index}
                     className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
                   >
-                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
-                      <Icon className="h-4 w-4" />
-                    </span>
-                    <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8">
-                      <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                        {contactItem.label}:
-                      </strong>{" "}
-                      <span className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                        {contactItem.value}
+                    {item?.Link?.Icon?.url && (
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
+                        <Image
+                          src={item.Link.Icon.url}
+                          alt={item.Link.Icon.alternativeText || item?.Title || "contact icon"}
+                          width={16}
+                          height={16}
+                          className="h-4 w-4 object-contain brightness-0 invert"
+                        />
                       </span>
+                    )}
+                    <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8 flex gap-1.5 items-center">
+                      {item?.Title && (
+                        <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
+                          {item.Title}
+                        </strong>
+                      )}
+                      {item?.Description && (
+                        <span
+                          className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8 [&_a]:text-inherit [&_a]:hover:text-white [&_a]:transition-colors [&_p]:m-0"
+                          dangerouslySetInnerHTML={{ __html: item.Description }}
+                        />
+                      )}
                     </span>
-                  </Link>
-                );
-              })}
+                  </div>
+                ))
+              ) : (
+                drawerContactDetails.map((contactItem) => {
+                  const Icon = contactItem.icon;
+                  return (
+                    <Link
+                      key={contactItem.id}
+                      href={contactItem.href}
+                      className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
+                    >
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8">
+                        <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
+                          {contactItem.label}:
+                        </strong>{" "}
+                        <span className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8">
+                          {contactItem.value}
+                        </span>
+                      </span>
+                    </Link>
+                  );
+                })
+              )}
             </div>
           </div>
         </aside>
