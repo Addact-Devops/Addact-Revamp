@@ -153,19 +153,19 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
   ];
 
   const dynamicContactDetails = useMemo(() => {
-    if (!addressInformation || addressInformation.length === 0) return null;
+    if (!addressInformation || addressInformation?.length === 0) return null;
 
-    const matchedItems = addressInformation.filter((item) => {
-      const keyword = item.urlKeyword;
+    const matchedItems = addressInformation?.filter((item) => {
+      const keyword = item?.urlKeyword;
       return keyword && keyword !== "default" && pathname?.includes(keyword);
     });
 
     let itemsToUse = matchedItems;
     if (itemsToUse.length === 0) {
-      itemsToUse = addressInformation.filter((item) => item.urlKeyword === "default" || !item.urlKeyword);
+      itemsToUse = addressInformation?.filter((item) => item?.urlKeyword === "default" || !item?.urlKeyword);
     }
 
-    if (itemsToUse.length === 0) return null;
+    if (!itemsToUse || itemsToUse?.length === 0) return null;
 
     return itemsToUse.slice(0, 2);
   }, [addressInformation, pathname]);
@@ -264,7 +264,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
         companyName: formData.company,
         description: formData.message,
         pageTitle,
-        recipientEmails: data.RecipientEmails,
+        recipientEmails: data?.RecipientEmails,
         honeypot: formData.honeypot,
         turnstileToken: captchaToken,
       };
@@ -323,7 +323,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
             <div className="mb-5 flex items-start justify-between gap-4 md:mb-7">
               <div>
                 <h2 className="pb-6! text-[36px]! font-light! leading-[1.05]! md:text-[48px]!">
-                  {formBlock.Title}
+                  {formBlock?.Title}
                 </h2>
                 <div className="h-1 w-30 bg-[#3C4CFF] md:w-37.5" />
               </div>
@@ -451,7 +451,7 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                     <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8 flex gap-1.5 items-center">
                       {item?.Title && (
                         <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                          {item.Title}
+                          {item?.Title}
                         </strong>
                       )}
                       {item?.Description && (
@@ -464,12 +464,12 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                   </div>
                 ))
               ) : (
-                drawerContactDetails.map((contactItem) => {
-                  const Icon = contactItem.icon;
+                drawerContactDetails?.map((contactItem) => {
+                  const Icon = contactItem?.icon;
                   return (
                     <Link
-                      key={contactItem.id}
-                      href={contactItem.href}
+                      key={contactItem?.id}
+                      href={contactItem?.href || "#"}
                       className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
                     >
                       <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
@@ -477,10 +477,10 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
                       </span>
                       <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8">
                         <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                          {contactItem.label}:
+                          {contactItem?.label}:
                         </strong>{" "}
                         <span className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                          {contactItem.value}
+                          {contactItem?.value}
                         </span>
                       </span>
                     </Link>
@@ -502,13 +502,13 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
             <div className="w-full flex flex-col md:flex-row md:items-center md:justify-between pb-[30px] md:pb-0">
               <div className="md:w-[30%] border-r border-gray-700 px-5 md:px-12 2xl:px-16 py-5 md:py-12 2xl:py-20">
                 <h2 className="!text-[28px] lg:!text-[40px] 2xl:!text-[55px] font-semibold leading-tight !pb-4 xl:!pb-10">
-                  {formBlock.Title}
+                  {formBlock?.Title}
                 </h2>
                 <div className="h-[3px] md:h-[5px] w-[45px] md:w-[160px] bg-[#3C4CFF] mt-2 mb-4"></div>
               </div>
 
               <div className="md:w-[70%] text-white px-5 pb-5 md:px-16 [&_p]:font-light [&_p]:!text-[18px] [&_p]:md:!text-[22px] [&_p]:xl:!text-3xl [&_p]:xl:!leading-[54px]">
-                <RichText html={formBlock.Description} />
+                <RichText html={formBlock?.Description || ""} />
               </div>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-stretch justify-center">
@@ -643,8 +643,8 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
               <div className="hidden lg:block w-1/2 relative">
                 {formBlock?.Image?.url && (
                   <Image
-                    src={formBlock.Image.url}
-                    alt={formBlock.Image.alternativeText || "Contact image"}
+                    src={formBlock?.Image?.url}
+                    alt={formBlock?.Image?.alternativeText || "Contact image"}
                     fill
                     className="object-cover"
                   />

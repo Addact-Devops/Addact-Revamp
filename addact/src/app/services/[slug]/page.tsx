@@ -1,13 +1,12 @@
 import { notFound } from "next/navigation";
 import SiteDetailClient from "@/app/hire-experts/[slug]/SiteDetailClient";
-import { HireExpert } from "@/graphql/queries/getHireExpertSlug";
-import { getServicesDetailSlug } from "@/graphql/queries/getServicesDetailSlug";
+import { getServicesDetailSlug, ServicesDetail } from "@/graphql/queries/getServicesDetailSlug";
 
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
-  const data: HireExpert | null = await getServicesDetailSlug(slug);
+  const data: ServicesDetail | null = await getServicesDetailSlug(slug);
 
   if (!data || !data.SEO) return {};
 
@@ -49,11 +48,12 @@ export async function generateMetadata({ params }: { params: Params }) {
 
 const ServiceDetailPage = async ({ params }: { params: Params }) => {
   const { slug } = await params;
-  const data: HireExpert | null = await getServicesDetailSlug(slug);
+  const data: ServicesDetail | null = await getServicesDetailSlug(slug);
 
   if (!data) return notFound();
 
-  return <SiteDetailClient data={data} />;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return <SiteDetailClient data={data as any} />;
 };
 
 export default ServiceDetailPage;
