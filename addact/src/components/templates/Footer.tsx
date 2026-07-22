@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 import type { Footer as FooterData } from "@/graphql/queries/footer";
 
 type ImageType = {
@@ -37,6 +39,7 @@ type AddressInformationItem = {
   __typename?: string;
   Title?: string;
   Description?: string;
+  urlKeyword?: string;
   Link?: {
     href?: string;
     isExternal?: boolean;
@@ -76,13 +79,32 @@ type FooterViewModel = {
 };
 
 export default function Footer({ data }: FooterProps) {
+  const pathname = usePathname();
+
+  const topContactItems = useMemo(() => {
+    const AddressInformation = (data as FooterViewModel)?.AddressInformation;
+    if (!AddressInformation || AddressInformation.length === 0) return [];
+
+    const matchedItems = AddressInformation.filter((item) => {
+      const keyword = item.urlKeyword;
+      return keyword && keyword !== "default" && pathname?.includes(keyword);
+    });
+
+    if (matchedItems.length > 0) {
+      return matchedItems.slice(0, 2);
+    }
+
+    return AddressInformation.filter(
+      (item) => item.urlKeyword === "default" || !item.urlKeyword
+    ).slice(0, 2);
+  }, [data, pathname]);
+
   if (!data) return null;
 
   const footer = data as FooterViewModel;
 
   const {
     Logo,
-    AddressInformation,
     footerlinks,
     milestonestitle,
     milestonesimage,
@@ -99,9 +121,7 @@ export default function Footer({ data }: FooterProps) {
     { label: "T & C", href: "/terms-of-use" },
     { label: "Privacy Policy", href: "/privacy-policy" },
   ];
-  const finalPolicyLinks = policyLinks.length ? policyLinks : fallbackPolicyLinks;
-
-  const topContactItems = AddressInformation?.slice(0, 2) || [];
+  const finalPolicyLinks = policyLinks?.length ? policyLinks : fallbackPolicyLinks;
 
   return (
     <>
