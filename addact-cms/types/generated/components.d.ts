@@ -428,6 +428,9 @@ export interface BaseTemplateTitleWithDescription
       >;
     Link: Schema.Attribute.Component<'shared.link', false>;
     Title: Schema.Attribute.String;
+    urlKeyword: Schema.Attribute.Enumeration<
+      ['default', 'india', 'usa', 'australia']
+    >;
   };
 }
 
