@@ -1738,5 +1738,10 @@ module.exports = [
     "source": "/project-cost-estimator",
     "destination": "/project-cost-estimators",
     "permanent": true
+  },
+  {
+    "source": "/development-design/ui-ux-design-services",
+    "destination": "/digital-marketing/ui-ux-design-services",
+    "permanent": true
   }
 ];
