@@ -19,6 +19,15 @@
       "type": "component",
       "component": "shared.link",
       "repeatable": false
+    },
+    "urlKeyword": {
+      "type": "enumeration",
+      "enum": [
+        "default",
+        "india",
+        "usa",
+        "australia"
+      ]
     }
   },
   "config": {}
