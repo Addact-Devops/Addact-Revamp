@@ -1,15 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 
 import HeroBanner from "@/components/organisms/HeroBanner";
-// import OurProcess from "@/components/organisms/OurProcess";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
-// import ServiceCtaBanner2 from "@/components/molecules/ServiceCtaBanner2";
+
 import { getServicesDetailSlug, ServicesDetail } from "@/graphql/queries/getServicesDetailSlug";
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
@@ -17,14 +15,9 @@ import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
 import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 import DetailPageServices from "@/components/organisms/DetailPageServices";
 
-// const IndustriesWeServe = dynamic(
-//   () => import("@/components/organisms/IndustriesWeServe"),
-//   { ssr: false },
-// );
-
 const ServiceDetailClient = ({ data }: { data: ServicesDetail }) => {
   const [pageData, setPageData] = useState<ServicesDetail | null>(data);
-  const [loading, setLoading] = useState(false); // set false, we already have data
+  const [loading, setLoading] = useState(false);
 
   const params = useParams();
   const slug =
@@ -74,9 +67,7 @@ const ServiceDetailClient = ({ data }: { data: ServicesDetail }) => {
       />
       <DetailPageServices data={pageData?.ourService} />
       {pageData?.our_process && <HowEngagementProcessWorks data={pageData?.our_process} />}
-      {/* {pageData?.our_service && (
-        <OurServicesWithTabs data={pageData.our_service} />
-      )} */}
+      {}
       <IndustryMarqueeCards data={pageData?.industry} />
       {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
       <ClientTestimonials />
