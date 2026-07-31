@@ -19,6 +19,7 @@ import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
 import OurInsights from "@/components/organisms/OurInsights";
 import FAQ from "@/components/organisms/FAQ";
 import CtaBanner from "@/components/molecules/CtaBanner";
+import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
 //   { ssr: false },
@@ -70,6 +71,7 @@ const SiteDetailClient = ({ data }: { data: AIService }) => {
       <SolveProblemsWithAI data={pageData?.aiSolveProblem} />
       <BenefitsSection data={pageData?.aiBenefit} />
       {ourServiceArray && <ServicesSection data={ourServiceArray} />}
+       {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
       <AIProcess data={pageData?.ourprocess} />
       <IndustryMarqueeCards data={pageData?.industry} />
       <OurTechStack data={pageData?.techStack} />

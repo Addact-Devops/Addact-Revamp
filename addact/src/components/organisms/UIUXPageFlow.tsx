@@ -9,6 +9,7 @@ import IndustryMarqueeCards from "./IndustryMarqueeCards";
 import DetailPageServices from "./DetailPageServices";
 import OurTechStack from "./OurTechStack";
 import WhyWorkWithUs from "./WhyWorkWithUs";
+import FAQ from "./FAQ";
 
 // Heavy below-fold components — lazy-loaded to keep initial main-thread work low
 const UIUXWhyImportant = dynamic(() => import("./UIUXWhyImportant"), { ssr: false });
@@ -40,6 +41,7 @@ const UIUXPageFlow = ({ data }: { data: PageData }) => {
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
       <OurInsights />
+      {data?.faq && <FAQ data={data?.faq} />}
       {data?.cta && <CtaBanner data={data?.cta} />}
     </>
   );
