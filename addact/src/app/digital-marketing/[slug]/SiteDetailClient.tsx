@@ -93,7 +93,7 @@ const SiteDetailClient = ({ data }: { data: DigitalMarketingService }) => {
           <IndustryMarqueeCards data={data?.industry} />
           <ClientTestimonials />
           {data?.faq && <FAQ data={data?.faq} />}
-          <OurInsights />
+          <OurInsights titleData={data?.ourInshightsTitle?.CommonTitle?.[0]} />
           {data?.cta && <CtaBanner data={data?.cta} />}
         </>
       )}

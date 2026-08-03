@@ -228,6 +228,28 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
+        ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -243,6 +265,23 @@ export interface QATestingSupport {
   ourService: OurServiceList[];
   cta: CTA | null;
   ourprocess: OurProcess;
+  ourInshightsTitle?: OurInshightsTitle | null;
+}
+
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
 }
 
 export interface SEO {

@@ -168,6 +168,29 @@ const developmentDesignDetailsSlugQuery = gql`
         }
       }
 
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
       techStack {
         title
         description
@@ -318,10 +341,27 @@ export interface SitecoreDetail {
   cta: CTA | null;
   whyaddact: Whyaddact | null;
   faq: FAQ;
+  ourInshightsTitle?: OurInshightsTitle | null;
   techStack: TechStack;
   ourService: OurServiceList[];
   industry: Industry;
   ourprocess: OurProcess;
+}
+
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
 }
 
 export interface OurServiceList {

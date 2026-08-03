@@ -228,12 +228,51 @@ const qaTestingSupportSlugQuery = gql`
           }
         }
       }
+
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
 
 export interface QATestingDetailResponse {
   qaTestingDetails: QATestingDetail[];
+}
+
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
 }
 
 export interface QATestingDetail {
@@ -243,6 +282,7 @@ export interface QATestingDetail {
   ourService: OurServiceList[];
   cta: CTA | null;
   ourprocess: OurProcess;
+  ourInshightsTitle?: OurInshightsTitle | null;
 }
 
 export interface SEO {
