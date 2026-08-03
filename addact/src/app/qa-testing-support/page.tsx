@@ -104,7 +104,7 @@ export default async function QATestingSupport() {
       <HowEngagementProcessWorks data={data?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
-      <OurInsights />
+      <OurInsights titleData={data?.ourInshightsTitle?.CommonTitle?.[0]} />
       {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
   );

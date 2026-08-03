@@ -117,6 +117,29 @@ const aiServiceSlugQuery = gql`
         }
       }
 
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
       whyaddact {
         Title {
           ... on ComponentHeadingsH1 {
@@ -369,6 +392,7 @@ export interface AIService {
   cta: CTA | null;
   faq: FAQ;
   whyaddact: Whyaddact | null;
+  ourInshightsTitle?: OurInshightsTitle | null;
   techStack: TechStack;
   aiSolveProblem: AISolveProblem | null;
   aiBenefit: AIBenefit | null;
@@ -376,6 +400,22 @@ export interface AIService {
   ourprocess?: OurProcess | null;
   our_process?: OurProcess | null;
   industry: Industry | null;
+}
+
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
 }
 
 export interface Industry {

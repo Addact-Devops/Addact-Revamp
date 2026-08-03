@@ -80,7 +80,7 @@ const SiteDetailClient = ({ data }: { data: HireExpert }) => {
       <IndustryMarqueeCards data={pageData?.industry} />
       {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
       <ClientTestimonials />
-      <OurInsights />
+      <OurInsights titleData={pageData?.ourInshightsTitle?.CommonTitle?.[0]} />
       <FAQ data={pageData.faq} />
       {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
