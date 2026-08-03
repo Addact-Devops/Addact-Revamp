@@ -70,4 +70,4 @@ export interface HomeProps {
 export async function getCMSExpertiseData(): Promise<CMSResponse> {
   const data = await client.request<CMSResponse>(GET_CMS_EXPERTISE);
   return data;
-}
+} 
