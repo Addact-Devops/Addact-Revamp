@@ -113,7 +113,7 @@ export default async function umbracoPage() {
       <AIProcess data={data?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />
       <OurTechStack data={data?.techStack} />
-      <OurInsights />
+      <OurInsights titleData={data?.ourInshightsTitle?.CommonTitle?.[0]} />
       {data?.faq && <FAQ data={data?.faq} />}
       {data?.cta && <CtaBanner data={data?.cta} />}
     </main>

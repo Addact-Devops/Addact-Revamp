@@ -40,7 +40,7 @@ const UIUXPageFlow = ({ data }: { data: PageData }) => {
       <DetailPageServices data={data?.ourService} />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
-      <OurInsights />
+      <OurInsights titleData={data?.ourInshightsTitle?.CommonTitle?.[0]} />
       {data?.faq && <FAQ data={data?.faq} />}
       {data?.cta && <CtaBanner data={data?.cta} />}
     </>

@@ -167,6 +167,29 @@ const servicesDetailSlugQuery = gql`
         }
       }
 
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
       industry {
         industryListTitle
         industry_list {
@@ -315,9 +338,26 @@ export interface ServicesDetail {
   cta: CTA | null;
   whyaddact: Whyaddact | null;
   faq: FAQ | null;
+  ourInshightsTitle?: OurInshightsTitle | null;
   industry: Industry | null;
   ourService: OurServiceList[];
   our_process?: OurProcess | null;
+}
+
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
 }
 
 export interface SEO {

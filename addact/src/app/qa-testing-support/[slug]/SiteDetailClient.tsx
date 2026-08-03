@@ -90,7 +90,7 @@ const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
       <HowEngagementProcessWorks data={pageData?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
-      <OurInsights />
+      <OurInsights titleData={pageData?.ourInshightsTitle?.CommonTitle?.[0]} />
       {pageData?.cta && <CtaBanner data={pageData?.cta} />}
     </main>
   );

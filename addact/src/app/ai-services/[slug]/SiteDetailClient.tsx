@@ -75,7 +75,7 @@ const SiteDetailClient = ({ data }: { data: AIService }) => {
       <AIProcess data={pageData?.ourprocess} />
       <IndustryMarqueeCards data={pageData?.industry} />
       <OurTechStack data={pageData?.techStack} />
-      <OurInsights /> 
+      <OurInsights titleData={pageData?.ourInshightsTitle?.CommonTitle?.[0]} />
       {pageData?.faq && <FAQ data={pageData?.faq} />}
       {pageData?.cta && <CtaBanner data={pageData?.cta} />}
     </main>
