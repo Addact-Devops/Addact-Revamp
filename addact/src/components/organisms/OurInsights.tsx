@@ -67,7 +67,7 @@ interface InsightCardProps {
   item: InsightCardData;
 }
 
-export interface InsightsTitleData {
+export interface OurInsightsContent {
   Title: string;
   Description: string;
   Link: {
@@ -81,11 +81,11 @@ export interface InsightsTitleData {
   };
 }
 
-interface OurInsightsProps {
-  titleData?: InsightsTitleData | null;
+interface OurInsight {
+  titleData?: OurInsightsContent | null;
 }
 
-export default function OurInsights({ titleData: propTitleData }: OurInsightsProps = {}) {
+export default function OurInsights({ titleData: ourInsightsTitleData }: OurInsight = {}) {
   const [data, setData] = useState<OurInsightsData | null>(null);
   const [homeData, setHomeData] = useState<HomeResponse | null>(null);
 
@@ -94,12 +94,12 @@ export default function OurInsights({ titleData: propTitleData }: OurInsightsPro
       const result = await getOurInsights();
       setData(result);
       // Only fetch home title if no page-specific titleData was passed
-      if (!propTitleData) {
+      if (!ourInsightsTitleData) {
         const homeResult = await getHomeOurInsightsTitle();
         setHomeData(homeResult);
       }
     })();
-  }, [propTitleData]);
+  }, [ourInsightsTitleData]);
 
   if (!data) return null;
 
@@ -124,7 +124,7 @@ export default function OurInsights({ titleData: propTitleData }: OurInsightsPro
   ];
 
   // Use page-specific titleData if passed, otherwise fallback to home data
-  const titleData = propTitleData ?? homeData?.home?.ourInshightsTitle?.CommonTitle?.[0];
+  const titleData = ourInsightsTitleData ?? homeData?.home?.ourInshightsTitle?.CommonTitle?.[0];
   return (
     <section className="py-10 md:py-20 xl:py-[80px] bg-white">
       <div className="container-main mx-auto px-4">
