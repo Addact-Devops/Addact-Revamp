@@ -20,7 +20,56 @@ const qaTestingSupportSlugQuery = gql`
         structuredData
         languageTag
       }
-
+       whyaddact {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        pageReference
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+      }
       industry {
         industryListTitle
         industry_list {
@@ -229,6 +278,14 @@ const qaTestingSupportSlugQuery = gql`
         }
       }
 
+      faq {
+        Title
+        FAQ {
+          Description
+          Title
+          id
+        }
+      }
       ourInshightsTitle {
         CommonTitle {
           ... on ComponentBaseTemplateTitleWithDescription {
@@ -282,7 +339,31 @@ export interface QATestingDetail {
   ourService: OurServiceList[];
   cta: CTA | null;
   ourprocess: OurProcess;
+  whyaddact: Whyaddact | null;
+  faq:FAQ;
   ourInshightsTitle?: OurInshightsTitle | null;
+}
+export interface FAQ{
+  Title: string;
+  FAQ: {
+    id: string;
+    Title: string;
+    Description: string;
+  }[];
+}
+export interface Whyaddact{
+
+    Title: Heading[];
+    pageReference?: string;
+    GlobalCard: GlobalCard2[];
+}
+
+export interface GlobalCard2 {
+  id?: string;
+  Title: string;
+  Description: string;
+  Image: Image;
+  Link?: Link | null;
 }
 
 export interface SEO {

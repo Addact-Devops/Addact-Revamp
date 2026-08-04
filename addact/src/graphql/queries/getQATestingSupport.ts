@@ -50,6 +50,56 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
+         whyaddact {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        pageReference
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+      }
 
       Banner {
         Banner {
@@ -178,7 +228,14 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
-
+     faq {
+        Title
+        FAQ {
+          Description
+          Title
+          id
+        }
+      }
       ourprocess {
         Title {
           ... on ComponentHeadingsH1 {
@@ -265,7 +322,33 @@ export interface QATestingSupport {
   ourService: OurServiceList[];
   cta: CTA | null;
   ourprocess: OurProcess;
+  faq: FAQ;
+  whyaddact: Whyaddact | null;
   ourInshightsTitle?: OurInshightsTitle | null;
+}
+
+export interface FAQ  {
+
+  Title: string;
+  FAQ: {
+    id: string;
+    Title: string;
+    Description: string;
+  }[];
+}
+export interface Whyaddact{
+
+    Title: Heading[];
+    pageReference?: string;
+    GlobalCard: GlobalCard2[];
+}
+
+export interface GlobalCard2 {
+  id?: string;
+  Title: string;
+  Description: string;
+  Image: Image;
+  Link?: Link | null;
 }
 
 export interface OurInshightsTitle {
