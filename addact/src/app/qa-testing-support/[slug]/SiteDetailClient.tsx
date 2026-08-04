@@ -15,6 +15,8 @@ import {
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
+import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
+import FAQ from "@/components/organisms/FAQ";
 
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
@@ -86,11 +88,12 @@ const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
       )} */}
 
       <DetailPageServices data={data?.ourService} />
-
+      {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
       <HowEngagementProcessWorks data={pageData?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
       <OurInsights titleData={pageData?.ourInshightsTitle?.CommonTitle?.[0]} />
+      {data?.faq && <FAQ data={data?.faq} />}
       {pageData?.cta && <CtaBanner data={pageData?.cta} />}
     </main>
   );
