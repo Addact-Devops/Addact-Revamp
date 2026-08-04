@@ -69,6 +69,11 @@
       "type": "component",
       "component": "home.ai-solve-problem",
       "repeatable": false
+    },
+    "whyaddact": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::global-card.global-card"
     }
   }
 }
