@@ -21,51 +21,6 @@ interface ServiceItem {
   isExternal?: boolean;
 }
 
-const SERVICES: ServiceItem[] = [
-  {
-    id: 1,
-    title: "AI Consulting & Strategy",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 2,
-    title: "Generative AI Solutions",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 3,
-    title: "Machine Learning Development",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 4,
-    title: "AI Chatbot Development",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 5,
-    title: "AI Integration",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 6,
-    title: "Natural Language Processing (NLP)",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 7,
-    title: "AI Automation",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-];
-
 const SECTION_HEADING = "Service We Are Providing";
 const SECTION_DESCRIPTION =
   "With our rich and long-standing experience in development and design services, we have been successfully delivering experiences that are mature, meaningful.";
@@ -166,7 +121,6 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
       }))
       .filter((service) => service.title || service.description) ?? [];
 
-  const servicesToRender = dynamicServices.length ? dynamicServices : SERVICES;
   const sectionHeading = firstListingContext?.title || primaryData?.serviceTitle || SECTION_HEADING;
   const sectionDescription = firstListingContext?.description || SECTION_DESCRIPTION;
   const ctaLabel = firstListingContext?.link?.label || CTA_LABEL;
@@ -216,7 +170,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {servicesToRender.map((service) => (
+          {dynamicServices.map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}
@@ -263,7 +217,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
         </div>
 
         <div className="flex flex-col gap-[10px] w-[49%] xl:w-[788px]! py-[80px]">
-          {servicesToRender.map((service) => (
+          {dynamicServices.map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}
