@@ -17,6 +17,7 @@ import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
 import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 import FAQ from "@/components/organisms/FAQ";
+import OurTechStack from "@/components/organisms/OurTechStack";
 
 // const IndustriesWeServe = dynamic(
 //   () => import("@/components/organisms/IndustriesWeServe"),
@@ -89,6 +90,7 @@ const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
 
       <DetailPageServices data={data?.ourService} />
       {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
+      <OurTechStack data={data?.techStack} />
       <HowEngagementProcessWorks data={pageData?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />

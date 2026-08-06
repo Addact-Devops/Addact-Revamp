@@ -264,6 +264,21 @@ const aiServiceSlugQuery = gql`
         ... on ComponentHomeServiceList {
           isCarousel
           serviceTitle
+          serviceDescription
+          serviceLink {
+            id
+            href
+            label
+            target
+            isExternal
+            SubDisc
+            Icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
           serviceVariant {
             variant
           }
@@ -561,6 +576,7 @@ export interface AIBenefit {
 export interface OurService {
   isCarousel: boolean;
   serviceTitle: string;
+
   serviceVariant: {
     variant: string;
   } | null;
@@ -571,6 +587,8 @@ export interface OurService {
       image: Image;
       link: Link;
     };
+    serviceDescription?: string | null;
+    serviceLink?: LinkWithIcon | null;
   }[];
 }
 export interface OurProcess {
