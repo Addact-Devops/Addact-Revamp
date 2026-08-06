@@ -928,6 +928,8 @@ export interface HomeServiceList extends Struct.ComponentSchema {
   };
   attributes: {
     isCarousel: Schema.Attribute.Boolean;
+    serviceDescription: Schema.Attribute.RichText;
+    serviceLink: Schema.Attribute.Component<'shared.link', false>;
     serviceList: Schema.Attribute.Relation<
       'oneToMany',
       'api::service-card.service-card'

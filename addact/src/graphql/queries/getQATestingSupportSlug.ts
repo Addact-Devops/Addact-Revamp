@@ -20,7 +20,7 @@ const qaTestingSupportSlugQuery = gql`
         structuredData
         languageTag
       }
-       whyaddact {
+      whyaddact {
         Title {
           ... on ComponentHeadingsH1 {
             id
@@ -227,6 +227,24 @@ const qaTestingSupportSlugQuery = gql`
           }
         }
       }
+      techStack {
+        title
+        description
+        tab {
+          category {
+            categoryTitle
+          }
+          tabContent {
+            title
+            logo {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
 
       ourprocess {
         Title {
@@ -337,13 +355,14 @@ export interface QATestingDetail {
   industry: Industry;
   Banner: BannerSection;
   ourService: OurServiceList[];
+  techStack: TechStack;
   cta: CTA | null;
   ourprocess: OurProcess;
   whyaddact: Whyaddact | null;
-  faq:FAQ;
+  faq: FAQ;
   ourInshightsTitle?: OurInshightsTitle | null;
 }
-export interface FAQ{
+export interface FAQ {
   Title: string;
   FAQ: {
     id: string;
@@ -351,11 +370,10 @@ export interface FAQ{
     Description: string;
   }[];
 }
-export interface Whyaddact{
-
-    Title: Heading[];
-    pageReference?: string;
-    GlobalCard: GlobalCard2[];
+export interface Whyaddact {
+  Title: Heading[];
+  pageReference?: string;
+  GlobalCard: GlobalCard2[];
 }
 
 export interface GlobalCard2 {
@@ -366,6 +384,21 @@ export interface GlobalCard2 {
   Link?: Link | null;
 }
 
+export interface TechStack {
+  title: string;
+  description: string;
+  tab: Tab[];
+}
+export interface Tab {
+  category: {
+    categoryTitle: string;
+  };
+  tabContent: TabContent[];
+}
+export interface TabContent {
+  title: string;
+  logo: Image | null;
+}
 export interface SEO {
   metaTitle: string;
   metaDescription: string;

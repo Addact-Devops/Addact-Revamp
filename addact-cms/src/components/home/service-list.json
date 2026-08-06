@@ -8,6 +8,9 @@
     "serviceTitle": {
       "type": "string"
     },
+    "serviceDescription": {
+      "type": "richtext"
+    },
     "serviceList": {
       "type": "relation",
       "relation": "oneToMany",
@@ -15,6 +18,11 @@
     },
     "isCarousel": {
       "type": "boolean"
+    },
+    "serviceLink": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
     },
     "serviceVariant": {
       "type": "component",
