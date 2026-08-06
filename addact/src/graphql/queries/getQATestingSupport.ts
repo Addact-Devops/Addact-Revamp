@@ -50,7 +50,7 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
-         whyaddact {
+      whyaddact {
         Title {
           ... on ComponentHeadingsH1 {
             id
@@ -228,12 +228,30 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
-     faq {
+      faq {
         Title
         FAQ {
           Description
           Title
           id
+        }
+      }
+      techStack {
+        title
+        description
+        tab {
+          category {
+            categoryTitle
+          }
+          tabContent {
+            title
+            logo {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
         }
       }
       ourprocess {
@@ -285,7 +303,7 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
-        ourInshightsTitle {
+      ourInshightsTitle {
         CommonTitle {
           ... on ComponentBaseTemplateTitleWithDescription {
             Title
@@ -321,14 +339,14 @@ export interface QATestingSupport {
   Banner: BannerSection;
   ourService: OurServiceList[];
   cta: CTA | null;
+  techStack: TechStack;
   ourprocess: OurProcess;
   faq: FAQ;
   whyaddact: Whyaddact | null;
   ourInshightsTitle?: OurInshightsTitle | null;
 }
 
-export interface FAQ  {
-
+export interface FAQ {
   Title: string;
   FAQ: {
     id: string;
@@ -336,11 +354,10 @@ export interface FAQ  {
     Description: string;
   }[];
 }
-export interface Whyaddact{
-
-    Title: Heading[];
-    pageReference?: string;
-    GlobalCard: GlobalCard2[];
+export interface Whyaddact {
+  Title: Heading[];
+  pageReference?: string;
+  GlobalCard: GlobalCard2[];
 }
 
 export interface GlobalCard2 {
@@ -349,6 +366,22 @@ export interface GlobalCard2 {
   Description: string;
   Image: Image;
   Link?: Link | null;
+}
+
+export interface TechStack {
+  title: string;
+  description: string;
+  tab: Tab[];
+}
+export interface Tab {
+  category: {
+    categoryTitle: string;
+  };
+  tabContent: TabContent[];
+}
+export interface TabContent {
+  title: string;
+  logo: Image | null;
 }
 
 export interface OurInshightsTitle {
