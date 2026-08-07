@@ -1,4 +1,4 @@
-import type { PageData } from "@/app/development-design/[...slug]/SiteDetailClient";
+import type { PageData } from "@/app/development-services/[...slug]/SiteDetailClient";
 import React from "react";
 import dynamic from "next/dynamic";
 import UIUXHeroBanner from "./UIUXHeroBanner";
