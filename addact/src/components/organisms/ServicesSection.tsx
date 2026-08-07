@@ -12,60 +12,6 @@ interface ServiceCardProps {
   isExternal?: boolean;
 }
 
-interface ServiceItem {
-  id: number;
-  title: string;
-  description: string;
-  href?: string;
-  target?: string;
-  isExternal?: boolean;
-}
-
-const SERVICES: ServiceItem[] = [
-  {
-    id: 1,
-    title: "AI Consulting & Strategy",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 2,
-    title: "Generative AI Solutions",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 3,
-    title: "Machine Learning Development",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 4,
-    title: "AI Chatbot Development",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 5,
-    title: "AI Integration",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 6,
-    title: "Natural Language Processing (NLP)",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-  {
-    id: 7,
-    title: "AI Automation",
-    description:
-      "Our skilled CMS experts bring deep platform knowledge to deliver powerful, scalable, and high-performing CMS deliverables.",
-  },
-];
-
 const SECTION_HEADING = "Service We Are Providing";
 const SECTION_DESCRIPTION =
   "With our rich and long-standing experience in development and design services, we have been successfully delivering experiences that are mature, meaningful.";
@@ -91,6 +37,13 @@ type ListingContextItem = {
 type ServiceSectionData = {
   listingContext?: ListingContextItem | ListingContextItem[] | null;
   serviceTitle?: string;
+  serviceDescription?: string | null;
+  serviceLink?: {
+    href?: string;
+    label?: string | null;
+    target?: string | null;
+    isExternal?: boolean;
+  } | null;
   serviceList?: {
     listingContext?: {
       id?: string | number;
@@ -166,13 +119,15 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
       }))
       .filter((service) => service.title || service.description) ?? [];
 
-  const servicesToRender = dynamicServices.length ? dynamicServices : SERVICES;
   const sectionHeading = firstListingContext?.title || primaryData?.serviceTitle || SECTION_HEADING;
-  const sectionDescription = firstListingContext?.description || SECTION_DESCRIPTION;
-  const ctaLabel = firstListingContext?.link?.label || CTA_LABEL;
-  const ctaHref = firstListingContext?.link?.href || "#";
-  const ctaTarget = firstListingContext?.link?.target || "_self";
-  const ctaIsExternal = firstListingContext?.link?.isExternal || false;
+  const sectionDescription =
+    primaryData?.serviceDescription || firstListingContext?.description || SECTION_DESCRIPTION;
+  const ctaLabel = primaryData?.serviceLink?.label || firstListingContext?.link?.label || CTA_LABEL;
+  const ctaHref = primaryData?.serviceLink?.href || firstListingContext?.link?.href || "#";
+  const ctaTarget =
+    primaryData?.serviceLink?.target || firstListingContext?.link?.target || "_self";
+  const ctaIsExternal =
+    primaryData?.serviceLink?.isExternal || firstListingContext?.link?.isExternal || false;
   const useContactDrawer = !ctaIsExternal && shouldOpenContactDrawer(ctaHref);
 
   const handleServicesCtaClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -191,9 +146,15 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[#0f0f0f] m-0 text-[28px] leading-[38px] md:text-[40px]! md:leading-[52px]!">
             {sectionHeading}
           </h2>
-          <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[14px] leading-[22px] md:text-[16px]! md:leading-[28px]! m-0">
-            {sectionDescription}
-          </p>
+          {primaryData?.serviceDescription ? (
+            <div className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[14px] leading-[22px] md:text-[16px]! md:leading-[28px]! m-0 [&_p]:m-0">
+              <RichText html={sectionDescription} />
+            </div>
+          ) : (
+            <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[14px] leading-[22px] md:text-[16px]! md:leading-[28px]! m-0">
+              {sectionDescription}
+            </p>
+          )}
           {useContactDrawer ? (
             <button
               type="button"
@@ -216,7 +177,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           )}
         </div>
         <div className="flex flex-col gap-3">
-          {servicesToRender.map((service) => (
+          {dynamicServices.map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}
@@ -237,9 +198,15 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
           <h2 className="font-['Montserrat',sans-serif] font-semibold! text-[#0f0f0f] m-0 text-[32px] leading-[44px] xl:text-[60px]! xl:leading-[85px]!">
             {sectionHeading}
           </h2>
-          <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[15px] leading-[26px] xl:text-[20px]! xl:leading-[34px]! m-0 xl:pr-15!">
-            {sectionDescription}
-          </p>
+          {primaryData?.serviceDescription ? (
+            <div className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[15px] leading-[26px] xl:text-[20px]! xl:leading-[34px]! m-0 xl:pr-15! [&_p]:m-0">
+              <RichText html={sectionDescription} />
+            </div>
+          ) : (
+            <p className="font-['Montserrat',sans-serif] font-normal text-[#0f0f0f] text-[15px] leading-[26px] xl:text-[20px]! xl:leading-[34px]! m-0 xl:pr-15!">
+              {sectionDescription}
+            </p>
+          )}
           {useContactDrawer ? (
             <button
               type="button"
@@ -263,7 +230,7 @@ export default function ServicesSection({ data }: ServicesSectionProps) {
         </div>
 
         <div className="flex flex-col gap-[10px] w-[49%] xl:w-[788px]! py-[80px]">
-          {servicesToRender.map((service) => (
+          {dynamicServices.map((service) => (
             <ServiceCard
               key={service.id}
               title={service.title}

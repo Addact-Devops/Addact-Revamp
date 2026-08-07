@@ -1,15 +1,12 @@
 import { notFound } from "next/navigation";
-import SiteDetailClient from "./SiteDetailClient";
-import {
-  DigitalMarketingService,
-  getDigitalMarketingSlug,
-} from "@/graphql/queries/getDigitalMarketingSlug";
+import ServiceDetailClient from "./ServiceDetailClient";
+import { getServicesDetailSlug, ServicesDetail } from "@/graphql/queries/getServicesDetailSlug";
 
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
   const { slug } = await params;
-  const data: DigitalMarketingService | null = await getDigitalMarketingSlug(slug);
+  const data: ServicesDetail | null = await getServicesDetailSlug(slug);
 
   if (!data || !data.SEO) return {};
 
@@ -49,12 +46,13 @@ export async function generateMetadata({ params }: { params: Params }) {
   };
 }
 
-const SiteDetailPage = async ({ params }: { params: Params }) => {
+const ServiceDetailPage = async ({ params }: { params: Params }) => {
   const { slug } = await params;
-  const data: DigitalMarketingService | null = await getDigitalMarketingSlug(slug);
+  const data: ServicesDetail | null = await getServicesDetailSlug(slug);
 
   if (!data) return notFound();
-  return <SiteDetailClient data={data} />;
+
+  return <ServiceDetailClient data={data} />;
 };
 
-export default SiteDetailPage;
+export default ServiceDetailPage;

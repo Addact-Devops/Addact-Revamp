@@ -428,6 +428,9 @@ export interface BaseTemplateTitleWithDescription
       >;
     Link: Schema.Attribute.Component<'shared.link', false>;
     Title: Schema.Attribute.String;
+    urlKeyword: Schema.Attribute.Enumeration<
+      ['default', 'india', 'usa', 'australia']
+    >;
   };
 }
 
@@ -925,6 +928,8 @@ export interface HomeServiceList extends Struct.ComponentSchema {
   };
   attributes: {
     isCarousel: Schema.Attribute.Boolean;
+    serviceDescription: Schema.Attribute.RichText;
+    serviceLink: Schema.Attribute.Component<'shared.link', false>;
     serviceList: Schema.Attribute.Relation<
       'oneToMany',
       'api::service-card.service-card'

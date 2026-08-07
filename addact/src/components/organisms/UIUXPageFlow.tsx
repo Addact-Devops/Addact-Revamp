@@ -1,4 +1,4 @@
-import type { PageData } from "@/app/development-design/[...slug]/SiteDetailClient";
+import type { PageData } from "@/app/development-services/[...slug]/SiteDetailClient";
 import React from "react";
 import dynamic from "next/dynamic";
 import UIUXHeroBanner from "./UIUXHeroBanner";
@@ -9,6 +9,7 @@ import IndustryMarqueeCards from "./IndustryMarqueeCards";
 import DetailPageServices from "./DetailPageServices";
 import OurTechStack from "./OurTechStack";
 import WhyWorkWithUs from "./WhyWorkWithUs";
+import FAQ from "./FAQ";
 
 // Heavy below-fold components — lazy-loaded to keep initial main-thread work low
 const UIUXWhyImportant = dynamic(() => import("./UIUXWhyImportant"), { ssr: false });
@@ -39,7 +40,8 @@ const UIUXPageFlow = ({ data }: { data: PageData }) => {
       <DetailPageServices data={data?.ourService} />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
-      <OurInsights />
+      <OurInsights titleData={data?.ourInshightsTitle?.CommonTitle?.[0]} />
+      {data?.faq && <FAQ data={data?.faq} />}
       {data?.cta && <CtaBanner data={data?.cta} />}
     </>
   );

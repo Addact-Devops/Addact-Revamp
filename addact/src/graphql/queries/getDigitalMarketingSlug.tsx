@@ -19,6 +19,8 @@ const digitalMarketingQuerySlugQuery = gql`
         structuredData
         languageTag
       }
+      isUxpage
+
       Banner {
         Banner {
           ... on ComponentBannerBanner {
@@ -53,6 +55,9 @@ const digitalMarketingQuerySlugQuery = gql`
                 url
                 width
               }
+            }
+               chipsText {
+              Title
             }
           }
         }
@@ -167,6 +172,29 @@ const digitalMarketingQuerySlugQuery = gql`
         }
       }
 
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
       techStack {
         title
         description
@@ -221,6 +249,53 @@ const digitalMarketingQuerySlugQuery = gql`
             }
           }
           isCarousel
+        }
+        ... on ComponentHomeUiUxLisitng {
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          isCarousel
+          link {
+            id
+            href
+            label
+            target
+            isExternal
+            SubDisc
+            Icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+          serviceList {
+            listingContext {
+              title
+              description
+              image {
+                alternativeText
+                height
+                url
+                width
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
         }
       }
 
@@ -303,6 +378,152 @@ const digitalMarketingQuerySlugQuery = gql`
           }
         }
       }
+
+      challenges {
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
+        ProcessData {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
+      designFlow {
+        title
+        description
+        tabsAndFlow {
+          tabTitle
+          flow {
+            title
+            information
+            gif {
+              alternativeText
+              height
+              mime
+              url
+              width
+            }
+            icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
+
+      impactUx {
+        title
+        beforeText
+        afterText
+        beforeImage {
+          alternativeText
+          height
+          url
+          width
+        }
+        afterImage {
+          alternativeText
+          height
+          url
+          width
+        }
+        desktopFrame {
+          alternativeText
+          height
+          url
+          width
+        }
+        mobileFrame {
+          alternativeText
+          height
+          url
+          width
+        }
+      }
+
+      ourWork {
+        serviceTitle
+        serviceVariant {
+          variant
+        }
+        isCarousel
+        serviceList {
+          listingContext {
+            id
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+          tagLine {
+            Title
+          }
+        }
+      }
     }
   }
 `;
@@ -314,14 +535,20 @@ export interface DigitalMarketingResponse {
 export interface DigitalMarketingService {
   SEO: SEO | null;
   Banner: BannerSection;
+  isUxpage?: boolean | null;
   cta: CTA | null;
   whyaddact: Whyaddact | null;
   faq: FAQ;
+  ourInshightsTitle?: OurInshightsTitle | null;
   techStack: TechStack;
   ourService: OurServiceList[];
   industry: Industry | null;
   our_service?: OurServiceData;
   ourprocess: OurProcess;
+  challenges?: Challenges | null;
+  designFlow?: DesignFlow | null;
+  impactUx?: ImpactUx | null;
+  ourWork?: OurWork | null;
 }
 
 export interface OurServiceList {
@@ -448,6 +675,9 @@ export interface BannerItem {
   show_searchbox: boolean;
   videoLink: string | null;
   BannerLink: BannerLink;
+  chipsText: {
+    Title: string;
+  }[];
 }
 
 export interface BannerLink {
@@ -492,6 +722,22 @@ export interface FAQ {
   }[];
 }
 
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
+}
+
 export interface TechStack {
   title: string;
   description: string;
@@ -530,6 +776,88 @@ export interface ProcessDataItem {
   id: string;
   Title: string;
   Description: string;
+}
+
+export interface Challenges {
+  Title: (Heading | ChallengeError)[];
+  ProcessData: ChallengeProcessDataItem[];
+}
+
+export interface ChallengeError {
+  code: string;
+  message: string;
+}
+
+export interface ChallengeProcessDataItem {
+  Title: string;
+  Description: string;
+  Link: {
+    id: string;
+    href: string;
+    label: string;
+    target: string;
+    isExternal: boolean;
+    SubDisc: string | null;
+    Icon: Image | null;
+  } | null;
+}
+
+export interface DesignFlow {
+  title: string;
+  description: string;
+  tabsAndFlow: DesignFlowTab[];
+}
+
+export interface DesignFlowTab {
+  tabTitle: string;
+  flow: DesignFlowItem[];
+}
+
+export interface DesignFlowItem {
+  title: string;
+  information: string;
+  gif: Image | null;
+  icon: Image | null;
+}
+
+export interface ImpactUx {
+  title: string;
+  beforeText: string;
+  afterText: string;
+  beforeImage: Image | null;
+  afterImage: Image | null;
+  desktopFrame: Image | null;
+  mobileFrame: Image | null;
+}
+
+export interface OurWork {
+  serviceTitle: string | null;
+  serviceVariant: {
+    variant: string;
+  } | null;
+  isCarousel: boolean | null;
+  serviceList: OurWorkServiceListItem[];
+}
+
+export interface OurWorkServiceListItem {
+  listingContext: {
+    id: string;
+    title: string | null;
+    description: string | null;
+    image: Image | null;
+    link: {
+      id: string;
+      href: string;
+      label: string | null;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: Image | null;
+    } | null;
+  } | null;
+  tagLine: {
+    Title: string;
+  }[];
 }
 
 // Fetch function

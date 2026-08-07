@@ -1646,62 +1646,62 @@ module.exports = [
   },
   {
     "source": "/sitecore-cms-development",
-    "destination": "/development-design/cms-development/sitecore",
+    "destination": "/development-services/cms-development/sitecore",
     "permanent": true
   },
   {
     "source": "/umbraco-cms-development",
-    "destination": "/development-design/cms-development/umbraco",
+    "destination": "/development-services/cms-development/umbraco",
     "permanent": true
   },
   {
     "source": "/strapi-cms-development",
-    "destination": "/development-design/cms-development/strapi",
+    "destination": "/development-services/cms-development/strapi",
     "permanent": true
   },
   {
     "source": "/kentico-cms-development",
-    "destination": "/development-design/cms-development/kentico",
+    "destination": "/development-services/cms-development/kentico",
     "permanent": true
   },
   {
     "source": "/contentful-cms-development",
-    "destination": "/development-design/cms-development/contentful",
+    "destination": "/development-services/cms-development/contentful",
     "permanent": true
   },
   {
     "source": "/contentstack-cms-development",
-    "destination": "/development-design/cms-development/contentstack",
+    "destination": "/development-services/cms-development/contentstack",
     "permanent": true
   },
   {
     "source": "/sitecore-cms-development/sitecore-support-and-maintenance-services",
-    "destination": "/development-design/cms-development/sitecore/support-and-maintenance",
+    "destination": "/development-services/cms-development/sitecore/support-and-maintenance",
     "permanent": true
   },
   {
     "source": "/sitecore-cms-development/sitecore-consulting-services",
-    "destination": "/development-design/cms-development/sitecore/consulting-services",
+    "destination": "/development-services/cms-development/sitecore/consulting-services",
     "permanent": true
   },
   {
     "source": "/sitecore-cms-development/sitecore-xm-cloud-services",
-    "destination": "/development-design/cms-development/sitecore/sitecore-ai",
+    "destination": "/development-services/cms-development/sitecore/sitecore-ai",
     "permanent": true
   },
   {
     "source": "/sitecore-cms-development/sitecore-platform-integrations",
-    "destination": "/development-design/cms-development/sitecore/platform-integrations",
+    "destination": "/development-services/cms-development/sitecore/platform-integrations",
     "permanent": true
   },
   {
     "source": "/sitecore-cms-development/sitecore-audit-service",
-    "destination": "/development-design/cms-development/sitecore/audit-service",
+    "destination": "/development-services/cms-development/sitecore/audit-service",
     "permanent": true
   },
   {
     "source": "/sitecore-cms-development/sitecore-platform-upgrade-services",
-    "destination": "/development-design/cms-development/sitecore/platform-upgrade",
+    "destination": "/development-services/cms-development/sitecore/platform-upgrade",
     "permanent": true
   },
   {
@@ -1726,7 +1726,7 @@ module.exports = [
   },
   {
     "source": "/hire-certified-sitecore-developer",
-    "destination": "/development-design/cms-development/sitecore",
+    "destination": "/development-services/cms-development/sitecore",
     "permanent": true
   },
   {
@@ -1737,6 +1737,71 @@ module.exports = [
   {
     "source": "/project-cost-estimator",
     "destination": "/project-cost-estimators",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/ui-ux-design-services",
+    "destination": "/digital-marketing/ui-ux-design-services",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/sitecore",
+    "destination": "/development-services/cms-development/sitecore",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/umbraco",
+    "destination": "/development-services/cms-development/umbraco",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/strapi",
+    "destination": "/development-services/cms-development/strapi",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/kentico",
+    "destination": "/development-services/cms-development/kentico",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/contentful",
+    "destination": "/development-services/cms-development/contentful",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/contentstack",
+    "destination": "/development-services/cms-development/contentstack",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/sitecore/support-and-maintenance",
+    "destination": "/development-services/cms-development/sitecore/support-and-maintenance",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/sitecore/consulting-services",
+    "destination": "/development-services/cms-development/sitecore/consulting-services",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/sitecore/sitecore-ai",
+    "destination": "/development-services/cms-development/sitecore/sitecore-ai",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/sitecore/platform-integrations",
+    "destination": "/development-services/cms-development/sitecore/platform-integrations",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/sitecore/audit-service",
+    "destination": "/development-services/cms-development/sitecore/audit-service",
+    "permanent": true
+  },
+  {
+    "source": "/development-design/cms-development/sitecore/platform-upgrade",
+    "destination": "/development-services/cms-development/sitecore/platform-upgrade",
     "permanent": true
   }
 ];
