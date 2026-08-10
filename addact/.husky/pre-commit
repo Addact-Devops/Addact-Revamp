@@ -1,0 +1,21 @@
+
+if [ "$OS" = "Windows_NT" ]; then
+  NPM="npm.cmd"
+else
+  NPM="npm"
+fi
+
+cd addact || exit 1
+$NPM run lint || exit $?
+
+set +e
+$NPM run format:check
+FORMAT_EXIT=$?
+set -e
+
+if [ $FORMAT_EXIT -eq 1 ]; then
+  echo "Ignoring Prettier formatting warnings..."
+  exit 0
+elif [ $FORMAT_EXIT -ne 0 ]; then
+  exit $FORMAT_EXIT
+fi
