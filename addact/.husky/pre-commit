@@ -5,7 +5,7 @@ else
   NPM="npm"
 fi
 
-cd addact
+cd addact || exit 1
 $NPM run lint || exit $?
 
 set +e
