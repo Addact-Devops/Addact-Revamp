@@ -19,7 +19,6 @@ export async function generateMetadata({ params }: { params: Params }) {
     metaRobots,
     twitterCardTitle,
     canonicalURL,
-    structuredData,
   } = data.SEO;
 
   return {
@@ -36,13 +35,16 @@ export async function generateMetadata({ params }: { params: Params }) {
     twitter: {
       title: twitterCardTitle || metaTitle,
     },
-    robots: metaRobots || undefined,
+    robots: metaRobots
+      ? {
+          index: metaRobots.includes("index"),
+          follow: metaRobots.includes("follow"),
+        }
+      : {
+          index: true,
+          follow: true,
+        },
     metadataBase: new URL("https://www.addact.net"),
-    ...(structuredData && {
-      other: {
-        structuredData: JSON.stringify(structuredData),
-      },
-    }),
   };
 }
 
@@ -52,7 +54,32 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
 
   if (!data) return notFound();
 
-  return <SiteDetailClient data={data} />;
+  const structuredData = data?.SEO?.structuredData;
+  let schemaArray: unknown[] = [];
+  if (structuredData) {
+    try {
+      const parsed = typeof structuredData === "string" ? JSON.parse(structuredData) : structuredData;
+      schemaArray = Array.isArray(parsed) ? parsed : [parsed];
+    } catch {
+      schemaArray = [structuredData];
+    }
+  }
+
+  return (
+    <>
+      {schemaArray.map((schema, index) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: typeof schema === "string" ? schema : JSON.stringify(schema),
+          }}
+        />
+      ))}
+      <SiteDetailClient data={data} />
+    </>
+  );
 };
 
 export default SiteDetailPage;
