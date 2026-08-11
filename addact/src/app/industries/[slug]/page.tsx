@@ -5,7 +5,6 @@ import HeroBanner from "@/components/organisms/HeroBanner";
 // import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
 import { getIndustryBySlug } from "@/graphql/queries/getIndustryBySlug";
 import { Metadata } from "next";
-import Script from "next/script";
 
 // ✅ import the exact types your OurPartners component expects
 // import IndustryCtaBanner from "@/components/molecules/IndustryCtaBanner";
@@ -204,11 +203,27 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
-      {structuredData && (
-        <Script id="structured-data" type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </Script>
-      )}
+      {(() => {
+        let schemaArray: unknown[] = [];
+        if (structuredData) {
+          try {
+            const parsed = typeof structuredData === "string" ? JSON.parse(structuredData) : structuredData;
+            schemaArray = Array.isArray(parsed) ? parsed : [parsed];
+          } catch {
+            schemaArray = [structuredData];
+          }
+        }
+        return schemaArray.map((schema, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            suppressHydrationWarning
+            dangerouslySetInnerHTML={{
+              __html: typeof schema === "string" ? schema : JSON.stringify(schema),
+            }}
+          />
+        ));
+      })()}
 
       <main className="industry-detail-page">
         {/* ✅ Hero Banner (image/video auto) */}
