@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { getCareerDetailsData } from "@/graphql/queries/getCareerDetails";
 import CareerDetailClient from "./CareerDetailClient";
-import Script from "next/script";
 
 type Params = Promise<{ slug: string }>;
 
@@ -45,21 +44,10 @@ export default async function CareerDetailPage({ params }: { params: Params }) {
 
   const data = await getCareerDetailsData(slug);
   const career = data?.careerDetails?.[0];
-  const seo = career?.SEO;
+
 
   return (
     <>
-      {seo?.structuredData?.map((item, index) => (
-        <Script
-          key={index}
-          id={`structured-data-${index}`}
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(item),
-          }}
-        />
-      ))}
       <CareerDetailClient data={career} />
     </>
   );

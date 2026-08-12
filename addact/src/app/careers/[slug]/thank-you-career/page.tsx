@@ -1,7 +1,6 @@
 import { getThankYouPageBySlug } from "@/graphql/queries/getThankYouPageBySlug";
 import CareerThankYouClient from "./CareerThankYouClient";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 
 export async function generateMetadata() {
   // Hardcoded slug for SEO metadata
@@ -54,17 +53,6 @@ export default async function CareerThankYouPage() {
 
   return (
     <>
-      {page.SEO?.structuredData?.map((item, index) => (
-        <Script
-          key={index}
-          id={`structured-data-${index}`}
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(item),
-          }}
-        />
-      ))}
       <CareerThankYouClient thankYouData={page} />
     </>
   );

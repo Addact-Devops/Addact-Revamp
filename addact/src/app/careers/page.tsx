@@ -5,17 +5,14 @@ import CareerGallery from "@/components/organisms/CareerGallery";
 import { getCareersData } from "@/graphql/queries/getCareers";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
-import { fetchSinglePage } from "@/utils/fetchSinglePage";
-import Script from "next/script";
 
 export async function generateMetadata() {
   return generatePageMetadata("careers");
 }
 
 export default async function CareersPage() {
-  const [careers, seoData] = await Promise.all([getCareersData(), fetchSinglePage("careers")]);
+  const careers = await getCareersData();
 
-  const structuredData = seoData?.SEO?.structuredData || null;
 
   const banner = careers.Banner?.Banner?.[0];
   const cardTitle = careers.Careercard?.Title ?? [];
@@ -25,18 +22,6 @@ export default async function CareersPage() {
 
   return (
     <>
-      {structuredData?.map((item, index) => (
-        <Script
-          key={index}
-          id={`structured-data-${index}`}
-          type="application/ld+json"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(item),
-          }}
-        />
-      ))}
-
       <main className="bg-[#f4f4f4] pb-[60px] sm:pb-[100px]">
         {banner && (
           <HeroBanner
