@@ -168,6 +168,29 @@ const hireExpertsSlugQuery = gql`
         }
       }
 
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
       industry {
         industryListTitle
         industry_list {
@@ -316,11 +339,28 @@ export interface HireExpert {
   cta: CTA | null;
   whyaddact: Whyaddact | null;
   faq: FAQ;
+  ourInshightsTitle?: OurInshightsTitle | null;
   techStack: TechStack;
   ourService: OurServiceList[];
   our_service?: OurServiceData;
   industry: Industry | null;
   our_process?: OurProcess | null;
+}
+
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
 }
 
 export interface LinkProps {

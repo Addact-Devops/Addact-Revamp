@@ -1,11 +1,10 @@
-import { Image, StructuredData } from "@/types/common";
-import client from "../client";
 import { gql } from "graphql-request";
-import { Heading, Link } from "./getHomePage";
+import client from "../client";
+import { Heading, Image, Link } from "./getHomePage";
 
-const GET_PRESS_RELEASE_LIST_PAGE = gql`
-  query QATesting {
-    qaTestingAndSupport {
+const servicesDetailSlugQuery = gql`
+  query ServicesDetailSlug($filters: ServicesDetailFiltersInput) {
+    servicesDetails(filters: $filters) {
       SEO {
         metaTitle
         metaDescription
@@ -20,88 +19,7 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
         structuredData
         languageTag
       }
-
-      industry {
-        industryListTitle
-        industry_list {
-          Slug
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                url
-                width
-                height
-              }
-            }
-          }
-        }
-      }
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
-
-      Banner {
+      Banner: banner {
         Banner {
           ... on ComponentBannerBanner {
             BannerTitle
@@ -139,45 +57,6 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
-
-      ourService {
-        ... on ComponentHomeQaTestingListing {
-          id
-          serviceTitle
-          serviceVariant {
-            variant
-          }
-          serviceList {
-            listingContext {
-              id
-              title
-              description
-              image {
-                alternativeText
-                url
-                width
-                height
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
-            }
-          }
-          isCarousel
-        }
-      }
-
       cta {
         CTADescription
         pageReference
@@ -228,33 +107,8 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
       }
-      faq {
-        Title
-        FAQ {
-          Description
-          Title
-          id
-        }
-      }
-      techStack {
-        title
-        description
-        tab {
-          category {
-            categoryTitle
-          }
-          tabContent {
-            title
-            logo {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
-      ourprocess {
+
+      whyaddact {
         Title {
           ... on ComponentHeadingsH1 {
             id
@@ -281,6 +135,160 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
             h6
           }
         }
+        pageReference
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+      }
+      faq {
+        Title
+        FAQ {
+          Description
+          Title
+          id
+        }
+      }
+
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
+
+      ourService {
+        ... on ComponentHomeServiceList {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                url
+                width
+                height
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+          isCarousel
+        }
+      }
+
+      our_process: ourProcess {
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
         link {
           id
           href
@@ -296,15 +304,6 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
           }
         }
         ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            id
-            Title
-            Description
-          }
-        }
-      }
-      ourInshightsTitle {
-        CommonTitle {
           ... on ComponentBaseTemplateTitleWithDescription {
             Title
             Description
@@ -329,59 +328,20 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
   }
 `;
 
-export interface QATestingSupportResponse {
-  qaTestingAndSupport: QATestingSupport;
+export interface ServicesDetailResponse {
+  servicesDetails: ServicesDetail[];
 }
 
-export interface QATestingSupport {
+export interface ServicesDetail {
   SEO: SEO | null;
-  industry: Industry;
   Banner: BannerSection;
-  ourService: OurServiceList[];
   cta: CTA | null;
-  techStack: TechStack;
-  ourprocess: OurProcess;
-  faq: FAQ;
   whyaddact: Whyaddact | null;
+  faq: FAQ | null;
   ourInshightsTitle?: OurInshightsTitle | null;
-}
-
-export interface FAQ {
-  Title: string;
-  FAQ: {
-    id: string;
-    Title: string;
-    Description: string;
-  }[];
-}
-export interface Whyaddact {
-  Title: Heading[];
-  pageReference?: string;
-  GlobalCard: GlobalCard2[];
-}
-
-export interface GlobalCard2 {
-  id?: string;
-  Title: string;
-  Description: string;
-  Image: Image;
-  Link?: Link | null;
-}
-
-export interface TechStack {
-  title: string;
-  description: string;
-  tab: Tab[];
-}
-export interface Tab {
-  category: {
-    categoryTitle: string;
-  };
-  tabContent: TabContent[];
-}
-export interface TabContent {
-  title: string;
-  logo: Image | null;
+  industry: Industry | null;
+  ourService: OurServiceList[];
+  our_process?: OurProcess | null;
 }
 
 export interface OurInshightsTitle {
@@ -411,8 +371,67 @@ export interface SEO {
   metaRobots: string;
   twitterCardTitle: string;
   canonicalURL: string;
-  structuredData: StructuredData[] | null;
+  structuredData: string | null;
   languageTag: string;
+}
+
+export interface BannerSection {
+  Banner: BannerItem[];
+}
+
+export interface BannerItem {
+  BannerTitle: string;
+  BannerDescription: string;
+  BannerLogo: Image | null;
+  BannerImage: Image | null;
+  isTextAlignCenter: boolean | null;
+  isVideo: boolean | null;
+  show_searchbox: boolean;
+  videoLink: string | null;
+  BannerLink: BannerLink;
+}
+
+export interface BannerLink {
+  id: string;
+  href: string;
+  label: string;
+  target: string;
+  isExternal: boolean;
+  SubDisc: string | null;
+  Icon: Image | null;
+}
+
+export interface CTA {
+  CTADescription: string;
+  pageReference: string;
+  CTAImage: {
+    Image: Image;
+  }[];
+  CTALink: Link[];
+  Title: Heading[];
+}
+
+export interface Whyaddact {
+  Title: Heading[];
+  pageReference?: string;
+  GlobalCard: GlobalCard2[];
+}
+
+export interface GlobalCard2 {
+  id?: string;
+  Title: string;
+  Description: string;
+  Image: Image;
+  Link?: Link | null;
+}
+
+export interface FAQ {
+  Title: string;
+  FAQ: {
+    id: string;
+    Title: string;
+    Description: string;
+  }[];
 }
 
 export interface Industry {
@@ -429,38 +448,12 @@ export interface IndustryListItem {
     link: {
       id: string;
       href: string;
-      label: string;
+      label: string | null;
       isExternal: boolean;
       SubDisc: string | null;
       Icon: Image | null;
     } | null;
   } | null;
-}
-
-export interface BannerSection {
-  Banner: BannerItem[];
-}
-
-export interface BannerItem {
-  BannerTitle: string;
-  BannerDescription: string;
-  BannerLogo: Image | null;
-  BannerImage: Image | null;
-  isTextAlignCenter: boolean | null;
-  isVideo: boolean | null;
-  show_searchbox: boolean;
-  videoLink: string | null;
-  BannerLink: BannerLink | null;
-}
-
-export interface BannerLink {
-  id: string;
-  href: string;
-  label: string;
-  target: string;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Image | null;
 }
 
 export interface OurServiceList {
@@ -491,14 +484,10 @@ export interface ServiceListItem {
   } | null;
 }
 
-export interface CTA {
-  CTADescription: string;
-  pageReference: string;
-  CTAImage: {
-    Image: Image;
-  }[];
-  CTALink: Link[];
+export interface OurProcess {
   Title: Heading[];
+  ProcessData: ProcessDataItem[];
+  link: LinkProps;
 }
 
 export interface LinkProps {
@@ -511,25 +500,20 @@ export interface LinkProps {
   Icon: Image | null;
 }
 
-export interface OurProcess {
-  Title: Heading[];
-  ProcessData: ProcessDataItem[];
-  link: LinkProps;
-}
-
 export interface ProcessDataItem {
   id: string;
   Title: string;
   Description: string;
 }
 
-export interface ProcessDataItem {
-  id: string;
-  Title: string;
-  Description: string;
-}
+export async function getServicesDetailSlug(slug: string): Promise<ServicesDetail | null> {
+  const data = await client.request<ServicesDetailResponse>(servicesDetailSlugQuery, {
+    filters: {
+      slug: {
+        eq: `/${slug}`,
+      },
+    },
+  });
 
-export async function getQATestingSupport(): Promise<QATestingSupport> {
-  const data = await client.request<QATestingSupportResponse>(GET_PRESS_RELEASE_LIST_PAGE);
-  return data.qaTestingAndSupport;
+  return data.servicesDetails?.[0] ?? null;
 }

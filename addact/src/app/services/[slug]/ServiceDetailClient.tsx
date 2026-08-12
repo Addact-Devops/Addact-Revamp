@@ -1,32 +1,23 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import dynamic from "next/dynamic";
 import { useParams } from "next/navigation";
 
 import HeroBanner from "@/components/organisms/HeroBanner";
 import ClientTestimonials from "@/components/organisms/ClientTestimonials";
 import OurInsights from "@/components/organisms/OurInsights";
-import DetailPageServices from "@/components/organisms/DetailPageServices";
-import {
-  getQATestingSupportSlug,
-  QATestingDetail,
-} from "@/graphql/queries/getQATestingSupportSlug";
+import FAQ from "@/components/organisms/FAQ";
+
+import { getServicesDetailSlug, ServicesDetail } from "@/graphql/queries/getServicesDetailSlug";
 import HowEngagementProcessWorks from "@/components/organisms/HowEngagementProcessWorks";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import IndustryMarqueeCards from "@/components/organisms/IndustryMarqueeCards";
 import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
-import FAQ from "@/components/organisms/FAQ";
-import OurTechStack from "@/components/organisms/OurTechStack";
+import DetailPageServices from "@/components/organisms/DetailPageServices";
 
-// const IndustriesWeServe = dynamic(
-//   () => import("@/components/organisms/IndustriesWeServe"),
-//   { ssr: false },
-// );
-
-const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
-  const [pageData, setPageData] = useState<QATestingDetail | null>(data);
-  const [loading, setLoading] = useState(false); // set false, we already have data
+const ServiceDetailClient = ({ data }: { data: ServicesDetail }) => {
+  const [pageData, setPageData] = useState<ServicesDetail | null>(data);
+  const [loading, setLoading] = useState(false);
 
   const params = useParams();
   const slug =
@@ -39,7 +30,7 @@ const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
   useEffect(() => {
     if (!pageData && slug) {
       setLoading(true);
-      getQATestingSupportSlug(slug)
+      getServicesDetailSlug(slug)
         .then((res) => {
           setPageData(res);
         })
@@ -64,41 +55,27 @@ const SiteDetailClient = ({ data }: { data: QATestingDetail }) => {
     <main className="bg-dark">
       <HeroBanner
         title={bannerData?.BannerTitle ?? ""}
-        description={bannerData?.BannerDescription ?? ""}
+        description={bannerData?.BannerDescription?.replace(/^<p>|<\/p>$/g, "") ?? ""}
         button={{
           label: bannerData?.BannerLink?.label ?? "",
           url: bannerData?.BannerLink?.href ?? "",
         }}
         isVideo={Boolean(bannerData?.isVideo)}
-        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         videoUrl={bannerData?.videoLink ?? ""}
+        isTextAlignCenter={bannerData?.isTextAlignCenter ?? false}
         backgroundImageUrl={bannerData?.BannerImage?.url ?? ""}
       />
-
-      {/* {pageData?.ourService && pageData.ourService.length > 0 && (
-        <>
-          {pageData.ourService.map((service, index) => (
-            <DetailPageServices
-              key={service.id || index}
-              title={service.serviceTitle}
-              isCaraousl={service.isCarousel}
-              data={service}
-            />
-          ))}
-        </>
-      )} */}
-
-      <DetailPageServices data={data?.ourService} />
-      {pageData?.whyaddact && <WhyWorkWithUs data={pageData.whyaddact} />}
-      <OurTechStack data={data?.techStack} />
-      <HowEngagementProcessWorks data={pageData?.ourprocess} />
-      <IndustryMarqueeCards data={data?.industry} />
+      <DetailPageServices data={pageData?.ourService} />
+      {pageData?.our_process && <HowEngagementProcessWorks data={pageData?.our_process} />}
+      {}
+      <IndustryMarqueeCards data={pageData?.industry} />
+      {pageData?.whyaddact && <WhyWorkWithUs data={pageData?.whyaddact} />}
       <ClientTestimonials />
       <OurInsights titleData={pageData?.ourInshightsTitle?.CommonTitle?.[0]} />
-      {data?.faq && <FAQ data={data?.faq} />}
-      {pageData?.cta && <CtaBanner data={pageData?.cta} />}
+      <FAQ data={pageData.faq} />
+      {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
   );
 };
 
-export default SiteDetailClient;
+export default ServiceDetailClient;

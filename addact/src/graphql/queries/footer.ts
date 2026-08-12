@@ -44,6 +44,7 @@ const GET_FOOTER = gql`
         ... on ComponentBaseTemplateTitleWithDescription {
           Title
           Description
+          urlKeyword
           Link {
             href
             isExternal
@@ -146,6 +147,7 @@ type FooterImageBlock = {
 type FooterAddressInformation = {
   Title?: string;
   Description?: string;
+  urlKeyword?: string;
   Link?: {
     href?: string;
     isExternal?: boolean;

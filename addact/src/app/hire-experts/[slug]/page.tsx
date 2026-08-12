@@ -36,7 +36,15 @@ export async function generateMetadata({ params }: { params: Params }) {
     twitter: {
       title: twitterCardTitle || metaTitle,
     },
-    robots: metaRobots || undefined,
+    robots: metaRobots
+      ? {
+          index: metaRobots.includes("index"),
+          follow: metaRobots.includes("follow"),
+        }
+      : {
+          index: true,
+          follow: true,
+        },
     metadataBase: new URL("https://www.addact.net"),
   };
 }

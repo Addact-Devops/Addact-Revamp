@@ -14,6 +14,7 @@ import {
   getDevelopmentDesignSlug,
   DevelopmentDesignDetail,
 } from "@/graphql/queries/getDevelopmentDesignSlug";
+import { DigitalMarketingService } from "@/graphql/queries/getDigitalMarketingSlug";
 import {
   CmsDetail,
   getDevelopmentDesignDetailsCmsSlug,
@@ -33,7 +34,11 @@ import UIUXPageFlow from "@/components/organisms/UIUXPageFlow";
 //   { ssr: false },
 // );
 
-export type PageData = DevelopmentDesignDetail | CmsDetail | SitecoreDetail;
+export type PageData =
+  | DevelopmentDesignDetail
+  | CmsDetail
+  | SitecoreDetail
+  | DigitalMarketingService;
 
 const SiteDetailClient = ({ data }: { data: PageData }) => {
   const [pageData, setPageData] = useState<PageData | null>(data);
@@ -109,7 +114,7 @@ const SiteDetailClient = ({ data }: { data: PageData }) => {
           <IndustryMarqueeCards data={pageData?.industry} />
           <ClientTestimonials />
           {pageData?.faq && <FAQ data={pageData?.faq} />}
-          <OurInsights />
+          <OurInsights titleData={pageData?.ourInshightsTitle?.CommonTitle?.[0]} />
           {pageData?.cta && <CtaBanner data={pageData?.cta} />}
         </>
       )}

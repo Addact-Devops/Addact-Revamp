@@ -10,6 +10,9 @@ import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import { getQATestingSupport } from "@/graphql/queries/getQATestingSupport";
 import Script from "next/script";
 
+import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
+import OurTechStack from "@/components/organisms/OurTechStack";
+import FAQ from "@/components/organisms/FAQ";
 export async function generateMetadata() {
   return generatePageMetadata("qaTestingAndSupport");
 }
@@ -60,11 +63,13 @@ export default async function QATestingSupport() {
         </>
       )} */}
       <DetailPageServices data={data?.ourService} />
-
+      {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
+      <OurTechStack data={data?.techStack} />
       <HowEngagementProcessWorks data={data?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />
       <ClientTestimonials />
-      <OurInsights />
+      <OurInsights titleData={data?.ourInshightsTitle?.CommonTitle?.[0]} />
+      {data?.faq && <FAQ data={data?.faq} />}
       {data?.cta && <CtaBanner data={data?.cta} />}
     </main>
   );

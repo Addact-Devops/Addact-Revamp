@@ -12,6 +12,7 @@ import FAQ from "@/components/organisms/FAQ";
 import CtaBanner from "@/components/molecules/CtaBanner";
 import { getAIService } from "@/graphql/queries/getAIService";
 import Script from "next/script";
+import WhyWorkWithUs from "@/components/organisms/WhyWorkWithUs";
 
 export async function generateMetadata() {
   return generatePageMetadata("aiService");
@@ -38,10 +39,11 @@ export default async function umbracoPage() {
       <SolveProblemsWithAI data={data?.aiSolveProblem} />
       <BenefitsSection data={data?.aiBenefit} />
       <ServicesSection data={data?.ourService} />
+      {data?.whyaddact && <WhyWorkWithUs data={data.whyaddact} />}
       <AIProcess data={data?.ourprocess} />
       <IndustryMarqueeCards data={data?.industry} />
       <OurTechStack data={data?.techStack} />
-      <OurInsights />
+      <OurInsights titleData={data?.ourInshightsTitle?.CommonTitle?.[0]} />
       {data?.faq && <FAQ data={data?.faq} />}
       {data?.cta && <CtaBanner data={data?.cta} />}
     </main>

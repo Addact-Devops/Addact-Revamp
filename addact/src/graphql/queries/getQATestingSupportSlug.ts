@@ -20,7 +20,56 @@ const qaTestingSupportSlugQuery = gql`
         structuredData
         languageTag
       }
-
+      whyaddact {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        pageReference
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+      }
       industry {
         industryListTitle
         industry_list {
@@ -178,6 +227,24 @@ const qaTestingSupportSlugQuery = gql`
           }
         }
       }
+      techStack {
+        title
+        description
+        tab {
+          category {
+            categoryTitle
+          }
+          tabContent {
+            title
+            logo {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
 
       ourprocess {
         Title {
@@ -228,6 +295,37 @@ const qaTestingSupportSlugQuery = gql`
           }
         }
       }
+
+      faq {
+        Title
+        FAQ {
+          Description
+          Title
+          id
+        }
+      }
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;
@@ -236,15 +334,71 @@ export interface QATestingDetailResponse {
   qaTestingDetails: QATestingDetail[];
 }
 
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
+}
+
 export interface QATestingDetail {
   SEO: SEO | null;
   industry: Industry;
   Banner: BannerSection;
   ourService: OurServiceList[];
+  techStack: TechStack;
   cta: CTA | null;
   ourprocess: OurProcess;
+  whyaddact: Whyaddact | null;
+  faq: FAQ;
+  ourInshightsTitle?: OurInshightsTitle | null;
+}
+export interface FAQ {
+  Title: string;
+  FAQ: {
+    id: string;
+    Title: string;
+    Description: string;
+  }[];
+}
+export interface Whyaddact {
+  Title: Heading[];
+  pageReference?: string;
+  GlobalCard: GlobalCard2[];
 }
 
+export interface GlobalCard2 {
+  id?: string;
+  Title: string;
+  Description: string;
+  Image: Image;
+  Link?: Link | null;
+}
+
+export interface TechStack {
+  title: string;
+  description: string;
+  tab: Tab[];
+}
+export interface Tab {
+  category: {
+    categoryTitle: string;
+  };
+  tabContent: TabContent[];
+}
+export interface TabContent {
+  title: string;
+  logo: Image | null;
+}
 export interface SEO {
   metaTitle: string;
   metaDescription: string;

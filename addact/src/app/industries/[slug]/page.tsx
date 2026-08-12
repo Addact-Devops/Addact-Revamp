@@ -5,7 +5,6 @@ import HeroBanner from "@/components/organisms/HeroBanner";
 // import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
 import { getIndustryBySlug } from "@/graphql/queries/getIndustryBySlug";
 import { Metadata } from "next";
-import Script from "next/script";
 
 // ✅ import the exact types your OurPartners component expects
 // import IndustryCtaBanner from "@/components/molecules/IndustryCtaBanner";
@@ -20,6 +19,7 @@ import WhyAddact from "@/components/organisms/WhyAddact";
 import OurTechStack from "@/components/organisms/OurTechStack";
 import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 // import type {
 //   PartnerImage,
 //   PartnerTitle,

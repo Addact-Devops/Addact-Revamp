@@ -118,6 +118,79 @@ const aiServiceSlugQuery = gql`
         }
       }
 
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
+
+      whyaddact {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        pageReference
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+      }
       techStack {
         title
         description
@@ -192,6 +265,21 @@ const aiServiceSlugQuery = gql`
         ... on ComponentHomeServiceList {
           isCarousel
           serviceTitle
+          serviceDescription
+          serviceLink {
+            id
+            href
+            label
+            target
+            isExternal
+            SubDisc
+            Icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
           serviceVariant {
             variant
           }
@@ -319,6 +407,8 @@ export interface AIService {
   Banner: BannerSection;
   cta: CTA | null;
   faq: FAQ;
+  whyaddact: Whyaddact | null;
+  ourInshightsTitle?: OurInshightsTitle | null;
   techStack: TechStack;
   aiSolveProblem: AISolveProblem | null;
   aiBenefit: AIBenefit | null;
@@ -326,6 +416,22 @@ export interface AIService {
   ourprocess?: OurProcess | null;
   our_process?: OurProcess | null;
   industry: Industry | null;
+}
+
+export interface OurInshightsTitle {
+  CommonTitle: {
+    Title: string;
+    Description: string;
+    Link: {
+      id: string;
+      href: string;
+      label: string;
+      target: string;
+      isExternal: boolean;
+      SubDisc: string | null;
+      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
+    };
+  }[];
 }
 
 export interface Industry {
@@ -414,6 +520,19 @@ export interface FAQ {
   }[];
 }
 
+export interface Whyaddact {
+  Title: Heading[];
+  pageReference?: string;
+  GlobalCard: GlobalCard2[];
+}
+
+export interface GlobalCard2 {
+  id?: string;
+  Title: string;
+  Description: string;
+  Image: Image;
+  Link?: Link | null;
+}
 export interface TechStack {
   title: string;
   description: string;
@@ -458,6 +577,7 @@ export interface AIBenefit {
 export interface OurService {
   isCarousel: boolean;
   serviceTitle: string;
+
   serviceVariant: {
     variant: string;
   } | null;
@@ -468,6 +588,8 @@ export interface OurService {
       image: Image;
       link: Link;
     };
+    serviceDescription?: string | null;
+    serviceLink?: LinkWithIcon | null;
   }[];
 }
 export interface OurProcess {
