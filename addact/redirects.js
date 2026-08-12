@@ -1803,5 +1803,10 @@ module.exports = [
     "source": "/development-design/cms-development/sitecore/platform-upgrade",
     "destination": "/development-services/cms-development/sitecore/platform-upgrade",
     "permanent": true
+  },
+  {
+    "source": "/development-services/ui-ux-design-services",
+    "destination": "/digital-marketing/ui-ux-design-services",
+    "permanent": true
   }
 ];
