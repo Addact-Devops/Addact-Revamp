@@ -126,7 +126,6 @@
 
 // export default EventDetails;
 
-// app/events/[slug]/page.tsx
 import { Metadata } from "next";
 import { getEventDetailBySlug } from "@/graphql/queries/getEventDetail";
 import EventDetailClient from "./EventDetailClient";
