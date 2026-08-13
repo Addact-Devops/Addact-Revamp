@@ -74,7 +74,7 @@ const OurCapabilities = ({ data }: OurCapabilitiesProps) => {
           {/* Left side — Heading + Tabs */}
           <div className="w-full md:w-[55%] lg:w-[60%] max-w-[1059px]">
             {heading && (
-              <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !text-[#0F0F0F]">
+              <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 !text-[#0F0F0F] font-semibold!">
                 {heading}
               </h2>
             )}
