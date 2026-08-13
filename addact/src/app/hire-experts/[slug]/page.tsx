@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 import SiteDetailClient from "./SiteDetailClient";
 import { getHireExpertsSlug, HireExpert } from "@/graphql/queries/getHireExpertSlug";
 
@@ -55,28 +56,9 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
   if (!data) return notFound();
 
   const structuredData = data?.SEO?.structuredData;
-  let schemaArray: unknown[] = [];
-  if (structuredData) {
-    try {
-      const parsed = typeof structuredData === "string" ? JSON.parse(structuredData) : structuredData;
-      schemaArray = Array.isArray(parsed) ? parsed : [parsed];
-    } catch {
-      schemaArray = [structuredData];
-    }
-  }
-
   return (
     <>
-      {schemaArray.map((schema, index) => (
-        <script
-          key={index}
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: typeof schema === "string" ? schema : JSON.stringify(schema),
-          }}
-        />
-      ))}
+      <StructuredDataScript data={structuredData} />
       <SiteDetailClient data={data} />
     </>
   );

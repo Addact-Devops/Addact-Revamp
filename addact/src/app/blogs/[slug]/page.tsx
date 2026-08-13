@@ -2,8 +2,8 @@ import { getBlogBySlug } from "@/graphql/queries/getBlogBySlug";
 import BlogPageClient from "./BlogPageClient";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Script from "next/script";
 import { Suspense } from "react";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 type Params = Promise<{ slug: string }>;
 
@@ -48,11 +48,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
-      {structuredData && (
-        <Script id="structured-data" type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </Script>
-      )}
+      <StructuredDataScript data={structuredData} />
       <Suspense fallback={<div>Loading blogs...</div>}>
         <BlogPageClient blog={blog} />
       </Suspense>

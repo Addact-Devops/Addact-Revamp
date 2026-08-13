@@ -14,6 +14,7 @@ import {
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 export async function generateMetadata() {
   return generatePageMetadata("aboutUs");
@@ -39,15 +40,7 @@ export default async function AboutUsPage() {
 
   return (
     <>
-      {structuredData && (
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
-      )}
+      <StructuredDataScript data={structuredData} />
 
       <main className="bg-[#f4f4f4]">
         <HeroBanner

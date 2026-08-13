@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import Head from "next/head";
 import RichText from "@/components/atom/richText";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 type Props = {
   thankYouData: {
@@ -62,14 +63,7 @@ export default function ConnectNowThankYouClient({ thankYouData }: Props) {
         {ogImage && <meta property="og:image" content={ogImage} />}
         {twitterCardTitle && <meta name="twitter:title" content={twitterCardTitle} />}
         {languageTag && <meta httpEquiv="Content-Language" content={languageTag} />}
-        {structuredData && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(structuredData),
-            }}
-          />
-        )}
+        <StructuredDataScript data={structuredData} />
       </Head>
 
       <div className="bg-white pt-[120px]">

@@ -3,6 +3,7 @@
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import BrandGuidelinesPageClient from "./BrandGuidelinesPageClient";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 export async function generateMetadata() {
   return generatePageMetadata("brandGuideline");
@@ -14,15 +15,7 @@ export default async function Page() {
 
   return (
     <>
-      {structuredData && (
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
-      )}
+      <StructuredDataScript data={structuredData} />
 
       <BrandGuidelinesPageClient />
     </>

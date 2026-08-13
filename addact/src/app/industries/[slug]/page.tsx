@@ -19,6 +19,8 @@ import WhyAddact from "@/components/organisms/WhyAddact";
 import OurTechStack from "@/components/organisms/OurTechStack";
 import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
+
 // import type {
 //   PartnerImage,
 //   PartnerTitle,
@@ -203,27 +205,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
-      {(() => {
-        let schemaArray: unknown[] = [];
-        if (structuredData) {
-          try {
-            const parsed = typeof structuredData === "string" ? JSON.parse(structuredData) : structuredData;
-            schemaArray = Array.isArray(parsed) ? parsed : [parsed];
-          } catch {
-            schemaArray = [structuredData];
-          }
-        }
-        return schemaArray.map((schema, index) => (
-          <script
-            key={index}
-            type="application/ld+json"
-            suppressHydrationWarning
-            dangerouslySetInnerHTML={{
-              __html: typeof schema === "string" ? schema : JSON.stringify(schema),
-            }}
-          />
-        ));
-      })()}
+      <StructuredDataScript data={structuredData} />
 
       <main className="industry-detail-page">
         {/* ✅ Hero Banner (image/video auto) */}
