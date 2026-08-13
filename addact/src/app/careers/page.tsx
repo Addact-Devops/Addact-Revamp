@@ -6,6 +6,7 @@ import { getCareersData } from "@/graphql/queries/getCareers";
 
 import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 export async function generateMetadata() {
   return generatePageMetadata("careers");
@@ -24,15 +25,7 @@ export default async function CareersPage() {
 
   return (
     <>
-      {structuredData && (
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
-      )}
+      <StructuredDataScript data={structuredData} />
 
       <main className="bg-[#f4f4f4] pb-[60px] sm:pb-[100px]">
         {banner && (

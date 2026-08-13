@@ -128,10 +128,10 @@
 
 // app/events/[slug]/page.tsx
 import { Metadata } from "next";
-import Script from "next/script";
 import { getEventDetailBySlug } from "@/graphql/queries/getEventDetail";
 import EventDetailClient from "./EventDetailClient";
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 type Params = Promise<{ slug: string }>;
 
@@ -182,11 +182,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
-      {structuredData && (
-        <Script id="structured-data" type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </Script>
-      )}
+      <StructuredDataScript data={structuredData} />
 
       <EventDetailClient data={res} />
     </>

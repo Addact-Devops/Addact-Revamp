@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 import SiteDetailClient from "./SiteDetailClient";
 import {
   getQATestingSupportSlug,
@@ -55,7 +56,12 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
 
   if (!data) return notFound();
 
-  return <SiteDetailClient data={data} />;
+  return (
+    <>
+      <StructuredDataScript data={data?.SEO?.structuredData} />
+      <SiteDetailClient data={data} />
+    </>
+  );
 };
 
 export default SiteDetailPage;
