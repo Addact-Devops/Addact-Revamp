@@ -1,34 +1,35 @@
 import React from "react";
 
 interface StructuredDataScriptProps {
-  data?: unknown; // Raw structured data from Strapi API
-  additionalData?: unknown[]; // Additional hardcoded JSON-LD objects to merge
+  data?: unknown;
+  additionalData?: unknown[];
 }
 
-export default function StructuredDataScript({ data, additionalData = [] }: StructuredDataScriptProps) {
-  // If neither is provided, don't render anything
+export default function StructuredDataScript({
+  data,
+  additionalData = [],
+}: StructuredDataScriptProps) {
   if (!data && additionalData.length === 0) return null;
 
   let structuredDataArray: unknown[] = [];
-  
+
   if (data) {
     structuredDataArray = Array.isArray(data)
       ? data
       : typeof data === "object" && data !== null
-      ? [data]
-      : typeof data === "string"
-      ? (() => {
-          try {
-            const p = JSON.parse(data);
-            return Array.isArray(p) ? p : [p];
-          } catch {
-            return [];
-          }
-        })()
-      : [];
+        ? [data]
+        : typeof data === "string"
+          ? (() => {
+              try {
+                const p = JSON.parse(data);
+                return Array.isArray(p) ? p : [p];
+              } catch {
+                return [];
+              }
+            })()
+          : [];
   }
 
-  // Ensure all items are proper objects and flatten them
   const cleanArray = structuredDataArray
     .flatMap((item) => {
       if (typeof item === "string") {
@@ -43,7 +44,6 @@ export default function StructuredDataScript({ data, additionalData = [] }: Stru
     })
     .filter(Boolean);
 
-  // Merge the dynamic Strapi data with any additional hardcoded schemas
   const mergedArray = [...cleanArray, ...additionalData];
 
   if (mergedArray.length === 0) return null;

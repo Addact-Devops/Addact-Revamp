@@ -20,9 +20,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ✅ Inject structured data */}
       <StructuredDataScript data={structuredData} />
-<HomePageFlow homeData={homeData} />
+      <HomePageFlow homeData={homeData} />
     </>
   );
 }

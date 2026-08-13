@@ -19,7 +19,6 @@ export default async function ContactUsPage() {
   return (
     <>
       <main>
-        {/* ✅ Structured data merged at the bottom */}
         {bannerData?.BannerTitle &&
         bannerData?.BannerDescription &&
         bannerData?.BannerImage?.url ? (
@@ -54,7 +53,6 @@ export default async function ContactUsPage() {
         )} */}
       </main>
 
-      {/* ✅ Merged Structured Data */}
       <StructuredDataScript
         data={contactus?.SEO?.structuredData}
         additionalData={[

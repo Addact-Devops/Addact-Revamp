@@ -5,7 +5,6 @@ import BlogListContent from "./BlogListContent";
 import { Suspense } from "react";
 import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
-// ✅ SEO metadata from utility
 export async function generateMetadata(): Promise<Metadata> {
   return generatePageMetadata("blogs");
 }
@@ -16,7 +15,6 @@ export default async function BlogListPage() {
 
   return (
     <>
-      {/* ✅ Structured data from Strapi */}
       <StructuredDataScript data={structuredData} />
 
       {/* ✅ WebSite Schema */}
@@ -71,8 +69,6 @@ export default async function BlogListPage() {
           }),
         }}
       />
-
-      {/* ✅ Actual blog listing UI */}
       <Suspense fallback={<div>Loading blogs...</div>}>
         <BlogListContent data={seoData} />
       </Suspense>
