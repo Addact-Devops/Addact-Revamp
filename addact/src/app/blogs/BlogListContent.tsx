@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getInitialBlogs, getNextBlogs } from "@/graphql/queries/getAllBlog";
@@ -58,6 +58,7 @@ export default function BlogListContent({}: Props) {
   const [bgImageUrl, setBgImageUrl] = useState<string | null>(null);
   const [title, setTitle] = useState("The think tank");
   const [description, setDescription] = useState("");
+  const route = usePathname();
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
@@ -214,6 +215,8 @@ export default function BlogListContent({}: Props) {
     return () => observer.disconnect();
   }, [loadingMore, hasMore, loadMoreBlogs]);
 
+  const queryString = searchParams.toString();
+  const fullRelativeUrl = queryString ? `${route}?${queryString}` : route;
   if (loading) return <Loader />;
 
   return (
@@ -266,9 +269,16 @@ export default function BlogListContent({}: Props) {
 
             const author = typeof rawAuthor === "string" ? rawAuthor.trim() : "Addact Technologies";
             const category = typeof rawCategory === "string" ? rawCategory.trim() : "General";
-
+            const handleBlogClick = () => {
+              localStorage.setItem("blogListReturnUrl", fullRelativeUrl);
+            };
             return (
-              <Link key={blog.Slug || blog.documentId} href={blogLink} className="group">
+              <Link
+                key={blog.Slug || blog.documentId}
+                href={blogLink}
+                onClick={handleBlogClick}
+                className="group"
+              >
                 <div className="bg-[#0E0D0D] rounded-xl group-hover:shadow-xl transition duration-300 cursor-pointer">
                   {imageUrl && (
                     <div className="relative blogitem-h rounded-xl overflow-hidden mb-4">
