@@ -1,6 +1,9 @@
 // src/graphql/queries/getAboutUs.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import client from "../client";
 
 // -----------------------------
@@ -26,18 +29,15 @@ export type AboutUsHeroBannerResponse = {
 };
 
 const bannerQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
       HeroBanner {
         Banner {
           ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              url
-              height
-              width
-            }
+            ...HeroBannerFields
           }
         }
       }
@@ -219,6 +219,8 @@ type AboutUsCTAResponse = {
 };
 
 const ctaQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
   query GetAboutUsCTA {
     aboutUs {
       aboutUsCTA {
@@ -235,14 +237,7 @@ const ctaQuery = gql`
         }
         CTADescription
         CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              url
-              alternativeText
-              width
-              height
-            }
-          }
+          ... on ComponentSharedImage { ...SharedImageFields }
         }
         CTALink {
           ... on ComponentSharedLink {

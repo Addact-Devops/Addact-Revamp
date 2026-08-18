@@ -1,8 +1,18 @@
+import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const ServiceDetailBySlug = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${HEADING_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
   query SubServicePages($filters: SubServicePageFiltersInput) {
     subServicePages(filters: $filters) {
       ReferenceTitle
@@ -63,10 +73,7 @@ const ServiceDetailBySlug = gql`
               id
               h6
             }
-            ... on ComponentBaseTemplateRichtext {
-              id
-              Richtext
-            }
+            ... on ComponentBaseTemplateRichtext { ...RichtextFields }
           }
         }
         ReferenceTitle
@@ -86,41 +93,7 @@ const ServiceDetailBySlug = gql`
           Description
         }
       }
-      our_process {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            id
-            Title
-            Description
-          }
-        }
-      }
+      our_process { ${OUR_PROCESS_FIELDS} }
       why_addact {
         Title {
           ... on ComponentHeadingsH1 {
@@ -147,10 +120,7 @@ const ServiceDetailBySlug = gql`
             id
             h6
           }
-          ... on ComponentBaseTemplateRichtext {
-            id
-            Richtext
-          }
+          ... on ComponentBaseTemplateRichtext { ...RichtextFields }
           ... on Error {
             code
             message
@@ -171,46 +141,90 @@ const ServiceDetailBySlug = gql`
         }
       }
       cta2 {
-        CtaDescription
-        CtaImage {
+        CTADescription
+        CTAImage {
           alternativeText
           height
           name
           url
           width
         }
-        CtaLink {
+        CTALink {
           id
           href
           label
           isExternal
         }
-        CtaTitle
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
       }
       cta {
-        CtaDescription
-        CtaImage {
+        CTADescription
+        CTAImage {
           alternativeText
           height
           name
           url
           width
         }
-        CtaLink {
+        CTALink {
           id
           href
           label
           isExternal
         }
-        CtaTitle
-      }
-      faq {
-        Title
-        FAQ {
-          Title
-          Description
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
         }
       }
+      faq { ${FAQ_FIELDS} }
       contact_us {
         Form {
           ... on ComponentBaseTemplatePromo {
@@ -316,10 +330,10 @@ export interface CONTACTUS {
   }[];
 }
 export interface CTA2 {
-  CtaDescription: string;
-  CtaImage: Image;
-  CtaLink: Link;
-  CtaTitle: string;
+  CTADescription: string;
+  CTAImage: Image;
+  CTALink: Link;
+  Title: Heading[];
 }
 
 export interface WhyAddact {

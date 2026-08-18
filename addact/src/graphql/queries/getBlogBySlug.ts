@@ -1,7 +1,23 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { CARD_FRAGMENT } from "../fragments/cardFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import client from "../client";
 
 const GET_BLOG_BY_SLUG = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${CARD_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${LINK_IMAGE_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query GetBlogBySlug($filters: AddactBlogFiltersInput) {
     addactBlogs(filters: $filters) {
       Slug
@@ -22,9 +38,7 @@ const GET_BLOG_BY_SLUG = gql`
       }
 
       HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
+        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
       }
 
       BlogBanner {
@@ -84,16 +98,7 @@ const GET_BLOG_BY_SLUG = gql`
           id
           h1
         }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            name
-            height
-            url
-            width
-          }
-        }
+        ... on ComponentSharedImage { ...SharedImageFields }
         ... on ComponentSharedLink {
           id
           href
@@ -101,10 +106,7 @@ const GET_BLOG_BY_SLUG = gql`
           target
           isExternal
         }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
+        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
         ... on Error {
           code
           message
@@ -130,10 +132,7 @@ const GET_BLOG_BY_SLUG = gql`
 
       similarstorytitle {
         CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
       }
 
@@ -172,31 +171,7 @@ const GET_BLOG_BY_SLUG = gql`
 
       socialicons {
         SocialIcon {
-          ... on ComponentBaseTemplateLinkImage {
-            Title
-            ClassName
-            Links {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-            Icons {
-              alternativeText
-              name
-              height
-              url
-              width
-            }
-            HoverIcon {
-              alternativeText
-              name
-              height
-              url
-              width
-            }
-          }
+          ... on ComponentBaseTemplateLinkImage { ...LinkImageFields }
         }
       }
 
@@ -207,25 +182,7 @@ const GET_BLOG_BY_SLUG = gql`
         updatedAt
         publishedAt
         ContactCard {
-          ... on ComponentCardCard {
-            id
-            CardTitle
-            CardDescription
-            CardLink {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-            BgImage {
-              width
-              url
-              name
-              height
-              alternativeText
-            }
-          }
+          ... on ComponentCardCard { ...CardFields }
           ... on Error {
             code
             message

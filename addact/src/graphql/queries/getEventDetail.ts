@@ -1,8 +1,16 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import client from "../client";
 import { Heading, Image } from "@/types/common";
 
 const GET_EVENT_DETAIL_PAGE = gql`
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactsEvents($filters: AddactEventsFiltersInput) {
     addactsEvents(filters: $filters) {
       EventBanner {
@@ -45,20 +53,8 @@ const GET_EVENT_DETAIL_PAGE = gql`
           id
           h6
         }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
+        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
+        ... on ComponentSharedImage { ...SharedImageFields }
         ... on ComponentSharedLink {
           id
           href
@@ -67,9 +63,7 @@ const GET_EVENT_DETAIL_PAGE = gql`
         }
       }
       HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
+        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
       }
       contact_us_card {
         ButtonLabel

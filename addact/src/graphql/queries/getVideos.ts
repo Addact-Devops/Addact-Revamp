@@ -1,6 +1,8 @@
 // src/graphql/queries/getVideos.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import client from "../client";
 
 // -----------------------------
@@ -51,6 +53,8 @@ export type VideoPageResponse = {
 // -----------------------------
 
 const videosQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query VideoListing {
     videoListing {
       PageHeading {
@@ -60,14 +64,7 @@ const videosQuery = gql`
       banner {
         Banner {
           ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              url
-              width
-              height
-              alternativeText
-            }
+            ...HeroBannerFields
           }
         }
       }

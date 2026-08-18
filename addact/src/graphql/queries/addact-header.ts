@@ -1,172 +1,33 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HEADER_CARD_FRAGMENT } from "../fragments/headerCardFragment";
+import { HEADER_LAYER_3_FRAGMENT } from "../fragments/headerLayer3Fragment";
+import { HEADER_LAYER_2_FRAGMENT } from "../fragments/headerLayer2Fragment";
+import { HEADER_LAYER_1_FRAGMENT } from "../fragments/headerLayer1Fragment";
 import client from "../client";
 
 const GET_ADDACT_HEADER = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${HEADER_CARD_FRAGMENT}
+  ${HEADER_LAYER_3_FRAGMENT}
+  ${HEADER_LAYER_2_FRAGMENT}
+  ${HEADER_LAYER_1_FRAGMENT}
   query AddactHeader {
     addactHeader {
       logo {
-        alternativeText
-        url
-        width
-        height
+        ...ImageFields
       }
       contactButton {
-        title
-        image {
-          alternativeText
-          height
-          url
-          width
-        }
-        link {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            height
-            url
-            width
-          }
-        }
+        ...HeaderCardFields
       }
       menu(pagination: { limit: -1 }) {
-        id
-        link {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            url
-            width
-            height
-          }
-        }
-        card {
-          title
-          image {
-            alternativeText
-            url
-            width
-            height
-          }
-          link {
-            id
-            href
-            label
-            target
-            isExternal
-            SubDisc
-            Icon {
-              alternativeText
-              width
-              url
-              height
-            }
-          }
-        }
-        subLayers(pagination: { limit: -1 }) {
-          id
-          link {
-            id
-            href
-            label
-            target
-            isExternal
-            SubDisc
-            Icon {
-              alternativeText
-              width
-              url
-              height
-            }
-          }
-          card {
-            title
-            image {
-              alternativeText
-              width
-              url
-              height
-            }
-            link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                width
-                url
-                height
-              }
-            }
-          }
-          subLayers(pagination: { limit: -1 }) {
-            id
-            link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-            card {
-              title
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  width
-                  url
-                }
-              }
-            }
-            isCardShow
-            isNavHide
-          }
-          isCardShow
-          isNavHide
-        }
-        isCardShow
-        isNavHide
+        ...HeaderLayer1Fields
       }
       additionalText
       contactDetails {
-        id
-        href
-        label
-        target
-        isExternal
-        SubDisc
-        Icon {
-          alternativeText
-          url
-          width
-          height
-        }
+        ...LinkFields
       }
     }
   }

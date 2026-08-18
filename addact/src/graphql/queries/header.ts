@@ -1,7 +1,13 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { TITLE_FRAGMENT } from "../fragments/titleFragment";
 import client from "../client";
 
 const GET_HEADER = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${TITLE_FRAGMENT}
   query Headers {
     headers {
       HeaderLogo {
@@ -14,9 +20,7 @@ const GET_HEADER = gql`
       main_navigations {
         Parent {
           HeaderNavLink {
-            ... on ComponentBaseTemplateTitle {
-              Title
-            }
+            ... on ComponentBaseTemplateTitle { ...TitleFields }
           }
           ReferenceTitle
         }

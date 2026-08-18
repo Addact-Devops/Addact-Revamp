@@ -1,4 +1,8 @@
 import { gql } from "graphql-request";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { REUSE_CARD_FRAGMENT } from "../fragments/reuseCardFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
@@ -8,6 +12,10 @@ if (!endpoint) {
 }
 
 const query = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${REUSE_CARD_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
   query CareersData {
     careers {
       PageHeading {
@@ -56,10 +64,7 @@ const query = gql`
             id
             h6
           }
-          ... on ComponentBaseTemplateRichtext {
-            id
-            Richtext
-          }
+          ... on ComponentBaseTemplateRichtext { ...RichtextFields }
           ... on Error {
             code
             message
@@ -98,47 +103,7 @@ const query = gql`
       positions {
         EventTitle
         CardInfo {
-          ... on ComponentReuseCard {
-            AerrowIcon {
-              url
-              name
-              width
-              height
-              alternativeText
-            }
-            HoverIcon {
-              url
-              name
-              width
-              height
-              alternativeText
-            }
-            Icon {
-              url
-              name
-              width
-              height
-              alternativeText
-            }
-            LogoLink {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-            LogoTitle
-            TitleIcon {
-              Icon {
-                url
-                name
-                width
-                height
-                alternativeText
-              }
-              Title
-            }
-          }
+          ... on ComponentReuseCard { ...ReuseCardFields }
         }
       }
     }

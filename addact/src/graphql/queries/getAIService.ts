@@ -1,8 +1,25 @@
+import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { CTA_FIELDS } from "../fragments/ctaFragment";
+import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
+import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
+import { AI_BENEFIT_FIELDS } from "../fragments/aiBenefitFragment";
+import { AI_SOLVE_PROBLEM_FIELDS } from "../fragments/aiSolveProblemFragment";
+import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
+import { AI_OUR_SERVICES_FRAGMENT } from "../fragments/aiOurServicesFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const aiServiceQuery = gql`
+  ${HEADING_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${AI_OUR_SERVICES_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query AiSolveProblem {
     aiService {
       SEO {
@@ -57,65 +74,9 @@ const aiServiceQuery = gql`
           }
         }
       }
-      cta {
-        CTADescription
-        pageReference
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-        }
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-        }
-      }
+      cta { ${CTA_FIELDS} }
 
-      faq {
-        Title
-        FAQ {
-          Description
-          Title
-          id
-        }
-      }
+      faq { ${FAQ_FIELDS} }
          whyaddact {
         Title {
           ... on ComponentHeadingsH1 {
@@ -169,234 +130,22 @@ const aiServiceQuery = gql`
 
       ourInshightsTitle {
         CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
       }
 
-      techStack {
-        title
-        description
-        tab {
-          category {
-            categoryTitle
-          }
-          tabContent {
-            title
-            logo {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
+      techStack { ${TECH_STACK_FIELDS} }
 
-      aiSolveProblem {
-        title
-        aiSolveProblemList {
-          list {
-            title
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            bgImage {
-              alternativeText
-              url
-              width
-              height
-            }
-          }
-        }
-      }
+      aiSolveProblem { ${AI_SOLVE_PROBLEM_FIELDS} }
 
-      aiBenefit {
-        title
-        serviceList {
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
+      aiBenefit { ${AI_BENEFIT_FIELDS} }
 
       ourService {
-        ... on ComponentHomeAiOurServices {
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-          serviceList {
-            listingContext {
-              id
-              title
-              description
-              image {
-                alternativeText
-                height
-                url
-                width
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
-            }
-          }
-        }
+        ... on ComponentHomeAiOurServices { ...AiOurServicesFields }
       }
 
-      ourprocess {
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
-      industry {
-        industryListTitle
-        industry_list {
-          Slug
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                url
-                width
-                height
-              }
-            }
-          }
-        }
-      }
+      ourprocess { ${OUR_PROCESS_FIELDS} }
+      industry { ${INDUSTRY_FIELDS} }
     }
   }
 `;

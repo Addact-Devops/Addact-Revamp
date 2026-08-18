@@ -1,7 +1,17 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { TITLE_FRAGMENT } from "../fragments/titleFragment";
 import client from "../client";
 
 const GET_FOOTER = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${TITLE_FRAGMENT}
   query Footers {
     footers {
       Logo {
@@ -41,31 +51,12 @@ const GET_FOOTER = gql`
         }
       }
       AddressInformation {
-        ... on ComponentBaseTemplateTitleWithDescription {
-          Title
-          Description
-          urlKeyword
-          Link {
-            href
-            isExternal
-            label
-            SubDisc
-            target
-            Icon {
-              alternativeText
-              width
-              height
-              url
-            }
-          }
-        }
+        ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
       }
 
       footerlinks {
         NavLink {
-          ... on ComponentBaseTemplateTitle {
-            Title
-          }
+          ... on ComponentBaseTemplateTitle { ...TitleFields }
           ... on ComponentSharedLink {
             id
             href
@@ -77,22 +68,11 @@ const GET_FOOTER = gql`
       }
       milestonestitle {
         CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
       }
       milestonesimage {
-        ... on ComponentSharedImage {
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
+        ... on ComponentSharedImage { ...SharedImageFields }
       }
       CopyrightText
       SiteSlog

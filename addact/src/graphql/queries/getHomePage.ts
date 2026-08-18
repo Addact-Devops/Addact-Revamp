@@ -1,101 +1,28 @@
 import { gql } from "graphql-request";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { CTA_FIELDS } from "../fragments/ctaFragment";
+import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
+import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { BASE_HEADING_FRAGMENT } from "../fragments/baseHeadingFragment";
 import client from "../client";
 
 const GET_HOME_PAGE = gql`
+  ${HEADING_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${BASE_HEADING_FRAGMENT}
   query Home {
     home {
       documentId
       PageHeading {
-        ... on ComponentBaseTemplateBaseHeading {
-          PageTitle
-          Slug
-        }
+        ... on ComponentBaseTemplateBaseHeading { ...BaseHeadingFields }
       }
-      cta {
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-        }
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            id
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-        }
-        pageReference
-      }
-      ourprocess {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            id
-            Title
-            Description
-          }
-        }
-      }
+      cta { ${CTA_FIELDS} }
+      ourprocess { ${OUR_PROCESS_FIELDS} }
       banner {
         Banner {
           ... on ComponentBannerBanner {
@@ -376,35 +303,7 @@ const GET_HOME_PAGE = gql`
         }
       }
 
-      industry {
-        industryListTitle
-        industry_list {
-          Slug
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                url
-                width
-                height
-              }
-            }
-          }
-        }
-      }
+      industry { ${INDUSTRY_FIELDS} }
 
       whoarewe {
         Counter {
@@ -415,10 +314,7 @@ const GET_HOME_PAGE = gql`
           }
         }
         Title {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Description
-            Title
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
         pageReference
       }

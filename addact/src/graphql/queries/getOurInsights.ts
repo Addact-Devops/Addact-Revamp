@@ -1,16 +1,21 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import client from "../client";
 
 const ourInsights_Query = gql`
+  ${LINK_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactBlogsAndCaseStudy {
     addactBlogs(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
       documentId
       Slug
       createdAt
       HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
+        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
       }
       BlogBanner {
         ... on ComponentBlogHeroBannerBlogHeroBanner {
@@ -123,28 +128,14 @@ export async function getOurInsights(): Promise<AddactBlogsAndCaseStudyResponse>
 
 // Home Query for insights title and description
 const home_Query = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query Home {
     home {
       ourInshightsTitle {
         CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
       }
     }

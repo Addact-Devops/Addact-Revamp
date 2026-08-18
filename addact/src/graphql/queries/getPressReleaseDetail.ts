@@ -1,8 +1,18 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
 import client from "../client";
 import { Heading, Image, Link } from "@/types/common";
 
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${LINK_IMAGE_FRAGMENT}
   query AddactPressReleases($filters: AddactPressReleaseFiltersInput) {
     addactPressReleases(filters: $filters) {
       SEO {
@@ -39,16 +49,7 @@ const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
           label
           isExternal
         }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
+        ... on ComponentSharedImage { ...SharedImageFields }
         ... on ComponentHeadingsH1 {
           id
           h1
@@ -73,36 +74,11 @@ const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
           id
           h6
         }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
+        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
       }
       social_icons {
         SocialIcon {
-          ... on ComponentBaseTemplateLinkImage {
-            Title
-            Links {
-              href
-              id
-              isExternal
-              label
-            }
-            Icons {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            HoverIcon {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
+          ... on ComponentBaseTemplateLinkImage { ...LinkImageFields }
         }
       }
     }

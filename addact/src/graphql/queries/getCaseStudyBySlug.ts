@@ -1,7 +1,19 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import client from "../client";
 
 const GET_CASE_STUDY_BY_SLUG = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactCaseStudies($filters: AddactCaseStudyFiltersInput) {
     addactCaseStudies(filters: $filters) {
       SEO {
@@ -20,9 +32,7 @@ const GET_CASE_STUDY_BY_SLUG = gql`
       }
       Slug
       HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
+        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
       }
       HeroBanner {
         ... on ComponentBlogHeroBannerBlogHeroBanner {
@@ -94,19 +104,8 @@ const GET_CASE_STUDY_BY_SLUG = gql`
           target
           isExternal
         }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            url
-            width
-            name
-            height
-          }
-        }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
+        ... on ComponentSharedImage { ...SharedImageFields }
+        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
         ... on Error {
           code
           message
@@ -114,10 +113,7 @@ const GET_CASE_STUDY_BY_SLUG = gql`
       }
       FormTitle {
         CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
       }
       CaseStudyPDF {

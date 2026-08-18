@@ -1,7 +1,9 @@
 import { gql } from "graphql-request";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
 
 const GET_THANK_YOU_PAGE = gql`
+  ${RICHTEXT_FRAGMENT}
   query ThankyouPages($filters: ThankyouPageFiltersInput) {
     thankyouPages(filters: $filters) {
       ReferenceTitle
@@ -21,10 +23,7 @@ const GET_THANK_YOU_PAGE = gql`
         languageTag
       }
       Content {
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
+        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
         ... on ComponentSharedLink {
           id
           href

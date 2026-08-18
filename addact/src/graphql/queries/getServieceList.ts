@@ -1,8 +1,19 @@
+import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { CTA_FIELDS } from "../fragments/ctaFragment";
+import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const ServiceListBySlug = gql`
+  ${LINK_FRAGMENT}
+  ${HEADING_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
   query ServiceLists($filters: ServiceListFiltersInput) {
     serviceLists(filters: $filters) {
       ReferenceTitle
@@ -42,69 +53,13 @@ const ServiceListBySlug = gql`
           }
         }
       }
-      cta {
-        CTADescription
-        pageReference
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-        }
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-        }
-      }
+      cta { ${CTA_FIELDS}
+  ${FAQ_FIELDS} }
       cta2 {
         CTADescription
         pageReference
         CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
+          ... on ComponentSharedImage { ...SharedImageFields }
         }
         CTALink {
           ... on ComponentSharedLink {
@@ -142,41 +97,7 @@ const ServiceListBySlug = gql`
           }
         }
       }
-      our_process {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            id
-            Title
-            Description
-          }
-        }
-      }
+      our_process { ${OUR_PROCESS_FIELDS} }
 
       why_addact {
         Title {
@@ -228,14 +149,7 @@ const ServiceListBySlug = gql`
         }
         pageReference
       }
-      faq {
-        Title
-        FAQ {
-          Description
-          Title
-          id
-        }
-      }
+      faq { ${FAQ_FIELDS} }
       our_service {
         FirstTabDisplayName
         SecondTabDisplayName

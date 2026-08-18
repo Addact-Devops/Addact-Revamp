@@ -1,5 +1,8 @@
 import client from "../client";
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 
 export type WhoAreWeResponse = {
   whoAreWes: {
@@ -18,6 +21,9 @@ export type WhoAreWeResponse = {
 
 export const getWhoAreWe = async (): Promise<WhoAreWeResponse> => {
   const query = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
     query whoAreWe {
       whoAreWes {
         Counter {
@@ -28,10 +34,7 @@ export const getWhoAreWe = async (): Promise<WhoAreWeResponse> => {
           }
         }
         Title {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Description
-            Title
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
         pageReference
       }

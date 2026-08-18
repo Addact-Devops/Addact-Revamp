@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import { GALLERY_TITLES_FRAGMENT } from "../fragments/galleryTitlesFragment";
 import client from "../client";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
@@ -8,13 +9,11 @@ if (!endpoint) {
 }
 
 const query = gql`
+  ${GALLERY_TITLES_FRAGMENT}
   query CareerGalleryData {
     careers {
       Gallery {
-        ... on ComponentAddactComponentGalleryTitles {
-          Title
-          SubTitle
-        }
+        ... on ComponentAddactComponentGalleryTitles { ...GalleryTitlesFields }
       }
     }
 

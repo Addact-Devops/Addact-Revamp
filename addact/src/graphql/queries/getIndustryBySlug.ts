@@ -1,5 +1,13 @@
+import { FAQ_FIELDS } from "../fragments/faqFragment";
 // src/graphql/queries/getIndustryBySlug.ts
 import { gql } from "graphql-request";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { CTA_FIELDS } from "../fragments/ctaFragment";
+import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
 import { Heading, Image } from "./getHomePage";
 
@@ -8,6 +16,11 @@ import { Heading, Image } from "./getHomePage";
  * Now includes `faq`, `ContactUs`, and newly added `ProjectHighlights`.
  */
 const GET_INDUSTRY_BY_SLUG = gql`
+  ${LINK_FRAGMENT}
+  ${HEADING_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
   query GetIndustryBySlug($slug: String!) {
     industryDetailPages(filters: { Slug: { eq: $slug } }) {
       Slug
@@ -95,12 +108,7 @@ const GET_INDUSTRY_BY_SLUG = gql`
           }
         }
         Image {
-          ... on ComponentSharedImage {
-            Image {
-              url
-              alternativeText
-            }
-          }
+          ... on ComponentSharedImage { ...SharedImageFields }
         }
       }
 
@@ -147,10 +155,7 @@ const GET_INDUSTRY_BY_SLUG = gql`
             id
             h6
           }
-          ... on ComponentBaseTemplateRichtext {
-            id
-            Richtext
-          }
+          ... on ComponentBaseTemplateRichtext { ...RichtextFields }
         }
         GlobalCard {
           ... on ComponentBaseTemplatePromo {
@@ -176,67 +181,10 @@ const GET_INDUSTRY_BY_SLUG = gql`
         }
       }
 
-      cta {
-        CTADescription
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            label
-            href
-            target
-          }
-        }
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-        slug
-      }
+      cta { ${CTA_FIELDS}
+  ${FAQ_FIELDS} }
 
-      faq {
-        ReferenceTitle
-        Title
-        FAQ {
-          Title
-          Description
-        }
-      }
+      faq { ${FAQ_FIELDS} }
 
       ContactUs {
         pageReference
@@ -280,24 +228,7 @@ const GET_INDUSTRY_BY_SLUG = gql`
         }
       }
 
-      techStack {
-        title
-        description
-        tab {
-          category {
-            categoryTitle
-          }
-          tabContent {
-            title
-            logo {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
+      techStack { ${TECH_STACK_FIELDS} }
     }
   }
 `;

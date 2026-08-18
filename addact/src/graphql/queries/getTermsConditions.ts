@@ -1,6 +1,9 @@
 // src/graphql/queries/getTermsConditions.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import client from "../client";
 
 type TermsConditionsData = {
@@ -20,6 +23,9 @@ type TermsConditionsData = {
 
 export const getTermsConditions = async (): Promise<TermsConditionsData> => {
     const query = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
         query PageHeading {
             termsConditions {
                 PageHeading {
@@ -28,10 +34,7 @@ export const getTermsConditions = async (): Promise<TermsConditionsData> => {
                 }
                 BodyContent {
                     CommonTitle {
-                        ... on ComponentBaseTemplateTitleWithDescription {
-                            Title
-                            Description
-                        }
+                        ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
                     }
                 }
             }

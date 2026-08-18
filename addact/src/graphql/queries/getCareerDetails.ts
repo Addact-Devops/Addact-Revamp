@@ -1,8 +1,14 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
 import { Image, Link } from "@/types/common";
 
 const GET_CAREER_DETAIL = gql`
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
   query careerDetailBySlug($filters: CareerDetailFiltersInput) {
     careerDetails(filters: $filters) {
       Banner {
@@ -51,10 +57,7 @@ const GET_CAREER_DETAIL = gql`
           id
           h1
         }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
+        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
         ... on ComponentSharedLink {
           id
           href
@@ -62,16 +65,7 @@ const GET_CAREER_DETAIL = gql`
           target
           isExternal
         }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
+        ... on ComponentSharedImage { ...SharedImageFields }
       }
       PageHeading {
         PageTitle

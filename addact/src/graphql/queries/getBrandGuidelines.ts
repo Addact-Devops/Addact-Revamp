@@ -1,8 +1,16 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
 import { Heading, Image } from "@/types/common";
 
 const GET_BRAND_GUIDELINES = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
   query BrandGuideline {
     brandGuideline {
       ReferenceTitle
@@ -10,15 +18,7 @@ const GET_BRAND_GUIDELINES = gql`
       HeroBanner {
         Banner {
           ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
+            ...HeroBannerFields
           }
         }
       }
@@ -47,20 +47,8 @@ const GET_BRAND_GUIDELINES = gql`
           id
           h6
         }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
+        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
+        ... on ComponentSharedImage { ...SharedImageFields }
         ... on ComponentSharedLink {
           id
           href

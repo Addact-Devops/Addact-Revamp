@@ -1,8 +1,12 @@
 import { Image } from "@/types/common";
 import client from "../client";
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 
 const GET_PRESS_RELEASE_LIST_PAGE = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query PressRelease {
     pressRelease {
       PageHeading {
@@ -12,15 +16,7 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
       HeroBanner {
         Banner {
           ... on ComponentBannerBanner {
-            BannerDescription
-            BannerTitle
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
+            ...HeroBannerFields
           }
         }
       }
@@ -29,14 +25,7 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
       Slug
       HeroBanner {
         ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
+          ...HeroBannerFields
         }
       }
       PressReleaseSummary

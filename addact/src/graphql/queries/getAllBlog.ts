@@ -1,7 +1,13 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactBlogs($page: Int, $pageSize: Int, $sort: [String]) {
     blogs {
       PageHeading {
@@ -13,14 +19,7 @@ const GET_ALL_BLOGS = gql`
         Banner {
           ... on ComponentBannerBanner {
             id
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              width
-              url
-              name
-              height
-            }
+            ...HeroBannerFields
             show_searchbox
           }
           ... on Error {
@@ -35,21 +34,11 @@ const GET_ALL_BLOGS = gql`
       Slug
       documentId
       HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
+        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
       }
       BlogBanner {
         ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            url
-            width
-            height
-            name
-            alternativeText
-          }
+          ...HeroBannerFields
           PublishDate
           author {
             Author {

@@ -1,21 +1,17 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import client from "../client";
 
 const GET_ALL_CASE_STUDY = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query CaseStudyList {
     caseStudy {
       CaseStudyBanner {
         Banner {
           ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              alternativeText
-              name
-              height
-              url
-              width
-            }
+            ...HeroBannerFields
             show_searchbox
           }
         }
@@ -27,14 +23,7 @@ const GET_ALL_CASE_STUDY = gql`
       HeroBanner {
         ... on ComponentBlogHeroBannerBlogHeroBanner {
           PublishDate
-          BannerTitle
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
+          ...HeroBannerFields
         }
       }
       caseStudySummary

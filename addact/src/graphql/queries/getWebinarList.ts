@@ -1,22 +1,18 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import client from "../client";
 import { Image } from "@/types/common";
 
 const GET_WEBINAR_LIST_PAGE = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query WebinarList {
     webinar {
       HeroBanner {
         Banner {
           ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
+            ...HeroBannerFields
           }
         }
       }
@@ -30,15 +26,7 @@ const GET_WEBINAR_LIST_PAGE = gql`
       ReferenceTitle
       HeroBanner {
         ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
+          ...HeroBannerFields
           PublishDate
           ReadNow {
             id
