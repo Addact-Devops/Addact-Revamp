@@ -59,5 +59,9 @@ export default () => {
     // seo: {
     //   enabled: true,
     // },
+    'import-export': {
+      enabled: true,
+      resolve: './src/plugins/import-export',
+    },
   };
 };

@@ -1,0 +1,25 @@
+{
+  "name": "import-export",
+  "version": "1.0.0",
+  "description": "Universal Content Import & Export Plugin for Strapi 5",
+  "strapi": {
+    "name": "import-export",
+    "displayName": "Import / Export",
+    "description": "Universal Content Import & Export plugin for Strapi 5",
+    "kind": "plugin"
+  },
+  "exports": {
+    "./strapi-admin": {
+      "source": "./admin/src/index.js",
+      "default": "./admin/src/index.js"
+    },
+    "./strapi-server": {
+      "source": "./server/index.js",
+      "default": "./server/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {},
+  "author": "Addact",
+  "license": "MIT"
+}
