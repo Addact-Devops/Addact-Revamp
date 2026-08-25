@@ -199,7 +199,7 @@ module.exports = ({ strapi }) => ({
     return result;
   },
 
-  async exportContent(uid, { selectionMode = 'all', selectedDocumentIds = [] } = {}) {
+  async exportContent(uid, { selectionMode = 'all', selectedDocumentIds = [], start = 0, limit = 1000 } = {}) {
     const schema = strapi.contentTypes[uid];
     if (!schema) {
       throw new Error(`Content type ${uid} not found`);
@@ -228,7 +228,8 @@ module.exports = ({ strapi }) => ({
         filters,
         populate,
         status: 'draft',
-        limit: 1000,
+        start,
+        limit,
       });
     }
 

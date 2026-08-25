@@ -30,14 +30,14 @@ module.exports = ({ strapi }) => ({
 
   async exportData(ctx) {
     try {
-      const { contentType, selectionMode, selectedDocumentIds } = ctx.request.body;
+      const { contentType, selectionMode, selectedDocumentIds, start, limit } = ctx.request.body;
       if (!contentType) {
         return ctx.badRequest('contentType parameter is required.');
       }
       const result = await strapi
         .plugin('import-export')
         .service('export')
-        .exportContent(contentType, { selectionMode, selectedDocumentIds });
+        .exportContent(contentType, { selectionMode, selectedDocumentIds, start, limit });
       ctx.body = result;
     } catch (err) {
       console.error('--- EXPORT CONTROLLER ERROR ---', err);

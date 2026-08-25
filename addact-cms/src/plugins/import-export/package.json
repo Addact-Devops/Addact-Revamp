@@ -1,5 +1,5 @@
 {
-  "name": "import-export",
+  "name": "strapi-navnath-plugin-import-export-v5",
   "version": "1.0.0",
   "description": "Universal Content Import & Export Plugin for Strapi 5",
   "strapi": {
@@ -8,6 +8,8 @@
     "description": "Universal Content Import & Export plugin for Strapi 5",
     "kind": "plugin"
   },
+  "main": "./strapi-server.js",
+  "browser": "./strapi-admin.js",
   "exports": {
     "./strapi-admin": {
       "source": "./admin/src/index.js",
@@ -19,7 +21,10 @@
     },
     "./package.json": "./package.json"
   },
+  "peerDependencies": {
+    "@strapi/strapi": "^5.0.0"
+  },
   "dependencies": {},
-  "author": "Addact",
+  "author": "Community",
   "license": "MIT"
 }

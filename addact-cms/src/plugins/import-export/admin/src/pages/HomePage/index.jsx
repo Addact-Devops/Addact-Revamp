@@ -20,8 +20,10 @@ import {
   Modal,
   TextInput,
   Loader,
+  ProgressBar,
 } from '@strapi/design-system';
 import { Download, Upload, Eye, ArrowClockwise, Check, WarningCircle } from '@strapi/icons';
+import { chunkArray, aggregateImportResults } from '../../utils/chunking';
 
 const HomePage = () => {
   const { get, post } = useFetchClient();
@@ -39,6 +41,10 @@ const HomePage = () => {
   const [selectedDocumentIds, setSelectedDocumentIds] = useState([]);
   const [loadingEntries, setLoadingEntries] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState(0);
+  const [exportLogs, setExportLogs] = useState([]);
+  const [importLogs, setImportLogs] = useState([]);
+  const [showLogsModal, setShowLogsModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [displayField, setDisplayField] = useState('');
 
@@ -60,7 +66,7 @@ const HomePage = () => {
 
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(50);
+  const [pageSize, setPageSize] = useState(10);
   const [totalEntries, setTotalEntries] = useState(0);
 
   // Import State
@@ -75,6 +81,7 @@ const HomePage = () => {
   const [previewData, setPreviewData] = useState(null);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [importing, setImporting] = useState(false);
+  const [importProgress, setImportProgress] = useState(0);
   const [importResult, setImportResult] = useState(null);
   const [statusMessage, setStatusMessage] = useState(null);
 
@@ -160,20 +167,84 @@ const HomePage = () => {
   const handleExport = async () => {
     if (!selectedContentType) return;
     setExporting(true);
+    setExportProgress(0);
+    setExportLogs([]);
+    setImportLogs([]);
+    setShowLogsModal(true);
     setStatusMessage(null);
 
-    try {
-      const payload = {
-        contentType: selectedContentType,
-        selectionMode: exportMode,
-        selectedDocumentIds: exportMode === 'selected' ? selectedDocumentIds : [],
-      };
+    const isSingleType = currentSchema?.kind === 'singleType';
+    const totalToExport = exportMode === 'selected' ? selectedDocumentIds.length : (isSingleType ? 1 : totalEntries);
+    const CHUNK_SIZE = 50;
 
-      const response = await post('/import-export/export', payload);
-      const exportJson = response.data;
+    let finalExportJson = null;
+    let accumulatedData = [];
+
+    try {
+      if (isSingleType) {
+        setExportLogs(prev => [...prev, `Exporting Single Type...`]);
+        const response = await post('/import-export/export', {
+          contentType: selectedContentType,
+          selectionMode: 'all',
+        });
+        finalExportJson = response.data;
+        setExportProgress(100);
+        setExportLogs(prev => [...prev, `Single Type exported successfully.`]);
+      } else {
+        if (exportMode === 'selected') {
+          const chunks = chunkArray(selectedDocumentIds, CHUNK_SIZE);
+          for (let i = 0; i < chunks.length; i++) {
+            setExportLogs(prev => [...prev, `Fetching selected chunk ${i + 1}/${chunks.length} (${chunks[i].length} items)...`]);
+            const response = await post('/import-export/export', {
+              contentType: selectedContentType,
+              selectionMode: 'selected',
+              selectedDocumentIds: chunks[i],
+            });
+            if (!finalExportJson) finalExportJson = { ...response.data, data: [] };
+            const fetchedData = response.data.data || [];
+            accumulatedData = accumulatedData.concat(fetchedData);
+            setExportProgress(Math.round(((i + 1) / chunks.length) * 100));
+            const newLogs = fetchedData.map(entry => `Exported entry: ${entry.documentId || entry.id}`);
+            setExportLogs(prev => [...prev, ...newLogs]);
+          }
+        } else {
+          // Export All - Paginate
+          let fetched = 0;
+          let i = 1;
+          while (fetched < totalToExport || totalToExport === 0) {
+            const limit = CHUNK_SIZE;
+            setExportLogs(prev => [...prev, `Fetching chunk ${i} (Offset: ${fetched}, Limit: ${limit})...`]);
+            const response = await post('/import-export/export', {
+              contentType: selectedContentType,
+              selectionMode: 'all',
+              start: fetched,
+              limit,
+            });
+            
+            if (!finalExportJson) finalExportJson = { ...response.data, data: [] };
+            const fetchedData = response.data.data || [];
+            accumulatedData = accumulatedData.concat(fetchedData);
+            fetched += fetchedData.length;
+            const newLogs = fetchedData.map(entry => `Exported entry: ${entry.documentId || entry.id}`);
+            setExportLogs(prev => [...prev, ...newLogs]);
+            
+            if (totalToExport > 0) {
+              setExportProgress(Math.round((Math.min(fetched, totalToExport) / totalToExport) * 100));
+            }
+            i++;
+
+            if (fetchedData.length < limit || totalToExport === 0) {
+              break; // No more data available
+            }
+          }
+        }
+        finalExportJson.data = accumulatedData;
+        setExportProgress(100);
+        setExportLogs(prev => [...prev, `Export completed. Total items: ${accumulatedData.length}`]);
+      }
 
       // Trigger Browser JSON File Download
-      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportJson, null, 2));
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(finalExportJson, null, 2));
       const downloadAnchor = document.createElement('a');
       const safeName = (selectedContentType.split('.').pop() || 'content').toLowerCase();
       downloadAnchor.setAttribute('href', dataStr);
@@ -185,6 +256,7 @@ const HomePage = () => {
       setStatusMessage({ type: 'success', message: 'Content exported successfully!' });
     } catch (err) {
       setStatusMessage({ type: 'danger', message: `Export failed: ${err.message}` });
+      setExportLogs(prev => [...prev, `Error: ${err.message}`]);
     } finally {
       setExporting(false);
     }
@@ -226,21 +298,81 @@ const HomePage = () => {
   // Execute Import
   const handleImport = async () => {
     setImporting(true);
+    setImportProgress(0);
+    setImportLogs([]);
+    setExportLogs([]);
+    setShowLogsModal(true);
     setStatusMessage(null);
     setShowPreviewModal(false);
     try {
+      setImportLogs(prev => [...prev, `Parsing payload...`]);
       const payload = await getParsedPayload();
-      const response = await post('/import-export/import', {
-        data: payload,
-        matchingKey,
-        publicationStateMode,
-      });
+      
+      let finalResult = null;
 
-      setImportResult(response.data?.data);
+      if (Array.isArray(payload.data)) {
+        // Collection Type - perform chunking
+        const CHUNK_SIZE = 50;
+        const chunks = chunkArray(payload.data, CHUNK_SIZE);
+        const results = [];
+        
+        setImportLogs(prev => [...prev, `Detected Collection Type. Starting import in ${chunks.length} chunks...`]);
+        for (let i = 0; i < chunks.length; i++) {
+          setImportLogs(prev => [...prev, `Importing chunk ${i + 1}/${chunks.length} (${chunks[i].length} items)...`]);
+          
+          const chunkPayload = { ...payload, data: chunks[i] };
+          const itemLogs = chunks[i].map(item => `> Enqueuing item: ${item.documentId || item.id || item.title || item.name || 'Unknown'}`);
+          setImportLogs(prev => [...prev, ...itemLogs]);
+
+          const response = await post('/import-export/import', {
+            data: chunkPayload,
+            matchingKey,
+            publicationStateMode,
+          });
+          const chunkResult = response.data?.data;
+          results.push(chunkResult);
+          
+          if (chunkResult) {
+            setImportLogs(prev => [...prev, `Chunk ${i + 1} Result: ${chunkResult.created} created, ${chunkResult.updated} updated, ${chunkResult.skipped} skipped, ${chunkResult.failed} failed.`]);
+            if (chunkResult.errors?.length > 0) {
+              setImportLogs(prev => [...prev, ...chunkResult.errors.map(err => `Error [${err.identifier}]: ${err.error}`)]);
+            }
+          }
+          
+          // Update progress
+          const progress = Math.round(((i + 1) / chunks.length) * 100);
+          setImportProgress(progress);
+        }
+        
+        finalResult = aggregateImportResults(results);
+        setImportLogs(prev => [...prev, `All chunks imported successfully. Finalizing...`]);
+      } else {
+        // Single Type - no chunking
+        setImportLogs(prev => [...prev, `Detected Single Type. Importing...`]);
+        const response = await post('/import-export/import', {
+          data: payload,
+          matchingKey,
+          publicationStateMode,
+        });
+        finalResult = response.data?.data;
+        
+        if (finalResult) {
+          setImportLogs(prev => [...prev, `Single Type Result: ${finalResult.created} created, ${finalResult.updated} updated, ${finalResult.skipped} skipped, ${finalResult.failed} failed.`]);
+          if (finalResult.errors?.length > 0) {
+            setImportLogs(prev => [...prev, ...finalResult.errors.map(err => `Error [${err.identifier}]: ${err.error}`)]);
+          }
+        }
+        
+        setImportProgress(100);
+        setImportLogs(prev => [...prev, `Single Type imported successfully.`]);
+      }
+
+      setImportResult(finalResult);
       setStatusMessage({ type: 'success', message: 'Import operation completed!' });
       if (selectedContentType) fetchEntries(selectedContentType, currentPage, pageSize, searchQuery);
     } catch (err) {
       setStatusMessage({ type: 'danger', message: `Import failed: ${err.message}` });
+      setImportLogs(prev => [...prev, `Error: ${err.message}`]);
     } finally {
       setImporting(false);
     }
@@ -256,9 +388,19 @@ const HomePage = () => {
     setSearchQuery('');
     setCurrentPage(1);
     setExportMode('all');
+    setExportProgress(0);
+    setExportLogs([]);
+    setImportProgress(0);
+    setImportLogs([]);
+    setShowLogsModal(false);
+    setDisplayField('');
+
+    const currentType = selectedContentType;
     await fetchContentTypes();
-    if (selectedContentType) {
-      fetchEntries(selectedContentType, 1, pageSize, '');
+    
+    // If content type didn't change, manually re-fetch entries to refresh the list
+    if (currentType) {
+      fetchEntries(currentType, 1, pageSize, '');
     }
   };
 
@@ -339,21 +481,36 @@ const HomePage = () => {
 
               {selectedContentType && (
                 <>
-                  <Flex gap={4} marginTop={2}>
-                    <Button
-                      variant={exportMode === 'all' ? 'default' : 'secondary'}
-                      onClick={() => setExportMode('all')}
-                      size="S"
-                    >
-                      Export All ({totalEntries})
-                    </Button>
-                    <Button
-                      variant={exportMode === 'selected' ? 'default' : 'secondary'}
-                      onClick={() => setExportMode('selected')}
-                      size="S"
-                    >
-                      Select Entries ({selectedDocumentIds.length})
-                    </Button>
+                  <Flex gap={4} marginTop={2} alignItems="center" justifyContent="space-between">
+                    <Flex gap={4}>
+                      <Button
+                        variant={exportMode === 'all' ? 'default' : 'secondary'}
+                        onClick={() => setExportMode('all')}
+                        size="S"
+                      >
+                        Export All ({totalEntries})
+                      </Button>
+                      <Button
+                        variant={exportMode === 'selected' ? 'default' : 'secondary'}
+                        onClick={() => setExportMode('selected')}
+                        size="S"
+                      >
+                        Select Entries ({selectedDocumentIds.length})
+                      </Button>
+                    </Flex>
+                    <Box>
+                      <Button
+                        startIcon={<Download />}
+                        onClick={handleExport}
+                        loading={exporting}
+                        disabled={!selectedContentType || (exportMode === 'selected' && selectedDocumentIds.length === 0)}
+                        size="S"
+                      >
+                        {exportMode === 'selected'
+                          ? `Export Selected (${selectedDocumentIds.length})`
+                          : `Export All (${totalEntries})`}
+                      </Button>
+                    </Box>
                   </Flex>
 
                   {exportMode === 'selected' && (
@@ -476,20 +633,19 @@ const HomePage = () => {
                     </Box>
                   )}
 
-                  <Box marginTop={4}>
-                    <Button
-                      startIcon={<Download />}
-                      onClick={handleExport}
-                      loading={exporting}
-                      disabled={!selectedContentType || (exportMode === 'selected' && selectedDocumentIds.length === 0)}
-                      size="L"
-                      fullWidth
-                    >
-                      {exportMode === 'selected'
-                        ? `Export Selected (${selectedDocumentIds.length})`
-                        : `Export All (${totalEntries})`}
-                    </Button>
-                  </Box>
+                  {exporting && (
+                    <Box marginTop={4}>
+                      <Flex direction="column" alignItems="stretch" gap={2}>
+                        <Flex justifyContent="space-between">
+                          <Typography variant="pi" fontWeight="bold">Export Progress</Typography>
+                          <Typography variant="pi">{exportProgress}%</Typography>
+                        </Flex>
+                        <ProgressBar value={exportProgress} size="M" />
+                      </Flex>
+                    </Box>
+                  )}
+
+
                 </>
               )}
             </Flex>
@@ -564,6 +720,20 @@ const HomePage = () => {
                 </Button>
               </Box>
 
+              {importing && (
+                <Box marginTop={4}>
+                  <Flex direction="column" alignItems="stretch" gap={2}>
+                    <Flex justifyContent="space-between">
+                      <Typography variant="pi" fontWeight="bold">Import Progress</Typography>
+                      <Typography variant="pi">{importProgress}%</Typography>
+                    </Flex>
+                    <ProgressBar value={importProgress} size="M" />
+                  </Flex>
+                </Box>
+              )}
+
+
+
               {/* Import Results Card */}
               {importResult && (
                 <Box background="neutral100" padding={6} hasRadius marginTop={4}>
@@ -615,6 +785,43 @@ const HomePage = () => {
             </Flex>
           </Box>
         </Flex>
+
+        {/* Logs Modal Popup */}
+        {showLogsModal && (exportLogs.length > 0 || importLogs.length > 0) && (
+          <Box
+            position="fixed"
+            top={0}
+            left={0}
+            width="100vw"
+            height="100vh"
+            zIndex={1000}
+            style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+          >
+            <Box background="neutral0" padding={6} hasRadius shadow="tableShadow" style={{ width: '800px', maxWidth: '90vw', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }}>
+              <Flex justifyContent="space-between" marginBottom={4}>
+                <Typography variant="beta">
+                  {exportLogs.length > 0 ? 'Export Logs' : 'Import Logs'}
+                </Typography>
+                <Button 
+                  variant="tertiary" 
+                  onClick={() => setShowLogsModal(false)}
+                >
+                  Close
+                </Button>
+              </Flex>
+              <Box background="neutral150" padding={4} hasRadius style={{ flex: 1, overflowY: 'auto' }}>
+                <ul style={{ marginTop: 0, padding: 0, listStyle: 'none' }}>
+                  {(exportLogs.length > 0 ? exportLogs : importLogs).map((log, idx) => (
+                    <li key={idx} style={{ marginBottom: '4px' }}>
+                      <Typography variant="pi" textColor="neutral700">{'>'} {log}</Typography>
+                    </li>
+                  ))}
+                </ul>
+              </Box>
+            </Box>
+          </Box>
+        )}
+
       </Flex>
     </Box>
   );
