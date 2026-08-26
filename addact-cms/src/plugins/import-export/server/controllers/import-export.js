@@ -13,7 +13,7 @@ module.exports = ({ strapi }) => ({
   async getEntries(ctx) {
     try {
       const { contentType } = ctx.params;
-      const { page, pageSize, search } = ctx.query;
+      const { page, pageSize, search, fromDate, toDate } = ctx.query;
       const result = await strapi
         .plugin('import-export')
         .service('contentTypes')
@@ -21,6 +21,8 @@ module.exports = ({ strapi }) => ({
           page: parseInt(page || 1, 10),
           pageSize: parseInt(pageSize || 50, 10),
           search: search || '',
+          fromDate,
+          toDate,
         });
       ctx.body = { data: result };
     } catch (err) {
@@ -30,14 +32,14 @@ module.exports = ({ strapi }) => ({
 
   async exportData(ctx) {
     try {
-      const { contentType, selectionMode, selectedDocumentIds, start, limit } = ctx.request.body;
+      const { contentType, selectionMode, selectedDocumentIds, start, limit, fromDate, toDate } = ctx.request.body;
       if (!contentType) {
         return ctx.badRequest('contentType parameter is required.');
       }
       const result = await strapi
         .plugin('import-export')
         .service('export')
-        .exportContent(contentType, { selectionMode, selectedDocumentIds, start, limit });
+        .exportContent(contentType, { selectionMode, selectedDocumentIds, start, limit, fromDate, toDate });
       ctx.body = result;
     } catch (err) {
       console.error('--- EXPORT CONTROLLER ERROR ---', err);

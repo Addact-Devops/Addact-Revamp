@@ -1,5 +1,5 @@
 {
-  "name": "strapi-navnath-plugin-import-export-v5",
+  "name": "strapi-nn-plugin-import-export-v5",
   "version": "1.0.0",
   "description": "Universal Content Import & Export Plugin for Strapi 5",
   "strapi": {

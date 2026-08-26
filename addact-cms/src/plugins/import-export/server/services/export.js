@@ -199,7 +199,7 @@ module.exports = ({ strapi }) => ({
     return result;
   },
 
-  async exportContent(uid, { selectionMode = 'all', selectedDocumentIds = [], start = 0, limit = 1000 } = {}) {
+  async exportContent(uid, { selectionMode = 'all', selectedDocumentIds = [], start = 0, limit = 1000, fromDate, toDate } = {}) {
     const schema = strapi.contentTypes[uid];
     if (!schema) {
       throw new Error(`Content type ${uid} not found`);
@@ -221,6 +221,18 @@ module.exports = ({ strapi }) => ({
       if (selectionMode === 'selected' || selectionMode === 'single') {
         if (selectedDocumentIds.length > 0) {
           filters.documentId = { $in: selectedDocumentIds };
+        }
+      }
+
+      if (fromDate || toDate) {
+        filters.createdAt = {};
+        if (fromDate) {
+          // If fromDate is YYYY-MM-DD, append start of day in UTC
+          filters.createdAt.$gte = fromDate.includes('T') ? fromDate : `${fromDate}T00:00:00.000Z`;
+        }
+        if (toDate) {
+          // If toDate is YYYY-MM-DD, append end of day in UTC
+          filters.createdAt.$lte = toDate.includes('T') ? toDate : `${toDate}T23:59:59.999Z`;
         }
       }
 

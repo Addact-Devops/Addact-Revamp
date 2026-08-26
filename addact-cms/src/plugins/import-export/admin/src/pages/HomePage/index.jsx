@@ -21,9 +21,29 @@ import {
   TextInput,
   Loader,
   ProgressBar,
+  DatePicker,
 } from '@strapi/design-system';
 import { Download, Upload, Eye, ArrowClockwise, Check, WarningCircle } from '@strapi/icons';
 import { chunkArray, aggregateImportResults } from '../../utils/chunking';
+
+const formatLocalDate = (date) => {
+  if (!date) return undefined;
+  if (typeof date === 'string') return date.substring(0, 10);
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return undefined;
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const parseDateForPicker = (date) => {
+  if (!date) return undefined;
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return undefined;
+  
+  return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+};
 
 const HomePage = () => {
   const { get, post } = useFetchClient();
@@ -32,11 +52,13 @@ const HomePage = () => {
   const [selectedContentType, setSelectedContentType] = useState('');
   const [loadingContentTypes, setLoadingContentTypes] = useState(true);
 
-  // Tab state
+ 
   const [activeTab, setActiveTab] = useState('export'); // 'export' | 'import'
 
-  // Selection & Search State
+
   const [exportMode, setExportMode] = useState('all'); // 'all' | 'selected'
+  const [fromDate, setFromDate] = useState(undefined);
+  const [toDate, setToDate] = useState(undefined);
   const [entriesList, setEntriesList] = useState([]);
   const [selectedDocumentIds, setSelectedDocumentIds] = useState([]);
   const [loadingEntries, setLoadingEntries] = useState(false);
@@ -48,11 +70,11 @@ const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [displayField, setDisplayField] = useState('');
 
-  // Derived matchable display fields
+
   const currentSchema = contentTypes.find((ct) => ct.uid === selectedContentType);
   const displayFields = (currentSchema?.matchableFields || []).filter((f) => f !== 'documentId');
 
-  // Auto-select preferred display field when schema changes
+  
   useEffect(() => {
     if (currentSchema) {
       const fields = (currentSchema.matchableFields || []).filter((f) => f !== 'documentId');
@@ -64,19 +86,19 @@ const HomePage = () => {
     }
   }, [selectedContentType, currentSchema]);
 
-  // Pagination State
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalEntries, setTotalEntries] = useState(0);
 
-  // Import State
+  
   const [importInputMode, setImportInputMode] = useState('upload'); // 'upload' | 'paste'
   const [jsonText, setJsonText] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [matchingKey, setMatchingKey] = useState('auto');
   const [publicationStateMode, setPublicationStateMode] = useState('preserve');
 
-  // Preview & Import Results
+  
   const [previewing, setPreviewing] = useState(false);
   const [previewData, setPreviewData] = useState(null);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
@@ -85,7 +107,7 @@ const HomePage = () => {
   const [importResult, setImportResult] = useState(null);
   const [statusMessage, setStatusMessage] = useState(null);
 
-  // 1. Fetch available Content Types on mount
+  
   useEffect(() => {
     fetchContentTypes();
   }, []);
@@ -106,7 +128,7 @@ const HomePage = () => {
     }
   };
 
-  // 2. Reset pagination & selection when content type changes
+  
   useEffect(() => {
     if (selectedContentType) {
       setCurrentPage(1);
@@ -115,19 +137,22 @@ const HomePage = () => {
     }
   }, [selectedContentType]);
 
-  // 3. Fetch entries whenever content type, page, pageSize, or search query changes
+  
   useEffect(() => {
     if (selectedContentType) {
-      fetchEntries(selectedContentType, currentPage, pageSize, searchQuery);
+      fetchEntries(selectedContentType, currentPage, pageSize, searchQuery, fromDate, toDate);
     }
-  }, [selectedContentType, currentPage, pageSize, searchQuery]);
+  }, [selectedContentType, currentPage, pageSize, searchQuery, fromDate, toDate]);
 
-  const fetchEntries = async (uid, page, size, search) => {
+  const fetchEntries = async (uid, page, size, search, fDate, tDate) => {
     setLoadingEntries(true);
     try {
-      const response = await get(
-        `/import-export/entries/${uid}?page=${page}&pageSize=${size}&search=${encodeURIComponent(search)}`
-      );
+      let url = `/import-export/entries/${uid}?page=${page}&pageSize=${size}&search=${encodeURIComponent(search)}`;
+      const fStr = formatLocalDate(fDate);
+      const tStr = formatLocalDate(tDate);
+      if (fStr) url += `&fromDate=${encodeURIComponent(fStr)}`;
+      if (tStr) url += `&toDate=${encodeURIComponent(tStr)}`;
+      const response = await get(url);
       setEntriesList(response.data?.data?.entries || []);
       setTotalEntries(response.data?.data?.total || 0);
     } catch (err) {
@@ -138,7 +163,7 @@ const HomePage = () => {
     }
   };
 
-  // Toggle Selection Logic
+  
   const currentPageDocumentIds = entriesList.map((e) => e.documentId).filter(Boolean);
   const isAllCurrentPageSelected =
     currentPageDocumentIds.length > 0 &&
@@ -146,10 +171,10 @@ const HomePage = () => {
 
   const handleToggleSelectAllCurrentPage = () => {
     if (isAllCurrentPageSelected) {
-      // Unselect all items on current page
+      
       setSelectedDocumentIds(selectedDocumentIds.filter((id) => !currentPageDocumentIds.includes(id)));
     } else {
-      // Add all missing items on current page
+      
       const newSelections = new Set([...selectedDocumentIds, ...currentPageDocumentIds]);
       setSelectedDocumentIds(Array.from(newSelections));
     }
@@ -163,7 +188,7 @@ const HomePage = () => {
     }
   };
 
-  // Execute Export
+  
   const handleExport = async () => {
     if (!selectedContentType) return;
     setExporting(true);
@@ -183,9 +208,13 @@ const HomePage = () => {
     try {
       if (isSingleType) {
         setExportLogs(prev => [...prev, `Exporting Single Type...`]);
+        const fStr = formatLocalDate(fromDate);
+        const tStr = formatLocalDate(toDate);
         const response = await post('/import-export/export', {
           contentType: selectedContentType,
           selectionMode: 'all',
+          fromDate: fStr,
+          toDate: tStr,
         });
         finalExportJson = response.data;
         setExportProgress(100);
@@ -208,17 +237,21 @@ const HomePage = () => {
             setExportLogs(prev => [...prev, ...newLogs]);
           }
         } else {
-          // Export All - Paginate
+          
           let fetched = 0;
           let i = 1;
           while (fetched < totalToExport || totalToExport === 0) {
             const limit = CHUNK_SIZE;
             setExportLogs(prev => [...prev, `Fetching chunk ${i} (Offset: ${fetched}, Limit: ${limit})...`]);
+            const fStr = formatLocalDate(fromDate);
+            const tStr = formatLocalDate(toDate);
             const response = await post('/import-export/export', {
               contentType: selectedContentType,
               selectionMode: 'all',
               start: fetched,
               limit,
+              fromDate: fStr,
+              toDate: tStr,
             });
             
             if (!finalExportJson) finalExportJson = { ...response.data, data: [] };
@@ -234,7 +267,7 @@ const HomePage = () => {
             i++;
 
             if (fetchedData.length < limit || totalToExport === 0) {
-              break; // No more data available
+              break; 
             }
           }
         }
@@ -243,7 +276,7 @@ const HomePage = () => {
         setExportLogs(prev => [...prev, `Export completed. Total items: ${accumulatedData.length}`]);
       }
 
-      // Trigger Browser JSON File Download
+      
       const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(finalExportJson, null, 2));
       const downloadAnchor = document.createElement('a');
       const safeName = (selectedContentType.split('.').pop() || 'content').toLowerCase();
@@ -262,7 +295,7 @@ const HomePage = () => {
     }
   };
 
-  // Read JSON Payload from file or text
+  
   const getParsedPayload = async () => {
     if (importInputMode === 'upload') {
       if (!uploadedFile) throw new Error('Please select a JSON file to upload.');
@@ -274,7 +307,7 @@ const HomePage = () => {
     }
   };
 
-  // Execute Dry Run Preview
+  
   const handlePreview = async () => {
     setPreviewing(true);
     setStatusMessage(null);
@@ -295,7 +328,7 @@ const HomePage = () => {
     }
   };
 
-  // Execute Import
+  
   const handleImport = async () => {
     setImporting(true);
     setImportProgress(0);
@@ -311,7 +344,7 @@ const HomePage = () => {
       let finalResult = null;
 
       if (Array.isArray(payload.data)) {
-        // Collection Type - perform chunking
+        
         const CHUNK_SIZE = 50;
         const chunks = chunkArray(payload.data, CHUNK_SIZE);
         const results = [];
@@ -339,7 +372,7 @@ const HomePage = () => {
             }
           }
           
-          // Update progress
+          
           const progress = Math.round(((i + 1) / chunks.length) * 100);
           setImportProgress(progress);
         }
@@ -347,7 +380,7 @@ const HomePage = () => {
         finalResult = aggregateImportResults(results);
         setImportLogs(prev => [...prev, `All chunks imported successfully. Finalizing...`]);
       } else {
-        // Single Type - no chunking
+        
         setImportLogs(prev => [...prev, `Detected Single Type. Importing...`]);
         const response = await post('/import-export/import', {
           data: payload,
@@ -378,7 +411,7 @@ const HomePage = () => {
     }
   };
 
-  // Reset & Refresh UI State
+  
   const handleResetUI = async () => {
     setStatusMessage(null);
     setImportResult(null);
@@ -398,7 +431,7 @@ const HomePage = () => {
     const currentType = selectedContentType;
     await fetchContentTypes();
     
-    // If content type didn't change, manually re-fetch entries to refresh the list
+    
     if (currentType) {
       fetchEntries(currentType, 1, pageSize, '');
     }
@@ -481,6 +514,7 @@ const HomePage = () => {
 
               {selectedContentType && (
                 <>
+                  {/* Row 1: Mode selector + Export button */}
                   <Flex gap={4} marginTop={2} alignItems="center" justifyContent="space-between">
                     <Flex gap={4}>
                       <Button
@@ -498,7 +532,7 @@ const HomePage = () => {
                         Select Entries ({selectedDocumentIds.length})
                       </Button>
                     </Flex>
-                    <Box>
+                    <Box style={{ flexShrink: 0 }}>
                       <Button
                         startIcon={<Download />}
                         onClick={handleExport}
@@ -512,6 +546,39 @@ const HomePage = () => {
                       </Button>
                     </Box>
                   </Flex>
+
+                  {/* Row 2: Date filter controls (only visible in Export All mode) */}
+                  {exportMode === 'all' && (
+                    <Flex gap={4} marginTop={3} alignItems="flex-end" flexWrap="wrap">
+                      <Box>
+                        <DatePicker
+                          label="From (Created)"
+                          value={parseDateForPicker(fromDate)}
+                          onChange={setFromDate}
+                          onClear={() => setFromDate(undefined)}
+                          size="S"
+                          placeholder="Select Start Date"
+                        />
+                      </Box>
+                      <Box>
+                        <DatePicker
+                          label="To (Created)"
+                          value={parseDateForPicker(toDate)}
+                          onChange={setToDate}
+                          onClear={() => setToDate(undefined)}
+                          size="S"
+                          placeholder="Select End Date"
+                        />
+                      </Box>
+                      {(fromDate || toDate) && (
+                        <Box background="primary100" padding={2} hasRadius style={{ alignSelf: 'flex-end' }}>
+                          <Typography variant="pi" textColor="primary700" fontWeight="bold">
+                            {totalEntries} Entries match this date range
+                          </Typography>
+                        </Box>
+                      )}
+                    </Flex>
+                  )}
 
                   {exportMode === 'selected' && (
                     <Box marginTop={2}>

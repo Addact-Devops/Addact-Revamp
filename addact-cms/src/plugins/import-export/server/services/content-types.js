@@ -71,7 +71,7 @@ module.exports = ({ strapi }) => ({
     return contentTypes;
   },
 
-  async getEntriesList(uid, { page = 1, pageSize = 50, search = '' } = {}) {
+  async getEntriesList(uid, { page = 1, pageSize = 50, search = '', fromDate, toDate } = {}) {
     const contentType = strapi.contentTypes[uid];
     if (!contentType) {
       throw new Error(`Content type ${uid} not found`);
@@ -100,6 +100,19 @@ module.exports = ({ strapi }) => ({
         filters.$or = searchFields.map((field) => ({
           [field]: { $contains: search },
         }));
+      }
+    }
+
+    // Apply Date filters if provided
+    if (fromDate || toDate) {
+      filters.createdAt = {};
+      if (fromDate) {
+        // If fromDate is YYYY-MM-DD, append start of day in UTC
+        filters.createdAt.$gte = fromDate.includes('T') ? fromDate : `${fromDate}T00:00:00.000Z`;
+      }
+      if (toDate) {
+        // If toDate is YYYY-MM-DD, append end of day in UTC
+        filters.createdAt.$lte = toDate.includes('T') ? toDate : `${toDate}T23:59:59.999Z`;
       }
     }
 
