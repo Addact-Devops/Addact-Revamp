@@ -27,6 +27,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
     "strapi-5-sitemap-plugin": "^1.0.7",
+    "strapi-plugin-import-export-v5": "^1.0.0",
     "styled-components": "^6.0.0",
     "swiper": "^12.1.2"
   },
