@@ -78,6 +78,7 @@ import { Metadata } from "next";
 import { getThankYouPageBySlug } from "@/graphql/queries/getThankYouPageBySlug";
 import EventThankYouClient from "./EventThankYouClient";
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 // Define JsonValue types (make sure it matches your client component definition)
 type JsonPrimitive = string | number | boolean | null;
@@ -148,14 +149,7 @@ export default async function EventFormThankYouPage() {
 
   return (
     <>
-      {typedPage.SEO?.structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(typedPage.SEO.structuredData),
-          }}
-        />
-      )}
+      <StructuredDataScript data={typedPage?.SEO?.structuredData} />
       <EventThankYouClient thankYouData={typedPage} />
     </>
   );

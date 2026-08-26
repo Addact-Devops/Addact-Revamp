@@ -1,5 +1,6 @@
 // components/organisms/BlogDetailBanner.tsx
 "use client";
+import { useEffect, useState } from "react";
 import Breadcrumps from "@/components/atom/breadcrumps";
 import Image from "next/image";
 
@@ -26,6 +27,14 @@ type BlogDetailBannerProps = {
 };
 
 export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
+  const [returnUrl, setReturnUrl] = useState<string>("/blogs");
+
+  useEffect(() => {
+    const storedUrl = localStorage.getItem("blogListReturnUrl");
+    if (storedUrl) {
+      setReturnUrl(storedUrl);
+    }
+  }, []);
   if (!banner) return null;
 
   const { BannerTitle, BannerDescription, BannerImage, PublishDate, blogcategory } = banner;
@@ -50,7 +59,7 @@ export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {
         <Breadcrumps
           crumbs={[
             { label: "Home", href: "/" },
-            { label: "Blogs", href: "/blogs" },
+            { label: "Blogs", href: returnUrl },
             { label: BannerTitle || "Blog", isCurrent: true },
           ]}
           className="bg-[#131318] margin-x-auto"

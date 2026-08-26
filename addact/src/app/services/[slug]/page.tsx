@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 import ServiceDetailClient from "./ServiceDetailClient";
 import { getServicesDetailSlug, ServicesDetail } from "@/graphql/queries/getServicesDetailSlug";
 
@@ -52,7 +53,12 @@ const ServiceDetailPage = async ({ params }: { params: Params }) => {
 
   if (!data) return notFound();
 
-  return <ServiceDetailClient data={data} />;
+  return (
+    <>
+      <StructuredDataScript data={data?.SEO?.structuredData} />
+      <ServiceDetailClient data={data} />
+    </>
+  );
 };
 
 export default ServiceDetailPage;

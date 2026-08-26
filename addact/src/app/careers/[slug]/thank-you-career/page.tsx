@@ -1,6 +1,7 @@
 import { getThankYouPageBySlug } from "@/graphql/queries/getThankYouPageBySlug";
 import CareerThankYouClient from "./CareerThankYouClient";
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 export async function generateMetadata() {
   // Hardcoded slug for SEO metadata
@@ -53,14 +54,7 @@ export default async function CareerThankYouPage() {
 
   return (
     <>
-      {page.SEO?.structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(page.SEO.structuredData),
-          }}
-        />
-      )}
+      <StructuredDataScript data={page?.SEO?.structuredData} />
       <CareerThankYouClient thankYouData={page} />
     </>
   );

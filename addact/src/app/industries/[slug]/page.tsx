@@ -5,7 +5,6 @@ import HeroBanner from "@/components/organisms/HeroBanner";
 // import OurCmsExpertsWithAnimation from "@/components/organisms/OurCmsExpertsWithAnimation";
 import { getIndustryBySlug } from "@/graphql/queries/getIndustryBySlug";
 import { Metadata } from "next";
-import Script from "next/script";
 
 // ✅ import the exact types your OurPartners component expects
 // import IndustryCtaBanner from "@/components/molecules/IndustryCtaBanner";
@@ -20,6 +19,8 @@ import WhyAddact from "@/components/organisms/WhyAddact";
 import OurTechStack from "@/components/organisms/OurTechStack";
 import IndustrySolutionsWithAnimation from "@/components/organisms/IndustrySolutionsWithAnimation";
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
+
 // import type {
 //   PartnerImage,
 //   PartnerTitle,
@@ -204,11 +205,7 @@ export default async function Page({ params }: { params: Params }) {
 
   return (
     <>
-      {structuredData && (
-        <Script id="structured-data" type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </Script>
-      )}
+      <StructuredDataScript data={structuredData} />
 
       <main className="industry-detail-page">
         {/* ✅ Hero Banner (image/video auto) */}

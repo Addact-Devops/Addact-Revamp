@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { getCareerDetailsData } from "@/graphql/queries/getCareerDetails";
 import CareerDetailClient from "./CareerDetailClient";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 type Params = Promise<{ slug: string }>;
 
@@ -49,12 +50,7 @@ export default async function CareerDetailPage({ params }: { params: Params }) {
 
   return (
     <>
-      {seo?.structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(seo.structuredData) }}
-        />
-      )}
+      <StructuredDataScript data={seo.structuredData} />
       <CareerDetailClient data={career} />
     </>
   );

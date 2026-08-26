@@ -2,6 +2,7 @@ import { getThankYouPageBySlug } from "@/graphql/queries/getThankYouPageBySlug";
 import ConnectNowThankYouClient from "./ConnectNowThankYouClient";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
 export async function generateMetadata(): Promise<Metadata> {
   const slug = "connect-now-thank-you";
@@ -43,14 +44,7 @@ export default async function ConnectNowThankYouPage() {
 
   return (
     <>
-      {page.SEO?.structuredData && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(page.SEO.structuredData),
-          }}
-        />
-      )}
+      <StructuredDataScript data={page?.SEO?.structuredData} />
       <ConnectNowThankYouClient thankYouData={page} />
     </>
   );

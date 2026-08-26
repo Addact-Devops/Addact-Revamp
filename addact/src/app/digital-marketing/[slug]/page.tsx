@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import StructuredDataScript from "@/components/atom/StructuredDataScript";
 import SiteDetailClient from "./SiteDetailClient";
 import {
   DigitalMarketingService,
@@ -54,7 +55,12 @@ const SiteDetailPage = async ({ params }: { params: Params }) => {
   const data: DigitalMarketingService | null = await getDigitalMarketingSlug(slug);
 
   if (!data) return notFound();
-  return <SiteDetailClient data={data} />;
+  return (
+    <>
+      <StructuredDataScript data={data?.SEO?.structuredData} />
+      <SiteDetailClient data={data} />
+    </>
+  );
 };
 
 export default SiteDetailPage;
