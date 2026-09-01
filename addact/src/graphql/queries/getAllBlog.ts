@@ -1,87 +1,28 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { BLOGS_PAGE_HEADING_FIELDS } from "../fragments/blogsPageHeadingFragment";
+import { BLOG_PAGE_BANNER_FIELDS } from "../fragments/blogPageBannerFragment";
+import { BLOG_CARD_FIELDS } from "../fragments/blogCardFragment";
+import { BLOG_CATEGORIES_FIELDS } from "../fragments/blogCategoriesFragment";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactBlogs($page: Int, $pageSize: Int, $sort: [String]) {
     blogs {
-      PageHeading {
-        id
-        PageTitle
-        Slug
-      }
-      blogBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            id
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              width
-              url
-              name
-              height
-            }
-            show_searchbox
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-      }
+      ${BLOGS_PAGE_HEADING_FIELDS}
+      ${BLOG_PAGE_BANNER_FIELDS}
     }
 
     addactBlogs(pagination: { page: $page, pageSize: $pageSize }, sort: $sort) {
-      Slug
-      documentId
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
-      }
-      BlogBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            url
-            width
-            height
-            name
-            alternativeText
-          }
-          PublishDate
-          author {
-            Author {
-              AuthorName
-            }
-          }
-          ReadNow {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-          blogcategory {
-            Category {
-              CategoryTitle
-            }
-          }
-        }
-      }
-      blog_category {
-        Category {
-          CategoryTitle
-        }
-      }
+      ${BLOG_CARD_FIELDS}
     }
 
-    blogCategories {
-      Category {
-        CategoryTitle
-      }
-    }
+    ${BLOG_CATEGORIES_FIELDS}
   }
 `;
 

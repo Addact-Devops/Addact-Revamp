@@ -1,51 +1,18 @@
 import { gql } from "graphql-request";
 import client from "../client";
 import { Image, Link } from "@/types/common";
+import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
+import { EVENT_BANNER_FIELDS } from "../fragments/eventBannerFragment";
+import { EVENT_BLOG_HERO_BANNER_FIELDS } from "../fragments/eventBlogHeroBannerFragment";
 
 const GET_EVENT_LIST_PAGE = gql`
   query EventList {
     event {
-      EventBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerDescription
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            BannerLink {
-              id
-              href
-              label
-              isExternal
-            }
-            BannerTitle
-          }
-        }
-      }
-      PageHeading {
-        PageTitle
-        Slug
-      }
+      ${EVENT_BANNER_FIELDS}
+      ${PAGE_HEADING_FIELDS}
     }
     addactsEvents {
-      EventBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          BannerTitle
-          PublishDate
-          eventLocation
-        }
-      }
+      ${EVENT_BLOG_HERO_BANNER_FIELDS}
       EventSummary
       Slug
     }

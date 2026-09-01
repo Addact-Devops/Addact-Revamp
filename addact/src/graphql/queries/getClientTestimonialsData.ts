@@ -1,27 +1,12 @@
 // src/graphql/queries/getClientTestimonialsData.ts
 
 import { gql } from "graphql-request";
+import { CLIENT_TESTIMONIALS_FIELDS } from "../fragments/clientTestimonialsFragment";
 import client from "../client";
 
 export const GET_CLIENT_TESTIMONIALS = gql`
   query GetClientTestimonials {
-    clientTestimonials {
-      Title
-      Item {
-        quote
-        author_name
-        author_position
-        rating
-      }
-      bgText
-      rating
-      ratingImage {
-        alternativeText
-        height
-        url
-        width
-      }
-    }
+    ${CLIENT_TESTIMONIALS_FIELDS}
   }
 `;
 

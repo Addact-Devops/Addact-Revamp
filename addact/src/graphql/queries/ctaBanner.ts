@@ -1,5 +1,9 @@
 import client from "../client";
 import { gql } from "graphql-request";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { CTA_FIELDS } from "../fragments/ctaFragment";
 
 export type CTAImage = {
     Image: {
@@ -33,55 +37,12 @@ export type CtaBannerResponse = {
 
 export const getOurPartners = async (): Promise<CtaBannerResponse> => {
     const query = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${HEADING_FRAGMENT}
         query Home {
             home {
-                cta {
-                    Title {
-                        ... on ComponentHeadingsH6 {
-                            id
-                            h6
-                        }
-                        ... on ComponentHeadingsH5 {
-                            id
-                            h5
-                        }
-                        ... on ComponentHeadingsH4 {
-                            id
-                            h5
-                        }
-                        ... on ComponentHeadingsH3 {
-                            id
-                            h3
-                        }
-                        ... on ComponentHeadingsH2 {
-                            id
-                            h2
-                        }
-                        ... on ComponentHeadingsH1 {
-                            id
-                            h1
-                        }
-                    }
-                    CTAImage {
-                        ... on ComponentSharedImage {
-                            Image {
-                                alternativeText
-                                caption
-                                width
-                                height
-                                url
-                            }
-                        }
-                    }
-                    CTALink {
-                        ... on ComponentSharedLink {
-                            href
-                            label
-                            target
-                            isExternal
-                        }
-                    }
-                }
+                cta { ${CTA_FIELDS} }
             }
         }
     `;
