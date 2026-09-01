@@ -1,41 +1,337 @@
-import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { HEADING_FRAGMENT } from "../fragments/headingFragment";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
-import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { SERVICE_LIST_BANNER_FIELDS } from "../fragments/serviceListBannerFragment";
-import { SERVICE_LIST_CTA2_FIELDS } from "../fragments/serviceListCta2Fragment";
-import { SERVICE_LIST_WHY_ADDACT_FIELDS } from "../fragments/serviceListWhyAddactFragment";
-import { SERVICE_LIST_OUR_SERVICE_FIELDS } from "../fragments/serviceListOurServiceFragment";
-import { SERVICE_LIST_CONTACT_US_FIELDS } from "../fragments/serviceListContactUsFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const ServiceListBySlug = gql`
-  ${LINK_FRAGMENT}
-  ${HEADING_FRAGMENT}
-  ${IMAGE_FRAGMENT}
-  ${SHARED_IMAGE_FRAGMENT}
   query ServiceLists($filters: ServiceListFiltersInput) {
     serviceLists(filters: $filters) {
       ReferenceTitle
       SEO {
-        ${SEO_FIELDS}
+        metaTitle
+        metaDescription
+        ogTitle
+        ogDescription
+        ogImage {
+          url
+        }
+        metaRobots
+        twitterCardTitle
+        canonicalURL
+        structuredData
+        languageTag
       }
-      ${SERVICE_LIST_BANNER_FIELDS}
-      cta { 
-        ${CTA_FIELDS}
+      Banner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerDescription
+            BannerImage {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            BannerLink {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+            BannerTitle
+          }
+        }
       }
-      faq { ${FAQ_FIELDS} }
-      ${SERVICE_LIST_CTA2_FIELDS}
-      our_process { ${OUR_PROCESS_FIELDS} }
-      ${SERVICE_LIST_WHY_ADDACT_FIELDS}
-      ${SERVICE_LIST_OUR_SERVICE_FIELDS}
-      ${SERVICE_LIST_CONTACT_US_FIELDS}
+      cta {
+        CTADescription
+        pageReference
+        CTAImage {
+          ... on ComponentSharedImage {
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+          }
+        }
+        CTALink {
+          ... on ComponentSharedLink {
+            href
+            id
+            isExternal
+            label
+            target
+          }
+        }
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+        }
+      }
+      cta2 {
+        CTADescription
+        pageReference
+        CTAImage {
+          ... on ComponentSharedImage {
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+          }
+        }
+        CTALink {
+          ... on ComponentSharedLink {
+            href
+            id
+            isExternal
+            label
+            target
+          }
+        }
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+        }
+      }
+      our_process {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        ProcessData {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            id
+            Title
+            Description
+          }
+        }
+      }
+
+      why_addact {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+        pageReference
+      }
+      faq {
+        Title
+        FAQ {
+          Description
+          Title
+          id
+        }
+      }
+      our_service {
+        FirstTabDisplayName
+        SecondTabDisplayName
+        ForEnterprisesBrands {
+          GlobalCard {
+            ... on ComponentBaseTemplatePromo {
+              id
+              Title
+              Description
+              Image {
+                alternativeText
+                height
+                name
+                url
+                width
+              }
+              Link {
+                id
+                href
+                label
+                target
+                isExternal
+              }
+              sub_service_page {
+                Slug
+              }
+            }
+          }
+          Title {
+            ... on ComponentHeadingsH1 {
+              id
+              h1
+            }
+            ... on ComponentHeadingsH2 {
+              id
+              h2
+            }
+            ... on ComponentHeadingsH3 {
+              id
+              h3
+            }
+            ... on ComponentHeadingsH4 {
+              id
+              h5
+            }
+            ... on ComponentHeadingsH5 {
+              id
+              h5
+            }
+            ... on ComponentHeadingsH6 {
+              id
+              h6
+            }
+          }
+        }
+        team_feature {
+          Description
+          Cards {
+            Description
+            Title
+            id
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+      }
+      contact_us {
+        Form {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+        pageReference
+        RecipientEmails
+      }
     }
   }
 `;

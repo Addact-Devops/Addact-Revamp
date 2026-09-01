@@ -1,22 +1,5 @@
-import { FAQ_FIELDS } from "../fragments/faqFragment";
 // src/graphql/queries/getIndustryBySlug.ts
 import { gql } from "graphql-request";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { HEADING_FRAGMENT } from "../fragments/headingFragment";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
-import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
-import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { INDUSTRY_HERO_BANNER_FIELDS } from "../fragments/industryHeroBannerFragment";
-import { OUR_PARTNER_FIELDS } from "../fragments/ourPartnerFragment";
-import { OUR_CHALLENGES_FIELDS } from "../fragments/ourChallengesFragment";
-import { OUR_SOLUTIONS_FIELDS } from "../fragments/ourSolutionsFragment";
-import { GLOBAL_CARD_FIELDS } from "../fragments/globalCardFragment";
-import { CLIENT_TESTIMONIAL_FIELDS } from "../fragments/clientTestimonialFragment";
-import { CONTACT_US_FIELDS } from "../fragments/contactUsFragment";
-import { PROJECT_HIGHLIGHTS_FIELDS } from "../fragments/projectHighlightsFragment";
 import client from "../client";
 import { Heading, Image } from "./getHomePage";
 
@@ -25,40 +8,296 @@ import { Heading, Image } from "./getHomePage";
  * Now includes `faq`, `ContactUs`, and newly added `ProjectHighlights`.
  */
 const GET_INDUSTRY_BY_SLUG = gql`
-  ${LINK_FRAGMENT}
-  ${HEADING_FRAGMENT}
-  ${IMAGE_FRAGMENT}
-  ${SHARED_IMAGE_FRAGMENT}
-  ${RICHTEXT_FRAGMENT}
   query GetIndustryBySlug($slug: String!) {
     industryDetailPages(filters: { Slug: { eq: $slug } }) {
       Slug
       ReferenceTitle
 
-      SEO { ${SEO_FIELDS} }
+      SEO {
+        metaTitle
+        metaDescription
+        ogTitle
+        ogDescription
+        ogImage {
+          url
+        }
+        metaRobots
+        twitterCardTitle
+        canonicalURL
+        structuredData
+        languageTag
+      }
 
-      ${INDUSTRY_HERO_BANNER_FIELDS}
+      HeroBanner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerTitle
+            BannerDescription
+            BannerLogo {
+              alternativeText
+              height
+              url
+              width
+            }
+            BannerImage {
+              alternativeText
+              height
+              url
+              width
+            }
+            isTextAlignCenter
+            isVideo
+            show_searchbox
+            videoLink
+            BannerLink {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
 
-      ${OUR_PARTNER_FIELDS}
+      OurPartner {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        Image {
+          ... on ComponentSharedImage {
+            Image {
+              url
+              alternativeText
+            }
+          }
+        }
+      }
 
-      ${OUR_CHALLENGES_FIELDS}
+      OurChallenges {
+        Title
+        NumberTitleContent {
+          Number
+          Title
+          Content
+        }
+      }
 
-      ${OUR_SOLUTIONS_FIELDS}
+      OurSolutions {
+        Title
+        SolutionsCards {
+          Title
+          Description
+        }
+      }
 
-      ${GLOBAL_CARD_FIELDS}
+      global_card {
+        Title {
+          ... on ComponentHeadingsH1 {
+            h1
+            id
+          }
+          ... on ComponentHeadingsH2 {
+            h2
+            id
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentBaseTemplateRichtext {
+            id
+            Richtext
+          }
+        }
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            Title
+            Description
+            Image {
+              url
+              alternativeText
+              width
+              height
+            }
+          }
+        }
+      }
 
-      ${CLIENT_TESTIMONIAL_FIELDS}
+      client_testimonial {
+        Title
+        Item {
+          quote
+          author_name
+          author_position
+          rating
+        }
+      }
 
-      cta { ${CTA_FIELDS} }
+      cta {
+        CTADescription
+        CTAImage {
+          ... on ComponentSharedImage {
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+          }
+        }
+        CTALink {
+          ... on ComponentSharedLink {
+            label
+            href
+            target
+          }
+        }
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
+        slug
+      }
 
-      faq { ${FAQ_FIELDS} }
+      faq {
+        ReferenceTitle
+        Title
+        FAQ {
+          Title
+          Description
+        }
+      }
 
-      ${CONTACT_US_FIELDS}
+      ContactUs {
+        pageReference
+        Form {
+          ... on ComponentBaseTemplatePromo {
+            Title
+            Description
+            Image {
+              url
+              alternativeText
+              width
+              height
+            }
+          }
+        }
+        NameLable
+        CompanyName
+        RequirementsLabel
+        ButtonLabel
+        EmailLabel
+        RecipientEmails
+      }
 
       # ✅ Newly added component block
-      ${PROJECT_HIGHLIGHTS_FIELDS}
+      ProjectHighlights {
+        Title
+        addact_case_studies {
+          Slug
+          HeroBanner {
+            ... on ComponentBlogHeroBannerBlogHeroBanner {
+              BannerTitle
+              PublishDate
+              BannerImage {
+                url
+                alternativeText
+                width
+                height
+              }
+            }
+          }
+        }
+      }
 
-      techStack { ${TECH_STACK_FIELDS} }
+      techStack {
+        title
+        description
+        tab {
+          category {
+            categoryTitle
+          }
+          tabContent {
+            title
+            logo {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
     }
   }
 `;

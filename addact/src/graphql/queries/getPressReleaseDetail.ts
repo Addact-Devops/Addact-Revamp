@@ -1,28 +1,110 @@
 import { gql } from "graphql-request";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
-import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
-import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
-import { PRESS_CONTENT_FIELDS } from "../fragments/pressContentFragment";
-import { SOCIAL_ICONS_FIELDS } from "../fragments/socialIconsFragment";
 import client from "../client";
 import { Heading, Image, Link } from "@/types/common";
 
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
-  ${LINK_FRAGMENT}
-  ${IMAGE_FRAGMENT}
-  ${SHARED_IMAGE_FRAGMENT}
-  ${RICHTEXT_FRAGMENT}
-  ${LINK_IMAGE_FRAGMENT}
   query AddactPressReleases($filters: AddactPressReleaseFiltersInput) {
     addactPressReleases(filters: $filters) {
-      SEO { ${SEO_FIELDS} }
-      ${BLOG_HERO_BANNER_FIELDS}
-      ${PRESS_CONTENT_FIELDS}
-      ${SOCIAL_ICONS_FIELDS}
+      SEO {
+        metaTitle
+        metaDescription
+        ogTitle
+        ogDescription
+        ogImage {
+          url
+        }
+        metaRobots
+        twitterCardTitle
+        canonicalURL
+        structuredData
+        languageTag
+      }
+      HeroBanner {
+        ... on ComponentBlogHeroBannerBlogHeroBanner {
+          BannerTitle
+          BannerDescription
+          BannerImage {
+            alternativeText
+            height
+            name
+            url
+            width
+          }
+        }
+      }
+      PressContent {
+        ... on ComponentSharedLink {
+          id
+          href
+          label
+          isExternal
+        }
+        ... on ComponentSharedImage {
+          id
+          Image {
+            alternativeText
+            height
+            name
+            url
+            width
+          }
+        }
+        ... on ComponentHeadingsH1 {
+          id
+          h1
+        }
+        ... on ComponentHeadingsH2 {
+          id
+          h2
+        }
+        ... on ComponentHeadingsH3 {
+          id
+          h3
+        }
+        ... on ComponentHeadingsH4 {
+          id
+          h5
+        }
+        ... on ComponentHeadingsH5 {
+          id
+          h5
+        }
+        ... on ComponentHeadingsH6 {
+          id
+          h6
+        }
+        ... on ComponentBaseTemplateRichtext {
+          id
+          Richtext
+        }
+      }
+      social_icons {
+        SocialIcon {
+          ... on ComponentBaseTemplateLinkImage {
+            Title
+            Links {
+              href
+              id
+              isExternal
+              label
+            }
+            Icons {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            HoverIcon {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+          }
+        }
+      }
     }
   }
 `;

@@ -1,21 +1,59 @@
 import { gql } from "graphql-request";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { TITLE_FRAGMENT } from "../fragments/titleFragment";
-import { HEADER_LOGO_FIELDS } from "../fragments/headerLogoFragment";
-import { HEADER_NAV_FIELDS } from "../fragments/headerNavFragment";
-import { HEADER_CONTACT_US_FIELDS } from "../fragments/headerContactUsFragment";
 import client from "../client";
 
 const GET_HEADER = gql`
-  ${IMAGE_FRAGMENT}
-  ${LINK_FRAGMENT}
-  ${TITLE_FRAGMENT}
   query Headers {
     headers {
-      ${HEADER_LOGO_FIELDS}
-      ${HEADER_NAV_FIELDS}
-      ${HEADER_CONTACT_US_FIELDS}
+      HeaderLogo {
+        width
+        url
+        height
+        name
+        alternativeText
+      }
+      main_navigations {
+        Parent {
+          HeaderNavLink {
+            ... on ComponentBaseTemplateTitle {
+              Title
+            }
+          }
+          ReferenceTitle
+        }
+        SubNavLink {
+          ... on ComponentSharedLink {
+            href
+            isExternal
+            id
+            label
+            target
+            SubDisc
+            Icon {
+              url
+              alternativeText
+              height
+              width
+            }
+          }
+        }
+        ReferenceTitle
+        SubNavImage {
+          alternativeText
+          height
+          name
+          url
+          width
+        }
+      }
+      contact_us {
+        ... on ComponentSharedLink {
+          id
+          href
+          label
+          target
+          isExternal
+        }
+      }
     }
   }
 `;
