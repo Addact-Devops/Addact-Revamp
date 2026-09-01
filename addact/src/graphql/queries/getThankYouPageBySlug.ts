@@ -1,67 +1,21 @@
 import { gql } from "graphql-request";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { THANK_YOU_CONTENT_FIELDS } from "../fragments/thankYouContentFragment";
+import { THANK_YOU_ANIMATION_VIDEO_FIELDS } from "../fragments/thankYouAnimationVideoFragment";
 import client from "../client";
 
 const GET_THANK_YOU_PAGE = gql`
+  ${RICHTEXT_FRAGMENT}
   query ThankyouPages($filters: ThankyouPageFiltersInput) {
     thankyouPages(filters: $filters) {
       ReferenceTitle
       Slug
       SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
+        ${SEO_FIELDS}
       }
-      Content {
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-      }
-      AnimationVideo {
-        alternativeText
-        name
-        url
-      }
+      ${THANK_YOU_CONTENT_FIELDS}
+      ${THANK_YOU_ANIMATION_VIDEO_FIELDS}
     }
   }
 `;

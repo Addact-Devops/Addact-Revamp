@@ -1,4 +1,7 @@
 import { gql } from "graphql-request";
+import { GALLERY_TITLES_FRAGMENT } from "../fragments/galleryTitlesFragment";
+import { CAREER_GALLERY_SECTION_FIELDS } from "../fragments/careerGallerySectionFragment";
+import { CAREER_GALLERY_CATEGORIES_FIELDS } from "../fragments/careerGalleryCategoriesFragment";
 import client from "../client";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
@@ -8,26 +11,10 @@ if (!endpoint) {
 }
 
 const query = gql`
+  ${GALLERY_TITLES_FRAGMENT}
   query CareerGalleryData {
-    careers {
-      Gallery {
-        ... on ComponentAddactComponentGalleryTitles {
-          Title
-          SubTitle
-        }
-      }
-    }
-
-    galleryCategories(pagination: { limit: -1 }) {
-      Name
-      Images(pagination: { limit: -1 }) {
-        Image {
-          url
-          alternativeText
-        }
-        Year
-      }
-    }
+    ${CAREER_GALLERY_SECTION_FIELDS}
+    ${CAREER_GALLERY_CATEGORIES_FIELDS}
   }
 `;
 

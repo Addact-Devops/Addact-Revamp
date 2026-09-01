@@ -1,30 +1,13 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { INDUSTRIES_WE_SERVE_TITLE_FIELDS } from "../fragments/industriesTitleFragment";
+import { INDUSTRIES_WE_SERVE_LIST_FIELDS } from "../fragments/industriesListFragment";
 
 const industries_Query = gql`
   query industriesWeServes {
     industriesWeServes {
-      TitleDescription {
-        Title
-        Description
-      }
-      Industries {
-        Icons {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-        LinkIcons {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-        Title
-      }
+      ${INDUSTRIES_WE_SERVE_TITLE_FIELDS}
+      ${INDUSTRIES_WE_SERVE_LIST_FIELDS}
     }
   }
 `;
