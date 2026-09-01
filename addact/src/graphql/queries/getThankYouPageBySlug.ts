@@ -2,6 +2,7 @@ import { gql } from "graphql-request";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
 import { THANK_YOU_CONTENT_FIELDS } from "../fragments/thankYouContentFragment";
+import { THANK_YOU_ANIMATION_VIDEO_FIELDS } from "../fragments/thankYouAnimationVideoFragment";
 import client from "../client";
 
 const GET_THANK_YOU_PAGE = gql`
@@ -14,11 +15,7 @@ const GET_THANK_YOU_PAGE = gql`
         ${SEO_FIELDS}
       }
       ${THANK_YOU_CONTENT_FIELDS}
-      AnimationVideo {
-        alternativeText
-        name
-        url
-      }
+      ${THANK_YOU_ANIMATION_VIDEO_FIELDS}
     }
   }
 `;

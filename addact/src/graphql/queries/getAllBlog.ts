@@ -5,6 +5,7 @@ import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { BLOGS_PAGE_HEADING_FIELDS } from "../fragments/blogsPageHeadingFragment";
 import { BLOG_PAGE_BANNER_FIELDS } from "../fragments/blogPageBannerFragment";
 import { BLOG_CARD_FIELDS } from "../fragments/blogCardFragment";
+import { BLOG_CATEGORIES_FIELDS } from "../fragments/blogCategoriesFragment";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
@@ -21,11 +22,7 @@ const GET_ALL_BLOGS = gql`
       ${BLOG_CARD_FIELDS}
     }
 
-    blogCategories {
-      Category {
-        CategoryTitle
-      }
-    }
+    ${BLOG_CATEGORIES_FIELDS}
   }
 `;
 
