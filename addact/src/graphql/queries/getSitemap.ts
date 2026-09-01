@@ -1,6 +1,5 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { SITEMAP_BANNER_FIELDS } from "../fragments/sitemapBannerFragment";
 
 export type SitemapBannerType = {
   BannerTitle?: string;
@@ -24,7 +23,20 @@ export type SitemapResponse = {
 const sitemapQuery = gql`
   query Sitemap {
     sitemap {
-      ${SITEMAP_BANNER_FIELDS}
+      banner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerImage {
+              url
+              width
+              height
+              alternativeText
+            }
+            BannerTitle
+            BannerDescription
+          }
+        }
+      }
     }
   }
 `;
