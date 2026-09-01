@@ -3,68 +3,16 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { OUR_INSIGHTS_BLOG_FIELDS } from "../fragments/ourInsightsBlogFragment";
+import { OUR_INSIGHTS_CASE_STUDY_FIELDS } from "../fragments/ourInsightsCaseStudyFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
 import client from "../client";
 
 const ourInsights_Query = gql`
-  ${LINK_FRAGMENT}
-  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   ${COMMON_SECTION_FRAGMENT}
   query AddactBlogsAndCaseStudy {
-    addactBlogs(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
-      documentId
-      Slug
-      createdAt
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
-      }
-      BlogBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          id
-          BannerImage {
-            width
-            url
-            name
-            height
-            alternativeText
-          }
-          BannerDescription
-          BannerTitle
-          PublishDate
-          ReadNow {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-        }
-      }
-    }
-    addactCaseStudies(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
-      ReferenceTitle
-      Slug
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          BannerTitle
-          ReadNow {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-          PublishDate
-          BannerDescription
-        }
-      }
-    }
+    ${OUR_INSIGHTS_BLOG_FIELDS}
+    ${OUR_INSIGHTS_CASE_STUDY_FIELDS}
   }
 `;
 
@@ -133,11 +81,7 @@ const home_Query = gql`
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query Home {
     home {
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
     }
   }
 `;

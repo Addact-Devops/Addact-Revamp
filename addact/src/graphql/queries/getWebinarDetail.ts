@@ -4,6 +4,11 @@ import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
 import { Heading, Image } from "@/types/common";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { WEBINAR_HERO_BANNER_FIELDS } from "../fragments/webinarHeroBannerFragment";
+import { WEBINAR_CONTENT_FIELDS } from "../fragments/webinarContentFragment";
+import { WEBINAR_SPEAKERS_FIELDS } from "../fragments/webinarSpeakersFragment";
+import { WEBINAR_HOST_FIELDS } from "../fragments/webinarHostFragment";
 
 const GET_WEBINAR_DETAIL_PAGE = gql`
   ${IMAGE_FRAGMENT}
@@ -11,105 +16,11 @@ const GET_WEBINAR_DETAIL_PAGE = gql`
   ${RICHTEXT_FRAGMENT}
   query AddactWebinars($filters: AddactWebinarFiltersInput) {
     addactWebinars(filters: $filters) {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          PublishDate
-          ReadNow {
-            id
-            href
-            label
-            isExternal
-          }
-        }
-      }
-      WebinarContent {
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-        ... on ComponentSharedImage { ...SharedImageFields }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-      }
-      Speakers {
-        Author {
-          AuthorImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          AuthorName
-          designation {
-            DesignationTitle
-          }
-        }
-      }
-      Host {
-        Author {
-          AuthorImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          AuthorName
-          designation {
-            DesignationTitle
-          }
-        }
-      }
+      SEO { ${SEO_FIELDS} }
+      ${WEBINAR_HERO_BANNER_FIELDS}
+      ${WEBINAR_CONTENT_FIELDS}
+      ${WEBINAR_SPEAKERS_FIELDS}
+      ${WEBINAR_HOST_FIELDS}
     }
   }
 `;

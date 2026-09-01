@@ -5,6 +5,12 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SERVICE_DETAIL_HERO_BANNER_FIELDS } from "../fragments/serviceDetailHeroBannerFragment";
+import { SERVICE_DETAIL_OUR_SERVICE_FIELDS } from "../fragments/serviceDetailOurServiceFragment";
+import { SERVICE_DETAIL_WHY_ADDACT_FIELDS } from "../fragments/serviceDetailWhyAddactFragment";
+import { SERVICE_DETAIL_CTA_FIELDS } from "../fragments/serviceDetailCtaFragment";
+import { SERVICE_DETAIL_CONTACT_US_FIELDS } from "../fragments/serviceDetailContactUsFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
@@ -16,253 +22,16 @@ const ServiceDetailBySlug = gql`
   query SubServicePages($filters: SubServicePageFiltersInput) {
     subServicePages(filters: $filters) {
       ReferenceTitle
-      HeroBanner {
-        BannerTitle
-        BannerDescription
-        BannerImage {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-        BannerLink {
-          id
-          href
-          label
-          isExternal
-        }
-      }
-      our_service {
-        Titeldescription {
-          Description
-          Title
-        }
-        FirstTabDisplayName
-        SecondTabDisplayName
-        ForEnterprisesBrands {
-          GlobalCard {
-            ... on ComponentBaseTemplatePromo {
-              Description
-              Title
-              id
-            }
-          }
-          Title {
-            ... on ComponentHeadingsH1 {
-              id
-              h1
-            }
-            ... on ComponentHeadingsH2 {
-              id
-              h2
-            }
-            ... on ComponentHeadingsH3 {
-              id
-              h3
-            }
-            ... on ComponentHeadingsH4 {
-              id
-              h5
-            }
-            ... on ComponentHeadingsH5 {
-              id
-              h5
-            }
-            ... on ComponentHeadingsH6 {
-              id
-              h6
-            }
-            ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-          }
-        }
-        ReferenceTitle
-        team_feature {
-          Cards {
-            Description
-            Title
-            id
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-          Description
-        }
-      }
+      ${SERVICE_DETAIL_HERO_BANNER_FIELDS}
+      ${SERVICE_DETAIL_OUR_SERVICE_FIELDS}
       our_process { ${OUR_PROCESS_FIELDS} }
-      why_addact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-          ... on Error {
-            code
-            message
-          }
-        }
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Title
-          }
-        }
-      }
-      cta2 {
-        CTADescription
-        CTAImage {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-        CTALink {
-          id
-          href
-          label
-          isExternal
-        }
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-      }
-      cta {
-        CTADescription
-        CTAImage {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-        CTALink {
-          id
-          href
-          label
-          isExternal
-        }
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-      }
+      ${SERVICE_DETAIL_WHY_ADDACT_FIELDS}
+      cta2 { ${SERVICE_DETAIL_CTA_FIELDS} }
+      cta { ${SERVICE_DETAIL_CTA_FIELDS} }
       faq { ${FAQ_FIELDS} }
-      contact_us {
-        Form {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-        pageReference
-        RecipientEmails
-      }
+      ${SERVICE_DETAIL_CONTACT_US_FIELDS}
       SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
+        ${SEO_FIELDS}
       }
     }
   }

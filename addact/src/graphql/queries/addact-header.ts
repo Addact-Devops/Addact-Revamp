@@ -5,6 +5,7 @@ import { HEADER_CARD_FRAGMENT } from "../fragments/headerCardFragment";
 import { HEADER_LAYER_3_FRAGMENT } from "../fragments/headerLayer3Fragment";
 import { HEADER_LAYER_2_FRAGMENT } from "../fragments/headerLayer2Fragment";
 import { HEADER_LAYER_1_FRAGMENT } from "../fragments/headerLayer1Fragment";
+import { ADDACT_HEADER_FIELDS } from "../fragments/addactHeaderFragment";
 import client from "../client";
 
 const GET_ADDACT_HEADER = gql`
@@ -16,19 +17,7 @@ const GET_ADDACT_HEADER = gql`
   ${HEADER_LAYER_1_FRAGMENT}
   query AddactHeader {
     addactHeader {
-      logo {
-        ...ImageFields
-      }
-      contactButton {
-        ...HeaderCardFields
-      }
-      menu(pagination: { limit: -1 }) {
-        ...HeaderLayer1Fields
-      }
-      additionalText
-      contactDetails {
-        ...LinkFields
-      }
+      ${ADDACT_HEADER_FIELDS}
     }
   }
 `;

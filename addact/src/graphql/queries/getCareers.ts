@@ -3,6 +3,11 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { REUSE_CARD_FRAGMENT } from "../fragments/reuseCardFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { CAREERS_HERO_BANNER_FIELDS } from "../fragments/careersHeroBannerFragment";
+import { CAREER_CARD_FIELDS } from "../fragments/careerCardFragment";
+import { POSITIONS_TITLE_FIELDS } from "../fragments/positionsTitleFragment";
+import { POSITIONS_FIELDS } from "../fragments/positionsFragment";
+import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
 import client from "../client";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
@@ -18,94 +23,11 @@ const query = gql`
   ${RICHTEXT_FRAGMENT}
   query CareersData {
     careers {
-      PageHeading {
-        PageTitle
-        Slug
-      }
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            show_searchbox
-            BannerImage {
-              url
-              name
-              width
-              height
-              alternativeText
-            }
-          }
-        }
-      }
-      Careercard {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-          ... on Error {
-            code
-            message
-          }
-        }
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              url
-              width
-              height
-              name
-              alternativeText
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-      }
-      PositionsTitle {
-        Title
-        Description
-      }
-      positions {
-        EventTitle
-        CardInfo {
-          ... on ComponentReuseCard { ...ReuseCardFields }
-        }
-      }
+      ${PAGE_HEADING_FIELDS}
+      Banner { ${CAREERS_HERO_BANNER_FIELDS} }
+      Careercard { ${CAREER_CARD_FIELDS} }
+      ${POSITIONS_TITLE_FIELDS}
+      ${POSITIONS_FIELDS}
     }
   }
 `;
@@ -193,6 +115,11 @@ export const getCareersData = async (): Promise<
   CareersDataResponse["careers"] & { positions: PositionType[] }
 > => {
   const res = await client.request<CareersDataResponse>(query);
+  if (!res.careers) {
+    return {
+      positions: [],
+    };
+  }
   const positionsWithId = res.careers.positions?.map((p, index) => ({
     ...p,
     id: String(index),

@@ -11,6 +11,11 @@ import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
 import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
 import { QA_TESTING_LISTING_FRAGMENT } from "../fragments/qaTestingListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { AI_BANNER_SECTION_FIELDS } from "../fragments/aiBannerSectionFragment";
+import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import { QA_OUR_SERVICE_FIELDS } from "../fragments/qaOurServiceFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
 import { Heading, Link } from "./getHomePage";
 
 const GET_PRESS_RELEASE_LIST_PAGE = gql`
@@ -21,126 +26,20 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query QATesting {
     qaTestingAndSupport {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
+      SEO { ${SEO_FIELDS} }
 
       industry { ${INDUSTRY_FIELDS} }
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
+      ${WHY_ADDACT_FIELDS}
 
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              alternativeText
-              height
-              url
-              width
-            }
-            BannerImage {
-              alternativeText
-              height
-              url
-              width
-            }
-            isTextAlignCenter
-            isVideo
-            show_searchbox
-            videoLink
-            BannerLink {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
+      ${AI_BANNER_SECTION_FIELDS}
 
-      ourService {
-        ... on ComponentHomeQaTestingListing { ...QaTestingListingFields }
-      }
+      ${QA_OUR_SERVICE_FIELDS}
 
-      cta { ${CTA_FIELDS}
-  ${FAQ_FIELDS} }
+      cta { ${CTA_FIELDS} }
       faq { ${FAQ_FIELDS} }
       techStack { ${TECH_STACK_FIELDS} }
       ourprocess { ${OUR_PROCESS_FIELDS} }
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
     }
   }
 `;

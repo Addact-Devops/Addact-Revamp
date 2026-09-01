@@ -8,6 +8,11 @@ import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
 import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
+import { AI_BANNER_SECTION_FIELDS } from "../fragments/aiBannerSectionFragment";
+import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import { HIRE_SLUG_OUR_SERVICE_FIELDS } from "../fragments/hireSlugOurServiceFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
@@ -19,124 +24,18 @@ const hireExpertsSlugQuery = gql`
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query HireExpertSlug($filters: HireExpertDetailFiltersInput) {
     hireExpertDetails(filters: $filters) {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              alternativeText
-              height
-              url
-              width
-            }
-            BannerImage {
-              alternativeText
-              height
-              url
-              width
-            }
-            isTextAlignCenter
-            isVideo
-            show_searchbox
-            videoLink
-            BannerLink {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
-      cta { ${CTA_FIELDS}
-  ${FAQ_FIELDS} }
+      SEO { ${SEO_FIELDS} }
+      ${AI_BANNER_SECTION_FIELDS}
+      cta { ${CTA_FIELDS} }
 
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
+      ${WHY_ADDACT_FIELDS}
       faq { ${FAQ_FIELDS} }
 
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
 
       industry { ${INDUSTRY_FIELDS} }
 
-      ourService {
-        ... on ComponentHomeServiceList { ...OurServiceFields }
-      }
+      ${HIRE_SLUG_OUR_SERVICE_FIELDS}
 
       our_process { ${OUR_PROCESS_FIELDS} }
     }

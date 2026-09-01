@@ -10,6 +10,15 @@ import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
 import { UI_UX_LISTING_FRAGMENT } from "../fragments/uiUxListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
+import { BANNER_SECTION_FIELDS } from "../fragments/bannerSectionFragment";
+import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import { DM_SLUG_OUR_SERVICE_FIELDS } from "../fragments/dmSlugOurServiceFragment";
+import { CHALLENGES_FIELDS } from "../fragments/challengesFragment";
+import { DESIGN_FLOW_FIELDS } from "../fragments/designFlowFragment";
+import { IMPACT_UX_FIELDS } from "../fragments/impactUxFragment";
+import { OUR_WORK_FIELDS } from "../fragments/ourWorkFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
@@ -22,263 +31,32 @@ const digitalMarketingQuerySlugQuery = gql`
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query DigitalMarketingDetails($filters: DigitalMarketingDetailFiltersInput) {
     digitalMarketingDetails(filters: $filters) {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
+      SEO { ${SEO_FIELDS} }
       isUxpage
 
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              alternativeText
-              height
-              url
-              width
-            }
-            BannerImage {
-              alternativeText
-              height
-              url
-              width
-            }
-            isTextAlignCenter
-            isVideo
-            show_searchbox
-            videoLink
-            BannerLink {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-               chipsText {
-              Title
-            }
-          }
-        }
-      }
-      cta { ${CTA_FIELDS}
-  ${FAQ_FIELDS} }
+      ${BANNER_SECTION_FIELDS}
+      cta { ${CTA_FIELDS} }
 
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
+      ${WHY_ADDACT_FIELDS}
       faq { ${FAQ_FIELDS} }
 
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
 
       techStack { ${TECH_STACK_FIELDS} }
 
-      ourService {
-        ... on ComponentHomeServiceList { ...OurServiceFields }
-        ... on ComponentHomeUiUxLisitng { ...UiUxListingFields }
-      }
+      ${DM_SLUG_OUR_SERVICE_FIELDS}
 
       industry { ${INDUSTRY_FIELDS} }
 
       ourprocess { ${OUR_PROCESS_FIELDS} }
 
-      challenges {
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
+      ${CHALLENGES_FIELDS}
 
-      designFlow {
-        title
-        description
-        tabsAndFlow {
-          tabTitle
-          flow {
-            title
-            information
-            gif {
-              alternativeText
-              height
-              mime
-              url
-              width
-            }
-            icon {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
+      ${DESIGN_FLOW_FIELDS}
 
-      impactUx {
-        title
-        beforeText
-        afterText
-        beforeImage {
-          alternativeText
-          height
-          url
-          width
-        }
-        afterImage {
-          alternativeText
-          height
-          url
-          width
-        }
-        desktopFrame {
-          alternativeText
-          height
-          url
-          width
-        }
-        mobileFrame {
-          alternativeText
-          height
-          url
-          width
-        }
-      }
+      ${IMPACT_UX_FIELDS}
 
-      ourWork {
-        serviceTitle
-        serviceVariant {
-          variant
-        }
-        isCarousel
-        serviceList {
-          listingContext {
-            id
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-          tagLine {
-            Title
-          }
-        }
-      }
+      ${OUR_WORK_FIELDS}
     }
   }
 `;

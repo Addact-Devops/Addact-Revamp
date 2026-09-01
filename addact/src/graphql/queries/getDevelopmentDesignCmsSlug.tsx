@@ -1,15 +1,11 @@
-import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
-import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
-import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
 import { SITECORE_LISTING_FRAGMENT } from "../fragments/sitecoreListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
+import { CMS_DETAIL_ALL_FIELDS_FRAGMENT } from "../fragments/cmsDetailAllFieldsFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
@@ -20,132 +16,10 @@ const developmentDesignDetailsSlugQuery = gql`
   ${OUR_SERVICE_FRAGMENT}
   ${SITECORE_LISTING_FRAGMENT}
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${CMS_DETAIL_ALL_FIELDS_FRAGMENT}
   query CMSDetails($filters: CmsDetailFiltersInput) {
     cmsDetails(filters: $filters) {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              alternativeText
-              height
-              url
-              width
-            }
-            BannerImage {
-              alternativeText
-              height
-              url
-              width
-            }
-            isTextAlignCenter
-            isVideo
-            show_searchbox
-            videoLink
-            BannerLink {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
-      cta { ${CTA_FIELDS}
-  ${FAQ_FIELDS} }
-
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
-
-      faq { ${FAQ_FIELDS} }
-
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
-
-      techStack { ${TECH_STACK_FIELDS} }
-
-      ourService {
-        ... on ComponentHomeSitecoreListing { ...SitecoreListingFields }
-        ... on ComponentHomeServiceList { ...OurServiceFields }
-      }
-
-      industry { ${INDUSTRY_FIELDS} }
-
-      ourprocess { ${OUR_PROCESS_FIELDS} }
+      ...CmsDetailAllFields
     }
   }
 `;

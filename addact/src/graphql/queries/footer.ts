@@ -4,6 +4,7 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { TITLE_FRAGMENT } from "../fragments/titleFragment";
+import { FOOTER_FIELDS } from "../fragments/footerFragment";
 import client from "../client";
 
 const GET_FOOTER = gql`
@@ -14,82 +15,7 @@ const GET_FOOTER = gql`
   ${TITLE_FRAGMENT}
   query Footers {
     footers {
-      Logo {
-        Image {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-      }
-      BackGroundImage {
-        Image {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-      }
-      BackGroundImageMobile {
-        Image {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-      }
-      AddressInformationMobileBgImg {
-        Image {
-          alternativeText
-          height
-          name
-          url
-          width
-        }
-      }
-      AddressInformation {
-        ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-      }
-
-      footerlinks {
-        NavLink {
-          ... on ComponentBaseTemplateTitle { ...TitleFields }
-          ... on ComponentSharedLink {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-        }
-      }
-      milestonestitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
-      milestonesimage {
-        ... on ComponentSharedImage { ...SharedImageFields }
-      }
-      CopyrightText
-      SiteSlog
-      socialMedia {
-        id
-        href
-        label
-        target
-        isExternal
-        SubDisc
-        Icon {
-          alternativeText
-          height
-          url
-          width
-        }
-      }
+      ${FOOTER_FIELDS}
     }
   }
 `;

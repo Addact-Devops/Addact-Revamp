@@ -5,6 +5,12 @@ import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { EVENT_HEADING_SECTION_FIELDS } from "../fragments/eventHeadingSectionFragment";
+import { CASE_STUDY_HERO_BANNER_FIELDS } from "../fragments/caseStudyHeroBannerFragment";
+import { CASE_STUDY_CONTENT_FIELDS } from "../fragments/caseStudyContentFragment";
+import { CASE_STUDY_FORM_TITLE_FIELDS } from "../fragments/caseStudyFormTitleFragment";
+import { CASE_STUDY_PDF_FORM_FIELDS } from "../fragments/caseStudyPdfFormFieldsFragment";
 import client from "../client";
 
 const GET_CASE_STUDY_BY_SLUG = gql`
@@ -16,119 +22,13 @@ const GET_CASE_STUDY_BY_SLUG = gql`
   ${COMMON_SECTION_FRAGMENT}
   query AddactCaseStudies($filters: AddactCaseStudyFiltersInput) {
     addactCaseStudies(filters: $filters) {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
+      SEO { ${SEO_FIELDS} }
       Slug
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
-      }
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          id
-          BannerTitle
-          BannerDescription
-          PublishDate
-          BannerImage {
-            width
-            name
-            height
-            url
-          }
-          blogcategory {
-            Category {
-              CategoryTitle
-            }
-          }
-          author {
-            Author {
-              AuthorName
-              designation {
-                DesignationTitle
-              }
-            }
-          }
-          ReadNow {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-        }
-        ... on Error {
-          code
-          message
-        }
-      }
-      CaseStudyContent {
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-        ... on ComponentSharedImage { ...SharedImageFields }
-        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-        ... on Error {
-          code
-          message
-        }
-      }
-      FormTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
-      CaseStudyPDF {
-        url
-        width
-        name
-        height
-      }
-      FormFields {
-        NameLable
-        EmailLabel
-        PhoneLabel
-        ButtonLabel
-        RecipientEmails
-      }
+      ${EVENT_HEADING_SECTION_FIELDS}
+      ${CASE_STUDY_HERO_BANNER_FIELDS}
+      ${CASE_STUDY_CONTENT_FIELDS}
+      ${CASE_STUDY_FORM_TITLE_FIELDS}
+      ${CASE_STUDY_PDF_FORM_FIELDS}
     }
   }
 `;

@@ -3,6 +3,10 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
+import { BRAND_GUIDELINES_CONTENT_FIELDS } from "../fragments/brandGuidelinesContentFragment";
+import { BRAND_GUIDELINES_FORM_FIELDS } from "../fragments/brandGuidelinesFormFragment";
+import { BRAND_GUIDELINES_PDF_FIELDS } from "../fragments/brandGuidelinesPdfFragment";
 import client from "../client";
 import { Heading, Image } from "@/types/common";
 
@@ -15,60 +19,10 @@ const GET_BRAND_GUIDELINES = gql`
     brandGuideline {
       ReferenceTitle
       Slug
-      HeroBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            ...HeroBannerFields
-          }
-        }
-      }
-      Content {
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-        ... on ComponentSharedImage { ...SharedImageFields }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-      }
-      FromTitle
-      FormFileds {
-        NameLable
-        EmailLabel
-        PhoneLabel
-        RecipientEmails
-        ButtonLabel
-      }
-      GuidelinePDF {
-        alternativeText
-        url
-      }
+      ${PAGE_HERO_BANNER_FIELDS}
+      ${BRAND_GUIDELINES_CONTENT_FIELDS}
+      ${BRAND_GUIDELINES_FORM_FIELDS}
+      ${BRAND_GUIDELINES_PDF_FIELDS}
     }
   }
 `;

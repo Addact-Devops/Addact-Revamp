@@ -1,106 +1,25 @@
 import { gql } from "graphql-request";
 import client from "../client"; // Adjust path if needed
 import { Image, Link } from "@/types/common";
+import { CONTACT_US_PAGE_HEADING_FIELDS } from "../fragments/contactUsPageHeadingFragment";
+import { CONTACT_US_BANNER_FIELDS } from "../fragments/contactUsBannerFragment";
+import { CONTACT_US_TEAM_IMAGE_FIELDS } from "../fragments/contactUsTeamImageFragment";
+import { CONTACT_US_ADDRESS_FIELDS } from "../fragments/contactUsAddressFragment";
+import { CONTACT_US_FORM_BLOCK_FIELDS } from "../fragments/contactUsFormBlockFragment";
+import { CONTACT_US_FORM_FIELDS } from "../fragments/contactUsFormFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
 
 export const GET_CONTACT_US = gql`
   query Contactus {
     contactus {
-      PageHeading {
-        PageTitle
-        Slug
-      }
-      banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerImage {
-              url
-              alternativeText
-              width
-              height
-            }
-            BannerTitle
-            BannerDescription
-            BannerLink {
-              href
-              label
-            }
-          }
-        }
-      }
-      AddactTeamImage {
-        url
-        alternativeText
-        width
-        height
-      }
-      TitleLine1
-      TitleLine2
-      Descriptions
-      ContactUsAvailability {
-        Days
-        Availability
-      }
-      AddressContent {
-        OfficeCountry
-        OfficeCity
-        Address
-        ContactUsEmailPhone {
-          Label
-          Link
-        }
-        MapIframe
-      }
-      ContactUsFormBlock {
-        LeftTitle
-        LeftDescription
-        LeftBackgroundImage {
-          url
-          alternativeText
-          width
-          height
-        }
-        RightTitle
-        RightDescription
-        RecipientEmails
-      }
-      contactus {
-        Form {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-        pageReference
-        RecipientEmails
-      }
+      ${CONTACT_US_PAGE_HEADING_FIELDS}
+      ${CONTACT_US_BANNER_FIELDS}
+      ${CONTACT_US_TEAM_IMAGE_FIELDS}
+      ${CONTACT_US_ADDRESS_FIELDS}
+      ${CONTACT_US_FORM_BLOCK_FIELDS}
+      ${CONTACT_US_FORM_FIELDS}
       SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
+        ${SEO_FIELDS}
       }
     }
   }

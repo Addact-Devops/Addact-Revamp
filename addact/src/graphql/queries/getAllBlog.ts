@@ -2,6 +2,9 @@ import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { BLOGS_PAGE_HEADING_FIELDS } from "../fragments/blogsPageHeadingFragment";
+import { BLOG_PAGE_BANNER_FIELDS } from "../fragments/blogPageBannerFragment";
+import { BLOG_CARD_FIELDS } from "../fragments/blogCardFragment";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
@@ -10,60 +13,12 @@ const GET_ALL_BLOGS = gql`
   ${COMMON_SECTION_FRAGMENT}
   query AddactBlogs($page: Int, $pageSize: Int, $sort: [String]) {
     blogs {
-      PageHeading {
-        id
-        PageTitle
-        Slug
-      }
-      blogBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            id
-            ...HeroBannerFields
-            show_searchbox
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-      }
+      ${BLOGS_PAGE_HEADING_FIELDS}
+      ${BLOG_PAGE_BANNER_FIELDS}
     }
 
     addactBlogs(pagination: { page: $page, pageSize: $pageSize }, sort: $sort) {
-      Slug
-      documentId
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
-      }
-      BlogBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          ...HeroBannerFields
-          PublishDate
-          author {
-            Author {
-              AuthorName
-            }
-          }
-          ReadNow {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-          blogcategory {
-            Category {
-              CategoryTitle
-            }
-          }
-        }
-      }
-      blog_category {
-        Category {
-          CategoryTitle
-        }
-      }
+      ${BLOG_CARD_FIELDS}
     }
 
     blogCategories {

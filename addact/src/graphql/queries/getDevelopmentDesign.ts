@@ -1,6 +1,9 @@
 import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { WHY_WORK_WITH_US_FIELDS } from "../fragments/whyWorkWithUsFragment";
+import { DEVELOPMENT_HERO_BANNER_FIELDS } from "../fragments/developmentHeroBannerFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { CTA_FIELDS } from "../fragments/ctaFragment";
@@ -10,6 +13,8 @@ import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
 import { DEVELOPMENT_DESIGN_LISTING_FRAGMENT } from "../fragments/developmentDesignListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import { DEVELOPMENT_OUR_SERVICE_FIELDS } from "../fragments/developmentOurServiceFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
@@ -22,125 +27,18 @@ const developementDesignQuery = gql`
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query DevelopmentDesign {
     developmentAndDesign {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              alternativeText
-              height
-              url
-              width
-            }
-            BannerImage {
-              alternativeText
-              height
-              url
-              width
-            }
-            isTextAlignCenter
-            isVideo
-            show_searchbox
-            videoLink
-            BannerLink {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
-      cta { ${CTA_FIELDS}
-  ${FAQ_FIELDS} }
+      SEO { ${SEO_FIELDS} }
+      Banner { ${DEVELOPMENT_HERO_BANNER_FIELDS} }
+      cta { ${CTA_FIELDS} }
 
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
+      whyaddact { ${WHY_WORK_WITH_US_FIELDS} }
       faq { ${FAQ_FIELDS} }
 
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
 
       techStack { ${TECH_STACK_FIELDS} }
 
-      ourService {
-        ... on ComponentHomeServiceList { ...OurServiceFields }
-        ... on ComponentHomeDevelopmentAndDesignListing { ...DevelopmentDesignListingFields }
-      }
+      ${DEVELOPMENT_OUR_SERVICE_FIELDS}
 
       industry { ${INDUSTRY_FIELDS} }
 

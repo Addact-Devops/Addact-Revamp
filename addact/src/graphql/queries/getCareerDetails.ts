@@ -2,6 +2,10 @@ import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { CAREER_DETAILS_BANNER_FRAGMENT } from "../fragments/careerDetailsBannerFragment";
+import { CAREER_DETAILS_JOB_DESC_FRAGMENT } from "../fragments/careerDetailsJobDescFragment";
+import { CAREER_DETAILS_FORM_FRAGMENT } from "../fragments/careerDetailsFormFragment";
+import { CAREER_DETAIL_ALL_FIELDS_FRAGMENT } from "../fragments/careerDetailAllFieldsFragment";
 import client from "../client";
 import { Image, Link } from "@/types/common";
 
@@ -9,127 +13,13 @@ const GET_CAREER_DETAIL = gql`
   ${IMAGE_FRAGMENT}
   ${SHARED_IMAGE_FRAGMENT}
   ${RICHTEXT_FRAGMENT}
+  ${CAREER_DETAILS_BANNER_FRAGMENT}
+  ${CAREER_DETAILS_JOB_DESC_FRAGMENT}
+  ${CAREER_DETAILS_FORM_FRAGMENT}
+  ${CAREER_DETAIL_ALL_FIELDS_FRAGMENT}
   query careerDetailBySlug($filters: CareerDetailFiltersInput) {
     careerDetails(filters: $filters) {
-      Banner {
-        ... on ComponentBannerBanner {
-          BannerDescription
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          BannerTitle
-          show_searchbox
-          BannerLink {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-        }
-      }
-      JobDescription {
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-        ... on ComponentSharedImage { ...SharedImageFields }
-      }
-      PageHeading {
-        PageTitle
-        Slug
-      }
-
-      Slug
-      ReferenceTitle
-      careers_form {
-        LeftInsights {
-          Title
-          Description
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
-        FormFields {
-          Form {
-            ... on ComponentBaseTemplatePromo {
-              Title
-              Description
-              Image {
-                alternativeText
-                height
-                name
-                url
-                width
-              }
-              Link {
-                label
-              }
-            }
-          }
-          NameLable
-          EmailLabel
-          PhoneLabel
-          GeneralText
-          RecipientEmails
-          ButtonLabel
-        }
-        fieldName {
-          Title
-        }
-      }
-
-      # ✅ Added SEO fields exactly as per your requirement
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
+      ...CareerDetailAllFields
     }
   }
 `;
