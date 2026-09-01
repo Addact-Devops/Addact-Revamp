@@ -1,8 +1,5 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { PROJECT_COST_BANNER_FIELDS } from "../fragments/projectCostBannerFragment";
-import { PROJECT_COST_CONTENT_FIELDS } from "../fragments/projectCostContentFragment";
 
 // -----------------------------
 // ✅ Types
@@ -59,10 +56,43 @@ const projectCostEstimatorQuery = gql`
   query ProjectCostEstimator {
     projectCostEstimator {
       SEO {
-        ${SEO_FIELDS}
+        metaTitle
+        metaDescription
+        ogTitle
+        ogDescription
+        ogImage {
+          url
+        }
+        metaRobots
+        twitterCardTitle
+        canonicalURL
+        structuredData
+        languageTag
       }
-      ${PROJECT_COST_BANNER_FIELDS}
-      ${PROJECT_COST_CONTENT_FIELDS}
+      banner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerImage {
+              url
+              alternativeText
+              width
+              height
+            }
+            BannerTitle
+            BannerDescription
+            BannerLogo {
+              url
+              alternativeText
+              width
+              height
+            }
+          }
+        }
+      }
+      Content {
+        Title
+        Description
+      }
     }
   }
 `;

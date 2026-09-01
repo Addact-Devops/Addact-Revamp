@@ -1,67 +1,639 @@
-import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
-import { HEADING_FRAGMENT } from "../fragments/headingFragment";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
-import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
-import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
-import { UI_UX_LISTING_FRAGMENT } from "../fragments/uiUxListingFragment";
-import { CMS_LISTING_FRAGMENT } from "../fragments/cmsListingFragment";
-import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
-import { BANNER_SECTION_FIELDS } from "../fragments/bannerSectionFragment";
-import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
-import { CHALLENGES_FIELDS } from "../fragments/challengesFragment";
-import { DESIGN_FLOW_FIELDS } from "../fragments/designFlowFragment";
-import { IMPACT_UX_FIELDS } from "../fragments/impactUxFragment";
-import { OUR_WORK_FIELDS } from "../fragments/ourWorkFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
-import { DEV_SLUG_OUR_SERVICE_FIELDS } from "../fragments/devSlugOurServiceFragment";
-import { DEV_SLUG_UI_UX_OUR_SERVICE_FIELDS } from "../fragments/devSlugUiUxOurServiceFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const developmentDesignSlugQuery = gql`
-  ${HEADING_FRAGMENT}
-  ${IMAGE_FRAGMENT}
-  ${LINK_FRAGMENT}
-  ${OUR_SERVICE_FRAGMENT}
-  ${UI_UX_LISTING_FRAGMENT}
-  ${CMS_LISTING_FRAGMENT}
-  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query DevelopmentDesignSlug($filters: DevelopmentAndDesignDetailFiltersInput) {
     developmentAndDesignDetails(filters: $filters) {
-      SEO { ${SEO_FIELDS} }
+      SEO {
+        metaTitle
+        metaDescription
+        ogTitle
+        ogDescription
+        ogImage {
+          url
+        }
+        metaRobots
+        twitterCardTitle
+        canonicalURL
+        structuredData
+        languageTag
+      }
       isUxpage
 
-      ${BANNER_SECTION_FIELDS}
-      cta { ${CTA_FIELDS} }
+      Banner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerTitle
+            BannerDescription
+            BannerLogo {
+              alternativeText
+              height
+              url
+              width
+            }
+            BannerImage {
+              alternativeText
+              height
+              url
+              width
+            }
+            isTextAlignCenter
+            isVideo
+            show_searchbox
+            videoLink
+            BannerLink {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+            chipsText {
+              Title
+            }
+          }
+        }
+      }
+      cta {
+        CTADescription
+        pageReference
+        CTAImage {
+          ... on ComponentSharedImage {
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+          }
+        }
+        CTALink {
+          ... on ComponentSharedLink {
+            href
+            id
+            isExternal
+            label
+            target
+          }
+        }
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+        }
+      }
 
-      ${WHY_ADDACT_FIELDS}
+      whyaddact {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        pageReference
+        GlobalCard {
+          ... on ComponentBaseTemplatePromo {
+            id
+            Title
+            Description
+            Image {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+          }
+        }
+      }
 
-      faq { ${FAQ_FIELDS} }
+      faq {
+        Title
+        FAQ {
+          Description
+          Title
+          id
+        }
+      }
 
-      ${OUR_INSIGHTS_TITLE_FIELDS}
+      ourInshightsTitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
 
-      techStack { ${TECH_STACK_FIELDS} }
-      ${DEV_SLUG_OUR_SERVICE_FIELDS}
+      techStack {
+        title
+        description
+        tab {
+          category {
+            categoryTitle
+          }
+          tabContent {
+            title
+            logo {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
+      ourService {
+        ... on ComponentHomeCmsListing {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                url
+                width
+                height
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
 
-      industry { ${INDUSTRY_FIELDS} }
+          isCarousel
+        }
+        ... on ComponentHomeServiceList {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                url
+                width
+                height
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+          isCarousel
+        }
+      }
 
-      ourprocess { ${OUR_PROCESS_FIELDS} }
+      industry {
+        industryListTitle
+        industry_list {
+          Slug
+          listingContext {
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                url
+                width
+                height
+              }
+            }
+          }
+        }
+      }
 
-      ${CHALLENGES_FIELDS}
+      ourprocess {
+        Title {
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+        }
+        link {
+          id
+          href
+          label
+          target
+          isExternal
+          SubDisc
+          Icon {
+            alternativeText
+            width
+            url
+            height
+          }
+        }
+        ProcessData {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            id
+            Title
+            Description
+          }
+        }
+      }
 
-      ${DESIGN_FLOW_FIELDS}
+      challenges {
+        Title {
+          ... on ComponentHeadingsH6 {
+            id
+            h6
+          }
+          ... on ComponentHeadingsH5 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH4 {
+            id
+            h5
+          }
+          ... on ComponentHeadingsH3 {
+            id
+            h3
+          }
+          ... on ComponentHeadingsH2 {
+            id
+            h2
+          }
+          ... on ComponentHeadingsH1 {
+            id
+            h1
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
+        ProcessData {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+            Link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+        }
+      }
 
-      ${IMPACT_UX_FIELDS}
+      designFlow {
+        title
+        description
+        tabsAndFlow {
+          tabTitle
+          flow {
+            title
+            information
+            gif {
+              alternativeText
+              height
+              mime
+              url
+              width
+            }
+            icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+        }
+      }
 
-      ${DEV_SLUG_UI_UX_OUR_SERVICE_FIELDS}
+      impactUx {
+        title
+        beforeText
+        afterText
+        beforeImage {
+          alternativeText
+          height
+          url
+          width
+        }
+        afterImage {
+          alternativeText
+          height
+          url
+          width
+        }
+        desktopFrame {
+          alternativeText
+          height
+          url
+          width
+        }
+        mobileFrame {
+          alternativeText
+          height
+          url
+          width
+        }
+      }
 
-      ${OUR_WORK_FIELDS}
+      ourService {
+        ... on ComponentHomeCmsListing {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                url
+                width
+                height
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+
+          isCarousel
+        }
+        ... on ComponentHomeServiceList {
+          id
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          serviceList {
+            listingContext {
+              id
+              title
+              description
+              image {
+                alternativeText
+                url
+                width
+                height
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+          isCarousel
+        }
+        ... on ComponentHomeUiUxLisitng {
+          serviceTitle
+          serviceVariant {
+            variant
+          }
+          isCarousel
+          link {
+            id
+            href
+            label
+            target
+            isExternal
+            SubDisc
+            Icon {
+              alternativeText
+              height
+              url
+              width
+            }
+          }
+          serviceList {
+            listingContext {
+              title
+              description
+              image {
+                alternativeText
+                height
+                url
+                width
+              }
+              link {
+                id
+                href
+                label
+                target
+                isExternal
+                SubDisc
+                Icon {
+                  alternativeText
+                  height
+                  url
+                  width
+                }
+              }
+            }
+          }
+        }
+      }
+
+      ourWork {
+        serviceTitle
+        serviceVariant {
+          variant
+        }
+        isCarousel
+        serviceList {
+          listingContext {
+            id
+            title
+            description
+            image {
+              alternativeText
+              height
+              url
+              width
+            }
+            link {
+              id
+              href
+              label
+              target
+              isExternal
+              SubDisc
+              Icon {
+                alternativeText
+                height
+                url
+                width
+              }
+            }
+          }
+          tagLine {
+            Title
+          }
+        }
+      }
     }
   }
 `;

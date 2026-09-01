@@ -1,22 +1,34 @@
 import { gql } from "graphql-request";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
 import client from "../client";
 
 const GET_CMS_EXPERTISE = gql`
-  ${LINK_FRAGMENT}
-  ${IMAGE_FRAGMENT}
-  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
-  ${LINK_IMAGE_FRAGMENT}
   query ourExpertises {
     ourExpertises {
       CMS {
-        ... on ComponentBaseTemplateLinkImage { ...LinkImageFields }
+        ... on ComponentBaseTemplateLinkImage {
+          Icons {
+            alternativeText
+            height
+            name
+            url
+            width
+          }
+          Links {
+            id
+            href
+            label
+            target
+            isExternal
+          }
+          Title
+          id
+        }
       }
       ExpertiseTitle {
-        ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
+        ... on ComponentBaseTemplateTitleWithDescription {
+          Description
+          Title
+        }
       }
     }
   }

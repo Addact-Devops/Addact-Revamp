@@ -1,53 +1,237 @@
 import { gql } from "graphql-request";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
-import { CARD_FRAGMENT } from "../fragments/cardFragment";
-import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
-import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
-import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { EVENT_HEADING_SECTION_FIELDS } from "../fragments/eventHeadingSectionFragment";
-import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFieldsFragment";
-import { BLOG_CONTENT_FIELDS } from "../fragments/blogContentFragment";
-import { BLOG_AUTHOR_FIELDS } from "../fragments/blogAuthorFragment";
-import { BLOG_SIMILAR_STORY_TITLE_FIELDS } from "../fragments/blogSimilarStoryTitleFragment";
-import { BLOG_SIMILAR_BLOGS_FIELDS } from "../fragments/blogSimilarBlogsFragment";
-import { BLOG_SOCIAL_ICONS_FIELDS } from "../fragments/blogSocialIconsFragment";
-import { BLOG_CONTACT_CARD_FIELDS } from "../fragments/blogContactCardFragment";
 import client from "../client";
 
 const GET_BLOG_BY_SLUG = gql`
-  ${LINK_FRAGMENT}
-  ${IMAGE_FRAGMENT}
-  ${SHARED_IMAGE_FRAGMENT}
-  ${CARD_FRAGMENT}
-  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
-  ${RICHTEXT_FRAGMENT}
-  ${LINK_IMAGE_FRAGMENT}
-  ${COMMON_SECTION_FRAGMENT}
   query GetBlogBySlug($filters: AddactBlogFiltersInput) {
     addactBlogs(filters: $filters) {
       Slug
 
-      SEO { ${SEO_FIELDS} }
+      SEO {
+        metaTitle
+        metaDescription
+        ogTitle
+        ogDescription
+        ogImage {
+          url
+        }
+        metaRobots
+        twitterCardTitle
+        canonicalURL
+        structuredData
+        languageTag
+      }
 
-      ${EVENT_HEADING_SECTION_FIELDS}
+      HeadingSection {
+        ... on ComponentBaseTemplateCommonSection {
+          PageTitle
+        }
+      }
 
-      ${BLOG_HERO_BANNER_FIELDS}
+      BlogBanner {
+        ... on ComponentBlogHeroBannerBlogHeroBanner {
+          BannerTitle
+          BannerDescription
+          BannerImage {
+            alternativeText
+            height
+            name
+            url
+            width
+          }
+          PublishDate
+          ReadNow {
+            id
+            href
+            label
+            target
+            isExternal
+          }
+          author {
+            Author {
+              AuthorName
+            }
+          }
+          blogcategory {
+            Category {
+              CategoryTitle
+            }
+          }
+        }
+      }
 
-      ${BLOG_CONTENT_FIELDS}
+      BlogContent {
+        ... on ComponentHeadingsH6 {
+          id
+          h6
+        }
+        ... on ComponentHeadingsH5 {
+          id
+          h5
+        }
+        ... on ComponentHeadingsH4 {
+          id
+          h5
+        }
+        ... on ComponentHeadingsH3 {
+          id
+          h3
+        }
+        ... on ComponentHeadingsH2 {
+          id
+          h2
+        }
+        ... on ComponentHeadingsH1 {
+          id
+          h1
+        }
+        ... on ComponentSharedImage {
+          id
+          Image {
+            alternativeText
+            name
+            height
+            url
+            width
+          }
+        }
+        ... on ComponentSharedLink {
+          id
+          href
+          label
+          target
+          isExternal
+        }
+        ... on ComponentBaseTemplateRichtext {
+          id
+          Richtext
+        }
+        ... on Error {
+          code
+          message
+        }
+      }
 
-      ${BLOG_AUTHOR_FIELDS}
+      author {
+        Author {
+          AuthorName
+          AuthorDescription
+          AuthorImage {
+            alternativeText
+            height
+            width
+            url
+            name
+          }
+          designation {
+            DesignationTitle
+          }
+        }
+      }
 
-      ${BLOG_SIMILAR_STORY_TITLE_FIELDS}
+      similarstorytitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription {
+            Title
+            Description
+          }
+        }
+      }
 
-      ${BLOG_SIMILAR_BLOGS_FIELDS}
+      similarBlogs {
+        BlogBanner {
+          ... on ComponentBlogHeroBannerBlogHeroBanner {
+            BannerTitle
+            BannerImage {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+            PublishDate
+            ReadNow {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+            author {
+              Author {
+                AuthorName
+              }
+            }
+            blogcategory {
+              Category {
+                CategoryTitle
+              }
+            }
+          }
+        }
+      }
 
-      ${BLOG_SOCIAL_ICONS_FIELDS}
+      socialicons {
+        SocialIcon {
+          ... on ComponentBaseTemplateLinkImage {
+            Title
+            ClassName
+            Links {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+            Icons {
+              alternativeText
+              name
+              height
+              url
+              width
+            }
+            HoverIcon {
+              alternativeText
+              name
+              height
+              url
+              width
+            }
+          }
+        }
+      }
 
-      ${BLOG_CONTACT_CARD_FIELDS}
+      contactCard {
+        documentId
+        pageReference
+        createdAt
+        updatedAt
+        publishedAt
+        ContactCard {
+          ... on ComponentCardCard {
+            id
+            CardTitle
+            CardDescription
+            CardLink {
+              id
+              href
+              label
+              target
+              isExternal
+            }
+            BgImage {
+              width
+              url
+              name
+              height
+              alternativeText
+            }
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
+      }
     }
   }
 `;

@@ -1,24 +1,53 @@
 import { gql } from "graphql-request";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import client from "../client";
 import { Image } from "@/types/common";
-import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
-import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
-import { WEBINAR_HERO_BANNER_FIELDS } from "../fragments/webinarHeroBannerFragment";
 
 const GET_WEBINAR_LIST_PAGE = gql`
-  ${IMAGE_FRAGMENT}
-  ${HERO_BANNER_FRAGMENT}
   query WebinarList {
     webinar {
-      ${PAGE_HERO_BANNER_FIELDS}
-      ${PAGE_HEADING_FIELDS}
+      HeroBanner {
+        Banner {
+          ... on ComponentBannerBanner {
+            BannerTitle
+            BannerDescription
+            BannerImage {
+              alternativeText
+              height
+              name
+              url
+              width
+            }
+          }
+        }
+      }
+      PageHeading {
+        PageTitle
+        Slug
+      }
     }
     addactWebinars {
       Slug
       ReferenceTitle
-      ${WEBINAR_HERO_BANNER_FIELDS}
+      HeroBanner {
+        ... on ComponentBlogHeroBannerBlogHeroBanner {
+          BannerTitle
+          BannerDescription
+          BannerImage {
+            alternativeText
+            height
+            name
+            url
+            width
+          }
+          PublishDate
+          ReadNow {
+            id
+            href
+            label
+            isExternal
+          }
+        }
+      }
       WebinarSummary
     }
   }
