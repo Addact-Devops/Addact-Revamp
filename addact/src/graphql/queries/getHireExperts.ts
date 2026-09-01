@@ -1,346 +1,46 @@
+import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { CTA_FIELDS } from "../fragments/ctaFragment";
+import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
+import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
+import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
+import { HIRE_SERVICE_LIST_FRAGMENT } from "../fragments/hireServiceListFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { AI_BANNER_SECTION_FIELDS } from "../fragments/aiBannerSectionFragment";
+import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import { HIRE_OUR_SERVICE_FIELDS } from "../fragments/hireOurServiceFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const hireExpertsQuery = gql`
+  ${HEADING_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${HIRE_SERVICE_LIST_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query HireExpert {
     hireExpert {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              alternativeText
-              height
-              url
-              width
-            }
-            BannerImage {
-              alternativeText
-              height
-              url
-              width
-            }
-            isTextAlignCenter
-            isVideo
-            show_searchbox
-            videoLink
-            BannerLink {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
-      cta {
-        CTADescription
-        pageReference
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-        }
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-        }
-      }
+      SEO { ${SEO_FIELDS} }
+      ${AI_BANNER_SECTION_FIELDS}
+      cta { ${CTA_FIELDS} }
 
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
-      faq {
-        Title
-        FAQ {
-          Description
-          Title
-          id
-        }
-      }
+      ${WHY_ADDACT_FIELDS}
+      faq { ${FAQ_FIELDS} }
 
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
 
-      techStack {
-        title
-        description
-        tab {
-          category {
-            categoryTitle
-          }
-          tabContent {
-            title
-            logo {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
+      techStack { ${TECH_STACK_FIELDS} }
 
-      industry {
-        industryListTitle
-        industry_list {
-          Slug
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                url
-                width
-                height
-              }
-            }
-          }
-        }
-      }
+      industry { ${INDUSTRY_FIELDS} }
 
-      ourService {
-        ... on ComponentHomeHireServiceList {
-          isCarousel
-          serviceTitle
-          serviceVariant {
-            variant
-          }
-          serviceList {
-            listingContext {
-              title
-              description
-              image {
-                alternativeText
-                height
-                url
-                width
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
-            }
-          }
-        }
-      }
+      ${HIRE_OUR_SERVICE_FIELDS}
 
-      ourprocess {
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-        link {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            width
-            url
-            height
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
+      ourprocess { ${OUR_PROCESS_FIELDS} }
     }
   }
 `;

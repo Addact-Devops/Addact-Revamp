@@ -1,384 +1,51 @@
+import { FAQ_FIELDS } from "../fragments/faqFragment";
 import { gql } from "graphql-request";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { CTA_FIELDS } from "../fragments/ctaFragment";
+import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
+import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
+import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
+import { DIGITAL_MARKETING_LISTING_FRAGMENT } from "../fragments/digitalMarketingListingFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
+import { AI_BANNER_SECTION_FIELDS } from "../fragments/aiBannerSectionFragment";
+import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import { DM_OUR_SERVICE_FIELDS } from "../fragments/dmOurServiceFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { DM_WHO_ARE_WE_FIELDS } from "../fragments/digitalMarketingWhoAreWeFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
 
 const digitalMarketingQuery = gql`
+  ${HEADING_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${OUR_SERVICE_FRAGMENT}
+  ${DIGITAL_MARKETING_LISTING_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query DigitalMarketingLanding {
     digitalMarketingService {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
-      Banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              alternativeText
-              height
-              url
-              width
-            }
-            BannerImage {
-              alternativeText
-              height
-              url
-              width
-            }
-            isTextAlignCenter
-            isVideo
-            show_searchbox
-            videoLink
-            BannerLink {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
-      cta {
-        CTADescription
-        pageReference
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-        }
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-        }
-      }
+      SEO { ${SEO_FIELDS} }
+      ${AI_BANNER_SECTION_FIELDS}
+      cta { ${CTA_FIELDS} }
 
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
-      faq {
-        Title
-        FAQ {
-          Description
-          Title
-          id
-        }
-      }
+      ${WHY_ADDACT_FIELDS}
+      faq { ${FAQ_FIELDS} }
 
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
 
-      techStack {
-        title
-        description
-        tab {
-          category {
-            categoryTitle
-          }
-          tabContent {
-            title
-            logo {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
+      techStack { ${TECH_STACK_FIELDS} }
 
-      ourService {
-        ... on ComponentHomeDigitalMarketingListing {
-          id
-          serviceVariant {
-            variant
-          }
-          serviceTitle
-          serviceList {
-            listingContext {
-              id
-              title
-              description
-              image {
-                alternativeText
-                url
-                width
-                height
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
-            }
-          }
+      ${DM_OUR_SERVICE_FIELDS}
 
-          isCarousel
-        }
-        ... on ComponentHomeServiceList {
-          id
-          serviceTitle
-          serviceVariant {
-            variant
-          }
-          serviceList {
-            listingContext {
-              id
-              title
-              description
-              image {
-                alternativeText
-                url
-                width
-                height
-              }
-              link {
-                id
-                href
-                label
-                target
-                isExternal
-                SubDisc
-                Icon {
-                  alternativeText
-                  height
-                  url
-                  width
-                }
-              }
-            }
-          }
-          isCarousel
-        }
-      }
+      industry { ${INDUSTRY_FIELDS} }
 
-      industry {
-        industryListTitle
-        industry_list {
-          Slug
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                url
-                width
-                height
-              }
-            }
-          }
-        }
-      }
+      ourprocess { ${OUR_PROCESS_FIELDS} }
 
-      ourprocess {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        link {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            width
-            url
-            height
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            id
-            Title
-            Description
-          }
-        }
-      }
-
-      whoarewe {
-        Counter {
-          ... on ComponentCounterCounter {
-            CounterTitle
-            NumberCount
-            id
-          }
-        }
-        Title {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Description
-            Title
-          }
-        }
-        pageReference
-      }
+      ${DM_WHO_ARE_WE_FIELDS}
     }
   }
 `;
