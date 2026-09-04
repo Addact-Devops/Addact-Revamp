@@ -1,45 +1,24 @@
 import { gql } from "graphql-request";
+import { HOME_ANIMATION_BANNER_SUB_TITLE_FIELDS } from "./homeAnimationBannerSubTitleFragment";
 
 export const HOME_ANIMATION_BANNER_FRAGMENT = gql`
   fragment HomeAnimationBannerFields on Home {
     animationBanner {
       animationTitle
       firstAnimationImage {
-        alternativeText
-        height
-        url
-        width
+        ...ImageFields
       }
       secondAnimationImage {
-        alternativeText
-        height
-        url
-        width
+        ...ImageFields
       }
       bannerTitle
       bannerDescription
-      bannerSubTitle {
-        Title
-      }
+      ${HOME_ANIMATION_BANNER_SUB_TITLE_FIELDS}
       bannerImage {
-        alternativeText
-        height
-        url
-        width
+        ...ImageFields
       }
       bannerLink {
-        Icon {
-          alternativeText
-          height
-          url
-          width
-        }
-        SubDisc
-        href
-        id
-        isExternal
-        label
-        target
+        ...LinkFields
       }
     }
   }

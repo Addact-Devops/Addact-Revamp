@@ -1,9 +1,6 @@
 export const CONTACT_US_TEAM_IMAGE_FIELDS = `
   AddactTeamImage {
-    url
-    alternativeText
-    width
-    height
+    ...ImageFields
   }
   TitleLine1
   TitleLine2

@@ -1,3 +1,4 @@
+
 export const CAREERS_HERO_BANNER_FIELDS = `
   Banner {
     ... on ComponentBannerBanner {
@@ -5,12 +6,8 @@ export const CAREERS_HERO_BANNER_FIELDS = `
       BannerDescription
       show_searchbox
       BannerImage {
-        url
-        name
-        width
-        height
-        alternativeText
-      }
+          ...ImageFields
+        }
     }
   }
 `;

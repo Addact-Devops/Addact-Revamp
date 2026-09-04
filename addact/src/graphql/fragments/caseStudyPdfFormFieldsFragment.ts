@@ -1,15 +1,7 @@
+import { CASE_STUDY_PDF_FIELDS } from "./caseStudyPdfFragment";
+import { CASE_STUDY_FORM_FIELDS } from "./caseStudyFormFragment";
+
 export const CASE_STUDY_PDF_FORM_FIELDS = `
-  CaseStudyPDF {
-    url
-    width
-    name
-    height
-  }
-  FormFields {
-    NameLable
-    EmailLabel
-    PhoneLabel
-    ButtonLabel
-    RecipientEmails
-  }
+  ${CASE_STUDY_PDF_FIELDS}
+  ${CASE_STUDY_FORM_FIELDS}
 `;

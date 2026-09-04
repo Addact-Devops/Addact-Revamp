@@ -1,34 +1,11 @@
+import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { BLOG_CONTENT_ERROR_FIELDS } from "./blogContentErrorFragment";
+
 export const CAREER_CARD_FIELDS = `
   Title {
-    ... on ComponentHeadingsH1 {
-      id
-      h1
-    }
-    ... on ComponentHeadingsH2 {
-      id
-      h2
-    }
-    ... on ComponentHeadingsH3 {
-      id
-      h3
-    }
-    ... on ComponentHeadingsH4 {
-      id
-      h5
-    }
-    ... on ComponentHeadingsH5 {
-      id
-      h5
-    }
-    ... on ComponentHeadingsH6 {
-      id
-      h6
-    }
+    ${BLOG_CONTENT_HEADINGS_FIELDS}
     ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-    ... on Error {
-      code
-      message
-    }
+    ${BLOG_CONTENT_ERROR_FIELDS}
   }
   GlobalCard {
     ... on ComponentBaseTemplatePromo {
@@ -36,23 +13,12 @@ export const CAREER_CARD_FIELDS = `
       Title
       Description
       Image {
-        url
-        width
-        height
-        name
-        alternativeText
-      }
+          ...ImageFields
+        }
       Link {
-        id
-        href
-        label
-        target
-        isExternal
-      }
+          ...LinkFields
+        }
     }
-    ... on Error {
-      code
-      message
-    }
+    ${BLOG_CONTENT_ERROR_FIELDS}
   }
 `;

@@ -1,37 +1,11 @@
+import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { BLOG_CONTENT_SHARED_LINK_FIELDS } from "./blogContentSharedLinkFragment";
+
 export const BRAND_GUIDELINES_CONTENT_FIELDS = `
   Content {
-    ... on ComponentHeadingsH1 {
-      id
-      h1
-    }
-    ... on ComponentHeadingsH2 {
-      id
-      h2
-    }
-    ... on ComponentHeadingsH3 {
-      id
-      h3
-    }
-    ... on ComponentHeadingsH4 {
-      id
-      h5
-    }
-    ... on ComponentHeadingsH5 {
-      id
-      h5
-    }
-    ... on ComponentHeadingsH6 {
-      id
-      h6
-    }
+    ${BLOG_CONTENT_HEADINGS_FIELDS}
     ... on ComponentBaseTemplateRichtext { ...RichtextFields }
     ... on ComponentSharedImage { ...SharedImageFields }
-    ... on ComponentSharedLink {
-      id
-      href
-      label
-      target
-      isExternal
-    }
+    ${BLOG_CONTENT_SHARED_LINK_FIELDS}
   }
 `;

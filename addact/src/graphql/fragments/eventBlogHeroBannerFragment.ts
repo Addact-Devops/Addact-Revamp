@@ -1,3 +1,4 @@
+
 export const EVENT_BLOG_HERO_BANNER_FIELDS = `
   EventBanner {
     ... on ComponentBlogHeroBannerBlogHeroBanner {
@@ -6,12 +7,8 @@ export const EVENT_BLOG_HERO_BANNER_FIELDS = `
       PublishDate
       eventLocation
       BannerImage {
-        alternativeText
-        height
-        name
-        url
-        width
-      }
+          ...ImageFields
+        }
     }
   }
 `;

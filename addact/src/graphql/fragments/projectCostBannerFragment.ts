@@ -3,20 +3,15 @@ export const PROJECT_COST_BANNER_FIELDS = `
     Banner {
       ... on ComponentBannerBanner {
         BannerImage {
-          url
-          alternativeText
-          width
-          height
+          ...ImageFields
         }
         BannerTitle
         BannerDescription
         BannerLogo {
-          url
-          alternativeText
-          width
-          height
+          ...ImageFields
         }
       }
     }
   }
 `;
+

@@ -2,6 +2,7 @@
 
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
 import { VIDEO_BANNER_FIELDS } from "../fragments/videoBannerFragment";
@@ -57,6 +58,7 @@ export type VideoPageResponse = {
 
 const videosQuery = gql`
   ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   ${HERO_BANNER_FRAGMENT}
   query VideoListing {
     videoListing {

@@ -7,19 +7,11 @@ export const HOME_BANNER_FRAGMENT = gql`
         ... on ComponentBannerBanner {
           BannerDescription
           BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
+          ...ImageFields
+        }
           BannerLink {
-            href
-            id
-            isExternal
-            label
-            target
-          }
+          ...LinkFields
+        }
           BannerTitle
         }
       }

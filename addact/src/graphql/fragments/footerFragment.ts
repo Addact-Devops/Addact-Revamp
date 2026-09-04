@@ -1,56 +1,31 @@
+import { FOOTER_LINKS_FIELDS } from "./footerLinksFragment";
+import { FOOTER_SOCIAL_MEDIA_FIELDS } from "./footerSocialMediaFragment";
+
 export const FOOTER_FIELDS = `
   Logo {
     Image {
-      alternativeText
-      height
-      name
-      url
-      width
-    }
+          ...ImageFields
+        }
   }
   BackGroundImage {
     Image {
-      alternativeText
-      height
-      name
-      url
-      width
-    }
+          ...ImageFields
+        }
   }
   BackGroundImageMobile {
     Image {
-      alternativeText
-      height
-      name
-      url
-      width
-    }
+          ...ImageFields
+        }
   }
   AddressInformationMobileBgImg {
     Image {
-      alternativeText
-      height
-      name
-      url
-      width
-    }
+          ...ImageFields
+        }
   }
   AddressInformation {
     ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
   }
-
-  footerlinks {
-    NavLink {
-      ... on ComponentBaseTemplateTitle { ...TitleFields }
-      ... on ComponentSharedLink {
-        id
-        href
-        label
-        target
-        isExternal
-      }
-    }
-  }
+  ${FOOTER_LINKS_FIELDS}
   milestonestitle {
     CommonTitle {
       ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
@@ -61,18 +36,5 @@ export const FOOTER_FIELDS = `
   }
   CopyrightText
   SiteSlog
-  socialMedia {
-    id
-    href
-    label
-    target
-    isExternal
-    SubDisc
-    Icon {
-      alternativeText
-      height
-      url
-      width
-    }
-  }
+  ${FOOTER_SOCIAL_MEDIA_FIELDS}
 `;

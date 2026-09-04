@@ -4,28 +4,17 @@ export const IMPACT_UX_FIELDS = `
     beforeText
     afterText
     beforeImage {
-      alternativeText
-      height
-      url
-      width
+      ...ImageFields
     }
     afterImage {
-      alternativeText
-      height
-      url
-      width
+      ...ImageFields
     }
     desktopFrame {
-      alternativeText
-      height
-      url
-      width
+      ...ImageFields
     }
     mobileFrame {
-      alternativeText
-      height
-      url
-      width
+      ...ImageFields
     }
   }
 `;
+

@@ -3,20 +3,13 @@ export const SERVICE_LIST_BANNER_FIELDS = `
     Banner {
       BannerDescription
       BannerImage {
-        alternativeText
-        height
-        name
-        url
-        width
+        ...ImageFields
       }
       BannerLink {
-        id
-        href
-        label
-        target
-        isExternal
+        ...LinkFields
       }
       BannerTitle
     }
   }
 `;
+

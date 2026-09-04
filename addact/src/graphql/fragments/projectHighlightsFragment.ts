@@ -8,13 +8,11 @@ export const PROJECT_HIGHLIGHTS_FIELDS = `
           BannerTitle
           PublishDate
           BannerImage {
-            url
-            alternativeText
-            width
-            height
+            ...ImageFields
           }
         }
       }
     }
   }
 `;
+

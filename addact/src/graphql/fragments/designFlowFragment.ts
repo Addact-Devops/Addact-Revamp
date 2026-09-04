@@ -1,26 +1,9 @@
+import { DESIGN_FLOW_TABS_FIELDS } from "./designFlowTabsFragment";
+
 export const DESIGN_FLOW_FIELDS = `
   designFlow {
     title
     description
-    tabsAndFlow {
-      tabTitle
-      flow {
-        title
-        information
-        gif {
-          alternativeText
-          height
-          mime
-          url
-          width
-        }
-        icon {
-          alternativeText
-          height
-          url
-          width
-        }
-      }
-    }
+    ${DESIGN_FLOW_TABS_FIELDS}
   }
 `;

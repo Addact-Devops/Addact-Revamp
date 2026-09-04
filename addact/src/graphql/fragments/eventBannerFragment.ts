@@ -1,20 +1,14 @@
+
 export const EVENT_BANNER_FIELDS = `
   EventBanner {
     Banner {
       ... on ComponentBannerBanner {
         BannerDescription
         BannerImage {
-          alternativeText
-          height
-          name
-          url
-          width
+          ...ImageFields
         }
         BannerLink {
-          id
-          href
-          label
-          isExternal
+          ...LinkFields
         }
         BannerTitle
       }

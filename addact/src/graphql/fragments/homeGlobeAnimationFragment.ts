@@ -6,11 +6,7 @@ export const HOME_GLOBE_ANIMATION_FRAGMENT = gql`
       Title
       Locations
       Video {
-        alternativeText
-        url
-        name
-        width
-        height
+        ...ImageFields
       }
     }
   }

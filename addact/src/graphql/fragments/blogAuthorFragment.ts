@@ -1,18 +1,14 @@
+import { BLOG_AUTHOR_DESIGNATION_FIELDS } from "./blogAuthorDesignationFragment";
+
 export const BLOG_AUTHOR_FIELDS = `
   author {
     Author {
       AuthorName
       AuthorDescription
       AuthorImage {
-        alternativeText
-        height
-        width
-        url
-        name
-      }
-      designation {
-        DesignationTitle
-      }
+          ...ImageFields
+        }
+      ${BLOG_AUTHOR_DESIGNATION_FIELDS}
     }
   }
 `;

@@ -8,33 +8,21 @@ export const HOME_AI_ECO_SYSTEM_FRAGMENT = gql`
         description
         tagLine
         firstImage {
-          alternativeText
-          height
-          url
-          width
+          ...ImageFields
         }
         secondImage {
-          alternativeText
-          height
-          url
-          width
+          ...ImageFields
         }
         firstLayerlogos {
           tooltip
           Image {
-            alternativeText
-            height
-            url
-            width
+            ...ImageFields
           }
         }
         secondLayerlogos {
           tooltip
           Image {
-            alternativeText
-            height
-            url
-            width
+            ...ImageFields
           }
         }
       }

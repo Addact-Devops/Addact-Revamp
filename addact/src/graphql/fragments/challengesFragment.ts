@@ -1,34 +1,11 @@
+import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { BLOG_CONTENT_ERROR_FIELDS } from "./blogContentErrorFragment";
+
 export const CHALLENGES_FIELDS = `
   challenges {
     Title {
-      ... on ComponentHeadingsH6 {
-        id
-        h6
-      }
-      ... on ComponentHeadingsH5 {
-        id
-        h5
-      }
-      ... on ComponentHeadingsH4 {
-        id
-        h5
-      }
-      ... on ComponentHeadingsH3 {
-        id
-        h3
-      }
-      ... on ComponentHeadingsH2 {
-        id
-        h2
-      }
-      ... on ComponentHeadingsH1 {
-        id
-        h1
-      }
-      ... on Error {
-        code
-        message
-      }
+      ${BLOG_CONTENT_HEADINGS_FIELDS}
+      ${BLOG_CONTENT_ERROR_FIELDS}
     }
     ProcessData {
       ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }

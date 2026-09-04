@@ -4,9 +4,7 @@ export const VIDEO_LIST_FIELDS = `
       Title
       Description
       Link {
-        isExternal
-        href
-        label
+        ...LinkFields
       }
     }
     Iframe {

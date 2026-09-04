@@ -3,10 +3,7 @@ export const SITEMAP_BANNER_FIELDS = `
     Banner {
       ... on ComponentBannerBanner {
         BannerImage {
-          url
-          width
-          height
-          alternativeText
+          ...ImageFields
         }
         BannerTitle
         BannerDescription
@@ -14,3 +11,4 @@ export const SITEMAP_BANNER_FIELDS = `
     }
   }
 `;
+

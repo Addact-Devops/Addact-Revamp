@@ -1,31 +1,12 @@
 import { gql } from "graphql-request";
-
-
+import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
+import { AI_SERVICE_LIST_FIELDS } from "./aiServiceListFragment";
 
 export const AI_OUR_SERVICES_FRAGMENT = gql`
   fragment AiOurServicesFields on ComponentHomeAiOurServices {
     listingContext {
-      title
-      description
-      image {
-        ...ImageFields
-      }
-      link {
-        ...LinkFields
-      }
+      ${AI_LISTING_CONTEXT_FIELDS}
     }
-    serviceList {
-      listingContext {
-        id
-        title
-        description
-        image {
-          ...ImageFields
-        }
-        link {
-          ...LinkFields
-        }
-      }
-    }
+    ${AI_SERVICE_LIST_FIELDS}
   }
 `;

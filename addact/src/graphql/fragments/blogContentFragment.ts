@@ -1,41 +1,13 @@
+import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { BLOG_CONTENT_SHARED_LINK_FIELDS } from "./blogContentSharedLinkFragment";
+import { BLOG_CONTENT_ERROR_FIELDS } from "./blogContentErrorFragment";
+
 export const BLOG_CONTENT_FIELDS = `
   BlogContent {
-    ... on ComponentHeadingsH6 {
-      id
-      h6
-    }
-    ... on ComponentHeadingsH5 {
-      id
-      h5
-    }
-    ... on ComponentHeadingsH4 {
-      id
-      h5
-    }
-    ... on ComponentHeadingsH3 {
-      id
-      h3
-    }
-    ... on ComponentHeadingsH2 {
-      id
-      h2
-    }
-    ... on ComponentHeadingsH1 {
-      id
-      h1
-    }
+    ${BLOG_CONTENT_HEADINGS_FIELDS}
     ... on ComponentSharedImage { ...SharedImageFields }
-    ... on ComponentSharedLink {
-      id
-      href
-      label
-      target
-      isExternal
-    }
+    ${BLOG_CONTENT_SHARED_LINK_FIELDS}
     ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-    ... on Error {
-      code
-      message
-    }
+    ${BLOG_CONTENT_ERROR_FIELDS}
   }
 `;

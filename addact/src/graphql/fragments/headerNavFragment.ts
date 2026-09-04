@@ -1,34 +1,14 @@
+import { HEADER_NAV_PARENT_FIELDS } from "./headerNavParentFragment";
+
 export const HEADER_NAV_FIELDS = `
   main_navigations {
-    Parent {
-      HeaderNavLink {
-        ... on ComponentBaseTemplateTitle { ...TitleFields }
-      }
-      ReferenceTitle
-    }
+    ${HEADER_NAV_PARENT_FIELDS}
     SubNavLink {
-      ... on ComponentSharedLink {
-        href
-        isExternal
-        id
-        label
-        target
-        SubDisc
-        Icon {
-          url
-          alternativeText
-          height
-          width
+          ...LinkFields
         }
-      }
-    }
     ReferenceTitle
     SubNavImage {
-      alternativeText
-      height
-      name
-      url
-      width
-    }
+          ...ImageFields
+        }
   }
 `;

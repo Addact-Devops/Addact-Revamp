@@ -2,8 +2,8 @@
 
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
-import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
 import { ABOUT_US_QUOTE_FIELDS } from "../fragments/aboutUsQuoteFragment";
 import { ABOUT_US_CONTENT_FIELDS } from "../fragments/aboutUsContentFragment";
@@ -145,6 +145,7 @@ export type OurVisionMissionData = {
 };
 
 const visionQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
       ${ABOUT_US_VISION_MISSION_FIELDS}
@@ -197,7 +198,7 @@ type AboutUsCTAResponse = {
 
 const ctaQuery = gql`
   ${IMAGE_FRAGMENT}
-  ${SHARED_IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   query GetAboutUsCTA {
     aboutUs {
       ${ABOUT_US_CTA_FIELDS}
@@ -275,6 +276,7 @@ export type WeAreAddactType = {
 };
 
 const addactQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
       ${ABOUT_US_WE_ARE_ADDACT_FIELDS}

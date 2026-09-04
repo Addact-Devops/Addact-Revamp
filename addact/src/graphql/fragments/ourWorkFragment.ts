@@ -11,24 +11,10 @@ export const OUR_WORK_FIELDS = `
         title
         description
         image {
-          alternativeText
-          height
-          url
-          width
+          ...ImageFields
         }
         link {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            height
-            url
-            width
-          }
+          ...LinkFields
         }
       }
       tagLine {
@@ -37,3 +23,4 @@ export const OUR_WORK_FIELDS = `
     }
   }
 `;
+

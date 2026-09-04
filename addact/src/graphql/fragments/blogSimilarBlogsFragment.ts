@@ -1,33 +1,19 @@
+import { BLOG_HERO_BANNER_READ_NOW_FIELDS } from "./blogHeroBannerReadNowFragment";
+import { BLOG_HERO_BANNER_AUTHOR_FIELDS } from "./blogHeroBannerAuthorFragment";
+import { BLOG_CATEGORY_FIELDS } from "./blogCategoryFragment";
+
 export const BLOG_SIMILAR_BLOGS_FIELDS = `
   similarBlogs {
     BlogBanner {
       ... on ComponentBlogHeroBannerBlogHeroBanner {
         BannerTitle
         BannerImage {
-          alternativeText
-          height
-          name
-          url
-          width
+          ...ImageFields
         }
         PublishDate
-        ReadNow {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-        author {
-          Author {
-            AuthorName
-          }
-        }
-        blogcategory {
-          Category {
-            CategoryTitle
-          }
-        }
+        ${BLOG_HERO_BANNER_READ_NOW_FIELDS}
+        ${BLOG_HERO_BANNER_AUTHOR_FIELDS}
+        ${BLOG_CATEGORY_FIELDS}
       }
     }
   }

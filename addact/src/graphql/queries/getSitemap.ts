@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { SITEMAP_BANNER_FIELDS } from "../fragments/sitemapBannerFragment";
 
 export type SitemapBannerType = {
@@ -22,6 +23,7 @@ export type SitemapResponse = {
 };
 
 const sitemapQuery = gql`
+  ${IMAGE_FRAGMENT}
   query Sitemap {
     sitemap {
       ${SITEMAP_BANNER_FIELDS}

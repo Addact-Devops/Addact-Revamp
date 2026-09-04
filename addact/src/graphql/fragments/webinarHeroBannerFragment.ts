@@ -4,18 +4,11 @@ export const WEBINAR_HERO_BANNER_FIELDS = `
       BannerTitle
       BannerDescription
       BannerImage {
-        alternativeText
-        height
-        name
-        url
-        width
+        ...ImageFields
       }
       PublishDate
       ReadNow {
-        id
-        href
-        label
-        isExternal
+        ...LinkFields
       }
     }
   }

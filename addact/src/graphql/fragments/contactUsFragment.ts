@@ -1,3 +1,5 @@
+import { CONTACT_US_FORM_LABELS_FIELDS } from "./contactUsFormLabelsFragment";
+
 export const CONTACT_US_FIELDS = `
   ContactUs {
     pageReference
@@ -6,18 +8,10 @@ export const CONTACT_US_FIELDS = `
         Title
         Description
         Image {
-          url
-          alternativeText
-          width
-          height
+          ...ImageFields
         }
       }
     }
-    NameLable
-    CompanyName
-    RequirementsLabel
-    ButtonLabel
-    EmailLabel
-    RecipientEmails
+    ${CONTACT_US_FORM_LABELS_FIELDS}
   }
 `;

@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 
 export const HOME_SERVICES_FRAGMENT = gql`
   fragment HomeServicesFields on Home {
@@ -7,51 +8,21 @@ export const HOME_SERVICES_FRAGMENT = gql`
         ... on ComponentBaseTemplatePromo {
           Description
           Image {
-            alternativeText
-            height
-            name
-            url
-            width
+            ...ImageFields
           }
           Link {
-            href
-            isExternal
-            label
-            id
-            target
+            ...LinkFields
           }
           Title
           id
         }
       }
       Title {
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
+        ${BLOG_CONTENT_HEADINGS_FIELDS}
       }
       documentId
       pageReference
     }
   }
 `;
+

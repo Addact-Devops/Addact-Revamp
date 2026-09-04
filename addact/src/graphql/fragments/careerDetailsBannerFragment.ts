@@ -11,11 +11,7 @@ export const CAREER_DETAILS_BANNER_FRAGMENT = gql`
         BannerTitle
         show_searchbox
         BannerLink {
-          id
-          href
-          label
-          target
-          isExternal
+          ...LinkFields
         }
       }
     }

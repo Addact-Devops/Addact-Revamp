@@ -8,38 +8,13 @@ export const HOME_CAPABILITIES_FRAGMENT = gql`
         title
         description
         link {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            height
-            url
-            width
-          }
+          ...LinkFields
         }
         image {
-          alternativeText
-          height
-          url
-          width
+          ...ImageFields
         }
         sublinks {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            height
-            url
-            width
-          }
+          ...LinkFields
         }
       }
     }

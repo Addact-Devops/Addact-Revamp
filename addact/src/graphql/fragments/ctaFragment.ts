@@ -1,16 +1,10 @@
 import { HeadingFragmentType } from "./headingFragment";
 import { ImageFragmentType } from "./imageFragment";
 import { LinkFragmentType } from "./linkFragment";
+import { CTA_TITLE_FIELDS } from "./ctaTitleFragment";
 
 export const CTA_FIELDS = `
-  Title {
-    ... on ComponentHeadingsH1 { ...HeadingFields }
-    ... on ComponentHeadingsH2 { ...Heading2Fields }
-    ... on ComponentHeadingsH3 { ...Heading3Fields }
-    ... on ComponentHeadingsH4 { ...Heading4Fields }
-    ... on ComponentHeadingsH5 { ...Heading5Fields }
-    ... on ComponentHeadingsH6 { ...Heading6Fields }
-  }
+  ${CTA_TITLE_FIELDS}
   CTADescription
   CTAImage {
     ... on ComponentSharedImage {

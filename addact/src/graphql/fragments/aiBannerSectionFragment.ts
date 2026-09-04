@@ -1,38 +1,21 @@
+import { AI_BANNER_LOGO_FIELDS } from "./aiBannerLogoFragment";
+
 export const AI_BANNER_SECTION_FIELDS = `
   Banner {
     Banner {
       ... on ComponentBannerBanner {
         BannerTitle
         BannerDescription
-        BannerLogo {
-          alternativeText
-          height
-          url
-          width
-        }
+        ${AI_BANNER_LOGO_FIELDS}
         BannerImage {
-          alternativeText
-          height
-          url
-          width
+          ...ImageFields
         }
         isTextAlignCenter
         isVideo
         show_searchbox
         videoLink
         BannerLink {
-          id
-          href
-          label
-          target
-          isExternal
-          SubDisc
-          Icon {
-            alternativeText
-            height
-            url
-            width
-          }
+          ...LinkFields
         }
       }
     }

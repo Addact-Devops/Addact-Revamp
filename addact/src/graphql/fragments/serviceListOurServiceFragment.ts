@@ -1,3 +1,5 @@
+import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+
 export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
   our_service {
     FirstTabDisplayName
@@ -9,18 +11,10 @@ export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
           Title
           Description
           Image {
-            alternativeText
-            height
-            name
-            url
-            width
+            ...ImageFields
           }
           Link {
-            id
-            href
-            label
-            target
-            isExternal
+            ...LinkFields
           }
           sub_service_page {
             Slug
@@ -28,30 +22,7 @@ export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
         }
       }
       Title {
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
+        ${BLOG_CONTENT_HEADINGS_FIELDS}
       }
     }
     team_feature {
@@ -61,11 +32,7 @@ export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
         Title
         id
         Link {
-          id
-          href
-          label
-          target
-          isExternal
+          ...LinkFields
         }
       }
     }

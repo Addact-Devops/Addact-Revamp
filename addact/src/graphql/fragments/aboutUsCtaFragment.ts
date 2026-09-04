@@ -1,26 +1,19 @@
+import { ABOUT_US_CTA_TITLE_FIELDS } from "./aboutUsCtaTitleFragment";
+
 export const ABOUT_US_CTA_FIELDS = `
   aboutUsCTA {
-    Title {
-      ... on ComponentHeadingsH1 {
-        h1
-      }
-      ... on ComponentHeadingsH2 {
-        h2
-      }
-      ... on ComponentHeadingsH3 {
-        h3
-      }
-    }
+    ${ABOUT_US_CTA_TITLE_FIELDS}
     CTADescription
     CTAImage {
-      ... on ComponentSharedImage { ...SharedImageFields }
+      ... on ComponentSharedImage {
+        Image {
+          ...ImageFields
+        }
+      }
     }
     CTALink {
       ... on ComponentSharedLink {
-        label
-        href
-        target
-        isExternal
+        ...LinkFields
       }
     }
   }

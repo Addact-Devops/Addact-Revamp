@@ -6,18 +6,10 @@ export const SERVICE_LIST_CONTACT_US_FIELDS = `
         Title
         Description
         Image {
-          alternativeText
-          height
-          name
-          url
-          width
+          ...ImageFields
         }
         Link {
-          id
-          href
-          label
-          target
-          isExternal
+          ...LinkFields
         }
       }
     }
@@ -25,3 +17,4 @@ export const SERVICE_LIST_CONTACT_US_FIELDS = `
     RecipientEmails
   }
 `;
+

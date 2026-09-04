@@ -1,3 +1,4 @@
+
 export const BLOG_HERO_BANNER_FIELDS = `
   HeroBanner {
     ... on ComponentBlogHeroBannerBlogHeroBanner {
@@ -5,12 +6,8 @@ export const BLOG_HERO_BANNER_FIELDS = `
       BannerDescription
       PublishDate
       BannerImage {
-        alternativeText
-        height
-        name
-        url
-        width
-      }
+          ...ImageFields
+        }
     }
   }
 `;

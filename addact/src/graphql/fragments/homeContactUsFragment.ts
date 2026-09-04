@@ -9,18 +9,10 @@ export const HOME_CONTACT_US_FRAGMENT = gql`
           Title
           Description
           Image {
-            alternativeText
-            height
-            name
-            url
-            width
+            ...ImageFields
           }
           Link {
-            id
-            href
-            label
-            target
-            isExternal
+            ...LinkFields
           }
         }
       }

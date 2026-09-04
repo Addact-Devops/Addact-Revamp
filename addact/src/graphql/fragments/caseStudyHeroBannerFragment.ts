@@ -1,3 +1,7 @@
+import { BLOG_CATEGORY_FIELDS } from "./blogCategoryFragment";
+import { BLOG_HERO_BANNER_READ_NOW_FIELDS } from "./blogHeroBannerReadNowFragment";
+import { CASE_STUDY_HERO_BANNER_AUTHOR_FIELDS } from "./caseStudyHeroBannerAuthorFragment";
+
 export const CASE_STUDY_HERO_BANNER_FIELDS = `
   HeroBanner {
     ... on ComponentBlogHeroBannerBlogHeroBanner {
@@ -6,31 +10,11 @@ export const CASE_STUDY_HERO_BANNER_FIELDS = `
       BannerDescription
       PublishDate
       BannerImage {
-        width
-        name
-        height
-        url
-      }
-      blogcategory {
-        Category {
-          CategoryTitle
+          ...ImageFields
         }
-      }
-      author {
-        Author {
-          AuthorName
-          designation {
-            DesignationTitle
-          }
-        }
-      }
-      ReadNow {
-        id
-        href
-        label
-        target
-        isExternal
-      }
+      ${BLOG_CATEGORY_FIELDS}
+      ${CASE_STUDY_HERO_BANNER_AUTHOR_FIELDS}
+      ${BLOG_HERO_BANNER_READ_NOW_FIELDS}
     }
   }
 `;

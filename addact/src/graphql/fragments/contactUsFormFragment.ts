@@ -1,3 +1,4 @@
+
 export const CONTACT_US_FORM_FIELDS = `
   contactus {
     Form {
@@ -6,18 +7,10 @@ export const CONTACT_US_FORM_FIELDS = `
         Title
         Description
         Image {
-          alternativeText
-          height
-          name
-          url
-          width
+          ...ImageFields
         }
         Link {
-          id
-          href
-          label
-          target
-          isExternal
+          ...LinkFields
         }
       }
     }

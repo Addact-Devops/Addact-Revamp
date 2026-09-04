@@ -1,4 +1,6 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
 import { THANK_YOU_CONTENT_FIELDS } from "../fragments/thankYouContentFragment";
@@ -6,6 +8,8 @@ import { THANK_YOU_ANIMATION_VIDEO_FIELDS } from "../fragments/thankYouAnimation
 import client from "../client";
 
 const GET_THANK_YOU_PAGE = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   ${RICHTEXT_FRAGMENT}
   query ThankyouPages($filters: ThankyouPageFiltersInput) {
     thankyouPages(filters: $filters) {
