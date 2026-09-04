@@ -7,10 +7,7 @@ export const FOOTER_SOCIAL_MEDIA_FIELDS = `
     isExternal
     SubDisc
     Icon {
-      alternativeText
-      height
-      url
-      width
+      ...ImageFields
     }
   }
 `;

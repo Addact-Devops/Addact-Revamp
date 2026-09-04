@@ -4,8 +4,7 @@ export const ABOUT_US_CONTENT_FIELDS = `
     Title
     Description
     Image {
-      url
-      alternativeText
+      ...ImageFields
     }
   }
 `;

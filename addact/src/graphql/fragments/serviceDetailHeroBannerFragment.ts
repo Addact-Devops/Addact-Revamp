@@ -3,11 +3,7 @@ export const SERVICE_DETAIL_HERO_BANNER_FIELDS = `
     BannerTitle
     BannerDescription
     BannerImage {
-      alternativeText
-      height
-      name
-      url
-      width
+      ...ImageFields
     }
     BannerLink {
       id

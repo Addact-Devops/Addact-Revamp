@@ -1,8 +1,7 @@
 export const ABOUT_US_QUOTE_FIELDS = `
   Quote {
     AuthorImage {
-      alternativeText
-      url
+      ...ImageFields
     }
     AuthorMessage
     AuthorName

@@ -4,10 +4,7 @@ export const ABOUT_US_BRAND_VALUE_FIELDS = `
     SubTitle
     Description
     Image {
-      url
-      alternativeText
-      width
-      height
+      ...ImageFields
     }
   }
 `;

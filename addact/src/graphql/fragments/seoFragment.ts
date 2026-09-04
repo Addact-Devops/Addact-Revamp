@@ -1,17 +1,3 @@
-/**
- * SEO fields string — interpolate directly into GraphQL query strings.
- *
- * Usage:
- *   import { SEO_FIELDS } from "../fragments/seoFragment";
- *
- *   const QUERY = gql`
-  *     query Foo {
- *       page {
- *         SEO { ${SEO_FIELDS} }
- *       }
- *     }
- *   `;
- */
 export const SEO_FIELDS = `
   metaTitle
   metaDescription

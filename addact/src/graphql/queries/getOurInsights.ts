@@ -9,6 +9,7 @@ import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment
 import client from "../client";
 
 const ourInsights_Query = gql`
+  ${IMAGE_FRAGMENT}
   ${COMMON_SECTION_FRAGMENT}
   query AddactBlogsAndCaseStudy {
     ${OUR_INSIGHTS_BLOG_FIELDS}

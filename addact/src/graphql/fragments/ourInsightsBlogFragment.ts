@@ -10,11 +10,7 @@ export const OUR_INSIGHTS_BLOG_FIELDS = `
       ... on ComponentBlogHeroBannerBlogHeroBanner {
         id
         BannerImage {
-          width
-          url
-          name
-          height
-          alternativeText
+          ...ImageFields
         }
         BannerDescription
         BannerTitle

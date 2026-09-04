@@ -3,8 +3,7 @@ export const CAREER_GALLERY_CATEGORIES_FIELDS = `
     Name
     Images(pagination: { limit: -1 }) {
       Image {
-        url
-        alternativeText
+        ...ImageFields
       }
       Year
     }

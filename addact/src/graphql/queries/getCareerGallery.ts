@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { GALLERY_TITLES_FRAGMENT } from "../fragments/galleryTitlesFragment";
 import { CAREER_GALLERY_SECTION_FIELDS } from "../fragments/careerGallerySectionFragment";
 import { CAREER_GALLERY_CATEGORIES_FIELDS } from "../fragments/careerGalleryCategoriesFragment";
@@ -11,6 +12,7 @@ if (!endpoint) {
 }
 
 const query = gql`
+  ${IMAGE_FRAGMENT}
   ${GALLERY_TITLES_FRAGMENT}
   query CareerGalleryData {
     ${CAREER_GALLERY_SECTION_FIELDS}

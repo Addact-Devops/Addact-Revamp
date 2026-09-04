@@ -5,11 +5,7 @@ export const OUR_INSIGHTS_CASE_STUDY_FIELDS = `
     HeroBanner {
       ... on ComponentBlogHeroBannerBlogHeroBanner {
         BannerImage {
-          alternativeText
-          height
-          name
-          url
-          width
+          ...ImageFields
         }
         BannerTitle
         ReadNow {

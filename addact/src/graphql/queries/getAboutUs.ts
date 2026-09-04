@@ -73,6 +73,7 @@ export type QuoteData = {
 };
 
 const quoteQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
       ${ABOUT_US_QUOTE_FIELDS}
@@ -112,6 +113,7 @@ export type AboutUsContentData = {
 };
 
 const aboutContentQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
       ${ABOUT_US_CONTENT_FIELDS}
@@ -234,6 +236,7 @@ type BrandValueQueryResponse = {
 };
 
 const brandValueQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
       ${ABOUT_US_BRAND_VALUE_FIELDS}
