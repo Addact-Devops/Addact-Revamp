@@ -1,105 +1,28 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { EVENT_BLOG_HERO_BANNER_FIELDS } from "../fragments/eventBlogHeroBannerFragment";
+import { EVENT_CONTENT_FIELDS } from "../fragments/eventContentFragment";
+import { EVENT_HEADING_SECTION_FIELDS } from "../fragments/eventHeadingSectionFragment";
+import { EVENT_CONTACT_US_CARD_FIELDS } from "../fragments/eventContactUsCardFragment";
 import client from "../client";
 import { Heading, Image } from "@/types/common";
 
 const GET_EVENT_DETAIL_PAGE = gql`
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactsEvents($filters: AddactEventsFiltersInput) {
     addactsEvents(filters: $filters) {
-      EventBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerDescription
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          BannerTitle
-          PublishDate
-          eventLocation
-        }
-      }
-      EventContent {
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          isExternal
-        }
-      }
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
-      }
-      contact_us_card {
-        ButtonLabel
-        CompanyName
-        EmailLabel
-        NameLable
-        RequirementsLabel
-        RecipientEmails
-        PhoneLabel
-        Form {
-          ... on ComponentBaseTemplatePromo {
-            Title
-            Description
-          }
-        }
-      }
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
+      ${EVENT_BLOG_HERO_BANNER_FIELDS}
+      ${EVENT_CONTENT_FIELDS}
+      ${EVENT_HEADING_SECTION_FIELDS}
+      ${EVENT_CONTACT_US_CARD_FIELDS}
+      SEO { ${SEO_FIELDS} }
     }
   }
 `;

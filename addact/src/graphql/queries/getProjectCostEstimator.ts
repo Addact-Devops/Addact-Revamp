@@ -1,5 +1,9 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { SEO_FIELDS } from "../fragments/seoFragment";
+import { PROJECT_COST_BANNER_FIELDS } from "../fragments/projectCostBannerFragment";
+import { PROJECT_COST_CONTENT_FIELDS } from "../fragments/projectCostContentFragment";
 
 // -----------------------------
 // ✅ Types
@@ -53,46 +57,14 @@ export type ProjectCostEstimatorResponse = {
 // -----------------------------
 
 const projectCostEstimatorQuery = gql`
+  ${IMAGE_FRAGMENT}
   query ProjectCostEstimator {
     projectCostEstimator {
       SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
+        ${SEO_FIELDS}
       }
-      banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerImage {
-              url
-              alternativeText
-              width
-              height
-            }
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              url
-              alternativeText
-              width
-              height
-            }
-          }
-        }
-      }
-      Content {
-        Title
-        Description
-      }
+      ${PROJECT_COST_BANNER_FIELDS}
+      ${PROJECT_COST_CONTENT_FIELDS}
     }
   }
 `;

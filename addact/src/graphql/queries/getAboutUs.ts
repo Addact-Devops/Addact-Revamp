@@ -1,6 +1,16 @@
 // src/graphql/queries/getAboutUs.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
+import { ABOUT_US_QUOTE_FIELDS } from "../fragments/aboutUsQuoteFragment";
+import { ABOUT_US_CONTENT_FIELDS } from "../fragments/aboutUsContentFragment";
+import { ABOUT_US_VISION_MISSION_FIELDS } from "../fragments/aboutUsVisionMissionFragment";
+import { ABOUT_US_CTA_FIELDS } from "../fragments/aboutUsCtaFragment";
+import { ABOUT_US_BRAND_VALUE_FIELDS } from "../fragments/aboutUsBrandValueFragment";
+import { ABOUT_US_WE_ARE_ADDACT_FIELDS } from "../fragments/aboutUsWeAreAddactFragment";
 import client from "../client";
 
 // -----------------------------
@@ -26,21 +36,11 @@ export type AboutUsHeroBannerResponse = {
 };
 
 const bannerQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query AboutUs {
     aboutUs {
-      HeroBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              url
-              height
-              width
-            }
-          }
-        }
-      }
+      ${PAGE_HERO_BANNER_FIELDS}
     }
   }
 `;
@@ -73,16 +73,10 @@ export type QuoteData = {
 };
 
 const quoteQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      Quote {
-        AuthorImage {
-          alternativeText
-          url
-        }
-        AuthorMessage
-        AuthorName
-      }
+      ${ABOUT_US_QUOTE_FIELDS}
     }
   }
 `;
@@ -119,17 +113,10 @@ export type AboutUsContentData = {
 };
 
 const aboutContentQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      AboutUsContent {
-        SubTitle
-        Title
-        Description
-        Image {
-          url
-          alternativeText
-        }
-      }
+      ${ABOUT_US_CONTENT_FIELDS}
     }
   }
 `;
@@ -160,17 +147,10 @@ export type OurVisionMissionData = {
 };
 
 const visionQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      OurVisionMission {
-        SubTitle
-        Title
-        Description
-        Image {
-          alternativeText
-          url
-        }
-      }
+      ${ABOUT_US_VISION_MISSION_FIELDS}
     }
   }
 `;
@@ -219,40 +199,11 @@ type AboutUsCTAResponse = {
 };
 
 const ctaQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   query GetAboutUsCTA {
     aboutUs {
-      aboutUsCTA {
-        Title {
-          ... on ComponentHeadingsH1 {
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            h3
-          }
-        }
-        CTADescription
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              url
-              alternativeText
-              width
-              height
-            }
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            label
-            href
-            target
-            isExternal
-          }
-        }
-      }
+      ${ABOUT_US_CTA_FIELDS}
     }
   }
 `;
@@ -269,10 +220,7 @@ export const getAboutUsCTA = async (): Promise<CTAType | null> => {
 export type BrandValueType = {
   Title: string;
   SubTitle: string;
-  Content: {
-    type: string;
-    children: { text: string }[];
-  }[];
+  Description: string;
   Image: {
     url: string;
     alternativeText: string | null;
@@ -288,19 +236,10 @@ type BrandValueQueryResponse = {
 };
 
 const brandValueQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      BrandValue {
-        Title
-        SubTitle
-        Content
-        Image {
-          url
-          alternativeText
-          width
-          height
-        }
-      }
+      ${ABOUT_US_BRAND_VALUE_FIELDS}
     }
   }
 `;
@@ -340,23 +279,10 @@ export type WeAreAddactType = {
 };
 
 const addactQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      WeAreAddact {
-        Image {
-          url
-          alternativeText
-          height
-          width
-        }
-        SubTitle
-        Title
-        Content
-        NumberContent {
-          Number
-          Content
-        }
-      }
+      ${ABOUT_US_WE_ARE_ADDACT_FIELDS}
     }
   }
 `;

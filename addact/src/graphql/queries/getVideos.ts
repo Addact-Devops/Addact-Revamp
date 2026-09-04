@@ -1,6 +1,12 @@
 // src/graphql/queries/getVideos.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
+import { VIDEO_BANNER_FIELDS } from "../fragments/videoBannerFragment";
+import { VIDEO_LIST_FIELDS } from "../fragments/videoListFragment";
 import client from "../client";
 
 // -----------------------------
@@ -51,40 +57,14 @@ export type VideoPageResponse = {
 // -----------------------------
 
 const videosQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query VideoListing {
     videoListing {
-      PageHeading {
-        PageTitle
-        Slug
-      }
-      banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              url
-              width
-              height
-              alternativeText
-            }
-          }
-        }
-      }
-      VideoList(pagination: { limit: -1 }) {
-        Content {
-          Title
-          Description
-          Link {
-            isExternal
-            href
-            label
-          }
-        }
-        Iframe {
-          Richtext
-        }
-      }
+      ${PAGE_HEADING_FIELDS}
+      ${VIDEO_BANNER_FIELDS}
+      ${VIDEO_LIST_FIELDS}
     }
   }
 `;
