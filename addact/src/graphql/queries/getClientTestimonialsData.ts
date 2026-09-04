@@ -1,10 +1,12 @@
 // src/graphql/queries/getClientTestimonialsData.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { CLIENT_TESTIMONIALS_FIELDS } from "../fragments/clientTestimonialsFragment";
 import client from "../client";
 
 export const GET_CLIENT_TESTIMONIALS = gql`
+  ${IMAGE_FRAGMENT}
   query GetClientTestimonials {
     ${CLIENT_TESTIMONIALS_FIELDS}
   }

@@ -1,6 +1,4 @@
-import { gql } from "graphql-request";
-
-export const IMAGE_FRAGMENT = gql`
+export const IMAGE_FRAGMENT = `
   fragment ImageFields on UploadFile {
     alternativeText
     caption

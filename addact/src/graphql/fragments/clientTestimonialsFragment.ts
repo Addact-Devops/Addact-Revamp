@@ -1,19 +1,13 @@
+import { CLIENT_TESTIMONIALS_ITEM_FIELDS } from "./clientTestimonialsItemFragment";
+
 export const CLIENT_TESTIMONIALS_FIELDS = `
   clientTestimonials {
     Title
-    Item {
-      quote
-      author_name
-      author_position
-      rating
-    }
+    ${CLIENT_TESTIMONIALS_ITEM_FIELDS}
     bgText
     rating
     ratingImage {
-      alternativeText
-      height
-      url
-      width
+      ...ImageFields
     }
   }
 `;
