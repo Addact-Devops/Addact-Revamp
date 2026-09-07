@@ -1,11 +1,13 @@
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { CASE_STUDY_BANNER_FIELDS } from "../fragments/caseStudyBannerFragment";
 import { CASE_STUDY_CARD_FIELDS } from "../fragments/caseStudyCardFragment";
 import client from "../client";
 
 const GET_ALL_CASE_STUDY = gql`
+  ${LINK_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${HERO_BANNER_FRAGMENT}
   query CaseStudyList {

@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { BLOGS_PAGE_HEADING_FIELDS } from "../fragments/blogsPageHeadingFragment";
@@ -9,6 +10,7 @@ import { BLOG_CATEGORIES_FIELDS } from "../fragments/blogCategoriesFragment";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
+  ${LINK_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${HERO_BANNER_FRAGMENT}
   ${COMMON_SECTION_FRAGMENT}

@@ -9,6 +9,7 @@ import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment
 import client from "../client";
 
 const ourInsights_Query = gql`
+  ${LINK_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${COMMON_SECTION_FRAGMENT}
   query AddactBlogsAndCaseStudy {
@@ -16,6 +17,7 @@ const ourInsights_Query = gql`
     ${OUR_INSIGHTS_CASE_STUDY_FIELDS}
   }
 `;
+
 
 export interface AddactBlogsAndCaseStudyResponse {
   addactBlogs: AddactBlog[];

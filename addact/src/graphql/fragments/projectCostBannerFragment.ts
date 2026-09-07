@@ -1,3 +1,5 @@
+import { BANNER_TITLE_DESCRIPTION_FIELDS } from "./componentBannerFieldsFragment";
+
 export const PROJECT_COST_BANNER_FIELDS = `
   banner {
     Banner {
@@ -5,8 +7,7 @@ export const PROJECT_COST_BANNER_FIELDS = `
         BannerImage {
           ...ImageFields
         }
-        BannerTitle
-        BannerDescription
+        ${BANNER_TITLE_DESCRIPTION_FIELDS}
         BannerLogo {
           ...ImageFields
         }
@@ -14,4 +15,5 @@ export const PROJECT_COST_BANNER_FIELDS = `
     }
   }
 `;
+
 

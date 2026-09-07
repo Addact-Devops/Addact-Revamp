@@ -36,6 +36,7 @@ export type AboutUsHeroBannerResponse = {
 };
 
 const bannerQuery = gql`
+  ${LINK_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${HERO_BANNER_FRAGMENT}
   query AboutUs {

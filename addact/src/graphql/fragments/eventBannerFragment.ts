@@ -1,16 +1,10 @@
+import { COMPONENT_BANNER_FIELDS } from "./componentBannerFieldsFragment";
 
 export const EVENT_BANNER_FIELDS = `
   EventBanner {
     Banner {
       ... on ComponentBannerBanner {
-        BannerDescription
-        BannerImage {
-          ...ImageFields
-        }
-        BannerLink {
-          ...LinkFields
-        }
-        BannerTitle
+        ${COMPONENT_BANNER_FIELDS}
       }
     }
   }

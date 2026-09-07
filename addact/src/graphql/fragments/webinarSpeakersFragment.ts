@@ -1,13 +1,8 @@
+import { WEBINAR_AUTHOR_FIELDS } from "./webinarHostFragment";
+
 export const WEBINAR_SPEAKERS_FIELDS = `
   Speakers {
-    Author {
-      AuthorImage {
-        ...ImageFields
-      }
-      AuthorName
-      designation {
-        DesignationTitle
-      }
-    }
+    ${WEBINAR_AUTHOR_FIELDS}
   }
 `;
+

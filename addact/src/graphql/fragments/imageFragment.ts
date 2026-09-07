@@ -1,11 +1,15 @@
+export const IMAGE_INNER_FIELDS = `
+  alternativeText
+  caption
+  width
+  height
+  url
+  name
+`;
+
 export const IMAGE_FRAGMENT = `
   fragment ImageFields on UploadFile {
-    alternativeText
-    caption
-    width
-    height
-    url
-    name
+    ${IMAGE_INNER_FIELDS}
   }
 `;
 
@@ -17,3 +21,4 @@ export type ImageFragmentType = {
   url: string;
   name?: string;
 };
+

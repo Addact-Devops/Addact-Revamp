@@ -1,13 +1,10 @@
 import { gql } from "graphql-request";
 import { ImageFragmentType } from "./imageFragment";
+import { COMPONENT_BANNER_FIELDS } from "./componentBannerFieldsFragment";
 
 export const HERO_BANNER_FRAGMENT = gql`
   fragment HeroBannerFields on ComponentBannerBanner {
-    BannerTitle
-    BannerDescription
-    BannerImage {
-      ...ImageFields
-    }
+    ${COMPONENT_BANNER_FIELDS}
   }
 `;
 

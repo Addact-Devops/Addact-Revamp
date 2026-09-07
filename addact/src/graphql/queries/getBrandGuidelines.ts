@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
@@ -11,6 +12,7 @@ import client from "../client";
 import { Heading, Image } from "@/types/common";
 
 const GET_BRAND_GUIDELINES = gql`
+  ${LINK_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${HERO_BANNER_FRAGMENT}
   ${SHARED_IMAGE_FRAGMENT}

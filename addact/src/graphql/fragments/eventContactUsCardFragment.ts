@@ -1,11 +1,8 @@
+import { CONTACT_US_FORM_LABELS_FIELDS } from "./contactUsFormLabelsFragment";
+
 export const EVENT_CONTACT_US_CARD_FIELDS = `
   contact_us_card {
-    ButtonLabel
-    CompanyName
-    EmailLabel
-    NameLable
-    RequirementsLabel
-    RecipientEmails
+    ${CONTACT_US_FORM_LABELS_FIELDS}
     PhoneLabel
     Form {
       ... on ComponentBaseTemplatePromo {
@@ -15,3 +12,4 @@ export const EVENT_CONTACT_US_CARD_FIELDS = `
     }
   }
 `;
+

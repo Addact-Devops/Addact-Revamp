@@ -1,8 +1,12 @@
 import { AI_BANNER_LOGO_FIELDS } from "./aiBannerLogoFragment";
 
-export const COMPONENT_BANNER_FIELDS = `
+export const BANNER_TITLE_DESCRIPTION_FIELDS = `
   BannerTitle
   BannerDescription
+`;
+
+export const COMPONENT_BANNER_FIELDS = `
+  ${BANNER_TITLE_DESCRIPTION_FIELDS}
   ${AI_BANNER_LOGO_FIELDS}
   BannerImage {
     ...ImageFields
@@ -15,3 +19,4 @@ export const COMPONENT_BANNER_FIELDS = `
     ...LinkFields
   }
 `;
+

@@ -1,3 +1,6 @@
+import { BLOG_HERO_BANNER_INNER_FIELDS } from "./blogHeroBannerFragment";
+import { BLOG_HERO_BANNER_READ_NOW_FIELDS } from "./blogHeroBannerReadNowFragment";
+
 export const OUR_INSIGHTS_BLOG_FIELDS = `
   addactBlogs(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
     documentId
@@ -9,19 +12,8 @@ export const OUR_INSIGHTS_BLOG_FIELDS = `
     BlogBanner {
       ... on ComponentBlogHeroBannerBlogHeroBanner {
         id
-        BannerImage {
-          ...ImageFields
-        }
-        BannerDescription
-        BannerTitle
-        PublishDate
-        ReadNow {
-          href
-          id
-          isExternal
-          label
-          target
-        }
+        ${BLOG_HERO_BANNER_INNER_FIELDS}
+        ${BLOG_HERO_BANNER_READ_NOW_FIELDS}
       }
     }
   }
