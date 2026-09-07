@@ -1,10 +1,7 @@
+import { ABOUT_US_ITEM_INNER_FIELDS } from "./aboutUsBrandValueFragment";
+
 export const ABOUT_US_CONTENT_FIELDS = `
   AboutUsContent {
-    SubTitle
-    Title
-    Description
-    Image {
-      ...ImageFields
-    }
+    ${ABOUT_US_ITEM_INNER_FIELDS}
   }
 `;

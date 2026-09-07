@@ -1,7 +1,11 @@
+export const CATEGORY_INNER_FIELDS = `
+  Category {
+    CategoryTitle
+  }
+`;
+
 export const BLOG_CATEGORY_FIELDS = `
   blogcategory {
-    Category {
-      CategoryTitle
-    }
+    ${CATEGORY_INNER_FIELDS}
   }
 `;

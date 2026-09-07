@@ -1,7 +1,7 @@
+import { CATEGORY_INNER_FIELDS } from "./blogCategoryFragment";
+
 export const BLOG_CATEGORIES_FIELDS = `
   blogCategories {
-    Category {
-      CategoryTitle
-    }
+    ${CATEGORY_INNER_FIELDS}
   }
 `;

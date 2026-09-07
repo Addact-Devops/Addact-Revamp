@@ -1,23 +1,11 @@
-import { AI_BANNER_LOGO_FIELDS } from "./aiBannerLogoFragment";
+import { COMPONENT_BANNER_FIELDS } from "./componentBannerFieldsFragment";
 import { BANNER_CHIPS_TEXT_FIELDS } from "./bannerChipsTextFragment";
 
 export const BANNER_SECTION_FIELDS = `
   Banner {
     Banner {
       ... on ComponentBannerBanner {
-        BannerTitle
-        BannerDescription
-        ${AI_BANNER_LOGO_FIELDS}
-        BannerImage {
-          ...ImageFields
-        }
-        isTextAlignCenter
-        isVideo
-        show_searchbox
-        videoLink
-        BannerLink {
-          ...LinkFields
-        }
+        ${COMPONENT_BANNER_FIELDS}
         ${BANNER_CHIPS_TEXT_FIELDS}
       }
     }
