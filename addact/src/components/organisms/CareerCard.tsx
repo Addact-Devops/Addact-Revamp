@@ -43,7 +43,7 @@ const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {
         {title.map((block) => {
           if ("Richtext" in block && block.Richtext) {
             return (
-              <p
+              <div
                 key={block.id}
                 className="text-[#3C4CFF] mb-[10px] md:mb-[15px] leading-[26px] text-center font-[500]"
                 dangerouslySetInnerHTML={{ __html: block.Richtext }}
