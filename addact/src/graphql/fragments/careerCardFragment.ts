@@ -1,5 +1,6 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 import { BLOG_CONTENT_ERROR_FIELDS } from "./blogContentErrorFragment";
+import { PROMO_INNER_FIELDS } from "./promoFragment";
 
 export const CAREER_CARD_FIELDS = `
   Title {
@@ -9,16 +10,9 @@ export const CAREER_CARD_FIELDS = `
   }
   GlobalCard {
     ... on ComponentBaseTemplatePromo {
-      id
-      Title
-      Description
-      Image {
-          ...ImageFields
-        }
-      Link {
-          ...LinkFields
-        }
+      ${PROMO_INNER_FIELDS}
     }
     ${BLOG_CONTENT_ERROR_FIELDS}
   }
 `;
+

@@ -12,12 +12,6 @@ export const OUR_PROCESS_FIELDS = `
     }
   }
   ProcessData {
-    ... on ComponentBaseTemplateTitleWithDescription {
-      Title
-      Description
-      Link {
-        ...LinkFields
-      }
-    }
+    ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
   }
 `;

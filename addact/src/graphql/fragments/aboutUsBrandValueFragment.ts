@@ -1,10 +1,14 @@
-export const ABOUT_US_ITEM_INNER_FIELDS = `
+export const TITLE_DESCRIPTION_IMAGE_FIELDS = `
   Title
-  SubTitle
   Description
   Image {
     ...ImageFields
   }
+`;
+
+export const ABOUT_US_ITEM_INNER_FIELDS = `
+  SubTitle
+  ${TITLE_DESCRIPTION_IMAGE_FIELDS}
 `;
 
 export const ABOUT_US_BRAND_VALUE_FIELDS = `
@@ -12,3 +16,4 @@ export const ABOUT_US_BRAND_VALUE_FIELDS = `
     ${ABOUT_US_ITEM_INNER_FIELDS}
   }
 `;
+

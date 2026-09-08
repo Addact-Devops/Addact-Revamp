@@ -1,6 +1,5 @@
 import { gql } from "graphql-request";
-
-
+import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
 
 export const QA_TESTING_LISTING_FRAGMENT = gql`
   fragment QaTestingListingFields on ComponentHomeQaTestingListing {
@@ -12,14 +11,7 @@ export const QA_TESTING_LISTING_FRAGMENT = gql`
     serviceList {
       listingContext {
         id
-        title
-        description
-        image {
-          ...ImageFields
-        }
-        link {
-          ...LinkFields
-        }
+        ${AI_LISTING_CONTEXT_FIELDS}
       }
     }
     isCarousel

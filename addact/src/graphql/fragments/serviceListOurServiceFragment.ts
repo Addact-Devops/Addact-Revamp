@@ -1,4 +1,6 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { PROMO_INNER_FIELDS } from "./promoFragment";
+import { ID_TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
 
 export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
   our_service {
@@ -7,15 +9,7 @@ export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
     ForEnterprisesBrands {
       GlobalCard {
         ... on ComponentBaseTemplatePromo {
-          id
-          Title
-          Description
-          Image {
-            ...ImageFields
-          }
-          Link {
-            ...LinkFields
-          }
+          ${PROMO_INNER_FIELDS}
           sub_service_page {
             Slug
           }
@@ -28,9 +22,7 @@ export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
     team_feature {
       Description
       Cards {
-        Description
-        Title
-        id
+        ${ID_TITLE_DESCRIPTION_FIELDS}
         Link {
           ...LinkFields
         }

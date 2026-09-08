@@ -1,15 +1,11 @@
+import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
+
 export const AI_BENEFIT_FIELDS = `
   title
   serviceList {
     listingContext {
-      title
-      description
-      image {
-        ...ImageFields
-      }
-      link {
-        ...LinkFields
-      }
+      ${AI_LISTING_CONTEXT_FIELDS}
     }
   }
 `;
+

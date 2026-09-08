@@ -1,6 +1,7 @@
+import { TITLE_DESCRIPTION_LOWER_FIELDS } from "./titleDescriptionFragment";
+
 export const AI_LISTING_CONTEXT_FIELDS = `
-  title
-  description
+  ${TITLE_DESCRIPTION_LOWER_FIELDS}
   image {
     ...ImageFields
   }
@@ -8,3 +9,4 @@ export const AI_LISTING_CONTEXT_FIELDS = `
     ...LinkFields
   }
 `;
+

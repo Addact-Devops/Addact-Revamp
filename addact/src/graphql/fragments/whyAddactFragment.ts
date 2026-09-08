@@ -1,4 +1,5 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { PROMO_INNER_FIELDS } from "./promoFragment";
 
 export const WHY_ADDACT_FIELDS = `
   whyaddact {
@@ -8,16 +9,9 @@ export const WHY_ADDACT_FIELDS = `
     pageReference
     GlobalCard {
       ... on ComponentBaseTemplatePromo {
-        id
-        Title
-        Description
-        Image {
-          ...ImageFields
-        }
-        Link {
-          ...LinkFields
-        }
+        ${PROMO_INNER_FIELDS}
       }
     }
   }
 `;
+

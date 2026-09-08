@@ -2,17 +2,21 @@ import { gql } from "graphql-request";
 import { ImageFragmentType } from "./imageFragment";
 import { LinkFragmentType } from "./linkFragment";
 
+export const PROMO_INNER_FIELDS = `
+  id
+  Title
+  Description
+  Image {
+    ...ImageFields
+  }
+  Link {
+    ...LinkFields
+  }
+`;
+
 export const PROMO_FRAGMENT = gql`
   fragment PromoFields on ComponentBaseTemplatePromo {
-    id
-    Title
-    Description
-    Image {
-      ...ImageFields
-    }
-    Link {
-      ...LinkFields
-    }
+    ${PROMO_INNER_FIELDS}
   }
 `;
 

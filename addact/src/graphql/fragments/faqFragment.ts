@@ -1,11 +1,12 @@
+import { ID_TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
+
 export const FAQ_FIELDS = `
   Title
   FAQ {
-    Description
-    Title
-    id
+    ${ID_TITLE_DESCRIPTION_FIELDS}
   }
 `;
+
 
 export type FAQItem = {
   id?: string;

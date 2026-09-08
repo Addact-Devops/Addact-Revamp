@@ -1,11 +1,11 @@
 import { gql } from "graphql-request";
+import { TITLE_DESCRIPTION_LOWER_FIELDS } from "./titleDescriptionFragment";
 
 export const HOME_AI_ECO_SYSTEM_FRAGMENT = gql`
   fragment HomeAiEcoSystemFields on Home {
     aiEcoSystem {
       AIEcoSystem {
-        title
-        description
+        ${TITLE_DESCRIPTION_LOWER_FIELDS}
         tagLine
         firstImage {
           ...ImageFields
@@ -29,3 +29,4 @@ export const HOME_AI_ECO_SYSTEM_FRAGMENT = gql`
     }
   }
 `;
+

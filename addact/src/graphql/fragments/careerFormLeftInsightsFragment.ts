@@ -1,9 +1,8 @@
+import { TITLE_DESCRIPTION_IMAGE_FIELDS } from "./aboutUsBrandValueFragment";
+
 export const CAREER_FORM_LEFT_INSIGHTS_FIELDS = `
   LeftInsights {
-    Title
-    Description
-    Image {
-      ...ImageFields
-    }
+    ${TITLE_DESCRIPTION_IMAGE_FIELDS}
   }
 `;
+

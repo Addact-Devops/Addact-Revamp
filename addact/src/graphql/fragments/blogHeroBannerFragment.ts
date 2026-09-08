@@ -1,10 +1,11 @@
+import { BANNER_TITLE_DESCRIPTION_FIELDS } from "./componentBannerFieldsFragment";
+
 export const BLOG_HERO_BANNER_INNER_FIELDS = `
-      BannerTitle
-      BannerDescription
-      PublishDate
-      BannerImage {
-          ...ImageFields
-        }
+  ${BANNER_TITLE_DESCRIPTION_FIELDS}
+  PublishDate
+  BannerImage {
+    ...ImageFields
+  }
 `;
 
 export const BLOG_HERO_BANNER_FIELDS = `
@@ -14,3 +15,4 @@ export const BLOG_HERO_BANNER_FIELDS = `
     }
   }
 `;
+

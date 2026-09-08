@@ -1,10 +1,9 @@
+import { FORM_BASIC_LABELS_FIELDS } from "./contactUsFormLabelsFragment";
+
 export const BRAND_GUIDELINES_FORM_FIELDS = `
   FromTitle
   FormFileds {
-    NameLable
-    EmailLabel
-    PhoneLabel
-    RecipientEmails
-    ButtonLabel
+    ${FORM_BASIC_LABELS_FIELDS}
   }
 `;
+

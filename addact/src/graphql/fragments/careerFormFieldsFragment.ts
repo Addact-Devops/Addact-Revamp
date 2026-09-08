@@ -1,9 +1,11 @@
+import { BANNER_TITLE_DESCRIPTION_FIELDS } from "./componentBannerFieldsFragment";
+import { FORM_BASIC_LABELS_FIELDS } from "./contactUsFormLabelsFragment";
+
 export const CAREER_FORM_FIELDS_FIELDS = `
   FormFields {
     Form {
       ... on ComponentBaseTemplatePromo {
-        Title
-        Description
+        ${BANNER_TITLE_DESCRIPTION_FIELDS}
         Image {
           ...ImageFields
         }
@@ -12,11 +14,9 @@ export const CAREER_FORM_FIELDS_FIELDS = `
         }
       }
     }
-    NameLable
-    EmailLabel
-    PhoneLabel
+    ${FORM_BASIC_LABELS_FIELDS}
     GeneralText
-    RecipientEmails
-    ButtonLabel
   }
 `;
+
+

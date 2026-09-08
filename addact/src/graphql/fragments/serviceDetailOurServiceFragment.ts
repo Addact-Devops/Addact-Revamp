@@ -1,19 +1,17 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { TITLE_DESCRIPTION_FIELDS, ID_TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
 
 export const SERVICE_DETAIL_OUR_SERVICE_FIELDS = `
   our_service {
     Titeldescription {
-      Description
-      Title
+      ${TITLE_DESCRIPTION_FIELDS}
     }
     FirstTabDisplayName
     SecondTabDisplayName
     ForEnterprisesBrands {
       GlobalCard {
         ... on ComponentBaseTemplatePromo {
-          Description
-          Title
-          id
+          ${ID_TITLE_DESCRIPTION_FIELDS}
         }
       }
       Title {
@@ -24,9 +22,7 @@ export const SERVICE_DETAIL_OUR_SERVICE_FIELDS = `
     ReferenceTitle
     team_feature {
       Cards {
-        Description
-        Title
-        id
+        ${ID_TITLE_DESCRIPTION_FIELDS}
         Link {
           ...LinkFields
         }

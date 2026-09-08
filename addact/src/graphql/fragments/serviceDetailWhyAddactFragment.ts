@@ -1,4 +1,5 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { TITLE_DESCRIPTION_IMAGE_FIELDS } from "./aboutUsBrandValueFragment";
 
 export const SERVICE_DETAIL_WHY_ADDACT_FIELDS = `
   why_addact {
@@ -12,11 +13,7 @@ export const SERVICE_DETAIL_WHY_ADDACT_FIELDS = `
     }
     GlobalCard {
       ... on ComponentBaseTemplatePromo {
-        Description
-        Image {
-          ...ImageFields
-        }
-        Title
+        ${TITLE_DESCRIPTION_IMAGE_FIELDS}
       }
     }
   }

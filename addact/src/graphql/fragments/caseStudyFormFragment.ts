@@ -1,9 +1,8 @@
+import { FORM_BASIC_LABELS_FIELDS } from "./contactUsFormLabelsFragment";
+
 export const CASE_STUDY_FORM_FIELDS = `
   FormFields {
-    NameLable
-    EmailLabel
-    PhoneLabel
-    ButtonLabel
-    RecipientEmails
+    ${FORM_BASIC_LABELS_FIELDS}
   }
 `;
+

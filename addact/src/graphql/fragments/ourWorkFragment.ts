@@ -1,3 +1,5 @@
+import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
+
 export const OUR_WORK_FIELDS = `
   ourWork {
     serviceTitle
@@ -8,14 +10,7 @@ export const OUR_WORK_FIELDS = `
     serviceList {
       listingContext {
         id
-        title
-        description
-        image {
-          ...ImageFields
-        }
-        link {
-          ...LinkFields
-        }
+        ${AI_LISTING_CONTEXT_FIELDS}
       }
       tagLine {
         Title

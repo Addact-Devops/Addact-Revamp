@@ -1,3 +1,5 @@
+import { BLOG_HERO_BANNER_INNER_FIELDS } from "./blogHeroBannerFragment";
+
 export const PROJECT_HIGHLIGHTS_FIELDS = `
   ProjectHighlights {
     Title
@@ -5,14 +7,11 @@ export const PROJECT_HIGHLIGHTS_FIELDS = `
       Slug
       HeroBanner {
         ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          PublishDate
-          BannerImage {
-            ...ImageFields
-          }
+          ${BLOG_HERO_BANNER_INNER_FIELDS}
         }
       }
     }
   }
 `;
+
 

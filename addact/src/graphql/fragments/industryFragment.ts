@@ -1,16 +1,12 @@
+import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
+
 export const INDUSTRY_FIELDS = `
   industryListTitle
   industry_list {
     Slug
     listingContext {
-      title
-      description
-      image {
-        ...ImageFields
-      }
-      link {
-        ...LinkFields
-      }
+      ${AI_LISTING_CONTEXT_FIELDS}
     }
   }
 `;
+
