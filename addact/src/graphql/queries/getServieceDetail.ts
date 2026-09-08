@@ -99,10 +99,13 @@ export interface CONTACTUS {
   }[];
 }
 export interface CTA2 {
-  CTADescription: string;
-  CTAImage: Image;
-  CTALink: Link;
-  Title: Heading[];
+  CtaDescription?: string;
+  CtaImage?: Image;
+  CtaLink?: Link;
+  CtaTitle?: string;
+  CTAImage?: Image;
+  CTALink?: Link;
+  Title?: Heading[];
 }
 
 export interface WhyAddact {

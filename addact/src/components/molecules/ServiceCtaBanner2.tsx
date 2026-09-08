@@ -7,13 +7,13 @@ interface IProps {
 }
 
 const ServiceCtaBanner2 = ({ data }: IProps) => {
-  const backgroundImage = `url(${data?.CTAImage?.url || ""})`;
+  const backgroundImage = `url(${data?.CTAImage?.url || data?.CtaImage?.url || ""})`;
 
-  const cta = data?.CTALink;
+  const cta = data?.CTALink || data?.CtaLink;
   const href = cta?.href || "#";
   const label = cta?.label || "";
   const target = cta?.isExternal ? "_blank" : "_self";
-  const headingText = data?.Title?.[0]?.h2 || data?.Title?.[0]?.h1 || data?.Title?.[0]?.h3 || "";
+  const headingText = data?.Title?.[0]?.h2 || data?.Title?.[0]?.h1 || data?.Title?.[0]?.h3 || data?.CtaTitle || "";
 
   return (
     <section data-ref="cta-banner2">

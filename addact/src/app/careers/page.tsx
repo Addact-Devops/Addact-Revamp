@@ -8,6 +8,9 @@ import { generatePageMetadata } from "@/utils/generatePageMetadata";
 import { fetchSinglePage } from "@/utils/fetchSinglePage";
 import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
+export const revalidate = 10;
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata() {
   return generatePageMetadata("careers");
 }
