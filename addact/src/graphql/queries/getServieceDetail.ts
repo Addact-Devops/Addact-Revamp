@@ -316,10 +316,13 @@ export interface CONTACTUS {
   }[];
 }
 export interface CTA2 {
-  CtaDescription: string;
-  CtaImage: Image;
-  CtaLink: Link;
-  CtaTitle: string;
+  CtaDescription?: string;
+  CtaImage?: Image;
+  CtaLink?: Link;
+  CtaTitle?: string;
+  CTAImage?: Image;
+  CTALink?: Link;
+  Title?: Heading[];
 }
 
 export interface WhyAddact {
