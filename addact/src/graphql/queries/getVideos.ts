@@ -6,51 +6,10 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
 import { VIDEO_BANNER_FIELDS } from "../fragments/videoBannerFragment";
-import { VIDEO_LIST_FIELDS } from "../fragments/videoListFragment";
+import { VIDEO_LIST_FIELDS, type VideoPageResponse } from "../fragments/videoListFragment";
+
+export type { VideoContentType, VideoPageResponse } from "../fragments/videoListFragment";
 import client from "../client";
-
-// -----------------------------
-// ✅ Types
-// -----------------------------
-
-export type VideoBannerType = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  };
-};
-
-export type VideoContentType = {
-  Content: {
-    Title: string;
-    Description: string;
-    Link: {
-      isExternal: boolean;
-      href: string;
-      label: string;
-    };
-  };
-  Iframe: {
-    Richtext: string;
-  };
-};
-
-export type VideoPageResponse = {
-  videoListing: {
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    };
-    banner: {
-      Banner: VideoBannerType[];
-    };
-    VideoList: VideoContentType[];
-  };
-};
 
 // -----------------------------
 // ✅ GraphQL Query

@@ -13,4 +13,20 @@ export const EVENT_CONTACT_US_CARD_FIELDS = `
   }
 `;
 
+export type EventContactUsCardItem = {
+  ButtonLabel: string;
+  CompanyName: string;
+  EmailLabel: string;
+  NameLable: string;
+  RequirementsLabel: string;
+  RecipientEmails: string;
+  PhoneLabel: string;
+  Form: {
+    Title: string;
+    Description: string;
+  }[];
+};
 
+export type EventContactUsCardType = {
+  contact_us_card: EventContactUsCardItem;
+};

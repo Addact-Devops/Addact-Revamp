@@ -13,13 +13,20 @@ import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescripti
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
 import { BANNER_SECTION_FIELDS } from "../fragments/bannerSectionFragment";
 import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
-import { CHALLENGES_FIELDS } from "../fragments/challengesFragment";
+import {
+  CHALLENGES_FIELDS,
+  type Challenges,
+  type ChallengeError,
+  type ChallengeProcessDataItem,
+} from "../fragments/challengesFragment";
+export type { Challenges, ChallengeError, ChallengeProcessDataItem };
 import { DESIGN_FLOW_FIELDS } from "../fragments/designFlowFragment";
 import { IMPACT_UX_FIELDS } from "../fragments/impactUxFragment";
 import { OUR_WORK_FIELDS } from "../fragments/ourWorkFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
 import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
 import { DEV_SLUG_OUR_SERVICE_FIELDS } from "../fragments/devSlugOurServiceFragment";
+export type { DevSlugOurServiceType } from "../fragments/devSlugOurServiceFragment";
 import { DEV_SLUG_UI_UX_OUR_SERVICE_FIELDS } from "../fragments/devSlugUiUxOurServiceFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
@@ -279,29 +286,6 @@ export interface ProcessDataItem {
   Description: string;
 }
 
-export interface Challenges {
-  Title: (Heading | ChallengeError)[];
-  ProcessData: ChallengeProcessDataItem[];
-}
-
-export interface ChallengeError {
-  code: string;
-  message: string;
-}
-
-export interface ChallengeProcessDataItem {
-  Title: string;
-  Description: string;
-  Link: {
-    id: string;
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-    SubDisc: string | null;
-    Icon: Image | null;
-  } | null;
-}
 
 export interface DesignFlow {
   title: string;

@@ -3,10 +3,10 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
-import { BLOGS_PAGE_HEADING_FIELDS } from "../fragments/blogsPageHeadingFragment";
-import { BLOG_PAGE_BANNER_FIELDS } from "../fragments/blogPageBannerFragment";
-import { BLOG_CARD_FIELDS } from "../fragments/blogCardFragment";
-import { BLOG_CATEGORIES_FIELDS } from "../fragments/blogCategoriesFragment";
+import { BLOGS_PAGE_HEADING_FIELDS, type BlogsPageHeadingType } from "../fragments/blogsPageHeadingFragment";
+import { BLOG_PAGE_BANNER_FIELDS, type BlogPageBannerType } from "../fragments/blogPageBannerFragment";
+import { BLOG_CARD_FIELDS, type BlogCardItem } from "../fragments/blogCardFragment";
+import { BLOG_CATEGORIES_FIELDS, type BlogCategoriesType } from "../fragments/blogCategoriesFragment";
 import client from "../client";
 
 const GET_ALL_BLOGS = gql`
@@ -30,74 +30,11 @@ const GET_ALL_BLOGS = gql`
 
 type AddactBlogsResponse = {
   blogs: {
-    PageHeading?: {
-      id: string;
-      PageTitle?: string;
-      Slug?: string;
-    };
-    blogBanner?: {
-      Banner: {
-        id?: string;
-        BannerTitle?: string;
-        BannerDescription?: string;
-        BannerImage?: {
-          width: number;
-          url: string;
-          name: string;
-          height: number;
-        };
-        show_searchbox?: boolean;
-        code?: string;
-        message?: string;
-      }[];
-    };
+    PageHeading?: BlogsPageHeadingType["PageHeading"];
+    blogBanner?: BlogPageBannerType["blogBanner"];
   };
-  addactBlogs: {
-    Slug: string;
-    documentId: string;
-    HeadingSection?: {
-      PageTitle?: string;
-    }[];
-    BlogBanner?: {
-      BannerTitle?: string;
-      BannerDescription?: string;
-      BannerImage?: {
-        url: string;
-        width: number;
-        height: number;
-        name: string;
-        alternativeText?: string;
-      };
-      PublishDate?: string;
-      author?: {
-        Author?: {
-          AuthorName?: string;
-        };
-      };
-      ReadNow?: {
-        id?: string;
-        href?: string;
-        label?: string;
-        target?: string;
-        isExternal?: boolean;
-      };
-      blogcategory?: {
-        Category?: {
-          CategoryTitle?: string;
-        };
-      };
-    }[];
-    blog_category?: {
-      Category?: {
-        CategoryTitle?: string;
-      };
-    };
-  }[];
-  blogCategories: {
-    Category: {
-      CategoryTitle: string;
-    };
-  }[];
+  addactBlogs: BlogCardItem[];
+  blogCategories: BlogCategoriesType["blogCategories"];
 };
 
 type InitialDataResponse = Omit<AddactBlogsResponse, "addactBlogs"> & {

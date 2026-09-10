@@ -10,12 +10,12 @@ import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
 import { EVENT_HEADING_SECTION_FIELDS } from "../fragments/eventHeadingSectionFragment";
 import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFieldsFragment";
-import { BLOG_CONTENT_FIELDS } from "../fragments/blogContentFragment";
-import { BLOG_AUTHOR_FIELDS } from "../fragments/blogAuthorFragment";
-import { BLOG_SIMILAR_STORY_TITLE_FIELDS } from "../fragments/blogSimilarStoryTitleFragment";
-import { BLOG_SIMILAR_BLOGS_FIELDS } from "../fragments/blogSimilarBlogsFragment";
-import { BLOG_SOCIAL_ICONS_FIELDS } from "../fragments/blogSocialIconsFragment";
-import { BLOG_CONTACT_CARD_FIELDS } from "../fragments/blogContactCardFragment";
+import { BLOG_CONTENT_FIELDS, type BlogContentType } from "../fragments/blogContentFragment";
+import { BLOG_AUTHOR_FIELDS, type BlogAuthorType } from "../fragments/blogAuthorFragment";
+import { BLOG_SIMILAR_STORY_TITLE_FIELDS, type BlogSimilarStoryTitleType } from "../fragments/blogSimilarStoryTitleFragment";
+import { BLOG_SIMILAR_BLOGS_FIELDS, type BlogSimilarBlogsType } from "../fragments/blogSimilarBlogsFragment";
+import { BLOG_SOCIAL_ICONS_FIELDS, type BlogSocialIconsType } from "../fragments/blogSocialIconsFragment";
+import { BLOG_CONTACT_CARD_FIELDS, type BlogContactCardType } from "../fragments/blogContactCardFragment";
 import client from "../client";
 
 const GET_BLOG_BY_SLUG = gql`
@@ -95,135 +95,17 @@ export type BlogBySlugResponse = {
       blogcategory?: { Category?: { CategoryTitle?: string } };
     }[];
 
-    BlogContent?: {
-      id?: string;
-      Richtext?: string;
-      h1?: string;
-      h2?: string;
-      h3?: string;
-      h4?: string;
-      h5?: string;
-      h6?: string;
-      href?: string;
-      label?: string;
-      target?: string;
-      isExternal?: boolean;
-      Image?: {
-        alternativeText?: string;
-        name?: string;
-        height?: number;
-        url?: string;
-        width?: number;
-      };
-    }[];
+    BlogContent?: BlogContentType["BlogContent"];
 
-    author?: {
-      Author?: {
-        AuthorName?: string;
-        AuthorDescription?: string;
-        AuthorImage?: {
-          alternativeText?: string;
-          height?: number;
-          width?: number;
-          url?: string;
-          name?: string;
-        };
-        designation?: { DesignationTitle?: string };
-      };
-    };
+    author?: BlogAuthorType["author"];
 
-    similarstorytitle?: {
-      CommonTitle?: {
-        Title?: string;
-        Description?: string;
-      }[];
-    };
+    similarstorytitle?: BlogSimilarStoryTitleType["similarstorytitle"];
 
-    similarBlogs?: {
-      BlogBanner?: {
-        BannerTitle?: string;
-        PublishDate?: string;
-        BannerImage?: {
-          alternativeText?: string;
-          name?: string;
-          url?: string;
-          width?: number;
-          height?: number;
-        };
-        ReadNow?: {
-          id?: string;
-          href?: string;
-          label?: string;
-          target?: string;
-          isExternal?: boolean;
-        };
-        author?: {
-          Author?: {
-            AuthorName?: string;
-          };
-        };
-        blogcategory?: {
-          Category?: {
-            CategoryTitle?: string;
-          };
-        };
-      }[];
-    }[];
+    similarBlogs?: BlogSimilarBlogsType["similarBlogs"];
 
-    socialicons?: {
-      SocialIcon?: {
-        Title?: string;
-        ClassName?: string;
-        Links?: {
-          id?: string;
-          href?: string;
-          label?: string;
-          target?: string;
-          isExternal?: boolean;
-        }[];
-        Icons?: {
-          alternativeText?: string;
-          name?: string;
-          height?: number;
-          url?: string;
-          width?: number;
-        };
-        HoverIcon?: {
-          alternativeText?: string;
-          name?: string;
-          height?: number;
-          url?: string;
-          width?: number;
-        };
-      }[];
-    };
+    socialicons?: BlogSocialIconsType["socialicons"];
 
-    contactCard?: {
-      documentId?: string;
-      pageReference?: string;
-      createdAt?: string;
-      updatedAt?: string;
-      publishedAt?: string;
-      ContactCard?: {
-        id?: string;
-        CardTitle?: string;
-        CardDescription?: string;
-        CardLink?: {
-          id?: string;
-          href?: string;
-          label?: string;
-          target?: string;
-          isExternal?: boolean;
-        };
-        BgImage?: {
-          width?: number;
-          url?: string;
-          name?: string;
-          height?: number;
-          alternativeText?: string;
-        };
-      }[];
-    };
+    contactCard?: BlogContactCardType["contactCard"];
   }[];
 };
 

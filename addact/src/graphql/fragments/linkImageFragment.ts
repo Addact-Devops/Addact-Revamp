@@ -1,6 +1,5 @@
 import { gql } from "graphql-request";
-
-
+import { Image, Link } from "@/types/common";
 
 export const LINK_IMAGE_FRAGMENT = gql`
   fragment LinkImageFields on ComponentBaseTemplateLinkImage {
@@ -17,3 +16,12 @@ export const LINK_IMAGE_FRAGMENT = gql`
     }
   }
 `;
+
+export type LinkImageItem = {
+  id?: string;
+  Title: string;
+  ClassName?: string;
+  Links: Link;
+  Icons: Image;
+  HoverIcon?: Image | null;
+};

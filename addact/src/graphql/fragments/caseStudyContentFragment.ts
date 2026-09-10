@@ -11,3 +11,14 @@ export const CASE_STUDY_CONTENT_FIELDS = `
     ${BLOG_CONTENT_ERROR_FIELDS}
   }
 `;
+
+export type CaseStudyContentItem = {
+  id: string;
+  h2?: string;
+  Richtext?: string;
+  h3?: string;
+};
+
+export type CaseStudyContentType = {
+  CaseStudyContent: CaseStudyContentItem[];
+};

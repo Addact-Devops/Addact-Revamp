@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
-
-
+// Re-using OurServiceList and ServiceListItem from developmentDesignListingFragment to avoid duplicate type definitions
+import { type OurServiceList, type ServiceListItem } from "./developmentDesignListingFragment";
 
 export const SITECORE_LISTING_FRAGMENT = gql`
   fragment SitecoreListingFields on ComponentHomeSitecoreListing {
@@ -25,3 +25,8 @@ export const SITECORE_LISTING_FRAGMENT = gql`
     }
   }
 `;
+
+export type { OurServiceList, ServiceListItem };
+
+export type SitecoreListingType = OurServiceList;
+

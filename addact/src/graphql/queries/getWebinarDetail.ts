@@ -7,8 +7,8 @@ import { Heading, Image } from "@/types/common";
 import { SEO_FIELDS } from "../fragments/seoFragment";
 import { WEBINAR_HERO_BANNER_FIELDS } from "../fragments/webinarHeroBannerFragment";
 import { WEBINAR_CONTENT_FIELDS } from "../fragments/webinarContentFragment";
-import { WEBINAR_SPEAKERS_FIELDS } from "../fragments/webinarSpeakersFragment";
-import { WEBINAR_HOST_FIELDS } from "../fragments/webinarHostFragment";
+import { WEBINAR_SPEAKERS_FIELDS, type WebinarSpeakersType } from "../fragments/webinarSpeakersFragment";
+import { WEBINAR_HOST_FIELDS, type WebinarAuthorType } from "../fragments/webinarHostFragment";
 
 const GET_WEBINAR_DETAIL_PAGE = gql`
   ${IMAGE_FRAGMENT}
@@ -52,24 +52,8 @@ export interface WebinarDetailResponse {
       };
     }[];
     WebinarContent: Heading[];
-    Speakers: {
-      Author: {
-        AuthorImage: Image;
-        AuthorName: string;
-        designation: {
-          DesignationTitle: string;
-        };
-      };
-    }[];
-    Host: {
-      Author: {
-        AuthorImage: Image;
-        AuthorName: string;
-        designation: {
-          DesignationTitle: string;
-        };
-      };
-    }[];
+    Speakers: WebinarSpeakersType["Speakers"];
+    Host: WebinarAuthorType[];
   }[];
 }
 

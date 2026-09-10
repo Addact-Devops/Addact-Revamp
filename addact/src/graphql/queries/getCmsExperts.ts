@@ -2,7 +2,7 @@ import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
+import { LINK_IMAGE_FRAGMENT, type LinkImageItem } from "../fragments/linkImageFragment";
 import client from "../client";
 
 const GET_CMS_EXPERTISE = gql`
@@ -23,24 +23,7 @@ const GET_CMS_EXPERTISE = gql`
 `;
 
 export interface OurExpertise {
-  CMS: {
-    Icons: {
-      alternativeText: string;
-      height: number;
-      name: string;
-      url: string;
-      width: number;
-    };
-    Links: {
-      id: string;
-      href: string;
-      label: string;
-      target: string;
-      isExternal: boolean;
-    };
-    Title: string;
-    id: string;
-  }[];
+  CMS: LinkImageItem[];
   ExpertiseTitle: {
     Description: string;
     Title: string;

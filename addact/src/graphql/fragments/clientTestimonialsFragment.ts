@@ -1,4 +1,4 @@
-import { CLIENT_TESTIMONIALS_ITEM_FIELDS } from "./clientTestimonialsItemFragment";
+import { CLIENT_TESTIMONIALS_ITEM_FIELDS, type TestimonialItem } from "./clientTestimonialsItemFragment";
 
 export const CLIENT_TESTIMONIALS_FIELDS = `
   clientTestimonials {
@@ -11,3 +11,20 @@ export const CLIENT_TESTIMONIALS_FIELDS = `
     }
   }
 `;
+
+export type ClientTestimonialItem = {
+  Title: string;
+  Item: TestimonialItem[];
+  bgText: string;
+  rating: string;
+  ratingImage: {
+    alternativeText: string;
+    height: number;
+    url: string;
+    width: number;
+  };
+};
+
+export type ClientTestimonialResponse = {
+  clientTestimonials: ClientTestimonialItem[];
+};

@@ -4,18 +4,31 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { BASE_HEADING_FRAGMENT } from "../fragments/baseHeadingFragment";
-import { HOME_BANNER_FRAGMENT } from "../fragments/homeBannerFragment";
-import { HOME_SERVICES_FRAGMENT } from "../fragments/homeServicesFragment";
-import { HOME_CONTACT_US_FRAGMENT } from "../fragments/homeContactUsFragment";
-import { HOME_WHY_ADDACT_FRAGMENT } from "../fragments/homeWhyAddactFragment";
-import { HOME_GLOBE_ANIMATION_FRAGMENT } from "../fragments/homeGlobeAnimationFragment";
-import { HOME_ANIMATION_BANNER_FRAGMENT } from "../fragments/homeAnimationBannerFragment";
-import { HOME_CAPABILITIES_FRAGMENT } from "../fragments/homeCapabilitiesFragment";
-import { HOME_AI_ECO_SYSTEM_FRAGMENT } from "../fragments/homeAiEcoSystemFragment";
-import { HOME_WHO_ARE_WE_FRAGMENT } from "../fragments/homeWhoAreWeFragment";
-import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
-import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
+import { HOME_BANNER_FRAGMENT, type BANNER } from "../fragments/homeBannerFragment";
+import { HOME_SERVICES_FRAGMENT, type OURSERVICES } from "../fragments/homeServicesFragment";
+
+export type { BANNER } from "../fragments/homeBannerFragment";
+export type { OURSERVICES } from "../fragments/homeServicesFragment";
+export type { CONTACTUS } from "../fragments/homeContactUsFragment";
+export type { Whyaddact } from "../fragments/homeWhyAddactFragment";
+export type { GloabeAnimation } from "../fragments/homeGlobeAnimationFragment";
+export type { AnimationBanner } from "../fragments/homeAnimationBannerFragment";
+export type { LinkWithIcon, OurCapabilitiy } from "../fragments/homeCapabilitiesFragment";
+export type { AIEcoSystem } from "../fragments/homeAiEcoSystemFragment";
+export type { Industry, IndustryListItem } from "../fragments/industryFragment";
+export type { WhoAreWe } from "../fragments/homeWhoAreWeFragment";
+export type { OurProcessDetails as OurProcessData } from "../fragments/ourProcessFragment";
+export type { CTA } from "../fragments/ctaFragment";
+import { HOME_CONTACT_US_FRAGMENT, type CONTACTUS } from "../fragments/homeContactUsFragment";
+import { HOME_WHY_ADDACT_FRAGMENT, type Whyaddact } from "../fragments/homeWhyAddactFragment";
+import { HOME_GLOBE_ANIMATION_FRAGMENT, type GloabeAnimation } from "../fragments/homeGlobeAnimationFragment";
+import { HOME_ANIMATION_BANNER_FRAGMENT, type AnimationBanner } from "../fragments/homeAnimationBannerFragment";
+import { HOME_CAPABILITIES_FRAGMENT, type OurCapabilitiy } from "../fragments/homeCapabilitiesFragment";
+import { HOME_AI_ECO_SYSTEM_FRAGMENT, type AIEcoSystem } from "../fragments/homeAiEcoSystemFragment";
+import { HOME_WHO_ARE_WE_FRAGMENT, type WhoAreWe } from "../fragments/homeWhoAreWeFragment";
+import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
+import { OUR_PROCESS_FIELDS, type OurProcessDetails as OurProcessData } from "../fragments/ourProcessFragment";
+import { INDUSTRY_FIELDS, type Industry } from "../fragments/industryFragment";
 import client from "../client";
 
 const GET_HOME_PAGE = gql`
@@ -92,64 +105,6 @@ export interface Heading {
   h6?: string;
 }
 
-export interface CTA {
-  Title: Heading[];
-  CTAImage: {
-    Image: Image;
-    id?: string;
-  }[];
-  CTALink: Link[];
-  pageReference?: string;
-}
-
-export interface BANNER {
-  Banner: {
-    BannerTitle: string;
-    BannerDescription: string;
-    BannerImage: Image;
-    BannerLink: Link;
-  }[];
-}
-
-export interface OURSERVICES {
-  Title: Heading[];
-  GlobalCard: {
-    id: string;
-    Title: string;
-    Description: string;
-    Image: Image;
-    Link: Link;
-  }[];
-  documentId: string;
-  pageReference: string;
-}
-
-export interface CONTACTUS {
-  pageReference: string;
-  RecipientEmails: string;
-  Form: {
-    id: string;
-    Title: string;
-    Description: string;
-    Image: Image;
-    Link: Link;
-  }[];
-}
-
-export interface Whyaddact {
-  Title: Heading[];
-  pageReference?: string;
-  GlobalCard: GlobalCard2[];
-}
-
-export interface GlobalCard2 {
-  id?: string;
-  Title: string;
-  Description: string;
-  Image: Image;
-  Link?: Link | null;
-}
-
 export interface Faq {
   Title: string;
   FAQ: {
@@ -157,98 +112,6 @@ export interface Faq {
     Title: string;
     id?: string;
   }[];
-}
-export interface GloabeAnimation {
-  Title: string;
-  Locations: string;
-  Video: Image;
-}
-
-export interface OurProcessData {
-  Title: Heading[];
-  ProcessData: {
-    id: string;
-    Title: string;
-    Description: string;
-  }[];
-}
-
-export interface AnimationBanner {
-  animationTitle: string;
-  firstAnimationImage: Image;
-  secondAnimationImage: Image;
-  bannerTitle: string;
-  bannerDescription: string;
-  bannerSubTitle: {
-    Title: string;
-  }[];
-  bannerImage: Image;
-  bannerLink: {
-    Icon: Image | null;
-    SubDisc: string | null;
-    href: string;
-    id: string;
-    isExternal: boolean;
-    label: string;
-    target: string;
-  };
-}
-
-export interface LinkWithIcon {
-  id: string;
-  href: string;
-  label: string | null;
-  target: string;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Image | null;
-}
-
-export interface Capability {
-  title: string;
-  description: string;
-  link: LinkWithIcon;
-  image: Image;
-  sublinks: LinkWithIcon[];
-}
-
-export interface OurCapabilitiy {
-  heading: string;
-  capabilities: Capability[];
-}
-
-export interface LogoLayer {
-  tooltip?: string | null;
-  Image: Image;
-}
-
-export interface AIEcoSystemData {
-  title: string;
-  description: string;
-  tagLine: string;
-  firstImage: Image;
-  secondImage: Image;
-  firstLayerlogos: LogoLayer[];
-  secondLayerlogos: LogoLayer[];
-}
-
-export interface AIEcoSystem {
-  AIEcoSystem: AIEcoSystemData;
-}
-
-export interface Industry {
-  industryListTitle: string;
-  industry_list: IndustryListItem[];
-}
-
-export interface IndustryListItem {
-  Slug: string;
-  listingContext: {
-    title: string;
-    description: string;
-    image: Image | null;
-    link: LinkWithIcon | null;
-  } | null;
 }
 
 // Main interface
@@ -274,18 +137,7 @@ export interface HomeItems {
   ourCapabilitiy: OurCapabilitiy;
   aiEcoSystem: AIEcoSystem;
   industry?: Industry;
-  whoarewe: {
-    Counter: {
-      CounterTitle: string;
-      NumberCount: number;
-      id: string;
-    }[];
-    Title: {
-      Description: string;
-      Title: string;
-    }[];
-    pageReference: string;
-  };
+  whoarewe: WhoAreWe;
 }
 
 export interface HomeResponse {

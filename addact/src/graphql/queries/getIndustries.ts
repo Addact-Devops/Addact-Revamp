@@ -1,7 +1,8 @@
 import { gql } from "graphql-request";
 import client from "../client";
 import { INDUSTRIES_WE_SERVE_TITLE_FIELDS } from "../fragments/industriesTitleFragment";
-import { INDUSTRIES_WE_SERVE_LIST_FIELDS } from "../fragments/industriesListFragment";
+import { INDUSTRIES_WE_SERVE_LIST_FIELDS, type Industry } from "../fragments/industriesListFragment";
+export type { Industry } from "../fragments/industriesListFragment";
 
 const industries_Query = gql`
   query industriesWeServes {
@@ -15,27 +16,8 @@ export async function getIndustriesWeServe(): Promise<IndustriesResponse> {
   const data = await client.request<IndustriesResponse>(industries_Query);
   return data;
 }
-export type IndustryIcon = {
-  alternativeText?: string | null;
-  height: number;
-  name: string;
-  url: string;
-  width: number;
-};
+// IndustryIcon, IndustryLink, Industry types moved to industriesListFragment.ts
 
-export type IndustryLink = {
-  id: string;
-  href: string;
-  label: string;
-  target: string;
-  isExternal: boolean;
-};
-
-export type Industry = {
-  Icons: IndustryIcon | null;
-  LinkIcons: IndustryLink[];
-  Title: string;
-};
 
 export type IndustriesWeServeEntry = {
   TitleDescription: {

@@ -5,12 +5,11 @@ import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
-import { EVENT_BLOG_HERO_BANNER_FIELDS } from "../fragments/eventBlogHeroBannerFragment";
-import { EVENT_CONTENT_FIELDS } from "../fragments/eventContentFragment";
-import { EVENT_HEADING_SECTION_FIELDS } from "../fragments/eventHeadingSectionFragment";
-import { EVENT_CONTACT_US_CARD_FIELDS } from "../fragments/eventContactUsCardFragment";
+import { EVENT_BLOG_HERO_BANNER_FIELDS, type EventBlogHeroBannerType } from "../fragments/eventBlogHeroBannerFragment";
+import { EVENT_CONTENT_FIELDS, type EventContentType } from "../fragments/eventContentFragment";
+import { EVENT_HEADING_SECTION_FIELDS, type EventHeadingSectionType } from "../fragments/eventHeadingSectionFragment";
+import { EVENT_CONTACT_US_CARD_FIELDS, type EventContactUsCardType } from "../fragments/eventContactUsCardFragment";
 import client from "../client";
-import { Heading, Image } from "@/types/common";
 
 const GET_EVENT_DETAIL_PAGE = gql`
   ${LINK_FRAGMENT}
@@ -31,31 +30,7 @@ const GET_EVENT_DETAIL_PAGE = gql`
 `;
 
 export interface EventDetailResponse {
-  addactsEvents: {
-    EventBanner: {
-      BannerDescription: string;
-      BannerImage: Image;
-      BannerTitle: string;
-      PublishDate: string;
-      eventLocation: string;
-    }[];
-    EventContent: Heading[];
-    HeadingSection: {
-      PageTitle: string;
-    }[];
-    contact_us_card: {
-      ButtonLabel: string;
-      CompanyName: string;
-      EmailLabel: string;
-      NameLable: string;
-      RequirementsLabel: string;
-      RecipientEmails: string;
-      PhoneLabel: string;
-      Form: {
-        Title: string;
-        Description: string;
-      }[];
-    };
+  addactsEvents: (EventBlogHeroBannerType & EventContentType & EventHeadingSectionType & EventContactUsCardType & {
     SEO?: {
       metaTitle?: string;
       metaDescription?: string;
@@ -68,7 +43,7 @@ export interface EventDetailResponse {
       structuredData?: Record<string, unknown>;
       languageTag?: string;
     } | null;
-  }[];
+  })[];
 }
 
 export async function getEventDetailBySlug(slug: string): Promise<EventDetailResponse> {

@@ -7,3 +7,13 @@ export const BRAND_GUIDELINES_FORM_FIELDS = `
   }
 `;
 
+export type BrandGuidelinesFormFieldsItem = {
+  FromTitle: string;
+  FormFileds: {
+    NameLable: string;
+    EmailLabel: string;
+    PhoneLabel: string;
+    RecipientEmails: string;
+    ButtonLabel: string;
+  };
+};

@@ -14,7 +14,13 @@ import { BANNER_SECTION_FIELDS } from "../fragments/bannerSectionFragment";
 import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
 import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
 import { DM_SLUG_OUR_SERVICE_FIELDS } from "../fragments/dmSlugOurServiceFragment";
-import { CHALLENGES_FIELDS } from "../fragments/challengesFragment";
+import {
+  CHALLENGES_FIELDS,
+  type Challenges,
+  type ChallengeError,
+  type ChallengeProcessDataItem,
+} from "../fragments/challengesFragment";
+export type { Challenges, ChallengeError, ChallengeProcessDataItem };
 import { DESIGN_FLOW_FIELDS } from "../fragments/designFlowFragment";
 import { IMPACT_UX_FIELDS } from "../fragments/impactUxFragment";
 import { OUR_WORK_FIELDS } from "../fragments/ourWorkFragment";
@@ -311,29 +317,6 @@ export interface ProcessDataItem {
   Description: string;
 }
 
-export interface Challenges {
-  Title: (Heading | ChallengeError)[];
-  ProcessData: ChallengeProcessDataItem[];
-}
-
-export interface ChallengeError {
-  code: string;
-  message: string;
-}
-
-export interface ChallengeProcessDataItem {
-  Title: string;
-  Description: string;
-  Link: {
-    id: string;
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-    SubDisc: string | null;
-    Icon: Image | null;
-  } | null;
-}
 
 export interface DesignFlow {
   title: string;

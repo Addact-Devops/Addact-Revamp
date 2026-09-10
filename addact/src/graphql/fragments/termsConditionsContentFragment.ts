@@ -1,3 +1,5 @@
+import { PageHeadingType } from "./pageHeadingFragment";
+
 export const TERMS_CONDITIONS_CONTENT_FIELDS = `
   BodyContent {
     CommonTitle {
@@ -5,3 +7,15 @@ export const TERMS_CONDITIONS_CONTENT_FIELDS = `
     }
   }
 `;
+
+export type TermsConditionsData = {
+  termsConditions: {
+    PageHeading: PageHeadingType["PageHeading"];
+    BodyContent: {
+      CommonTitle: {
+        Title: string;
+        Description: string;
+      }[];
+    };
+  };
+};

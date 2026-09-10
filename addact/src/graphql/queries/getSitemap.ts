@@ -3,26 +3,7 @@ import client from "../client";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
-import { SITEMAP_BANNER_FIELDS } from "../fragments/sitemapBannerFragment";
-
-export type SitemapBannerType = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  } | null;
-};
-
-export type SitemapResponse = {
-  sitemap?: {
-    banner?: {
-      Banner?: SitemapBannerType[];
-    };
-  };
-};
+import { SITEMAP_BANNER_FIELDS, type SitemapBannerType, type SitemapResponse } from "../fragments/sitemapBannerFragment";
 
 const sitemapQuery = gql`
   ${LINK_FRAGMENT}

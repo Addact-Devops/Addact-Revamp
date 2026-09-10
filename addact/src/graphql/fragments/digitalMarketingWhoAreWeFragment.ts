@@ -13,3 +13,24 @@ export const DM_WHO_ARE_WE_FIELDS = `
     pageReference
   }
 `;
+
+export type CounterItem = {
+  CounterTitle: string;
+  NumberCount: number;
+  id: string;
+};
+
+export type TitleWithDescriptionItem = {
+  Description: string;
+  Title: string;
+};
+
+export type DigitalMarketingWhoAreWeData = {
+  Counter: CounterItem[];
+  Title: TitleWithDescriptionItem[];
+  pageReference: string;
+};
+
+export type DigitalMarketingWhoAreWeType = {
+  whoarewe: DigitalMarketingWhoAreWeData;
+};

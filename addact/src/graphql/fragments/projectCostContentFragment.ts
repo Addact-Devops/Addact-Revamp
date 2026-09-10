@@ -6,3 +6,7 @@ export const PROJECT_COST_CONTENT_FIELDS = `
   }
 `;
 
+export type ProjectCostEstimatorContentType = {
+  Title: string;
+  Description: string;
+};

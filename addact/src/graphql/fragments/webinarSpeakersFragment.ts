@@ -1,4 +1,4 @@
-import { WEBINAR_AUTHOR_FIELDS } from "./webinarHostFragment";
+import { WEBINAR_AUTHOR_FIELDS, type WebinarAuthorType } from "./webinarHostFragment";
 
 export const WEBINAR_SPEAKERS_FIELDS = `
   Speakers {
@@ -6,3 +6,6 @@ export const WEBINAR_SPEAKERS_FIELDS = `
   }
 `;
 
+export type WebinarSpeakersType = {
+  Speakers: WebinarAuthorType[];
+};

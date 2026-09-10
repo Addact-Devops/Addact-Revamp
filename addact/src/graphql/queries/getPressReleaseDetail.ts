@@ -6,10 +6,10 @@ import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
 import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
-import { PRESS_CONTENT_FIELDS } from "../fragments/pressContentFragment";
+import { PRESS_CONTENT_FIELDS, type PressContentType } from "../fragments/pressContentFragment";
 import { SOCIAL_ICONS_FIELDS } from "../fragments/socialIconsFragment";
 import client from "../client";
-import { Heading, Image, Link } from "@/types/common";
+import { Image, Link } from "@/types/common";
 
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
   ${LINK_FRAGMENT}
@@ -28,7 +28,7 @@ const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
 `;
 
 export interface PressReleaseDetailResponse {
-  addactPressReleases: {
+  addactPressReleases: (PressContentType & {
     SEO: {
       metaTitle: string | null;
       metaDescription: string | null;
@@ -46,7 +46,6 @@ export interface PressReleaseDetailResponse {
       BannerDescription: string;
       BannerImage: Image;
     }[];
-    PressContent: Heading[];
     social_icons: {
       SocialIcon: {
         Title: string;
@@ -55,7 +54,7 @@ export interface PressReleaseDetailResponse {
         HoverIcon: Image;
       }[];
     }[];
-  }[];
+  })[];
 }
 
 export async function getPressReleaseDetailBySlug(

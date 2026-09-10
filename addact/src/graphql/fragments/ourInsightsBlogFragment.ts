@@ -1,3 +1,4 @@
+import { Image, Link } from "@/types/common";
 import { BLOG_HERO_BANNER_INNER_FIELDS } from "./blogHeroBannerFragment";
 import { BLOG_HERO_BANNER_READ_NOW_FIELDS } from "./blogHeroBannerReadNowFragment";
 
@@ -18,3 +19,28 @@ export const OUR_INSIGHTS_BLOG_FIELDS = `
     }
   }
 `;
+
+export type BlogHeadingSection = {
+  PageTitle: string;
+};
+
+export type BlogBanner = {
+  id: string;
+  BannerImage: Image;
+  BannerDescription: string;
+  BannerTitle: string;
+  PublishDate: string;
+  ReadNow: Link;
+};
+
+export type AddactBlog = {
+  documentId: string;
+  Slug: string;
+  createdAt: string;
+  HeadingSection: BlogHeadingSection[];
+  BlogBanner: BlogBanner[];
+};
+
+export type OurInsightsBlogType = {
+  addactBlogs: AddactBlog[];
+};

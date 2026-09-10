@@ -6,3 +6,9 @@ export const GALLERY_TITLES_FRAGMENT = gql`
     SubTitle
   }
 `;
+
+export type GalleryTitlesType = {
+  Title?: string;
+  SubTitle?: string;
+};
+

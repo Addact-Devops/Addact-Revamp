@@ -1,5 +1,6 @@
 import { gql } from "graphql-request";
 import { TITLE_DESCRIPTION_LOWER_FIELDS } from "./titleDescriptionFragment";
+import { Image } from "@/types/common";
 
 export const HOME_AI_ECO_SYSTEM_FRAGMENT = gql`
   fragment HomeAiEcoSystemFields on Home {
@@ -29,4 +30,27 @@ export const HOME_AI_ECO_SYSTEM_FRAGMENT = gql`
     }
   }
 `;
+
+export type LogoLayer = {
+  tooltip?: string | null;
+  Image: Image;
+};
+
+export type AIEcoSystemData = {
+  title: string;
+  description: string;
+  tagLine: string;
+  firstImage: Image;
+  secondImage: Image;
+  firstLayerlogos: LogoLayer[];
+  secondLayerlogos: LogoLayer[];
+};
+
+export type AIEcoSystem = {
+  AIEcoSystem: AIEcoSystemData;
+};
+
+export type HomeAiEcoSystemType = {
+  aiEcoSystem: AIEcoSystem;
+};
 

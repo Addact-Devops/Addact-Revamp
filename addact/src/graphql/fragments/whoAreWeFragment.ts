@@ -13,3 +13,18 @@ export const WHO_ARE_WE_FIELDS = `
     pageReference
   }
 `;
+
+export type WhoAreWeResponse = {
+  whoAreWes: {
+    Counter: {
+      CounterTitle: string;
+      NumberCount: number;
+      id: string;
+    }[];
+    Title: {
+      Description: string;
+      Title: string;
+    }[];
+    pageReference: string;
+  }[];
+};

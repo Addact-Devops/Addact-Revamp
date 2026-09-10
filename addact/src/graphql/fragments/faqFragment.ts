@@ -7,14 +7,15 @@ export const FAQ_FIELDS = `
   }
 `;
 
-
 export type FAQItem = {
   id?: string;
   Title: string;
   Description: string;
 };
 
-export type FAQFragmentType = {
-  Title?: string;
+export type FAQ = {
+  Title: string;
   FAQ: FAQItem[];
 };
+
+export type FAQFragmentType = FAQ;

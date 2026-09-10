@@ -3,9 +3,9 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
-import { OUR_INSIGHTS_BLOG_FIELDS } from "../fragments/ourInsightsBlogFragment";
-import { OUR_INSIGHTS_CASE_STUDY_FIELDS } from "../fragments/ourInsightsCaseStudyFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import { OUR_INSIGHTS_BLOG_FIELDS, type AddactBlog } from "../fragments/ourInsightsBlogFragment";
+import { OUR_INSIGHTS_CASE_STUDY_FIELDS, type AddactCaseStudy } from "../fragments/ourInsightsCaseStudyFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS, type OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
 import client from "../client";
 
 const ourInsights_Query = gql`
@@ -18,58 +18,12 @@ const ourInsights_Query = gql`
   }
 `;
 
+export type { AddactBlog } from "../fragments/ourInsightsBlogFragment";
+export type { AddactCaseStudy } from "../fragments/ourInsightsCaseStudyFragment";
 
 export interface AddactBlogsAndCaseStudyResponse {
   addactBlogs: AddactBlog[];
   addactCaseStudies: AddactCaseStudy[];
-}
-
-export interface AddactBlog {
-  documentId: string;
-  Slug: string;
-  createdAt: string;
-  HeadingSection: BlogHeadingSection[];
-  BlogBanner: BlogBanner[];
-}
-
-export interface BlogHeadingSection {
-  PageTitle: string;
-}
-
-export interface BlogBanner {
-  id: string;
-  BannerImage: BannerImage;
-  BannerDescription: string;
-  BannerTitle: string;
-  PublishDate: string;
-  ReadNow: ReadNowLink;
-}
-export interface AddactCaseStudy {
-  ReferenceTitle: string;
-  HeroBanner: CaseStudyHeroBanner[];
-}
-
-export interface CaseStudyHeroBanner {
-  BannerImage: BannerImage;
-  BannerTitle: string;
-  ReadNow: ReadNowLink;
-  PublishDate: string;
-  BannerDescription: string;
-}
-export interface BannerImage {
-  width: number;
-  height: number;
-  url: string;
-  name: string;
-  alternativeText: string | null;
-}
-
-export interface ReadNowLink {
-  href: string;
-  id: string;
-  isExternal: boolean;
-  label: string;
-  target: string;
 }
 
 export async function getOurInsights(): Promise<AddactBlogsAndCaseStudyResponse> {
@@ -95,33 +49,6 @@ export interface HomeResponse {
 
 export interface HomeData {
   ourInshightsTitle: OurInsightsTitle;
-}
-
-export interface OurInsightsTitle {
-  CommonTitle: TitleWithDescription[];
-}
-
-export interface TitleWithDescription {
-  Title: string;
-  Description: string;
-  Link: Link;
-}
-
-export interface Link {
-  id: string;
-  href: string;
-  label: string;
-  target: string;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Icon | null;
-}
-
-export interface Icon {
-  alternativeText: string | null;
-  height: number;
-  url: string;
-  width: number;
 }
 
 export async function getHomeOurInsightsTitle(): Promise<HomeResponse> {

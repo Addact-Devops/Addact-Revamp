@@ -18,3 +18,37 @@ export const ABOUT_US_CTA_FIELDS = `
     }
   }
 `;
+
+export type CTAImageType = {
+  url: string;
+  alternativeText: string | null;
+  width: number | null;
+  height: number | null;
+};
+
+export type CTALinkType = {
+  label: string;
+  href: string;
+  target: string | null;
+  isExternal: boolean;
+};
+
+export type CtaTitle = { h1?: string } | { h2?: string } | { h3?: string };
+
+export type DescriptionNode = {
+  type: string;
+  children: { text: string }[];
+};
+
+export type CTAType = {
+  Title: CtaTitle[];
+  CTADescription: DescriptionNode[];
+  CTAImage: { Image: CTAImageType }[];
+  CTALink: CTALinkType[];
+};
+
+export type AboutUsCTAResponse = {
+  aboutUs: {
+    aboutUsCTA: CTAType;
+  };
+};

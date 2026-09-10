@@ -5,7 +5,8 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
+import { TECH_STACK_FIELDS, type TechStack } from "../fragments/techStackFragment";
+export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
@@ -16,7 +17,8 @@ import { OUR_SOLUTIONS_FIELDS } from "../fragments/ourSolutionsFragment";
 import { GLOBAL_CARD_FIELDS } from "../fragments/globalCardFragment";
 import { CLIENT_TESTIMONIAL_FIELDS } from "../fragments/clientTestimonialFragment";
 import { CONTACT_US_FIELDS } from "../fragments/contactUsFragment";
-import { PROJECT_HIGHLIGHTS_FIELDS } from "../fragments/projectHighlightsFragment";
+import { PROJECT_HIGHLIGHTS_FIELDS, type ProjectHighlightsType } from "../fragments/projectHighlightsFragment";
+
 import client from "../client";
 import { Heading, Image } from "./getHomePage";
 
@@ -74,23 +76,7 @@ const GET_INDUSTRY_SLUGS = gql`
 
 // -------------------- Types --------------------
 
-export interface TechStack {
-  title: string;
-  description: string;
-  tab: Tab[];
-}
 
-export interface Tab {
-  category: {
-    categoryTitle: string;
-  };
-  tabContent: TabContent[];
-}
-
-export interface TabContent {
-  title: string;
-  logo: Image | null;
-}
 
 export type IndustryDetail = {
   Slug: string;
@@ -258,23 +244,9 @@ export type IndustryDetail = {
     RecipientEmails?: string | null;
   } | null;
 
-  /** ✅ New type for ProjectHighlights */
-  ProjectHighlights?: {
-    Title?: string | null;
-    addact_case_studies?: Array<{
-      Slug?: string | null;
-      HeroBanner?: Array<{
-        BannerTitle?: string | null;
-        PublishDate?: string | null;
-        BannerImage?: {
-          url?: string | null;
-          alternativeText?: string | null;
-          width?: number | null;
-          height?: number | null;
-        } | null;
-      }> | null;
-    }> | null;
-  } | null;
+  /** ✅ Type for ProjectHighlights moved to projectHighlightsFragment */
+  ProjectHighlights?: ProjectHighlightsType["ProjectHighlights"];
+
 
   techStack?: TechStack | null;
 };

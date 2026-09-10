@@ -5,3 +5,14 @@ export const BLOG_CATEGORIES_FIELDS = `
     ${CATEGORY_INNER_FIELDS}
   }
 `;
+
+export type BlogCategoryItem = {
+  Category: {
+    CategoryTitle: string;
+  };
+};
+
+export type BlogCategoriesType = {
+  blogCategories: BlogCategoryItem[];
+};
+

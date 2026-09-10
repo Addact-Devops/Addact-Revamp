@@ -1,3 +1,5 @@
+import { Image } from "@/types/common";
+
 export const PRESS_RELEASE_HERO_BANNER_FIELDS = `
   HeroBanner {
     Banner {
@@ -7,3 +9,13 @@ export const PRESS_RELEASE_HERO_BANNER_FIELDS = `
     }
   }
 `;
+
+export type PressReleaseHeroBannerType = {
+  HeroBanner: {
+    Banner: {
+      BannerDescription: string;
+      BannerTitle: string;
+      BannerImage: Image;
+    }[];
+  };
+};

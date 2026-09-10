@@ -2,34 +2,18 @@ import { gql } from "graphql-request";
 import client from "../client";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
-import { PROJECT_COST_BANNER_FIELDS } from "../fragments/projectCostBannerFragment";
-import { PROJECT_COST_CONTENT_FIELDS } from "../fragments/projectCostContentFragment";
+import { PROJECT_COST_BANNER_FIELDS, type ProjectCostEstimatorBannerType } from "../fragments/projectCostBannerFragment";
+export type { ProjectCostEstimatorBannerType } from "../fragments/projectCostBannerFragment";
+import { PROJECT_COST_CONTENT_FIELDS, type ProjectCostEstimatorContentType } from "../fragments/projectCostContentFragment";
+export type { ProjectCostEstimatorContentType } from "../fragments/projectCostContentFragment";
 
 // -----------------------------
 // ✅ Types
 // -----------------------------
 
-export type ProjectCostEstimatorBannerType = {
-  BannerImage?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  };
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerLogo?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  };
-};
+// ProjectCostEstimatorBannerType moved to projectCostBannerFragment.ts
 
-export type ProjectCostEstimatorContentType = {
-  Title: string;
-  Description: string;
-};
+// ProjectCostEstimatorContentType moved to projectCostContentFragment.ts
 
 export type ProjectCostEstimatorResponse = {
   projectCostEstimator: {

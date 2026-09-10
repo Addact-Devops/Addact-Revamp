@@ -12,3 +12,21 @@ export const BLOG_AUTHOR_FIELDS = `
     }
   }
 `;
+
+export type BlogAuthorType = {
+  author?: {
+    Author?: {
+      AuthorName?: string;
+      AuthorDescription?: string;
+      AuthorImage?: {
+        alternativeText?: string;
+        height?: number;
+        width?: number;
+        url?: string;
+        name?: string;
+      };
+      designation?: { DesignationTitle?: string };
+    };
+  };
+};
+

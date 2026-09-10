@@ -6,10 +6,13 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { CTA_FIELDS } from "../fragments/ctaFragment";
 import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
 import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
-import { AI_BENEFIT_FIELDS } from "../fragments/aiBenefitFragment";
-import { AI_SOLVE_PROBLEM_FIELDS } from "../fragments/aiSolveProblemFragment";
+import { AI_BENEFIT_FIELDS, type AIBenefit } from "../fragments/aiBenefitFragment";
+export type { AIBenefit } from "../fragments/aiBenefitFragment";
+import { AI_SOLVE_PROBLEM_FIELDS, type AISolveProblem } from "../fragments/aiSolveProblemFragment";
+export type { AISolveProblem } from "../fragments/aiSolveProblemFragment";
 import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
-import { AI_OUR_SERVICES_FRAGMENT } from "../fragments/aiOurServicesFragment";
+import { AI_OUR_SERVICES_FRAGMENT, type OurService } from "../fragments/aiOurServicesFragment";
+export type { OurService } from "../fragments/aiOurServicesFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { AI_BANNER_SECTION_FIELDS } from "../fragments/aiBannerSectionFragment";
 import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
@@ -175,46 +178,11 @@ export interface TabContent {
   logo: Image | null;
 }
 
-export interface AISolveProblem {
-  title: string;
-  aiSolveProblemList: {
-    list: {
-      title: string;
-      image: Image | null;
-      bgImage: Image | null;
-    };
-  }[];
-}
+// AISolveProblem type moved to aiSolveProblemFragment.ts
 
-export interface AIBenefit {
-  title: string;
-  serviceList: {
-    listingContext: {
-      title: string;
-      description: string;
-      image: Image;
-      link: LinkWithIcon;
-    };
-  }[];
-}
+// AIBenefit type moved to aiBenefitFragment.ts
 
-export interface OurService {
-  listingContext: {
-    title: string;
-    description: string;
-    image: Image;
-    link: LinkWithIcon;
-  };
-  serviceList: {
-    listingContext: {
-      id: string;
-      title: string;
-      description: string;
-      image: Image;
-      link: LinkWithIcon;
-    };
-  }[];
-}
+// OurService type moved to aiOurServicesFragment.ts
 
 export interface OurProcess {
   Title: Heading[];

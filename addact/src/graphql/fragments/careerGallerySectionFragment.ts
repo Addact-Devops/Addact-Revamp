@@ -5,3 +5,14 @@ export const CAREER_GALLERY_SECTION_FIELDS = `
     }
   }
 `;
+
+export type GallerySection = {
+  Title?: string;
+  SubTitle?: string;
+};
+
+export type CareerGallerySectionType = {
+  careers: {
+    Gallery?: GallerySection[];
+  };
+};

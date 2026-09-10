@@ -1,3 +1,4 @@
+import { Heading } from "@/types/common";
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 
 export const PRESS_CONTENT_FIELDS = `
@@ -9,3 +10,6 @@ export const PRESS_CONTENT_FIELDS = `
   }
 `;
 
+export type PressContentType = {
+  PressContent: Heading[];
+};

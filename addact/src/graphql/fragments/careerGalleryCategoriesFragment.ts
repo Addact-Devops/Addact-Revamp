@@ -9,3 +9,18 @@ export const CAREER_GALLERY_CATEGORIES_FIELDS = `
     }
   }
 `;
+
+export type GalleryCategory = {
+  Name: string;
+  Images: {
+    Image: {
+      url: string;
+      alternativeText: string | null;
+    };
+    Year: number | null;
+  }[];
+};
+
+export type CareerGalleryCategoriesType = {
+  galleryCategories: GalleryCategory[];
+};

@@ -5,3 +5,15 @@ export const BLOG_SIMILAR_STORY_TITLE_FIELDS = `
     }
   }
 `;
+
+export type BlogSimilarStoryTitleItem = {
+  Title?: string;
+  Description?: string;
+};
+
+export type BlogSimilarStoryTitleType = {
+  similarstorytitle?: {
+    CommonTitle?: BlogSimilarStoryTitleItem[];
+  };
+};
+

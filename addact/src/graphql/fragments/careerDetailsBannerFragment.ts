@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import { Image, Link } from "@/types/common";
 import { COMPONENT_BANNER_FIELDS } from "./componentBannerFieldsFragment";
 
 export const CAREER_DETAILS_BANNER_FRAGMENT = gql`
@@ -11,3 +12,14 @@ export const CAREER_DETAILS_BANNER_FRAGMENT = gql`
   }
 `;
 
+export type CareerDetailsBannerItem = {
+  BannerDescription: string;
+  BannerImage: Image;
+  BannerTitle: string;
+  show_searchbox: boolean;
+  BannerLink: Link;
+};
+
+export type CareerDetailsBannerType = {
+  Banner: CareerDetailsBannerItem[];
+};

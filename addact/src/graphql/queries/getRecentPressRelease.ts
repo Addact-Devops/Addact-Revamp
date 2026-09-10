@@ -1,7 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { Image } from "@/types/common";
-import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
+import { BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerItem } from "../fragments/blogHeroBannerFragment";
 
 const GET_RECENT_PRESS_RELEASE = gql`
   query Recentitem($pagination: PaginationArg, $sort: [String]) {
@@ -14,10 +13,7 @@ const GET_RECENT_PRESS_RELEASE = gql`
 
 export interface RecentPressRelease {
   addactPressReleases: {
-    HeroBanner: {
-      BannerTitle: string;
-      BannerImage: Image;
-    }[];
+    HeroBanner: BlogHeroBannerItem[];
     Slug: string;
   }[];
 }

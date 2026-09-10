@@ -3,10 +3,9 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import client from "../client";
-import { Image } from "@/types/common";
-import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
-import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
-import { WEBINAR_HERO_BANNER_FIELDS } from "../fragments/webinarHeroBannerFragment";
+import { PAGE_HERO_BANNER_FIELDS, type PageHeroBannerType } from "../fragments/pageHeroBannerFragment";
+import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
+import { WEBINAR_HERO_BANNER_FIELDS, type WebinarHeroBannerType } from "../fragments/webinarHeroBannerFragment";
 
 const GET_WEBINAR_LIST_PAGE = gql`
   ${IMAGE_FRAGMENT}
@@ -27,40 +26,11 @@ const GET_WEBINAR_LIST_PAGE = gql`
 `;
 
 export interface WebinarListResponse {
-  webinar: {
-    HeroBanner: {
-      Banner: {
-        BannerTitle: string;
-        BannerDescription: string;
-        BannerImage: Image;
-        ReadNow: {
-          id: string;
-          href: string;
-          label: string;
-          isExternal: boolean;
-        };
-      }[];
-    };
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    };
-  };
+  webinar: PageHeroBannerType & PageHeadingType;
   addactWebinars: {
     Slug: string;
     ReferenceTitle: string;
-    HeroBanner: {
-      BannerTitle: string;
-      BannerDescription: string;
-      BannerImage: Image;
-      PublishDate: string;
-      ReadNow: {
-        id: string;
-        href: string;
-        label: string;
-        isExternal: boolean;
-      };
-    }[];
+    HeroBanner: WebinarHeroBannerType["HeroBanner"];
     WebinarSummary: string;
   }[];
 }

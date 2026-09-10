@@ -25,3 +25,5 @@ export type SeoType = {
   structuredData?: string | Record<string, unknown> | null;
   languageTag?: string | null;
 };
+
+export type SEO = SeoType;

@@ -6,13 +6,15 @@ import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
-import { SERVICE_DETAIL_HERO_BANNER_FIELDS } from "../fragments/serviceDetailHeroBannerFragment";
+import { SERVICE_DETAIL_HERO_BANNER_FIELDS, type ServiceDetailHeroBanner } from "../fragments/serviceDetailHeroBannerFragment";
 import { SERVICE_DETAIL_OUR_SERVICE_FIELDS } from "../fragments/serviceDetailOurServiceFragment";
 import { SERVICE_DETAIL_WHY_ADDACT_FIELDS } from "../fragments/serviceDetailWhyAddactFragment";
 import { SERVICE_DETAIL_CTA_FIELDS } from "../fragments/serviceDetailCtaFragment";
 import { SERVICE_DETAIL_CONTACT_US_FIELDS } from "../fragments/serviceDetailContactUsFragment";
 import client from "../client";
 import { Heading, Image, Link } from "./getHomePage";
+
+export type { ServiceDetailHeroBanner } from "../fragments/serviceDetailHeroBannerFragment";
 
 const ServiceDetailBySlug = gql`
   ${IMAGE_FRAGMENT}
@@ -57,12 +59,7 @@ export interface SubServicePage {
     structuredData?: Record<string, unknown>;
     languageTag?: string;
   } | null;
-  HeroBanner: {
-    BannerTitle: string;
-    BannerDescription: string;
-    BannerImage: Image;
-    BannerLink: Link;
-  };
+  HeroBanner: ServiceDetailHeroBanner;
   our_process: OurProcessData;
   our_service: OurServiceData;
   why_addact: WhyAddact;

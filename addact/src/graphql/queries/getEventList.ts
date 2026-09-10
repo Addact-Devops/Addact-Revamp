@@ -1,11 +1,13 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { Image, Link } from "@/types/common";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
+import type { PageHeadingType } from "../fragments/pageHeadingFragment";
 import { EVENT_BANNER_FIELDS } from "../fragments/eventBannerFragment";
+import type { EventBannerType } from "../fragments/eventBannerFragment";
 import { EVENT_BLOG_HERO_BANNER_FIELDS } from "../fragments/eventBlogHeroBannerFragment";
+import type { EventBlogHeroBannerType } from "../fragments/eventBlogHeroBannerFragment";
 
 const GET_EVENT_LIST_PAGE = gql`
   ${IMAGE_FRAGMENT}
@@ -24,30 +26,13 @@ const GET_EVENT_LIST_PAGE = gql`
 `;
 
 export interface EventListResponse {
-  event: {
-    EventBanner: {
-      Banner: {
-        BannerDescription: string;
-        BannerImage: Image;
-        BannerLink: Link;
-        BannerTitle: string;
-      }[];
-    };
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    }[];
+  event: EventBannerType & {
+    PageHeading: PageHeadingType["PageHeading"][];
   };
-  addactsEvents: {
-    EventBanner: {
-      BannerImage: Image;
-      BannerTitle: string;
-      PublishDate: string;
-      eventLocation: string;
-    }[];
+  addactsEvents: (EventBlogHeroBannerType & {
     EventSummary: string;
     Slug: string;
-  }[];
+  })[];
 }
 
 export async function getEventListPageData(): Promise<EventListResponse> {

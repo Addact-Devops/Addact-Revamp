@@ -16,3 +16,13 @@ export const CAREER_DETAILS_JOB_DESC_FRAGMENT = gql`
     }
   }
 `;
+
+export type CareerDetailsJobDescItem = {
+  id: string;
+  Richtext?: string;
+  h2?: string;
+};
+
+export type CareerDetailsJobDescType = {
+  JobDescription: CareerDetailsJobDescItem[];
+};

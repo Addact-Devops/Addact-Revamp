@@ -5,3 +5,12 @@ export const BLOGS_PAGE_HEADING_FIELDS = `
     Slug
   }
 `;
+
+export type BlogsPageHeadingType = {
+  PageHeading?: {
+    id: string;
+    PageTitle?: string;
+    Slug?: string;
+  };
+};
+

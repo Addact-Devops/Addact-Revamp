@@ -7,3 +7,14 @@ export const VIDEO_BANNER_FIELDS = `
     }
   }
 `;
+
+export type VideoBannerType = {
+  BannerTitle?: string;
+  BannerDescription?: string;
+  BannerImage?: {
+    url?: string;
+    width?: number;
+    height?: number;
+    alternativeText?: string | null;
+  };
+};

@@ -1,3 +1,4 @@
+import { Heading } from "@/types/common";
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 import { EVENT_CONTENT_SHARED_LINK_FIELDS } from "./eventContentSharedLinkFragment";
 
@@ -9,3 +10,7 @@ export const EVENT_CONTENT_FIELDS = `
     ${EVENT_CONTENT_SHARED_LINK_FIELDS}
   }
 `;
+
+export type EventContentType = {
+  EventContent: Heading[];
+};

@@ -6,11 +6,11 @@ import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescripti
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
-import { EVENT_HEADING_SECTION_FIELDS } from "../fragments/eventHeadingSectionFragment";
-import { CASE_STUDY_HERO_BANNER_FIELDS } from "../fragments/caseStudyHeroBannerFragment";
-import { CASE_STUDY_CONTENT_FIELDS } from "../fragments/caseStudyContentFragment";
-import { CASE_STUDY_FORM_TITLE_FIELDS } from "../fragments/caseStudyFormTitleFragment";
-import { CASE_STUDY_PDF_FORM_FIELDS } from "../fragments/caseStudyPdfFormFieldsFragment";
+import { EVENT_HEADING_SECTION_FIELDS, type EventHeadingSectionType } from "../fragments/eventHeadingSectionFragment";
+import { CASE_STUDY_HERO_BANNER_FIELDS, type CaseStudyHeroBannerType } from "../fragments/caseStudyHeroBannerFragment";
+import { CASE_STUDY_CONTENT_FIELDS, type CaseStudyContentType } from "../fragments/caseStudyContentFragment";
+import { CASE_STUDY_FORM_TITLE_FIELDS, type CaseStudyFormTitleType } from "../fragments/caseStudyFormTitleFragment";
+import { CASE_STUDY_PDF_FORM_FIELDS, type CaseStudyPdfFormFieldsType } from "../fragments/caseStudyPdfFormFieldsFragment";
 import client from "../client";
 
 const GET_CASE_STUDY_BY_SLUG = gql`
@@ -34,7 +34,7 @@ const GET_CASE_STUDY_BY_SLUG = gql`
 `;
 
 export type CaseStudyBySlugResponse = {
-  addactCaseStudies: {
+  addactCaseStudies: (CaseStudyHeroBannerType & CaseStudyContentType & CaseStudyFormTitleType & EventHeadingSectionType & CaseStudyPdfFormFieldsType & {
     SEO: {
       metaTitle: string | null;
       metaDescription: string | null;
@@ -48,50 +48,7 @@ export type CaseStudyBySlugResponse = {
       languageTag: string | null;
     } | null;
     Slug: string;
-    HeadingSection: {
-      PageTitle: string;
-    }[];
-    HeroBanner: {
-      id: string;
-      BannerTitle: string;
-      BannerDescription: string;
-      PublishDate: string;
-      BannerImage: {
-        width: number;
-        name: string;
-        height: number;
-        url: string;
-      };
-      blogcategory: string;
-      author: string;
-      ReadNow: string;
-    }[];
-    CaseStudyContent: {
-      id: string;
-      h2?: string;
-      Richtext?: string;
-      h3?: string;
-    }[];
-    FormTitle: {
-      CommonTitle: {
-        Title: string;
-        Description: string;
-      }[];
-    };
-    CaseStudyPDF: {
-      url: string;
-      width: string;
-      name: string;
-      height: string;
-    };
-    FormFields: {
-      NameLable: string;
-      EmailLabel: string;
-      PhoneLabel: string;
-      ButtonLabel: string;
-      RecipientEmails: string;
-    };
-  }[];
+  })[];
 };
 
 export async function getCaseStudyBySlug(slug: string) {

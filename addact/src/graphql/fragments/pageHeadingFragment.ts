@@ -4,3 +4,11 @@ export const PAGE_HEADING_FIELDS = `
     Slug
   }
 `;
+
+export type PageHeadingType = {
+  PageHeading: {
+    PageTitle?: string;
+    Slug?: string;
+  };
+};
+

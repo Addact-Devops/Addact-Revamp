@@ -6,3 +6,12 @@ export const POSITIONS_TITLE_FIELDS = `
   }
 `;
 
+export type PositionsTitleData = {
+  Title?: string;
+  Description?: string;
+};
+
+export type PositionsTitleType = {
+  PositionsTitle: PositionsTitleData;
+};
+

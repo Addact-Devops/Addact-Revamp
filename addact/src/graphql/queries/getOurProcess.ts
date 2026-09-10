@@ -3,31 +3,8 @@ import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
-import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
-
-type Heading = {
-  h1?: string;
-  h2?: string;
-  h3?: string;
-  h4?: string;
-  h5?: string;
-  h6?: string;
-};
-
-type ProcessItem = {
-  id: string;
-  Title: string;
-  Description: string;
-};
-
-export type OurProcessData = {
-  home: {
-    ourprocess: {
-      Title: Heading[];
-      ProcessData: ProcessItem[];
-    };
-  };
-};
+import { OUR_PROCESS_FIELDS, type OurProcessData } from "../fragments/ourProcessFragment";
+export type { OurProcessData } from "../fragments/ourProcessFragment";
 
 export const getOurProcess = async (): Promise<OurProcessData> => {
   const query = gql`

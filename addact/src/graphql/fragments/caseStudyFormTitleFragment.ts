@@ -5,3 +5,14 @@ export const CASE_STUDY_FORM_TITLE_FIELDS = `
     }
   }
 `;
+
+export type CaseStudyFormTitleItem = {
+  Title: string;
+  Description: string;
+};
+
+export type CaseStudyFormTitleType = {
+  FormTitle: {
+    CommonTitle: CaseStudyFormTitleItem[];
+  };
+};

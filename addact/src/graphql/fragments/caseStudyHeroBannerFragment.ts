@@ -14,3 +14,23 @@ export const CASE_STUDY_HERO_BANNER_FIELDS = `
     }
   }
 `;
+
+export type CaseStudyHeroBannerItem = {
+  id: string;
+  BannerTitle: string;
+  BannerDescription: string;
+  PublishDate: string;
+  BannerImage: {
+    width: number;
+    name: string;
+    height: number;
+    url: string;
+  };
+  blogcategory: string;
+  author: string;
+  ReadNow: string;
+};
+
+export type CaseStudyHeroBannerType = {
+  HeroBanner: CaseStudyHeroBannerItem[];
+};
