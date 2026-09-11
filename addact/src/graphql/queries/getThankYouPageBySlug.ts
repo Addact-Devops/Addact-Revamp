@@ -2,9 +2,12 @@ import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { THANK_YOU_CONTENT_FIELDS } from "../fragments/thankYouContentFragment";
-import { THANK_YOU_ANIMATION_VIDEO_FIELDS } from "../fragments/thankYouAnimationVideoFragment";
+import { SEO_FIELDS, type SeoType as SEO, type ThankYouPageSEO } from "../fragments/seoFragment";
+export type { SEO, ThankYouPageSEO };
+import { THANK_YOU_CONTENT_FIELDS, type Content } from "../fragments/thankYouContentFragment";
+export type { Content };
+import { THANK_YOU_ANIMATION_VIDEO_FIELDS, type AnimationVideo } from "../fragments/thankYouAnimationVideoFragment";
+export type { AnimationVideo };
 import client from "../client";
 
 const GET_THANK_YOU_PAGE = gql`
@@ -24,39 +27,16 @@ const GET_THANK_YOU_PAGE = gql`
   }
 `;
 
-export interface ThankYouPageResponse {
-  thankyouPages: {
-    ReferenceTitle: string;
-    Slug: string;
-    Content: Content[];
-    AnimationVideo: {
-      alternativeText: string;
-      name: string;
-      url: string;
-    };
-    SEO?: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string;
-      ogDescription?: string;
-      ogImage?: { url?: string };
-      metaRobots?: string;
-      twitterCardTitle?: string;
-      canonicalURL?: string;
-      structuredData?: Record<string, unknown>;
-      languageTag?: string;
-    } | null;
-  }[];
+export interface ThankYouPageItem {
+  ReferenceTitle: string;
+  Slug: string;
+  Content: Content[];
+  AnimationVideo: AnimationVideo;
+  SEO?: ThankYouPageSEO | null;
 }
 
-export interface Content {
-  id: string;
-  h1?: string;
-  Richtext?: string;
-  href?: string;
-  label?: string;
-  target?: string;
-  isExternal?: boolean;
+export interface ThankYouPageResponse {
+  thankyouPages: ThankYouPageItem[];
 }
 
 export async function getThankYouPageBySlug(slug: string): Promise<ThankYouPageResponse> {

@@ -14,4 +14,21 @@ export const TITLE_DESCRIPTION_FIELDS = `
   Description
 `;
 
+export type TitleDescriptionType = {
+  Title?: string;
+  Description?: string;
+};
+
+export type TitleDescriptionLowerType = {
+  title?: string;
+  description?: string;
+};
+
+export type IdTitleDescriptionType = {
+  id?: string;
+  Title?: string;
+  Description?: string;
+};
+
+
 

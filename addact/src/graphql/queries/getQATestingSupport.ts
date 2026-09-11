@@ -24,8 +24,8 @@ import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle } from "../fragments/
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
 import { QA_OUR_SERVICE_FIELDS } from "../fragments/qaOurServiceFragment";
 export type { QaOurServiceType } from "../fragments/qaOurServiceFragment";
-import { SEO_FIELDS, type SEO } from "../fragments/seoFragment";
-export type { SEO } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
 
 const GET_PRESS_RELEASE_LIST_PAGE = gql`
   ${HEADING_FRAGMENT}

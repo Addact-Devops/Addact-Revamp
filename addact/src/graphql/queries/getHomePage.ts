@@ -3,7 +3,8 @@ import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { BASE_HEADING_FRAGMENT } from "../fragments/baseHeadingFragment";
+import { BASE_HEADING_FRAGMENT, type BaseHeading } from "../fragments/baseHeadingFragment";
+export type { BaseHeading };
 import { HOME_BANNER_FRAGMENT, type BANNER } from "../fragments/homeBannerFragment";
 import { HOME_SERVICES_FRAGMENT, type OURSERVICES } from "../fragments/homeServicesFragment";
 
@@ -77,54 +78,18 @@ const GET_HOME_PAGE = gql`
 `;
 
 // Reusable types
-export interface Image {
-  alternativeText: string | null;
-  height: number;
-  name?: string;
-  url: string;
-  width: number;
-}
+import type { ImageFragmentType as Image } from "../fragments/imageFragment";
+import type { LinkFragmentType as Link } from "../fragments/linkFragment";
+import type { HeadingFragmentType as Heading } from "../fragments/headingFragment";
+import type { FAQ as Faq } from "../fragments/faqFragment";
 
-export interface Link {
-  id: string;
-  href: string;
-  label: string | null;
-  target?: string | null;
-  isExternal: boolean;
-  SubDisc?: string | null;
-  Icon?: Image | null;
-}
-
-export interface Heading {
-  id?: string;
-  h1?: string;
-  h2?: string;
-  h3?: string;
-  h4?: string;
-  h5?: string;
-  h6?: string;
-}
-
-export interface Faq {
-  Title: string;
-  FAQ: {
-    Description: string;
-    Title: string;
-    id?: string;
-  }[];
-}
+export type { Image, Link, Heading, Faq };
 
 // Main interface
 export interface HomeItems {
   documentId: string;
-  PageHeading?: {
-    PageTitle: string;
-    Slug: string;
-  }[];
-  pageHeading: {
-    PageTitle: string;
-    Slug: string;
-  }[];
+  PageHeading?: BaseHeading[];
+  pageHeading: BaseHeading[];
   cta: CTA;
   banner: BANNER;
   ourprocess: OurProcessData;

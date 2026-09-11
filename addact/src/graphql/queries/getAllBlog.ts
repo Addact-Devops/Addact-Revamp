@@ -42,6 +42,16 @@ type InitialDataResponse = Omit<AddactBlogsResponse, "addactBlogs"> & {
   hasMore: boolean;
 };
 
+export type {
+  BlogsPageHeadingType,
+  BlogPageBannerType,
+  BlogCardItem,
+  BlogCategoriesType,
+  AddactBlogsResponse,
+  InitialDataResponse,
+};
+
+
 // Fetch initial page + metadata
 export async function getInitialBlogs(): Promise<InitialDataResponse> {
   const pageSize = 50;

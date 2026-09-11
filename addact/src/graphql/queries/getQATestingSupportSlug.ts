@@ -25,8 +25,8 @@ import { QA_SLUG_OUR_SERVICE_FIELDS } from "../fragments/qaSlugOurServiceFragmen
 export type { QaSlugOurServiceType } from "../fragments/qaSlugOurServiceFragment";
 import { type OurServiceList } from "../fragments/qaTestingListingFragment";
 export type { OurServiceList, ServiceListItem } from "../fragments/qaTestingListingFragment";
-import { SEO_FIELDS, type SEO } from "../fragments/seoFragment";
-export type { SEO } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
 
 const qaTestingSupportSlugQuery = gql`
   ${HEADING_FRAGMENT}

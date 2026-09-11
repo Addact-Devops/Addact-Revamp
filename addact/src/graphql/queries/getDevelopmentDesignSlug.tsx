@@ -1,18 +1,48 @@
-import { FAQ_FIELDS } from "../fragments/faqFragment";
+import { FAQ_FIELDS, type FAQ } from "../fragments/faqFragment";
+export type { FAQ };
 import { gql } from "graphql-request";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
-import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
-import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
+import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
+export type { CTA };
+import {
+  INDUSTRY_FIELDS,
+  type Industry,
+  type IndustryListItem,
+} from "../fragments/industryFragment";
+export type { Industry, IndustryListItem };
+import {
+  OUR_PROCESS_FIELDS,
+  type OurProcess,
+  type ProcessDataItem,
+  type LinkProps,
+} from "../fragments/ourProcessFragment";
+export type { OurProcess, ProcessDataItem, LinkProps };
+import {
+  TECH_STACK_FIELDS,
+  type TechStack,
+  type Tab,
+  type TabContent,
+} from "../fragments/techStackFragment";
+export type { TechStack, Tab, TabContent };
 import { UI_UX_LISTING_FRAGMENT } from "../fragments/uiUxListingFragment";
 import { CMS_LISTING_FRAGMENT } from "../fragments/cmsListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
-import { BANNER_SECTION_FIELDS } from "../fragments/bannerSectionFragment";
-import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
+import {
+  BANNER_SECTION_FIELDS,
+  type BannerSection,
+  type BannerItem,
+  type BannerLink,
+} from "../fragments/bannerSectionFragment";
+export type { BannerSection, BannerItem, BannerLink };
+import {
+  WHY_ADDACT_FIELDS,
+  type Whyaddact,
+  type GlobalCard2,
+} from "../fragments/whyAddactFragment";
+export type { Whyaddact, GlobalCard2 };
 import {
   CHALLENGES_FIELDS,
   type Challenges,
@@ -20,16 +50,35 @@ import {
   type ChallengeProcessDataItem,
 } from "../fragments/challengesFragment";
 export type { Challenges, ChallengeError, ChallengeProcessDataItem };
-import { DESIGN_FLOW_FIELDS } from "../fragments/designFlowFragment";
-import { IMPACT_UX_FIELDS } from "../fragments/impactUxFragment";
-import { OUR_WORK_FIELDS } from "../fragments/ourWorkFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import {
+  DESIGN_FLOW_FIELDS,
+  type DesignFlow,
+  type DesignFlowTab,
+  type DesignFlowItem,
+} from "../fragments/designFlowFragment";
+export type { DesignFlow, DesignFlowTab, DesignFlowItem };
+import { IMPACT_UX_FIELDS, type ImpactUx } from "../fragments/impactUxFragment";
+export type { ImpactUx };
+import {
+  OUR_WORK_FIELDS,
+  type OurWork,
+  type OurWorkServiceListItem,
+} from "../fragments/ourWorkFragment";
+export type { OurWork, OurWorkServiceListItem };
+import { SEO_FIELDS, type SEO } from "../fragments/seoFragment";
+export type { SEO };
+import {
+  OUR_INSIGHTS_TITLE_FIELDS,
+  type OurInshightsTitle,
+  type OurInsightsTitle,
+} from "../fragments/ourInsightsTitleFragment";
+export type { OurInshightsTitle, OurInsightsTitle };
 import { DEV_SLUG_OUR_SERVICE_FIELDS } from "../fragments/devSlugOurServiceFragment";
 export type { DevSlugOurServiceType } from "../fragments/devSlugOurServiceFragment";
+import type { OurServiceList, ServiceListItem } from "../fragments/developmentDesignListingFragment";
+export type { OurServiceList, ServiceListItem };
 import { DEV_SLUG_UI_UX_OUR_SERVICE_FIELDS } from "../fragments/devSlugUiUxOurServiceFragment";
 import client from "../client";
-import { Heading, Image, Link } from "./getHomePage";
 
 const developmentDesignSlugQuery = gql`
   ${HEADING_FRAGMENT}
@@ -95,255 +144,19 @@ export interface DevelopmentDesignDetail {
   ourWork: OurWork | null;
 }
 
-export interface OurInshightsTitle {
-  CommonTitle: {
-    Title: string;
-    Description: string;
-    Link: {
-      id: string;
-      href: string;
-      label: string;
-      target: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
-    };
-  }[];
-}
-
-export interface OurServiceList {
-  id?: string | null;
-  isCarousel: boolean | null;
-  serviceTitle: string | null;
-  serviceVariant: {
-    variant: string;
-  } | null;
-  link?: {
-    id: string;
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-    SubDisc: string | null;
-    Icon: Image | null;
-  } | null;
-  serviceList: ServiceListItem[];
-}
-
-export interface ServiceListItem {
-  listingContext: {
-    id?: string | null;
-    title: string | null;
-    description: string | null;
-    image: Image | null;
-    link: {
-      id: string;
-      href: string;
-      label: string | null;
-      target: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: Image | null;
-    } | null;
-  } | null;
-}
-
-export interface SEO {
-  metaTitle: string;
-  metaDescription: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: {
-    url: string;
-  } | null;
-  metaRobots: string;
-  twitterCardTitle: string;
-  canonicalURL: string;
-  structuredData: string | null;
-  languageTag: string;
-}
-
-export interface BannerSection {
-  Banner: BannerItem[];
-}
-
-export interface BannerItem {
-  BannerTitle: string;
-  BannerDescription: string;
-  BannerLogo: Image | null;
-  BannerImage: Image | null;
-  isTextAlignCenter: boolean | null;
-  isVideo: boolean | null;
-  show_searchbox: boolean;
-  videoLink: string | null;
-  BannerLink: BannerLink;
-  chipsText: {
-    Title: string;
-  }[];
-}
-
-export interface BannerLink {
-  id: string;
-  href: string;
-  label: string;
-  target: string;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Image | null;
-}
-
-export interface CTA {
-  CTADescription: string;
-  pageReference: string;
-  CTAImage: {
-    Image: Image;
-  }[];
-  CTALink: Link[];
-  Title: Heading[];
-}
-
-export interface Whyaddact {
-  Title: Heading[];
-  pageReference?: string;
-  GlobalCard: GlobalCard2[];
-}
-export interface GlobalCard2 {
-  id?: string;
-  Title: string;
-  Description: string;
-  Image: Image;
-  Link?: Link | null;
-}
-
-export interface FAQ {
-  Title: string;
-  FAQ: {
-    id: string;
-    Title: string;
-    Description: string;
-  }[];
-}
-
-export interface TechStack {
-  title: string;
-  description: string;
-  tab: Tab[];
-}
-
-export interface Tab {
-  category: {
-    categoryTitle: string;
-  };
-  tabContent: TabContent[];
-}
-
-export interface TabContent {
-  title: string;
-  logo: Image | null;
-}
-
-export interface Industry {
-  industryListTitle: string;
-  industry_list: IndustryListItem[];
-}
-
-export interface IndustryListItem {
-  Slug: string;
-  listingContext: {
-    title: string;
-    description: string;
-    image: Image | null;
-    link: {
-      id: string;
-      href: string;
-      label: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: Image | null;
-    } | null;
-  } | null;
-}
-
-export interface LinkProps {
-  id: string;
-  href: string;
-  label: string;
-  target: string;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Image | null;
-}
-
-export interface OurProcess {
-  Title: Heading[];
-  ProcessData: ProcessDataItem[];
-  link: LinkProps;
-}
-
-export interface ProcessDataItem {
-  id: string;
-  Title: string;
-  Description: string;
-}
 
 
-export interface DesignFlow {
-  title: string;
-  description: string;
-  tabsAndFlow: DesignFlowTab[];
-}
 
-export interface DesignFlowTab {
-  tabTitle: string;
-  flow: DesignFlowItem[];
-}
 
-export interface DesignFlowItem {
-  title: string;
-  information: string;
-  gif: Image | null;
-  icon: Image | null;
-}
 
-export interface ImpactUx {
-  title: string;
-  beforeText: string;
-  afterText: string;
-  beforeImage: Image | null;
-  afterImage: Image | null;
-  desktopFrame: Image | null;
-  mobileFrame: Image | null;
-}
 
-export interface OurWork {
-  serviceTitle: string | null;
-  serviceVariant: {
-    variant: string;
-  } | null;
-  isCarousel: boolean | null;
-  serviceList: OurWorkServiceListItem[];
-}
 
-export interface OurWorkServiceListItem {
-  listingContext: {
-    id: string;
-    title: string | null;
-    description: string | null;
-    image: Image | null;
-    link: {
-      id: string;
-      href: string;
-      label: string | null;
-      target: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: Image | null;
-    } | null;
-  } | null;
-  tagLine: {
-    Title: string;
-  }[];
-}
+
+
+
+
+
+
 
 // Fetch function
 export async function getDevelopmentDesignSlug(

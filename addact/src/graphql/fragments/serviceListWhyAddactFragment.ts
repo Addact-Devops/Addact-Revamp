@@ -1,4 +1,22 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import type { HeadingFragmentType } from "./headingFragment";
+import type { PromoFragmentType } from "./promoFragment";
+
+export type ServiceListWhyAddactItem = {
+  Title?: HeadingFragmentType[];
+  GlobalCard?: PromoFragmentType[];
+  pageReference?: string;
+};
+
+export type ServiceListWhyAddactType = {
+  why_addact?: ServiceListWhyAddactItem;
+};
+
+export interface WhyAddact {
+  Title: HeadingFragmentType[];
+  GlobalCard: PromoFragmentType[];
+  pageReference?: string;
+}
 
 export const SERVICE_LIST_WHY_ADDACT_FIELDS = `
   why_addact {
@@ -21,3 +39,4 @@ export const SERVICE_LIST_WHY_ADDACT_FIELDS = `
     pageReference
   }
 `;
+

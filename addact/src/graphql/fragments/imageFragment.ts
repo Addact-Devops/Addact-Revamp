@@ -22,3 +22,6 @@ export type ImageFragmentType = {
   name?: string;
 };
 
+// Alias used specifically for header image references
+export type HeaderImage = ImageFragmentType;
+

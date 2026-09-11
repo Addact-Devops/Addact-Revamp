@@ -1,4 +1,6 @@
-import { BLOG_AUTHOR_DESIGNATION_FIELDS } from "./blogAuthorDesignationFragment";
+import { BLOG_AUTHOR_DESIGNATION_FIELDS, type Designation } from "./blogAuthorDesignationFragment";
+export type { Designation };
+
 
 export const BLOG_AUTHOR_FIELDS = `
   author {
@@ -19,14 +21,15 @@ export type BlogAuthorType = {
       AuthorName?: string;
       AuthorDescription?: string;
       AuthorImage?: {
-        alternativeText?: string;
-        height?: number;
-        width?: number;
         url?: string;
+        width?: number;
+        height?: number;
         name?: string;
+        alternativeText?: string;
       };
-      designation?: { DesignationTitle?: string };
+      designation?: Designation;
     };
   };
 };
+
 

@@ -1,4 +1,5 @@
-import { ABOUT_US_WE_ARE_ADDACT_NUMBER_FIELDS } from "./aboutUsWeAreAddactNumberFragment";
+import { ABOUT_US_WE_ARE_ADDACT_NUMBER_FIELDS, type NumberContent } from "./aboutUsWeAreAddactNumberFragment";
+export type { NumberContent };
 import type { ImageFragmentType } from "./imageFragment";
 
 export const ABOUT_US_WE_ARE_ADDACT_FIELDS = `
@@ -32,8 +33,6 @@ export type WeAreAddactType = {
   SubTitle: string;
   Title: string;
   Content: ContentBlock[];
-  NumberContent: {
-    Number: string;
-    Content: string;
-  }[];
+  NumberContent: NumberContent[];
 };
+

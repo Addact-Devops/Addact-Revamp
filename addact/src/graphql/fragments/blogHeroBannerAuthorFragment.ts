@@ -5,3 +5,12 @@ export const BLOG_HERO_BANNER_AUTHOR_FIELDS = `
     }
   }
 `;
+
+export type BannerAuthor = {
+  author?: {
+    Author?: {
+      AuthorName?: string;
+    };
+  };
+};
+

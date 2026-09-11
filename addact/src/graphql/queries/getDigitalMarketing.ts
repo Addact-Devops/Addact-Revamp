@@ -23,8 +23,10 @@ export type { Whyaddact, GlobalCard2 } from "../fragments/whyAddactFragment";
 import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
 import { DM_OUR_SERVICE_FIELDS } from "../fragments/dmOurServiceFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
 import { DM_WHO_ARE_WE_FIELDS, type DigitalMarketingWhoAreWeData } from "../fragments/digitalMarketingWhoAreWeFragment";
+export type { DigitalMarketingWhoAreWeData };
 import client from "../client";
 
 const digitalMarketingQuery = gql`
@@ -77,20 +79,6 @@ export interface DigitalMarketingService {
 }
 
 
-export interface SEO {
-  metaTitle: string;
-  metaDescription: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: {
-    url: string;
-  } | null;
-  metaRobots: string;
-  twitterCardTitle: string;
-  canonicalURL: string;
-  structuredData: string | null;
-  languageTag: string;
-}
 
 // Fetch function
 export async function getDigitalMarketing(): Promise<DigitalMarketingService> {

@@ -3,12 +3,25 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import client from "../client";
-import { Heading, Image } from "@/types/common";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { WEBINAR_HERO_BANNER_FIELDS } from "../fragments/webinarHeroBannerFragment";
-import { WEBINAR_CONTENT_FIELDS } from "../fragments/webinarContentFragment";
-import { WEBINAR_SPEAKERS_FIELDS, type WebinarSpeakersType } from "../fragments/webinarSpeakersFragment";
+import { SEO_FIELDS, type WebinarSEO as SEO } from "../fragments/seoFragment";
+export type { SEO };
+import {
+  WEBINAR_HERO_BANNER_FIELDS,
+  type WebinarHeroBannerItem,
+} from "../fragments/webinarHeroBannerFragment";
+export type { WebinarHeroBannerItem };
+import {
+  WEBINAR_CONTENT_FIELDS,
+  type WebinarContentItem,
+} from "../fragments/webinarContentFragment";
+export type { WebinarContentItem };
+import {
+  WEBINAR_SPEAKERS_FIELDS,
+  type WebinarSpeakersType,
+} from "../fragments/webinarSpeakersFragment";
+export type { WebinarSpeakersType };
 import { WEBINAR_HOST_FIELDS, type WebinarAuthorType } from "../fragments/webinarHostFragment";
+export type { WebinarAuthorType };
 
 const GET_WEBINAR_DETAIL_PAGE = gql`
   ${IMAGE_FRAGMENT}
@@ -25,36 +38,16 @@ const GET_WEBINAR_DETAIL_PAGE = gql`
   }
 `;
 
+export interface WebinarDetailItem {
+  SEO?: SEO | null;
+  HeroBanner: WebinarHeroBannerItem[];
+  WebinarContent: WebinarContentItem[];
+  Speakers: WebinarSpeakersType["Speakers"];
+  Host: WebinarAuthorType[];
+}
+
 export interface WebinarDetailResponse {
-  addactWebinars: {
-    SEO?: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string;
-      ogDescription?: string;
-      ogImage?: { url: string };
-      metaRobots?: string;
-      twitterCardTitle?: string;
-      canonicalURL?: string;
-      structuredData?: string;
-      languageTag?: string;
-    };
-    HeroBanner: {
-      BannerTitle: string;
-      BannerDescription: string;
-      BannerImage: Image;
-      PublishDate: string;
-      ReadNow: {
-        id: string;
-        href: string;
-        label: string;
-        isExternal: boolean;
-      };
-    }[];
-    WebinarContent: Heading[];
-    Speakers: WebinarSpeakersType["Speakers"];
-    Host: WebinarAuthorType[];
-  }[];
+  addactWebinars: WebinarDetailItem[];
 }
 
 export async function getWebinarDetailBySlug(slug: string): Promise<WebinarDetailResponse> {

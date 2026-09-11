@@ -1,15 +1,15 @@
 import { FAQ_FIELDS, type FAQ } from "../fragments/faqFragment";
-export type { FAQ } from "../fragments/faqFragment";
+export type { FAQ };
 import { gql } from "graphql-request";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
-export type { CTA } from "../fragments/ctaFragment";
-import { INDUSTRY_FIELDS, type Industry } from "../fragments/industryFragment";
-export type { Industry, IndustryListItem } from "../fragments/industryFragment";
-import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFragment";
-export type { OurProcess, ProcessDataItem, LinkProps } from "../fragments/ourProcessFragment";
+export type { CTA };
+import { INDUSTRY_FIELDS, type Industry, type IndustryListItem } from "../fragments/industryFragment";
+export type { Industry, IndustryListItem };
+import { OUR_PROCESS_FIELDS, type OurProcess, type ProcessDataItem, type LinkProps } from "../fragments/ourProcessFragment";
+export type { OurProcess, ProcessDataItem, LinkProps };
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { type TechStack } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment";
@@ -23,12 +23,14 @@ import {
   type OurInshightsTitle,
 } from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
-import { HIRE_SLUG_OUR_SERVICE_FIELDS } from "../fragments/hireSlugOurServiceFragment";
-export type { HireSlugOurServiceType } from "../fragments/hireSlugOurServiceFragment";
+import { HIRE_SLUG_OUR_SERVICE_FIELDS, type HireSlugOurServiceType, type OurServiceData } from "../fragments/hireSlugOurServiceFragment";
+export type { HireSlugOurServiceType, OurServiceData };
 import { SEO_FIELDS, type SEO } from "../fragments/seoFragment";
-import type { Image } from "@/types/common";
+export type { SEO };
 import { type OurServiceList } from "../fragments/qaTestingListingFragment";
 export type { OurServiceList, ServiceListItem } from "../fragments/qaTestingListingFragment";
+import { type LinkWithIcon } from "../fragments/homeCapabilitiesFragment";
+export type { LinkWithIcon };
 import client from "../client";
 
 const hireExpertsSlugQuery = gql`
@@ -75,80 +77,8 @@ export interface HireExpert {
   our_process?: OurProcess | null;
 }
 
-export interface LinkWithIcon {
-  id: string;
-  href: string;
-  label: string | null;
-  target?: string | null;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Image | null;
-}
 
 
-
-export interface OurServiceData {
-  Titeldescription?: {
-    Description: string;
-    Title: string;
-  }[];
-
-  FirstTabDisplayName: string;
-  SecondTabDisplayName: string;
-
-  ForEnterprisesBrands: {
-    GlobalCard: {
-      id: string;
-      Title: string;
-      Description: string;
-      Image?: {
-        alternativeText: string | null;
-        height: number;
-        name: string;
-        url: string;
-        width: number;
-      };
-      Link?: {
-        id: string;
-        href: string;
-        label: string;
-        target: string;
-        isExternal: boolean;
-      };
-      sub_service_page?: {
-        Slug: string;
-      };
-    }[];
-
-    Title: {
-      id?: string;
-      h2: string;
-    }[];
-  };
-
-  ReferenceTitle: string;
-
-  team_feature: {
-    documentId?: string;
-    ReferenceTitle?: string;
-    Description: string;
-    Cards: {
-      id: string;
-      Title: string;
-      Description: string;
-      Link?: {
-        id: string;
-        href: string;
-        label: string;
-        target: string;
-        isExternal: boolean;
-      };
-    }[];
-    createdAt?: string;
-    updatedAt?: string;
-    publishedAt?: string;
-  };
-}
 
 
 

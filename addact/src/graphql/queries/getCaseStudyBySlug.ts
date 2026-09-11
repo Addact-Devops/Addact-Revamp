@@ -5,12 +5,20 @@ import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType } from "../fragments/seoFragment";
 import { EVENT_HEADING_SECTION_FIELDS, type EventHeadingSectionType } from "../fragments/eventHeadingSectionFragment";
 import { CASE_STUDY_HERO_BANNER_FIELDS, type CaseStudyHeroBannerType } from "../fragments/caseStudyHeroBannerFragment";
 import { CASE_STUDY_CONTENT_FIELDS, type CaseStudyContentType } from "../fragments/caseStudyContentFragment";
 import { CASE_STUDY_FORM_TITLE_FIELDS, type CaseStudyFormTitleType } from "../fragments/caseStudyFormTitleFragment";
 import { CASE_STUDY_PDF_FORM_FIELDS, type CaseStudyPdfFormFieldsType } from "../fragments/caseStudyPdfFormFieldsFragment";
+export type {
+  EventHeadingSectionType,
+  CaseStudyHeroBannerType,
+  CaseStudyContentType,
+  CaseStudyFormTitleType,
+  CaseStudyPdfFormFieldsType,
+  SeoType,
+};
 import client from "../client";
 
 const GET_CASE_STUDY_BY_SLUG = gql`
@@ -34,21 +42,14 @@ const GET_CASE_STUDY_BY_SLUG = gql`
 `;
 
 export type CaseStudyBySlugResponse = {
-  addactCaseStudies: (CaseStudyHeroBannerType & CaseStudyContentType & CaseStudyFormTitleType & EventHeadingSectionType & CaseStudyPdfFormFieldsType & {
-    SEO: {
-      metaTitle: string | null;
-      metaDescription: string | null;
-      ogTitle: string | null;
-      ogDescription: string | null;
-      ogImage: { url: string | null } | null;
-      metaRobots: string | null;
-      twitterCardTitle: string | null;
-      canonicalURL: string | null;
-      structuredData: Record<string, unknown> | null;
-      languageTag: string | null;
-    } | null;
-    Slug: string;
-  })[];
+  addactCaseStudies: (CaseStudyHeroBannerType &
+    CaseStudyContentType &
+    CaseStudyFormTitleType &
+    EventHeadingSectionType &
+    CaseStudyPdfFormFieldsType & {
+      SEO?: SeoType | null;
+      Slug: string;
+    })[];
 };
 
 export async function getCaseStudyBySlug(slug: string) {

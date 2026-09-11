@@ -1,4 +1,5 @@
-import { ABOUT_US_CTA_TITLE_FIELDS } from "./aboutUsCtaTitleFragment";
+import { ABOUT_US_CTA_TITLE_FIELDS, type AboutUsCtaTitle } from "./aboutUsCtaTitleFragment";
+export type { AboutUsCtaTitle };
 
 export const ABOUT_US_CTA_FIELDS = `
   aboutUsCTA {
@@ -33,15 +34,14 @@ export type CTALinkType = {
   isExternal: boolean;
 };
 
-export type CtaTitle = { h1?: string } | { h2?: string } | { h3?: string };
-
 export type DescriptionNode = {
   type: string;
   children: { text: string }[];
 };
 
+// CTAType.Title reuses Heading[] from AboutUsCtaTitle (aboutUsCtaTitleFragment.ts)
 export type CTAType = {
-  Title: CtaTitle[];
+  Title: AboutUsCtaTitle["Title"];
   CTADescription: DescriptionNode[];
   CTAImage: { Image: CTAImageType }[];
   CTALink: CTALinkType[];
@@ -52,3 +52,4 @@ export type AboutUsCTAResponse = {
     aboutUsCTA: CTAType;
   };
 };
+

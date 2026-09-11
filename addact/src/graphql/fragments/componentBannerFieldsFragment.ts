@@ -5,6 +5,11 @@ export const BANNER_TITLE_DESCRIPTION_FIELDS = `
   BannerDescription
 `;
 
+export type BannerTitleDescriptionType = {
+  BannerTitle?: string;
+  BannerDescription?: string;
+};
+
 export const COMPONENT_BANNER_FIELDS = `
   ${BANNER_TITLE_DESCRIPTION_FIELDS}
   ${AI_BANNER_LOGO_FIELDS}
@@ -19,4 +24,5 @@ export const COMPONENT_BANNER_FIELDS = `
     ...LinkFields
   }
 `;
+
 

@@ -4,6 +4,8 @@ import { GALLERY_TITLES_FRAGMENT } from "../fragments/galleryTitlesFragment";
 export type { GalleryTitlesType } from "../fragments/galleryTitlesFragment";
 import { CAREER_GALLERY_SECTION_FIELDS, type CareerGallerySectionType } from "../fragments/careerGallerySectionFragment";
 import { CAREER_GALLERY_CATEGORIES_FIELDS, type CareerGalleryCategoriesType } from "../fragments/careerGalleryCategoriesFragment";
+export type { CareerGallerySectionType, CareerGalleryCategoriesType };
+
 import client from "../client";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
@@ -21,7 +23,7 @@ const query = gql`
   }
 `;
 
-type GalleryResponse = CareerGallerySectionType & CareerGalleryCategoriesType;
+export type GalleryResponse = CareerGallerySectionType & CareerGalleryCategoriesType;
 
 export const getCareerGalleryData = async (): Promise<GalleryResponse> => {
   const res = await client.request<GalleryResponse>(query);

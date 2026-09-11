@@ -14,12 +14,12 @@ export const CHALLENGES_FIELDS = `
   }
 `;
 
-export interface ChallengeError {
+export type ChallengeError = {
   code: string;
   message: string;
-}
+};
 
-export interface ChallengeProcessDataItem {
+export type ChallengeProcessDataItem = {
   Title: string;
   Description: string;
   Link: {
@@ -31,10 +31,10 @@ export interface ChallengeProcessDataItem {
     SubDisc: string | null;
     Icon: Image | null;
   } | null;
-}
+};
 
-export interface Challenges {
+export type Challenges = {
   Title: (Heading | ChallengeError)[];
   ProcessData: ChallengeProcessDataItem[];
-}
+};
 

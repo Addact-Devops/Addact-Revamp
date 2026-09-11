@@ -1,5 +1,20 @@
-import { DESIGN_FLOW_GIF_FIELDS } from "./designFlowGifFragment";
-import { DESIGN_FLOW_ICON_FIELDS } from "./designFlowIconFragment";
+import { DESIGN_FLOW_GIF_FIELDS, type DesignFlowGifType } from "./designFlowGifFragment";
+import { DESIGN_FLOW_ICON_FIELDS, type DesignFlowIconType } from "./designFlowIconFragment";
+
+export type FlowItemType = DesignFlowGifType &
+  DesignFlowIconType & {
+    title?: string;
+    information?: string;
+  };
+
+export type DesignFlowTabType = {
+  tabTitle?: string;
+  flow?: FlowItemType[];
+};
+
+export type DesignFlowTabsType = {
+  tabsAndFlow?: DesignFlowTabType[];
+};
 
 export const DESIGN_FLOW_TABS_FIELDS = `
   tabsAndFlow {
@@ -12,3 +27,4 @@ export const DESIGN_FLOW_TABS_FIELDS = `
     }
   }
 `;
+

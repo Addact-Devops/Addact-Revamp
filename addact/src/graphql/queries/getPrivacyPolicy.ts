@@ -6,6 +6,7 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
 import { PRIVACY_POLICY_CONTENT_FIELDS, type PrivacyPolicyData } from "../fragments/privacyPolicyContentFragment";
+export type { PrivacyPolicyData };
 import client from "../client";
 
 export const getPrivacyPolicy = async (): Promise<PrivacyPolicyData> => {

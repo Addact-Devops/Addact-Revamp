@@ -4,12 +4,13 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { REUSE_CARD_FRAGMENT } from "../fragments/reuseCardFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { CAREERS_HERO_BANNER_FIELDS, type CareersHeroBanner } from "../fragments/careersHeroBannerFragment";
-import { CAREER_CARD_FIELDS, type CareerCardData } from "../fragments/careerCardFragment";
-export type { TitleBlock, CardPromo, CareerCardData } from "../fragments/careerCardFragment";
+import { CAREER_CARD_FIELDS, type CareerCardData, type TitleBlock, type CardPromo } from "../fragments/careerCardFragment";
+export type { TitleBlock, CardPromo, CareerCardData, CareersHeroBanner };
 import { POSITIONS_TITLE_FIELDS, type PositionsTitleData } from "../fragments/positionsTitleFragment";
-import { POSITIONS_FIELDS, type PositionType, type PositionItem } from "../fragments/positionsFragment";
-export type { CardInfoType, PositionType } from "../fragments/positionsFragment";
+import { POSITIONS_FIELDS, type PositionType, type PositionItem, type CardInfoType } from "../fragments/positionsFragment";
+export type { CardInfoType, PositionType, PositionsTitleData, PositionItem };
 import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
+export type { PageHeadingType };
 import client from "../client";
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
@@ -34,7 +35,7 @@ const query = gql`
   }
 `;
 
-type CareersDataResponse = {
+export type CareersDataResponse = {
   careers: {
     PageHeading?: PageHeadingType["PageHeading"];
     Banner?: CareersHeroBanner;

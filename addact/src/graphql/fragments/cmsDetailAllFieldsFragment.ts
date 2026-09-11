@@ -1,13 +1,26 @@
 import { gql } from "graphql-request";
-import { SEO_FIELDS } from "./seoFragment";
-import { BANNER_SECTION_FIELDS } from "./bannerSectionFragment";
-import { CTA_FIELDS } from "./ctaFragment";
-import { FAQ_FIELDS } from "./faqFragment";
-import { WHY_ADDACT_FIELDS } from "./whyAddactFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS } from "./ourInsightsTitleFragment";
-import { TECH_STACK_FIELDS } from "./techStackFragment";
-import { INDUSTRY_FIELDS } from "./industryFragment";
-import { OUR_PROCESS_FIELDS } from "./ourProcessFragment";
+import { SEO_FIELDS, type SeoType } from "./seoFragment";
+import { BANNER_SECTION_FIELDS, type BannerSection } from "./bannerSectionFragment";
+import { CTA_FIELDS, type CTAFragmentType } from "./ctaFragment";
+import { FAQ_FIELDS, type FAQFragmentType } from "./faqFragment";
+import { WHY_ADDACT_FIELDS, type WhyAddactType } from "./whyAddactFragment";
+import { OUR_INSIGHTS_TITLE_FIELDS, type OurInsightsTitleType } from "./ourInsightsTitleFragment";
+import { TECH_STACK_FIELDS, type TechStackType } from "./techStackFragment";
+import { INDUSTRY_FIELDS, type IndustryType } from "./industryFragment";
+import { OUR_PROCESS_FIELDS, type OurProcess } from "./ourProcessFragment";
+import type { OurServiceType } from "./ourServiceFragment";
+
+export type CmsDetailAllFieldsType = BannerSection &
+  WhyAddactType &
+  OurInsightsTitleType &
+  TechStackType &
+  IndustryType & {
+    SEO?: SeoType;
+    cta?: CTAFragmentType;
+    faq?: FAQFragmentType;
+    ourService?: OurServiceType[];
+    ourprocess?: OurProcess;
+  };
 
 export const CMS_DETAIL_ALL_FIELDS_FRAGMENT = gql`
   fragment CmsDetailAllFields on CmsDetail {
@@ -42,3 +55,4 @@ export const CMS_DETAIL_ALL_FIELDS_FRAGMENT = gql`
     }
   }
 `;
+

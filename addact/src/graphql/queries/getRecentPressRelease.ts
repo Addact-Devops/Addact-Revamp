@@ -1,6 +1,7 @@
 import { gql } from "graphql-request";
 import client from "../client";
 import { BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerItem } from "../fragments/blogHeroBannerFragment";
+export type { BlogHeroBannerItem };
 
 const GET_RECENT_PRESS_RELEASE = gql`
   query Recentitem($pagination: PaginationArg, $sort: [String]) {

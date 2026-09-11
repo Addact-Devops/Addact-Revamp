@@ -1,3 +1,5 @@
+import { Heading } from "@/types/common";
+
 export const ABOUT_US_CTA_TITLE_FIELDS = `
   Title {
     ... on ComponentHeadingsH1 {
@@ -11,3 +13,8 @@ export const ABOUT_US_CTA_TITLE_FIELDS = `
     }
   }
 `;
+
+export type AboutUsCtaTitle = {
+  Title: Heading[];
+};
+

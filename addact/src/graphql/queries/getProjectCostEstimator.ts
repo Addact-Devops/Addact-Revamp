@@ -1,7 +1,8 @@
 import { gql } from "graphql-request";
 import client from "../client";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
 import { PROJECT_COST_BANNER_FIELDS, type ProjectCostEstimatorBannerType } from "../fragments/projectCostBannerFragment";
 export type { ProjectCostEstimatorBannerType } from "../fragments/projectCostBannerFragment";
 import { PROJECT_COST_CONTENT_FIELDS, type ProjectCostEstimatorContentType } from "../fragments/projectCostContentFragment";
@@ -11,24 +12,9 @@ export type { ProjectCostEstimatorContentType } from "../fragments/projectCostCo
 // ✅ Types
 // -----------------------------
 
-// ProjectCostEstimatorBannerType moved to projectCostBannerFragment.ts
-
-// ProjectCostEstimatorContentType moved to projectCostContentFragment.ts
-
 export type ProjectCostEstimatorResponse = {
   projectCostEstimator: {
-    SEO: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string | null;
-      ogDescription?: string | null;
-      ogImage?: { url: string } | null;
-      metaRobots?: string | null;
-      twitterCardTitle?: string | null;
-      canonicalURL?: string | null;
-      structuredData?: string | null;
-      languageTag?: string | null;
-    };
+    SEO: SEO | null;
     banner: {
       Banner: ProjectCostEstimatorBannerType[];
     };

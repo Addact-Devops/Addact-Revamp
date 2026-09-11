@@ -5,25 +5,37 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
-import type { AboutUsBannerType, AboutUsHeroBannerResponse } from "../fragments/pageHeroBannerFragment";
+import type {
+  AboutUsBannerType,
+  AboutUsHeroBannerResponse,
+} from "../fragments/pageHeroBannerFragment";
+export type { AboutUsBannerType, AboutUsHeroBannerResponse };
 import { ABOUT_US_QUOTE_FIELDS } from "../fragments/aboutUsQuoteFragment";
 import type { QuoteData } from "../fragments/aboutUsQuoteFragment";
+export type { QuoteData };
 import { ABOUT_US_CONTENT_FIELDS } from "../fragments/aboutUsContentFragment";
 import type { AboutUsContentData } from "../fragments/aboutUsContentFragment";
+export type { AboutUsContentData };
 import { ABOUT_US_VISION_MISSION_FIELDS } from "../fragments/aboutUsVisionMissionFragment";
 import type { OurVisionMissionData } from "../fragments/aboutUsVisionMissionFragment";
+export type { OurVisionMissionData };
 import { ABOUT_US_CTA_FIELDS } from "../fragments/aboutUsCtaFragment";
 import type { CTAType, AboutUsCTAResponse } from "../fragments/aboutUsCtaFragment";
+export type { CTAType, AboutUsCTAResponse };
 import { ABOUT_US_BRAND_VALUE_FIELDS } from "../fragments/aboutUsBrandValueFragment";
-import type { BrandValueType, BrandValueQueryResponse } from "../fragments/aboutUsBrandValueFragment";
+import type {
+  BrandValueType,
+  BrandValueQueryResponse,
+} from "../fragments/aboutUsBrandValueFragment";
+export type { BrandValueType, BrandValueQueryResponse };
 import { ABOUT_US_WE_ARE_ADDACT_FIELDS } from "../fragments/aboutUsWeAreAddactFragment";
 import type { WeAreAddactType } from "../fragments/aboutUsWeAreAddactFragment";
+export type { WeAreAddactType };
 import client from "../client";
 
 // -----------------------------
 // ✅ About Us Hero Banner
 // -----------------------------
-
 
 const bannerQuery = gql`
   ${LINK_FRAGMENT}
@@ -50,7 +62,6 @@ export const getAboutUsHeroBanner = async (): Promise<AboutUsBannerType | null> 
 // ✅ Quote
 // -----------------------------
 
-
 const quoteQuery = gql`
   ${IMAGE_FRAGMENT}
   query AboutUs {
@@ -68,8 +79,6 @@ export const getAboutUsQuote = async (): Promise<QuoteData> => {
 // -----------------------------
 // ✅ About Us Content
 // -----------------------------
-
-
 
 const aboutContentQuery = gql`
   ${IMAGE_FRAGMENT}
@@ -89,7 +98,6 @@ export const getAboutUsContent = async (): Promise<AboutUsContentData> => {
 // ✅ Our Vision & Mission
 // -----------------------------
 
-
 const visionQuery = gql`
   ${IMAGE_FRAGMENT}
   query AboutUs {
@@ -107,7 +115,6 @@ export const getOurVisionMission = async (): Promise<OurVisionMissionData> => {
 // -----------------------------
 // ✅ CTA Section
 // -----------------------------
-
 
 const ctaQuery = gql`
   ${IMAGE_FRAGMENT}
@@ -128,7 +135,6 @@ export const getAboutUsCTA = async (): Promise<CTAType | null> => {
 // ✅ Brand Value
 // -----------------------------
 
-
 const brandValueQuery = gql`
   ${IMAGE_FRAGMENT}
   query AboutUs {
@@ -146,7 +152,6 @@ export const getBrandValue = async (): Promise<BrandValueType> => {
 // -----------------------------
 // ✅ We Are Addact
 // -----------------------------
-
 
 const addactQuery = gql`
   ${IMAGE_FRAGMENT}

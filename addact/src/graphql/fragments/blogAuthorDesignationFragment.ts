@@ -3,3 +3,8 @@ export const BLOG_AUTHOR_DESIGNATION_FIELDS = `
     DesignationTitle
   }
 `;
+
+export type Designation = {
+  DesignationTitle?: string;
+};
+

@@ -4,11 +4,12 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType } from "../fragments/seoFragment";
 import { EVENT_BLOG_HERO_BANNER_FIELDS, type EventBlogHeroBannerType } from "../fragments/eventBlogHeroBannerFragment";
 import { EVENT_CONTENT_FIELDS, type EventContentType } from "../fragments/eventContentFragment";
 import { EVENT_HEADING_SECTION_FIELDS, type EventHeadingSectionType } from "../fragments/eventHeadingSectionFragment";
 import { EVENT_CONTACT_US_CARD_FIELDS, type EventContactUsCardType } from "../fragments/eventContactUsCardFragment";
+export type { SeoType, EventBlogHeroBannerType, EventContentType, EventHeadingSectionType, EventContactUsCardType };
 import client from "../client";
 
 const GET_EVENT_DETAIL_PAGE = gql`
@@ -31,18 +32,7 @@ const GET_EVENT_DETAIL_PAGE = gql`
 
 export interface EventDetailResponse {
   addactsEvents: (EventBlogHeroBannerType & EventContentType & EventHeadingSectionType & EventContactUsCardType & {
-    SEO?: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string;
-      ogDescription?: string;
-      ogImage?: { url?: string };
-      metaRobots?: string;
-      twitterCardTitle?: string;
-      canonicalURL?: string;
-      structuredData?: Record<string, unknown>;
-      languageTag?: string;
-    } | null;
+    SEO?: SeoType | null;
   })[];
 }
 

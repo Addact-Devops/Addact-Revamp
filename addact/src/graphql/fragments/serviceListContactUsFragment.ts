@@ -1,4 +1,14 @@
-import { PROMO_INNER_FIELDS } from "./promoFragment";
+import { PROMO_INNER_FIELDS, type PromoFragmentType } from "./promoFragment";
+
+export type ServiceListContactUsItem = {
+  Form?: PromoFragmentType[];
+  pageReference?: string;
+  RecipientEmails?: string;
+};
+
+export type ServiceListContactUsType = {
+  contact_us?: ServiceListContactUsItem;
+};
 
 export const SERVICE_LIST_CONTACT_US_FIELDS = `
   contact_us {
@@ -11,4 +21,5 @@ export const SERVICE_LIST_CONTACT_US_FIELDS = `
     RecipientEmails
   }
 `;
+
 

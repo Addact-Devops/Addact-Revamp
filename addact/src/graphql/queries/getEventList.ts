@@ -2,12 +2,10 @@ import { gql } from "graphql-request";
 import client from "../client";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
-import type { PageHeadingType } from "../fragments/pageHeadingFragment";
-import { EVENT_BANNER_FIELDS } from "../fragments/eventBannerFragment";
-import type { EventBannerType } from "../fragments/eventBannerFragment";
-import { EVENT_BLOG_HERO_BANNER_FIELDS } from "../fragments/eventBlogHeroBannerFragment";
-import type { EventBlogHeroBannerType } from "../fragments/eventBlogHeroBannerFragment";
+import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
+import { EVENT_BANNER_FIELDS, type EventBannerType } from "../fragments/eventBannerFragment";
+import { EVENT_BLOG_HERO_BANNER_FIELDS, type EventBlogHeroBannerType } from "../fragments/eventBlogHeroBannerFragment";
+export type { PageHeadingType, EventBannerType, EventBlogHeroBannerType };
 
 const GET_EVENT_LIST_PAGE = gql`
   ${IMAGE_FRAGMENT}

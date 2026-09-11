@@ -6,3 +6,9 @@ export const BASE_HEADING_FRAGMENT = gql`
     Slug
   }
 `;
+
+export type BaseHeading = {
+  PageTitle: string;
+  Slug: string;
+};
+

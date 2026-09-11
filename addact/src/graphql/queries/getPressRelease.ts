@@ -5,8 +5,9 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
 import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
-import { PRESS_RELEASE_HERO_BANNER_FIELDS, type PressReleaseHeroBannerType } from "../fragments/pressReleaseHeroBannerFragment";
-import { Image } from "@/types/common";
+export type { PageHeadingType };
+import { PRESS_RELEASE_HERO_BANNER_FIELDS, type PressReleaseHeroBannerType, type AddactPressReleaseItem } from "../fragments/pressReleaseHeroBannerFragment";
+export type { PressReleaseHeroBannerType, AddactPressReleaseItem };
 
 const GET_PRESS_RELEASE_LIST_PAGE = gql`
   ${LINK_FRAGMENT}
@@ -27,14 +28,7 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
 
 export interface PressReleaseResponse {
   pressRelease: PageHeadingType & PressReleaseHeroBannerType;
-  addactPressReleases: {
-    Slug: string;
-    HeroBanner: {
-      BannerTitle: string;
-      BannerImage: Image;
-    }[];
-    PressReleaseSummary: string;
-  }[];
+  addactPressReleases: AddactPressReleaseItem[];
 }
 
 export async function getPressReleaseData(): Promise<PressReleaseResponse> {

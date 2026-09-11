@@ -4,14 +4,15 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
-import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
-import { BRAND_GUIDELINES_CONTENT_FIELDS } from "../fragments/brandGuidelinesContentFragment";
-import type { BrandGuidelinesResponse } from "../fragments/brandGuidelinesContentFragment";
-export type { BrandGuidelinesResponse } from "../fragments/brandGuidelinesContentFragment";
-import { BRAND_GUIDELINES_FORM_FIELDS } from "../fragments/brandGuidelinesFormFragment";
-import { BRAND_GUIDELINES_PDF_FIELDS } from "../fragments/brandGuidelinesPdfFragment";
+import { PAGE_HERO_BANNER_FIELDS, type AboutUsBannerType } from "../fragments/pageHeroBannerFragment";
+export type { AboutUsBannerType };
+import { BRAND_GUIDELINES_CONTENT_FIELDS, type BrandGuidelinesResponse } from "../fragments/brandGuidelinesContentFragment";
+export type { BrandGuidelinesResponse };
+import { BRAND_GUIDELINES_FORM_FIELDS, type BrandGuidelinesFormFieldsItem } from "../fragments/brandGuidelinesFormFragment";
+export type { BrandGuidelinesFormFieldsItem };
+import { BRAND_GUIDELINES_PDF_FIELDS, type BrandGuidelinesPdfType } from "../fragments/brandGuidelinesPdfFragment";
+export type { BrandGuidelinesPdfType };
 import client from "../client";
-
 
 const GET_BRAND_GUIDELINES = gql`
   ${LINK_FRAGMENT}
@@ -31,8 +32,8 @@ const GET_BRAND_GUIDELINES = gql`
   }
 `;
 
-
 export async function getBrandGuidelines(): Promise<BrandGuidelinesResponse> {
   const data = await client.request<BrandGuidelinesResponse>(GET_BRAND_GUIDELINES);
   return data;
 }
+

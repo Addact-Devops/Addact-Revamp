@@ -1,8 +1,10 @@
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT, type TitleWithDescriptionFragmentType, type ExpertiseTitleItem } from "../fragments/titleWithDescriptionFragment";
+export type { TitleWithDescriptionFragmentType, ExpertiseTitleItem };
 import { LINK_IMAGE_FRAGMENT, type LinkImageItem } from "../fragments/linkImageFragment";
+export type { LinkImageItem };
 import client from "../client";
 
 const GET_CMS_EXPERTISE = gql`
@@ -24,10 +26,7 @@ const GET_CMS_EXPERTISE = gql`
 
 export interface OurExpertise {
   CMS: LinkImageItem[];
-  ExpertiseTitle: {
-    Description: string;
-    Title: string;
-  }[];
+  ExpertiseTitle: ExpertiseTitleItem[];
 }
 
 export interface CMSResponse {

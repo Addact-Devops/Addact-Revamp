@@ -7,15 +7,44 @@ import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescripti
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
-import { EVENT_HEADING_SECTION_FIELDS } from "../fragments/eventHeadingSectionFragment";
-import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFieldsFragment";
+import { SEO_FIELDS, type SeoType, type SEO, type BlogBySlugSEO } from "../fragments/seoFragment";
+export type { SeoType, SEO, BlogBySlugSEO };
+import {
+  EVENT_HEADING_SECTION_FIELDS,
+  type EventHeadingSectionType,
+} from "../fragments/eventHeadingSectionFragment";
+export type { EventHeadingSectionType };
+import {
+  BLOG_HERO_BANNER_FIELDS,
+  type BlogBanner,
+  type BlogBannerItem,
+  type BlogBySlugBannerItem,
+} from "../fragments/blogHeroBannerFieldsFragment";
+export type { BlogBanner, BlogBannerItem, BlogBySlugBannerItem };
 import { BLOG_CONTENT_FIELDS, type BlogContentType } from "../fragments/blogContentFragment";
+export type { BlogContentType };
 import { BLOG_AUTHOR_FIELDS, type BlogAuthorType } from "../fragments/blogAuthorFragment";
-import { BLOG_SIMILAR_STORY_TITLE_FIELDS, type BlogSimilarStoryTitleType } from "../fragments/blogSimilarStoryTitleFragment";
-import { BLOG_SIMILAR_BLOGS_FIELDS, type BlogSimilarBlogsType } from "../fragments/blogSimilarBlogsFragment";
-import { BLOG_SOCIAL_ICONS_FIELDS, type BlogSocialIconsType } from "../fragments/blogSocialIconsFragment";
-import { BLOG_CONTACT_CARD_FIELDS, type BlogContactCardType } from "../fragments/blogContactCardFragment";
+export type { BlogAuthorType };
+import {
+  BLOG_SIMILAR_STORY_TITLE_FIELDS,
+  type BlogSimilarStoryTitleType,
+} from "../fragments/blogSimilarStoryTitleFragment";
+export type { BlogSimilarStoryTitleType };
+import {
+  BLOG_SIMILAR_BLOGS_FIELDS,
+  type BlogSimilarBlogsType,
+} from "../fragments/blogSimilarBlogsFragment";
+export type { BlogSimilarBlogsType };
+import {
+  BLOG_SOCIAL_ICONS_FIELDS,
+  type BlogSocialIconsType,
+} from "../fragments/blogSocialIconsFragment";
+export type { BlogSocialIconsType };
+import {
+  BLOG_CONTACT_CARD_FIELDS,
+  type BlogContactCardType,
+} from "../fragments/blogContactCardFragment";
+export type { BlogContactCardType };
 import client from "../client";
 
 const GET_BLOG_BY_SLUG = gql`
@@ -56,44 +85,11 @@ export type BlogBySlugResponse = {
   addactBlogs: {
     Slug: string;
 
-    SEO?: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string;
-      ogDescription?: string;
-      ogImage?: {
-        url?: string;
-      };
-      metaRobots?: string;
-      twitterCardTitle?: string;
-      canonicalURL?: string;
-      structuredData?: Record<string, unknown>; // ✅ fixed: replaced `any` with valid type
-      languageTag?: string;
-    } | null;
+    SEO?: BlogBySlugSEO | null;
 
-    HeadingSection?: { PageTitle?: string }[];
+    HeadingSection?: EventHeadingSectionType["HeadingSection"];
 
-    BlogBanner?: {
-      BannerTitle?: string;
-      BannerDescription?: string;
-      BannerImage?: {
-        alternativeText?: string;
-        height?: number;
-        name?: string;
-        url?: string;
-        width?: number;
-      };
-      PublishDate?: string;
-      ReadNow?: {
-        id?: string;
-        href?: string;
-        label?: string;
-        target?: string;
-        isExternal?: boolean;
-      };
-      author?: { Author?: { AuthorName?: string } };
-      blogcategory?: { Category?: { CategoryTitle?: string } };
-    }[];
+    BlogBanner?: BlogBySlugBannerItem[];
 
     BlogContent?: BlogContentType["BlogContent"];
 

@@ -15,3 +15,21 @@ export const CONTACT_US_FORM_LABELS_FIELDS = `
   RecipientEmails
 `;
 
+export type FormBasicLabels = {
+  NameLable?: string;
+  EmailLabel?: string;
+  PhoneLabel?: string;
+  ButtonLabel?: string;
+  RecipientEmails?: string;
+};
+
+export type ContactUsFormLabels = {
+  NameLable?: string;
+  CompanyName?: string;
+  RequirementsLabel?: string;
+  ButtonLabel?: string;
+  EmailLabel?: string;
+  RecipientEmails?: string;
+};
+
+

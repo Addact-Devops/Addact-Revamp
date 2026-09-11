@@ -1,3 +1,5 @@
+import { type HeadingFragmentType } from "./headingFragment";
+
 export const BLOG_CONTENT_HEADINGS_FIELDS = `
   ... on ComponentHeadingsH6 {
     id
@@ -24,3 +26,6 @@ export const BLOG_CONTENT_HEADINGS_FIELDS = `
     h1
   }
 `;
+
+export type ContentHeading = HeadingFragmentType;
+export type { HeadingFragmentType };

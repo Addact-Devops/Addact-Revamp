@@ -19,3 +19,13 @@ export type PressReleaseHeroBannerType = {
     }[];
   };
 };
+
+export type AddactPressReleaseItem = {
+  Slug: string;
+  HeroBanner: {
+    BannerTitle: string;
+    BannerImage: Image;
+  }[];
+  PressReleaseSummary: string;
+};
+

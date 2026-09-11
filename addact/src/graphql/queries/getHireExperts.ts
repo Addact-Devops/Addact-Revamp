@@ -23,7 +23,8 @@ import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle } from "../fragments/
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
 import { HIRE_OUR_SERVICE_FIELDS } from "../fragments/hireOurServiceFragment";
 export type { HireOurServiceType } from "../fragments/hireOurServiceFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
 import client from "../client";
 
 const hireExpertsQuery = gql`
@@ -71,20 +72,6 @@ export interface HireExpert {
   ourprocess: OurProcess | null;
 }
 
-export interface SEO {
-  metaTitle: string;
-  metaDescription: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: {
-    url: string;
-  } | null;
-  metaRobots: string;
-  twitterCardTitle: string;
-  canonicalURL: string;
-  structuredData: string | null;
-  languageTag: string;
-}
 
 // Fetch function
 export async function getHireExperts(): Promise<HireExpert> {

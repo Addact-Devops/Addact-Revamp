@@ -4,12 +4,17 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
 import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
+import { type AddactPressReleaseItem } from "../fragments/pressReleaseHeroBannerFragment";
+export type { AddactPressReleaseItem };
 import { PRESS_CONTENT_FIELDS, type PressContentType } from "../fragments/pressContentFragment";
-import { SOCIAL_ICONS_FIELDS } from "../fragments/socialIconsFragment";
+export type { PressContentType };
+import { SOCIAL_ICONS_FIELDS, type SocialIcon } from "../fragments/socialIconsFragment";
+export type { SocialIcon };
 import client from "../client";
-import { Image, Link } from "@/types/common";
+import { Image } from "@/types/common";
 
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
   ${LINK_FRAGMENT}
@@ -27,34 +32,20 @@ const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
   }
 `;
 
+export interface PressReleaseDetailItem extends PressContentType {
+  SEO: SEO | null;
+  HeroBanner: {
+    BannerTitle: string;
+    BannerDescription: string;
+    BannerImage: Image;
+  }[];
+  social_icons: {
+    SocialIcon: SocialIcon[];
+  }[];
+}
+
 export interface PressReleaseDetailResponse {
-  addactPressReleases: (PressContentType & {
-    SEO: {
-      metaTitle: string | null;
-      metaDescription: string | null;
-      ogTitle: string | null;
-      ogDescription: string | null;
-      ogImage: { url: string | null } | null;
-      metaRobots: string | null;
-      twitterCardTitle: string | null;
-      canonicalURL: string | null;
-      structuredData: Record<string, unknown> | null;
-      languageTag: string | null;
-    } | null;
-    HeroBanner: {
-      BannerTitle: string;
-      BannerDescription: string;
-      BannerImage: Image;
-    }[];
-    social_icons: {
-      SocialIcon: {
-        Title: string;
-        Links: Link;
-        Icons: Image;
-        HoverIcon: Image;
-      }[];
-    }[];
-  })[];
+  addactPressReleases: PressReleaseDetailItem[];
 }
 
 export async function getPressReleaseDetailBySlug(

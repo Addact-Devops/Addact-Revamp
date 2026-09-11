@@ -4,8 +4,11 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { OUR_INSIGHTS_BLOG_FIELDS, type AddactBlog } from "../fragments/ourInsightsBlogFragment";
+export type { AddactBlog };
 import { OUR_INSIGHTS_CASE_STUDY_FIELDS, type AddactCaseStudy } from "../fragments/ourInsightsCaseStudyFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS, type OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
+export type { AddactCaseStudy };
+import { OUR_INSIGHTS_TITLE_FIELDS, type OurInsightsTitle, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
+export type { OurInsightsTitle, OurInshightsTitle };
 import client from "../client";
 
 const ourInsights_Query = gql`
@@ -17,9 +20,6 @@ const ourInsights_Query = gql`
     ${OUR_INSIGHTS_CASE_STUDY_FIELDS}
   }
 `;
-
-export type { AddactBlog } from "../fragments/ourInsightsBlogFragment";
-export type { AddactCaseStudy } from "../fragments/ourInsightsCaseStudyFragment";
 
 export interface AddactBlogsAndCaseStudyResponse {
   addactBlogs: AddactBlog[];

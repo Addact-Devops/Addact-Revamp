@@ -27,3 +27,14 @@ export type LinkFragmentType = {
     Image?: ImageFragmentType | null;
   } | ImageFragmentType | null;
 };
+
+// Header-specific link type with optional fields (matches header query shape)
+export type HeaderLink = {
+  id?: string;
+  href?: string;
+  label?: string;
+  target?: string;
+  isExternal?: boolean;
+  SubDisc?: string;
+  Icon?: ImageFragmentType;
+};

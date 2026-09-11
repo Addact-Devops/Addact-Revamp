@@ -1,26 +1,53 @@
-import { FAQ_FIELDS } from "../fragments/faqFragment";
+import { FAQ_FIELDS, type FAQ } from "../fragments/faqFragment";
+export type { FAQ };
 import { gql } from "graphql-request";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { CTA_FIELDS } from "../fragments/ctaFragment";
-import { INDUSTRY_FIELDS } from "../fragments/industryFragment";
-import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
+import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
+export type { CTA };
+import { INDUSTRY_FIELDS, type Industry, type IndustryListItem } from "../fragments/industryFragment";
+export type { Industry, IndustryListItem };
+import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFragment";
+export type { OurProcess };
 import { AI_BENEFIT_FIELDS, type AIBenefit } from "../fragments/aiBenefitFragment";
-export type { AIBenefit } from "../fragments/aiBenefitFragment";
+export type { AIBenefit };
 import { AI_SOLVE_PROBLEM_FIELDS, type AISolveProblem } from "../fragments/aiSolveProblemFragment";
-export type { AISolveProblem } from "../fragments/aiSolveProblemFragment";
-import { TECH_STACK_FIELDS } from "../fragments/techStackFragment";
+export type { AISolveProblem };
+import {
+  TECH_STACK_FIELDS,
+  type TechStack,
+  type Tab,
+  type TabContent,
+} from "../fragments/techStackFragment";
+export type { TechStack, Tab, TabContent };
 import { AI_OUR_SERVICES_FRAGMENT, type OurService } from "../fragments/aiOurServicesFragment";
-export type { OurService } from "../fragments/aiOurServicesFragment";
+export type { OurService };
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { AI_BANNER_SECTION_FIELDS } from "../fragments/aiBannerSectionFragment";
-import { WHY_ADDACT_FIELDS } from "../fragments/whyAddactFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS } from "../fragments/ourInsightsTitleFragment";
+import {
+  AI_BANNER_SECTION_FIELDS,
+  type BannerSection,
+  type BannerItem,
+  type BannerLink,
+  type LinkWithIcon,
+} from "../fragments/aiBannerSectionFragment";
+export type { BannerSection, BannerItem, BannerLink, LinkWithIcon };
+import {
+  WHY_ADDACT_FIELDS,
+  type Whyaddact,
+  type GlobalCard2,
+} from "../fragments/whyAddactFragment";
+export type { Whyaddact, GlobalCard2 };
+import {
+  OUR_INSIGHTS_TITLE_FIELDS,
+  type OurInshightsTitle,
+  type OurInsightsTitle,
+} from "../fragments/ourInsightsTitleFragment";
+export type { OurInshightsTitle, OurInsightsTitle };
 import { AI_OUR_SERVICE_FIELDS } from "../fragments/aiOurServiceFragment";
-import { SEO_FIELDS } from "../fragments/seoFragment";
+import { SEO_FIELDS, type SEO } from "../fragments/seoFragment";
+export type { SEO };
 import client from "../client";
-import { Heading, Image, Link } from "./getHomePage";
 
 const aiServiceQuery = gql`
   ${HEADING_FRAGMENT}
@@ -62,7 +89,7 @@ export interface AIService {
   Banner: BannerSection;
   cta: CTA | null;
   faq: FAQ;
-   whyaddact: Whyaddact | null;
+  whyaddact: Whyaddact | null;
   ourInshightsTitle?: OurInshightsTitle | null;
   techStack: TechStack;
   aiSolveProblem: AISolveProblem | null;
@@ -71,140 +98,6 @@ export interface AIService {
   ourprocess: OurProcess | null;
   industry: Industry | null;
 }
-export interface Whyaddact {
-  Title: Heading[];
-  pageReference?: string;
-  GlobalCard: GlobalCard2[];
-}
-
-export interface GlobalCard2 {
-  id?: string;
-  Title: string;
-  Description: string;
-  Image: Image;
-  Link?: Link | null;
-}
-export interface OurInshightsTitle {
-  CommonTitle: {
-    Title: string;
-    Description: string;
-    Link: {
-      id: string;
-      href: string;
-      label: string;
-      target: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: { alternativeText: string | null; height: number; url: string; width: number } | null;
-    };
-  }[];
-}
-
-export interface SEO {
-  metaTitle: string;
-  metaDescription: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: {
-    url: string;
-  } | null;
-  metaRobots: string;
-  twitterCardTitle: string;
-  canonicalURL: string;
-  structuredData: string | null;
-  languageTag: string;
-}
-
-export interface BannerSection {
-  Banner: BannerItem[];
-}
-
-export interface BannerItem {
-  BannerTitle: string;
-  BannerDescription: string;
-  BannerLogo: Image | null;
-  BannerImage: Image | null;
-  isTextAlignCenter: boolean | null;
-  isVideo: boolean | null;
-  show_searchbox: boolean;
-  videoLink: string | null;
-  BannerLink: LinkWithIcon;
-}
-
-export interface LinkWithIcon {
-  id: string;
-  href: string;
-  label: string | null;
-  target?: string | null;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Image | null;
-}
-
-export interface CTA {
-  CTADescription: string;
-  pageReference: string;
-  CTAImage: {
-    Image: Image;
-  }[];
-  CTALink: Link[];
-  Title: Heading[];
-}
-
-export interface FAQ {
-  Title: string;
-  FAQ: {
-    id: string;
-    Title: string;
-    Description: string;
-  }[];
-}
-
-export interface TechStack {
-  title: string;
-  description: string;
-  tab: Tab[];
-}
-
-export interface Tab {
-  category: {
-    categoryTitle: string;
-  };
-  tabContent: TabContent[];
-}
-
-export interface TabContent {
-  title: string;
-  logo: Image | null;
-}
-
-// AISolveProblem type moved to aiSolveProblemFragment.ts
-
-// AIBenefit type moved to aiBenefitFragment.ts
-
-// OurService type moved to aiOurServicesFragment.ts
-
-export interface OurProcess {
-  Title: Heading[];
-  ProcessData: {
-    Title: string;
-    Description: string;
-    Link: LinkWithIcon;
-  }[];
-}
-
-export interface Industry {
-  industryListTitle: string;
-  industry_list: {
-    Slug: string;
-    listingContext: {
-      title: string;
-      description: string;
-      image: Image | null;
-      link: LinkWithIcon;
-    };
-  }[];
-}
 
 // Fetch function
 export async function getAIService(): Promise<AIService> {
@@ -212,3 +105,4 @@ export async function getAIService(): Promise<AIService> {
 
   return data.aiService;
 }
+

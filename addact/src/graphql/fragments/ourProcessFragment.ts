@@ -18,10 +18,13 @@ export const OUR_PROCESS_FIELDS = `
   }
 `;
 
+import { type LinkWithIcon } from "./homeCapabilitiesFragment";
+
 export type ProcessItem = {
-  id: string;
+  id?: string;
   Title: string;
   Description: string;
+  Link?: LinkWithIcon;
 };
 
 export type ProcessDataItem = ProcessItem;

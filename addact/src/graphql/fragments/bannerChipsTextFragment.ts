@@ -3,3 +3,12 @@ export const BANNER_CHIPS_TEXT_FIELDS = `
     Title
   }
 `;
+
+export type ChipsTextItem = {
+  Title: string;
+};
+
+export type ChipsText = {
+  chipsText: ChipsTextItem[];
+};
+
