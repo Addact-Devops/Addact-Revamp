@@ -1,143 +1,51 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
+import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
+import { type AddactPressReleaseItem } from "../fragments/pressReleaseHeroBannerFragment";
+export type { AddactPressReleaseItem };
+import { PRESS_CONTENT_FIELDS, type PressContentType } from "../fragments/pressContentFragment";
+export type { PressContentType };
+import { SOCIAL_ICONS_FIELDS, type SocialIcon } from "../fragments/socialIconsFragment";
+export type { SocialIcon };
 import client from "../client";
-import { Heading, Image, Link } from "@/types/common";
+import { Image } from "@/types/common";
 
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${LINK_IMAGE_FRAGMENT}
   query AddactPressReleases($filters: AddactPressReleaseFiltersInput) {
     addactPressReleases(filters: $filters) {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
-      }
-      PressContent {
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          isExternal
-        }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
-      }
-      social_icons {
-        SocialIcon {
-          ... on ComponentBaseTemplateLinkImage {
-            Title
-            Links {
-              href
-              id
-              isExternal
-              label
-            }
-            Icons {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            HoverIcon {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-      }
+      SEO { ${SEO_FIELDS} }
+      ${BLOG_HERO_BANNER_FIELDS}
+      ${PRESS_CONTENT_FIELDS}
+      ${SOCIAL_ICONS_FIELDS}
     }
   }
 `;
 
-export interface PressReleaseDetailResponse {
-  addactPressReleases: {
-    SEO: {
-      metaTitle: string | null;
-      metaDescription: string | null;
-      ogTitle: string | null;
-      ogDescription: string | null;
-      ogImage: { url: string | null } | null;
-      metaRobots: string | null;
-      twitterCardTitle: string | null;
-      canonicalURL: string | null;
-      structuredData: Record<string, unknown> | null;
-      languageTag: string | null;
-    } | null;
-    HeroBanner: {
-      BannerTitle: string;
-      BannerDescription: string;
-      BannerImage: Image;
-    }[];
-    PressContent: Heading[];
-    social_icons: {
-      SocialIcon: {
-        Title: string;
-        Links: Link;
-        Icons: Image;
-        HoverIcon: Image;
-      }[];
-    }[];
+export interface PressReleaseDetailItem extends PressContentType {
+  SEO: SEO | null;
+  HeroBanner: {
+    BannerTitle: string;
+    BannerDescription: string;
+    BannerImage: Image;
   }[];
+  social_icons: {
+    SocialIcon: SocialIcon[];
+  }[];
+}
+
+export interface PressReleaseDetailResponse {
+  addactPressReleases: PressReleaseDetailItem[];
 }
 
 export async function getPressReleaseDetailBySlug(

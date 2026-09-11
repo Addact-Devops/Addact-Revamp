@@ -1,46 +1,49 @@
 // src/graphql/queries/getAboutUs.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { PAGE_HERO_BANNER_FIELDS } from "../fragments/pageHeroBannerFragment";
+import type {
+  AboutUsBannerType,
+  AboutUsHeroBannerResponse,
+} from "../fragments/pageHeroBannerFragment";
+export type { AboutUsBannerType, AboutUsHeroBannerResponse };
+import { ABOUT_US_QUOTE_FIELDS } from "../fragments/aboutUsQuoteFragment";
+import type { QuoteData } from "../fragments/aboutUsQuoteFragment";
+export type { QuoteData };
+import { ABOUT_US_CONTENT_FIELDS } from "../fragments/aboutUsContentFragment";
+import type { AboutUsContentData } from "../fragments/aboutUsContentFragment";
+export type { AboutUsContentData };
+import { ABOUT_US_VISION_MISSION_FIELDS } from "../fragments/aboutUsVisionMissionFragment";
+import type { OurVisionMissionData } from "../fragments/aboutUsVisionMissionFragment";
+export type { OurVisionMissionData };
+import { ABOUT_US_CTA_FIELDS } from "../fragments/aboutUsCtaFragment";
+import type { CTAType, AboutUsCTAResponse } from "../fragments/aboutUsCtaFragment";
+export type { CTAType, AboutUsCTAResponse };
+import { ABOUT_US_BRAND_VALUE_FIELDS } from "../fragments/aboutUsBrandValueFragment";
+import type {
+  BrandValueType,
+  BrandValueQueryResponse,
+} from "../fragments/aboutUsBrandValueFragment";
+export type { BrandValueType, BrandValueQueryResponse };
+import { ABOUT_US_WE_ARE_ADDACT_FIELDS } from "../fragments/aboutUsWeAreAddactFragment";
+import type { WeAreAddactType } from "../fragments/aboutUsWeAreAddactFragment";
+export type { WeAreAddactType };
 import client from "../client";
 
 // -----------------------------
 // ✅ About Us Hero Banner
 // -----------------------------
 
-export type AboutUsBannerType = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    url?: string;
-    height?: number;
-    width?: number;
-  } | null;
-};
-
-export type AboutUsHeroBannerResponse = {
-  aboutUs?: {
-    HeroBanner?: {
-      Banner?: AboutUsBannerType[];
-    };
-  };
-};
-
 const bannerQuery = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query AboutUs {
     aboutUs {
-      HeroBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              url
-              height
-              width
-            }
-          }
-        }
-      }
+      ${PAGE_HERO_BANNER_FIELDS}
     }
   }
 `;
@@ -59,30 +62,11 @@ export const getAboutUsHeroBanner = async (): Promise<AboutUsBannerType | null> 
 // ✅ Quote
 // -----------------------------
 
-export type QuoteData = {
-  aboutUs: {
-    Quote: {
-      AuthorName: string;
-      AuthorMessage: string;
-      AuthorImage: {
-        url: string;
-        alternativeText: string | null;
-      };
-    };
-  };
-};
-
 const quoteQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      Quote {
-        AuthorImage {
-          alternativeText
-          url
-        }
-        AuthorMessage
-        AuthorName
-      }
+      ${ABOUT_US_QUOTE_FIELDS}
     }
   }
 `;
@@ -96,40 +80,11 @@ export const getAboutUsQuote = async (): Promise<QuoteData> => {
 // ✅ About Us Content
 // -----------------------------
 
-type ParagraphBlock = {
-  type: "paragraph";
-  children: {
-    type: string;
-    text: string;
-  }[];
-};
-
-export type AboutUsContentData = {
-  aboutUs: {
-    AboutUsContent: {
-      SubTitle: string;
-      Title: string;
-      Description: string;
-      Image: {
-        url: string;
-        alternativeText?: string | null;
-      };
-    };
-  };
-};
-
 const aboutContentQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      AboutUsContent {
-        SubTitle
-        Title
-        Description
-        Image {
-          url
-          alternativeText
-        }
-      }
+      ${ABOUT_US_CONTENT_FIELDS}
     }
   }
 `;
@@ -143,34 +98,11 @@ export const getAboutUsContent = async (): Promise<AboutUsContentData> => {
 // ✅ Our Vision & Mission
 // -----------------------------
 
-export type VisionMissionItem = {
-  SubTitle: string;
-  Title: string;
-  Description: ParagraphBlock[];
-  Image: {
-    url: string;
-    alternativeText?: string | null;
-  };
-};
-
-export type OurVisionMissionData = {
-  aboutUs: {
-    OurVisionMission: VisionMissionItem[];
-  };
-};
-
 const visionQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      OurVisionMission {
-        SubTitle
-        Title
-        Description
-        Image {
-          alternativeText
-          url
-        }
-      }
+      ${ABOUT_US_VISION_MISSION_FIELDS}
     }
   }
 `;
@@ -184,75 +116,12 @@ export const getOurVisionMission = async (): Promise<OurVisionMissionData> => {
 // ✅ CTA Section
 // -----------------------------
 
-export type CTAImageType = {
-  url: string;
-  alternativeText: string | null;
-  width: number | null;
-  height: number | null;
-};
-
-export type CTALinkType = {
-  label: string;
-  href: string;
-  target: string | null;
-  isExternal: boolean;
-};
-
-export type CtaTitle = { h1?: string } | { h2?: string } | { h3?: string };
-
-export type DescriptionNode = {
-  type: string;
-  children: { text: string }[];
-};
-
-export type CTAType = {
-  Title: CtaTitle[];
-  CTADescription: DescriptionNode[];
-  CTAImage: { Image: CTAImageType }[];
-  CTALink: CTALinkType[];
-};
-
-type AboutUsCTAResponse = {
-  aboutUs: {
-    aboutUsCTA: CTAType;
-  };
-};
-
 const ctaQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   query GetAboutUsCTA {
     aboutUs {
-      aboutUsCTA {
-        Title {
-          ... on ComponentHeadingsH1 {
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            h3
-          }
-        }
-        CTADescription
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              url
-              alternativeText
-              width
-              height
-            }
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            label
-            href
-            target
-            isExternal
-          }
-        }
-      }
+      ${ABOUT_US_CTA_FIELDS}
     }
   }
 `;
@@ -266,41 +135,11 @@ export const getAboutUsCTA = async (): Promise<CTAType | null> => {
 // ✅ Brand Value
 // -----------------------------
 
-export type BrandValueType = {
-  Title: string;
-  SubTitle: string;
-  Content: {
-    type: string;
-    children: { text: string }[];
-  }[];
-  Image: {
-    url: string;
-    alternativeText: string | null;
-    width: number | null;
-    height: number | null;
-  };
-};
-
-type BrandValueQueryResponse = {
-  aboutUs: {
-    BrandValue: BrandValueType;
-  };
-};
-
 const brandValueQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      BrandValue {
-        Title
-        SubTitle
-        Content
-        Image {
-          url
-          alternativeText
-          width
-          height
-        }
-      }
+      ${ABOUT_US_BRAND_VALUE_FIELDS}
     }
   }
 `;
@@ -314,49 +153,11 @@ export const getBrandValue = async (): Promise<BrandValueType> => {
 // ✅ We Are Addact
 // -----------------------------
 
-type ContentChild = {
-  text: string;
-};
-
-type ContentBlock = {
-  type: string;
-  children: ContentChild[];
-};
-
-export type WeAreAddactType = {
-  Image: {
-    url: string;
-    alternativeText: string | null;
-    height: number;
-    width: number;
-  };
-  SubTitle: string;
-  Title: string;
-  Content: ContentBlock[];
-  NumberContent: {
-    Number: string;
-    Content: string;
-  }[];
-};
-
 const addactQuery = gql`
+  ${IMAGE_FRAGMENT}
   query AboutUs {
     aboutUs {
-      WeAreAddact {
-        Image {
-          url
-          alternativeText
-          height
-          width
-        }
-        SubTitle
-        Title
-        Content
-        NumberContent {
-          Number
-          Content
-        }
-      }
+      ${ABOUT_US_WE_ARE_ADDACT_FIELDS}
     }
   }
 `;

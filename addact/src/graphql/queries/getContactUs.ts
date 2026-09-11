@@ -1,196 +1,61 @@
 import { gql } from "graphql-request";
 import client from "../client"; // Adjust path if needed
-import { Image, Link } from "@/types/common";
+import { IMAGE_FRAGMENT, type ImageFragmentType as ImageType } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { CONTACT_US_PAGE_HEADING_FIELDS, type ContactUsPageHeadingData } from "../fragments/contactUsPageHeadingFragment";
+import { CONTACT_US_BANNER_FIELDS, type ContactUsBanner } from "../fragments/contactUsBannerFragment";
+import { CONTACT_US_TEAM_IMAGE_FIELDS, type ContactUsTeamImageData } from "../fragments/contactUsTeamImageFragment";
+import { CONTACT_US_ADDRESS_FIELDS, type AddressContentData, type RichTextBlock } from "../fragments/contactUsAddressFragment";
+import { CONTACT_US_FORM_BLOCK_FIELDS, type ContactUsFormBlockData } from "../fragments/contactUsFormBlockFragment";
+import { CONTACT_US_FORM_FIELDS, type CONTACTUS } from "../fragments/contactUsFormFragment";
+import { SEO_FIELDS, type SeoType } from "../fragments/seoFragment";
+
+export type {
+  ImageType,
+  ContactUsPageHeadingData,
+  ContactUsBanner,
+  ContactUsTeamImageData,
+  AddressContentData,
+  RichTextBlock,
+  ContactUsFormBlockData,
+  CONTACTUS,
+  SeoType,
+};
 
 export const GET_CONTACT_US = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   query Contactus {
     contactus {
-      PageHeading {
-        PageTitle
-        Slug
-      }
-      banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerImage {
-              url
-              alternativeText
-              width
-              height
-            }
-            BannerTitle
-            BannerDescription
-            BannerLink {
-              href
-              label
-            }
-          }
-        }
-      }
-      AddactTeamImage {
-        url
-        alternativeText
-        width
-        height
-      }
-      TitleLine1
-      TitleLine2
-      Descriptions
-      ContactUsAvailability {
-        Days
-        Availability
-      }
-      AddressContent {
-        OfficeCountry
-        OfficeCity
-        Address
-        ContactUsEmailPhone {
-          Label
-          Link
-        }
-        MapIframe
-      }
-      ContactUsFormBlock {
-        LeftTitle
-        LeftDescription
-        LeftBackgroundImage {
-          url
-          alternativeText
-          width
-          height
-        }
-        RightTitle
-        RightDescription
-        RecipientEmails
-      }
-      contactus {
-        Form {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-        pageReference
-        RecipientEmails
-      }
+      ${CONTACT_US_PAGE_HEADING_FIELDS}
+      ${CONTACT_US_BANNER_FIELDS}
+      ${CONTACT_US_TEAM_IMAGE_FIELDS}
+      ${CONTACT_US_ADDRESS_FIELDS}
+      ${CONTACT_US_FORM_BLOCK_FIELDS}
+      ${CONTACT_US_FORM_FIELDS}
       SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
+        ${SEO_FIELDS}
       }
     }
   }
 `;
 
-export interface ImageType {
-  url: string;
-  alternativeText: string;
-  width: number;
-  height: number;
-}
-
-export interface RichTextBlock {
-  type: string;
-  children: {
-    text: string;
-    type?: string;
-  }[];
-}
-
 export interface ContactUsResponse {
   contactus: {
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    };
-    banner: {
-      Banner: {
-        BannerImage: ImageType;
-        BannerTitle: string;
-        BannerDescription: string;
-        BannerLink: {
-          href: string;
-          label: string;
-        };
-      }[];
-    };
-    AddactTeamImage: ImageType;
-    TitleLine1: string;
-    TitleLine2: string;
-    Descriptions: RichTextBlock[];
-    ContactUsAvailability: {
-      Days: string;
-      Availability: string;
-    }[];
-    AddressContent: {
-      OfficeCountry: string;
-      OfficeCity: string;
-      Address: string;
-      ContactUsEmailPhone: {
-        Label: string;
-        Link: string;
-      }[];
-      MapIframe: RichTextBlock[];
-    };
-    ContactUsFormBlock: {
-      LeftTitle: string;
-      LeftDescription: string;
-      LeftBackgroundImage: ImageType;
-      RightTitle: string;
-      RightDescription: string;
-      RecipientEmails: string;
-    };
+    PageHeading: ContactUsPageHeadingData;
+    banner: ContactUsBanner;
+    AddactTeamImage: ContactUsTeamImageData["AddactTeamImage"];
+    TitleLine1: ContactUsTeamImageData["TitleLine1"];
+    TitleLine2: ContactUsTeamImageData["TitleLine2"];
+    Descriptions: ContactUsTeamImageData["Descriptions"];
+    ContactUsAvailability: ContactUsTeamImageData["ContactUsAvailability"];
+    AddressContent: AddressContentData;
+    ContactUsFormBlock: ContactUsFormBlockData;
     contactus: CONTACTUS;
-    SEO?: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string;
-      ogDescription?: string;
-      ogImage?: { url?: string };
-      metaRobots?: string;
-      twitterCardTitle?: string;
-      canonicalURL?: string;
-      structuredData?: Record<string, unknown>;
-      languageTag?: string;
-    } | null;
+    SEO?: SeoType | null;
   };
 }
 
-export interface CONTACTUS {
-  pageReference: string;
-  RecipientEmails: string;
-  Form: {
-    id: string;
-    Title: string;
-    Description: string;
-    Image: Image;
-    Link: Link;
-  }[];
-}
 
 export async function getContactUsData(): Promise<ContactUsResponse> {
   const data = await client.request<ContactUsResponse>(GET_CONTACT_US);

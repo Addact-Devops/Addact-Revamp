@@ -1,630 +1,95 @@
 import { gql } from "graphql-request";
+import { HEADING_FRAGMENT } from "../fragments/headingFragment";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { BASE_HEADING_FRAGMENT, type BaseHeading } from "../fragments/baseHeadingFragment";
+export type { BaseHeading };
+import { HOME_BANNER_FRAGMENT, type BANNER } from "../fragments/homeBannerFragment";
+import { HOME_SERVICES_FRAGMENT, type OURSERVICES } from "../fragments/homeServicesFragment";
+
+export type { BANNER } from "../fragments/homeBannerFragment";
+export type { OURSERVICES } from "../fragments/homeServicesFragment";
+export type { CONTACTUS } from "../fragments/homeContactUsFragment";
+export type { Whyaddact } from "../fragments/homeWhyAddactFragment";
+export type { GloabeAnimation } from "../fragments/homeGlobeAnimationFragment";
+export type { AnimationBanner } from "../fragments/homeAnimationBannerFragment";
+export type { LinkWithIcon, OurCapabilitiy } from "../fragments/homeCapabilitiesFragment";
+export type { AIEcoSystem } from "../fragments/homeAiEcoSystemFragment";
+export type { Industry, IndustryListItem } from "../fragments/industryFragment";
+export type { WhoAreWe } from "../fragments/homeWhoAreWeFragment";
+export type { OurProcessDetails as OurProcessData } from "../fragments/ourProcessFragment";
+export type { CTA } from "../fragments/ctaFragment";
+import { HOME_CONTACT_US_FRAGMENT, type CONTACTUS } from "../fragments/homeContactUsFragment";
+import { HOME_WHY_ADDACT_FRAGMENT, type Whyaddact } from "../fragments/homeWhyAddactFragment";
+import { HOME_GLOBE_ANIMATION_FRAGMENT, type GloabeAnimation } from "../fragments/homeGlobeAnimationFragment";
+import { HOME_ANIMATION_BANNER_FRAGMENT, type AnimationBanner } from "../fragments/homeAnimationBannerFragment";
+import { HOME_CAPABILITIES_FRAGMENT, type OurCapabilitiy } from "../fragments/homeCapabilitiesFragment";
+import { HOME_AI_ECO_SYSTEM_FRAGMENT, type AIEcoSystem } from "../fragments/homeAiEcoSystemFragment";
+import { HOME_WHO_ARE_WE_FRAGMENT, type WhoAreWe } from "../fragments/homeWhoAreWeFragment";
+import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
+import { OUR_PROCESS_FIELDS, type OurProcessDetails as OurProcessData } from "../fragments/ourProcessFragment";
+import { INDUSTRY_FIELDS, type Industry } from "../fragments/industryFragment";
 import client from "../client";
 
 const GET_HOME_PAGE = gql`
+  ${HEADING_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${BASE_HEADING_FRAGMENT}
+  ${HOME_BANNER_FRAGMENT}
+  ${HOME_SERVICES_FRAGMENT}
+  ${HOME_CONTACT_US_FRAGMENT}
+  ${HOME_WHY_ADDACT_FRAGMENT}
+  ${HOME_GLOBE_ANIMATION_FRAGMENT}
+  ${HOME_ANIMATION_BANNER_FRAGMENT}
+  ${HOME_CAPABILITIES_FRAGMENT}
+  ${HOME_AI_ECO_SYSTEM_FRAGMENT}
+  ${HOME_WHO_ARE_WE_FRAGMENT}
   query Home {
     home {
       documentId
       PageHeading {
         ... on ComponentBaseTemplateBaseHeading {
-          PageTitle
-          Slug
+          ...BaseHeadingFields
         }
       }
       cta {
-        Title {
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-        }
-        CTAImage {
-          ... on ComponentSharedImage {
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            id
-          }
-        }
-        CTALink {
-          ... on ComponentSharedLink {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-        }
-        pageReference
+        ${CTA_FIELDS}
       }
       ourprocess {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        ProcessData {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            id
-            Title
-            Description
-          }
-        }
+        ${OUR_PROCESS_FIELDS}
       }
-      banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerDescription
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            BannerLink {
-              href
-              id
-              isExternal
-              label
-              target
-            }
-            BannerTitle
-          }
-        }
-      }
-      ourservices {
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              href
-              isExternal
-              label
-              id
-              target
-            }
-            Title
-            id
-          }
-        }
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        documentId
-        pageReference
-      }
-      contactus {
-        Form {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-        RecipientEmails
-        pageReference
-      }
-      whyaddact {
-        Title {
-          ... on ComponentHeadingsH1 {
-            id
-            h1
-          }
-          ... on ComponentHeadingsH2 {
-            id
-            h2
-          }
-          ... on ComponentHeadingsH3 {
-            id
-            h3
-          }
-          ... on ComponentHeadingsH4 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH5 {
-            id
-            h5
-          }
-          ... on ComponentHeadingsH6 {
-            id
-            h6
-          }
-        }
-        pageReference
-        GlobalCard {
-          ... on ComponentBaseTemplatePromo {
-            id
-            Title
-            Description
-            Image {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-          }
-        }
-      }
-      GlobeAnimation {
-        Title
-        Locations
-        Video {
-          alternativeText
-          url
-          name
-          width
-          height
-        }
-      }
-      animationBanner {
-        animationTitle
-        firstAnimationImage {
-          alternativeText
-          height
-          url
-          width
-        }
-        secondAnimationImage {
-          alternativeText
-          height
-          url
-          width
-        }
-        bannerTitle
-        bannerDescription
-        bannerSubTitle {
-          Title
-        }
-        bannerImage {
-          alternativeText
-          height
-          url
-          width
-        }
-        bannerLink {
-          Icon {
-            alternativeText
-            height
-            url
-            width
-          }
-          SubDisc
-          href
-          id
-          isExternal
-          label
-          target
-        }
-      }
-
-      ourCapabilitiy {
-        heading
-        capabilities {
-          title
-          description
-          link {
-            id
-            href
-            label
-            target
-            isExternal
-            SubDisc
-            Icon {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-          image {
-            alternativeText
-            height
-            url
-            width
-          }
-          sublinks {
-            id
-            href
-            label
-            target
-            isExternal
-            SubDisc
-            Icon {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
-
-      aiEcoSystem {
-        AIEcoSystem {
-          title
-          description
-          tagLine
-          firstImage {
-            alternativeText
-            height
-            url
-            width
-          }
-          secondImage {
-            alternativeText
-            height
-            url
-            width
-          }
-          firstLayerlogos {
-            tooltip
-            Image {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-          secondLayerlogos {
-            tooltip
-            Image {
-              alternativeText
-              height
-              url
-              width
-            }
-          }
-        }
-      }
-
+      ...HomeBannerFields
+      ...HomeServicesFields
+      ...HomeContactUsFields
+      ...HomeWhyAddactFields
+      ...HomeGlobeAnimationFields
+      ...HomeAnimationBannerFields
+      ...HomeCapabilitiesFields
+      ...HomeAiEcoSystemFields
       industry {
-        industryListTitle
-        industry_list {
-          Slug
-          listingContext {
-            title
-            description
-            image {
-              alternativeText
-              height
-              url
-              width
-            }
-            link {
-              id
-              href
-              label
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                url
-                width
-                height
-              }
-            }
-          }
-        }
+        ${INDUSTRY_FIELDS}
       }
-
-      whoarewe {
-        Counter {
-          ... on ComponentCounterCounter {
-            CounterTitle
-            NumberCount
-            id
-          }
-        }
-        Title {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Description
-            Title
-          }
-        }
-        pageReference
-      }
+      ...HomeWhoAreWeFields
     }
   }
 `;
 
 // Reusable types
-export interface Image {
-  alternativeText: string | null;
-  height: number;
-  name?: string;
-  url: string;
-  width: number;
-}
+import type { ImageFragmentType as Image } from "../fragments/imageFragment";
+import type { LinkFragmentType as Link } from "../fragments/linkFragment";
+import type { HeadingFragmentType as Heading } from "../fragments/headingFragment";
+import type { FAQ as Faq } from "../fragments/faqFragment";
 
-export interface Link {
-  id: string;
-  href: string;
-  label: string | null;
-  target?: string | null;
-  isExternal: boolean;
-  SubDisc?: string | null;
-  Icon?: Image | null;
-}
-
-export interface Heading {
-  id?: string;
-  h1?: string;
-  h2?: string;
-  h3?: string;
-  h4?: string;
-  h5?: string;
-  h6?: string;
-}
-
-export interface CTA {
-  Title: Heading[];
-  CTAImage: {
-    Image: Image;
-    id?: string;
-  }[];
-  CTALink: Link[];
-  pageReference?: string;
-}
-
-export interface BANNER {
-  Banner: {
-    BannerTitle: string;
-    BannerDescription: string;
-    BannerImage: Image;
-    BannerLink: Link;
-  }[];
-}
-
-export interface OURSERVICES {
-  Title: Heading[];
-  GlobalCard: {
-    id: string;
-    Title: string;
-    Description: string;
-    Image: Image;
-    Link: Link;
-  }[];
-  documentId: string;
-  pageReference: string;
-}
-
-export interface CONTACTUS {
-  pageReference: string;
-  RecipientEmails: string;
-  Form: {
-    id: string;
-    Title: string;
-    Description: string;
-    Image: Image;
-    Link: Link;
-  }[];
-}
-
-export interface Whyaddact {
-  Title: Heading[];
-  pageReference?: string;
-  GlobalCard: GlobalCard2[];
-}
-
-export interface GlobalCard2 {
-  id?: string;
-  Title: string;
-  Description: string;
-  Image: Image;
-  Link?: Link | null;
-}
-
-export interface Faq {
-  Title: string;
-  FAQ: {
-    Description: string;
-    Title: string;
-    id?: string;
-  }[];
-}
-export interface GloabeAnimation {
-  Title: string;
-  Locations: string;
-  Video: Image;
-}
-
-export interface OurProcessData {
-  Title: Heading[];
-  ProcessData: {
-    id: string;
-    Title: string;
-    Description: string;
-  }[];
-}
-
-export interface AnimationBanner {
-  animationTitle: string;
-  firstAnimationImage: Image;
-  secondAnimationImage: Image;
-  bannerTitle: string;
-  bannerDescription: string;
-  bannerSubTitle: {
-    Title: string;
-  }[];
-  bannerImage: Image;
-  bannerLink: {
-    Icon: Image | null;
-    SubDisc: string | null;
-    href: string;
-    id: string;
-    isExternal: boolean;
-    label: string;
-    target: string;
-  };
-}
-
-export interface LinkWithIcon {
-  id: string;
-  href: string;
-  label: string | null;
-  target: string;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Image | null;
-}
-
-export interface Capability {
-  title: string;
-  description: string;
-  link: LinkWithIcon;
-  image: Image;
-  sublinks: LinkWithIcon[];
-}
-
-export interface OurCapabilitiy {
-  heading: string;
-  capabilities: Capability[];
-}
-
-export interface LogoLayer {
-  tooltip?: string | null;
-  Image: Image;
-}
-
-export interface AIEcoSystemData {
-  title: string;
-  description: string;
-  tagLine: string;
-  firstImage: Image;
-  secondImage: Image;
-  firstLayerlogos: LogoLayer[];
-  secondLayerlogos: LogoLayer[];
-}
-
-export interface AIEcoSystem {
-  AIEcoSystem: AIEcoSystemData;
-}
-
-export interface Industry {
-  industryListTitle: string;
-  industry_list: IndustryListItem[];
-}
-
-export interface IndustryListItem {
-  Slug: string;
-  listingContext: {
-    title: string;
-    description: string;
-    image: Image | null;
-    link: LinkWithIcon | null;
-  } | null;
-}
+export type { Image, Link, Heading, Faq };
 
 // Main interface
 export interface HomeItems {
   documentId: string;
-  PageHeading?: {
-    PageTitle: string;
-    Slug: string;
-  }[];
-  pageHeading: {
-    PageTitle: string;
-    Slug: string;
-  }[];
+  PageHeading?: BaseHeading[];
+  pageHeading: BaseHeading[];
   cta: CTA;
   banner: BANNER;
   ourprocess: OurProcessData;
@@ -637,18 +102,7 @@ export interface HomeItems {
   ourCapabilitiy: OurCapabilitiy;
   aiEcoSystem: AIEcoSystem;
   industry?: Industry;
-  whoarewe: {
-    Counter: {
-      CounterTitle: string;
-      NumberCount: number;
-      id: string;
-    }[];
-    Title: {
-      Description: string;
-      Title: string;
-    }[];
-    pageReference: string;
-  };
+  whoarewe: WhoAreWe;
 }
 
 export interface HomeResponse {
