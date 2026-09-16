@@ -35,22 +35,24 @@ const CaseStudyListing = () => {
   return (
     <div>
       {/* Banner Section */}
-      {caseStudyBanner && (
+      {caseStudyBanner?.CaseStudyBanner?.Banner?.[0] && (
         <div className="relative w-full flex items-center justify-center text-white">
-          <Image
-            src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url}
-            alt={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.alternativeText}
-            layout="fill"
-            objectFit="cover"
-            priority
-            className="absolute inset-0 z-0"
-          />
+          {caseStudyBanner.CaseStudyBanner.Banner[0].BannerImage?.url && (
+            <Image
+              src={caseStudyBanner.CaseStudyBanner.Banner[0].BannerImage.url}
+              alt={caseStudyBanner.CaseStudyBanner.Banner[0].BannerImage?.alternativeText || caseStudyBanner.CaseStudyBanner.Banner[0].BannerTitle || "Case Study Banner"}
+              layout="fill"
+              objectFit="cover"
+              priority
+              className="absolute inset-0 z-0"
+            />
+          )}
           <div className="relative container-main mt-[68px] lg:mt-[120px] min-h-[200px] md:h-[300px] lg:h-[500px]! flex flex-col lg:justify-center justify-end h-full mb-[40px] lg:mb-0">
             <h1 className="text-white mb-[20px] md:mb-[15px] !font-bold !text-[33px] md:!text-[45px] leading-[55px] 2xl:!text-[60px] !2xl:leading-[63px] xl:max-w-[60%]">
-              {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
+              {caseStudyBanner.CaseStudyBanner.Banner[0]?.BannerTitle}
             </h1>
             <div className="mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl">
-              <RichText html={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription} />
+              <RichText html={caseStudyBanner.CaseStudyBanner.Banner[0]?.BannerDescription} />
             </div>
           </div>
         </div>
@@ -63,15 +65,17 @@ const CaseStudyListing = () => {
             key={item.documentId}
             className="flex flex-col items-center md:flex-row bg-[#232630] p-5 text-white rounded-[20px] overflow-hidden shadow-lg"
           >
-            <div className="relative w-full md:w-[550px] h-[200px] md:h-[300px]">
-              <Image
-                src={item.HeroBanner[0].BannerImage.url}
-                alt={item.HeroBanner[0].BannerImage.alternativeText}
-                layout="fill"
-                objectFit="cover"
-                className="rounded-[20px]"
-              />
-            </div>
+            {item.HeroBanner?.[0]?.BannerImage?.url && (
+              <div className="relative w-full md:w-[550px] h-[200px] md:h-[300px]">
+                <Image
+                  src={item.HeroBanner[0].BannerImage.url}
+                  alt={item.HeroBanner[0].BannerImage?.alternativeText || item.HeroBanner[0].BannerTitle || "Case Study Image"}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-[20px]"
+                />
+              </div>
+            )}
 
             <div className="flex flex-col justify-between pt-6 md:pt-0 md:pl-9 w-full md:w-2/3">
               <div>

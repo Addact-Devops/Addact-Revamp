@@ -1,57 +1,19 @@
 // src/graphql/queries/getClientTestimonialsData.ts
 
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { CLIENT_TESTIMONIALS_FIELDS, type ClientTestimonialResponse } from "../fragments/clientTestimonialsFragment";
 import client from "../client";
 
+export type { TestimonialItem } from "../fragments/clientTestimonialsItemFragment";
+export type { ClientTestimonialResponse } from "../fragments/clientTestimonialsFragment";
+
 export const GET_CLIENT_TESTIMONIALS = gql`
+  ${IMAGE_FRAGMENT}
   query GetClientTestimonials {
-    clientTestimonials {
-      Title
-      Item {
-        quote
-        author_name
-        author_position
-        rating
-      }
-      bgText
-      rating
-      ratingImage {
-        alternativeText
-        height
-        url
-        width
-      }
-    }
+    ${CLIENT_TESTIMONIALS_FIELDS}
   }
 `;
-
-export type TestimonialItem = {
-  quote: {
-    type: string;
-    children: {
-      text: string;
-      type: string;
-    }[];
-  }[];
-  author_name: string;
-  author_position: string;
-  rating: string; // Expected format: "star1", "star2", etc.
-};
-
-export type ClientTestimonialResponse = {
-  clientTestimonials: {
-    Title: string;
-    Item: TestimonialItem[];
-    bgText: string;
-    rating: string;
-    ratingImage: {
-      alternativeText: string;
-      height: number;
-      url: string;
-      width: number;
-    };
-  }[];
-};
 
 export async function getClientTestimonialsData(): Promise<
   ClientTestimonialResponse["clientTestimonials"][0] | null
