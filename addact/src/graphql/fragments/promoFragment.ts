@@ -1,11 +1,10 @@
 import { gql } from "graphql-request";
-import { ImageFragmentType } from "./imageFragment";
-import { LinkFragmentType } from "./linkFragment";
+import { ID_TITLE_DESCRIPTION_FIELDS, type IdTitleDescriptionType } from "./titleDescriptionFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import type { LinkFragmentType } from "./linkFragment";
 
 export const PROMO_INNER_FIELDS = `
-  id
-  Title
-  Description
+  ${ID_TITLE_DESCRIPTION_FIELDS}
   Image {
     ...ImageFields
   }
@@ -20,10 +19,8 @@ export const PROMO_FRAGMENT = gql`
   }
 `;
 
-export type PromoFragmentType = {
-  id: string;
-  Title: string;
-  Description: string;
+export type PromoFragmentType = Required<IdTitleDescriptionType> & {
   Image: ImageFragmentType;
   Link: LinkFragmentType;
 };
+

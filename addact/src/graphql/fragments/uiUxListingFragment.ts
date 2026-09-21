@@ -1,48 +1,32 @@
 import { gql } from "graphql-request";
-import type { ImageFragmentType } from "./imageFragment";
+import { CMS_SERVICE_VARIANT_FIELDS } from "./cmsServiceVariantFragment";
+import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
 import type { LinkFragmentType } from "./linkFragment";
+import { type OurServiceList, type ServiceListItem } from "./developmentDesignListingFragment";
 
-export type UiUxListingContextItem = {
-  listingContext?: {
-    title?: string;
-    description?: string;
-    image?: ImageFragmentType;
-    link?: LinkFragmentType;
-  };
-};
+export type UiUxListingContextItem = ServiceListItem;
 
-export type UiUxListingType = {
-  serviceTitle?: string;
-  serviceVariant?: {
-    variant?: string;
-  };
-  isCarousel?: boolean;
+export type UiUxListingType = OurServiceList & {
   link?: LinkFragmentType;
-  serviceList?: UiUxListingContextItem[];
 };
+
+export type { OurServiceList, ServiceListItem };
+
 
 export const UI_UX_LISTING_FRAGMENT = gql`
   fragment UiUxListingFields on ComponentHomeUiUxLisitng {
     serviceTitle
-    serviceVariant {
-      variant
-    }
+    ${CMS_SERVICE_VARIANT_FIELDS}
     isCarousel
     link {
       ...LinkFields
     }
     serviceList {
       listingContext {
-        title
-        description
-        image {
-          ...ImageFields
-        }
-        link {
-          ...LinkFields
-        }
+        ${AI_LISTING_CONTEXT_FIELDS}
       }
     }
   }
 `;
+
 

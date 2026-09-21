@@ -1,7 +1,6 @@
 import { gql } from "graphql-request";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { REUSE_CARD_FRAGMENT } from "../fragments/reuseCardFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { CAREERS_HERO_BANNER_FIELDS, type CareersHeroBanner } from "../fragments/careersHeroBannerFragment";
 import { CAREER_CARD_FIELDS, type CareerCardData, type TitleBlock, type CardPromo } from "../fragments/careerCardFragment";
@@ -22,7 +21,6 @@ if (!endpoint) {
 const query = gql`
   ${LINK_FRAGMENT}
   ${IMAGE_FRAGMENT}
-  ${REUSE_CARD_FRAGMENT}
   ${RICHTEXT_FRAGMENT}
   query CareersData {
     careers {

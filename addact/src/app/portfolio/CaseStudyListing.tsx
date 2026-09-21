@@ -52,7 +52,7 @@ const CaseStudyListing = () => {
               {caseStudyBanner.CaseStudyBanner.Banner[0]?.BannerTitle}
             </h1>
             <div className="mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl">
-              <RichText html={caseStudyBanner.CaseStudyBanner.Banner[0]?.BannerDescription} />
+              <RichText html={caseStudyBanner.CaseStudyBanner.Banner[0]?.BannerDescription || ""} />
             </div>
           </div>
         </div>

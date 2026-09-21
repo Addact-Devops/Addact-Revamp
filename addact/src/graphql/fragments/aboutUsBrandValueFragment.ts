@@ -1,4 +1,5 @@
 import type { ImageFragmentType } from "./imageFragment";
+import type { TitleDescriptionType } from "./titleDescriptionFragment";
 
 export const TITLE_DESCRIPTION_IMAGE_FIELDS = `
   Title
@@ -19,17 +20,15 @@ export const ABOUT_US_BRAND_VALUE_FIELDS = `
   }
 `;
 
-export type BrandValueType = {
-  Title: string;
-  SubTitle: string;
-  Description: string;
-  Image: ImageFragmentType & {
-    url: string;
-    alternativeText: string | null;
-    width: number | null;
-    height: number | null;
-  };
+export type TitleDescriptionImageType = Required<TitleDescriptionType> & {
+  Image: ImageFragmentType;
 };
+
+export type AboutUsItemType = TitleDescriptionImageType & {
+  SubTitle: string;
+};
+
+export type BrandValueType = AboutUsItemType;
 
 export type BrandValueQueryResponse = {
   aboutUs: {

@@ -1,16 +1,11 @@
-import { CATEGORY_INNER_FIELDS } from "./blogCategoryFragment";
+import { CATEGORY_INNER_FIELDS, type BlogCategoryItem, type Category } from "./blogCategoryFragment";
+export type { BlogCategoryItem, Category };
 
 export const BLOG_CATEGORIES_FIELDS = `
   blogCategories {
     ${CATEGORY_INNER_FIELDS}
   }
 `;
-
-export type BlogCategoryItem = {
-  Category: {
-    CategoryTitle: string;
-  };
-};
 
 export type BlogCategoriesType = {
   blogCategories: BlogCategoryItem[];

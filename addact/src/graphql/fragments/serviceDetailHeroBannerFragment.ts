@@ -1,24 +1,14 @@
-import { BANNER_TITLE_DESCRIPTION_FIELDS } from "./componentBannerFieldsFragment";
-// import type { BannerTitleDescriptionType } from "./componentBannerFieldsFragment";
-import type { ImageFragmentType } from "./imageFragment";
-import type { LinkFragmentType } from "./linkFragment";
+import {
+  BANNER_IMAGE_LINK_FIELDS,
+  type HeroBannerFragmentType,
+} from "./componentBannerFieldsFragment";
 
 export const SERVICE_DETAIL_HERO_BANNER_FIELDS = `
   HeroBanner {
-    ${BANNER_TITLE_DESCRIPTION_FIELDS}
-    BannerImage {
-      ...ImageFields
-    }
-    BannerLink {
-      ...LinkFields
-    }
+    ${BANNER_IMAGE_LINK_FIELDS}
   }
 `;
 
-export type ServiceDetailHeroBanner = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: ImageFragmentType;
-  BannerLink?: LinkFragmentType;
-};
+export type ServiceDetailHeroBanner = HeroBannerFragmentType;
+
 

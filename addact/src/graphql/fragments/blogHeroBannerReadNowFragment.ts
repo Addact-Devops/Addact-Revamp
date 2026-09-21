@@ -1,4 +1,4 @@
-import { type LinkFragmentType } from "./linkFragment";
+import { type HeaderLink } from "./linkFragment";
 
 export const BLOG_HERO_BANNER_READ_NOW_FIELDS = `
   ReadNow {
@@ -7,5 +7,5 @@ export const BLOG_HERO_BANNER_READ_NOW_FIELDS = `
 `;
 
 export type ReadNow = {
-  ReadNow: LinkFragmentType | null;
+  ReadNow?: HeaderLink;
 };

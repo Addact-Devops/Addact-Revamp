@@ -1,4 +1,4 @@
-import { CONTACT_US_FORM_LABELS_FIELDS } from "./contactUsFormLabelsFragment";
+import { CONTACT_US_FORM_LABELS_FIELDS, type ContactUsFormLabels } from "./contactUsFormLabelsFragment";
 
 export const EVENT_CONTACT_US_CARD_FIELDS = `
   contact_us_card {
@@ -13,13 +13,7 @@ export const EVENT_CONTACT_US_CARD_FIELDS = `
   }
 `;
 
-export type EventContactUsCardItem = {
-  ButtonLabel: string;
-  CompanyName: string;
-  EmailLabel: string;
-  NameLable: string;
-  RequirementsLabel: string;
-  RecipientEmails: string;
+export type EventContactUsCardItem = Required<ContactUsFormLabels> & {
   PhoneLabel: string;
   Form: {
     Title: string;
@@ -30,3 +24,5 @@ export type EventContactUsCardItem = {
 export type EventContactUsCardType = {
   contact_us_card: EventContactUsCardItem;
 };
+
+

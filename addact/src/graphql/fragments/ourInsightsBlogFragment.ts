@@ -1,6 +1,5 @@
-import { Image, Link } from "@/types/common";
-import { BLOG_HERO_BANNER_INNER_FIELDS } from "./blogHeroBannerFragment";
-import { BLOG_HERO_BANNER_READ_NOW_FIELDS } from "./blogHeroBannerReadNowFragment";
+import { BLOG_HERO_BANNER_FIELDS, type BlogBannerItem } from "./blogHeroBannerFieldsFragment";
+import type { BaseHeading } from "./baseHeadingFragment";
 
 export const OUR_INSIGHTS_BLOG_FIELDS = `
   addactBlogs(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
@@ -10,35 +9,16 @@ export const OUR_INSIGHTS_BLOG_FIELDS = `
     HeadingSection {
       ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
     }
-    BlogBanner {
-      ... on ComponentBlogHeroBannerBlogHeroBanner {
-        id
-        ${BLOG_HERO_BANNER_INNER_FIELDS}
-        ${BLOG_HERO_BANNER_READ_NOW_FIELDS}
-      }
-    }
+    ${BLOG_HERO_BANNER_FIELDS}
   }
 `;
-
-export type BlogHeadingSection = {
-  PageTitle: string;
-};
-
-export type BlogBanner = {
-  id: string;
-  BannerImage: Image;
-  BannerDescription: string;
-  BannerTitle: string;
-  PublishDate: string;
-  ReadNow: Link;
-};
 
 export type AddactBlog = {
   documentId: string;
   Slug: string;
   createdAt: string;
-  HeadingSection: BlogHeadingSection[];
-  BlogBanner: BlogBanner[];
+  HeadingSection: Partial<BaseHeading>[];
+  BlogBanner: BlogBannerItem[];
 };
 
 export type OurInsightsBlogType = {

@@ -1,5 +1,5 @@
 import { gql } from "graphql-request";
-import type { ImageFragmentType } from "./imageFragment";
+import { IMAGE_FIELD_SELECTION, type ImageFragmentType } from "./imageFragment";
 
 export type SharedImageFragmentType = {
   Image?: ImageFragmentType;
@@ -7,9 +7,7 @@ export type SharedImageFragmentType = {
 
 export const SHARED_IMAGE_FRAGMENT = gql`
   fragment SharedImageFields on ComponentSharedImage {
-    Image {
-      ...ImageFields
-    }
+    ${IMAGE_FIELD_SELECTION}
   }
 `;
 

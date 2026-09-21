@@ -1,29 +1,16 @@
-import { Image, Link } from "@/types/common";
-import { BANNER_TITLE_DESCRIPTION_FIELDS } from "./componentBannerFieldsFragment";
+import { BANNER_IMAGE_LINK_FIELDS } from "./componentBannerFieldsFragment";
+import type { BannerItem as ServiceListBannerItem, BANNER } from "./homeBannerFragment";
 
-export type ServiceListBannerItem = {
-  BannerDescription: string;
-  BannerTitle: string;
-  BannerImage: Image;
-  BannerLink: Link;
-};
+export type { ServiceListBannerItem };
 
 export type ServiceListBannerType = {
-  Banner: {
-    Banner: ServiceListBannerItem[];
-  };
+  Banner: BANNER;
 };
 
 export const SERVICE_LIST_BANNER_FIELDS = `
   Banner {
     Banner {
-      ${BANNER_TITLE_DESCRIPTION_FIELDS}
-      BannerImage {
-        ...ImageFields
-      }
-      BannerLink {
-        ...LinkFields
-      }
+      ${BANNER_IMAGE_LINK_FIELDS}
     }
   }
 `;

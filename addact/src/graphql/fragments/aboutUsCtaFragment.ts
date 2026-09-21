@@ -1,5 +1,7 @@
 import { ABOUT_US_CTA_TITLE_FIELDS, type AboutUsCtaTitle } from "./aboutUsCtaTitleFragment";
 export type { AboutUsCtaTitle };
+import type { ImageFragmentType } from "./imageFragment";
+import type { LinkFragmentType } from "./linkFragment";
 
 export const ABOUT_US_CTA_FIELDS = `
   aboutUsCTA {
@@ -20,19 +22,8 @@ export const ABOUT_US_CTA_FIELDS = `
   }
 `;
 
-export type CTAImageType = {
-  url: string;
-  alternativeText: string | null;
-  width: number | null;
-  height: number | null;
-};
-
-export type CTALinkType = {
-  label: string;
-  href: string;
-  target: string | null;
-  isExternal: boolean;
-};
+export type CTAImageType = ImageFragmentType;
+export type CTALinkType = LinkFragmentType;
 
 export type DescriptionNode = {
   type: string;

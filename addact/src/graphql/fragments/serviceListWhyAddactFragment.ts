@@ -1,41 +1,21 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
-import type { HeadingFragmentType } from "./headingFragment";
-import type { PromoFragmentType } from "./promoFragment";
+import { GLOBAL_CARD_PROMO_FIELDS } from "./globalCardPromoFragment";
+import { type Whyaddact as WhyAddact } from "./homeWhyAddactFragment";
 
-export type ServiceListWhyAddactItem = {
-  Title?: HeadingFragmentType[];
-  GlobalCard?: PromoFragmentType[];
-  pageReference?: string;
-};
+export type ServiceListWhyAddactItem = WhyAddact;
 
 export type ServiceListWhyAddactType = {
   why_addact?: ServiceListWhyAddactItem;
 };
 
-export interface WhyAddact {
-  Title: HeadingFragmentType[];
-  GlobalCard: PromoFragmentType[];
-  pageReference?: string;
-}
+export type { WhyAddact };
 
 export const SERVICE_LIST_WHY_ADDACT_FIELDS = `
   why_addact {
     Title {
       ${BLOG_CONTENT_HEADINGS_FIELDS}
     }
-    GlobalCard {
-      ... on ComponentBaseTemplatePromo {
-        id
-        Title
-        Description
-        Image {
-          ...ImageFields
-        }
-        Link {
-          ...LinkFields
-        }
-      }
-    }
+    ${GLOBAL_CARD_PROMO_FIELDS}
     pageReference
   }
 `;

@@ -1,24 +1,14 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
-import { BLOG_CONTENT_SHARED_LINK_FIELDS } from "./blogContentSharedLinkFragment";
-import { BLOG_CONTENT_ERROR_FIELDS } from "./blogContentErrorFragment";
+import { BLOG_CONTENT_INNER_FIELDS, type BlogContentItem } from "./blogContentFragment";
 
 export const CASE_STUDY_CONTENT_FIELDS = `
   CaseStudyContent {
-    ${BLOG_CONTENT_HEADINGS_FIELDS}
-    ${BLOG_CONTENT_SHARED_LINK_FIELDS}
-    ... on ComponentSharedImage { ...SharedImageFields }
-    ... on ComponentBaseTemplateRichtext { ...RichtextFields }
-    ${BLOG_CONTENT_ERROR_FIELDS}
+    ${BLOG_CONTENT_INNER_FIELDS}
   }
 `;
 
-export type CaseStudyContentItem = {
-  id: string;
-  h2?: string;
-  Richtext?: string;
-  h3?: string;
-};
+export type CaseStudyContentItem = BlogContentItem;
 
 export type CaseStudyContentType = {
   CaseStudyContent: CaseStudyContentItem[];
 };
+

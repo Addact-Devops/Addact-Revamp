@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     alternates: seo.canonicalURL ? { canonical: seo.canonicalURL } : undefined,
     other: {
       twitterCardTitle: seo.twitterCardTitle || "",
-      structuredData: seo.structuredData || "",
+      structuredData: seo.structuredData ? JSON.stringify(seo.structuredData) : "",
       languageTag: seo.languageTag || "",
     },
   };
@@ -50,7 +50,7 @@ export default async function CareerDetailPage({ params }: { params: Params }) {
 
   return (
     <>
-      <StructuredDataScript data={seo.structuredData} />
+      <StructuredDataScript data={seo?.structuredData} />
       <CareerDetailClient data={career} />
     </>
   );

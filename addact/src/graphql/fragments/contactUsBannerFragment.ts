@@ -1,27 +1,12 @@
-import { COMPONENT_BANNER_FIELDS } from "./componentBannerFieldsFragment";
-import { Image } from "@/types/common";
+import { COMPONENT_BANNER_SECTION_FIELDS, type ComponentBannerItem } from "./componentBannerFieldsFragment";
 
 export const CONTACT_US_BANNER_FIELDS = `
   banner {
-    Banner {
-      ... on ComponentBannerBanner {
-        ${COMPONENT_BANNER_FIELDS}
-      }
-    }
+    ${COMPONENT_BANNER_SECTION_FIELDS}
   }
 `;
 
-export type ContactUsBannerLink = {
-  href: string;
-  label: string;
-};
-
-export type ContactUsBannerItem = {
-  BannerImage: Image;
-  BannerTitle: string;
-  BannerDescription: string;
-  BannerLink: ContactUsBannerLink;
-};
+export type ContactUsBannerItem = ComponentBannerItem;
 
 export type ContactUsBanner = {
   Banner: ContactUsBannerItem[];
@@ -30,3 +15,4 @@ export type ContactUsBanner = {
 export type ContactUsBannerType = {
   banner: ContactUsBanner;
 };
+

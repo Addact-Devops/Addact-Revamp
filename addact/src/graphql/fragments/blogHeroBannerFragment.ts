@@ -1,5 +1,5 @@
-import { Image } from "@/types/common";
-import { BANNER_TITLE_DESCRIPTION_FIELDS } from "./componentBannerFieldsFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import { BANNER_TITLE_DESCRIPTION_FIELDS, type BannerTitleDescriptionType } from "./componentBannerFieldsFragment";
 
 export const BLOG_HERO_BANNER_INNER_FIELDS = `
   ${BANNER_TITLE_DESCRIPTION_FIELDS}
@@ -17,9 +17,9 @@ export const BLOG_HERO_BANNER_FIELDS = `
   }
 `;
 
-export type BlogHeroBannerItem = {
+export type BlogHeroBannerItem = BannerTitleDescriptionType & {
   BannerTitle: string;
-  BannerImage: Image;
+  BannerImage: ImageFragmentType;
   PublishDate?: string;
 };
 

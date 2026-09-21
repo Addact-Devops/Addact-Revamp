@@ -1,5 +1,23 @@
 import { gql } from "graphql-request";
 
+export const HEADING_SELECTION_FIELDS = `
+  ... on ComponentHeadingsH1 { ...HeadingFields }
+  ... on ComponentHeadingsH2 { ...Heading2Fields }
+  ... on ComponentHeadingsH3 { ...Heading3Fields }
+  ... on ComponentHeadingsH4 { ...Heading4Fields }
+  ... on ComponentHeadingsH5 { ...Heading5Fields }
+  ... on ComponentHeadingsH6 { ...Heading6Fields }
+`;
+
+export const HEADING_INLINE_FIELDS = `
+  ... on ComponentHeadingsH1 { id h1 }
+  ... on ComponentHeadingsH2 { id h2 }
+  ... on ComponentHeadingsH3 { id h3 }
+  ... on ComponentHeadingsH4 { id h5 }
+  ... on ComponentHeadingsH5 { id h5 }
+  ... on ComponentHeadingsH6 { id h6 }
+`;
+
 export const HEADING_FRAGMENT = gql`
   fragment HeadingFields on ComponentHeadingsH1 {
     h1

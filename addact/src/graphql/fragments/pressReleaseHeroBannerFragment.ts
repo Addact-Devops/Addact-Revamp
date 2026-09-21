@@ -1,31 +1,25 @@
-import { Image } from "@/types/common";
+import { COMPONENT_HERO_BANNER_FIELDS, type HeroBannerFragmentType } from "./heroBannerFragment";
+import { type BlogHeroBannerItem } from "./blogHeroBannerFragment";
 
 export const PRESS_RELEASE_HERO_BANNER_FIELDS = `
   HeroBanner {
     Banner {
-      ... on ComponentBannerBanner {
-        ...HeroBannerFields
-      }
+      ${COMPONENT_HERO_BANNER_FIELDS}
     }
   }
 `;
 
 export type PressReleaseHeroBannerType = {
   HeroBanner: {
-    Banner: {
-      BannerDescription: string;
-      BannerTitle: string;
-      BannerImage: Image;
-    }[];
+    Banner: HeroBannerFragmentType[];
   };
 };
 
 export type AddactPressReleaseItem = {
   Slug: string;
-  HeroBanner: {
-    BannerTitle: string;
-    BannerImage: Image;
-  }[];
+  HeroBanner: BlogHeroBannerItem[];
   PressReleaseSummary: string;
 };
+
+
 

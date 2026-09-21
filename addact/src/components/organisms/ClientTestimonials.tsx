@@ -2,25 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
-import {
-  getClientTestimonialsData,
-  TestimonialItem,
-} from "@/graphql/queries/getClientTestimonialsData";
+import { getClientTestimonialsData } from "@/graphql/queries/getClientTestimonialsData";
 import { TestimonialWatermarkIcon } from "../atom/icons";
 import Image from "../atom/image";
 
-type Data = {
-  Title: string;
-  Item: TestimonialItem[];
-  bgText: string;
-  rating: string;
-  ratingImage: {
-    alternativeText: string;
-    height: number;
-    url: string;
-    width: number;
-  };
-};
+import type { ClientTestimonialItem } from "@/graphql/fragments/clientTestimonialsFragment";
+
+type Data = ClientTestimonialItem;
 
 export default function ClientTestimonials() {
   const [data, setData] = useState<Data | null>(null);

@@ -1,5 +1,4 @@
-import { ABOUT_US_ITEM_INNER_FIELDS } from "./aboutUsBrandValueFragment";
-import type { ImageFragmentType } from "./imageFragment";
+import { ABOUT_US_ITEM_INNER_FIELDS, type AboutUsItemType } from "./aboutUsBrandValueFragment";
 
 export const ABOUT_US_VISION_MISSION_FIELDS = `
   OurVisionMission {
@@ -15,14 +14,8 @@ export type ParagraphBlockType = {
   }[];
 };
 
-export type VisionMissionItem = {
-  SubTitle: string;
-  Title: string;
+export type VisionMissionItem = Omit<AboutUsItemType, "Description"> & {
   Description: ParagraphBlockType[];
-  Image: ImageFragmentType & {
-    url: string;
-    alternativeText?: string | null;
-  };
 };
 
 export type OurVisionMissionData = {

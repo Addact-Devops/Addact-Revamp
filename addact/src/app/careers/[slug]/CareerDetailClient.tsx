@@ -133,7 +133,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
 
     // Metadata
     formData.append("sheetName", "CareerForm");
-    formData.append("RecipientEmails", data.careers_form.FormFields.RecipientEmails);
+    formData.append("RecipientEmails", data.careers_form.FormFields.RecipientEmails || "");
     formData.append("pageTitle", `"${pageTitle}"`);
     formData.append("honeypot", honeypot);
     formData.append("turnstileToken", captchaToken || "");
@@ -229,7 +229,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                 <div
                   className="text-base text-[#333] mb-6"
                   dangerouslySetInnerHTML={{
-                    __html: data.careers_form.FormFields.Form[0]?.Description,
+                    __html: data.careers_form.FormFields.Form[0]?.Description || "",
                   }}
                 />
 
@@ -247,7 +247,7 @@ export default function CareerDetailClient({ data }: CareerDetailClientProps) {
                     <div
                       className="prose prose-sm prose-invert text-white max-w-none !text-lg"
                       dangerouslySetInnerHTML={{
-                        __html: data.careers_form.FormFields.Form[1]?.Description,
+                        __html: data.careers_form.FormFields.Form[1]?.Description || "",
                       }}
                     />
                   </div>

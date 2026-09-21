@@ -1,52 +1,56 @@
 import { gql } from "graphql-request";
 import { HOME_ANIMATION_BANNER_SUB_TITLE_FIELDS } from "./homeAnimationBannerSubTitleFragment";
-import { Image } from "@/types/common";
+import type { ImageFragmentType } from "./imageFragment";
+import type { LinkFragmentType } from "./linkFragment";
 
-export const HOME_ANIMATION_BANNER_FRAGMENT = gql`
-  fragment HomeAnimationBannerFields on Home {
-    animationBanner {
-      animationTitle
-      firstAnimationImage {
-        ...ImageFields
-      }
-      secondAnimationImage {
-        ...ImageFields
-      }
-      bannerTitle
-      bannerDescription
-      ${HOME_ANIMATION_BANNER_SUB_TITLE_FIELDS}
-      bannerImage {
-        ...ImageFields
-      }
-      bannerLink {
-        ...LinkFields
-      }
+export const ANIMATION_BANNER_TITLE_DESC_FIELDS = `
+  bannerTitle
+  bannerDescription
+`;
+
+export const HOME_ANIMATION_BANNER_FIELDS = `
+  animationBanner {
+    animationTitle
+    firstAnimationImage {
+      ...ImageFields
+    }
+    secondAnimationImage {
+      ...ImageFields
+    }
+    ${ANIMATION_BANNER_TITLE_DESC_FIELDS}
+    ${HOME_ANIMATION_BANNER_SUB_TITLE_FIELDS}
+    bannerImage {
+      ...ImageFields
+    }
+    bannerLink {
+      ...LinkFields
     }
   }
 `;
 
-export type AnimationBannerLink = {
-  Icon: Image | null;
-  SubDisc: string | null;
-  href: string;
-  id: string;
-  isExternal: boolean;
-  label: string;
-  target: string;
-};
+export const HOME_ANIMATION_BANNER_FRAGMENT = gql`
+  fragment HomeAnimationBannerFields on Home {
+    ${HOME_ANIMATION_BANNER_FIELDS}
+  }
+`;
+
+export type AnimationBannerLink = LinkFragmentType;
 
 export type AnimationBannerSubTitle = {
   Title: string;
 };
 
-export type AnimationBanner = {
-  animationTitle: string;
-  firstAnimationImage: Image;
-  secondAnimationImage: Image;
+export type AnimationBannerTitleDescription = {
   bannerTitle: string;
   bannerDescription: string;
+};
+
+export type AnimationBanner = AnimationBannerTitleDescription & {
+  animationTitle: string;
+  firstAnimationImage: ImageFragmentType;
+  secondAnimationImage: ImageFragmentType;
   bannerSubTitle: AnimationBannerSubTitle[];
-  bannerImage: Image;
+  bannerImage: ImageFragmentType;
   bannerLink: AnimationBannerLink;
 };
 

@@ -1,25 +1,15 @@
-import { Image, Link } from "@/types/common";
-import { COMPONENT_BANNER_FIELDS } from "./componentBannerFieldsFragment";
+import { COMPONENT_BANNER_SECTION_FIELDS, type ComponentBannerItem, type BannerSection } from "./componentBannerFieldsFragment";
 
 export const EVENT_BANNER_FIELDS = `
   EventBanner {
-    Banner {
-      ... on ComponentBannerBanner {
-        ${COMPONENT_BANNER_FIELDS}
-      }
-    }
+    ${COMPONENT_BANNER_SECTION_FIELDS}
   }
 `;
 
-export type EventBannerItem = {
-  BannerDescription: string;
-  BannerImage: Image;
-  BannerLink: Link;
-  BannerTitle: string;
-};
+export type EventBannerItem = ComponentBannerItem;
 
 export type EventBannerType = {
-  EventBanner: {
-    Banner: EventBannerItem[];
-  };
+  EventBanner: BannerSection;
 };
+
+

@@ -13,6 +13,12 @@ export const IMAGE_FRAGMENT = `
   }
 `;
 
+export const IMAGE_FIELD_SELECTION = `
+  Image {
+    ...ImageFields
+  }
+`;
+
 export type ImageFragmentType = {
   alternativeText?: string | null;
   caption?: string | null;

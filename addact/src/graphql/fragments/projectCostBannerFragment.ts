@@ -1,25 +1,11 @@
-import { BANNER_TITLE_DESCRIPTION_FIELDS } from "./componentBannerFieldsFragment";
-import { type ImageFragmentType } from "./imageFragment";
+import { COMPONENT_BANNER_SECTION_FIELDS, type HeroBannerFragmentType } from "./componentBannerFieldsFragment";
 
 export const PROJECT_COST_BANNER_FIELDS = `
   banner {
-    Banner {
-      ... on ComponentBannerBanner {
-        BannerImage {
-          ...ImageFields
-        }
-        ${BANNER_TITLE_DESCRIPTION_FIELDS}
-        BannerLogo {
-          ...ImageFields
-        }
-      }
-    }
+    ${COMPONENT_BANNER_SECTION_FIELDS}
   }
 `;
 
-export type ProjectCostEstimatorBannerType = {
-  BannerImage?: ImageFragmentType;
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerLogo?: ImageFragmentType;
-};
+export type ProjectCostEstimatorBannerType = HeroBannerFragmentType;
+
+

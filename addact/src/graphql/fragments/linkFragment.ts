@@ -1,17 +1,21 @@
 import { gql } from "graphql-request";
-import { ImageFragmentType } from "./imageFragment";
+import type { ImageFragmentType } from "./imageFragment";
+
+export const LINK_INNER_FIELDS = `
+  id
+  href
+  label
+  target
+  isExternal
+  SubDisc
+  Icon {
+    ...ImageFields
+  }
+`;
 
 export const LINK_FRAGMENT = gql`
   fragment LinkFields on ComponentSharedLink {
-    id
-    href
-    label
-    target
-    isExternal
-    SubDisc
-    Icon {
-      ...ImageFields
-    }
+    ${LINK_INNER_FIELDS}
   }
 `;
 
@@ -28,13 +32,7 @@ export type LinkFragmentType = {
   } | ImageFragmentType | null;
 };
 
-// Header-specific link type with optional fields (matches header query shape)
-export type HeaderLink = {
-  id?: string;
-  href?: string;
-  label?: string;
-  target?: string;
-  isExternal?: boolean;
-  SubDisc?: string;
+// Header-specific link type with optional fields (derived from LinkFragmentType)
+export type HeaderLink = Partial<Omit<LinkFragmentType, "Icon">> & {
   Icon?: ImageFragmentType;
 };

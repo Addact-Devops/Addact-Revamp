@@ -1,32 +1,18 @@
+import { COMPONENT_HERO_BANNER_SEARCHBOX_FIELDS, type HeroBannerFragmentType } from "./heroBannerFragment";
+import { BLOG_CONTENT_ERROR_FIELDS, type ContentError } from "./blogContentErrorFragment";
+
 export const BLOG_PAGE_BANNER_FIELDS = `
   blogBanner {
     Banner {
-      ... on ComponentBannerBanner {
-        id
-        ...HeroBannerFields
-        show_searchbox
-      }
-      ... on Error {
-        code
-        message
-      }
+      ${COMPONENT_HERO_BANNER_SEARCHBOX_FIELDS}
+      ${BLOG_CONTENT_ERROR_FIELDS}
     }
   }
 `;
 
-export type BlogPageBannerItem = {
+export type BlogPageBannerItem = HeroBannerFragmentType & Partial<ContentError> & {
   id?: string;
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    width: number;
-    url: string;
-    name: string;
-    height: number;
-  };
   show_searchbox?: boolean;
-  code?: string;
-  message?: string;
 };
 
 export type BlogPageBannerType = {
@@ -34,4 +20,5 @@ export type BlogPageBannerType = {
     Banner: BlogPageBannerItem[];
   };
 };
+
 

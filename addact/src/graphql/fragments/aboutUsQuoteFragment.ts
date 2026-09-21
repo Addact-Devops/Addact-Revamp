@@ -13,10 +13,7 @@ export const ABOUT_US_QUOTE_FIELDS = `
 export type AboutUsQuoteType = {
   AuthorName: string;
   AuthorMessage: string;
-  AuthorImage: ImageFragmentType & {
-    url: string;
-    alternativeText: string | null;
-  };
+  AuthorImage: ImageFragmentType;
 };
 
 export type QuoteData = {

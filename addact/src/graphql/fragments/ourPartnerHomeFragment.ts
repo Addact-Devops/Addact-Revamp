@@ -1,4 +1,5 @@
-import { OUR_PARTNER_INNER_FIELDS } from "./ourPartnerFragment";
+import { OUR_PARTNER_INNER_FIELDS, type SharedImageWrapper } from "./ourPartnerFragment";
+import type { HeadingFragmentType } from "./headingFragment";
 
 export const OUR_PARTNER_HOME_FIELDS = `
   ourpartner {
@@ -6,19 +7,9 @@ export const OUR_PARTNER_HOME_FIELDS = `
   }
 `;
 
-export type PartnerImage = {
-  Image: {
-    url: string;
-    alternativeText: string | null;
-  };
-};
+export type PartnerImage = SharedImageWrapper;
 
-export type PartnerTitle =
-  | { h1: string }
-  | { h2: string }
-  | { h3: string }
-  | { h5: string }
-  | { h6: string };
+export type PartnerTitle = HeadingFragmentType;
 
 export type OurPartnerResponse = {
   home: {

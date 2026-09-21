@@ -1,20 +1,16 @@
-import { Image, Link } from "@/types/common";
-import type { LinkImageItem } from "./linkImageFragment";
+import { type LinkImageItem } from "./linkImageFragment";
 
-export type SocialIcon = {
-  Title: string;
-  Links: Link;
-  Icons: Image;
-  HoverIcon: Image;
-};
+export type SocialIcon = LinkImageItem;
 
 export type SocialIconItem = {
-  SocialIcon?: LinkImageItem[] | SocialIcon[];
+  SocialIcon?: SocialIcon[];
 };
 
 export type SocialIconsType = {
-  social_icons?: SocialIconItem | SocialIconItem[];
+  social_icons?: SocialIconItem[];
 };
+
+export type { LinkImageItem };
 
 export const SOCIAL_ICONS_FIELDS = `
   social_icons {
@@ -23,4 +19,5 @@ export const SOCIAL_ICONS_FIELDS = `
     }
   }
 `;
+
 

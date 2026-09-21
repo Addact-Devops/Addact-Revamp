@@ -13,30 +13,41 @@ export type ReuseCardFragmentType = {
   Icon?: ImageFragmentType;
   LogoLink?: LinkFragmentType;
   LogoTitle?: string;
-  TitleIcon?: TitleIconItem;
+  TitleIcon?: TitleIconItem | TitleIconItem[];
 };
 
-export const REUSE_CARD_FRAGMENT = gql`
-  fragment ReuseCardFields on ComponentReuseCard {
-    AerrowIcon {
-      ...ImageFields
-    }
-    HoverIcon {
-      ...ImageFields
-    }
+export const REUSE_CARD_INNER_FIELDS = `
+  AerrowIcon {
+    ...ImageFields
+  }
+  HoverIcon {
+    ...ImageFields
+  }
+  Icon {
+    ...ImageFields
+  }
+  LogoLink {
+    ...LinkFields
+  }
+  LogoTitle
+  TitleIcon {
     Icon {
       ...ImageFields
     }
-    LogoLink {
-      ...LinkFields
-    }
-    LogoTitle
-    TitleIcon {
-      Icon {
-        ...ImageFields
-      }
-      Title
-    }
+    Title
   }
 `;
+
+export const REUSE_CARD_FIELDS = `
+  ... on ComponentReuseCard {
+    ${REUSE_CARD_INNER_FIELDS}
+  }
+`;
+
+export const REUSE_CARD_FRAGMENT = gql`
+  fragment ReuseCardFields on ComponentReuseCard {
+    ${REUSE_CARD_INNER_FIELDS}
+  }
+`;
+
 

@@ -29,33 +29,19 @@ export type DescriptionNode = {
 
 export type CTAFragmentType = {
   Title: HeadingFragmentType[];
-  CTADescription: string | null;
-  CTAImage?: {
-    Image: ImageFragmentType;
-  }[];
-  CTALink: LinkFragmentType[];
+  CTADescription?: string | null;
+  CTAImage?: CTAImageItem[];
+  CTALink?: LinkFragmentType[];
   pageReference?: string;
 };
 
 export type CTAImageItem = {
-  Image: {
-    alternativeText: string | null;
-    height?: number | null;
-    name?: string;
-    url: string;
-    width?: number | null;
-  };
+  Image: ImageFragmentType;
   id?: string;
 };
 
-export type CTALinkItem = {
+export type CTALinkItem = LinkFragmentType & {
   id: string;
-  href: string;
-  label?: string | null;
-  target?: string | null;
-  isExternal: boolean;
-  SubDisc?: string | null;
-  Icon?: CTAImageItem["Image"] | null;
 };
 
 export type CTA = {
@@ -67,24 +53,12 @@ export type CTA = {
 };
 
 export type CTAImage = {
-  Image: {
-    alternativeText: string | null;
-    caption: string | null;
-    width: number | null;
-    height: number | null;
-    url: string;
-  };
+  Image: ImageFragmentType;
 };
 
-export type CtaTitle = { h1: string } | { h2: string } | { h3: string } | { h5: string } | { h6: string };
+export type CtaTitle = HeadingFragmentType;
 
-export type CtaLink = {
-  id: string;
-  href: string;
-  label: string;
-  target: string | null;
-  isExternal: boolean;
-};
+export type CtaLink = LinkFragmentType;
 
 export type CtaBannerResponse = {
   home: {
@@ -95,3 +69,4 @@ export type CtaBannerResponse = {
     };
   };
 };
+

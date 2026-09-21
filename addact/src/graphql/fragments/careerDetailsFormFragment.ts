@@ -6,7 +6,7 @@ import { CAREER_FORM_FIELD_NAME_FIELDS, type CareerFormFieldNameType } from "./c
 export type CareersFormType = LeftInsightsType & FormFieldsType & CareerFormFieldNameType;
 
 export type CareerDetailsFormType = {
-  careers_form?: CareersFormType;
+  careers_form: CareersFormType;
 };
 
 export const CAREER_DETAILS_FORM_FRAGMENT = gql`

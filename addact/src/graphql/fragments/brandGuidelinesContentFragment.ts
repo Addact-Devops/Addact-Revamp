@@ -1,8 +1,9 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 import { BLOG_CONTENT_SHARED_LINK_FIELDS } from "./blogContentSharedLinkFragment";
-import { type BrandGuidelinesFormFieldsItem } from "./brandGuidelinesFormFragment";
-import { type PageHeroBannerType } from "./pageHeroBannerFragment";
-import type { Heading } from "@/types/common";
+import type { BrandGuidelinesFormFieldsItem } from "./brandGuidelinesFormFragment";
+import type { PageHeroBannerType } from "./pageHeroBannerFragment";
+import type { BrandGuidelinesPdfType } from "./brandGuidelinesPdfFragment";
+import type { BlogContentItem } from "./blogContentFragment";
 
 export const BRAND_GUIDELINES_CONTENT_FIELDS = `
   Content {
@@ -13,14 +14,15 @@ export const BRAND_GUIDELINES_CONTENT_FIELDS = `
   }
 `;
 
-export type BrandGuidelinesResponse = {
-  brandGuideline: PageHeroBannerType & BrandGuidelinesFormFieldsItem & {
-    ReferenceTitle: string;
-    Slug: string;
-    Content: Heading[];
-    GuidelinePDF: {
-      alternativeText: string;
-      url: string;
-    };
+export type BrandGuidelinesItem = PageHeroBannerType &
+  BrandGuidelinesFormFieldsItem &
+  Partial<BrandGuidelinesPdfType> & {
+    ReferenceTitle?: string;
+    Slug?: string;
+    Content?: BlogContentItem[];
   };
+
+export type BrandGuidelinesResponse = {
+  brandGuideline: BrandGuidelinesItem;
 };
+

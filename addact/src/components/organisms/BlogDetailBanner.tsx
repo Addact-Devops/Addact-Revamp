@@ -4,26 +4,10 @@ import { useEffect, useState } from "react";
 import Breadcrumps from "@/components/atom/breadcrumps";
 import Image from "next/image";
 
-type BannerImageType = {
-  url?: string;
-  width?: number;
-  height?: number;
-  name?: string;
-  alternativeText?: string;
-};
+import type { BlogBannerItem } from "@/graphql/fragments/blogHeroBannerFieldsFragment";
 
 type BlogDetailBannerProps = {
-  banner?: {
-    BannerTitle?: string;
-    BannerDescription?: string;
-    BannerImage?: BannerImageType;
-    PublishDate?: string;
-    blogcategory?: {
-      Category?: {
-        CategoryTitle?: string;
-      };
-    };
-  };
+  banner?: BlogBannerItem;
 };
 
 export default function BlogDetailBanner({ banner }: BlogDetailBannerProps) {

@@ -1,20 +1,12 @@
+import { COMPONENT_HERO_BANNER_FIELDS, type HeroBannerFragmentType } from "./heroBannerFragment";
+
 export const VIDEO_BANNER_FIELDS = `
   banner {
     Banner {
-      ... on ComponentBannerBanner {
-        ...HeroBannerFields
-      }
+      ${COMPONENT_HERO_BANNER_FIELDS}
     }
   }
 `;
 
-export type VideoBannerType = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  };
-};
+export type VideoBannerType = HeroBannerFragmentType;
+

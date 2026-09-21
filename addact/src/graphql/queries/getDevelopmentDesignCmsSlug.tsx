@@ -5,43 +5,27 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { SITECORE_LISTING_FRAGMENT } from "../fragments/sitecoreListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
-import { CMS_DETAIL_ALL_FIELDS_FRAGMENT } from "../fragments/cmsDetailAllFieldsFragment";
-import client from "../client";
-
-
-import type { SeoType as SEO } from "../fragments/seoFragment";
-import type { FAQ } from "../fragments/faqFragment";
-import type { Whyaddact, GlobalCard2 } from "../fragments/whyWorkWithUsFragment";
-import type { BannerSection, BannerItem, BannerLink } from "../fragments/developmentHeroBannerFragment";
-import type { CTA } from "../fragments/ctaFragment";
-import type { Industry, IndustryListItem } from "../fragments/industryFragment";
-import type { OurProcess, ProcessDataItem, LinkProps } from "../fragments/ourProcessFragment";
-import type { TechStack, Tab, TabContent } from "../fragments/techStackFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
+import { BANNER_SECTION_FIELDS, type BannerSection, type BannerItem, type BannerLink } from "../fragments/bannerSectionFragment";
+export type { BannerSection, BannerItem, BannerLink };
+import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
+export type { CTA };
+import { WHY_ADDACT_FIELDS, type Whyaddact, type GlobalCard2 } from "../fragments/whyAddactFragment";
+export type { Whyaddact, GlobalCard2 };
+import { FAQ_FIELDS, type FAQ } from "../fragments/faqFragment";
+export type { FAQ };
+import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle, type OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
+export type { OurInshightsTitle, OurInsightsTitle };
+import { TECH_STACK_FIELDS, type TechStack, type Tab, type TabContent } from "../fragments/techStackFragment";
+export type { TechStack, Tab, TabContent };
+import { INDUSTRY_FIELDS, type Industry, type IndustryListItem } from "../fragments/industryFragment";
+export type { Industry, IndustryListItem };
+import { OUR_PROCESS_FIELDS, type OurProcess, type ProcessDataItem, type LinkProps } from "../fragments/ourProcessFragment";
+export type { OurProcess, ProcessDataItem, LinkProps };
 import type { OurServiceList, ServiceListItem } from "../fragments/developmentDesignListingFragment";
-import type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
-
-export type {
-  SEO,
-  FAQ,
-  Whyaddact,
-  GlobalCard2,
-  BannerSection,
-  BannerItem,
-  BannerLink,
-  CTA,
-  Industry,
-  IndustryListItem,
-  OurProcess,
-  ProcessDataItem,
-  LinkProps,
-  TechStack,
-  Tab,
-  TabContent,
-  OurServiceList,
-  ServiceListItem,
-  OurInshightsTitle,
-  OurInsightsTitle,
-};
+export type { OurServiceList, ServiceListItem };
+import client from "../client";
 
 const developmentDesignDetailsSlugQuery = gql`
   ${HEADING_FRAGMENT}
@@ -50,10 +34,37 @@ const developmentDesignDetailsSlugQuery = gql`
   ${OUR_SERVICE_FRAGMENT}
   ${SITECORE_LISTING_FRAGMENT}
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
-  ${CMS_DETAIL_ALL_FIELDS_FRAGMENT}
   query CMSDetails($filters: CmsDetailFiltersInput) {
     cmsDetails(filters: $filters) {
-      ...CmsDetailAllFields
+      SEO {
+        ${SEO_FIELDS}
+      }
+      ${BANNER_SECTION_FIELDS}
+      cta {
+        ${CTA_FIELDS}
+      }
+      ${WHY_ADDACT_FIELDS}
+      faq {
+        ${FAQ_FIELDS}
+      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
+      techStack {
+        ${TECH_STACK_FIELDS}
+      }
+      ourService {
+        ... on ComponentHomeSitecoreListing {
+          ...SitecoreListingFields
+        }
+        ... on ComponentHomeServiceList {
+          ...OurServiceFields
+        }
+      }
+      industry {
+        ${INDUSTRY_FIELDS}
+      }
+      ourprocess {
+        ${OUR_PROCESS_FIELDS}
+      }
     }
   }
 `;
@@ -87,3 +98,4 @@ export async function getDevelopmentDesignDetailsCmsSlug(slug: string): Promise<
 
   return data.cmsDetails?.[0] ?? null;
 }
+

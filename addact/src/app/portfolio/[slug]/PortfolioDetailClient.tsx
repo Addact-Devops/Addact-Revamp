@@ -49,7 +49,7 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
           <div className="relative aspect-[16/9] md:aspect-auto w-full h-60 md:h-auto">
             <Image
               src={hero.BannerImage.url}
-              alt={hero.BannerImage.name}
+              alt={hero.BannerImage.name || ""}
               width={hero.BannerImage.width}
               height={hero.BannerImage.height}
               className="object-cover rounded-lg"
@@ -70,15 +70,15 @@ export default function PortfolioDetailClient({ slug }: { slug: string }) {
                 <DownloadForm
                   title="Get your free copy now!"
                   description={formTitle?.Description}
-                  pdfUrl={pdf.url}
-                  pdfName={pdf.name}
+                  pdfUrl={pdf?.url || ""}
+                  pdfName={pdf?.name || ""}
                   submitUrl="/api/submit-form"
                   sheetName="Case_Study"
-                  NameLabel={formFields?.NameLable}
-                  EmailLabel={formFields?.EmailLabel}
-                  PhoneLabel={formFields?.PhoneLabel}
-                  ButtonLabel={formFields?.ButtonLabel}
-                  RecipientEmails={formFields?.RecipientEmails}
+                  NameLabel={formFields?.NameLable || ""}
+                  EmailLabel={formFields?.EmailLabel || ""}
+                  PhoneLabel={formFields?.PhoneLabel || ""}
+                  ButtonLabel={formFields?.ButtonLabel || ""}
+                  RecipientEmails={formFields?.RecipientEmails || ""}
                   pageTitle={`Case-Study-Details ${slug}`}
                 />
               </div>

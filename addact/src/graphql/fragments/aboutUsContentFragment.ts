@@ -1,5 +1,4 @@
-import { ABOUT_US_ITEM_INNER_FIELDS } from "./aboutUsBrandValueFragment";
-import type { ImageFragmentType } from "./imageFragment";
+import { ABOUT_US_ITEM_INNER_FIELDS, type AboutUsItemType } from "./aboutUsBrandValueFragment";
 
 export const ABOUT_US_CONTENT_FIELDS = `
   AboutUsContent {
@@ -7,15 +6,7 @@ export const ABOUT_US_CONTENT_FIELDS = `
   }
 `;
 
-export type AboutUsContentType = {
-  SubTitle: string;
-  Title: string;
-  Description: string;
-  Image: ImageFragmentType & {
-    url: string;
-    alternativeText?: string | null;
-  };
-};
+export type AboutUsContentType = AboutUsItemType;
 
 export type AboutUsContentData = {
   aboutUs: {

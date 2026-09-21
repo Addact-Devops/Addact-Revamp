@@ -1,5 +1,5 @@
-import { Image } from "@/types/common";
-import { BLOG_AUTHOR_DESIGNATION_FIELDS } from "./blogAuthorDesignationFragment";
+import { BLOG_AUTHOR_DESIGNATION_FIELDS, type Designation } from "./blogAuthorDesignationFragment";
+import type { AuthorDetails } from "./blogAuthorFragment";
 
 export const WEBINAR_AUTHOR_FIELDS = `
   Author {
@@ -17,16 +17,16 @@ export const WEBINAR_HOST_FIELDS = `
   }
 `;
 
+export type WebinarAuthorDetails = AuthorDetails;
+
 export type WebinarAuthorType = {
-  Author: {
-    AuthorImage: Image;
-    AuthorName: string;
-    designation: {
-      DesignationTitle: string;
-    };
-  };
+  Author?: WebinarAuthorDetails;
 };
 
 export type WebinarHostType = {
   Host: WebinarAuthorType[];
 };
+
+export type { Designation, AuthorDetails };
+
+

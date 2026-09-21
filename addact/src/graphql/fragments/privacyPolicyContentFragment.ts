@@ -1,3 +1,6 @@
+import type { TitleWithDescriptionFragmentType } from "./titleWithDescriptionFragment";
+import type { PageHeadingType } from "./pageHeadingFragment";
+
 export const PRIVACY_POLICY_CONTENT_FIELDS = `
   BodyContent {
     CommonTitle {
@@ -8,19 +11,10 @@ export const PRIVACY_POLICY_CONTENT_FIELDS = `
 
 export type PrivacyPolicyData = {
   privacyPolicy: {
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    };
+    PageHeading: PageHeadingType["PageHeading"];
     BodyContent: {
-      CommonTitle: {
-        Title: string;
-        Description: string;
-        Link?: {
-          href: string;
-          target?: string;
-        } | null;
-      }[];
+      CommonTitle: TitleWithDescriptionFragmentType[];
     };
   };
 };
+

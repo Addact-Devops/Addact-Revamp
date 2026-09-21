@@ -1,26 +1,29 @@
-import { FOOTER_LINKS_FIELDS } from "./footerLinksFragment";
+import { FOOTER_LINKS_FIELDS, type FooterNavLinkItem } from "./footerLinksFragment";
 import { FOOTER_SOCIAL_MEDIA_FIELDS } from "./footerSocialMediaFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import type { LinkFragmentType } from "./linkFragment";
+import type { TitleWithDescriptionFragmentType } from "./titleWithDescriptionFragment";
 
 export const FOOTER_FIELDS = `
   Logo {
     Image {
-          ...ImageFields
-        }
+      ...ImageFields
+    }
   }
   BackGroundImage {
     Image {
-          ...ImageFields
-        }
+      ...ImageFields
+    }
   }
   BackGroundImageMobile {
     Image {
-          ...ImageFields
-        }
+      ...ImageFields
+    }
   }
   AddressInformationMobileBgImg {
     Image {
-          ...ImageFields
-        }
+      ...ImageFields
+    }
   }
   AddressInformation {
     ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
@@ -39,64 +42,25 @@ export const FOOTER_FIELDS = `
   ${FOOTER_SOCIAL_MEDIA_FIELDS}
 `;
 
-export type FooterImage = {
-  alternativeText?: string;
-  height?: number;
-  name?: string;
-  url?: string;
-  width?: number;
-};
+export type FooterImage = ImageFragmentType;
 
 export type FooterImageBlock = {
   Image?: FooterImage | null;
 };
 
-export type FooterAddressInformation = {
-  Title?: string;
-  Description?: string;
-  urlKeyword?: string;
-  Link?: {
-    href?: string;
-    isExternal?: boolean;
-    label?: string;
-    SubDisc?: string;
-    target?: string;
-    Icon?: FooterImage | null;
-  } | null;
-};
+export type FooterAddressInformation = TitleWithDescriptionFragmentType;
 
 export type FooterLinksGroup = {
   NavLink?: FooterNavLink[];
 };
 
-export type FooterNavLink =
-  | {
-      Title?: string;
-    }
-  | {
-      id?: string;
-      href?: string;
-      label?: string;
-      target?: string;
-      isExternal?: boolean;
-    };
+export type FooterNavLink = FooterNavLinkItem;
 
 export type FooterMilestonesTitle = {
-  CommonTitle?: {
-    Title?: string;
-    Description?: string;
-  }[];
+  CommonTitle?: TitleWithDescriptionFragmentType[];
 };
 
-export type FooterSocialLink = {
-  id?: string;
-  href?: string;
-  label?: string;
-  target?: string;
-  isExternal?: boolean;
-  SubDisc?: string;
-  Icon?: FooterImage | null;
-};
+export type FooterSocialLink = LinkFragmentType;
 
 export type Footer = {
   Logo?: FooterImageBlock | null;
@@ -111,4 +75,5 @@ export type Footer = {
   CopyrightText?: string;
   SiteSlog?: string;
 };
+
 

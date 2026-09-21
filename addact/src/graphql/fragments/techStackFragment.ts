@@ -1,6 +1,8 @@
+import { TITLE_DESCRIPTION_LOWER_FIELDS } from "./titleDescriptionFragment";
+import type { ImageFragmentType } from "./imageFragment";
+
 export const TECH_STACK_FIELDS = `
-  title
-  description
+  ${TITLE_DESCRIPTION_LOWER_FIELDS}
   tab {
     category {
       categoryTitle
@@ -14,13 +16,7 @@ export const TECH_STACK_FIELDS = `
   }
 `;
 
-export type TabContentLogo = {
-  alternativeText?: string | null;
-  height?: number;
-  name?: string;
-  url: string;
-  width?: number;
-};
+export type TabContentLogo = ImageFragmentType;
 
 export type TabContent = {
   title: string;
@@ -43,3 +39,6 @@ export type TechStack = {
 export type TechStackType = {
   techStack: TechStack;
 };
+
+export type { ImageFragmentType };
+

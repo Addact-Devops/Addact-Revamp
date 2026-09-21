@@ -1,14 +1,12 @@
+import { BASE_HEADING_FIELDS, type BaseHeading } from "./baseHeadingFragment";
+
 export const PAGE_HEADING_FIELDS = `
   PageHeading {
-    PageTitle
-    Slug
+    ${BASE_HEADING_FIELDS}
   }
 `;
 
 export type PageHeadingType = {
-  PageHeading: {
-    PageTitle?: string;
-    Slug?: string;
-  };
+  PageHeading: Partial<BaseHeading>;
 };
 

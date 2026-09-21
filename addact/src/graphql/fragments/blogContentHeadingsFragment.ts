@@ -1,31 +1,6 @@
-import { type HeadingFragmentType } from "./headingFragment";
+import { HEADING_INLINE_FIELDS, type HeadingFragmentType } from "./headingFragment";
 
-export const BLOG_CONTENT_HEADINGS_FIELDS = `
-  ... on ComponentHeadingsH6 {
-    id
-    h6
-  }
-  ... on ComponentHeadingsH5 {
-    id
-    h5
-  }
-  ... on ComponentHeadingsH4 {
-    id
-    h5
-  }
-  ... on ComponentHeadingsH3 {
-    id
-    h3
-  }
-  ... on ComponentHeadingsH2 {
-    id
-    h2
-  }
-  ... on ComponentHeadingsH1 {
-    id
-    h1
-  }
-`;
+export const BLOG_CONTENT_HEADINGS_FIELDS = HEADING_INLINE_FIELDS;
 
 export type ContentHeading = HeadingFragmentType;
 export type { HeadingFragmentType };

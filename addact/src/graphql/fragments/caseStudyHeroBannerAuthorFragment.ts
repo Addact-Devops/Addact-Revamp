@@ -1,23 +1,8 @@
-import { BLOG_AUTHOR_DESIGNATION_FIELDS, type Designation } from "./blogAuthorDesignationFragment";
+import { BLOG_AUTHOR_FIELDS, type BlogAuthorType, type AuthorDetails } from "./blogAuthorFragment";
 
-export type CaseStudyAuthorType = {
-  AuthorName?: string;
-  designation?: Designation;
-};
+export type CaseStudyAuthorType = AuthorDetails;
+export type CaseStudyHeroBannerAuthorType = BlogAuthorType;
 
-export type CaseStudyHeroBannerAuthorType = {
-  author?: {
-    Author?: CaseStudyAuthorType;
-  };
-};
-
-export const CASE_STUDY_HERO_BANNER_AUTHOR_FIELDS = `
-  author {
-    Author {
-      AuthorName
-      ${BLOG_AUTHOR_DESIGNATION_FIELDS}
-    }
-  }
-`;
+export const CASE_STUDY_HERO_BANNER_AUTHOR_FIELDS = BLOG_AUTHOR_FIELDS;
 
 

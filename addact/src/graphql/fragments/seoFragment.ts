@@ -31,18 +31,14 @@ export type SeoType = {
 export type SEO = SeoType;
 
 export type PageSEO = {
-  metaTitle?: string;
-  metaDescription?: string;
-  ogTitle?: string;
-  ogDescription?: string;
+  [K in keyof Omit<SeoType, "ogImage" | "structuredData">]?: string;
+} & {
   ogImage?: { url?: string };
-  metaRobots?: string;
-  twitterCardTitle?: string;
-  canonicalURL?: string;
   structuredData?: Record<string, unknown>;
-  languageTag?: string;
 };
 
 export type BlogBySlugSEO = PageSEO;
 export type ThankYouPageSEO = PageSEO;
 export type WebinarSEO = PageSEO;
+
+

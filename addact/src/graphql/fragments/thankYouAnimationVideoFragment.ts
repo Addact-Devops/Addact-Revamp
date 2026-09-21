@@ -1,19 +1,19 @@
-import { ImageFragmentType } from "./imageFragment";
+import type { ImageFragmentType } from "./imageFragment";
+
+export type AnimationVideo = ImageFragmentType;
 
 export type ThankYouAnimationVideoType = {
-  AnimationVideo?: ImageFragmentType;
+  AnimationVideo?: AnimationVideo;
 };
-
-export interface AnimationVideo {
-  alternativeText: string;
-  name: string;
-  url: string;
-}
 
 export const THANK_YOU_ANIMATION_VIDEO_FIELDS = `
   AnimationVideo {
     ...ImageFields
   }
 `;
+
+
+
+
 
 

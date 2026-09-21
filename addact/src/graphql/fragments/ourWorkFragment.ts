@@ -1,12 +1,12 @@
 import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
-import { Image } from "@/types/common";
+import { CMS_SERVICE_VARIANT_FIELDS, type CmsServiceVariantType } from "./cmsServiceVariantFragment";
+import type { Image } from "@/types/common";
+import type { LinkWithIcon } from "./homeCapabilitiesFragment";
 
 export const OUR_WORK_FIELDS = `
   ourWork {
     serviceTitle
-    serviceVariant {
-      variant
-    }
+    ${CMS_SERVICE_VARIANT_FIELDS}
     isCarousel
     serviceList {
       listingContext {
@@ -26,28 +26,19 @@ export type OurWorkServiceListItem = {
     title: string | null;
     description: string | null;
     image: Image | null;
-    link: {
-      id: string;
-      href: string;
-      label: string | null;
-      target: string;
-      isExternal: boolean;
-      SubDisc: string | null;
-      Icon: Image | null;
-    } | null;
+    link: LinkWithIcon | null;
   } | null;
   tagLine: {
     Title: string;
   }[];
 };
 
-export type OurWork = {
+export type OurWork = CmsServiceVariantType & {
   serviceTitle: string | null;
-  serviceVariant: {
-    variant: string;
-  } | null;
   isCarousel: boolean | null;
   serviceList: OurWorkServiceListItem[];
 };
+
+
 
 

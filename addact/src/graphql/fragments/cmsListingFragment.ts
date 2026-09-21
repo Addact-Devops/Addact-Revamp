@@ -4,16 +4,27 @@ import { AI_SERVICE_LIST_FIELDS } from "./aiServiceListFragment";
 // Re-using OurServiceList and ServiceListItem from developmentDesignListingFragment to avoid duplicate type definitions
 import { type OurServiceList, type ServiceListItem } from "./developmentDesignListingFragment";
 
+export const CMS_LISTING_INNER_FIELDS = `
+  id
+  serviceTitle
+  ${CMS_SERVICE_VARIANT_FIELDS}
+  ${AI_SERVICE_LIST_FIELDS}
+  isCarousel
+`;
+
+export const CMS_LISTING_FIELDS = `
+  ... on ComponentHomeCmsListing {
+    ${CMS_LISTING_INNER_FIELDS}
+  }
+`;
+
 export const CMS_LISTING_FRAGMENT = gql`
   fragment CmsListingFields on ComponentHomeCmsListing {
-    id
-    serviceTitle
-    ${CMS_SERVICE_VARIANT_FIELDS}
-    ${AI_SERVICE_LIST_FIELDS}
-    isCarousel
+    ${CMS_LISTING_INNER_FIELDS}
   }
 `;
 
 export type { OurServiceList, ServiceListItem };
 
 export type CmsListingType = OurServiceList;
+

@@ -1,6 +1,4 @@
-import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
-import { Image } from "@/types/common";
-import { LinkWithIcon } from "./homeCapabilitiesFragment";
+import { AI_LISTING_CONTEXT_FIELDS, type AIListingContext } from "./aiListingContextFragment";
 
 export const INDUSTRY_FIELDS = `
   industryListTitle
@@ -14,12 +12,7 @@ export const INDUSTRY_FIELDS = `
 
 export type IndustryListItem = {
   Slug: string;
-  listingContext: {
-    title: string;
-    description: string;
-    image: Image | null;
-    link: LinkWithIcon | null;
-  } | null;
+  listingContext: AIListingContext | null;
 };
 
 export type Industry = {

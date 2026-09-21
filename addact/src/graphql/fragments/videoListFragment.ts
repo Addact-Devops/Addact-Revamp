@@ -1,8 +1,12 @@
+import { TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
+import type { BaseHeading } from "./baseHeadingFragment";
+import type { BannerSection } from "./componentBannerFieldsFragment";
+import type { Link } from "@/types/common";
+
 export const VIDEO_LIST_FIELDS = `
   VideoList(pagination: { limit: -1 }) {
     Content {
-      Title
-      Description
+      ${TITLE_DESCRIPTION_FIELDS}
       Link {
         ...LinkFields
       }
@@ -17,11 +21,7 @@ export type VideoContentType = {
   Content: {
     Title: string;
     Description: string;
-    Link: {
-      isExternal: boolean;
-      href: string;
-      label: string;
-    };
+    Link: Link;
   };
   Iframe: {
     Richtext: string;
@@ -30,22 +30,11 @@ export type VideoContentType = {
 
 export type VideoPageResponse = {
   videoListing: {
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    };
-    banner: {
-      Banner: {
-        BannerTitle?: string;
-        BannerDescription?: string;
-        BannerImage?: {
-          url?: string;
-          width?: number;
-          height?: number;
-          alternativeText?: string | null;
-        };
-      }[];
-    };
+    PageHeading: BaseHeading;
+    banner: BannerSection;
     VideoList: VideoContentType[];
   };
 };
+
+export type { BaseHeading, BannerSection };
+

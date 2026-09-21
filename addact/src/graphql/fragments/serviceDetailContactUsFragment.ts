@@ -1,39 +1,19 @@
-import { Image, Link } from "@/types/common";
-import { PROMO_INNER_FIELDS, type PromoFragmentType } from "./promoFragment";
+import { CONTACT_US_FORM_INNER_FIELDS } from "./contactUsFormFragment";
+import { type CONTACTUS, type ContactUsFormItem } from "./homeContactUsFragment";
 
-export type ServiceDetailContactUsItem = {
-  Form?: PromoFragmentType[];
-  pageReference?: string;
-  RecipientEmails?: string;
-};
+export type ServiceDetailContactUsItem = Partial<CONTACTUS>;
 
 export type ServiceDetailContactUsType = {
   contact_us?: ServiceDetailContactUsItem;
 };
 
-export interface CONTACTUS {
-  pageReference: string;
-  RecipientEmails: string;
-  Form: {
-    id: string;
-    Title: string;
-    Description: string;
-    Image: Image;
-    Link: Link;
-  }[];
-}
-
+export type { CONTACTUS, ContactUsFormItem };
 
 export const SERVICE_DETAIL_CONTACT_US_FIELDS = `
   contact_us {
-    Form {
-      ... on ComponentBaseTemplatePromo {
-        ${PROMO_INNER_FIELDS}
-      }
-    }
-    pageReference
-    RecipientEmails
+    ${CONTACT_US_FORM_INNER_FIELDS}
   }
 `;
+
 
 

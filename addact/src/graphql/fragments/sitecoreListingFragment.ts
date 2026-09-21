@@ -1,4 +1,6 @@
 import { gql } from "graphql-request";
+import { CMS_SERVICE_VARIANT_FIELDS } from "./cmsServiceVariantFragment";
+import { AI_SERVICE_LIST_FIELDS } from "./aiServiceListFragment";
 // Re-using OurServiceList and ServiceListItem from developmentDesignListingFragment to avoid duplicate type definitions
 import { type OurServiceList, type ServiceListItem } from "./developmentDesignListingFragment";
 
@@ -6,25 +8,12 @@ export const SITECORE_LISTING_FRAGMENT = gql`
   fragment SitecoreListingFields on ComponentHomeSitecoreListing {
     id
     serviceTitle
-    serviceList {
-      listingContext {
-        id
-        title
-        description
-        image {
-          ...ImageFields
-        }
-        link {
-          ...LinkFields
-        }
-      }
-    }
+    ${AI_SERVICE_LIST_FIELDS}
     isCarousel
-    serviceVariant {
-      variant
-    }
+    ${CMS_SERVICE_VARIANT_FIELDS}
   }
 `;
+
 
 export type { OurServiceList, ServiceListItem };
 

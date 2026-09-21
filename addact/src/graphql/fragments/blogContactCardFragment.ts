@@ -1,3 +1,6 @@
+import type { ImageFragmentType } from "./imageFragment";
+import type { HeaderLink } from "./linkFragment";
+
 export const BLOG_CONTACT_CARD_FIELDS = `
   contactCard {
     documentId
@@ -19,20 +22,8 @@ export type BlogContactCardItem = {
   id?: string;
   CardTitle?: string;
   CardDescription?: string;
-  CardLink?: {
-    id?: string;
-    href?: string;
-    label?: string;
-    target?: string;
-    isExternal?: boolean;
-  };
-  BgImage?: {
-    width?: number;
-    url?: string;
-    name?: string;
-    height?: number;
-    alternativeText?: string;
-  };
+  CardLink?: HeaderLink;
+  BgImage?: ImageFragmentType;
 };
 
 export type BlogContactCardType = {

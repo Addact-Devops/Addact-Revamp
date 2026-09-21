@@ -1,6 +1,6 @@
 import { ABOUT_US_WE_ARE_ADDACT_NUMBER_FIELDS, type NumberContent } from "./aboutUsWeAreAddactNumberFragment";
 export type { NumberContent };
-import type { ImageFragmentType } from "./imageFragment";
+import type { AboutUsItemType } from "./aboutUsBrandValueFragment";
 
 export const ABOUT_US_WE_ARE_ADDACT_FIELDS = `
   WeAreAddact {
@@ -23,15 +23,7 @@ export type ContentBlock = {
   children: ContentChild[];
 };
 
-export type WeAreAddactType = {
-  Image: ImageFragmentType & {
-    url: string;
-    alternativeText: string | null;
-    height: number;
-    width: number;
-  };
-  SubTitle: string;
-  Title: string;
+export type WeAreAddactType = Omit<AboutUsItemType, "Description"> & {
   Content: ContentBlock[];
   NumberContent: NumberContent[];
 };

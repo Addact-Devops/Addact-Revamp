@@ -1,9 +1,13 @@
 import { gql } from "graphql-request";
 
+export const BASE_HEADING_FIELDS = `
+  PageTitle
+  Slug
+`;
+
 export const BASE_HEADING_FRAGMENT = gql`
   fragment BaseHeadingFields on ComponentBaseTemplateBaseHeading {
-    PageTitle
-    Slug
+    ${BASE_HEADING_FIELDS}
   }
 `;
 

@@ -1,20 +1,13 @@
-import { Heading } from "@/types/common";
+import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { type HeadingFragmentType } from "./headingFragment";
 
 export const ABOUT_US_CTA_TITLE_FIELDS = `
   Title {
-    ... on ComponentHeadingsH1 {
-      h1
-    }
-    ... on ComponentHeadingsH2 {
-      h2
-    }
-    ... on ComponentHeadingsH3 {
-      h3
-    }
+    ${BLOG_CONTENT_HEADINGS_FIELDS}
   }
 `;
 
 export type AboutUsCtaTitle = {
-  Title: Heading[];
+  Title: HeadingFragmentType[];
 };
 

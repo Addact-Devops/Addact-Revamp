@@ -1,7 +1,9 @@
-import { AI_LISTING_CONTEXT_FIELDS } from "./aiListingContextFragment";
-import { type ImageFragmentType } from "./imageFragment";
-// Re-using LinkWithIcon from homeCapabilitiesFragment to avoid duplicate type definitions
+import { AI_LISTING_CONTEXT_FIELDS, type AIListingContext } from "./aiListingContextFragment";
 import { type LinkWithIcon } from "./homeCapabilitiesFragment";
+
+export type { AIListingContext, LinkWithIcon };
+
+export type AIBenefitLink = LinkWithIcon;
 
 export const AI_BENEFIT_FIELDS = `
   title
@@ -12,28 +14,13 @@ export const AI_BENEFIT_FIELDS = `
   }
 `;
 
-export type { LinkWithIcon };
-
-export type AIBenefitLink = {
-  id: string;
-  href: string;
-  label: string | null;
-  target?: string | null;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: ImageFragmentType | null;
+export type AIBenefitItem = {
+  listingContext: AIListingContext;
 };
 
 export type AIBenefit = {
   title: string;
-  serviceList: {
-    listingContext: {
-      title: string;
-      description: string;
-      image: ImageFragmentType;
-      link: AIBenefitLink;
-    };
-  }[];
+  serviceList: AIBenefitItem[];
 };
 
 

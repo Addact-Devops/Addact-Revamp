@@ -4,32 +4,11 @@ import React from "react";
 import Image from "../atom/image";
 import Link from "next/link";
 
-// Inline types
-type HeadingBlock =
-  | { id: string; h1?: string }
-  | { id: string; h2?: string }
-  | { id: string; h3?: string }
-  | { id: string; h4?: string }
-  | { id: string; h5?: string }
-  | { id: string; h6?: string }
-  | { id: string; Richtext?: string };
-
-type GlobalCardItem = {
-  id: string;
-  Title?: string | null;
-  Description?: string | null;
-  Image?: {
-    url: string;
-    alternativeText?: string | null;
-  } | null;
-  Link?: {
-    href: string;
-  } | null;
-};
+import type { TitleBlock, CardPromo } from "@/graphql/fragments/careerCardFragment";
 
 type CareerCardProps = {
-  title: HeadingBlock[];
-  cards: GlobalCardItem[];
+  title: TitleBlock[];
+  cards: CardPromo[];
 };
 
 const CareerCard: React.FC<CareerCardProps> = ({ title, cards }) => {

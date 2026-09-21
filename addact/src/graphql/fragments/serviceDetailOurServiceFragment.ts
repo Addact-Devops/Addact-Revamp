@@ -3,25 +3,38 @@ import { TITLE_DESCRIPTION_FIELDS, ID_TITLE_DESCRIPTION_FIELDS, type TitleDescri
 import type { HeadingFragmentType } from "./headingFragment";
 import type { RichtextFragmentType } from "./richtextFragment";
 import type { LinkFragmentType } from "./linkFragment";
+import type { ImageFragmentType } from "./imageFragment";
 
 export type EnterprisesBrandsTitleItem = HeadingFragmentType | RichtextFragmentType;
 
-export type ForEnterprisesBrandsType = {
-  GlobalCard?: IdTitleDescriptionType[];
-  Title?: EnterprisesBrandsTitleItem[];
-};
-
-export type TeamFeatureCardType = IdTitleDescriptionType & {
+export type TeamFeatureCardType = Required<IdTitleDescriptionType> & {
   Link?: LinkFragmentType;
 };
 
+export type GlobalCardItem = TeamFeatureCardType & {
+  Image?: ImageFragmentType;
+  sub_service_page?: {
+    Slug: string;
+  };
+};
+
+export type ForEnterprisesBrandsType = {
+  GlobalCard?: GlobalCardItem[];
+  Title?: HeadingFragmentType[];
+};
+
 export type TeamFeatureType = {
-  Cards?: TeamFeatureCardType[];
+  documentId?: string;
+  ReferenceTitle?: string;
   Description?: string;
+  Cards?: TeamFeatureCardType[];
+  createdAt?: string;
+  updatedAt?: string;
+  publishedAt?: string;
 };
 
 export type ServiceDetailOurServiceItem = {
-  Titeldescription?: TitleDescriptionType;
+  Titeldescription?: Required<TitleDescriptionType>[];
   FirstTabDisplayName?: string;
   SecondTabDisplayName?: string;
   ForEnterprisesBrands?: ForEnterprisesBrandsType;
@@ -33,68 +46,7 @@ export type ServiceDetailOurServiceType = {
   our_service?: ServiceDetailOurServiceItem;
 };
 
-export interface OurServiceData {
-  Titeldescription?: {
-    Description: string;
-    Title: string;
-  }[];
-
-  FirstTabDisplayName: string;
-  SecondTabDisplayName: string;
-
-  ForEnterprisesBrands: {
-    GlobalCard: {
-      id: string;
-      Title: string;
-      Description: string;
-      Image?: {
-        alternativeText: string | null;
-        height: number;
-        name: string;
-        url: string;
-        width: number;
-      };
-      Link?: {
-        id: string;
-        href: string;
-        label: string;
-        target: string;
-        isExternal: boolean;
-      };
-      sub_service_page?: {
-        Slug: string;
-      };
-    }[];
-
-    Title: {
-      id?: string;
-      h2: string;
-    }[];
-  };
-
-  ReferenceTitle: string;
-
-  team_feature: {
-    documentId?: string;
-    ReferenceTitle?: string;
-    Description: string;
-    Cards: {
-      id: string;
-      Title: string;
-      Description: string;
-      Link?: {
-        id: string;
-        href: string;
-        label: string;
-        target: string;
-        isExternal: boolean;
-      };
-    }[];
-    createdAt?: string;
-    updatedAt?: string;
-    publishedAt?: string;
-  };
-}
+export type OurServiceData = ServiceDetailOurServiceItem;
 
 
 export const SERVICE_DETAIL_OUR_SERVICE_FIELDS = `
@@ -127,5 +79,6 @@ export const SERVICE_DETAIL_OUR_SERVICE_FIELDS = `
     }
   }
 `;
+
 
 

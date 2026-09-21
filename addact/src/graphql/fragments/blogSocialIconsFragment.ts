@@ -1,3 +1,6 @@
+import type { HeaderLink } from "./linkFragment";
+import type { ImageFragmentType } from "./imageFragment";
+
 export const BLOG_SOCIAL_ICONS_FIELDS = `
   socialicons {
     SocialIcon {
@@ -9,27 +12,9 @@ export const BLOG_SOCIAL_ICONS_FIELDS = `
 export type BlogSocialIconItem = {
   Title?: string;
   ClassName?: string;
-  Links?: {
-    id?: string;
-    href?: string;
-    label?: string;
-    target?: string;
-    isExternal?: boolean;
-  }[];
-  Icons?: {
-    alternativeText?: string;
-    name?: string;
-    height?: number;
-    url?: string;
-    width?: number;
-  };
-  HoverIcon?: {
-    alternativeText?: string;
-    name?: string;
-    height?: number;
-    url?: string;
-    width?: number;
-  };
+  Links?: HeaderLink[];
+  Icons?: Partial<ImageFragmentType>;
+  HoverIcon?: Partial<ImageFragmentType>;
 };
 
 export type BlogSocialIconsType = {

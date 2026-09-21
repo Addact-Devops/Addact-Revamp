@@ -1,28 +1,14 @@
 import { gql } from "graphql-request";
-import { PROMO_INNER_FIELDS } from "./promoFragment";
-import { Image, Link } from "@/types/common";
+import { CONTACT_US_FORM_FIELDS } from "./contactUsFormFragment";
+import type { PromoFragmentType } from "./promoFragment";
 
 export const HOME_CONTACT_US_FRAGMENT = gql`
   fragment HomeContactUsFields on Home {
-    contactus {
-      Form {
-        ... on ComponentBaseTemplatePromo {
-          ${PROMO_INNER_FIELDS}
-        }
-      }
-      RecipientEmails
-      pageReference
-    }
+    ${CONTACT_US_FORM_FIELDS}
   }
 `;
 
-export type ContactUsFormItem = {
-  id: string;
-  Title: string;
-  Description: string;
-  Image: Image;
-  Link: Link;
-};
+export type ContactUsFormItem = PromoFragmentType;
 
 export type CONTACTUS = {
   pageReference: string;

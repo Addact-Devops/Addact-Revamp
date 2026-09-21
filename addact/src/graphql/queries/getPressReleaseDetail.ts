@@ -6,7 +6,7 @@ import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
+import { BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerType } from "../fragments/blogHeroBannerFragment";
 import { type AddactPressReleaseItem } from "../fragments/pressReleaseHeroBannerFragment";
 export type { AddactPressReleaseItem };
 import { PRESS_CONTENT_FIELDS, type PressContentType } from "../fragments/pressContentFragment";
@@ -14,7 +14,6 @@ export type { PressContentType };
 import { SOCIAL_ICONS_FIELDS, type SocialIcon } from "../fragments/socialIconsFragment";
 export type { SocialIcon };
 import client from "../client";
-import { Image } from "@/types/common";
 
 const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
   ${LINK_FRAGMENT}
@@ -32,13 +31,8 @@ const GET_PRESS_RELEASE_DETAIL_PAGE = gql`
   }
 `;
 
-export interface PressReleaseDetailItem extends PressContentType {
+export interface PressReleaseDetailItem extends PressContentType, BlogHeroBannerType {
   SEO: SEO | null;
-  HeroBanner: {
-    BannerTitle: string;
-    BannerDescription: string;
-    BannerImage: Image;
-  }[];
   social_icons: {
     SocialIcon: SocialIcon[];
   }[];

@@ -1,24 +1,16 @@
-import { Image, Link } from "@/types/common";
+import { COMPONENT_HERO_BANNER_FIELDS, type HeroBannerFragmentType } from "./heroBannerFragment";
+import type { HeaderLink } from "./linkFragment";
 
 export const PAGE_HERO_BANNER_FIELDS = `
   HeroBanner {
     Banner {
-      ... on ComponentBannerBanner {
-        ...HeroBannerFields
-      }
+      ${COMPONENT_HERO_BANNER_FIELDS}
     }
   }
 `;
 
-export type PageHeroBannerItemType = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: Image | {
-    url?: string;
-    height?: number;
-    width?: number;
-  } | null;
-  ReadNow?: Link | null;
+export type PageHeroBannerItemType = HeroBannerFragmentType & {
+  ReadNow?: HeaderLink | null;
 };
 
 export type PageHeroBannerType = {

@@ -1,32 +1,15 @@
-import { BLOG_CATEGORY_FIELDS } from "./blogCategoryFragment";
-import { BLOG_HERO_BANNER_READ_NOW_FIELDS } from "./blogHeroBannerReadNowFragment";
-import { CASE_STUDY_HERO_BANNER_AUTHOR_FIELDS } from "./caseStudyHeroBannerAuthorFragment";
-import { BLOG_HERO_BANNER_INNER_FIELDS } from "./blogHeroBannerFragment";
+import { HERO_BANNER_FULL_FIELDS, type BlogBannerItem } from "./blogHeroBannerFieldsFragment";
 import type { ImageFragmentType } from "./imageFragment";
 
 export const CASE_STUDY_HERO_BANNER_FIELDS = `
-  HeroBanner {
-    ... on ComponentBlogHeroBannerBlogHeroBanner {
-      id
-      ${BLOG_HERO_BANNER_INNER_FIELDS}
-      ${BLOG_CATEGORY_FIELDS}
-      ${CASE_STUDY_HERO_BANNER_AUTHOR_FIELDS}
-      ${BLOG_HERO_BANNER_READ_NOW_FIELDS}
-    }
-  }
+  ${HERO_BANNER_FULL_FIELDS}
 `;
 
-export type CaseStudyHeroBannerItem = {
-  id: string;
-  BannerTitle: string;
-  BannerDescription: string;
+export type CaseStudyHeroBannerItem = BlogBannerItem & {
+  id?: string;
   PublishDate: string;
-  BannerImage: ImageFragmentType & { name: string };
-  blogcategory?: string;
-  author?: string;
-  ReadNow?: string;
+  BannerImage: ImageFragmentType;
 };
-
 
 export type CaseStudyHeroBannerType = {
   HeroBanner: CaseStudyHeroBannerItem[];

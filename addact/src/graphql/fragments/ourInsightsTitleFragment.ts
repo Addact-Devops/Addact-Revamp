@@ -1,4 +1,5 @@
-import { Image, Link } from "@/types/common";
+import type { TitleWithDescriptionFragmentType } from "./titleWithDescriptionFragment";
+import type { LinkFragmentType } from "./linkFragment";
 
 export const OUR_INSIGHTS_TITLE_FIELDS = `
   ourInshightsTitle {
@@ -8,13 +9,8 @@ export const OUR_INSIGHTS_TITLE_FIELDS = `
   }
 `;
 
-export type TitleWithDescription = {
-  Title: string;
-  Description: string;
-  Link: Link & {
-    SubDisc: string | null;
-    Icon: Image | null;
-  };
+export type TitleWithDescription = Required<Pick<TitleWithDescriptionFragmentType, "Title" | "Description">> & {
+  Link?: LinkFragmentType;
 };
 
 export type OurInsightsTitle = {

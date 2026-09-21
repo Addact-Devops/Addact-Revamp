@@ -1,4 +1,6 @@
-import { BLOG_HERO_BANNER_FIELDS } from "./blogHeroBannerFieldsFragment";
+import { BLOG_HERO_BANNER_FIELDS, type BlogBannerItem } from "./blogHeroBannerFieldsFragment";
+import type { BaseHeading } from "./baseHeadingFragment";
+import { CATEGORY_INNER_FIELDS, type BlogCategoryItem } from "./blogCategoryFragment";
 
 export const BLOG_CARD_FIELDS = `
   Slug
@@ -8,52 +10,16 @@ export const BLOG_CARD_FIELDS = `
   }
   ${BLOG_HERO_BANNER_FIELDS}
   blog_category {
-    Category {
-      CategoryTitle
-    }
+    ${CATEGORY_INNER_FIELDS}
   }
 `;
 
 export type BlogCardItem = {
   Slug: string;
   documentId: string;
-  HeadingSection?: {
-    PageTitle?: string;
-  }[];
-  BlogBanner?: {
-    BannerTitle?: string;
-    BannerDescription?: string;
-    BannerImage?: {
-      url: string;
-      width: number;
-      height: number;
-      name: string;
-      alternativeText?: string;
-    };
-    PublishDate?: string;
-    author?: {
-      Author?: {
-        AuthorName?: string;
-      };
-    };
-    ReadNow?: {
-      id?: string;
-      href?: string;
-      label?: string;
-      target?: string;
-      isExternal?: boolean;
-    };
-    blogcategory?: {
-      Category?: {
-        CategoryTitle?: string;
-      };
-    };
-  }[];
-  blog_category?: {
-    Category?: {
-      CategoryTitle?: string;
-    };
-  };
+  HeadingSection?: Partial<BaseHeading>[];
+  BlogBanner?: BlogBannerItem[];
+  blog_category?: BlogCategoryItem;
 };
 
 export type BlogCardType = BlogCardItem;

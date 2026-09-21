@@ -1,6 +1,9 @@
 
 
 
+import type { ImageFragmentType } from "./imageFragment";
+import type { LinkFragmentType } from "./linkFragment";
+
 export const INDUSTRIES_WE_SERVE_LIST_FIELDS = `
   Industries {
     Icons {
@@ -13,21 +16,8 @@ export const INDUSTRIES_WE_SERVE_LIST_FIELDS = `
   }
 `;
 
-export type IndustryIcon = {
-  alternativeText?: string | null;
-  height: number;
-  name: string;
-  url: string;
-  width: number;
-};
-
-export type IndustryLink = {
-  id: string;
-  href: string;
-  label: string;
-  target: string;
-  isExternal: boolean;
-};
+export type IndustryIcon = ImageFragmentType;
+export type IndustryLink = LinkFragmentType;
 
 export type Industry = {
   Icons: IndustryIcon | null;

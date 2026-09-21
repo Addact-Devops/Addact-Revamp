@@ -1,15 +1,10 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { OUR_PROCESS_FIELDS, type OurProcess, type ProcessItem } from "./ourProcessFragment";
 import type { HeadingFragmentType } from "./headingFragment";
-import type { LinkFragmentType } from "./linkFragment";
-import type { ProcessItem } from "./ourProcessFragment";
+import type { ContentError } from "./blogContentErrorFragment";
 
-export type ServicesDetailProcessTitleItem = HeadingFragmentType | { code?: string; message?: string };
+export type ServicesDetailProcessTitleItem = HeadingFragmentType | Partial<ContentError>;
 
-export type ServicesDetailProcessItem = {
-  Title?: ServicesDetailProcessTitleItem[];
-  link?: LinkFragmentType;
-  ProcessData?: ProcessItem[];
-};
+export type ServicesDetailProcessItem = OurProcess;
 
 export type ServicesDetailProcessType = {
   our_process?: ServicesDetailProcessItem;
@@ -17,29 +12,18 @@ export type ServicesDetailProcessType = {
 
 export interface OurProcessData {
   Title: HeadingFragmentType[];
-  ProcessData: {
-    id: string;
-    Title: string;
-    Description: string;
-  }[];
+  ProcessData: ProcessItem[];
 }
 
+export type { OurProcess, ProcessItem };
 
 export const SERVICES_DETAIL_PROCESS_FIELDS = `
   our_process: ourProcess {
-    Title {
-      ${BLOG_CONTENT_HEADINGS_FIELDS}
-      ... on Error {
-        code
-        message
-      }
-    }
+    ${OUR_PROCESS_FIELDS}
     link {
       ...LinkFields
     }
-    ProcessData {
-      ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
-    }
   }
 `;
+
 

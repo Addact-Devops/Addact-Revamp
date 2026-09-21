@@ -1,4 +1,8 @@
 import type { OurServiceType } from "./ourServiceFragment";
+import type { TitleDescriptionType, IdTitleDescriptionType } from "./titleDescriptionFragment";
+import type { HeadingFragmentType } from "./headingFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import type { LinkFragmentType } from "./linkFragment";
 
 export const HIRE_SLUG_OUR_SERVICE_FIELDS = `
   ourService {
@@ -10,43 +14,27 @@ export type HireSlugOurServiceType = {
   ourService: OurServiceType[];
 };
 
+export type GlobalCardItem = IdTitleDescriptionType & {
+  Image?: ImageFragmentType;
+  Link?: LinkFragmentType;
+  sub_service_page?: {
+    Slug: string;
+  };
+};
+
+export type TeamFeatureCardItem = IdTitleDescriptionType & {
+  Link?: LinkFragmentType;
+};
+
 export interface OurServiceData {
-  Titeldescription?: {
-    Description: string;
-    Title: string;
-  }[];
+  Titeldescription?: TitleDescriptionType[];
 
   FirstTabDisplayName: string;
   SecondTabDisplayName: string;
 
   ForEnterprisesBrands: {
-    GlobalCard: {
-      id: string;
-      Title: string;
-      Description: string;
-      Image?: {
-        alternativeText: string | null;
-        height: number;
-        name: string;
-        url: string;
-        width: number;
-      };
-      Link?: {
-        id: string;
-        href: string;
-        label: string;
-        target: string;
-        isExternal: boolean;
-      };
-      sub_service_page?: {
-        Slug: string;
-      };
-    }[];
-
-    Title: {
-      id?: string;
-      h2: string;
-    }[];
+    GlobalCard: GlobalCardItem[];
+    Title: HeadingFragmentType[];
   };
 
   ReferenceTitle: string;
@@ -55,18 +43,7 @@ export interface OurServiceData {
     documentId?: string;
     ReferenceTitle?: string;
     Description: string;
-    Cards: {
-      id: string;
-      Title: string;
-      Description: string;
-      Link?: {
-        id: string;
-        href: string;
-        label: string;
-        target: string;
-        isExternal: boolean;
-      };
-    }[];
+    Cards: TeamFeatureCardItem[];
     createdAt?: string;
     updatedAt?: string;
     publishedAt?: string;

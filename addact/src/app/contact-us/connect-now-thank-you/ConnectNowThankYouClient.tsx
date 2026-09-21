@@ -5,6 +5,8 @@ import Head from "next/head";
 import RichText from "@/components/atom/richText";
 import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
+import type { AnimationVideo } from "@/graphql/fragments/thankYouAnimationVideoFragment";
+
 type Props = {
   thankYouData: {
     Content: {
@@ -12,11 +14,7 @@ type Props = {
       Richtext?: string;
       label?: string;
     }[];
-    AnimationVideo?: {
-      alternativeText?: string;
-      name?: string;
-      url?: string;
-    };
+    AnimationVideo?: AnimationVideo | null;
     SEO?: {
       metaTitle?: string;
       metaDescription?: string;

@@ -1,4 +1,4 @@
-import { HeadingFragmentType } from "./headingFragment";
+import { HEADING_SELECTION_FIELDS, type HeadingFragmentType } from "./headingFragment";
 
 export type CtaTitleType = {
   Title?: HeadingFragmentType[];
@@ -6,12 +6,7 @@ export type CtaTitleType = {
 
 export const CTA_TITLE_FIELDS = `
   Title {
-    ... on ComponentHeadingsH1 { ...HeadingFields }
-    ... on ComponentHeadingsH2 { ...Heading2Fields }
-    ... on ComponentHeadingsH3 { ...Heading3Fields }
-    ... on ComponentHeadingsH4 { ...Heading4Fields }
-    ... on ComponentHeadingsH5 { ...Heading5Fields }
-    ... on ComponentHeadingsH6 { ...Heading6Fields }
+    ${HEADING_SELECTION_FIELDS}
   }
 `;
 

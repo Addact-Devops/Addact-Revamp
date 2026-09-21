@@ -1,6 +1,7 @@
 import { gql } from "graphql-request";
 import client from "../client";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
 import { PROJECT_COST_BANNER_FIELDS, type ProjectCostEstimatorBannerType } from "../fragments/projectCostBannerFragment";
@@ -28,6 +29,7 @@ export type ProjectCostEstimatorResponse = {
 
 const projectCostEstimatorQuery = gql`
   ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   query ProjectCostEstimator {
     projectCostEstimator {
       SEO {
