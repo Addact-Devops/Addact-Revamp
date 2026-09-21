@@ -3,13 +3,17 @@ import { CMS_SERVICE_VARIANT_FIELDS, type CmsServiceVariantType } from "./cmsSer
 import { AI_SERVICE_LIST_FIELDS } from "./aiServiceListFragment";
 import { Image, Link } from "@/types/common";
 
+export const SERVICE_LISTING_COMMON_FIELDS = `
+  id
+  serviceTitle
+  ${CMS_SERVICE_VARIANT_FIELDS}
+  ${AI_SERVICE_LIST_FIELDS}
+  isCarousel
+`;
+
 export const DEVELOPMENT_DESIGN_LISTING_FRAGMENT = gql`
   fragment DevelopmentDesignListingFields on ComponentHomeDevelopmentAndDesignListing {
-    id
-    serviceTitle
-    ${CMS_SERVICE_VARIANT_FIELDS}
-    ${AI_SERVICE_LIST_FIELDS}
-    isCarousel
+    ${SERVICE_LISTING_COMMON_FIELDS}
   }
 `;
 
