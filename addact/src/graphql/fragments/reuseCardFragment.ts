@@ -13,7 +13,7 @@ export type ReuseCardFragmentType = {
   Icon?: ImageFragmentType;
   LogoLink?: LinkFragmentType;
   LogoTitle?: string;
-  TitleIcon?: TitleIconItem | TitleIconItem[];
+  TitleIcon?: TitleIconItem[];
 };
 
 export const REUSE_CARD_INNER_FIELDS = `
@@ -49,5 +49,3 @@ export const REUSE_CARD_FRAGMENT = gql`
     ${REUSE_CARD_INNER_FIELDS}
   }
 `;
-
-

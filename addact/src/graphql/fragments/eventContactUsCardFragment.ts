@@ -1,4 +1,5 @@
 import { CONTACT_US_FORM_LABELS_FIELDS, type ContactUsFormLabels } from "./contactUsFormLabelsFragment";
+import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "./titleDescriptionFragment";
 
 export const EVENT_CONTACT_US_CARD_FIELDS = `
   contact_us_card {
@@ -6,8 +7,7 @@ export const EVENT_CONTACT_US_CARD_FIELDS = `
     PhoneLabel
     Form {
       ... on ComponentBaseTemplatePromo {
-        Title
-        Description
+        ${TITLE_DESCRIPTION_FIELDS}
       }
     }
   }
@@ -15,10 +15,7 @@ export const EVENT_CONTACT_US_CARD_FIELDS = `
 
 export type EventContactUsCardItem = Required<ContactUsFormLabels> & {
   PhoneLabel: string;
-  Form: {
-    Title: string;
-    Description: string;
-  }[];
+  Form: Required<TitleDescriptionType>[];
 };
 
 export type EventContactUsCardType = {

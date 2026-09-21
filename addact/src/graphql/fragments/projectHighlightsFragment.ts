@@ -1,15 +1,11 @@
-import { BLOG_HERO_BANNER_INNER_FIELDS, type BlogHeroBannerItem } from "./blogHeroBannerFragment";
+import { BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerItem } from "./blogHeroBannerFragment";
 
 export const PROJECT_HIGHLIGHTS_FIELDS = `
   ProjectHighlights {
     Title
     addact_case_studies {
       Slug
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          ${BLOG_HERO_BANNER_INNER_FIELDS}
-        }
-      }
+      ${BLOG_HERO_BANNER_FIELDS}
     }
   }
 `;

@@ -1,17 +1,13 @@
-// Re-using BannerSection, BannerItem, BannerLink from developmentHeroBannerFragment to avoid duplicate type definitions
-import { COMPONENT_BANNER_FIELDS } from "./componentBannerFieldsFragment";
-import { type BannerSection, type BannerItem, type BannerLink } from "./developmentHeroBannerFragment";
+import {
+  COMPONENT_BANNER_SECTION_FIELDS,
+  type BannerSection,
+  type BannerItem,
+  type BannerLink,
+} from "./componentBannerFieldsFragment";
 
 export const SERVICES_DETAIL_BANNER_FIELDS = `
   Banner: banner {
-    Banner {
-      ... on ComponentBannerBanner {
-        ${COMPONENT_BANNER_FIELDS}
-        BannerLogo {
-          ...ImageFields
-        }
-      }
-    }
+    ${COMPONENT_BANNER_SECTION_FIELDS}
   }
 `;
 

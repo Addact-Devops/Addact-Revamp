@@ -120,11 +120,11 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
                   submitUrl="/api/submit-form"
                   sheetName="Home_Page"
                   redirectUrl={`${pathname}/event-form-thank-you`}
-                  NameLabel={formFields?.NameLable}
-                  EmailLabel={formFields?.EmailLabel}
-                  PhoneLabel={formFields?.PhoneLabel}
-                  ButtonLabel={formFields?.ButtonLabel}
-                  RecipientEmails={formFields?.RecipientEmails}
+                  NameLabel={formFields?.NameLable || ""}
+                  EmailLabel={formFields?.EmailLabel || ""}
+                  PhoneLabel={formFields?.PhoneLabel || ""}
+                  ButtonLabel={formFields?.ButtonLabel || ""}
+                  RecipientEmails={formFields?.RecipientEmails || ""}
                   pageTitle={`Event-Details ${slug}`}
                 />
               </div>

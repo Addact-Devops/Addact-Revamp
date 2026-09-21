@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import type { Heading } from "@/types/common";
 
 export const HEADING_SELECTION_FIELDS = `
   ... on ComponentHeadingsH1 { ...HeadingFields }
@@ -45,12 +46,5 @@ export const HEADING_FRAGMENT = gql`
   }
 `;
 
-export type HeadingFragmentType = {
-  id?: string;
-  h1?: string;
-  h2?: string;
-  h3?: string;
-  h4?: string;
-  h5?: string;
-  h6?: string;
-};
+export type HeadingFragmentType = Heading;
+export type { Heading };

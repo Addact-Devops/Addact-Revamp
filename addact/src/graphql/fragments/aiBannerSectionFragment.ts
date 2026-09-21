@@ -1,6 +1,9 @@
-import { COMPONENT_BANNER_SECTION_FIELDS } from "./componentBannerFieldsFragment";
-// Re-using BannerSection, BannerItem, BannerLink from developmentHeroBannerFragment to avoid duplicate type definitions
-import { type BannerSection, type BannerItem, type BannerLink } from "./developmentHeroBannerFragment";
+import {
+  COMPONENT_BANNER_SECTION_FIELDS,
+  type BannerSection,
+  type BannerItem,
+  type BannerLink,
+} from "./componentBannerFieldsFragment";
 import { type LinkWithIcon } from "./homeCapabilitiesFragment";
 
 export const AI_BANNER_SECTION_FIELDS = `

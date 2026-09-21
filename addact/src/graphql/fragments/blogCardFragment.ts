@@ -1,6 +1,6 @@
 import { BLOG_HERO_BANNER_FIELDS, type BlogBannerItem } from "./blogHeroBannerFieldsFragment";
 import type { BaseHeading } from "./baseHeadingFragment";
-import { CATEGORY_INNER_FIELDS, type BlogCategoryItem } from "./blogCategoryFragment";
+import { BLOG_CARD_CATEGORY_FIELDS, type BlogCategoryItem } from "./blogCategoryFragment";
 
 export const BLOG_CARD_FIELDS = `
   Slug
@@ -9,9 +9,7 @@ export const BLOG_CARD_FIELDS = `
     ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
   }
   ${BLOG_HERO_BANNER_FIELDS}
-  blog_category {
-    ${CATEGORY_INNER_FIELDS}
-  }
+  ${BLOG_CARD_CATEGORY_FIELDS}
 `;
 
 export type BlogCardItem = {

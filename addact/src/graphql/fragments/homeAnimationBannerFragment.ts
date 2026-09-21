@@ -36,9 +36,9 @@ export const HOME_ANIMATION_BANNER_FRAGMENT = gql`
 
 export type AnimationBannerLink = LinkFragmentType;
 
-export type AnimationBannerSubTitle = {
-  Title: string;
-};
+import type { TitleFragmentType } from "./titleFragment";
+
+export type AnimationBannerSubTitle = Required<TitleFragmentType>;
 
 export type AnimationBannerTitleDescription = {
   bannerTitle: string;

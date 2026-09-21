@@ -17,7 +17,6 @@ type Props = {
   positionsTitle?: TitleBlock[];
 };
 
-
 const stripTags = (html: string) =>
   DOMPurify.sanitize(html, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
 

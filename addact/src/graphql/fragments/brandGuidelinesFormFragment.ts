@@ -1,4 +1,4 @@
-import { FORM_BASIC_LABELS_FIELDS } from "./contactUsFormLabelsFragment";
+import { FORM_BASIC_LABELS_FIELDS, type FormBasicLabels } from "./contactUsFormLabelsFragment";
 
 export const BRAND_GUIDELINES_FORM_FIELDS = `
   FromTitle
@@ -9,11 +9,6 @@ export const BRAND_GUIDELINES_FORM_FIELDS = `
 
 export type BrandGuidelinesFormFieldsItem = {
   FromTitle: string;
-  FormFileds: {
-    NameLable: string;
-    EmailLabel: string;
-    PhoneLabel: string;
-    RecipientEmails: string;
-    ButtonLabel: string;
-  };
+  FormFileds: FormBasicLabels;
 };
+

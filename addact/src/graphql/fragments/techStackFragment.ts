@@ -1,4 +1,4 @@
-import { TITLE_DESCRIPTION_LOWER_FIELDS } from "./titleDescriptionFragment";
+import { TITLE_DESCRIPTION_LOWER_FIELDS, type TitleDescriptionLowerType } from "./titleDescriptionFragment";
 import type { ImageFragmentType } from "./imageFragment";
 
 export const TECH_STACK_FIELDS = `
@@ -30,9 +30,7 @@ export type Tab = {
   tabContent: TabContent[];
 };
 
-export type TechStack = {
-  title: string;
-  description: string;
+export type TechStack = Required<TitleDescriptionLowerType> & {
   tab: Tab[];
 };
 

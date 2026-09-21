@@ -53,11 +53,11 @@ const BrandGuidelinesPageClient = () => {
                   pdfUrl={pdf?.url || ""}
                   submitUrl="/api/submit-form"
                   sheetName="Home_Page"
-                  NameLabel={formFields?.NameLable}
-                  EmailLabel={formFields?.EmailLabel}
-                  PhoneLabel={formFields?.PhoneLabel}
-                  ButtonLabel={formFields?.ButtonLabel}
-                  RecipientEmails={formFields?.RecipientEmails}
+                  NameLabel={formFields?.NameLable || ""}
+                  EmailLabel={formFields?.EmailLabel || ""}
+                  PhoneLabel={formFields?.PhoneLabel || ""}
+                  ButtonLabel={formFields?.ButtonLabel || ""}
+                  RecipientEmails={formFields?.RecipientEmails || ""}
                   pageTitle="Brand-Guidelines"
                 />
               </div>

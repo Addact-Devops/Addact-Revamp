@@ -1,13 +1,9 @@
 import { Heading, Link } from "@/types/common";
+import { HEADING_SELECTION_FIELDS } from "./headingFragment";
 
 export const OUR_PROCESS_FIELDS = `
   Title {
-    ... on ComponentHeadingsH6 { ...Heading6Fields }
-    ... on ComponentHeadingsH5 { ...Heading5Fields }
-    ... on ComponentHeadingsH4 { ...Heading4Fields }
-    ... on ComponentHeadingsH3 { ...Heading3Fields }
-    ... on ComponentHeadingsH2 { ...Heading2Fields }
-    ... on ComponentHeadingsH1 { ...HeadingFields }
+    ${HEADING_SELECTION_FIELDS}
     ... on Error {
       code
       message
