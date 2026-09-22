@@ -1,21 +1,19 @@
-import { COMPONENT_HERO_BANNER_SEARCHBOX_FIELDS, type HeroBannerFragmentType } from "./heroBannerFragment";
+import {
+  CASE_STUDY_BANNER_SECTION_FIELDS,
+  type HeroBannerFragmentType,
+} from "./heroBannerFragment";
 
-export const CASE_STUDY_BANNER_FIELDS = `
-  CaseStudyBanner {
-    Banner {
-      ${COMPONENT_HERO_BANNER_SEARCHBOX_FIELDS}
-    }
-  }
-`;
+export const CASE_STUDY_BANNER_FIELDS = CASE_STUDY_BANNER_SECTION_FIELDS;
 
-export type CaseStudyBannerItem = HeroBannerFragmentType & {
-  show_searchbox?: boolean;
-};
+
+export type CaseStudyBannerItem = HeroBannerFragmentType;
 
 export type CaseStudyBannerType = {
   CaseStudyBanner: {
     Banner: CaseStudyBannerItem[];
   };
 };
+
+export type { HeroBannerFragmentType };
 
 

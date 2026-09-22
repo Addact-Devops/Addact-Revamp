@@ -1,8 +1,8 @@
 import { CASE_STUDY_HERO_BANNER_FIELDS, type CaseStudyHeroBannerType } from "./caseStudyHeroBannerFragment";
+import type { SlugType } from "@/types/common";
 
-export type CaseStudyCardType = CaseStudyHeroBannerType & {
+export type CaseStudyCardType = CaseStudyHeroBannerType & SlugType & {
   ReferenceTitle?: string;
-  Slug?: string;
   caseStudySummary?: string;
   documentId?: string;
 };

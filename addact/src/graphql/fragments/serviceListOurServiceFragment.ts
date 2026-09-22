@@ -3,10 +3,9 @@ import { PROMO_INNER_FIELDS, type PromoFragmentType } from "./promoFragment";
 import { ID_TITLE_DESCRIPTION_FIELDS, type IdTitleDescriptionType } from "./titleDescriptionFragment";
 import type { HeadingFragmentType } from "./headingFragment";
 import type { LinkFragmentType } from "./linkFragment";
+import type { SlugType } from "@/types/common";
 
-export type SubServicePage = {
-  Slug?: string;
-};
+export type SubServicePage = SlugType;
 
 export type EnterprisePromoCard = PromoFragmentType & {
   sub_service_page?: SubServicePage;
@@ -37,6 +36,18 @@ export type ServiceListOurServiceType = {
   our_service?: ServiceListOurServiceItem;
 };
 
+export const TEAM_FEATURE_FIELDS = `
+  team_feature {
+    Description
+    Cards {
+      ${ID_TITLE_DESCRIPTION_FIELDS}
+      Link {
+        ...LinkFields
+      }
+    }
+  }
+`;
+
 export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
   our_service {
     FirstTabDisplayName
@@ -54,15 +65,8 @@ export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
         ${BLOG_CONTENT_HEADINGS_FIELDS}
       }
     }
-    team_feature {
-      Description
-      Cards {
-        ${ID_TITLE_DESCRIPTION_FIELDS}
-        Link {
-          ...LinkFields
-        }
-      }
-    }
+    ${TEAM_FEATURE_FIELDS}
   }
 `;
+
 

@@ -3,7 +3,7 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT, type TitleWithDescriptionFragmentType, type ExpertiseTitleItem } from "../fragments/titleWithDescriptionFragment";
 export type { TitleWithDescriptionFragmentType, ExpertiseTitleItem };
-import { LINK_IMAGE_FRAGMENT, type LinkImageItem } from "../fragments/linkImageFragment";
+import { LINK_IMAGE_FRAGMENT, COMPONENT_LINK_IMAGE_FIELDS, type LinkImageItem } from "../fragments/linkImageFragment";
 export type { LinkImageItem };
 import client from "../client";
 
@@ -15,7 +15,7 @@ const GET_CMS_EXPERTISE = gql`
   query ourExpertises {
     ourExpertises {
       CMS {
-        ... on ComponentBaseTemplateLinkImage { ...LinkImageFields }
+        ${COMPONENT_LINK_IMAGE_FIELDS}
       }
       ExpertiseTitle {
         ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }

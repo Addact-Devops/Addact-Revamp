@@ -17,6 +17,12 @@ export const TITLE_WITH_DESCRIPTION_INNER_FIELDS = `
   }
 `;
 
+export const COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS = `
+  ... on ComponentBaseTemplateTitleWithDescription {
+    ...TitleWithDescriptionFields
+  }
+`;
+
 export const TITLE_WITH_DESCRIPTION_FRAGMENT = gql`
   fragment TitleWithDescriptionFields on ComponentBaseTemplateTitleWithDescription {
     ${TITLE_WITH_DESCRIPTION_INNER_FIELDS}

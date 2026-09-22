@@ -1,7 +1,7 @@
 import { gql } from "graphql-request";
 import { CMS_SERVICE_VARIANT_FIELDS, type CmsServiceVariantType } from "./cmsServiceVariantFragment";
-import { AI_SERVICE_LIST_FIELDS } from "./aiServiceListFragment";
-import { Image, Link } from "@/types/common";
+import { AI_SERVICE_LIST_FIELDS, type ServiceListItem } from "./aiServiceListFragment";
+import { type AIListingContext, type ListingContextType } from "./aiListingContextFragment";
 
 export const SERVICE_LISTING_COMMON_FIELDS = `
   id
@@ -17,17 +17,8 @@ export const DEVELOPMENT_DESIGN_LISTING_FRAGMENT = gql`
   }
 `;
 
-export type ListingContext = {
-  id?: string;
-  title: string | null;
-  description: string | null;
-  image: Image | null;
-  link: Link | null;
-};
-
-export type ServiceListItem = {
-  listingContext: ListingContext | null;
-};
+export type ListingContext = AIListingContext;
+export type { ServiceListItem, ListingContextType };
 
 export type OurServiceList = CmsServiceVariantType & {
   id: string;
@@ -37,5 +28,3 @@ export type OurServiceList = CmsServiceVariantType & {
 };
 
 export type DevelopmentDesignListingType = OurServiceList;
-
-

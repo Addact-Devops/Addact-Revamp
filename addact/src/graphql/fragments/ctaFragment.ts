@@ -1,12 +1,10 @@
-import { Heading } from "@/types/common";
-import { HeadingFragmentType } from "./headingFragment";
-import { ImageFragmentType } from "./imageFragment";
-import { LinkFragmentType } from "./linkFragment";
+import type { Heading } from "@/types/common";
+import type { HeadingFragmentType } from "./headingFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import type { LinkFragmentType } from "./linkFragment";
 import { CTA_TITLE_FIELDS } from "./ctaTitleFragment";
 
-export const CTA_FIELDS = `
-  ${CTA_TITLE_FIELDS}
-  CTADescription
+export const CTA_IMAGE_LINK_FIELDS = `
   CTAImage {
     ... on ComponentSharedImage {
       Image {
@@ -19,6 +17,12 @@ export const CTA_FIELDS = `
       ...LinkFields
     }
   }
+`;
+
+export const CTA_FIELDS = `
+  ${CTA_TITLE_FIELDS}
+  CTADescription
+  ${CTA_IMAGE_LINK_FIELDS}
   pageReference
 `;
 
@@ -52,9 +56,7 @@ export type CTA = {
   pageReference?: string;
 };
 
-export type CTAImage = {
-  Image: ImageFragmentType;
-};
+export type CTAImage = CTAImageItem;
 
 export type CtaTitle = HeadingFragmentType;
 

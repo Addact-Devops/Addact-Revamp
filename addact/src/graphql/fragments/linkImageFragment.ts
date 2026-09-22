@@ -18,6 +18,10 @@ export const LINK_IMAGE_FRAGMENT = gql`
   }
 `;
 
+export const COMPONENT_LINK_IMAGE_FIELDS = `
+  ... on ComponentBaseTemplateLinkImage { ...LinkImageFields }
+`;
+
 export type LinkImageItem = {
   id?: string;
   Title: string;

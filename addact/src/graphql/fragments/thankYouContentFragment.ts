@@ -1,4 +1,5 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import type { Heading, Link } from "@/types/common";
 import type { HeadingFragmentType } from "./headingFragment";
 import type { LinkFragmentType } from "./linkFragment";
 import type { RichtextFragmentType } from "./richtextFragment";
@@ -9,15 +10,11 @@ export type ThankYouContentType = {
   Content?: ThankYouContentItem[];
 };
 
-export interface Content {
+export type Content = {
   id: string;
-  h1?: string;
-  Richtext?: string;
-  href?: string;
-  label?: string;
-  target?: string;
-  isExternal?: boolean;
-}
+  h1?: Heading["h1"];
+  Richtext?: RichtextFragmentType["Richtext"];
+} & Partial<Omit<Link, "id">>;
 
 export const THANK_YOU_CONTENT_FIELDS = `
   Content {
@@ -26,4 +23,3 @@ export const THANK_YOU_CONTENT_FIELDS = `
     ${BLOG_CONTENT_HEADINGS_FIELDS}
   }
 `;
-

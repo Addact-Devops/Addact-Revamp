@@ -1,17 +1,15 @@
-import { AI_LISTING_CONTEXT_FIELDS, type AIListingContext } from "./aiListingContextFragment";
+import { LISTING_CONTEXT_FIELDS, type AIListingContext } from "./aiListingContextFragment";
+import type { SlugType } from "@/types/common";
 
 export const INDUSTRY_FIELDS = `
   industryListTitle
   industry_list {
     Slug
-    listingContext {
-      ${AI_LISTING_CONTEXT_FIELDS}
-    }
+    ${LISTING_CONTEXT_FIELDS}
   }
 `;
 
-export type IndustryListItem = {
-  Slug: string;
+export type IndustryListItem = Required<SlugType> & {
   listingContext: AIListingContext | null;
 };
 

@@ -17,7 +17,10 @@ import { OUR_SOLUTIONS_FIELDS } from "../fragments/ourSolutionsFragment";
 import { GLOBAL_CARD_FIELDS } from "../fragments/globalCardFragment";
 import { CLIENT_TESTIMONIAL_FIELDS } from "../fragments/clientTestimonialFragment";
 import { CONTACT_US_FIELDS } from "../fragments/contactUsFragment";
-import { PROJECT_HIGHLIGHTS_FIELDS, type ProjectHighlightsType } from "../fragments/projectHighlightsFragment";
+import {
+  PROJECT_HIGHLIGHTS_FIELDS,
+  type ProjectHighlightsType,
+} from "../fragments/projectHighlightsFragment";
 
 import client from "../client";
 import { Heading, Image } from "./getHomePage";
@@ -75,8 +78,6 @@ const GET_INDUSTRY_SLUGS = gql`
 `;
 
 // -------------------- Types --------------------
-
-
 
 export type IndustryDetail = {
   Slug: string;
@@ -246,7 +247,6 @@ export type IndustryDetail = {
 
   /** ✅ Type for ProjectHighlights moved to projectHighlightsFragment */
   ProjectHighlights?: ProjectHighlightsType["ProjectHighlights"];
-
 
   techStack?: TechStack | null;
 };

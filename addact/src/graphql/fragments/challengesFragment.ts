@@ -1,7 +1,9 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 import { BLOG_CONTENT_ERROR_FIELDS, type ContentError } from "./blogContentErrorFragment";
+import { COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS } from "./titleWithDescriptionFragment";
+import type { TitleDescriptionType } from "./titleDescriptionFragment";
 import type { LinkFragmentType } from "./linkFragment";
-import { Heading } from "@/types/common";
+import type { Heading } from "@/types/common";
 
 export const CHALLENGES_FIELDS = `
   challenges {
@@ -10,16 +12,14 @@ export const CHALLENGES_FIELDS = `
       ${BLOG_CONTENT_ERROR_FIELDS}
     }
     ProcessData {
-      ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
+      ${COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS}
     }
   }
 `;
 
 export type ChallengeError = ContentError;
 
-export type ChallengeProcessDataItem = {
-  Title: string;
-  Description: string;
+export type ChallengeProcessDataItem = Required<TitleDescriptionType> & {
   Link?: LinkFragmentType | null;
 };
 

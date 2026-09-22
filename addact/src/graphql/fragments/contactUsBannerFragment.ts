@@ -1,16 +1,14 @@
-import { COMPONENT_BANNER_SECTION_FIELDS, type ComponentBannerItem } from "./componentBannerFieldsFragment";
+import {
+  COMPONENT_NESTED_BANNER_FIELDS,
+  type BannerSection,
+  type ComponentBannerItem,
+} from "./componentBannerFieldsFragment";
 
-export const CONTACT_US_BANNER_FIELDS = `
-  banner {
-    ${COMPONENT_BANNER_SECTION_FIELDS}
-  }
-`;
+export const CONTACT_US_BANNER_FIELDS = COMPONENT_NESTED_BANNER_FIELDS;
+
 
 export type ContactUsBannerItem = ComponentBannerItem;
-
-export type ContactUsBanner = {
-  Banner: ContactUsBannerItem[];
-};
+export type ContactUsBanner = BannerSection;
 
 export type ContactUsBannerType = {
   banner: ContactUsBanner;

@@ -1,4 +1,4 @@
-import { TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
+import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "./titleDescriptionFragment";
 
 export const PROJECT_COST_CONTENT_FIELDS = `
   Content {
@@ -6,7 +6,5 @@ export const PROJECT_COST_CONTENT_FIELDS = `
   }
 `;
 
-export type ProjectCostEstimatorContentType = {
-  Title: string;
-  Description: string;
-};
+export type ProjectCostEstimatorContentType = Required<TitleDescriptionType>;
+

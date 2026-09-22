@@ -1,4 +1,4 @@
-import type { TitleFragmentType } from "./titleFragment";
+import { COMPONENT_TITLE_FIELDS, type TitleFragmentType } from "./titleFragment";
 
 export type HeaderNavParentItem = {
   HeaderNavLink?: TitleFragmentType[];
@@ -12,7 +12,7 @@ export type HeaderNavParentType = {
 export const HEADER_NAV_PARENT_FIELDS = `
   Parent {
     HeaderNavLink {
-      ... on ComponentBaseTemplateTitle { ...TitleFields }
+      ${COMPONENT_TITLE_FIELDS}
     }
     ReferenceTitle
   }

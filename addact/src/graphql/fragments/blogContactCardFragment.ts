@@ -1,5 +1,5 @@
-import type { ImageFragmentType } from "./imageFragment";
-import type { HeaderLink } from "./linkFragment";
+import { COMPONENT_CARD_FIELDS, type CardFragmentType } from "./cardFragment";
+import { BLOG_CONTENT_ERROR_FIELDS, type ContentError } from "./blogContentErrorFragment";
 
 export const BLOG_CONTACT_CARD_FIELDS = `
   contactCard {
@@ -9,31 +9,26 @@ export const BLOG_CONTACT_CARD_FIELDS = `
     updatedAt
     publishedAt
     ContactCard {
-      ... on ComponentCardCard { ...CardFields }
-      ... on Error {
-        code
-        message
-      }
+      ${COMPONENT_CARD_FIELDS}
+      ${BLOG_CONTENT_ERROR_FIELDS}
     }
   }
 `;
 
-export type BlogContactCardItem = {
-  id?: string;
-  CardTitle?: string;
-  CardDescription?: string;
-  CardLink?: HeaderLink;
-  BgImage?: ImageFragmentType;
+export type BlogContactCardItem = CardFragmentType;
+
+export type BlogContactCard = {
+  documentId?: string;
+  pageReference?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  publishedAt?: string;
+  ContactCard?: BlogContactCardItem[];
 };
 
 export type BlogContactCardType = {
-  contactCard?: {
-    documentId?: string;
-    pageReference?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    publishedAt?: string;
-    ContactCard?: BlogContactCardItem[];
-  };
+  contactCard?: BlogContactCard;
 };
+
+export type { CardFragmentType, ContentError };
 

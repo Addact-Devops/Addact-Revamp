@@ -4,6 +4,7 @@ import type { CareerDetailsBannerType } from "./careerDetailsBannerFragment";
 import type { CareerDetailsJobDescType } from "./careerDetailsJobDescFragment";
 import { PAGE_HEADING_FIELDS, type PageHeadingType } from "./pageHeadingFragment";
 import type { CareerDetailsFormType } from "./careerDetailsFormFragment";
+import type { SlugType } from "@/types/common";
 
 export const CAREER_DETAIL_ALL_FIELDS_FRAGMENT = gql`
   fragment CareerDetailAllFields on CareerDetail {
@@ -21,9 +22,9 @@ export const CAREER_DETAIL_ALL_FIELDS_FRAGMENT = gql`
 
 export type CareerDetailItem = CareerDetailsBannerType &
   CareerDetailsJobDescType &
-  CareerDetailsFormType & {
+  CareerDetailsFormType &
+  SlugType & {
     PageHeading?: PageHeadingType["PageHeading"][];
-    Slug?: string;
     ReferenceTitle?: string;
     SEO?: SeoType;
   };

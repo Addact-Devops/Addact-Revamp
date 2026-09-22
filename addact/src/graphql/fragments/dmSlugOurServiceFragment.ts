@@ -1,4 +1,4 @@
-import type { OurServiceType } from "./ourServiceFragment";
+import { COMPONENT_OUR_SERVICE_FIELDS, type OurServiceType } from "./ourServiceFragment";
 import type { UiUxListingType } from "./uiUxListingFragment";
 
 export type DmSlugOurServiceUnion = OurServiceType | UiUxListingType;
@@ -9,8 +9,9 @@ export type DmSlugOurServiceType = {
 
 export const DM_SLUG_OUR_SERVICE_FIELDS = `
   ourService {
-    ... on ComponentHomeServiceList { ...OurServiceFields }
+    ${COMPONENT_OUR_SERVICE_FIELDS}
     ... on ComponentHomeUiUxLisitng { ...UiUxListingFields }
   }
 `;
+
 

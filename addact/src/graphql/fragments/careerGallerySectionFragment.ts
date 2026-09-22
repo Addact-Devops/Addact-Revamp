@@ -1,3 +1,5 @@
+import { type GalleryTitlesType } from "./galleryTitlesFragment";
+
 export const CAREER_GALLERY_SECTION_FIELDS = `
   careers {
     Gallery {
@@ -6,10 +8,7 @@ export const CAREER_GALLERY_SECTION_FIELDS = `
   }
 `;
 
-export type GallerySection = {
-  Title?: string;
-  SubTitle?: string;
-};
+export type GallerySection = GalleryTitlesType;
 
 export type CareerGallerySectionType = {
   careers: {

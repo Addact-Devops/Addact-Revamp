@@ -1,23 +1,21 @@
+import type { RichTextBlock } from "@/types/common";
+
+export const CONTACT_US_EMAIL_PHONE_FIELDS = `
+  ContactUsEmailPhone {
+    Label
+    Link
+  }
+`;
+
 export const CONTACT_US_ADDRESS_FIELDS = `
   AddressContent {
     OfficeCountry
     OfficeCity
     Address
-    ContactUsEmailPhone {
-      Label
-      Link
-    }
+    ${CONTACT_US_EMAIL_PHONE_FIELDS}
     MapIframe
   }
 `;
-
-export type RichTextBlock = {
-  type: string;
-  children: {
-    text: string;
-    type?: string;
-  }[];
-};
 
 export type ContactUsEmailPhoneItem = {
   Label: string;
@@ -35,3 +33,5 @@ export type AddressContentData = {
 export type ContactUsAddressType = {
   AddressContent: AddressContentData;
 };
+
+export type { RichTextBlock };

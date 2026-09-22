@@ -12,7 +12,6 @@ export const BLOG_PAGE_BANNER_FIELDS = `
 
 export type BlogPageBannerItem = HeroBannerFragmentType & Partial<ContentError> & {
   id?: string;
-  show_searchbox?: boolean;
 };
 
 export type BlogPageBannerType = {

@@ -1,4 +1,4 @@
-import { PROMO_INNER_FIELDS, type PromoFragmentType } from "./promoFragment";
+import { COMPONENT_PROMO_FIELDS, type PromoFragmentType } from "./promoFragment";
 
 export type ServiceListContactUsItem = {
   Form?: PromoFragmentType[];
@@ -13,9 +13,7 @@ export type ServiceListContactUsType = {
 export const SERVICE_LIST_CONTACT_US_FIELDS = `
   contact_us {
     Form {
-      ... on ComponentBaseTemplatePromo {
-        ${PROMO_INNER_FIELDS}
-      }
+      ${COMPONENT_PROMO_FIELDS}
     }
     pageReference
     RecipientEmails

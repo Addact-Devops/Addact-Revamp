@@ -1,3 +1,6 @@
+import type { CounterFragmentType } from "./counterFragment";
+import type { TitleDescriptionType } from "./titleDescriptionFragment";
+
 export const WHO_ARE_WE_FIELDS = `
   whoAreWes {
     Counter {
@@ -14,17 +17,12 @@ export const WHO_ARE_WE_FIELDS = `
   }
 `;
 
+export type WhoAreWeData = {
+  Counter: CounterFragmentType[];
+  Title: Required<TitleDescriptionType>[];
+  pageReference: string;
+};
+
 export type WhoAreWeResponse = {
-  whoAreWes: {
-    Counter: {
-      CounterTitle: string;
-      NumberCount: number;
-      id: string;
-    }[];
-    Title: {
-      Description: string;
-      Title: string;
-    }[];
-    pageReference: string;
-  }[];
+  whoAreWes: WhoAreWeData[];
 };

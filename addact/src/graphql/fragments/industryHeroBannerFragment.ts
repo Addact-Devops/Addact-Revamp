@@ -1,5 +1,9 @@
-import { COMPONENT_BANNER_SECTION_FIELDS } from "./componentBannerFieldsFragment";
-import type { BannerItem } from "./developmentHeroBannerFragment";
+import {
+  COMPONENT_HERO_BANNER_SECTION_FIELDS,
+  type BannerItem,
+} from "./componentBannerFieldsFragment";
+
+export const INDUSTRY_HERO_BANNER_FIELDS = COMPONENT_HERO_BANNER_SECTION_FIELDS;
 
 export type IndustryHeroBannerItem = BannerItem;
 
@@ -9,11 +13,6 @@ export type IndustryHeroBannerType = {
   };
 };
 
-export const INDUSTRY_HERO_BANNER_FIELDS = `
-  HeroBanner {
-    ${COMPONENT_BANNER_SECTION_FIELDS}
-  }
-`;
 
 
 

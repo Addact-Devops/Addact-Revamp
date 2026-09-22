@@ -13,6 +13,12 @@ export const LINK_INNER_FIELDS = `
   }
 `;
 
+export const COMPONENT_LINK_FIELDS = `
+  ... on ComponentSharedLink {
+    ...LinkFields
+  }
+`;
+
 export const LINK_FRAGMENT = gql`
   fragment LinkFields on ComponentSharedLink {
     ${LINK_INNER_FIELDS}

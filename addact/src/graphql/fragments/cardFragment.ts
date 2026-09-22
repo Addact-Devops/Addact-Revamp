@@ -10,17 +10,27 @@ export type CardFragmentType = {
   BgImage?: ImageFragmentType;
 };
 
+export const CARD_INNER_FIELDS = `
+  id
+  CardTitle
+  CardDescription
+  CardLink {
+    ...LinkFields
+  }
+  BgImage {
+    ...ImageFields
+  }
+`;
+
+export const COMPONENT_CARD_FIELDS = `
+  ... on ComponentCardCard {
+    ${CARD_INNER_FIELDS}
+  }
+`;
+
 export const CARD_FRAGMENT = gql`
   fragment CardFields on ComponentCardCard {
-    id
-    CardTitle
-    CardDescription
-    CardLink {
-      ...LinkFields
-    }
-    BgImage {
-      ...ImageFields
-    }
+    ${CARD_INNER_FIELDS}
   }
 `;
 

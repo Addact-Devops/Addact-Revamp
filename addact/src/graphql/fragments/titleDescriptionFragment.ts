@@ -24,10 +24,13 @@ export type TitleDescriptionLowerType = {
   description?: string;
 };
 
-export type IdTitleDescriptionType = {
+export type IdTitleDescriptionType = TitleDescriptionType & {
   id?: string;
+};
+
+export type TitleSubTitleType = {
   Title?: string;
-  Description?: string;
+  SubTitle?: string;
 };
 
 

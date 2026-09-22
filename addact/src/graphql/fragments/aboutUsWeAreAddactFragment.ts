@@ -1,12 +1,14 @@
 import { ABOUT_US_WE_ARE_ADDACT_NUMBER_FIELDS, type NumberContent } from "./aboutUsWeAreAddactNumberFragment";
-export type { NumberContent };
 import type { AboutUsItemType } from "./aboutUsBrandValueFragment";
+import type { RichTextBlock } from "@/types/common";
+
+export type { NumberContent };
 
 export const ABOUT_US_WE_ARE_ADDACT_FIELDS = `
   WeAreAddact {
     Image {
-          ...ImageFields
-        }
+      ...ImageFields
+    }
     SubTitle
     Title
     Content
@@ -14,17 +16,9 @@ export const ABOUT_US_WE_ARE_ADDACT_FIELDS = `
   }
 `;
 
-export type ContentChild = {
-  text: string;
-};
-
-export type ContentBlock = {
-  type: string;
-  children: ContentChild[];
-};
+export type ContentBlock = RichTextBlock;
 
 export type WeAreAddactType = Omit<AboutUsItemType, "Description"> & {
   Content: ContentBlock[];
   NumberContent: NumberContent[];
 };
-

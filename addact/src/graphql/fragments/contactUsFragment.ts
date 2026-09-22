@@ -1,5 +1,5 @@
 import { CONTACT_US_FORM_LABELS_FIELDS, type ContactUsFormLabels } from "./contactUsFormLabelsFragment";
-import { PROMO_INNER_FIELDS, type PromoFragmentType } from "./promoFragment";
+import { COMPONENT_PROMO_FIELDS, type PromoFragmentType } from "./promoFragment";
 
 export type ContactUsDetailsType = ContactUsFormLabels & {
   pageReference?: string;
@@ -14,9 +14,7 @@ export const CONTACT_US_FIELDS = `
   ContactUs {
     pageReference
     Form {
-      ... on ComponentBaseTemplatePromo {
-        ${PROMO_INNER_FIELDS}
-      }
+      ${COMPONENT_PROMO_FIELDS}
     }
     ${CONTACT_US_FORM_LABELS_FIELDS}
   }

@@ -1,4 +1,4 @@
-import { type LinkImageItem } from "./linkImageFragment";
+import { COMPONENT_LINK_IMAGE_FIELDS, type LinkImageItem } from "./linkImageFragment";
 
 export type SocialIcon = LinkImageItem;
 
@@ -15,7 +15,7 @@ export type { LinkImageItem };
 export const SOCIAL_ICONS_FIELDS = `
   social_icons {
     SocialIcon {
-      ... on ComponentBaseTemplateLinkImage { ...LinkImageFields }
+      ${COMPONENT_LINK_IMAGE_FIELDS}
     }
   }
 `;

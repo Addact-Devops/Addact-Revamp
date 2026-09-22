@@ -1,24 +1,29 @@
 import type { ImageFragmentType } from "./imageFragment";
-import { BANNER_TITLE_DESCRIPTION_FIELDS, type BannerTitleDescriptionType } from "./componentBannerFieldsFragment";
+import {
+  BANNER_TITLE_DESCRIPTION_FIELDS,
+  BANNER_IMAGE_FIELDS,
+  type BannerTitleDescriptionType,
+} from "./componentBannerFieldsFragment";
 
 export const BLOG_HERO_BANNER_INNER_FIELDS = `
   ${BANNER_TITLE_DESCRIPTION_FIELDS}
   PublishDate
-  BannerImage {
-    ...ImageFields
+  ${BANNER_IMAGE_FIELDS}
+`;
+
+export const COMPONENT_BLOG_HERO_BANNER_FIELDS = `
+  ... on ComponentBlogHeroBannerBlogHeroBanner {
+    ${BLOG_HERO_BANNER_INNER_FIELDS}
   }
 `;
 
 export const BLOG_HERO_BANNER_FIELDS = `
   HeroBanner {
-    ... on ComponentBlogHeroBannerBlogHeroBanner {
-      ${BLOG_HERO_BANNER_INNER_FIELDS}
-    }
+    ${COMPONENT_BLOG_HERO_BANNER_FIELDS}
   }
 `;
 
 export type BlogHeroBannerItem = BannerTitleDescriptionType & {
-  BannerTitle: string;
   BannerImage: ImageFragmentType;
   PublishDate?: string;
 };

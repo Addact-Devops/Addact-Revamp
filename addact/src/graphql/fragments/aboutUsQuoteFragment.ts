@@ -1,23 +1,19 @@
 import type { ImageFragmentType } from "./imageFragment";
+import { AUTHOR_BASE_FIELDS, type CommonAuthorType } from "./blogAuthorFragment";
 
 export const ABOUT_US_QUOTE_FIELDS = `
   Quote {
-    AuthorImage {
-      ...ImageFields
-    }
+    ${AUTHOR_BASE_FIELDS}
     AuthorMessage
-    AuthorName
   }
 `;
 
-export type AboutUsQuoteType = {
-  AuthorName: string;
-  AuthorMessage: string;
-  AuthorImage: ImageFragmentType;
-};
+export type AboutUsQuoteType = CommonAuthorType;
 
 export type QuoteData = {
   aboutUs: {
     Quote: AboutUsQuoteType;
   };
 };
+
+export type { CommonAuthorType, ImageFragmentType };

@@ -6,7 +6,6 @@ export const CASE_STUDY_HERO_BANNER_FIELDS = `
 `;
 
 export type CaseStudyHeroBannerItem = BlogBannerItem & {
-  id?: string;
   PublishDate: string;
   BannerImage: ImageFragmentType;
 };

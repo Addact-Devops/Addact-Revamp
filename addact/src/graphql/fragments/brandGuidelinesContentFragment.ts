@@ -4,6 +4,7 @@ import type { BrandGuidelinesFormFieldsItem } from "./brandGuidelinesFormFragmen
 import type { PageHeroBannerType } from "./pageHeroBannerFragment";
 import type { BrandGuidelinesPdfType } from "./brandGuidelinesPdfFragment";
 import type { BlogContentItem } from "./blogContentFragment";
+import type { SlugType } from "@/types/common";
 
 export const BRAND_GUIDELINES_CONTENT_FIELDS = `
   Content {
@@ -16,9 +17,9 @@ export const BRAND_GUIDELINES_CONTENT_FIELDS = `
 
 export type BrandGuidelinesItem = PageHeroBannerType &
   BrandGuidelinesFormFieldsItem &
-  Partial<BrandGuidelinesPdfType> & {
+  Partial<BrandGuidelinesPdfType> &
+  SlugType & {
     ReferenceTitle?: string;
-    Slug?: string;
     Content?: BlogContentItem[];
   };
 

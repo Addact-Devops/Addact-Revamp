@@ -1,3 +1,5 @@
+import { type TitleDescriptionType } from "./titleDescriptionFragment";
+
 export const BLOG_SIMILAR_STORY_TITLE_FIELDS = `
   similarstorytitle {
     CommonTitle {
@@ -6,10 +8,7 @@ export const BLOG_SIMILAR_STORY_TITLE_FIELDS = `
   }
 `;
 
-export type BlogSimilarStoryTitleItem = {
-  Title?: string;
-  Description?: string;
-};
+export type BlogSimilarStoryTitleItem = TitleDescriptionType;
 
 export type BlogSimilarStoryTitleType = {
   similarstorytitle?: {

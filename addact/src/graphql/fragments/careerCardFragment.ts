@@ -1,6 +1,6 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 import { BLOG_CONTENT_ERROR_FIELDS, type ContentError } from "./blogContentErrorFragment";
-import { PROMO_INNER_FIELDS, type PromoFragmentType } from "./promoFragment";
+import { COMPONENT_PROMO_FIELDS, type PromoFragmentType } from "./promoFragment";
 import type { HeadingFragmentType } from "./headingFragment";
 import type { RichtextFragmentType } from "./richtextFragment";
 
@@ -11,9 +11,7 @@ export const CAREER_CARD_FIELDS = `
     ${BLOG_CONTENT_ERROR_FIELDS}
   }
   GlobalCard {
-    ... on ComponentBaseTemplatePromo {
-      ${PROMO_INNER_FIELDS}
-    }
+    ${COMPONENT_PROMO_FIELDS}
     ${BLOG_CONTENT_ERROR_FIELDS}
   }
 `;

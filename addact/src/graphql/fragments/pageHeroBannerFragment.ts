@@ -1,13 +1,8 @@
-import { COMPONENT_HERO_BANNER_FIELDS, type HeroBannerFragmentType } from "./heroBannerFragment";
+import { HERO_BANNER_FIELDS, type HeroBannerFragmentType } from "./heroBannerFragment";
 import type { HeaderLink } from "./linkFragment";
 
-export const PAGE_HERO_BANNER_FIELDS = `
-  HeroBanner {
-    Banner {
-      ${COMPONENT_HERO_BANNER_FIELDS}
-    }
-  }
-`;
+export const PAGE_HERO_BANNER_FIELDS = HERO_BANNER_FIELDS;
+
 
 export type PageHeroBannerItemType = HeroBannerFragmentType & {
   ReadNow?: HeaderLink | null;

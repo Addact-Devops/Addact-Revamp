@@ -1,25 +1,22 @@
 import { Heading, Link } from "@/types/common";
 import { HEADING_SELECTION_FIELDS } from "./headingFragment";
+import { BLOG_CONTENT_ERROR_FIELDS } from "./blogContentErrorFragment";
+import { COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS } from "./titleWithDescriptionFragment";
+import { type TitleDescriptionType } from "./titleDescriptionFragment";
+import { type LinkWithIcon } from "./homeCapabilitiesFragment";
 
 export const OUR_PROCESS_FIELDS = `
   Title {
     ${HEADING_SELECTION_FIELDS}
-    ... on Error {
-      code
-      message
-    }
+    ${BLOG_CONTENT_ERROR_FIELDS}
   }
   ProcessData {
-    ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
+    ${COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS}
   }
 `;
 
-import { type LinkWithIcon } from "./homeCapabilitiesFragment";
-
-export type ProcessItem = {
+export type ProcessItem = Required<TitleDescriptionType> & {
   id?: string;
-  Title: string;
-  Description: string;
   Link?: LinkWithIcon;
 };
 
@@ -41,3 +38,4 @@ export type OurProcessData = {
     ourprocess: OurProcessDetails;
   };
 };
+

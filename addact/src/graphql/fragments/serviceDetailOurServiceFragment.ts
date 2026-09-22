@@ -1,9 +1,12 @@
 import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
 import { TITLE_DESCRIPTION_FIELDS, ID_TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType, type IdTitleDescriptionType } from "./titleDescriptionFragment";
+import { RICHTEXT_FIELDS, type RichtextFragmentType } from "./richtextFragment";
+import { TEAM_FEATURE_FIELDS } from "./serviceListOurServiceFragment";
 import type { HeadingFragmentType } from "./headingFragment";
-import type { RichtextFragmentType } from "./richtextFragment";
 import type { LinkFragmentType } from "./linkFragment";
 import type { ImageFragmentType } from "./imageFragment";
+import type { SlugType } from "@/types/common";
+
 
 export type EnterprisesBrandsTitleItem = HeadingFragmentType | RichtextFragmentType;
 
@@ -13,9 +16,7 @@ export type TeamFeatureCardType = Required<IdTitleDescriptionType> & {
 
 export type GlobalCardItem = TeamFeatureCardType & {
   Image?: ImageFragmentType;
-  sub_service_page?: {
-    Slug: string;
-  };
+  sub_service_page?: Required<SlugType>;
 };
 
 export type ForEnterprisesBrandsType = {
@@ -48,7 +49,6 @@ export type ServiceDetailOurServiceType = {
 
 export type OurServiceData = ServiceDetailOurServiceItem;
 
-
 export const SERVICE_DETAIL_OUR_SERVICE_FIELDS = `
   our_service {
     Titeldescription {
@@ -64,21 +64,14 @@ export const SERVICE_DETAIL_OUR_SERVICE_FIELDS = `
       }
       Title {
         ${BLOG_CONTENT_HEADINGS_FIELDS}
-        ... on ComponentBaseTemplateRichtext { ...RichtextFields }
+        ${RICHTEXT_FIELDS}
       }
     }
     ReferenceTitle
-    team_feature {
-      Cards {
-        ${ID_TITLE_DESCRIPTION_FIELDS}
-        Link {
-          ...LinkFields
-        }
-      }
-      Description
-    }
+    ${TEAM_FEATURE_FIELDS}
   }
 `;
+
 
 
 

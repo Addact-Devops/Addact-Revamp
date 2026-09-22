@@ -12,10 +12,20 @@ export const AI_LISTING_CONTEXT_FIELDS = `
   }
 `;
 
+export const LISTING_CONTEXT_FIELDS = `
+  listingContext {
+    id
+    ${AI_LISTING_CONTEXT_FIELDS}
+  }
+`;
+
 export type AIListingContext = {
+  id?: string;
   title: string;
   description: string;
   image: Image | null;
   link: LinkWithIcon;
 };
+
+export type ListingContextType = AIListingContext;
 

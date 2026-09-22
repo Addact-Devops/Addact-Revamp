@@ -1,4 +1,4 @@
-import { ID_TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
+import { ID_TITLE_DESCRIPTION_FIELDS, type IdTitleDescriptionType } from "./titleDescriptionFragment";
 
 export const FAQ_FIELDS = `
   Title
@@ -7,11 +7,7 @@ export const FAQ_FIELDS = `
   }
 `;
 
-export type FAQItem = {
-  id?: string;
-  Title: string;
-  Description: string;
-};
+export type FAQItem = IdTitleDescriptionType;
 
 export type FAQ = {
   Title: string;

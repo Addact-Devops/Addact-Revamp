@@ -1,3 +1,5 @@
+import type { TitleDescriptionType } from "./titleDescriptionFragment";
+
 export const CASE_STUDY_FORM_TITLE_FIELDS = `
   FormTitle {
     CommonTitle {
@@ -6,10 +8,7 @@ export const CASE_STUDY_FORM_TITLE_FIELDS = `
   }
 `;
 
-export type CaseStudyFormTitleItem = {
-  Title: string;
-  Description: string;
-};
+export type CaseStudyFormTitleItem = Required<TitleDescriptionType>;
 
 export type CaseStudyFormTitleType = {
   FormTitle: {

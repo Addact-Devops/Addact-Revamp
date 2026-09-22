@@ -1,12 +1,9 @@
 import { BLOG_AUTHOR_DESIGNATION_FIELDS, type Designation } from "./blogAuthorDesignationFragment";
-import type { AuthorDetails } from "./blogAuthorFragment";
+import { AUTHOR_BASE_FIELDS, type AuthorDetails } from "./blogAuthorFragment";
 
 export const WEBINAR_AUTHOR_FIELDS = `
   Author {
-    AuthorImage {
-      ...ImageFields
-    }
-    AuthorName
+    ${AUTHOR_BASE_FIELDS}
     ${BLOG_AUTHOR_DESIGNATION_FIELDS}
   }
 `;

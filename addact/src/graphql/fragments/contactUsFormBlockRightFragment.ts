@@ -1,6 +1,8 @@
+import type { RichTextBlock } from "@/types/common";
+
 export type ContactUsFormBlockRightType = {
   RightTitle?: string;
-  RightDescription?: string;
+  RightDescription?: RichTextBlock[] | string[] | string;
   RecipientEmails?: string;
 };
 

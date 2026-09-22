@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import { type TitleSubTitleType } from "./titleDescriptionFragment";
 
 export const GALLERY_TITLES_FRAGMENT = gql`
   fragment GalleryTitlesFields on ComponentAddactComponentGalleryTitles {
@@ -7,8 +8,5 @@ export const GALLERY_TITLES_FRAGMENT = gql`
   }
 `;
 
-export type GalleryTitlesType = {
-  Title?: string;
-  SubTitle?: string;
-};
+export type GalleryTitlesType = TitleSubTitleType;
 

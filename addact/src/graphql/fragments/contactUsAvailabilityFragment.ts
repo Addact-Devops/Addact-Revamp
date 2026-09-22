@@ -1,8 +1,6 @@
-export type ContactUsAvailabilityType = {
-  ContactUsAvailability?: {
-    Days?: string;
-    Availability?: string;
-  };
+export type ContactUsAvailabilityItem = {
+  Days?: string;
+  Availability?: string;
 };
 
 export const CONTACT_US_AVAILABILITY_FIELDS = `
@@ -11,4 +9,8 @@ export const CONTACT_US_AVAILABILITY_FIELDS = `
     Availability
   }
 `;
+
+export type ContactUsAvailabilityType = {
+  ContactUsAvailability?: ContactUsAvailabilityItem[];
+};
 

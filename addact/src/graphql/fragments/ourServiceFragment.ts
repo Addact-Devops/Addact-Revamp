@@ -4,6 +4,19 @@ import { AI_SERVICE_LIST_FIELDS } from "./aiServiceListFragment";
 import type { AIListingContext } from "./aiListingContextFragment";
 import type { Link } from "@/types/common";
 
+export const COMPONENT_OUR_SERVICE_FIELDS = `
+  ... on ComponentHomeServiceList {
+    ...OurServiceFields
+  }
+`;
+
+export const OUR_SERVICE_FIELDS = `
+  ourService {
+    ${COMPONENT_OUR_SERVICE_FIELDS}
+  }
+`;
+
+
 export const OUR_SERVICE_FRAGMENT = gql`
   fragment OurServiceFields on ComponentHomeServiceList {
     isCarousel
@@ -16,6 +29,7 @@ export const OUR_SERVICE_FRAGMENT = gql`
     ${AI_SERVICE_LIST_FIELDS}
   }
 `;
+
 
 export type ServiceListContextItem = {
   listingContext: Omit<AIListingContext, "link"> & {

@@ -1,4 +1,6 @@
 import { gql } from "graphql-request";
+import type { CounterFragmentType } from "./counterFragment";
+import type { TitleDescriptionType } from "./titleDescriptionFragment";
 
 export const HOME_WHO_ARE_WE_FRAGMENT = gql`
   fragment HomeWhoAreWeFields on Home {
@@ -20,16 +22,8 @@ export const HOME_WHO_ARE_WE_FRAGMENT = gql`
   }
 `;
 
-export type WhoAreWeCounter = {
-  CounterTitle: string;
-  NumberCount: number;
-  id: string;
-};
-
-export type WhoAreWeTitle = {
-  Description: string;
-  Title: string;
-};
+export type WhoAreWeCounter = CounterFragmentType;
+export type WhoAreWeTitle = Required<TitleDescriptionType>;
 
 export type WhoAreWe = {
   Counter: WhoAreWeCounter[];
@@ -40,3 +34,4 @@ export type WhoAreWe = {
 export type HomeWhoAreWeType = {
   whoarewe: WhoAreWe;
 };
+

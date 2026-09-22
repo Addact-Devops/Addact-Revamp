@@ -1,11 +1,11 @@
-export type NumberTitleContentItem = {
+import type { TitleFragmentType } from "./titleFragment";
+
+export type NumberTitleContentItem = TitleFragmentType & {
   Number?: string;
-  Title?: string;
   Content?: string;
 };
 
-export type OurChallengesItem = {
-  Title?: string;
+export type OurChallengesItem = TitleFragmentType & {
   NumberTitleContent?: NumberTitleContentItem[];
 };
 
@@ -23,4 +23,3 @@ export const OUR_CHALLENGES_FIELDS = `
     }
   }
 `;
-

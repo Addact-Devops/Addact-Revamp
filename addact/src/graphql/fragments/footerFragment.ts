@@ -1,41 +1,37 @@
 import { FOOTER_LINKS_FIELDS, type FooterNavLinkItem } from "./footerLinksFragment";
 import { FOOTER_SOCIAL_MEDIA_FIELDS } from "./footerSocialMediaFragment";
-import type { ImageFragmentType } from "./imageFragment";
+import { IMAGE_FIELD_SELECTION, type ImageFragmentType } from "./imageFragment";
+import { SHARED_IMAGE_FIELDS, type SharedImageFragmentType } from "./sharedImageFragment";
 import type { LinkFragmentType } from "./linkFragment";
-import type { TitleWithDescriptionFragmentType } from "./titleWithDescriptionFragment";
+import {
+  COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS,
+  type TitleWithDescriptionFragmentType,
+} from "./titleWithDescriptionFragment";
 
 export const FOOTER_FIELDS = `
   Logo {
-    Image {
-      ...ImageFields
-    }
+    ${IMAGE_FIELD_SELECTION}
   }
   BackGroundImage {
-    Image {
-      ...ImageFields
-    }
+    ${IMAGE_FIELD_SELECTION}
   }
   BackGroundImageMobile {
-    Image {
-      ...ImageFields
-    }
+    ${IMAGE_FIELD_SELECTION}
   }
   AddressInformationMobileBgImg {
-    Image {
-      ...ImageFields
-    }
+    ${IMAGE_FIELD_SELECTION}
   }
   AddressInformation {
-    ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
+    ${COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS}
   }
   ${FOOTER_LINKS_FIELDS}
   milestonestitle {
     CommonTitle {
-      ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
+      ${COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS}
     }
   }
   milestonesimage {
-    ... on ComponentSharedImage { ...SharedImageFields }
+    ${SHARED_IMAGE_FIELDS}
   }
   CopyrightText
   SiteSlog
@@ -43,15 +39,11 @@ export const FOOTER_FIELDS = `
 `;
 
 export type FooterImage = ImageFragmentType;
-
-export type FooterImageBlock = {
-  Image?: FooterImage | null;
-};
-
+export type FooterImageBlock = SharedImageFragmentType;
 export type FooterAddressInformation = TitleWithDescriptionFragmentType;
 
 export type FooterLinksGroup = {
-  NavLink?: FooterNavLink[];
+  NavLink?: FooterNavLinkItem[];
 };
 
 export type FooterNavLink = FooterNavLinkItem;
@@ -75,5 +67,3 @@ export type Footer = {
   CopyrightText?: string;
   SiteSlog?: string;
 };
-
-

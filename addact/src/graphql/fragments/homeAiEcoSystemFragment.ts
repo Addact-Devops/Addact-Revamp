@@ -1,6 +1,12 @@
 import { gql } from "graphql-request";
-import { TITLE_DESCRIPTION_LOWER_FIELDS } from "./titleDescriptionFragment";
+import { TITLE_DESCRIPTION_LOWER_FIELDS, type TitleDescriptionLowerType } from "./titleDescriptionFragment";
+import { IMAGE_FIELD_SELECTION } from "./imageFragment";
 import { Image } from "@/types/common";
+
+export const LAYER_LOGOS_FIELDS = `
+  tooltip
+  ${IMAGE_FIELD_SELECTION}
+`;
 
 export const HOME_AI_ECO_SYSTEM_FRAGMENT = gql`
   fragment HomeAiEcoSystemFields on Home {
@@ -15,16 +21,10 @@ export const HOME_AI_ECO_SYSTEM_FRAGMENT = gql`
           ...ImageFields
         }
         firstLayerlogos {
-          tooltip
-          Image {
-            ...ImageFields
-          }
+          ${LAYER_LOGOS_FIELDS}
         }
         secondLayerlogos {
-          tooltip
-          Image {
-            ...ImageFields
-          }
+          ${LAYER_LOGOS_FIELDS}
         }
       }
     }
@@ -36,9 +36,7 @@ export type LogoLayer = {
   Image: Image;
 };
 
-export type AIEcoSystemData = {
-  title: string;
-  description: string;
+export type AIEcoSystemData = Required<TitleDescriptionLowerType> & {
   tagLine: string;
   firstImage: Image;
   secondImage: Image;
@@ -53,4 +51,3 @@ export type AIEcoSystem = {
 export type HomeAiEcoSystemType = {
   aiEcoSystem: AIEcoSystem;
 };
-

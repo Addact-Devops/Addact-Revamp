@@ -31,5 +31,3 @@ export type Whyaddact = {
 export type HomeWhyAddactType = {
   whyaddact: Whyaddact;
 };
-
-

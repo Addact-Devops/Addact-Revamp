@@ -1,8 +1,9 @@
-import { ImageFragmentType } from "./imageFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import type { RichTextBlock } from "@/types/common";
 
 export type ContactUsFormBlockLeftType = {
   LeftTitle?: string;
-  LeftDescription?: string;
+  LeftDescription?: RichTextBlock[] | string[] | string;
   LeftBackgroundImage?: ImageFragmentType;
 };
 

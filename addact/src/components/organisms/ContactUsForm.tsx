@@ -5,13 +5,7 @@ import { Turnstile } from "@marsidev/react-turnstile";
 import { usePathname } from "next/navigation";
 
 import type { ImageFragmentType } from "@/graphql/fragments/imageFragment";
-
-type RichTextBlock = {
-  type: string;
-  children: {
-    text: string;
-  }[];
-};
+import type { RichTextBlock } from "@/types/common";
 
 type ContactUsFormProps = {
   ContactUsFormBlock: {

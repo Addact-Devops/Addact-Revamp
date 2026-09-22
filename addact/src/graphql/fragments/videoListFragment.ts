@@ -1,4 +1,4 @@
-import { TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
+import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "./titleDescriptionFragment";
 import type { BaseHeading } from "./baseHeadingFragment";
 import type { BannerSection } from "./componentBannerFieldsFragment";
 import type { Link } from "@/types/common";
@@ -17,12 +17,12 @@ export const VIDEO_LIST_FIELDS = `
   }
 `;
 
+export type VideoContentItem = Required<TitleDescriptionType> & {
+  Link: Link;
+};
+
 export type VideoContentType = {
-  Content: {
-    Title: string;
-    Description: string;
-    Link: Link;
-  };
+  Content: VideoContentItem;
   Iframe: {
     Richtext: string;
   };

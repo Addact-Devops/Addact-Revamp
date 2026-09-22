@@ -2,6 +2,7 @@ import { gql } from "graphql-request";
 import { HOME_ANIMATION_BANNER_SUB_TITLE_FIELDS } from "./homeAnimationBannerSubTitleFragment";
 import type { ImageFragmentType } from "./imageFragment";
 import type { LinkFragmentType } from "./linkFragment";
+import type { TitleFragmentType } from "./titleFragment";
 
 export const ANIMATION_BANNER_TITLE_DESC_FIELDS = `
   bannerTitle
@@ -35,9 +36,6 @@ export const HOME_ANIMATION_BANNER_FRAGMENT = gql`
 `;
 
 export type AnimationBannerLink = LinkFragmentType;
-
-import type { TitleFragmentType } from "./titleFragment";
-
 export type AnimationBannerSubTitle = Required<TitleFragmentType>;
 
 export type AnimationBannerTitleDescription = {

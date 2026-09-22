@@ -1,5 +1,5 @@
-import type { LinkFragmentType } from "./linkFragment";
-import type { TitleFragmentType } from "./titleFragment";
+import { COMPONENT_LINK_FIELDS, type LinkFragmentType } from "./linkFragment";
+import { COMPONENT_TITLE_FIELDS, type TitleFragmentType } from "./titleFragment";
 
 export type FooterNavLinkItem = TitleFragmentType | LinkFragmentType;
 
@@ -12,8 +12,8 @@ export type FooterLinksType = {
 export const FOOTER_LINKS_FIELDS = `
   footerlinks {
     NavLink {
-      ... on ComponentBaseTemplateTitle { ...TitleFields }
-      ... on ComponentSharedLink { ...LinkFields }
+      ${COMPONENT_TITLE_FIELDS}
+      ${COMPONENT_LINK_FIELDS}
     }
   }
 `;

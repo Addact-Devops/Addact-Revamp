@@ -10,26 +10,27 @@ export const BLOG_HERO_BANNER_FULL_INNER_FIELDS = `
   ${BLOG_CATEGORY_FIELDS}
 `;
 
+export const COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS = `
+  ... on ComponentBlogHeroBannerBlogHeroBanner {
+    ${BLOG_HERO_BANNER_FULL_INNER_FIELDS}
+  }
+`;
+
 export const BLOG_HERO_BANNER_FIELDS = `
   BlogBanner {
-    ... on ComponentBlogHeroBannerBlogHeroBanner {
-      ${BLOG_HERO_BANNER_FULL_INNER_FIELDS}
-    }
+    ${COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS}
   }
 `;
 
 export const HERO_BANNER_FULL_FIELDS = `
   HeroBanner {
-    ... on ComponentBlogHeroBannerBlogHeroBanner {
-      ${BLOG_HERO_BANNER_FULL_INNER_FIELDS}
-    }
+    ${COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS}
   }
 `;
 
 // Composite type merging all 4 sub-fragment shapes directly
-export type BlogBySlugBannerItem = Partial<BlogHeroBannerItem> & {
-  BannerDescription?: string;
-} & ReadNow &
+export type BlogBySlugBannerItem = Partial<BlogHeroBannerItem> &
+  ReadNow &
   BannerAuthor &
   BlogCategory;
 

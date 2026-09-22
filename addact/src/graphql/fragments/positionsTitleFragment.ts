@@ -1,4 +1,4 @@
-import { TITLE_DESCRIPTION_FIELDS } from "./titleDescriptionFragment";
+import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "./titleDescriptionFragment";
 
 export const POSITIONS_TITLE_FIELDS = `
   PositionsTitle {
@@ -6,10 +6,7 @@ export const POSITIONS_TITLE_FIELDS = `
   }
 `;
 
-export type PositionsTitleData = {
-  Title?: string;
-  Description?: string;
-};
+export type PositionsTitleData = TitleDescriptionType;
 
 export type PositionsTitleType = {
   PositionsTitle: PositionsTitleData;

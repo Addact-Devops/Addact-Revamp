@@ -2,39 +2,25 @@ import { ABOUT_US_CTA_TITLE_FIELDS, type AboutUsCtaTitle } from "./aboutUsCtaTit
 export type { AboutUsCtaTitle };
 import type { ImageFragmentType } from "./imageFragment";
 import type { LinkFragmentType } from "./linkFragment";
+import { CTA_IMAGE_LINK_FIELDS, type DescriptionNode, type CTAImageItem } from "./ctaFragment";
 
 export const ABOUT_US_CTA_FIELDS = `
   aboutUsCTA {
     ${ABOUT_US_CTA_TITLE_FIELDS}
     CTADescription
-    CTAImage {
-      ... on ComponentSharedImage {
-        Image {
-          ...ImageFields
-        }
-      }
-    }
-    CTALink {
-      ... on ComponentSharedLink {
-        ...LinkFields
-      }
-    }
+    ${CTA_IMAGE_LINK_FIELDS}
   }
 `;
 
 export type CTAImageType = ImageFragmentType;
 export type CTALinkType = LinkFragmentType;
-
-export type DescriptionNode = {
-  type: string;
-  children: { text: string }[];
-};
+export type { DescriptionNode };
 
 // CTAType.Title reuses Heading[] from AboutUsCtaTitle (aboutUsCtaTitleFragment.ts)
 export type CTAType = {
   Title: AboutUsCtaTitle["Title"];
   CTADescription: DescriptionNode[];
-  CTAImage: { Image: CTAImageType }[];
+  CTAImage: CTAImageItem[];
   CTALink: CTALinkType[];
 };
 

@@ -1,3 +1,6 @@
+import type { CounterFragmentType } from "./counterFragment";
+import type { TitleDescriptionType } from "./titleDescriptionFragment";
+
 export const DM_WHO_ARE_WE_FIELDS = `
   whoarewe {
     Counter {
@@ -14,16 +17,8 @@ export const DM_WHO_ARE_WE_FIELDS = `
   }
 `;
 
-export type CounterItem = {
-  CounterTitle: string;
-  NumberCount: number;
-  id: string;
-};
-
-export type TitleWithDescriptionItem = {
-  Description: string;
-  Title: string;
-};
+export type CounterItem = CounterFragmentType;
+export type TitleWithDescriptionItem = Required<TitleDescriptionType>;
 
 export type DigitalMarketingWhoAreWeData = {
   Counter: CounterItem[];
@@ -34,3 +29,4 @@ export type DigitalMarketingWhoAreWeData = {
 export type DigitalMarketingWhoAreWeType = {
   whoarewe: DigitalMarketingWhoAreWeData;
 };
+

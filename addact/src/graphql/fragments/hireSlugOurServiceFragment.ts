@@ -1,14 +1,13 @@
-import type { OurServiceType } from "./ourServiceFragment";
+import { OUR_SERVICE_FIELDS, type OurServiceType } from "./ourServiceFragment";
 import type { TitleDescriptionType, IdTitleDescriptionType } from "./titleDescriptionFragment";
 import type { HeadingFragmentType } from "./headingFragment";
 import type { ImageFragmentType } from "./imageFragment";
 import type { LinkFragmentType } from "./linkFragment";
+import type { SlugType } from "@/types/common";
 
-export const HIRE_SLUG_OUR_SERVICE_FIELDS = `
-  ourService {
-    ... on ComponentHomeServiceList { ...OurServiceFields }
-  }
-`;
+export const HIRE_SLUG_OUR_SERVICE_FIELDS = OUR_SERVICE_FIELDS;
+
+
 
 export type HireSlugOurServiceType = {
   ourService: OurServiceType[];
@@ -17,9 +16,7 @@ export type HireSlugOurServiceType = {
 export type GlobalCardItem = IdTitleDescriptionType & {
   Image?: ImageFragmentType;
   Link?: LinkFragmentType;
-  sub_service_page?: {
-    Slug: string;
-  };
+  sub_service_page?: Required<SlugType>;
 };
 
 export type TeamFeatureCardItem = IdTitleDescriptionType & {

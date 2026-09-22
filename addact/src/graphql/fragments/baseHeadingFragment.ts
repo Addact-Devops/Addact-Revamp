@@ -1,4 +1,5 @@
 import { gql } from "graphql-request";
+import type { SlugType } from "@/types/common";
 
 export const BASE_HEADING_FIELDS = `
   PageTitle
@@ -11,8 +12,7 @@ export const BASE_HEADING_FRAGMENT = gql`
   }
 `;
 
-export type BaseHeading = {
+export type BaseHeading = Required<SlugType> & {
   PageTitle: string;
-  Slug: string;
 };
 

@@ -1,12 +1,10 @@
-import { PROMO_INNER_FIELDS } from "./promoFragment";
+import { COMPONENT_PROMO_FIELDS } from "./promoFragment";
 // Re-using CONTACTUS type from homeContactUsFragment to avoid duplicate type definitions
 import { type CONTACTUS, type ContactUsFormItem } from "./homeContactUsFragment";
 
 export const CONTACT_US_FORM_INNER_FIELDS = `
   Form {
-    ... on ComponentBaseTemplatePromo {
-      ${PROMO_INNER_FIELDS}
-    }
+    ${COMPONENT_PROMO_FIELDS}
   }
   pageReference
   RecipientEmails

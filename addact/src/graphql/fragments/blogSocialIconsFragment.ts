@@ -1,25 +1,19 @@
-import type { HeaderLink } from "./linkFragment";
-import type { ImageFragmentType } from "./imageFragment";
+import { COMPONENT_LINK_IMAGE_FIELDS, type LinkImageItem } from "./linkImageFragment";
 
 export const BLOG_SOCIAL_ICONS_FIELDS = `
   socialicons {
     SocialIcon {
-      ... on ComponentBaseTemplateLinkImage { ...LinkImageFields }
+      ${COMPONENT_LINK_IMAGE_FIELDS}
     }
   }
 `;
 
-export type BlogSocialIconItem = {
-  Title?: string;
-  ClassName?: string;
-  Links?: HeaderLink[];
-  Icons?: Partial<ImageFragmentType>;
-  HoverIcon?: Partial<ImageFragmentType>;
-};
+export type BlogSocialIconItem = LinkImageItem;
 
 export type BlogSocialIconsType = {
   socialicons?: {
     SocialIcon?: BlogSocialIconItem[];
   };
 };
+
 
