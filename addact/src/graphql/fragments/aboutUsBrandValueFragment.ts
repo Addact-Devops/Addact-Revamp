@@ -1,9 +1,8 @@
 import type { ImageFragmentType } from "./imageFragment";
-import type { TitleDescriptionType } from "./titleDescriptionFragment";
+import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "./titleDescriptionFragment";
 
 export const TITLE_DESCRIPTION_IMAGE_FIELDS = `
-  Title
-  Description
+  ${TITLE_DESCRIPTION_FIELDS}
   Image {
     ...ImageFields
   }
