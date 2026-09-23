@@ -6,18 +6,11 @@ import Link from "next/link";
 import AnimatedBlindsBackground from "./AnimatedBlindsBackground";
 import RichText from "../atom/richText";
 import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
+import type { ComponentBannerItem } from "@/graphql/fragments/componentBannerFieldsFragment";
+import type { ChipsTextItem } from "@/graphql/fragments/bannerChipsTextFragment";
 
-type UIUXBannerData = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerLink?: {
-    label?: string;
-    href?: string;
-    isExternal?: boolean;
-  } | null;
-  chipsText?: {
-    Title: string;
-  }[];
+type UIUXBannerData = ComponentBannerItem & {
+  chipsText?: ChipsTextItem[] | { Title?: string | null }[] | null;
 };
 
 const HERO_BLIND_GRADIENT = ["#3c4cff", "#3c4cff"];

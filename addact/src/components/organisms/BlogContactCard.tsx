@@ -1,27 +1,9 @@
 "use client";
 import Link from "next/link";
 import Image from "../atom/image";
+import type { BlogContactCardItem } from "@/graphql/fragments/blogContactCardFragment";
 
-type ContactCard = {
-  CardTitle?: string;
-  CardDescription?: string;
-  CardLink?: {
-    id?: string;
-    href?: string;
-    label?: string;
-    target?: string;
-    isExternal?: boolean;
-  };
-  BgImage?: {
-    height?: number;
-    name?: string;
-    alternativeText?: string;
-    url?: string;
-    width?: number;
-  };
-};
-
-export default function BlogContactCard({ card }: { card?: ContactCard }) {
+export default function BlogContactCard({ card }: { card?: BlogContactCardItem }) {
   if (!card) return null;
 
   const { CardTitle, CardDescription, CardLink, BgImage } = card;

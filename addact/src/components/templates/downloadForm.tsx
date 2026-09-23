@@ -13,11 +13,11 @@ type DownloadFormProps = {
   pdfName?: string;
   sheetName: string;
   className?: string;
-  NameLabel: string;
-  EmailLabel: string;
-  PhoneLabel: string;
-  ButtonLabel: string;
-  RecipientEmails: string;
+  NameLabel?: string | null;
+  EmailLabel?: string | null;
+  PhoneLabel?: string | null;
+  ButtonLabel?: string | null;
+  RecipientEmails?: string | null;
   pageTitle: string;
 };
 
@@ -30,11 +30,11 @@ const DownloadForm = ({
   sheetName,
   redirectUrl,
   className = "",
-  NameLabel,
-  EmailLabel,
-  PhoneLabel,
-  ButtonLabel,
-  RecipientEmails,
+  NameLabel = "Name",
+  EmailLabel = "Email",
+  PhoneLabel = "Phone",
+  ButtonLabel = "Submit",
+  RecipientEmails = "",
   pageTitle,
 }: DownloadFormProps) => {
   const [captchaError, setCaptchaError] = useState(false);

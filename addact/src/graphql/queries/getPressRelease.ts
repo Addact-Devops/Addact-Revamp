@@ -1,71 +1,34 @@
-import { Image } from "@/types/common";
 import client from "../client";
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
+import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
+export type { PageHeadingType };
+import { PRESS_RELEASE_HERO_BANNER_FIELDS, type PressReleaseHeroBannerType, type AddactPressReleaseItem } from "../fragments/pressReleaseHeroBannerFragment";
+export type { PressReleaseHeroBannerType, AddactPressReleaseItem };
 
 const GET_PRESS_RELEASE_LIST_PAGE = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query PressRelease {
     pressRelease {
-      PageHeading {
-        PageTitle
-        Slug
-      }
-      HeroBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerDescription
-            BannerTitle
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-      }
+      ${PAGE_HEADING_FIELDS}
+      ${PRESS_RELEASE_HERO_BANNER_FIELDS}
     }
     addactPressReleases {
       Slug
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
-      }
+      ${BLOG_HERO_BANNER_FIELDS}
       PressReleaseSummary
     }
   }
 `;
 
 export interface PressReleaseResponse {
-  pressRelease: {
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    };
-    HeroBanner: {
-      Banner: {
-        BannerDescription: string;
-        BannerTitle: string;
-        BannerImage: Image;
-      }[];
-    };
-  };
-  addactPressReleases: {
-    Slug: string;
-    HeroBanner: {
-      BannerTitle: string;
-      BannerImage: Image;
-    }[];
-    PressReleaseSummary: string;
-  }[];
+  pressRelease: PageHeadingType & PressReleaseHeroBannerType;
+  addactPressReleases: AddactPressReleaseItem[];
 }
 
 export async function getPressReleaseData(): Promise<PressReleaseResponse> {

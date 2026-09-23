@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 // import Link from "next/link";
 // import { ArrowRight } from "lucide-react";
-import { OurServiceData } from "@/graphql/queries/getServieceList";
+import {
+  OurServiceData,
+  type GlobalCardItem,
+} from "@/graphql/fragments/serviceDetailOurServiceFragment";
 import RichText from "../atom/richText";
 // import { RightArrowUpIcon } from "../atom/icons";
 
@@ -21,28 +24,7 @@ interface Props {
 }
 
 // ✅ Card type for array items
-interface Card {
-  id: string;
-  Title: string;
-  Description: string;
-  Image?: {
-    alternativeText: string | null;
-    height: number;
-    name: string;
-    url: string;
-    width: number;
-  };
-  Link?: {
-    id: string;
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-  };
-  sub_service_page?: {
-    Slug: string;
-  };
-}
+type Card = GlobalCardItem;
 
 const OurServicesWithTabs = ({ data }: Props) => {
   const pathname = usePathname();
@@ -59,38 +41,42 @@ const OurServicesWithTabs = ({ data }: Props) => {
   const enterprisesCards = data?.ForEnterprisesBrands?.GlobalCard ?? [];
   const teamFeatureCards = data?.team_feature?.Cards ?? [];
 
+  const totalEnterprisesSlides = Math.ceil(enterprisesCards.length / 2);
+  const totalTeamFeatureSlides = Math.ceil(teamFeatureCards.length / 2);
+
   // ---- Slider settings ----
   const enterprisesSliderSettings = {
     dots: false,
-    arrows: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
     beforeChange: (_: number, newIndex: number) => setCurrentSlide(newIndex),
   };
 
   const teamSliderSettings = {
     dots: false,
-    arrows: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
     beforeChange: (_: number, newIndex: number) => setCurrentSlide(newIndex),
   };
 
   // ✅ Generic chunkArray function
   const chunkArray = <T,>(arr: T[], size: number): T[][] => {
-    const result: T[][] = [];
+    const results: T[][] = [];
     for (let i = 0; i < arr.length; i += size) {
-      result.push(arr.slice(i, i + size));
+      results.push(arr.slice(i, i + size));
     }
-    return result;
+    return results;
   };
 
   // indicator width & position
   const getIndicatorStyle = (totalSlides: number) => {
+    if (totalSlides <= 1) return { width: "100%", left: "0%" };
     const segmentWidth = 100 / totalSlides;
     return {
       width: `${segmentWidth}%`,
@@ -103,7 +89,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
       <div className="container-main">
         <div className="flex flex-col">
           <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%] text-[#0F0F0F] font-semibold!">
-            {data.ForEnterprisesBrands.Title[0].h2}
+            {data.ForEnterprisesBrands?.Title?.[0]?.h2 || ""}
           </h2>
 
           <div className="w-full text-white mt-8 lg:mt-15">
@@ -217,7 +203,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                   <div className="relative mt-[40px] h-[1px] bg-gray-600">
                     <div
                       className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
-                      style={getIndicatorStyle(Math.ceil(enterprisesCards.length / 2))}
+                      style={getIndicatorStyle(totalEnterprisesSlides)}
                     />
                   </div>
                 </div>
@@ -293,7 +279,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                   <div className="relative mt-[40px] h-[1px] bg-gray-600">
                     <div
                       className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
-                      style={getIndicatorStyle(teamFeatureCards.length)}
+                      style={getIndicatorStyle(totalTeamFeatureSlides)}
                     />
                   </div>
                 </div>

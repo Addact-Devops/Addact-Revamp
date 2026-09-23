@@ -28,34 +28,11 @@ export interface DetailPageServiceItem {
   link: DetailPageServiceLink | null;
 }
 
+import type { OurServiceList, ListingContext } from "@/graphql/fragments/developmentDesignListingFragment";
+
 type ServiceVariant = "twoCard" | "threeCard" | "fourCard";
 
-interface DynamicServiceItem {
-  listingContext: {
-    id?: string | null;
-    title: string | null;
-    description: string | null;
-    image: {
-      url: string;
-      alternativeText?: string | null;
-    } | null;
-    link: {
-      href: string;
-      target?: string | null;
-      isExternal?: boolean | null;
-    } | null;
-  } | null;
-}
-
-interface DynamicServiceSection {
-  id?: string | null;
-  serviceTitle: string | null;
-  isCarousel: boolean | null;
-  serviceVariant: {
-    variant: string;
-  } | null;
-  serviceList: DynamicServiceItem[];
-}
+type DynamicServiceSection = OurServiceList;
 
 interface DetailPageServicesProps {
   title?: string;
@@ -211,7 +188,7 @@ const normalizeLinkTarget = (target?: string | null): DetailPageServiceTarget =>
 const mapDynamicItems = (section: DynamicServiceSection): DetailPageServiceItem[] => {
   return section.serviceList
     .map((serviceItem) => serviceItem.listingContext)
-    .filter((context): context is NonNullable<DynamicServiceItem["listingContext"]> =>
+    .filter((context): context is NonNullable<ListingContext> =>
       Boolean(context),
     )
     .map((context, index): DetailPageServiceItem => {

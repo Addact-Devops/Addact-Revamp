@@ -4,27 +4,9 @@ import Heading from "../atom/heading";
 import RichText from "../atom/richText";
 import LinkBase from "../atom/linkBase";
 
-type ContentBlock = {
-  id?: string;
-  Richtext?: string;
-  Image?: {
-    alternativeText?: string;
-    name?: string;
-    height?: number;
-    url?: string;
-    width?: number;
-  };
-  h1?: string;
-  h2?: string;
-  h3?: string;
-  h4?: string;
-  h5?: string;
-  h6?: string;
-  href?: string;
-  label?: string;
-  target?: string;
-  isExternal?: boolean;
-};
+import type { BlogContentItem } from "@/graphql/fragments/blogContentFragment";
+
+type ContentBlock = BlogContentItem;
 
 export default function BlogContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
   return (

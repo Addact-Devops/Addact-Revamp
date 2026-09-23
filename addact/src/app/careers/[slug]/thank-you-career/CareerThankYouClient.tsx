@@ -17,6 +17,8 @@ interface SEO {
   languageTag?: string | null;
 }
 
+import type { AnimationVideo } from "@/graphql/fragments/thankYouAnimationVideoFragment";
+
 interface ThankYouPage {
   ReferenceTitle: string;
   Slug: string;
@@ -29,11 +31,7 @@ interface ThankYouPage {
     target?: string;
     isExternal?: boolean;
   }[];
-  AnimationVideo?: {
-    alternativeText: string | null;
-    name: string;
-    url: string;
-  };
+  AnimationVideo?: AnimationVideo | null;
   SEO?: SEO | null;
 }
 

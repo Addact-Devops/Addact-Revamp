@@ -99,7 +99,7 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
           <div className="relative aspect-[16/9] md:aspect-auto w-full md:h-auto">
             <Image
               src={eventData.EventBanner[0].BannerImage.url}
-              alt={eventData.EventBanner[0].BannerImage.name}
+              alt={eventData.EventBanner[0].BannerImage.name || ""}
               width={eventData.EventBanner[0].BannerImage.width}
               height={eventData.EventBanner[0].BannerImage.height}
               className="object-cover rounded-lg"
@@ -120,11 +120,11 @@ const EventDetails = ({ data: serverData }: EventDetailClientProps) => {
                   submitUrl="/api/submit-form"
                   sheetName="Home_Page"
                   redirectUrl={`${pathname}/event-form-thank-you`}
-                  NameLabel={formFields?.NameLable}
-                  EmailLabel={formFields?.EmailLabel}
-                  PhoneLabel={formFields?.PhoneLabel}
-                  ButtonLabel={formFields?.ButtonLabel}
-                  RecipientEmails={formFields?.RecipientEmails}
+                  NameLabel={formFields?.NameLable || ""}
+                  EmailLabel={formFields?.EmailLabel || ""}
+                  PhoneLabel={formFields?.PhoneLabel || ""}
+                  ButtonLabel={formFields?.ButtonLabel || ""}
+                  RecipientEmails={formFields?.RecipientEmails || ""}
                   pageTitle={`Event-Details ${slug}`}
                 />
               </div>

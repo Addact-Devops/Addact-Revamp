@@ -1,119 +1,29 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { OUR_INSIGHTS_BLOG_FIELDS, type AddactBlog } from "../fragments/ourInsightsBlogFragment";
+export type { AddactBlog };
+import { OUR_INSIGHTS_CASE_STUDY_FIELDS, type AddactCaseStudy } from "../fragments/ourInsightsCaseStudyFragment";
+export type { AddactCaseStudy };
+import { OUR_INSIGHTS_TITLE_FIELDS, type OurInsightsTitle, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
+export type { OurInsightsTitle, OurInshightsTitle };
 import client from "../client";
 
 const ourInsights_Query = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactBlogsAndCaseStudy {
-    addactBlogs(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
-      documentId
-      Slug
-      createdAt
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
-      }
-      BlogBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          id
-          BannerImage {
-            width
-            url
-            name
-            height
-            alternativeText
-          }
-          BannerDescription
-          BannerTitle
-          PublishDate
-          ReadNow {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-        }
-      }
-    }
-    addactCaseStudies(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
-      ReferenceTitle
-      Slug
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          BannerTitle
-          ReadNow {
-            href
-            id
-            isExternal
-            label
-            target
-          }
-          PublishDate
-          BannerDescription
-        }
-      }
-    }
+    ${OUR_INSIGHTS_BLOG_FIELDS}
+    ${OUR_INSIGHTS_CASE_STUDY_FIELDS}
   }
 `;
 
 export interface AddactBlogsAndCaseStudyResponse {
   addactBlogs: AddactBlog[];
   addactCaseStudies: AddactCaseStudy[];
-}
-
-export interface AddactBlog {
-  documentId: string;
-  Slug: string;
-  createdAt: string;
-  HeadingSection: BlogHeadingSection[];
-  BlogBanner: BlogBanner[];
-}
-
-export interface BlogHeadingSection {
-  PageTitle: string;
-}
-
-export interface BlogBanner {
-  id: string;
-  BannerImage: BannerImage;
-  BannerDescription: string;
-  BannerTitle: string;
-  PublishDate: string;
-  ReadNow: ReadNowLink;
-}
-export interface AddactCaseStudy {
-  ReferenceTitle: string;
-  HeroBanner: CaseStudyHeroBanner[];
-}
-
-export interface CaseStudyHeroBanner {
-  BannerImage: BannerImage;
-  BannerTitle: string;
-  ReadNow: ReadNowLink;
-  PublishDate: string;
-  BannerDescription: string;
-}
-export interface BannerImage {
-  width: number;
-  height: number;
-  url: string;
-  name: string;
-  alternativeText: string | null;
-}
-
-export interface ReadNowLink {
-  href: string;
-  id: string;
-  isExternal: boolean;
-  label: string;
-  target: string;
 }
 
 export async function getOurInsights(): Promise<AddactBlogsAndCaseStudyResponse> {
@@ -123,30 +33,12 @@ export async function getOurInsights(): Promise<AddactBlogsAndCaseStudyResponse>
 
 // Home Query for insights title and description
 const home_Query = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query Home {
     home {
-      ourInshightsTitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-            Link {
-              id
-              href
-              label
-              target
-              isExternal
-              SubDisc
-              Icon {
-                alternativeText
-                height
-                url
-                width
-              }
-            }
-          }
-        }
-      }
+      ${OUR_INSIGHTS_TITLE_FIELDS}
     }
   }
 `;
@@ -157,33 +49,6 @@ export interface HomeResponse {
 
 export interface HomeData {
   ourInshightsTitle: OurInsightsTitle;
-}
-
-export interface OurInsightsTitle {
-  CommonTitle: TitleWithDescription[];
-}
-
-export interface TitleWithDescription {
-  Title: string;
-  Description: string;
-  Link: Link;
-}
-
-export interface Link {
-  id: string;
-  href: string;
-  label: string;
-  target: string;
-  isExternal: boolean;
-  SubDisc: string | null;
-  Icon: Icon | null;
-}
-
-export interface Icon {
-  alternativeText: string | null;
-  height: number;
-  url: string;
-  width: number;
 }
 
 export async function getHomeOurInsightsTitle(): Promise<HomeResponse> {

@@ -2,37 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { RightArrowUpIcon } from "../atom/icons";
 
+import { BlogSimilarBlogItem } from "@/graphql/fragments/blogSimilarBlogsFragment";
+
 type SimilarBlogProps = {
-  similarBlogs?: {
-    BlogBanner?: {
-      BannerTitle?: string;
-      PublishDate?: string;
-      BannerImage?: {
-        alternativeText?: string;
-        name?: string;
-        url?: string;
-        width?: number;
-        height?: number;
-      };
-      ReadNow?: {
-        id?: string;
-        href?: string;
-        label?: string;
-        target?: string;
-        isExternal?: boolean;
-      };
-      author?: {
-        Author?: {
-          AuthorName?: string;
-        };
-      };
-      blogcategory?: {
-        Category?: {
-          CategoryTitle?: string;
-        };
-      };
-    }[];
-  }[];
+  similarBlogs?: BlogSimilarBlogItem[];
   similarstorytitle?: {
     CommonTitle?: {
       Title?: string;

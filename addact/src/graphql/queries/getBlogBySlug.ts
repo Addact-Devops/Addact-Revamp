@@ -1,237 +1,82 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { CARD_FRAGMENT } from "../fragments/cardFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { SEO_FIELDS, type SeoType, type SEO, type BlogBySlugSEO } from "../fragments/seoFragment";
+export type { SeoType, SEO, BlogBySlugSEO };
+import {
+  EVENT_HEADING_SECTION_FIELDS,
+  type EventHeadingSectionType,
+} from "../fragments/eventHeadingSectionFragment";
+export type { EventHeadingSectionType };
+import {
+  BLOG_HERO_BANNER_FIELDS,
+  type BlogBanner,
+  type BlogBannerItem,
+  type BlogBySlugBannerItem,
+} from "../fragments/blogHeroBannerFieldsFragment";
+export type { BlogBanner, BlogBannerItem, BlogBySlugBannerItem };
+import { BLOG_CONTENT_FIELDS, type BlogContentType } from "../fragments/blogContentFragment";
+export type { BlogContentType };
+import { BLOG_AUTHOR_FIELDS, type BlogAuthorType } from "../fragments/blogAuthorFragment";
+export type { BlogAuthorType };
+import {
+  BLOG_SIMILAR_STORY_TITLE_FIELDS,
+  type BlogSimilarStoryTitleType,
+} from "../fragments/blogSimilarStoryTitleFragment";
+export type { BlogSimilarStoryTitleType };
+import {
+  BLOG_SIMILAR_BLOGS_FIELDS,
+  type BlogSimilarBlogsType,
+} from "../fragments/blogSimilarBlogsFragment";
+export type { BlogSimilarBlogsType };
+import {
+  BLOG_SOCIAL_ICONS_FIELDS,
+  type BlogSocialIconsType,
+} from "../fragments/blogSocialIconsFragment";
+export type { BlogSocialIconsType };
+import {
+  BLOG_CONTACT_CARD_FIELDS,
+  type BlogContactCardType,
+} from "../fragments/blogContactCardFragment";
+export type { BlogContactCardType };
 import client from "../client";
 
 const GET_BLOG_BY_SLUG = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${CARD_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${LINK_IMAGE_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query GetBlogBySlug($filters: AddactBlogFiltersInput) {
     addactBlogs(filters: $filters) {
       Slug
 
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
+      SEO { ${SEO_FIELDS} }
 
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
-      }
+      ${EVENT_HEADING_SECTION_FIELDS}
 
-      BlogBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          PublishDate
-          ReadNow {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-          author {
-            Author {
-              AuthorName
-            }
-          }
-          blogcategory {
-            Category {
-              CategoryTitle
-            }
-          }
-        }
-      }
+      ${BLOG_HERO_BANNER_FIELDS}
 
-      BlogContent {
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            alternativeText
-            name
-            height
-            url
-            width
-          }
-        }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
-        ... on Error {
-          code
-          message
-        }
-      }
+      ${BLOG_CONTENT_FIELDS}
 
-      author {
-        Author {
-          AuthorName
-          AuthorDescription
-          AuthorImage {
-            alternativeText
-            height
-            width
-            url
-            name
-          }
-          designation {
-            DesignationTitle
-          }
-        }
-      }
+      ${BLOG_AUTHOR_FIELDS}
 
-      similarstorytitle {
-        CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-          }
-        }
-      }
+      ${BLOG_SIMILAR_STORY_TITLE_FIELDS}
 
-      similarBlogs {
-        BlogBanner {
-          ... on ComponentBlogHeroBannerBlogHeroBanner {
-            BannerTitle
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-            PublishDate
-            ReadNow {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-            author {
-              Author {
-                AuthorName
-              }
-            }
-            blogcategory {
-              Category {
-                CategoryTitle
-              }
-            }
-          }
-        }
-      }
+      ${BLOG_SIMILAR_BLOGS_FIELDS}
 
-      socialicons {
-        SocialIcon {
-          ... on ComponentBaseTemplateLinkImage {
-            Title
-            ClassName
-            Links {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-            Icons {
-              alternativeText
-              name
-              height
-              url
-              width
-            }
-            HoverIcon {
-              alternativeText
-              name
-              height
-              url
-              width
-            }
-          }
-        }
-      }
+      ${BLOG_SOCIAL_ICONS_FIELDS}
 
-      contactCard {
-        documentId
-        pageReference
-        createdAt
-        updatedAt
-        publishedAt
-        ContactCard {
-          ... on ComponentCardCard {
-            id
-            CardTitle
-            CardDescription
-            CardLink {
-              id
-              href
-              label
-              target
-              isExternal
-            }
-            BgImage {
-              width
-              url
-              name
-              height
-              alternativeText
-            }
-          }
-          ... on Error {
-            code
-            message
-          }
-        }
-      }
+      ${BLOG_CONTACT_CARD_FIELDS}
     }
   }
 `;
@@ -240,174 +85,23 @@ export type BlogBySlugResponse = {
   addactBlogs: {
     Slug: string;
 
-    SEO?: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string;
-      ogDescription?: string;
-      ogImage?: {
-        url?: string;
-      };
-      metaRobots?: string;
-      twitterCardTitle?: string;
-      canonicalURL?: string;
-      structuredData?: Record<string, unknown>; // ✅ fixed: replaced `any` with valid type
-      languageTag?: string;
-    } | null;
+    SEO?: BlogBySlugSEO | null;
 
-    HeadingSection?: { PageTitle?: string }[];
+    HeadingSection?: EventHeadingSectionType["HeadingSection"];
 
-    BlogBanner?: {
-      BannerTitle?: string;
-      BannerDescription?: string;
-      BannerImage?: {
-        alternativeText?: string;
-        height?: number;
-        name?: string;
-        url?: string;
-        width?: number;
-      };
-      PublishDate?: string;
-      ReadNow?: {
-        id?: string;
-        href?: string;
-        label?: string;
-        target?: string;
-        isExternal?: boolean;
-      };
-      author?: { Author?: { AuthorName?: string } };
-      blogcategory?: { Category?: { CategoryTitle?: string } };
-    }[];
+    BlogBanner?: BlogBySlugBannerItem[];
 
-    BlogContent?: {
-      id?: string;
-      Richtext?: string;
-      h1?: string;
-      h2?: string;
-      h3?: string;
-      h4?: string;
-      h5?: string;
-      h6?: string;
-      href?: string;
-      label?: string;
-      target?: string;
-      isExternal?: boolean;
-      Image?: {
-        alternativeText?: string;
-        name?: string;
-        height?: number;
-        url?: string;
-        width?: number;
-      };
-    }[];
+    BlogContent?: BlogContentType["BlogContent"];
 
-    author?: {
-      Author?: {
-        AuthorName?: string;
-        AuthorDescription?: string;
-        AuthorImage?: {
-          alternativeText?: string;
-          height?: number;
-          width?: number;
-          url?: string;
-          name?: string;
-        };
-        designation?: { DesignationTitle?: string };
-      };
-    };
+    author?: BlogAuthorType["author"];
 
-    similarstorytitle?: {
-      CommonTitle?: {
-        Title?: string;
-        Description?: string;
-      }[];
-    };
+    similarstorytitle?: BlogSimilarStoryTitleType["similarstorytitle"];
 
-    similarBlogs?: {
-      BlogBanner?: {
-        BannerTitle?: string;
-        PublishDate?: string;
-        BannerImage?: {
-          alternativeText?: string;
-          name?: string;
-          url?: string;
-          width?: number;
-          height?: number;
-        };
-        ReadNow?: {
-          id?: string;
-          href?: string;
-          label?: string;
-          target?: string;
-          isExternal?: boolean;
-        };
-        author?: {
-          Author?: {
-            AuthorName?: string;
-          };
-        };
-        blogcategory?: {
-          Category?: {
-            CategoryTitle?: string;
-          };
-        };
-      }[];
-    }[];
+    similarBlogs?: BlogSimilarBlogsType["similarBlogs"];
 
-    socialicons?: {
-      SocialIcon?: {
-        Title?: string;
-        ClassName?: string;
-        Links?: {
-          id?: string;
-          href?: string;
-          label?: string;
-          target?: string;
-          isExternal?: boolean;
-        }[];
-        Icons?: {
-          alternativeText?: string;
-          name?: string;
-          height?: number;
-          url?: string;
-          width?: number;
-        };
-        HoverIcon?: {
-          alternativeText?: string;
-          name?: string;
-          height?: number;
-          url?: string;
-          width?: number;
-        };
-      }[];
-    };
+    socialicons?: BlogSocialIconsType["socialicons"];
 
-    contactCard?: {
-      documentId?: string;
-      pageReference?: string;
-      createdAt?: string;
-      updatedAt?: string;
-      publishedAt?: string;
-      ContactCard?: {
-        id?: string;
-        CardTitle?: string;
-        CardDescription?: string;
-        CardLink?: {
-          id?: string;
-          href?: string;
-          label?: string;
-          target?: string;
-          isExternal?: boolean;
-        };
-        BgImage?: {
-          width?: number;
-          url?: string;
-          name?: string;
-          height?: number;
-          alternativeText?: string;
-        };
-      }[];
-    };
+    contactCard?: BlogContactCardType["contactCard"];
   }[];
 };
 

@@ -4,23 +4,14 @@ import Image from "next/image";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { usePathname } from "next/navigation";
 
-type RichTextBlock = {
-  type: string;
-  children: {
-    text: string;
-  }[];
-};
+import type { ImageFragmentType } from "@/graphql/fragments/imageFragment";
+import type { RichTextBlock } from "@/types/common";
 
 type ContactUsFormProps = {
   ContactUsFormBlock: {
     LeftTitle: string;
     LeftDescription: RichTextBlock[] | string[];
-    LeftBackgroundImage: {
-      url: string;
-      alternativeText: string | null;
-      width: number;
-      height: number;
-    };
+    LeftBackgroundImage: ImageFragmentType;
     RightTitle: string;
     RightDescription: RichTextBlock[] | string[];
     RecipientEmails: string;

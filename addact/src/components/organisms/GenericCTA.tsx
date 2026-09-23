@@ -4,19 +4,7 @@ import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer"
 import Link from "next/link";
 import React from "react";
 
-type CTAImageType = {
-  url: string;
-  alternativeText: string | null;
-  width: number | null;
-  height: number | null;
-};
-
-type CTALinkType = {
-  label: string;
-  href: string;
-  target: string | null;
-  isExternal: boolean;
-};
+import type { CTAImageType, CTALinkType } from "@/graphql/fragments/aboutUsCtaFragment";
 
 type CtaTitle = { h1?: string } | { h2?: string } | { h3?: string };
 

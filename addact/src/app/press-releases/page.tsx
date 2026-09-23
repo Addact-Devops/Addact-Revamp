@@ -76,14 +76,14 @@ export default async function PressRelease() {
       />
       <div className="pt-24">
         {data.addactPressReleases.map((event, index: number) => {
-          const banner = event.HeroBanner[0];
+          const banner = event.HeroBanner?.[0];
           return (
             <EventCard
               key={index}
               pageType="Event"
-              title={banner.BannerTitle}
-              description={event.PressReleaseSummary}
-              imageUrl={banner.BannerImage.url}
+              title={banner?.BannerTitle || ""}
+              description={event.PressReleaseSummary || ""}
+              imageUrl={banner?.BannerImage?.url || ""}
               slug={event.Slug}
               linkText={"Read More"}
             />

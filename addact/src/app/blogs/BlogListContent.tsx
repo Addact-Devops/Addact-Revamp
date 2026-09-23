@@ -9,24 +9,9 @@ import BlogHeroBanner from "@/components/organisms/BlogHeroBanner";
 import Loader from "@/components/atom/loader";
 
 // ...existing types...
-type BannerType = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    url: string;
-    width?: number;
-    height?: number;
-    name?: string;
-    alternativeText?: string;
-  };
-  PublishDate?: string;
-  author?: {
-    Author?: { AuthorName?: string };
-  };
-  blogcategory?: {
-    Category?: { CategoryTitle?: string };
-  };
-};
+import type { BlogBannerItem } from "@/graphql/fragments/blogHeroBannerFieldsFragment";
+
+type BannerType = BlogBannerItem;
 
 type BlogType = {
   Slug: string;

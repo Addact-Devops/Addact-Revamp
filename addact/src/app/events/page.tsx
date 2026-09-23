@@ -88,7 +88,7 @@ export default async function EventsPage() {
             <EventCard
               key={index}
               pageType="Event"
-              title={banner.BannerTitle}
+              title={banner.BannerTitle || ""}
               date={formattedDate}
               location={banner.eventLocation}
               description={event.EventSummary}

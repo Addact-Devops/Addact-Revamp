@@ -11,24 +11,8 @@ import { useEffect, useState } from "react";
 import RichText from "../atom/richText";
 import { useCursor } from "@/lib/useCursor";
 
-export interface BlogBanner {
-  PublishDate?: string;
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    url: string;
-    width: number;
-    height: number;
-    name: string;
-    alternativeText?: string | null;
-  };
-  ReadNow?: {
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-  };
-}
+import type { BlogBannerItem as BlogBanner } from "@/graphql/fragments/blogHeroBannerFieldsFragment";
+export type { BlogBanner };
 
 export interface Blog {
   Slug: string;
@@ -39,7 +23,7 @@ export interface Blog {
 
 export interface CaseStudy {
   Slug?: string;
-  HeroBanner?: BlogBanner[];
+  HeroBanner?: Partial<BlogBanner>[];
 }
 
 interface OurInsightsData {
@@ -53,10 +37,10 @@ interface InsightCardData {
   date: string;
   readTime: string;
   image?: {
-    url: string;
-    width: number;
-    height: number;
-    name: string;
+    url?: string;
+    width?: number;
+    height?: number;
+    name?: string;
     alternativeText?: string | null;
   };
   description: string;
@@ -81,8 +65,10 @@ export interface OurInsightsContent {
   };
 }
 
+import type { TitleWithDescription } from "@/graphql/fragments/ourInsightsTitleFragment";
+
 interface OurInsight {
-  titleData?: OurInsightsContent | null;
+  titleData?: TitleWithDescription | OurInsightsContent | null;
 }
 
 export default function OurInsights({ titleData: ourInsightsTitleData }: OurInsight = {}) {
@@ -226,7 +212,7 @@ function InsightCard({ item }: InsightCardProps) {
           {item.image?.url && (
             <Image
               src={item.image.url}
-              alt={item.image.alternativeText || item.image.name}
+              alt={item.image.alternativeText || item.image.name || item.title || ""}
               width={520}
               height={321}
               className="w-full h-full object-cover"
