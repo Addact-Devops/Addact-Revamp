@@ -8,8 +8,23 @@ import { usePathname } from "next/navigation";
 import { Mail, Phone, X } from "lucide-react";
 import Link from "next/link";
 
-import type { FooterAddressInformation as AddressInformationItem } from "@/graphql/fragments/footerFragment";
-export type { AddressInformationItem };
+export interface AddressInformationItem {
+  __typename?: string;
+  Title?: string | null;
+  Description?: string | null;
+  urlKeyword?: string | null;
+  Link?: {
+    href?: string | null;
+    isExternal?: boolean | null;
+    label?: string | null;
+    SubDisc?: string | null;
+    target?: string | null;
+    Icon?:
+      | { url?: string | null; alternativeText?: string | null }
+      | { id?: string; Image?: { url?: string | null; alternativeText?: string | null } | null }
+      | null;
+  } | null;
+}
 
 interface IProps {
   data: CONTACTUS;
@@ -427,67 +442,76 @@ const ContactUs = ({
             </form>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4 md:mt-9">
-              {dynamicContactDetails
-                ? dynamicContactDetails.map((item: AddressInformationItem, index: number) => (
+              {dynamicContactDetails ? (
+                dynamicContactDetails.map((item: AddressInformationItem, index: number) => {
+                  const icon = item?.Link?.Icon;
+                  let iconUrl: string | null = null;
+                  let iconAlt: string | null = null;
+
+                  if (icon && "Image" in icon && icon.Image) {
+                    iconUrl = icon.Image.url ?? null;
+                    iconAlt = icon.Image.alternativeText ?? null;
+                  } else if (icon && "url" in icon) {
+                    iconUrl = icon.url ?? null;
+                    iconAlt = icon.alternativeText ?? null;
+                  }
+
+                  return (
                     <div
                       key={index}
                       className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
                     >
-                      {(() => {
-                        const icon = item?.Link?.Icon;
-                        const imageObj = icon ? ("url" in icon ? icon : icon.Image) : null;
-                        const iconUrl = imageObj?.url ?? null;
-                        const iconAlt = imageObj?.alternativeText ?? null;
-                        if (!iconUrl) return null;
-                        return (
-                          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
-                            <Image
-                              src={iconUrl}
-                              alt={iconAlt || item?.Title || "contact icon"}
-                              width={16}
-                              height={16}
-                              className="h-4 w-4 object-contain brightness-0 invert"
-                            />
-                          </span>
-                        );
-                      })()}
+                      {iconUrl && (
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
+                          <Image
+                            src={iconUrl}
+                            alt={iconAlt || item?.Title || "contact icon"}
+                            width={16}
+                            height={16}
+                            className="h-4 w-4 object-contain brightness-0 invert"
+                          />
+                        </span>
+                      )}
                       <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8 flex gap-1.5 items-center">
                         {item?.Title && (
                           <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                            {item?.Title}
+                            {item.Title}
                           </strong>
                         )}
                         {item?.Description && (
                           <span
                             className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8 [&_a]:text-inherit [&_a]:hover:text-white [&_a]:transition-colors [&_p]:m-0"
-                            dangerouslySetInnerHTML={{ __html: item?.Description }}
+                            dangerouslySetInnerHTML={{ __html: item.Description }}
                           />
                         )}
                       </span>
                     </div>
-                  ))
-                : drawerContactDetails?.map((contactItem) => {
-                    const Icon = contactItem?.icon;
-                    return (
-                      <Link
-                        key={contactItem?.id}
-                        href={contactItem?.href || "#"}
-                        className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
-                      >
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
-                          <Icon className="h-4 w-4" />
+                  );
+                })
+              ) : (
+                drawerContactDetails?.map((contactItem) => {
+                  const Icon = contactItem?.icon;
+                  return (
+                    <Link
+                      key={contactItem?.id}
+                      href={contactItem?.href || "#"}
+                      className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
+                    >
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8">
+                        <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
+                          {contactItem?.label}:
+                        </strong>{" "}
+                        <span className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8">
+                          {contactItem?.value}
                         </span>
-                        <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8">
-                          <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                            {contactItem?.label}:
-                          </strong>{" "}
-                          <span className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                            {contactItem?.value}
-                          </span>
-                        </span>
-                      </Link>
-                    );
-                  })}
+                      </span>
+                    </Link>
+                  );
+                })
+              )}
             </div>
           </div>
         </aside>
