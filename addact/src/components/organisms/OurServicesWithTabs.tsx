@@ -41,9 +41,6 @@ const OurServicesWithTabs = ({ data }: Props) => {
   const enterprisesCards = data?.ForEnterprisesBrands?.GlobalCard ?? [];
   const teamFeatureCards = data?.team_feature?.Cards ?? [];
 
-  const totalEnterprisesSlides = Math.ceil(enterprisesCards.length / 2);
-  const totalTeamFeatureSlides = Math.ceil(teamFeatureCards.length / 2);
-
   // ---- Slider settings ----
   const enterprisesSliderSettings = {
     dots: false,
@@ -67,16 +64,15 @@ const OurServicesWithTabs = ({ data }: Props) => {
 
   // ✅ Generic chunkArray function
   const chunkArray = <T,>(arr: T[], size: number): T[][] => {
-    const results: T[][] = [];
+    const result: T[][] = [];
     for (let i = 0; i < arr.length; i += size) {
-      results.push(arr.slice(i, i + size));
+      result.push(arr.slice(i, i + size));
     }
-    return results;
+    return result;
   };
 
   // indicator width & position
   const getIndicatorStyle = (totalSlides: number) => {
-    if (totalSlides <= 1) return { width: "100%", left: "0%" };
     const segmentWidth = 100 / totalSlides;
     return {
       width: `${segmentWidth}%`,
@@ -203,7 +199,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                   <div className="relative mt-[40px] h-[1px] bg-gray-600">
                     <div
                       className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
-                      style={getIndicatorStyle(totalEnterprisesSlides)}
+                      style={getIndicatorStyle(Math.ceil(enterprisesCards.length / 2))}
                     />
                   </div>
                 </div>
@@ -279,7 +275,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
                   <div className="relative mt-[40px] h-[1px] bg-gray-600">
                     <div
                       className="absolute top-0 left-0 h-[2px] bg-[#3C4CFF] transition-all duration-300"
-                      style={getIndicatorStyle(totalTeamFeatureSlides)}
+                      style={getIndicatorStyle(teamFeatureCards.length)}
                     />
                   </div>
                 </div>

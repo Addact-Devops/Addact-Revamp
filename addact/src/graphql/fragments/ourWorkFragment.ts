@@ -1,5 +1,6 @@
 import { LISTING_CONTEXT_FIELDS, type AIListingContext } from "./aiListingContextFragment";
-import { CMS_SERVICE_VARIANT_FIELDS, type CmsServiceVariantType } from "./cmsServiceVariantFragment";
+import type { CmsServiceVariantType } from "./developmentDesignListingFragment";
+export type { CmsServiceVariantType };
 import { type TitleDescriptionLowerType } from "./titleDescriptionFragment";
 import type { TitleFragmentType } from "./titleFragment";
 import type { Image } from "@/types/common";
@@ -8,7 +9,9 @@ import type { LinkWithIcon } from "./homeCapabilitiesFragment";
 export const OUR_WORK_FIELDS = `
   ourWork {
     serviceTitle
-    ${CMS_SERVICE_VARIANT_FIELDS}
+    serviceVariant {
+      variant
+    }
     isCarousel
     serviceList {
       ${LISTING_CONTEXT_FIELDS}

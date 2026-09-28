@@ -24,7 +24,7 @@ export type SeoType = {
   metaRobots?: string | null;
   twitterCardTitle?: string | null;
   canonicalURL?: string | null;
-  structuredData?: string | Record<string, unknown> | null;
+  structuredData?: string | null;
   languageTag?: string | null;
 };
 

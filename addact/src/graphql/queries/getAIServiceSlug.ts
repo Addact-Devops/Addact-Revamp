@@ -10,7 +10,8 @@ import { INDUSTRY_FIELDS, type Industry, type IndustryListItem } from "../fragme
 export type { Industry, IndustryListItem };
 import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFragment";
 export type { OurProcess };
-import { AI_SERVICE_LIST_FIELDS, type AIBenefit } from "../fragments/aiServiceListFragment";
+import { type AIBenefit } from "../fragments/developmentDesignListingFragment";
+import { LISTING_CONTEXT_FIELDS } from "../fragments/aiListingContextFragment";
 import {
   AI_SOLVE_PROBLEM_FIELDS,
   type AISolveProblem,
@@ -78,7 +79,9 @@ const aiServiceSlugQuery = gql`
 
       aiBenefit {
         title
-        ${AI_SERVICE_LIST_FIELDS}
+        serviceList {
+          ${LISTING_CONTEXT_FIELDS}
+        }
       }
 
       ${OUR_SERVICE_FIELDS}

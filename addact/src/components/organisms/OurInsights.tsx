@@ -11,8 +11,24 @@ import { useEffect, useState } from "react";
 import RichText from "../atom/richText";
 import { useCursor } from "@/lib/useCursor";
 
-import type { BlogBannerItem as BlogBanner } from "@/graphql/fragments/blogHeroBannerFieldsFragment";
-export type { BlogBanner };
+export interface BlogBanner {
+  PublishDate?: string;
+  BannerTitle?: string;
+  BannerDescription?: string;
+  BannerImage?: {
+    url: string;
+    width?: number;
+    height?: number;
+    name?: string;
+    alternativeText?: string | null;
+  };
+  ReadNow?: {
+    href?: string;
+    label?: string | null;
+    target?: string | null;
+    isExternal?: boolean;
+  };
+}
 
 export interface Blog {
   Slug: string;
@@ -23,7 +39,7 @@ export interface Blog {
 
 export interface CaseStudy {
   Slug?: string;
-  HeroBanner?: Partial<BlogBanner>[];
+  HeroBanner?: BlogBanner[];
 }
 
 interface OurInsightsData {

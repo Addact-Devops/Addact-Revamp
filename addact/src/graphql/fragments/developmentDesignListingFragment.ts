@@ -1,16 +1,15 @@
 import { gql } from "graphql-request";
-import {
-  CMS_SERVICE_VARIANT_FIELDS,
-  type CmsServiceVariantType,
-} from "./cmsServiceVariantFragment";
-import { AI_SERVICE_LIST_FIELDS, type ServiceListItem } from "./aiServiceListFragment";
-import { type AIListingContext, type ListingContextType } from "./aiListingContextFragment";
+import { LISTING_CONTEXT_FIELDS, type AIListingContext, type ListingContextType } from "./aiListingContextFragment";
 
 export const SERVICE_LISTING_COMMON_FIELDS = `
   id
   serviceTitle
-  ${CMS_SERVICE_VARIANT_FIELDS}
-  ${AI_SERVICE_LIST_FIELDS}
+  serviceVariant {
+    variant
+  }
+  serviceList {
+    ${LISTING_CONTEXT_FIELDS}
+  }
   isCarousel
 `;
 
@@ -20,8 +19,26 @@ export const DEVELOPMENT_DESIGN_LISTING_FRAGMENT = gql`
   }
 `;
 
+export type CmsServiceVariantType = {
+  serviceVariant?: {
+    variant?: string;
+  } | null;
+};
+
+export type ServiceListItem = {
+  listingContext: AIListingContext;
+};
+
+export type ServiceList = {
+  serviceList: ServiceListItem[];
+};
+
+export type AIBenefit = ServiceList & {
+  title: string;
+};
+
 export type ListingContext = AIListingContext;
-export type { ServiceListItem, ListingContextType };
+export type { AIListingContext, ListingContextType };
 
 export type OurServiceList = CmsServiceVariantType & {
   id: string;
@@ -31,3 +48,4 @@ export type OurServiceList = CmsServiceVariantType & {
 };
 
 export type DevelopmentDesignListingType = OurServiceList;
+

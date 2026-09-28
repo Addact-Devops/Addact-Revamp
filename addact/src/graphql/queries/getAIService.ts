@@ -15,10 +15,9 @@ export type { Industry, IndustryListItem };
 import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFragment";
 export type { OurProcess };
 import {
-  AI_SERVICE_LIST_FIELDS,
   type AIBenefit,
   type ServiceListItem,
-} from "../fragments/aiServiceListFragment";
+} from "../fragments/developmentDesignListingFragment";
 export type { AIBenefit };
 import {
   LISTING_CONTEXT_FIELDS,
@@ -100,7 +99,9 @@ const aiServiceQuery = gql`
   ${LINK_FRAGMENT}
   fragment AiOurServicesFields on ComponentHomeAiOurServices {
     ${LISTING_CONTEXT_FIELDS}
-    ${AI_SERVICE_LIST_FIELDS}
+    serviceList {
+      ${LISTING_CONTEXT_FIELDS}
+    }
   }
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query AiSolveProblem {
@@ -124,7 +125,9 @@ const aiServiceQuery = gql`
 
       aiBenefit {
         title
-        ${AI_SERVICE_LIST_FIELDS}
+        serviceList {
+          ${LISTING_CONTEXT_FIELDS}
+        }
       }
 
      ourService {

@@ -4,19 +4,30 @@ import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer"
 import Link from "next/link";
 import React from "react";
 
-import type { ImageFragmentType } from "@/graphql/fragments/imageFragment";
-import type { LinkFragmentType } from "@/graphql/fragments/linkFragment";
+type CTAImageType = {
+  url: string;
+  alternativeText?: string | null;
+  width?: number | null;
+  height?: number | null;
+};
+
+type CTALinkType = {
+  label?: string | null;
+  href?: string;
+  target?: string | null;
+  isExternal?: boolean | null;
+};
 
 type CtaTitle = { h1?: string } | { h2?: string } | { h3?: string };
 
 type CTAProps = {
   title?: CtaTitle[];
   description?: {
-    type: string;
-    children: { text: string }[];
+    type?: string;
+    children?: { text?: string }[];
   }[];
-  image?: ImageFragmentType | null;
-  link?: LinkFragmentType | null;
+  image?: CTAImageType | null;
+  link?: CTALinkType | null;
 };
 
 const getHeadingValue = (heading: CtaTitle): string => {

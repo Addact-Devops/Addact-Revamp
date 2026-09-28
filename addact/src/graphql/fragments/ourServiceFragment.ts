@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
-import { CMS_SERVICE_VARIANT_FIELDS, type CmsServiceVariantType } from "./cmsServiceVariantFragment";
-import { AI_SERVICE_LIST_FIELDS } from "./aiServiceListFragment";
-import type { AIListingContext } from "./aiListingContextFragment";
+import { LISTING_CONTEXT_FIELDS, type AIListingContext } from "./aiListingContextFragment";
 import type { Link } from "@/types/common";
+import type { CmsServiceVariantType } from "./developmentDesignListingFragment";
+export type { CmsServiceVariantType };
 
 export const COMPONENT_OUR_SERVICE_FIELDS = `
   ... on ComponentHomeServiceList {
@@ -16,7 +16,6 @@ export const OUR_SERVICE_FIELDS = `
   }
 `;
 
-
 export const OUR_SERVICE_FRAGMENT = gql`
   fragment OurServiceFields on ComponentHomeServiceList {
     isCarousel
@@ -25,8 +24,12 @@ export const OUR_SERVICE_FRAGMENT = gql`
     serviceLink {
       ...LinkFields
     }
-    ${CMS_SERVICE_VARIANT_FIELDS}
-    ${AI_SERVICE_LIST_FIELDS}
+    serviceVariant {
+      variant
+    }
+    serviceList {
+      ${LISTING_CONTEXT_FIELDS}
+    }
   }
 `;
 

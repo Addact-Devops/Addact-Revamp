@@ -28,11 +28,35 @@ export interface DetailPageServiceItem {
   link: DetailPageServiceLink | null;
 }
 
-import type { OurServiceList, ListingContext } from "@/graphql/fragments/developmentDesignListingFragment";
-
 type ServiceVariant = "twoCard" | "threeCard" | "fourCard";
 
-type DynamicServiceSection = OurServiceList;
+interface DynamicServiceItem {
+  listingContext?: {
+    id?: string | null;
+    title?: string | null;
+    description?: string | null;
+    image?: {
+      url: string;
+      alternativeText?: string | null;
+    } | null;
+    link?: {
+      href: string;
+      label?: string | null;
+      target?: string | null;
+      isExternal?: boolean | null;
+    } | null;
+  } | null;
+}
+
+interface DynamicServiceSection {
+  id?: string | null;
+  serviceTitle?: string | null;
+  isCarousel?: boolean | null;
+  serviceVariant?: {
+    variant?: string | null;
+  } | null;
+  serviceList?: DynamicServiceItem[] | null;
+}
 
 interface DetailPageServicesProps {
   title?: string;
@@ -186,9 +210,9 @@ const normalizeLinkTarget = (target?: string | null): DetailPageServiceTarget =>
 };
 
 const mapDynamicItems = (section: DynamicServiceSection): DetailPageServiceItem[] => {
-  return section.serviceList
-    .map((serviceItem) => serviceItem.listingContext)
-    .filter((context): context is NonNullable<ListingContext> =>
+  return (section.serviceList ?? [])
+    .map((serviceItem) => serviceItem?.listingContext)
+    .filter((context): context is NonNullable<NonNullable<DynamicServiceItem>["listingContext"]> =>
       Boolean(context),
     )
     .map((context, index): DetailPageServiceItem => {
@@ -196,16 +220,18 @@ const mapDynamicItems = (section: DynamicServiceSection): DetailPageServiceItem[
         id: context.id ?? `service-${index}`,
         title: context.title ?? "",
         description: context.description ?? "",
-        image: context.image
+        image: context.image?.url
           ? {
               url: context.image.url,
               alt: context.image.alternativeText ?? context.title ?? "Service image",
             }
           : null,
-        link: context.link
+        link: context.link?.href
           ? {
               href: context.link.href,
               target: normalizeLinkTarget(context.link.target),
+              isExternal: context.link.isExternal ?? undefined,
+              label: context.link.label ?? undefined,
             }
           : null,
       };
