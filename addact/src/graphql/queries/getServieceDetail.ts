@@ -23,7 +23,7 @@ import {
   type WhyAddact,
 } from "../fragments/serviceDetailWhyAddactFragment";
 export type { WhyAddact };
-import { SERVICE_DETAIL_CTA_FIELDS, type CTA2 } from "../fragments/serviceDetailCtaFragment";
+import { CTA_FIELDS, type CTA2 } from "../fragments/ctaFragment";
 export type { CTA2 };
 import { type CONTACTUS } from "../fragments/homeContactUsFragment";
 export type { CONTACTUS };
@@ -52,8 +52,8 @@ const ServiceDetailBySlug = gql`
       ${SERVICE_DETAIL_OUR_SERVICE_FIELDS}
       our_process { ${OUR_PROCESS_FIELDS} }
       ${SERVICE_DETAIL_WHY_ADDACT_FIELDS}
-      cta2 { ${SERVICE_DETAIL_CTA_FIELDS} }
-      cta { ${SERVICE_DETAIL_CTA_FIELDS} }
+      cta2 { ${CTA_FIELDS} }
+      cta { ${CTA_FIELDS} }
       faq { ${FAQ_FIELDS} }
       contact_us {
           ${CONTACT_US_FORM_FIELDS}

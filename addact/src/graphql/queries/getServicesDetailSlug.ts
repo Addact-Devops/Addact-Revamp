@@ -45,7 +45,7 @@ const servicesDetailSlugQuery = gql`
       SEO {
         ${SEO_FIELDS}
       }
-      Banner {
+      Banner: banner {
         Banner {
           ${COMPONENT_BANNER_FIELDS}
         }
@@ -79,7 +79,8 @@ export interface ServicesDetailResponse {
 
 export interface ServicesDetail {
   SEO: SEO | null;
-  Banner: BannerSection;
+  Banner?: BannerSection | null;
+  banner?: BannerSection | null;
   cta: CTA | null;
   whyaddact: Whyaddact | null;
   faq: FAQ | null;

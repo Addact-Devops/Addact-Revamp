@@ -1,4 +1,3 @@
-import type { Heading } from "@/types/common";
 import { HEADING_INLINE_FIELDS, type HeadingFragmentType } from "./headingFragment";
 import type { ImageFragmentType } from "./imageFragment";
 import type { LinkFragmentType } from "./linkFragment";
@@ -36,32 +35,34 @@ export type CTAImageItem = {
   id?: string;
 };
 
-export type CTAFragmentType = {
-  slug?: string;
-  pageReference?: string;
-  Title?: HeadingFragmentType[];
-  CTADescription?: DescriptionNode[];
-  CTAImage?: CTAImageItem[];
-  CTALink?: LinkFragmentType[];
-};
-
 export type CTALinkItem = LinkFragmentType & {
-  id: string;
+  id?: string;
 };
 
+// Base CTA type
 export type CTA = {
-  Title: Heading[];
-  CTADescription?: string | null;
+  Title: HeadingFragmentType[];
+  CTADescription?: DescriptionNode[];
   CTAImage: CTAImageItem[];
   CTALink: CTALinkItem[];
   pageReference?: string;
+  slug?: string;
 };
 
+// DRY aliases & extensions
+export type CTAFragmentType = CTA;
 export type CTAImage = CTAImageItem;
-
 export type CtaTitle = HeadingFragmentType;
-
 export type CtaLink = LinkFragmentType;
+
+export type CTA2 = CTA & {
+  CTAImage: CTAImageItem[] & ImageFragmentType;
+  CTALink: CTALinkItem[] & LinkFragmentType;
+  CtaDescription?: string;
+  CtaImage?: ImageFragmentType;
+  CtaLink?: LinkFragmentType;
+  CtaTitle?: string;
+};
 
 export type CtaBannerResponse = {
   home: {
@@ -72,4 +73,5 @@ export type CtaBannerResponse = {
     };
   };
 };
+
 

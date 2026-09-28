@@ -4,8 +4,8 @@ import { gql } from "graphql-request";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
-export type { CTA };
+import { CTA_FIELDS, type CTA, type CTA2 } from "../fragments/ctaFragment";
+export type { CTA, CTA2 };
 import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
@@ -16,8 +16,6 @@ export type { ServiceListBannerItem };
 export type ServiceListBannerType = {
   Banner: BANNER;
 };
-import { SERVICE_LIST_CTA2_FIELDS, type CTA2 } from "../fragments/serviceListCta2Fragment";
-export type { CTA2 };
 import { SERVICE_LIST_WHY_ADDACT_FIELDS, type WhyAddact } from "../fragments/serviceListWhyAddactFragment";
 export type { WhyAddact };
 import { SERVICE_LIST_OUR_SERVICE_FIELDS } from "../fragments/serviceListOurServiceFragment";
@@ -50,7 +48,9 @@ const ServiceListBySlug = gql`
         ${CTA_FIELDS}
       }
       faq { ${FAQ_FIELDS} }
-      ${SERVICE_LIST_CTA2_FIELDS}
+      cta2 {
+        ${CTA_FIELDS}
+      }
       our_process { ${OUR_PROCESS_FIELDS} }
       ${SERVICE_LIST_WHY_ADDACT_FIELDS}
       ${SERVICE_LIST_OUR_SERVICE_FIELDS}
