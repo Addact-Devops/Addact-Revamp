@@ -10,19 +10,16 @@ import Link from "next/link";
 
 export interface AddressInformationItem {
   __typename?: string;
-  Title?: string | null;
-  Description?: string | null;
-  urlKeyword?: string | null;
+  Title?: string;
+  Description?: string;
+  urlKeyword?: string;
   Link?: {
-    href?: string | null;
-    isExternal?: boolean | null;
-    label?: string | null;
+    href?: string;
+    isExternal?: boolean;
+    label?: string;
     SubDisc?: string | null;
-    target?: string | null;
-    Icon?:
-      | { url?: string | null; alternativeText?: string | null }
-      | { id?: string; Image?: { url?: string | null; alternativeText?: string | null } | null }
-      | null;
+    target?: string;
+    Icon?: { url?: string; alternativeText?: string } | null;
   } | null;
 }
 
@@ -443,51 +440,37 @@ const ContactUs = ({
 
             <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4 md:mt-9">
               {dynamicContactDetails ? (
-                dynamicContactDetails.map((item: AddressInformationItem, index: number) => {
-                  const icon = item?.Link?.Icon;
-                  let iconUrl: string | null = null;
-                  let iconAlt: string | null = null;
-
-                  if (icon && "Image" in icon && icon.Image) {
-                    iconUrl = icon.Image.url ?? null;
-                    iconAlt = icon.Image.alternativeText ?? null;
-                  } else if (icon && "url" in icon) {
-                    iconUrl = icon.url ?? null;
-                    iconAlt = icon.alternativeText ?? null;
-                  }
-
-                  return (
-                    <div
-                      key={index}
-                      className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
-                    >
-                      {iconUrl && (
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
-                          <Image
-                            src={iconUrl}
-                            alt={iconAlt || item?.Title || "contact icon"}
-                            width={16}
-                            height={16}
-                            className="h-4 w-4 object-contain brightness-0 invert"
-                          />
-                        </span>
-                      )}
-                      <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8 flex gap-1.5 items-center">
-                        {item?.Title && (
-                          <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
-                            {item.Title}
-                          </strong>
-                        )}
-                        {item?.Description && (
-                          <span
-                            className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8 [&_a]:text-inherit [&_a]:hover:text-white [&_a]:transition-colors [&_p]:m-0"
-                            dangerouslySetInnerHTML={{ __html: item.Description }}
-                          />
-                        )}
+                dynamicContactDetails.map((item: AddressInformationItem, index: number) => (
+                  <div
+                    key={index}
+                    className="group flex items-center gap-3 text-white/90 transition-colors hover:text-white"
+                  >
+                    {item?.Link?.Icon?.url && (
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#3C4CFF] text-[#D9DEFF] transition-colors group-hover:text-white">
+                        <Image
+                          src={item?.Link?.Icon?.url}
+                          alt={item?.Link?.Icon?.alternativeText || item?.Title || "contact icon"}
+                          width={16}
+                          height={16}
+                          className="h-4 w-4 object-contain brightness-0 invert"
+                        />
                       </span>
-                    </div>
-                  );
-                })
+                    )}
+                    <span className="whitespace-nowrap text-[18px] leading-7 md:text-[22px] md:leading-8 flex gap-1.5 items-center">
+                      {item?.Title && (
+                        <strong className="font-semibold text-[18px]! leading-7 md:text-[22px] md:leading-8">
+                          {item?.Title}
+                        </strong>
+                      )}
+                      {item?.Description && (
+                        <span
+                          className="font-normal text-[18px]! leading-7 md:text-[22px] md:leading-8 [&_a]:text-inherit [&_a]:hover:text-white [&_a]:transition-colors [&_p]:m-0"
+                          dangerouslySetInnerHTML={{ __html: item?.Description }}
+                        />
+                      )}
+                    </span>
+                  </div>
+                ))
               ) : (
                 drawerContactDetails?.map((contactItem) => {
                   const Icon = contactItem?.icon;
@@ -593,9 +576,7 @@ const ContactUs = ({
                     className="w-full bg-transparent border-b border-gray-700 px-3 py-2 pl-0 placeholder-gray-500 focus:outline-none"
                     placeholder="Type your company name here"
                   />
-                  {errors?.company && (
-                    <p className="text-red-500 text-sm mt-1">{errors?.company}</p>
-                  )}
+                  {errors?.company && <p className="text-red-500 text-sm mt-1">{errors?.company}</p>}
                 </div>
 
                 <div className="mb-[40px]">

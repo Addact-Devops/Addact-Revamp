@@ -40,7 +40,22 @@ export const FOOTER_FIELDS = `
 
 export type FooterImage = ImageFragmentType;
 export type FooterImageBlock = SharedImageFragmentType;
-export type FooterAddressInformation = TitleWithDescriptionFragmentType;
+export type FooterAddressInformation = {
+  Title?: string;
+  Description?: string;
+  urlKeyword?: string;
+  Link?: {
+    href?: string;
+    isExternal?: boolean;
+    label?: string;
+    SubDisc?: string | null;
+    target?: string;
+    Icon?: {
+      url?: string;
+      alternativeText?: string;
+    } | null;
+  } | null;
+};
 
 export type FooterLinksGroup = {
   NavLink?: FooterNavLinkItem[];
