@@ -7,14 +7,12 @@ export type { SEO };
 import { WHY_WORK_WITH_US_FIELDS, type Whyaddact } from "../fragments/whyWorkWithUsFragment";
 export type { Whyaddact, GlobalCard2 } from "../fragments/whyWorkWithUsFragment";
 import {
-  DEVELOPMENT_HERO_BANNER_FIELDS,
+  COMPONENT_BANNER_FIELDS,
   type BannerSection,
-} from "../fragments/developmentHeroBannerFragment";
-export type {
-  BannerSection,
-  BannerItem,
-  BannerLink,
-} from "../fragments/developmentHeroBannerFragment";
+  type BannerItem,
+  type BannerLink,
+} from "../fragments/componentBannerFieldsFragment";
+export type { BannerSection, BannerItem, BannerLink };
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
@@ -40,10 +38,8 @@ import {
   type OurInshightsTitle,
 } from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
-import { DEVELOPMENT_OUR_SERVICE_FIELDS } from "../fragments/developmentOurServiceFragment";
-export type { DevelopmentOurServiceType } from "../fragments/developmentOurServiceFragment";
+//export type { DevelopmentOurServiceType } from "../fragments/developmentOurServiceFragment";
 import client from "../client";
-
 const developementDesignQuery = gql`
   ${HEADING_FRAGMENT}
   ${IMAGE_FRAGMENT}
@@ -54,7 +50,11 @@ const developementDesignQuery = gql`
   query DevelopmentDesign {
     developmentAndDesign {
       SEO { ${SEO_FIELDS} }
-      Banner { ${DEVELOPMENT_HERO_BANNER_FIELDS} }
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       whyaddact { ${WHY_WORK_WITH_US_FIELDS} }
@@ -64,7 +64,10 @@ const developementDesignQuery = gql`
 
       techStack { ${TECH_STACK_FIELDS} }
 
-      ${DEVELOPMENT_OUR_SERVICE_FIELDS}
+     ourService {
+    ... on ComponentHomeServiceList { ...OurServiceFields }
+    ... on ComponentHomeDevelopmentAndDesignListing { ...DevelopmentDesignListingFields }
+  }
 
       industry { ${INDUSTRY_FIELDS} }
 

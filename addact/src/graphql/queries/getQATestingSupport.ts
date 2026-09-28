@@ -13,17 +13,26 @@ import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFrag
 export type { OurProcess, ProcessDataItem, LinkProps } from "../fragments/ourProcessFragment";
 import { TECH_STACK_FIELDS, type TechStack } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment";
-import { QA_TESTING_LISTING_FRAGMENT, type OurServiceList } from "../fragments/qaTestingListingFragment";
+import {
+  QA_TESTING_LISTING_FRAGMENT,
+  type OurServiceList,
+} from "../fragments/qaTestingListingFragment";
 export type { OurServiceList, ServiceListItem } from "../fragments/qaTestingListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { AI_BANNER_SECTION_FIELDS, type BannerSection } from "../fragments/aiBannerSectionFragment";
-export type { BannerSection, BannerItem, BannerLink } from "../fragments/aiBannerSectionFragment";
+import {
+  COMPONENT_BANNER_FIELDS,
+  type BannerSection,
+  type ComponentBannerItem as BannerItem,
+  type BannerLink,
+} from "../fragments/componentBannerFieldsFragment";
+export type { BannerSection, BannerItem, BannerLink };
 import { WHY_ADDACT_FIELDS, type Whyaddact } from "../fragments/whyAddactFragment";
 export type { Whyaddact, GlobalCard2 } from "../fragments/whyAddactFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
+import {
+  OUR_INSIGHTS_TITLE_FIELDS,
+  type OurInshightsTitle,
+} from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
-import { QA_OUR_SERVICE_FIELDS } from "../fragments/qaOurServiceFragment";
-export type { QaOurServiceType } from "../fragments/qaOurServiceFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
 
@@ -40,9 +49,15 @@ const GET_PRESS_RELEASE_LIST_PAGE = gql`
       industry { ${INDUSTRY_FIELDS} }
       ${WHY_ADDACT_FIELDS}
 
-      ${AI_BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
 
-      ${QA_OUR_SERVICE_FIELDS}
+      ourService {
+    ... on ComponentHomeQaTestingListing { ...QaTestingListingFields }
+  }
 
       cta { ${CTA_FIELDS} }
       faq { ${FAQ_FIELDS} }
@@ -69,8 +84,9 @@ export interface QATestingSupport {
   whyaddact: Whyaddact | null;
   ourInshightsTitle?: OurInshightsTitle | null;
 }
-
-
+export type QaOurServiceType = {
+  ourService: OurServiceList[];
+};
 
 export async function getQATestingSupport(): Promise<QATestingSupport> {
   const data = await client.request<QATestingSupportResponse>(GET_PRESS_RELEASE_LIST_PAGE);

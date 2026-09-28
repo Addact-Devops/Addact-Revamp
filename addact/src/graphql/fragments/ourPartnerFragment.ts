@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import type { HeadingFragmentType } from "./headingFragment";
 import type { ImageFragmentType } from "./imageFragment";
 
@@ -17,7 +17,7 @@ export type OurPartnerType = {
 
 export const OUR_PARTNER_INNER_FIELDS = `
   Title {
-    ${BLOG_CONTENT_HEADINGS_FIELDS}
+    ${HEADING_INLINE_FIELDS}
   }
   Image {
     ... on ComponentSharedImage { ...SharedImageFields }

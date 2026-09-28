@@ -8,18 +8,34 @@ import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { SERVICE_DETAIL_HERO_BANNER_FIELDS, type ServiceDetailHeroBanner } from "../fragments/serviceDetailHeroBannerFragment";
+import {
+  BANNER_IMAGE_LINK_FIELDS,
+  type ComponentBannerItem as ServiceDetailHeroBanner,
+} from "../fragments/componentBannerFieldsFragment";
 export type { ServiceDetailHeroBanner };
-import { SERVICE_DETAIL_OUR_SERVICE_FIELDS, type OurServiceData } from "../fragments/serviceDetailOurServiceFragment";
+import {
+  SERVICE_DETAIL_OUR_SERVICE_FIELDS,
+  type OurServiceData,
+} from "../fragments/serviceDetailOurServiceFragment";
 export type { OurServiceData };
-import { SERVICE_DETAIL_WHY_ADDACT_FIELDS, type WhyAddact } from "../fragments/serviceDetailWhyAddactFragment";
+import {
+  SERVICE_DETAIL_WHY_ADDACT_FIELDS,
+  type WhyAddact,
+} from "../fragments/serviceDetailWhyAddactFragment";
 export type { WhyAddact };
 import { SERVICE_DETAIL_CTA_FIELDS, type CTA2 } from "../fragments/serviceDetailCtaFragment";
 export type { CTA2 };
-import { SERVICE_DETAIL_CONTACT_US_FIELDS, type CONTACTUS } from "../fragments/serviceDetailContactUsFragment";
+import { type CONTACTUS } from "../fragments/homeContactUsFragment";
 export type { CONTACTUS };
-import { type OurProcessData } from "../fragments/servicesDetailProcessFragment";
+import { type OurProcessData } from "../fragments/ourProcessFragment";
 export type { OurProcessData };
+import { CONTACT_US_FORM_FIELDS } from "../fragments/contactUsFormFragment";
+
+export type ServiceDetailContactUsItem = Partial<CONTACTUS>;
+
+export type ServiceDetailContactUsType = {
+  contact_us?: ServiceDetailContactUsItem;
+};
 import client from "../client";
 
 const ServiceDetailBySlug = gql`
@@ -30,14 +46,18 @@ const ServiceDetailBySlug = gql`
   query SubServicePages($filters: SubServicePageFiltersInput) {
     subServicePages(filters: $filters) {
       ReferenceTitle
-      ${SERVICE_DETAIL_HERO_BANNER_FIELDS}
+      HeroBanner {
+        ${BANNER_IMAGE_LINK_FIELDS}
+      }
       ${SERVICE_DETAIL_OUR_SERVICE_FIELDS}
       our_process { ${OUR_PROCESS_FIELDS} }
       ${SERVICE_DETAIL_WHY_ADDACT_FIELDS}
       cta2 { ${SERVICE_DETAIL_CTA_FIELDS} }
       cta { ${SERVICE_DETAIL_CTA_FIELDS} }
       faq { ${FAQ_FIELDS} }
-      ${SERVICE_DETAIL_CONTACT_US_FIELDS}
+      contact_us {
+          ${CONTACT_US_FORM_FIELDS}
+        }
       SEO {
         ${SEO_FIELDS}
       }

@@ -2,7 +2,6 @@ import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
-import { CARD_FRAGMENT } from "../fragments/cardFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
@@ -23,18 +22,24 @@ import {
 export type { BlogBanner, BlogBannerItem, BlogBySlugBannerItem };
 import { BLOG_CONTENT_FIELDS, type BlogContentType } from "../fragments/blogContentFragment";
 export type { BlogContentType };
-import { BLOG_AUTHOR_FIELDS, type BlogAuthorType } from "../fragments/blogAuthorFragment";
+import type { BlogAuthorType } from "../fragments/blogAuthorFragment";
 export type { BlogAuthorType };
-import {
-  BLOG_SIMILAR_STORY_TITLE_FIELDS,
-  type BlogSimilarStoryTitleType,
-} from "../fragments/blogSimilarStoryTitleFragment";
-export type { BlogSimilarStoryTitleType };
-import {
-  BLOG_SIMILAR_BLOGS_FIELDS,
-  type BlogSimilarBlogsType,
-} from "../fragments/blogSimilarBlogsFragment";
-export type { BlogSimilarBlogsType };
+import type { TitleDescriptionType } from "../fragments/titleDescriptionFragment";
+
+export type BlogSimilarStoryTitleItem = TitleDescriptionType;
+
+export type BlogSimilarStoryTitleType = {
+  similarstorytitle?: {
+    CommonTitle?: BlogSimilarStoryTitleItem[];
+  };
+};
+export type BlogSimilarBlogItem = {
+  BlogBanner?: BlogBannerItem[];
+};
+
+export type BlogSimilarBlogsType = {
+  similarBlogs?: BlogSimilarBlogItem[];
+};
 import {
   BLOG_SOCIAL_ICONS_FIELDS,
   type BlogSocialIconsType,
@@ -51,7 +56,6 @@ const GET_BLOG_BY_SLUG = gql`
   ${LINK_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${SHARED_IMAGE_FRAGMENT}
-  ${CARD_FRAGMENT}
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   ${RICHTEXT_FRAGMENT}
   ${LINK_IMAGE_FRAGMENT}
@@ -68,11 +72,28 @@ const GET_BLOG_BY_SLUG = gql`
 
       ${BLOG_CONTENT_FIELDS}
 
-      ${BLOG_AUTHOR_FIELDS}
+      author {
+        Author {
+          AuthorName
+          AuthorImage {
+            ...ImageFields
+          }
+          AuthorDescription
+          designation {
+            DesignationTitle
+          }
+        }
+      }
 
-      ${BLOG_SIMILAR_STORY_TITLE_FIELDS}
+      similarstorytitle {
+        CommonTitle {
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
+        }
+      }
 
-      ${BLOG_SIMILAR_BLOGS_FIELDS}
+      similarBlogs {
+        ${BLOG_HERO_BANNER_FIELDS}
+      }
 
       ${BLOG_SOCIAL_ICONS_FIELDS}
 

@@ -10,12 +10,11 @@ import { INDUSTRY_FIELDS, type Industry, type IndustryListItem } from "../fragme
 export type { Industry, IndustryListItem };
 import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFragment";
 export type { OurProcess };
-import { AI_BENEFIT_FIELDS, type AIBenefit } from "../fragments/aiBenefitFragment";
-export type { AIBenefit };
+import { AI_SERVICE_LIST_FIELDS, type AIBenefit } from "../fragments/aiServiceListFragment";
 import {
   AI_SOLVE_PROBLEM_FIELDS,
   type AISolveProblem,
-} from "../fragments/aiSolveProblemFragment";
+} from "./getAIService";
 export type { AISolveProblem };
 import {
   TECH_STACK_FIELDS,
@@ -25,15 +24,15 @@ import {
 } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent };
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { OUR_SERVICE_FRAGMENT, type OurServiceType as OurService } from "../fragments/ourServiceFragment";
+import { OUR_SERVICE_FRAGMENT, OUR_SERVICE_FIELDS, type OurServiceType as OurService } from "../fragments/ourServiceFragment";
 export type { OurService };
 import {
-  AI_BANNER_SECTION_FIELDS,
+  COMPONENT_BANNER_FIELDS,
   type BannerSection,
-  type BannerItem,
+  type ComponentBannerItem as BannerItem,
   type BannerLink,
-  type LinkWithIcon,
-} from "../fragments/aiBannerSectionFragment";
+} from "../fragments/componentBannerFieldsFragment";
+import type { LinkWithIcon } from "../fragments/homeCapabilitiesFragment";
 export type { BannerSection, BannerItem, BannerLink, LinkWithIcon };
 import {
   WHY_ADDACT_FIELDS,
@@ -47,7 +46,7 @@ import {
   type OurInsightsTitle,
 } from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle };
-import { AI_SLUG_OUR_SERVICE_FIELDS } from "../fragments/aiSlugOurServiceFragment";
+
 import { SEO_FIELDS, type SEO } from "../fragments/seoFragment";
 export type { SEO };
 import client from "../client";
@@ -61,7 +60,11 @@ const aiServiceSlugQuery = gql`
   query AiSolveProblem($filters: AiServicesDetailFiltersInput) {
     aiServicesDetails(filters: $filters) {
       SEO { ${SEO_FIELDS} }
-      ${AI_BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       faq { ${FAQ_FIELDS} }
@@ -73,9 +76,12 @@ const aiServiceSlugQuery = gql`
 
       aiSolveProblem { ${AI_SOLVE_PROBLEM_FIELDS} }
 
-      aiBenefit { ${AI_BENEFIT_FIELDS} }
+      aiBenefit {
+        title
+        ${AI_SERVICE_LIST_FIELDS}
+      }
 
-      ${AI_SLUG_OUR_SERVICE_FIELDS}
+      ${OUR_SERVICE_FIELDS}
 
       ourprocess { ${OUR_PROCESS_FIELDS} }
       industry { ${INDUSTRY_FIELDS} }

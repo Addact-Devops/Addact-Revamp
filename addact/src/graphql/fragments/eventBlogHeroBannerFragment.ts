@@ -1,9 +1,14 @@
-import { BLOG_HERO_BANNER_INNER_FIELDS, type BlogHeroBannerItem } from "./blogHeroBannerFragment";
+import type { BlogHeroBannerItem } from "./blogHeroBannerFieldsFragment";
 
 export const EVENT_BLOG_HERO_BANNER_FIELDS = `
   EventBanner {
     ... on ComponentBlogHeroBannerBlogHeroBanner {
-      ${BLOG_HERO_BANNER_INNER_FIELDS}
+      BannerTitle
+      BannerDescription
+      PublishDate
+      BannerImage {
+        ...ImageFields
+      }
       eventLocation
     }
   }
@@ -17,4 +22,3 @@ export type EventBlogHeroBannerItem = BlogHeroBannerItem & {
 export type EventBlogHeroBannerType = {
   EventBanner: EventBlogHeroBannerItem[];
 };
-

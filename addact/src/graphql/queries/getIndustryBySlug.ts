@@ -10,17 +10,17 @@ export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment"
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { SEO_FIELDS } from "../fragments/seoFragment";
-import { INDUSTRY_HERO_BANNER_FIELDS } from "../fragments/industryHeroBannerFragment";
+import { COMPONENT_BANNER_FIELDS } from "../fragments/componentBannerFieldsFragment";
 import { OUR_PARTNER_FIELDS } from "../fragments/ourPartnerFragment";
 import { OUR_CHALLENGES_FIELDS } from "../fragments/ourChallengesFragment";
 import { OUR_SOLUTIONS_FIELDS } from "../fragments/ourSolutionsFragment";
 import { GLOBAL_CARD_FIELDS } from "../fragments/globalCardFragment";
-import { CLIENT_TESTIMONIAL_FIELDS } from "../fragments/clientTestimonialFragment";
+import { CLIENT_TESTIMONIALS_ITEM_FIELDS } from "../fragments/clientTestimonialsItemFragment";
 import { CONTACT_US_FIELDS } from "../fragments/contactUsFragment";
 import {
-  PROJECT_HIGHLIGHTS_FIELDS,
-  type ProjectHighlightsType,
-} from "../fragments/projectHighlightsFragment";
+  BlogHeroBannerItem,
+  HERO_BANNER_FULL_FIELDS,
+} from "../fragments/blogHeroBannerFieldsFragment";
 
 import client from "../client";
 import { Heading, Image } from "./getHomePage";
@@ -42,7 +42,11 @@ const GET_INDUSTRY_BY_SLUG = gql`
 
       SEO { ${SEO_FIELDS} }
 
-      ${INDUSTRY_HERO_BANNER_FIELDS}
+      HeroBanner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
 
       ${OUR_PARTNER_FIELDS}
 
@@ -52,7 +56,10 @@ const GET_INDUSTRY_BY_SLUG = gql`
 
       ${GLOBAL_CARD_FIELDS}
 
-      ${CLIENT_TESTIMONIAL_FIELDS}
+     client_testimonial {
+    Title
+    ${CLIENT_TESTIMONIALS_ITEM_FIELDS}
+  }
 
       cta { ${CTA_FIELDS} }
 
@@ -61,7 +68,13 @@ const GET_INDUSTRY_BY_SLUG = gql`
       ${CONTACT_US_FIELDS}
 
       # ✅ Newly added component block
-      ${PROJECT_HIGHLIGHTS_FIELDS}
+      ProjectHighlights {
+         Title
+         addact_case_studies {
+           Slug
+           ${HERO_BANNER_FULL_FIELDS}
+         }
+       }
 
       techStack { ${TECH_STACK_FIELDS} }
     }
@@ -254,7 +267,17 @@ export type IndustryDetail = {
 export type IndustryBySlugResponse = {
   industryDetailPages: IndustryDetail[];
 };
+export type ProjectHighlightCaseStudyType = {
+  Slug?: string | null;
+  HeroBanner?: BlogHeroBannerItem[] | null;
+};
 
+export type ProjectHighlightsType = {
+  ProjectHighlights?: {
+    Title?: string | null;
+    addact_case_studies?: ProjectHighlightCaseStudyType[] | null;
+  } | null;
+};
 // -------------------- Fetchers --------------------
 
 export async function getIndustryBySlug(slug: string) {

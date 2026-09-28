@@ -13,3 +13,7 @@ export type ServiceListItem = {
 export type ServiceList = {
   serviceList: ServiceListItem[];
 };
+
+export type AIBenefit = ServiceList & {
+  title: string;
+};

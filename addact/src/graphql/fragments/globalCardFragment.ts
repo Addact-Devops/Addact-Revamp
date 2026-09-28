@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import { GLOBAL_CARD_PROMO_FIELDS } from "./promoFragment";
 import { RICHTEXT_FIELDS, type RichtextFragmentType } from "./richtextFragment";
 import type { HeadingFragmentType } from "./headingFragment";
@@ -18,7 +18,7 @@ export type GlobalCardType = {
 export const GLOBAL_CARD_FIELDS = `
   global_card {
     Title {
-      ${BLOG_CONTENT_HEADINGS_FIELDS}
+      ${HEADING_INLINE_FIELDS}
       ${RICHTEXT_FIELDS}
     }
     ${GLOBAL_CARD_PROMO_FIELDS}

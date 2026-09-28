@@ -1,11 +1,13 @@
-import { CASE_STUDY_PDF_FIELDS } from "./caseStudyPdfFragment";
-import { CASE_STUDY_FORM_FIELDS } from "./caseStudyFormFragment";
+import { FORM_BASIC_LABELS_FIELDS, type FormBasicLabels } from "./contactUsFormLabelsFragment";
 import type { ImageFragmentType } from "./imageFragment";
-import type { FormBasicLabels } from "./contactUsFormLabelsFragment";
 
 export const CASE_STUDY_PDF_FORM_FIELDS = `
-  ${CASE_STUDY_PDF_FIELDS}
-  ${CASE_STUDY_FORM_FIELDS}
+  CaseStudyPDF {
+    ...ImageFields
+  }
+  FormFields {
+    ${FORM_BASIC_LABELS_FIELDS}
+  }
 `;
 
 export type CaseStudyPDFItem = ImageFragmentType;

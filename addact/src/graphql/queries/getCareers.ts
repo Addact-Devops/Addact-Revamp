@@ -2,9 +2,10 @@ import { gql } from "graphql-request";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
-import { CAREERS_HERO_BANNER_FIELDS, type CareersHeroBanner } from "../fragments/careersHeroBannerFragment";
+import { COMPONENT_BANNER_FIELDS, type ComponentBannerItem as CareersHeroBannerItem } from "../fragments/componentBannerFieldsFragment";
+export type CareersHeroBanner = { Banner?: CareersHeroBannerItem[] };
 import { CAREER_CARD_FIELDS, type CareerCardData, type TitleBlock, type CardPromo } from "../fragments/careerCardFragment";
-export type { TitleBlock, CardPromo, CareerCardData, CareersHeroBanner };
+export type { TitleBlock, CardPromo, CareerCardData };
 import { POSITIONS_TITLE_FIELDS, type PositionsTitleData } from "../fragments/positionsTitleFragment";
 import { POSITIONS_FIELDS, type PositionType, type PositionItem, type CardInfoType } from "../fragments/positionsFragment";
 export type { CardInfoType, PositionType, PositionsTitleData, PositionItem };
@@ -25,7 +26,11 @@ const query = gql`
   query CareersData {
     careers {
       ${PAGE_HEADING_FIELDS}
-      Banner { ${CAREERS_HERO_BANNER_FIELDS} }
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       Careercard { ${CAREER_CARD_FIELDS} }
       ${POSITIONS_TITLE_FIELDS}
       ${POSITIONS_FIELDS}

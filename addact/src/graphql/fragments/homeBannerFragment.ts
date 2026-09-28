@@ -1,13 +1,15 @@
 import { gql } from "graphql-request";
 import {
-  COMPONENT_BANNER_SECTION_FIELDS,
+  COMPONENT_BANNER_FIELDS,
   type ComponentBannerItem,
 } from "./componentBannerFieldsFragment";
 
 export const HOME_BANNER_FRAGMENT = gql`
   fragment HomeBannerFields on Home {
     banner {
-      ${COMPONENT_BANNER_SECTION_FIELDS}
+      Banner {
+        ${COMPONENT_BANNER_FIELDS}
+      }
     }
   }
 `;

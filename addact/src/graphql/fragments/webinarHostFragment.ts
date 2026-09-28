@@ -1,10 +1,14 @@
-import { BLOG_AUTHOR_DESIGNATION_FIELDS, type Designation } from "./blogAuthorDesignationFragment";
-import { AUTHOR_BASE_FIELDS, type AuthorDetails } from "./blogAuthorFragment";
+import type { AuthorDetails } from "./blogAuthorFragment";
 
 export const WEBINAR_AUTHOR_FIELDS = `
   Author {
-    ${AUTHOR_BASE_FIELDS}
-    ${BLOG_AUTHOR_DESIGNATION_FIELDS}
+    AuthorName
+    AuthorImage {
+      ...ImageFields
+    }
+    designation {
+      DesignationTitle
+    }
   }
 `;
 
@@ -23,7 +27,3 @@ export type WebinarAuthorType = {
 export type WebinarHostType = {
   Host: WebinarAuthorType[];
 };
-
-export type { Designation, AuthorDetails };
-
-

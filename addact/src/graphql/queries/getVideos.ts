@@ -3,9 +3,8 @@
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { HERO_BANNER_FRAGMENT, BANNER_HERO_SECTION_FIELDS } from "../fragments/heroBannerFragment";
 import { PAGE_HEADING_FIELDS } from "../fragments/pageHeadingFragment";
-import { VIDEO_BANNER_FIELDS } from "../fragments/videoBannerFragment";
 import { VIDEO_LIST_FIELDS, type VideoPageResponse } from "../fragments/videoListFragment";
 
 export type { VideoContentType, VideoPageResponse } from "../fragments/videoListFragment";
@@ -22,7 +21,7 @@ const videosQuery = gql`
   query VideoListing {
     videoListing {
       ${PAGE_HEADING_FIELDS}
-      ${VIDEO_BANNER_FIELDS}
+      ${BANNER_HERO_SECTION_FIELDS}
       ${VIDEO_LIST_FIELDS}
     }
   }

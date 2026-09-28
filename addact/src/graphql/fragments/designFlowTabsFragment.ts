@@ -1,5 +1,12 @@
-import { DESIGN_FLOW_GIF_FIELDS, type DesignFlowGifType } from "./designFlowGifFragment";
-import { DESIGN_FLOW_ICON_FIELDS, type DesignFlowIconType } from "./designFlowIconFragment";
+import { ImageFragmentType } from "./imageFragment";
+
+export type DesignFlowGifType = {
+  gif?: ImageFragmentType;
+};
+
+export type DesignFlowIconType = {
+  icon?: ImageFragmentType;
+};
 
 export type FlowItemType = DesignFlowGifType &
   DesignFlowIconType & {
@@ -22,9 +29,12 @@ export const DESIGN_FLOW_TABS_FIELDS = `
     flow {
       title
       information
-      ${DESIGN_FLOW_GIF_FIELDS}
-      ${DESIGN_FLOW_ICON_FIELDS}
+      gif {
+        ...ImageFields
+      }
+      icon {
+        ...ImageFields
+      }
     }
   }
 `;
-

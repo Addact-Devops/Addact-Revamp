@@ -1,13 +1,57 @@
-import { BLOG_HERO_BANNER_READ_NOW_FIELDS, type ReadNow } from "./blogHeroBannerReadNowFragment";
-import { BLOG_HERO_BANNER_AUTHOR_FIELDS, type BannerAuthor } from "./blogHeroBannerAuthorFragment";
-import { BLOG_CATEGORY_FIELDS, type BlogCategory } from "./blogCategoryFragment";
-import { BLOG_HERO_BANNER_INNER_FIELDS, type BlogHeroBannerItem } from "./blogHeroBannerFragment";
+import type { HeaderLink } from "./linkFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import type { BlogAuthorType as BannerAuthor } from "./blogAuthorFragment";
+
+export type BlogCategory = {
+  blogcategory?: {
+    Category?: {
+      CategoryTitle?: string;
+    };
+  };
+};
+
+export type ReadNow = {
+  ReadNow?: HeaderLink;
+};
+
+export type BlogHeroBannerItem = {
+  BannerTitle?: string;
+  BannerDescription?: string;
+  PublishDate?: string;
+  BannerImage: ImageFragmentType;
+};
+
+export type BlogHeroBannerType = {
+  HeroBanner: BlogHeroBannerItem[];
+};
 
 export const BLOG_HERO_BANNER_FULL_INNER_FIELDS = `
-  ${BLOG_HERO_BANNER_INNER_FIELDS}
-  ${BLOG_HERO_BANNER_READ_NOW_FIELDS}
-  ${BLOG_HERO_BANNER_AUTHOR_FIELDS}
-  ${BLOG_CATEGORY_FIELDS}
+  BannerTitle
+  BannerDescription
+  PublishDate
+  BannerImage {
+    ...ImageFields
+  }
+  ReadNow {
+    ...LinkFields
+  }
+  author {
+    Author {
+      AuthorName
+      AuthorImage {
+        ...ImageFields
+      }
+      AuthorDescription
+      designation {
+        DesignationTitle
+      }
+    }
+  }
+  blogcategory {
+    Category {
+      CategoryTitle
+    }
+  }
 `;
 
 export const COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS = `
@@ -16,19 +60,10 @@ export const COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS = `
   }
 `;
 
-export const BLOG_HERO_BANNER_FIELDS = `
-  BlogBanner {
-    ${COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS}
-  }
-`;
+export const BLOG_HERO_BANNER_FIELDS = `BlogBanner { ${COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS} }`;
+export const HERO_BANNER_FULL_FIELDS = `HeroBanner { ${COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS} }`;
 
-export const HERO_BANNER_FULL_FIELDS = `
-  HeroBanner {
-    ${COMPONENT_BLOG_HERO_BANNER_FULL_FIELDS}
-  }
-`;
-
-// Composite type merging all 4 sub-fragment shapes directly
+// Composite type merging all sub-fragment shapes directly
 export type BlogBySlugBannerItem = Partial<BlogHeroBannerItem> &
   ReadNow &
   BannerAuthor &

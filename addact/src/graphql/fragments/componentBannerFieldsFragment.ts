@@ -1,5 +1,3 @@
-import { AI_BANNER_LOGO_FIELDS } from "./aiBannerLogoFragment";
-import { BANNER_CHIPS_TEXT_FIELDS, type ChipsTextItem } from "./bannerChipsTextFragment";
 import type { Image, Link } from "@/types/common";
 import type { ImageFragmentType } from "./imageFragment";
 import type { LinkFragmentType } from "./linkFragment";
@@ -15,34 +13,47 @@ export const BANNER_IMAGE_FIELDS = `
   }
 `;
 
-export const BANNER_LINK_FIELDS = `
+export const BANNER_IMAGE_LINK_FIELDS = `
+  BannerTitle
+  BannerDescription
+  BannerImage {
+    ...ImageFields
+  }
   BannerLink {
     ...LinkFields
   }
 `;
 
-export const BANNER_IMAGE_LINK_FIELDS = `
-  ${BANNER_TITLE_DESCRIPTION_FIELDS}
-  ${BANNER_IMAGE_FIELDS}
-  ${BANNER_LINK_FIELDS}
-`;
 
 export type BannerTitleDescriptionType = {
   BannerTitle?: string | null;
   BannerDescription?: string | null;
 };
 
+export type ChipsTextItem = {
+  Title: string;
+};
+
 // Raw inner fields inside ComponentBannerBanner
 export const COMPONENT_BANNER_INNER_FIELDS = `
-  ${BANNER_TITLE_DESCRIPTION_FIELDS}
-  ${AI_BANNER_LOGO_FIELDS}
-  ${BANNER_IMAGE_FIELDS}
+  BannerTitle
+  BannerDescription
+  BannerLogo {
+    ...ImageFields
+  }
+  BannerImage {
+    ...ImageFields
+  }
   isTextAlignCenter
   isVideo
   show_searchbox
   videoLink
-  ${BANNER_LINK_FIELDS}
-  ${BANNER_CHIPS_TEXT_FIELDS}
+  BannerLink {
+    ...LinkFields
+  }
+  chipsText {
+    Title
+  }
 `;
 
 // Union member selection block (... on ComponentBannerBanner)
@@ -51,57 +62,6 @@ export const COMPONENT_BANNER_FIELDS = `
     ${COMPONENT_BANNER_INNER_FIELDS}
   }
 `;
-
-// Full Banner section wrapper field selection (Banner { ... on ComponentBannerBanner })
-export const COMPONENT_BANNER_SECTION_FIELDS = `
-  Banner {
-    ${COMPONENT_BANNER_FIELDS}
-  }
-`;
-
-// Nested banner wrapper field selection (banner { Banner { ... on ComponentBannerBanner } })
-export const COMPONENT_NESTED_BANNER_FIELDS = `
-  banner {
-    ${COMPONENT_BANNER_SECTION_FIELDS}
-  }
-`;
-
-// Nested uppercase banner wrapper field selection (Banner { Banner { ... on ComponentBannerBanner } })
-export const COMPONENT_NESTED_UPPER_BANNER_FIELDS = `
-  Banner {
-    ${COMPONENT_BANNER_SECTION_FIELDS}
-  }
-`;
-
-// Aliased banner wrapper field selection (Banner: banner { Banner { ... on ComponentBannerBanner } })
-export const COMPONENT_ALIASED_BANNER_FIELDS = `
-  Banner: banner {
-    ${COMPONENT_BANNER_SECTION_FIELDS}
-  }
-`;
-
-// HeroBanner wrapper selection (HeroBanner { BannerTitle BannerDescription BannerImage BannerLink })
-export const COMPONENT_HERO_BANNER_IMAGE_LINK_FIELDS = `
-  HeroBanner {
-    ${BANNER_IMAGE_LINK_FIELDS}
-  }
-`;
-
-// HeroBanner section wrapper selection (HeroBanner { Banner { ... on ComponentBannerBanner } })
-export const COMPONENT_HERO_BANNER_SECTION_FIELDS = `
-  HeroBanner {
-    ${COMPONENT_BANNER_SECTION_FIELDS}
-  }
-`;
-
-// EventBanner section wrapper selection (EventBanner { Banner { ... on ComponentBannerBanner } })
-export const COMPONENT_EVENT_BANNER_SECTION_FIELDS = `
-  EventBanner {
-    ${COMPONENT_BANNER_SECTION_FIELDS}
-  }
-`;
-
-
 
 
 
@@ -124,4 +84,3 @@ export type BannerSection = {
 
 export type HeroBannerFragmentType = ComponentBannerItem;
 export type BannerItem = ComponentBannerItem;
-export type { ChipsTextItem };

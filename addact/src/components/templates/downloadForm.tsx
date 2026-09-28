@@ -29,12 +29,12 @@ const DownloadForm = ({
   submitUrl,
   sheetName,
   redirectUrl,
-  className = "",
-  NameLabel = "Name",
-  EmailLabel = "Email",
-  PhoneLabel = "Phone",
-  ButtonLabel = "Submit",
-  RecipientEmails = "",
+  className,
+  NameLabel,
+  EmailLabel,
+  PhoneLabel,
+  ButtonLabel,
+  RecipientEmails,
   pageTitle,
 }: DownloadFormProps) => {
   const [captchaError, setCaptchaError] = useState(false);

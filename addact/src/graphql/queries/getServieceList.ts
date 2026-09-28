@@ -10,8 +10,12 @@ import { OUR_PROCESS_FIELDS } from "../fragments/ourProcessFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { SERVICE_LIST_BANNER_FIELDS, type ServiceListBannerType } from "../fragments/serviceListBannerFragment";
-export type { ServiceListBannerType };
+import { BANNER_IMAGE_LINK_FIELDS } from "../fragments/componentBannerFieldsFragment";
+import type { BannerItem as ServiceListBannerItem, BANNER } from "../fragments/homeBannerFragment";
+export type { ServiceListBannerItem };
+export type ServiceListBannerType = {
+  Banner: BANNER;
+};
 import { SERVICE_LIST_CTA2_FIELDS, type CTA2 } from "../fragments/serviceListCta2Fragment";
 export type { CTA2 };
 import { SERVICE_LIST_WHY_ADDACT_FIELDS, type WhyAddact } from "../fragments/serviceListWhyAddactFragment";
@@ -20,9 +24,9 @@ import { SERVICE_LIST_OUR_SERVICE_FIELDS } from "../fragments/serviceListOurServ
 import { type OurServiceData } from "../fragments/serviceDetailOurServiceFragment";
 export type { OurServiceData };
 import { SERVICE_LIST_CONTACT_US_FIELDS } from "../fragments/serviceListContactUsFragment";
-import { type CONTACTUS } from "../fragments/serviceDetailContactUsFragment";
+import { type CONTACTUS } from "../fragments/homeContactUsFragment";
 export type { CONTACTUS };
-import { type OurProcessData } from "../fragments/servicesDetailProcessFragment";
+import { type OurProcessData } from "../fragments/ourProcessFragment";
 export type { OurProcessData };
 import client from "../client";
 
@@ -37,7 +41,11 @@ const ServiceListBySlug = gql`
       SEO {
         ${SEO_FIELDS}
       }
-      ${SERVICE_LIST_BANNER_FIELDS}
+      Banner {
+        Banner {
+          ${BANNER_IMAGE_LINK_FIELDS}
+        }
+      }
       cta { 
         ${CTA_FIELDS}
       }

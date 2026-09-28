@@ -1,12 +1,11 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS, type HeadingFragmentType } from "./headingFragment";
 import { BLOG_CONTENT_ERROR_FIELDS, type ContentError } from "./blogContentErrorFragment";
 import { COMPONENT_PROMO_FIELDS, type PromoFragmentType } from "./promoFragment";
-import type { HeadingFragmentType } from "./headingFragment";
 import type { RichtextFragmentType } from "./richtextFragment";
 
 export const CAREER_CARD_FIELDS = `
   Title {
-    ${BLOG_CONTENT_HEADINGS_FIELDS}
+    ${HEADING_INLINE_FIELDS}
     ... on ComponentBaseTemplateRichtext { ...RichtextFields }
     ${BLOG_CONTENT_ERROR_FIELDS}
   }

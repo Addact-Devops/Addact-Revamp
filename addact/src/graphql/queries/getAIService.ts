@@ -6,14 +6,53 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
 export type { CTA };
-import { INDUSTRY_FIELDS, type Industry, type IndustryListItem } from "../fragments/industryFragment";
+import {
+  INDUSTRY_FIELDS,
+  type Industry,
+  type IndustryListItem,
+} from "../fragments/industryFragment";
 export type { Industry, IndustryListItem };
 import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFragment";
 export type { OurProcess };
-import { AI_BENEFIT_FIELDS, type AIBenefit } from "../fragments/aiBenefitFragment";
+import {
+  AI_SERVICE_LIST_FIELDS,
+  type AIBenefit,
+  type ServiceListItem,
+} from "../fragments/aiServiceListFragment";
 export type { AIBenefit };
-import { AI_SOLVE_PROBLEM_FIELDS, type AISolveProblem } from "../fragments/aiSolveProblemFragment";
-export type { AISolveProblem };
+import {
+  LISTING_CONTEXT_FIELDS,
+  type AIListingContext,
+} from "../fragments/aiListingContextFragment";
+import { type Image } from "@/types/common";
+
+// Inlined AI Solve Problem fields & types (used in 2 places)
+export const AI_SOLVE_PROBLEM_FIELDS = `
+  title
+  aiSolveProblemList {
+    list {
+      title
+      image {
+        ...ImageFields
+      }
+      bgImage {
+        ...ImageFields
+      }
+    }
+  }
+`;
+
+export type AISolveProblem = {
+  title: string;
+  aiSolveProblemList: {
+    list: {
+      title: string;
+      image: Image | null;
+      bgImage: Image | null;
+    };
+  }[];
+};
+
 import {
   TECH_STACK_FIELDS,
   type TechStack,
@@ -21,16 +60,23 @@ import {
   type TabContent,
 } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent };
-import { AI_OUR_SERVICES_FRAGMENT, type OurService } from "../fragments/aiOurServicesFragment";
-export type { OurService };
+
+// Inlined AI Our Services fragment & fields (used only here)
+export const AI_OUR_SERVICES_FRAGMENT = gql``;
+
+export type OurService = {
+  listingContext: AIListingContext;
+  serviceList: ServiceListItem[];
+};
+
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import {
-  AI_BANNER_SECTION_FIELDS,
+  COMPONENT_BANNER_FIELDS,
   type BannerSection,
-  type BannerItem,
+  type ComponentBannerItem as BannerItem,
   type BannerLink,
-  type LinkWithIcon,
-} from "../fragments/aiBannerSectionFragment";
+} from "../fragments/componentBannerFieldsFragment";
+import type { LinkWithIcon } from "../fragments/homeCapabilitiesFragment";
 export type { BannerSection, BannerItem, BannerLink, LinkWithIcon };
 import {
   WHY_ADDACT_FIELDS,
@@ -44,7 +90,6 @@ import {
   type OurInsightsTitle,
 } from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle };
-import { AI_OUR_SERVICE_FIELDS } from "../fragments/aiOurServiceFragment";
 import { SEO_FIELDS, type SEO } from "../fragments/seoFragment";
 export type { SEO };
 import client from "../client";
@@ -53,12 +98,19 @@ const aiServiceQuery = gql`
   ${HEADING_FRAGMENT}
   ${IMAGE_FRAGMENT}
   ${LINK_FRAGMENT}
-  ${AI_OUR_SERVICES_FRAGMENT}
+  fragment AiOurServicesFields on ComponentHomeAiOurServices {
+    ${LISTING_CONTEXT_FIELDS}
+    ${AI_SERVICE_LIST_FIELDS}
+  }
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query AiSolveProblem {
     aiService {
       SEO { ${SEO_FIELDS} }
-      ${AI_BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       faq { ${FAQ_FIELDS} }
@@ -70,9 +122,14 @@ const aiServiceQuery = gql`
 
       aiSolveProblem { ${AI_SOLVE_PROBLEM_FIELDS} }
 
-      aiBenefit { ${AI_BENEFIT_FIELDS} }
+      aiBenefit {
+        title
+        ${AI_SERVICE_LIST_FIELDS}
+      }
 
-      ${AI_OUR_SERVICE_FIELDS}
+     ourService {
+    ... on ComponentHomeAiOurServices { ...AiOurServicesFields }
+  }
 
       ourprocess { ${OUR_PROCESS_FIELDS} }
       industry { ${INDUSTRY_FIELDS} }
@@ -105,4 +162,3 @@ export async function getAIService(): Promise<AIService> {
 
   return data.aiService;
 }
-

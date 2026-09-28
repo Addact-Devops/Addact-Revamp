@@ -1,11 +1,11 @@
 import { gql } from "graphql-request";
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import { BLOG_CONTENT_SHARED_LINK_FIELDS } from "./blogContentSharedLinkFragment";
 
 export const CAREER_DETAILS_JOB_DESC_FRAGMENT = gql`
   fragment CareerDetailsJobDescFields on CareerDetail {
     JobDescription {
-      ${BLOG_CONTENT_HEADINGS_FIELDS}
+      ${HEADING_INLINE_FIELDS}
       ... on ComponentBaseTemplateRichtext {
         ...RichtextFields
       }

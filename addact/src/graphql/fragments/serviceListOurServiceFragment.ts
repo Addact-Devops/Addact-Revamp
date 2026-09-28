@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import { PROMO_INNER_FIELDS, type PromoFragmentType } from "./promoFragment";
 import { ID_TITLE_DESCRIPTION_FIELDS, type IdTitleDescriptionType } from "./titleDescriptionFragment";
 import type { HeadingFragmentType } from "./headingFragment";
@@ -62,7 +62,7 @@ export const SERVICE_LIST_OUR_SERVICE_FIELDS = `
         }
       }
       Title {
-        ${BLOG_CONTENT_HEADINGS_FIELDS}
+        ${HEADING_INLINE_FIELDS}
       }
     }
     ${TEAM_FEATURE_FIELDS}

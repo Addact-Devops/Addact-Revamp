@@ -14,15 +14,20 @@ export type { OurProcess, ProcessDataItem, LinkProps } from "../fragments/ourPro
 import { TECH_STACK_FIELDS, type TechStack } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
-import { AI_BANNER_SECTION_FIELDS, type BannerSection } from "../fragments/aiBannerSectionFragment";
-export type { BannerSection, BannerItem, BannerLink } from "../fragments/aiBannerSectionFragment";
+import {
+  OUR_SERVICE_FRAGMENT,
+  OUR_SERVICE_FIELDS,
+  type OurServiceType,
+} from "../fragments/ourServiceFragment";
+export type QaSlugOurServiceType = {
+  ourService: OurServiceType[];
+};
+import { COMPONENT_BANNER_FIELDS, type BannerSection, type ComponentBannerItem as BannerItem, type BannerLink } from "../fragments/componentBannerFieldsFragment";
+export type { BannerSection, BannerItem, BannerLink };
 import { WHY_ADDACT_FIELDS, type Whyaddact } from "../fragments/whyAddactFragment";
 export type { Whyaddact, GlobalCard2 } from "../fragments/whyAddactFragment";
 import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
-import { QA_SLUG_OUR_SERVICE_FIELDS } from "../fragments/qaSlugOurServiceFragment";
-export type { QaSlugOurServiceType } from "../fragments/qaSlugOurServiceFragment";
 import { type OurServiceList } from "../fragments/qaTestingListingFragment";
 export type { OurServiceList, ServiceListItem } from "../fragments/qaTestingListingFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
@@ -40,9 +45,13 @@ const qaTestingSupportSlugQuery = gql`
       ${WHY_ADDACT_FIELDS}
       industry { ${INDUSTRY_FIELDS} }
 
-      ${AI_BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
 
-      ${QA_SLUG_OUR_SERVICE_FIELDS}
+      ${OUR_SERVICE_FIELDS}
 
       cta { ${CTA_FIELDS} }
       techStack { ${TECH_STACK_FIELDS} }

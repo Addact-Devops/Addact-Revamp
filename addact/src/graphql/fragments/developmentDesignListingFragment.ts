@@ -1,5 +1,8 @@
 import { gql } from "graphql-request";
-import { CMS_SERVICE_VARIANT_FIELDS, type CmsServiceVariantType } from "./cmsServiceVariantFragment";
+import {
+  CMS_SERVICE_VARIANT_FIELDS,
+  type CmsServiceVariantType,
+} from "./cmsServiceVariantFragment";
 import { AI_SERVICE_LIST_FIELDS, type ServiceListItem } from "./aiServiceListFragment";
 import { type AIListingContext, type ListingContextType } from "./aiListingContextFragment";
 

@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import { TITLE_DESCRIPTION_IMAGE_FIELDS } from "./aboutUsBrandValueFragment";
 import { BLOG_CONTENT_ERROR_FIELDS, type ContentError } from "./blogContentErrorFragment";
 import { type TitleDescriptionType, type IdTitleDescriptionType } from "./titleDescriptionFragment";
@@ -39,7 +39,7 @@ export interface WhyAddact {
 export const SERVICE_DETAIL_WHY_ADDACT_FIELDS = `
   why_addact {
     Title {
-      ${BLOG_CONTENT_HEADINGS_FIELDS}
+      ${HEADING_INLINE_FIELDS}
       ... on ComponentBaseTemplateRichtext { ...RichtextFields }
       ${BLOG_CONTENT_ERROR_FIELDS}
     }

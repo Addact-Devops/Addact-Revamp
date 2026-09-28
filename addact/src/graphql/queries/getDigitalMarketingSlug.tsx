@@ -30,11 +30,11 @@ import { UI_UX_LISTING_FRAGMENT } from "../fragments/uiUxListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
 import {
-  BANNER_SECTION_FIELDS,
+  COMPONENT_BANNER_FIELDS,
   type BannerSection,
-  type BannerItem,
+  type ComponentBannerItem as BannerItem,
   type BannerLink,
-} from "../fragments/bannerSectionFragment";
+} from "../fragments/componentBannerFieldsFragment";
 export type { BannerSection, BannerItem, BannerLink };
 import {
   WHY_ADDACT_FIELDS,
@@ -90,7 +90,11 @@ const digitalMarketingQuerySlugQuery = gql`
       SEO { ${SEO_FIELDS} }
       isUxpage
 
-      ${BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       ${WHY_ADDACT_FIELDS}

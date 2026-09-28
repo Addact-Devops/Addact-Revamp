@@ -1,12 +1,20 @@
 import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { GALLERY_TITLES_FRAGMENT } from "../fragments/galleryTitlesFragment";
-export type { GalleryTitlesType } from "../fragments/galleryTitlesFragment";
-import { CAREER_GALLERY_SECTION_FIELDS, type CareerGallerySectionType } from "../fragments/careerGallerySectionFragment";
-import { CAREER_GALLERY_CATEGORIES_FIELDS, type CareerGalleryCategoriesType } from "../fragments/careerGalleryCategoriesFragment";
-export type { CareerGallerySectionType, CareerGalleryCategoriesType };
+import { GALLERY_TITLES_FRAGMENT, type GalleryTitlesType } from "../fragments/galleryTitlesFragment";
+export type { GalleryTitlesType };
+import {
+  CAREER_GALLERY_CATEGORIES_FIELDS,
+  type CareerGalleryCategoriesType,
+} from "../fragments/careerGalleryCategoriesFragment";
 
 import client from "../client";
+export type GallerySection = GalleryTitlesType;
+
+export type CareerGallerySectionType = {
+  careers: {
+    Gallery?: GallerySection[];
+  };
+};
 
 const endpoint = process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_ENDPOINT;
 
@@ -18,7 +26,11 @@ const query = gql`
   ${IMAGE_FRAGMENT}
   ${GALLERY_TITLES_FRAGMENT}
   query CareerGalleryData {
-    ${CAREER_GALLERY_SECTION_FIELDS}
+     careers {
+    Gallery {
+      ... on ComponentAddactComponentGalleryTitles { ...GalleryTitlesFields }
+    }
+  }
     ${CAREER_GALLERY_CATEGORIES_FIELDS}
   }
 `;

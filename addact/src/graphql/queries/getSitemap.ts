@@ -2,8 +2,17 @@ import { gql } from "graphql-request";
 import client from "../client";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
-import { SITEMAP_BANNER_FIELDS, type SitemapBannerType, type SitemapResponse } from "../fragments/sitemapBannerFragment";
+import { HERO_BANNER_FRAGMENT, BANNER_HERO_SECTION_FIELDS, type HeroBannerFragmentType } from "../fragments/heroBannerFragment";
+
+export type SitemapBannerType = HeroBannerFragmentType;
+
+export type SitemapResponse = {
+  sitemap?: {
+    banner?: {
+      Banner?: SitemapBannerType[];
+    };
+  };
+};
 
 const sitemapQuery = gql`
   ${LINK_FRAGMENT}
@@ -11,7 +20,7 @@ const sitemapQuery = gql`
   ${HERO_BANNER_FRAGMENT}
   query Sitemap {
     sitemap {
-      ${SITEMAP_BANNER_FIELDS}
+      ${BANNER_HERO_SECTION_FIELDS}
     }
   }
 `;

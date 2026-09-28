@@ -9,14 +9,6 @@ export type TitleWithDescriptionFragmentType = TitleDescriptionType & {
 
 export type ExpertiseTitleItem = TitleWithDescriptionFragmentType;
 
-export const TITLE_WITH_DESCRIPTION_INNER_FIELDS = `
-  ${TITLE_DESCRIPTION_FIELDS}
-  urlKeyword
-  Link {
-    ...LinkFields
-  }
-`;
-
 export const COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS = `
   ... on ComponentBaseTemplateTitleWithDescription {
     ...TitleWithDescriptionFields
@@ -25,12 +17,10 @@ export const COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS = `
 
 export const TITLE_WITH_DESCRIPTION_FRAGMENT = gql`
   fragment TitleWithDescriptionFields on ComponentBaseTemplateTitleWithDescription {
-    ${TITLE_WITH_DESCRIPTION_INNER_FIELDS}
+    ${TITLE_DESCRIPTION_FIELDS}
+  urlKeyword
+  Link {
+    ...LinkFields
+  }
   }
 `;
-
-
-
-
-
-

@@ -5,7 +5,7 @@ import Head from "next/head";
 import RichText from "@/components/atom/richText";
 import StructuredDataScript from "@/components/atom/StructuredDataScript";
 
-import type { AnimationVideo } from "@/graphql/fragments/thankYouAnimationVideoFragment";
+import type { AnimationVideo } from "@/graphql/queries/getThankYouPageBySlug";
 
 type Props = {
   thankYouData: {

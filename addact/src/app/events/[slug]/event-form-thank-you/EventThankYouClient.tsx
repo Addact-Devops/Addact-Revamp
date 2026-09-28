@@ -24,7 +24,7 @@ interface SEO {
   languageTag?: string | null;
 }
 
-import type { AnimationVideo } from "@/graphql/fragments/thankYouAnimationVideoFragment";
+import type { AnimationVideo } from "@/graphql/queries/getThankYouPageBySlug";
 
 interface ThankYouPage {
   ReferenceTitle: string;

@@ -3,16 +3,21 @@ import client from "../client";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
-import { EVENT_BANNER_FIELDS, type EventBannerType } from "../fragments/eventBannerFragment";
+import { COMPONENT_BANNER_FIELDS, type BannerSection } from "../fragments/componentBannerFieldsFragment";
 import { EVENT_BLOG_HERO_BANNER_FIELDS, type EventBlogHeroBannerType } from "../fragments/eventBlogHeroBannerFragment";
-export type { PageHeadingType, EventBannerType, EventBlogHeroBannerType };
+export type { PageHeadingType, EventBlogHeroBannerType };
+export type EventBannerType = { EventBanner: BannerSection };
 
 const GET_EVENT_LIST_PAGE = gql`
   ${IMAGE_FRAGMENT}
   ${LINK_FRAGMENT}
   query EventList {
     event {
-      ${EVENT_BANNER_FIELDS}
+      EventBanner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       ${PAGE_HEADING_FIELDS}
     }
     addactsEvents {

@@ -3,7 +3,7 @@ import { gql } from "graphql-request";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
-import { BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFragment";
+import { HERO_BANNER_FULL_FIELDS as BLOG_HERO_BANNER_FIELDS } from "../fragments/blogHeroBannerFieldsFragment";
 import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
 export type { PageHeadingType };
 import { PRESS_RELEASE_HERO_BANNER_FIELDS, type PressReleaseHeroBannerType, type AddactPressReleaseItem } from "../fragments/pressReleaseHeroBannerFragment";

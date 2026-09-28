@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import { SEO_FIELDS, type SeoType } from "./seoFragment";
-import { BANNER_SECTION_FIELDS, type BannerSection } from "./bannerSectionFragment";
+import { COMPONENT_BANNER_FIELDS, type BannerSection } from "./componentBannerFieldsFragment";
 import { CTA_FIELDS, type CTAFragmentType } from "./ctaFragment";
 import { FAQ_FIELDS, type FAQFragmentType } from "./faqFragment";
 import { WHY_ADDACT_FIELDS, type WhyAddactType } from "./whyAddactFragment";
@@ -27,7 +27,11 @@ export const SITECORE_DETAIL_ALL_FIELDS_FRAGMENT = gql`
     SEO {
       ${SEO_FIELDS}
     }
-    ${BANNER_SECTION_FIELDS}
+    Banner {
+      Banner {
+        ${COMPONENT_BANNER_FIELDS}
+      }
+    }
     cta {
       ${CTA_FIELDS}
     }

@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import type { BlogContentItem } from "./blogContentFragment";
 
 export type WebinarContentItem = BlogContentItem;
@@ -9,7 +9,7 @@ export type WebinarContentType = {
 
 export const WEBINAR_CONTENT_FIELDS = `
   WebinarContent {
-    ${BLOG_CONTENT_HEADINGS_FIELDS}
+    ${HEADING_INLINE_FIELDS}
     ... on ComponentBaseTemplateRichtext { ...RichtextFields }
     ... on ComponentSharedImage { ...SharedImageFields }
     ...LinkFields

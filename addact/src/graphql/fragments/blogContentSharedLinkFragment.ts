@@ -6,6 +6,5 @@ export const BLOG_CONTENT_SHARED_LINK_FIELDS = `
   }
 `;
 
-// Reuses LinkFragmentType — ComponentSharedLink spreads ...LinkFields
 export type SharedLink = LinkFragmentType;
 export type { LinkFragmentType };

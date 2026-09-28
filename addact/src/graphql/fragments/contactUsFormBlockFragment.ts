@@ -1,12 +1,17 @@
-import { CONTACT_US_FORM_BLOCK_LEFT_FIELDS, type ContactUsFormBlockLeftType } from "./contactUsFormBlockLeftFragment";
-import { CONTACT_US_FORM_BLOCK_RIGHT_FIELDS, type ContactUsFormBlockRightType } from "./contactUsFormBlockRightFragment";
+import type { ImageFragmentType } from "./imageFragment";
+import type { RichTextBlock } from "@/types/common";
 
-export const CONTACT_US_FORM_BLOCK_FIELDS = `
-  ContactUsFormBlock {
-    ${CONTACT_US_FORM_BLOCK_LEFT_FIELDS}
-    ${CONTACT_US_FORM_BLOCK_RIGHT_FIELDS}
-  }
-`;
+export type ContactUsFormBlockLeftType = {
+  LeftTitle?: string;
+  LeftDescription?: RichTextBlock[] | string[] | string;
+  LeftBackgroundImage?: ImageFragmentType;
+};
+
+export type ContactUsFormBlockRightType = {
+  RightTitle?: string;
+  RightDescription?: RichTextBlock[] | string[] | string;
+  RecipientEmails?: string;
+};
 
 export type ContactUsFormBlockData = ContactUsFormBlockLeftType & ContactUsFormBlockRightType;
 
@@ -14,3 +19,15 @@ export type ContactUsFormBlockType = {
   ContactUsFormBlock: ContactUsFormBlockData;
 };
 
+export const CONTACT_US_FORM_BLOCK_FIELDS = `
+  ContactUsFormBlock {
+    LeftTitle
+    LeftDescription
+    LeftBackgroundImage {
+      ...ImageFields
+    }
+    RightTitle
+    RightDescription
+    RecipientEmails
+  }
+`;

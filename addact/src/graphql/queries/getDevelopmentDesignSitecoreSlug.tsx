@@ -6,7 +6,7 @@ import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescripti
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { BANNER_SECTION_FIELDS, type BannerSection, type BannerItem, type BannerLink } from "../fragments/bannerSectionFragment";
+import { COMPONENT_BANNER_FIELDS, type BannerSection, type BannerItem, type BannerLink } from "../fragments/componentBannerFieldsFragment";
 export type { BannerSection, BannerItem, BannerLink };
 import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
 export type { CTA };
@@ -37,7 +37,11 @@ const developmentDesignDetailsSlugQuery = gql`
       SEO {
         ${SEO_FIELDS}
       }
-      ${BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta {
         ${CTA_FIELDS}
       }

@@ -1,15 +1,21 @@
 import type { Heading } from "@/types/common";
-import type { HeadingFragmentType } from "./headingFragment";
+import { HEADING_INLINE_FIELDS, type HeadingFragmentType } from "./headingFragment";
 import type { ImageFragmentType } from "./imageFragment";
 import type { LinkFragmentType } from "./linkFragment";
-import { CTA_TITLE_FIELDS } from "./ctaTitleFragment";
 
-export const CTA_IMAGE_LINK_FIELDS = `
+export const CTA_FIELDS = `
+  slug
+  pageReference
+  Title {
+    ${HEADING_INLINE_FIELDS}
+  }
+  CTADescription
   CTAImage {
     ... on ComponentSharedImage {
       Image {
         ...ImageFields
       }
+      tooltip
     }
   }
   CTALink {
@@ -19,29 +25,24 @@ export const CTA_IMAGE_LINK_FIELDS = `
   }
 `;
 
-export const CTA_FIELDS = `
-  ${CTA_TITLE_FIELDS}
-  CTADescription
-  ${CTA_IMAGE_LINK_FIELDS}
-  pageReference
-`;
-
 export type DescriptionNode = {
   type: string;
   children: { text: string }[];
 };
 
-export type CTAFragmentType = {
-  Title: HeadingFragmentType[];
-  CTADescription?: string | null;
-  CTAImage?: CTAImageItem[];
-  CTALink?: LinkFragmentType[];
-  pageReference?: string;
-};
-
 export type CTAImageItem = {
   Image: ImageFragmentType;
+  tooltip?: string | null;
   id?: string;
+};
+
+export type CTAFragmentType = {
+  slug?: string;
+  pageReference?: string;
+  Title?: HeadingFragmentType[];
+  CTADescription?: DescriptionNode[];
+  CTAImage?: CTAImageItem[];
+  CTALink?: LinkFragmentType[];
 };
 
 export type CTALinkItem = LinkFragmentType & {

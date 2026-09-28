@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { RightArrowUpIcon } from "../atom/icons";
 
-import { BlogSimilarBlogItem } from "@/graphql/fragments/blogSimilarBlogsFragment";
+import { BlogSimilarBlogItem } from "@/graphql/queries/getBlogBySlug";
 
 type SimilarBlogProps = {
   similarBlogs?: BlogSimilarBlogItem[];

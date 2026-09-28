@@ -6,7 +6,7 @@ import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { LINK_IMAGE_FRAGMENT } from "../fragments/linkImageFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerType } from "../fragments/blogHeroBannerFragment";
+import { HERO_BANNER_FULL_FIELDS as BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerType } from "../fragments/blogHeroBannerFieldsFragment";
 import { type AddactPressReleaseItem } from "../fragments/pressReleaseHeroBannerFragment";
 export type { AddactPressReleaseItem };
 import { PRESS_CONTENT_FIELDS, type PressContentType } from "../fragments/pressContentFragment";

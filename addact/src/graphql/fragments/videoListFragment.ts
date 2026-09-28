@@ -1,5 +1,5 @@
 import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "./titleDescriptionFragment";
-import type { BaseHeading } from "./baseHeadingFragment";
+import type { BaseHeading } from "./pageHeadingFragment";
 import type { BannerSection } from "./componentBannerFieldsFragment";
 import type { Link } from "@/types/common";
 

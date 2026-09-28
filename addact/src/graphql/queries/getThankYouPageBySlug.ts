@@ -1,13 +1,10 @@
 import { gql } from "graphql-request";
-import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
-import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { IMAGE_FRAGMENT, ImageFragmentType } from "../fragments/imageFragment";
+import { LINK_FRAGMENT, LinkFragmentType } from "../fragments/linkFragment";
+import { RICHTEXT_FRAGMENT, RichtextFragmentType } from "../fragments/richtextFragment";
 import { SEO_FIELDS, type SeoType as SEO, type ThankYouPageSEO } from "../fragments/seoFragment";
 export type { SEO, ThankYouPageSEO };
-import { THANK_YOU_CONTENT_FIELDS, type Content } from "../fragments/thankYouContentFragment";
-export type { Content };
-import { THANK_YOU_ANIMATION_VIDEO_FIELDS, type AnimationVideo } from "../fragments/thankYouAnimationVideoFragment";
-export type { AnimationVideo };
+import { type Heading, HEADING_INLINE_FIELDS, HeadingFragmentType } from "../fragments/headingFragment";
 import client from "../client";
 
 const GET_THANK_YOU_PAGE = gql`
@@ -21,11 +18,22 @@ const GET_THANK_YOU_PAGE = gql`
       SEO {
         ${SEO_FIELDS}
       }
-      ${THANK_YOU_CONTENT_FIELDS}
-      ${THANK_YOU_ANIMATION_VIDEO_FIELDS}
+       Content {
+          ... on ComponentBaseTemplateRichtext { ...RichtextFields }
+          ...LinkFields
+          ${HEADING_INLINE_FIELDS}
+        }
+       AnimationVideo {
+    ...ImageFields
+  }
     }
   }
 `;
+export type AnimationVideo = ImageFragmentType;
+
+export type ThankYouAnimationVideoType = {
+  AnimationVideo?: AnimationVideo;
+};
 
 export interface ThankYouPageItem {
   ReferenceTitle: string;
@@ -34,6 +42,21 @@ export interface ThankYouPageItem {
   AnimationVideo: AnimationVideo;
   SEO?: ThankYouPageSEO | null;
 }
+export type ThankYouContentItem = HeadingFragmentType | LinkFragmentType | RichtextFragmentType;
+
+export type ThankYouContentType = {
+  Content?: ThankYouContentItem[];
+};
+
+export type Content = {
+  id: string;
+  h1?: Heading["h1"];
+  Richtext?: RichtextFragmentType["Richtext"];
+  href?: string;
+  label?: string;
+  target?: string;
+  isExternal?: boolean;
+};
 
 export interface ThankYouPageResponse {
   thankyouPages: ThankYouPageItem[];

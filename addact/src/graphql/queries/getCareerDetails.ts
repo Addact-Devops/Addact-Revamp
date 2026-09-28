@@ -3,7 +3,6 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
-import { CAREER_DETAILS_BANNER_FRAGMENT } from "../fragments/careerDetailsBannerFragment";
 import { CAREER_DETAILS_JOB_DESC_FRAGMENT } from "../fragments/careerDetailsJobDescFragment";
 import { CAREER_DETAILS_FORM_FRAGMENT } from "../fragments/careerDetailsFormFragment";
 import { CAREER_DETAIL_ALL_FIELDS_FRAGMENT, type CareerDetailResponse } from "../fragments/careerDetailAllFieldsFragment";
@@ -15,7 +14,6 @@ const GET_CAREER_DETAIL = gql`
   ${SHARED_IMAGE_FRAGMENT}
   ${LINK_FRAGMENT}
   ${RICHTEXT_FRAGMENT}
-  ${CAREER_DETAILS_BANNER_FRAGMENT}
   ${CAREER_DETAILS_JOB_DESC_FRAGMENT}
   ${CAREER_DETAILS_FORM_FRAGMENT}
   ${CAREER_DETAIL_ALL_FIELDS_FRAGMENT}

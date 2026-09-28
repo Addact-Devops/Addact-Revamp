@@ -6,8 +6,7 @@ import Link from "next/link";
 import AnimatedBlindsBackground from "./AnimatedBlindsBackground";
 import RichText from "../atom/richText";
 import { openContactDrawer, shouldOpenContactDrawer } from "@/lib/contactDrawer";
-import type { ComponentBannerItem } from "@/graphql/fragments/componentBannerFieldsFragment";
-import type { ChipsTextItem } from "@/graphql/fragments/bannerChipsTextFragment";
+import type { ComponentBannerItem, ChipsTextItem } from "@/graphql/fragments/componentBannerFieldsFragment";
 
 type UIUXBannerData = ComponentBannerItem & {
   chipsText?: ChipsTextItem[] | { Title?: string | null }[] | null;

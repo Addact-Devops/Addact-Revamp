@@ -47,4 +47,5 @@ export const HEADING_FRAGMENT = gql`
 `;
 
 export type HeadingFragmentType = Heading;
+export type ContentHeading = HeadingFragmentType;
 export type { Heading };

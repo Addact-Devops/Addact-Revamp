@@ -15,9 +15,10 @@ export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment"
 import { HIRE_SERVICE_LIST_FRAGMENT, type OurServiceList } from "../fragments/hireServiceListFragment";
 export type { OurServiceList, ServiceListItem } from "../fragments/hireServiceListFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { AI_BANNER_SECTION_FIELDS, type BannerSection } from "../fragments/aiBannerSectionFragment";
-export type { BannerSection, BannerItem, BannerLink } from "../fragments/aiBannerSectionFragment";
+import { COMPONENT_BANNER_FIELDS, type BannerSection, type ComponentBannerItem as BannerItem, type BannerLink } from "../fragments/componentBannerFieldsFragment";
+export type { BannerSection, BannerItem, BannerLink };
 import { WHY_ADDACT_FIELDS, type Whyaddact } from "../fragments/whyAddactFragment";
+
 export type { Whyaddact, GlobalCard2 } from "../fragments/whyAddactFragment";
 import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
@@ -36,7 +37,11 @@ const hireExpertsQuery = gql`
   query HireExpert {
     hireExpert {
       SEO { ${SEO_FIELDS} }
-      ${AI_BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       ${WHY_ADDACT_FIELDS}

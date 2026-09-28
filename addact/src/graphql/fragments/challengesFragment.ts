@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import { BLOG_CONTENT_ERROR_FIELDS, type ContentError } from "./blogContentErrorFragment";
 import { COMPONENT_TITLE_WITH_DESCRIPTION_FIELDS } from "./titleWithDescriptionFragment";
 import type { TitleDescriptionType } from "./titleDescriptionFragment";
@@ -8,7 +8,7 @@ import type { Heading } from "@/types/common";
 export const CHALLENGES_FIELDS = `
   challenges {
     Title {
-      ${BLOG_CONTENT_HEADINGS_FIELDS}
+      ${HEADING_INLINE_FIELDS}
       ${BLOG_CONTENT_ERROR_FIELDS}
     }
     ProcessData {

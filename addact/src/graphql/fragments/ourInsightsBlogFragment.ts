@@ -1,5 +1,5 @@
 import { BLOG_HERO_BANNER_FIELDS, type BlogBannerItem } from "./blogHeroBannerFieldsFragment";
-import type { BaseHeading } from "./baseHeadingFragment";
+import type { BaseHeading } from "./pageHeadingFragment";
 import type { SlugType } from "@/types/common";
 
 export const OUR_INSIGHTS_BLOG_FIELDS = `

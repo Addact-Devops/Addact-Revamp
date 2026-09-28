@@ -26,16 +26,16 @@ import {
   type TabContent,
 } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent };
-import { UI_UX_LISTING_FRAGMENT } from "../fragments/uiUxListingFragment";
-import { CMS_LISTING_FRAGMENT } from "../fragments/cmsListingFragment";
+import { UI_UX_LISTING_FRAGMENT, UiUxListingType } from "../fragments/uiUxListingFragment";
+import { CMS_LISTING_FRAGMENT, CmsListingType } from "../fragments/cmsListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
+import { OUR_SERVICE_FRAGMENT, OurServiceType } from "../fragments/ourServiceFragment";
 import {
-  BANNER_SECTION_FIELDS,
+  COMPONENT_BANNER_FIELDS,
   type BannerSection,
-  type BannerItem,
+  type ComponentBannerItem as BannerItem,
   type BannerLink,
-} from "../fragments/bannerSectionFragment";
+} from "../fragments/componentBannerFieldsFragment";
 export type { BannerSection, BannerItem, BannerLink };
 import {
   WHY_ADDACT_FIELDS,
@@ -70,16 +70,13 @@ export type { SEO };
 import {
   OUR_INSIGHTS_TITLE_FIELDS,
   type OurInshightsTitle,
-  type OurInsightsTitle,
 } from "../fragments/ourInsightsTitleFragment";
-export type { OurInshightsTitle, OurInsightsTitle };
-import { DEV_SLUG_OUR_SERVICE_FIELDS } from "../fragments/devSlugOurServiceFragment";
-export type { DevSlugOurServiceType } from "../fragments/devSlugOurServiceFragment";
-import type { OurServiceList, ServiceListItem } from "../fragments/developmentDesignListingFragment";
+import type {
+  OurServiceList,
+  ServiceListItem,
+} from "../fragments/developmentDesignListingFragment";
 export type { OurServiceList, ServiceListItem };
-import { DEV_SLUG_UI_UX_OUR_SERVICE_FIELDS } from "../fragments/devSlugUiUxOurServiceFragment";
 import client from "../client";
-
 const developmentDesignSlugQuery = gql`
   ${HEADING_FRAGMENT}
   ${IMAGE_FRAGMENT}
@@ -93,7 +90,11 @@ const developmentDesignSlugQuery = gql`
       SEO { ${SEO_FIELDS} }
       isUxpage
 
-      ${BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       ${WHY_ADDACT_FIELDS}
@@ -103,7 +104,10 @@ const developmentDesignSlugQuery = gql`
       ${OUR_INSIGHTS_TITLE_FIELDS}
 
       techStack { ${TECH_STACK_FIELDS} }
-      ${DEV_SLUG_OUR_SERVICE_FIELDS}
+      ourService {
+    ... on ComponentHomeCmsListing { ...CmsListingFields }
+    ... on ComponentHomeServiceList { ...OurServiceFields }
+  }
 
       industry { ${INDUSTRY_FIELDS} }
 
@@ -115,7 +119,11 @@ const developmentDesignSlugQuery = gql`
 
       ${IMPACT_UX_FIELDS}
 
-      ${DEV_SLUG_UI_UX_OUR_SERVICE_FIELDS}
+     ourService {
+    ... on ComponentHomeCmsListing { ...CmsListingFields }
+    ... on ComponentHomeServiceList { ...OurServiceFields }
+    ... on ComponentHomeUiUxLisitng { ...UiUxListingFields }
+  }
 
       ${OUR_WORK_FIELDS}
     }
@@ -125,6 +133,14 @@ const developmentDesignSlugQuery = gql`
 export interface DevelopmentDesignSlugResponse {
   developmentAndDesignDetails: DevelopmentDesignDetail[];
 }
+export type DevSlugOurServiceType = {
+  ourService: OurServiceList[];
+};
+export type DevSlugUiUxOurServiceUnion = CmsListingType | OurServiceType | UiUxListingType;
+
+export type DevSlugUiUxOurServiceType = {
+  ourService?: DevSlugUiUxOurServiceUnion[];
+};
 
 export interface DevelopmentDesignDetail {
   SEO: SEO | null;
@@ -143,20 +159,6 @@ export interface DevelopmentDesignDetail {
   impactUx: ImpactUx | null;
   ourWork: OurWork | null;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Fetch function
 export async function getDevelopmentDesignSlug(

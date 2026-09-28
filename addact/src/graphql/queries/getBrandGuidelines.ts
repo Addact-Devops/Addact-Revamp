@@ -6,12 +6,9 @@ import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
 import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
 import { PAGE_HERO_BANNER_FIELDS, type AboutUsBannerType } from "../fragments/pageHeroBannerFragment";
 export type { AboutUsBannerType };
-import { BRAND_GUIDELINES_CONTENT_FIELDS, type BrandGuidelinesResponse } from "../fragments/brandGuidelinesContentFragment";
-export type { BrandGuidelinesResponse };
-import { BRAND_GUIDELINES_FORM_FIELDS, type BrandGuidelinesFormFieldsItem } from "../fragments/brandGuidelinesFormFragment";
-export type { BrandGuidelinesFormFieldsItem };
-import { BRAND_GUIDELINES_PDF_FIELDS, type BrandGuidelinesPdfType } from "../fragments/brandGuidelinesPdfFragment";
-export type { BrandGuidelinesPdfType };
+import { BRAND_GUIDELINES_CONTENT_FIELDS, type BrandGuidelinesResponse, type BrandGuidelinesPdfType, type BrandGuidelinesFormFieldsItem } from "../fragments/brandGuidelinesContentFragment";
+export type { BrandGuidelinesResponse, BrandGuidelinesPdfType, BrandGuidelinesFormFieldsItem };
+import { FORM_BASIC_LABELS_FIELDS } from "../fragments/contactUsFormLabelsFragment";
 import client from "../client";
 
 const GET_BRAND_GUIDELINES = gql`
@@ -26,8 +23,13 @@ const GET_BRAND_GUIDELINES = gql`
       Slug
       ${PAGE_HERO_BANNER_FIELDS}
       ${BRAND_GUIDELINES_CONTENT_FIELDS}
-      ${BRAND_GUIDELINES_FORM_FIELDS}
-      ${BRAND_GUIDELINES_PDF_FIELDS}
+      FromTitle
+      FormFileds {
+        ${FORM_BASIC_LABELS_FIELDS}
+      }
+      GuidelinePDF {
+        ...ImageFields
+      }
     }
   }
 `;

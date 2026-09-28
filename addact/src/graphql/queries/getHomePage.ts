@@ -3,7 +3,7 @@ import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
-import { BASE_HEADING_FRAGMENT, type BaseHeading } from "../fragments/baseHeadingFragment";
+import type { BaseHeading } from "../fragments/pageHeadingFragment";
 export type { BaseHeading };
 import { HOME_BANNER_FRAGMENT, type BANNER } from "../fragments/homeBannerFragment";
 import { HOME_SERVICES_FRAGMENT, type OURSERVICES } from "../fragments/homeServicesFragment";
@@ -37,7 +37,6 @@ const GET_HOME_PAGE = gql`
   ${IMAGE_FRAGMENT}
   ${LINK_FRAGMENT}
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
-  ${BASE_HEADING_FRAGMENT}
   ${HOME_BANNER_FRAGMENT}
   ${HOME_SERVICES_FRAGMENT}
   ${HOME_CONTACT_US_FRAGMENT}
@@ -52,7 +51,8 @@ const GET_HOME_PAGE = gql`
       documentId
       PageHeading {
         ... on ComponentBaseTemplateBaseHeading {
-          ...BaseHeadingFields
+          PageTitle
+          Slug
         }
       }
       cta {

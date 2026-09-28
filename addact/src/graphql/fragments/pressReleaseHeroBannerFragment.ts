@@ -1,6 +1,6 @@
 import { HERO_BANNER_FIELDS } from "./heroBannerFragment";
 import type { BannerSection } from "./componentBannerFieldsFragment";
-import type { BlogHeroBannerItem } from "./blogHeroBannerFragment";
+import type { BlogHeroBannerItem } from "./blogHeroBannerFieldsFragment";
 
 export const PRESS_RELEASE_HERO_BANNER_FIELDS = HERO_BANNER_FIELDS;
 

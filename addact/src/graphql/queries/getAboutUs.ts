@@ -10,28 +10,118 @@ import type {
   AboutUsHeroBannerResponse,
 } from "../fragments/pageHeroBannerFragment";
 export type { AboutUsBannerType, AboutUsHeroBannerResponse };
-import { ABOUT_US_QUOTE_FIELDS } from "../fragments/aboutUsQuoteFragment";
-import type { QuoteData } from "../fragments/aboutUsQuoteFragment";
-export type { QuoteData };
-import { ABOUT_US_CONTENT_FIELDS } from "../fragments/aboutUsContentFragment";
-import type { AboutUsContentData } from "../fragments/aboutUsContentFragment";
-export type { AboutUsContentData };
-import { ABOUT_US_VISION_MISSION_FIELDS } from "../fragments/aboutUsVisionMissionFragment";
-import type { OurVisionMissionData } from "../fragments/aboutUsVisionMissionFragment";
-export type { OurVisionMissionData };
-import { ABOUT_US_CTA_FIELDS } from "../fragments/aboutUsCtaFragment";
-import type { CTAType, AboutUsCTAResponse } from "../fragments/aboutUsCtaFragment";
-export type { CTAType, AboutUsCTAResponse };
-import { ABOUT_US_BRAND_VALUE_FIELDS } from "../fragments/aboutUsBrandValueFragment";
-import type {
-  BrandValueType,
-  BrandValueQueryResponse,
+import { CTA_FIELDS, type CTAFragmentType } from "../fragments/ctaFragment";
+import type { CommonAuthorType } from "../fragments/blogAuthorFragment";
+import {
+  ABOUT_US_BRAND_VALUE_FIELDS,
+  ABOUT_US_ITEM_INNER_FIELDS,
+  type AboutUsItemType,
+  type BrandValueType,
+  type BrandValueQueryResponse,
 } from "../fragments/aboutUsBrandValueFragment";
 export type { BrandValueType, BrandValueQueryResponse };
-import { ABOUT_US_WE_ARE_ADDACT_FIELDS } from "../fragments/aboutUsWeAreAddactFragment";
-import type { WeAreAddactType } from "../fragments/aboutUsWeAreAddactFragment";
-export type { WeAreAddactType };
+import type { RichTextBlock } from "@/types/common";
 import client from "../client";
+
+// -----------------------------
+// ✅ Quote Types & Fields
+// -----------------------------
+export const ABOUT_US_QUOTE_FIELDS = `
+  Quote {
+    AuthorName
+    AuthorImage {
+      ...ImageFields
+    }
+    AuthorMessage
+  }
+`;
+export type AboutUsQuoteType = CommonAuthorType;
+export type QuoteData = {
+  aboutUs: {
+    Quote: AboutUsQuoteType;
+  };
+};
+
+// -----------------------------
+// ✅ Content Types & Fields
+// -----------------------------
+export const ABOUT_US_CONTENT_FIELDS = `
+  AboutUsContent {
+    ${ABOUT_US_ITEM_INNER_FIELDS}
+  }
+`;
+export type AboutUsContentType = AboutUsItemType;
+export type AboutUsContentData = {
+  aboutUs: {
+    AboutUsContent: AboutUsContentType;
+  };
+};
+
+// -----------------------------
+// ✅ Vision & Mission Types & Fields
+// -----------------------------
+export const ABOUT_US_VISION_MISSION_FIELDS = `
+  OurVisionMission {
+    ${ABOUT_US_ITEM_INNER_FIELDS}
+  }
+`;
+export type ParagraphBlockType = {
+  type: "paragraph";
+  children: {
+    type: string;
+    text: string;
+  }[];
+};
+export type VisionMissionItem = Omit<AboutUsItemType, "Description"> & {
+  Description: ParagraphBlockType[];
+};
+export type OurVisionMissionData = {
+  aboutUs: {
+    OurVisionMission: VisionMissionItem[];
+  };
+};
+
+// -----------------------------
+// ✅ CTA Types & Fields
+// -----------------------------
+export const ABOUT_US_CTA_FIELDS = `
+  aboutUsCTA {
+    ${CTA_FIELDS}
+  }
+`;
+export type CTAType = CTAFragmentType;
+export type AboutUsCTAResponse = {
+  aboutUs: {
+    aboutUsCTA: CTAType;
+  };
+};
+
+// -----------------------------
+// ✅ We Are Addact Types & Fields
+// -----------------------------
+export const ABOUT_US_WE_ARE_ADDACT_FIELDS = `
+  WeAreAddact {
+    Image {
+      ...ImageFields
+    }
+    SubTitle
+    Title
+    Content
+    NumberContent {
+      Number
+      Content
+    }
+  }
+`;
+export type NumberContent = {
+  Number: string;
+  Content: string;
+};
+export type ContentBlock = RichTextBlock;
+export type WeAreAddactType = Omit<AboutUsItemType, "Description"> & {
+  Content: ContentBlock[];
+  NumberContent: NumberContent[];
+};
 
 // -----------------------------
 // ✅ About Us Hero Banner

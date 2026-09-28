@@ -4,10 +4,11 @@ import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { PROJECT_COST_BANNER_FIELDS, type ProjectCostEstimatorBannerType } from "../fragments/projectCostBannerFragment";
-export type { ProjectCostEstimatorBannerType } from "../fragments/projectCostBannerFragment";
-import { PROJECT_COST_CONTENT_FIELDS, type ProjectCostEstimatorContentType } from "../fragments/projectCostContentFragment";
-export type { ProjectCostEstimatorContentType } from "../fragments/projectCostContentFragment";
+import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "../fragments/titleDescriptionFragment";
+import { COMPONENT_BANNER_FIELDS, type HeroBannerFragmentType as ProjectCostEstimatorBannerType } from "../fragments/componentBannerFieldsFragment";
+export type { ProjectCostEstimatorBannerType };
+
+export type ProjectCostEstimatorContentType = Required<TitleDescriptionType>;
 
 // -----------------------------
 // ✅ Types
@@ -35,8 +36,14 @@ const projectCostEstimatorQuery = gql`
       SEO {
         ${SEO_FIELDS}
       }
-      ${PROJECT_COST_BANNER_FIELDS}
-      ${PROJECT_COST_CONTENT_FIELDS}
+      banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
+      Content {
+        ${TITLE_DESCRIPTION_FIELDS}
+      }
     }
   }
 `;

@@ -5,11 +5,19 @@ import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescripti
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { OUR_INSIGHTS_BLOG_FIELDS, type AddactBlog } from "../fragments/ourInsightsBlogFragment";
 export type { AddactBlog };
-import { OUR_INSIGHTS_CASE_STUDY_FIELDS, type AddactCaseStudy } from "../fragments/ourInsightsCaseStudyFragment";
-export type { AddactCaseStudy };
-import { OUR_INSIGHTS_TITLE_FIELDS, type OurInsightsTitle, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
+import {
+  OUR_INSIGHTS_TITLE_FIELDS,
+  type OurInsightsTitle,
+  type OurInshightsTitle,
+} from "../fragments/ourInsightsTitleFragment";
 export type { OurInsightsTitle, OurInshightsTitle };
+import {
+  HERO_BANNER_FULL_FIELDS,
+  type BlogBannerItem,
+} from "../fragments/blogHeroBannerFieldsFragment";
+
 import client from "../client";
+import { SlugType } from "@/types/common";
 
 const ourInsights_Query = gql`
   ${LINK_FRAGMENT}
@@ -17,7 +25,11 @@ const ourInsights_Query = gql`
   ${COMMON_SECTION_FRAGMENT}
   query AddactBlogsAndCaseStudy {
     ${OUR_INSIGHTS_BLOG_FIELDS}
-    ${OUR_INSIGHTS_CASE_STUDY_FIELDS}
+   addactCaseStudies(pagination: { page: 1, pageSize: 2 }, sort: ["publishedAt:desc"]) {
+      ReferenceTitle
+      Slug
+      ${HERO_BANNER_FULL_FIELDS}
+    }
   }
 `;
 
@@ -55,3 +67,13 @@ export async function getHomeOurInsightsTitle(): Promise<HomeResponse> {
   const data = await client.request<HomeResponse>(home_Query);
   return data;
 }
+export type CaseStudyHeroBanner = BlogBannerItem;
+
+export type AddactCaseStudy = SlugType & {
+  ReferenceTitle: string;
+  HeroBanner: CaseStudyHeroBanner[];
+};
+
+export type OurInsightsCaseStudyType = {
+  addactCaseStudies: AddactCaseStudy[];
+};

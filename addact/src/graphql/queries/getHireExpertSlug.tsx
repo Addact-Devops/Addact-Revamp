@@ -14,9 +14,10 @@ import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescripti
 import { type TechStack } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
-import { AI_BANNER_SECTION_FIELDS, type BannerSection } from "../fragments/aiBannerSectionFragment";
-export type { BannerSection, BannerItem, BannerLink } from "../fragments/aiBannerSectionFragment";
+import { COMPONENT_BANNER_FIELDS, type BannerSection, type ComponentBannerItem as BannerItem, type BannerLink } from "../fragments/componentBannerFieldsFragment";
+export type { BannerSection, BannerItem, BannerLink };
 import { WHY_ADDACT_FIELDS, type Whyaddact } from "../fragments/whyAddactFragment";
+
 export type { Whyaddact, GlobalCard2 } from "../fragments/whyAddactFragment";
 import {
   OUR_INSIGHTS_TITLE_FIELDS,
@@ -42,7 +43,11 @@ const hireExpertsSlugQuery = gql`
   query HireExpertSlug($filters: HireExpertDetailFiltersInput) {
     hireExpertDetails(filters: $filters) {
       SEO { ${SEO_FIELDS} }
-      ${AI_BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       ${WHY_ADDACT_FIELDS}

@@ -12,20 +12,34 @@ import { OUR_PROCESS_FIELDS, type OurProcess } from "../fragments/ourProcessFrag
 export type { OurProcess, ProcessDataItem, LinkProps } from "../fragments/ourProcessFragment";
 import { TECH_STACK_FIELDS, type TechStack } from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent } from "../fragments/techStackFragment";
-import { DIGITAL_MARKETING_LISTING_FRAGMENT, type OurServiceList } from "../fragments/digitalMarketingListingFragment";
+import {
+  DIGITAL_MARKETING_LISTING_FRAGMENT,
+  type OurServiceList,
+} from "../fragments/digitalMarketingListingFragment";
 export type { OurServiceList, ServiceListItem } from "../fragments/digitalMarketingListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
-import { AI_BANNER_SECTION_FIELDS, type BannerSection } from "../fragments/aiBannerSectionFragment";
-export type { BannerSection, BannerItem, BannerLink } from "../fragments/aiBannerSectionFragment";
+import {
+  COMPONENT_BANNER_FIELDS,
+  type BannerSection,
+  type ComponentBannerItem as BannerItem,
+  type BannerLink,
+} from "../fragments/componentBannerFieldsFragment";
+export type { BannerSection, BannerItem, BannerLink };
 import { WHY_ADDACT_FIELDS, type Whyaddact } from "../fragments/whyAddactFragment";
+
 export type { Whyaddact, GlobalCard2 } from "../fragments/whyAddactFragment";
-import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle } from "../fragments/ourInsightsTitleFragment";
-export type { OurInshightsTitle, OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
-import { DM_OUR_SERVICE_FIELDS } from "../fragments/dmOurServiceFragment";
+import {
+  OUR_INSIGHTS_TITLE_FIELDS,
+  type OurInshightsTitle,
+} from "../fragments/ourInsightsTitleFragment";
+export type { OurInshightsTitle };
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { DM_WHO_ARE_WE_FIELDS, type DigitalMarketingWhoAreWeData } from "../fragments/digitalMarketingWhoAreWeFragment";
+import {
+  DM_WHO_ARE_WE_FIELDS,
+  type DigitalMarketingWhoAreWeData,
+} from "../fragments/digitalMarketingWhoAreWeFragment";
 export type { DigitalMarketingWhoAreWeData };
 import client from "../client";
 
@@ -39,7 +53,11 @@ const digitalMarketingQuery = gql`
   query DigitalMarketingLanding {
     digitalMarketingService {
       SEO { ${SEO_FIELDS} }
-      ${AI_BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta { ${CTA_FIELDS} }
 
       ${WHY_ADDACT_FIELDS}
@@ -49,7 +67,10 @@ const digitalMarketingQuery = gql`
 
       techStack { ${TECH_STACK_FIELDS} }
 
-      ${DM_OUR_SERVICE_FIELDS}
+     ourService {
+    ... on ComponentHomeDigitalMarketingListing { ...DigitalMarketingListingFields }
+    ... on ComponentHomeServiceList { ...OurServiceFields }
+  }
 
       industry { ${INDUSTRY_FIELDS} }
 
@@ -64,6 +85,10 @@ export interface DigitalMarketingResponse {
   digitalMarketingService: DigitalMarketingService;
 }
 
+export type DmOurServiceType = {
+  ourService: OurServiceList[];
+};
+
 export interface DigitalMarketingService {
   SEO: SEO | null;
   Banner: BannerSection;
@@ -77,8 +102,6 @@ export interface DigitalMarketingService {
   ourprocess: OurProcess;
   whoarewe: DigitalMarketingWhoAreWeData;
 }
-
-
 
 // Fetch function
 export async function getDigitalMarketing(): Promise<DigitalMarketingService> {

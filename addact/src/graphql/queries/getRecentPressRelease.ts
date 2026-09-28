@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 import client from "../client";
-import { BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerItem } from "../fragments/blogHeroBannerFragment";
+import { HERO_BANNER_FULL_FIELDS as BLOG_HERO_BANNER_FIELDS, type BlogHeroBannerItem } from "../fragments/blogHeroBannerFieldsFragment";
 export type { BlogHeroBannerItem };
 
 const GET_RECENT_PRESS_RELEASE = gql`

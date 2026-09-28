@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import type { HeadingFragmentType } from "./headingFragment";
 import type { ImageFragmentType } from "./imageFragment";
 import type { LinkFragmentType } from "./linkFragment";
@@ -29,7 +29,7 @@ export const SERVICE_DETAIL_CTA_FIELDS = `
     ...LinkFields
   }
   Title {
-    ${BLOG_CONTENT_HEADINGS_FIELDS}
+    ${HEADING_INLINE_FIELDS}
   }
 `;
 

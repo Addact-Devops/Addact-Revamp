@@ -4,10 +4,41 @@ import { LINK_FRAGMENT } from "../fragments/linkFragment";
 import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
 import { BLOGS_PAGE_HEADING_FIELDS, type BlogsPageHeadingType } from "../fragments/blogsPageHeadingFragment";
-import { BLOG_PAGE_BANNER_FIELDS, type BlogPageBannerType } from "../fragments/blogPageBannerFragment";
-import { BLOG_CARD_FIELDS, type BlogCardItem } from "../fragments/blogCardFragment";
-import { BLOG_CATEGORIES_FIELDS, type BlogCategoriesType } from "../fragments/blogCategoriesFragment";
+import { BLOG_HERO_BANNER_FIELDS, type BlogBannerItem } from "../fragments/blogHeroBannerFieldsFragment";
+import type { BaseHeading } from "../fragments/pageHeadingFragment";
+import type { HeroBannerFragmentType } from "../fragments/heroBannerFragment";
+import type { ContentError } from "../fragments/blogContentErrorFragment";
+import type { SlugType } from "@/types/common";
 import client from "../client";
+
+export type BlogPageBannerItem = HeroBannerFragmentType & Partial<ContentError> & {
+  id?: string;
+};
+
+export type BlogPageBannerType = {
+  blogBanner?: {
+    Banner: BlogPageBannerItem[];
+  };
+};
+
+export type Category = {
+  CategoryTitle: string;
+};
+
+export type BlogCategoryItem = {
+  Category: Category;
+};
+
+export type BlogCategoriesType = {
+  blogCategories: BlogCategoryItem[];
+};
+
+export type BlogCardItem = Required<SlugType> & {
+  documentId: string;
+  HeadingSection?: Partial<BaseHeading>[];
+  BlogBanner?: BlogBannerItem[];
+  blog_category?: BlogCategoryItem;
+};
 
 const GET_ALL_BLOGS = gql`
   ${LINK_FRAGMENT}
@@ -17,14 +48,39 @@ const GET_ALL_BLOGS = gql`
   query AddactBlogs($page: Int, $pageSize: Int, $sort: [String]) {
     blogs {
       ${BLOGS_PAGE_HEADING_FIELDS}
-      ${BLOG_PAGE_BANNER_FIELDS}
+      blogBanner {
+        Banner {
+          ... on ComponentBannerBanner {
+            id
+            ...HeroBannerFields
+          }
+          ... on Error {
+            code
+            message
+          }
+        }
+      }
     }
 
     addactBlogs(pagination: { page: $page, pageSize: $pageSize }, sort: $sort) {
-      ${BLOG_CARD_FIELDS}
+      Slug
+      documentId
+      HeadingSection {
+        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
+      }
+      ${BLOG_HERO_BANNER_FIELDS}
+      blog_category {
+        Category {
+          CategoryTitle
+        }
+      }
     }
 
-    ${BLOG_CATEGORIES_FIELDS}
+    blogCategories {
+      Category {
+        CategoryTitle
+      }
+    }
   }
 `;
 
@@ -44,9 +100,6 @@ type InitialDataResponse = Omit<AddactBlogsResponse, "addactBlogs"> & {
 
 export type {
   BlogsPageHeadingType,
-  BlogPageBannerType,
-  BlogCardItem,
-  BlogCategoriesType,
   AddactBlogsResponse,
   InitialDataResponse,
 };

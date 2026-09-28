@@ -1,4 +1,4 @@
-import { BLOG_CONTENT_HEADINGS_FIELDS } from "./blogContentHeadingsFragment";
+import { HEADING_INLINE_FIELDS } from "./headingFragment";
 import { TITLE_DESCRIPTION_FIELDS, ID_TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType, type IdTitleDescriptionType } from "./titleDescriptionFragment";
 import { RICHTEXT_FIELDS, type RichtextFragmentType } from "./richtextFragment";
 import { TEAM_FEATURE_FIELDS } from "./serviceListOurServiceFragment";
@@ -63,7 +63,7 @@ export const SERVICE_DETAIL_OUR_SERVICE_FIELDS = `
         }
       }
       Title {
-        ${BLOG_CONTENT_HEADINGS_FIELDS}
+        ${HEADING_INLINE_FIELDS}
         ${RICHTEXT_FIELDS}
       }
     }

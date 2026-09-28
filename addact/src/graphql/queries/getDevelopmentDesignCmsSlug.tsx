@@ -2,29 +2,59 @@ import { gql } from "graphql-request";
 import { HEADING_FRAGMENT } from "../fragments/headingFragment";
 import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
 import { LINK_FRAGMENT } from "../fragments/linkFragment";
-import { SITECORE_LISTING_FRAGMENT } from "../fragments/sitecoreListingFragment";
 import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
 import { OUR_SERVICE_FRAGMENT } from "../fragments/ourServiceFragment";
 import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
 export type { SEO };
-import { BANNER_SECTION_FIELDS, type BannerSection, type BannerItem, type BannerLink } from "../fragments/bannerSectionFragment";
+import {
+  COMPONENT_BANNER_FIELDS,
+  type BannerSection,
+  type ComponentBannerItem as BannerItem,
+  type BannerLink,
+} from "../fragments/componentBannerFieldsFragment";
 export type { BannerSection, BannerItem, BannerLink };
 import { CTA_FIELDS, type CTA } from "../fragments/ctaFragment";
 export type { CTA };
-import { WHY_ADDACT_FIELDS, type Whyaddact, type GlobalCard2 } from "../fragments/whyAddactFragment";
+import {
+  WHY_ADDACT_FIELDS,
+  type Whyaddact,
+  type GlobalCard2,
+} from "../fragments/whyAddactFragment";
 export type { Whyaddact, GlobalCard2 };
 import { FAQ_FIELDS, type FAQ } from "../fragments/faqFragment";
 export type { FAQ };
-import { OUR_INSIGHTS_TITLE_FIELDS, type OurInshightsTitle, type OurInsightsTitle } from "../fragments/ourInsightsTitleFragment";
+import {
+  OUR_INSIGHTS_TITLE_FIELDS,
+  type OurInshightsTitle,
+  type OurInsightsTitle,
+} from "../fragments/ourInsightsTitleFragment";
 export type { OurInshightsTitle, OurInsightsTitle };
-import { TECH_STACK_FIELDS, type TechStack, type Tab, type TabContent } from "../fragments/techStackFragment";
+import {
+  TECH_STACK_FIELDS,
+  type TechStack,
+  type Tab,
+  type TabContent,
+} from "../fragments/techStackFragment";
 export type { TechStack, Tab, TabContent };
-import { INDUSTRY_FIELDS, type Industry, type IndustryListItem } from "../fragments/industryFragment";
+import {
+  INDUSTRY_FIELDS,
+  type Industry,
+  type IndustryListItem,
+} from "../fragments/industryFragment";
 export type { Industry, IndustryListItem };
-import { OUR_PROCESS_FIELDS, type OurProcess, type ProcessDataItem, type LinkProps } from "../fragments/ourProcessFragment";
+import {
+  OUR_PROCESS_FIELDS,
+  type OurProcess,
+  type ProcessDataItem,
+  type LinkProps,
+} from "../fragments/ourProcessFragment";
 export type { OurProcess, ProcessDataItem, LinkProps };
-import type { OurServiceList, ServiceListItem } from "../fragments/developmentDesignListingFragment";
+import type {
+  OurServiceList,
+  ServiceListItem,
+} from "../fragments/developmentDesignListingFragment";
 export type { OurServiceList, ServiceListItem };
+import { SERVICE_LISTING_COMMON_FIELDS } from "../fragments/developmentDesignListingFragment";
 import client from "../client";
 
 const developmentDesignDetailsSlugQuery = gql`
@@ -32,14 +62,20 @@ const developmentDesignDetailsSlugQuery = gql`
   ${IMAGE_FRAGMENT}
   ${LINK_FRAGMENT}
   ${OUR_SERVICE_FRAGMENT}
-  ${SITECORE_LISTING_FRAGMENT}
+  fragment SitecoreListingFields on ComponentHomeSitecoreListing {
+      ${SERVICE_LISTING_COMMON_FIELDS}
+    }
   ${TITLE_WITH_DESCRIPTION_FRAGMENT}
   query CMSDetails($filters: CmsDetailFiltersInput) {
     cmsDetails(filters: $filters) {
       SEO {
         ${SEO_FIELDS}
       }
-      ${BANNER_SECTION_FIELDS}
+      Banner {
+        Banner {
+          ${COMPONENT_BANNER_FIELDS}
+        }
+      }
       cta {
         ${CTA_FIELDS}
       }
@@ -98,4 +134,3 @@ export async function getDevelopmentDesignDetailsCmsSlug(slug: string): Promise<
 
   return data.cmsDetails?.[0] ?? null;
 }
-
