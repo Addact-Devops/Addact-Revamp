@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 // import Link from "next/link";
 // import { ArrowRight } from "lucide-react";
-import { OurServiceData } from "@/graphql/queries/getServieceList";
+import {
+  OurServiceData,
+  type GlobalCardItem,
+} from "@/graphql/fragments/serviceDetailOurServiceFragment";
 import RichText from "../atom/richText";
 // import { RightArrowUpIcon } from "../atom/icons";
 
@@ -21,28 +24,7 @@ interface Props {
 }
 
 // ✅ Card type for array items
-interface Card {
-  id: string;
-  Title: string;
-  Description: string;
-  Image?: {
-    alternativeText: string | null;
-    height: number;
-    name: string;
-    url: string;
-    width: number;
-  };
-  Link?: {
-    id: string;
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-  };
-  sub_service_page?: {
-    Slug: string;
-  };
-}
+type Card = GlobalCardItem;
 
 const OurServicesWithTabs = ({ data }: Props) => {
   const pathname = usePathname();
@@ -62,21 +44,21 @@ const OurServicesWithTabs = ({ data }: Props) => {
   // ---- Slider settings ----
   const enterprisesSliderSettings = {
     dots: false,
-    arrows: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
     beforeChange: (_: number, newIndex: number) => setCurrentSlide(newIndex),
   };
 
   const teamSliderSettings = {
     dots: false,
-    arrows: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
     beforeChange: (_: number, newIndex: number) => setCurrentSlide(newIndex),
   };
 
@@ -103,7 +85,7 @@ const OurServicesWithTabs = ({ data }: Props) => {
       <div className="container-main">
         <div className="flex flex-col">
           <h2 className="!text-[28px] md:!text-[40px] 2xl:!text-[60px] !pb-4 xl:!pb-10 xl:max-w-[40%] 2xl:max-w-[50%] text-[#0F0F0F] font-semibold!">
-            {data.ForEnterprisesBrands.Title[0].h2}
+            {data.ForEnterprisesBrands?.Title?.[0]?.h2 || ""}
           </h2>
 
           <div className="w-full text-white mt-8 lg:mt-15">

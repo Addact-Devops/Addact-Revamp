@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const HomeHeroBanner = ({ data }: IProps) => {
-  const src = data?.Banner[0]?.BannerImage?.url ?? "#";
+  const src = data?.Banner?.[0]?.BannerImage?.url ?? "#";
   const bannerLink = data?.Banner?.[0]?.BannerLink;
   const bannerHref = bannerLink?.href ?? "#";
 
@@ -37,7 +37,7 @@ const HomeHeroBanner = ({ data }: IProps) => {
 
           <div className="flex flex-col sm:flex-row sm:items-center lg:gap-9">
             <div className="text-base sm:!text-base lg:!text-2xl font-medium max-w-[910px] hero-subtext">
-              <RichText html={data?.Banner?.[0]?.BannerDescription} />
+              <RichText html={data?.Banner?.[0]?.BannerDescription ?? ""} />
             </div>
 
             <Link

@@ -12,20 +12,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
-type GalleryImage = {
-  url: string;
-  alternativeText: string | null;
-};
-
-type GalleryImageItem = {
-  Image: GalleryImage;
-  Year: number | null;
-};
-
-type GalleryCategory = {
-  Name: string;
-  Images: GalleryImageItem[];
-};
+import type { GalleryCategory, GalleryImageItem } from "@/graphql/fragments/careerGalleryCategoriesFragment";
 
 const currentYear = new Date().getFullYear();
 

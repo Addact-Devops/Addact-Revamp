@@ -1,16 +1,10 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HERO_BANNER_FRAGMENT, BANNER_HERO_SECTION_FIELDS, type HeroBannerFragmentType } from "../fragments/heroBannerFragment";
 
-export type SitemapBannerType = {
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerImage?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  } | null;
-};
+export type SitemapBannerType = HeroBannerFragmentType;
 
 export type SitemapResponse = {
   sitemap?: {
@@ -21,22 +15,12 @@ export type SitemapResponse = {
 };
 
 const sitemapQuery = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query Sitemap {
     sitemap {
-      banner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerImage {
-              url
-              width
-              height
-              alternativeText
-            }
-            BannerTitle
-            BannerDescription
-          }
-        }
-      }
+      ${BANNER_HERO_SECTION_FIELDS}
     }
   }
 `;

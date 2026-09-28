@@ -1,20 +1,9 @@
 // components/organisms/AuthorCard.tsx
 import Image from "next/image";
 
-type Author = {
-  AuthorName?: string;
-  AuthorDescription?: string;
-  AuthorImage?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    name?: string;
-    alternativeText?: string;
-  };
-  designation?: {
-    DesignationTitle?: string;
-  };
-};
+import type { AuthorDetails } from "@/graphql/fragments/blogAuthorFragment";
+
+type Author = AuthorDetails;
 
 export default function AuthorCard({ author }: { author: Author }) {
   if (!author) return null;

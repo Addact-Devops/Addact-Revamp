@@ -3,12 +3,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "../atom/image";
 
-type ImageType = {
-  url: string;
-  alternativeText: string | null;
-  height: number;
-  width: number;
-};
+import type { ImageFragmentType } from "@/graphql/fragments/imageFragment";
+
+type ImageType = ImageFragmentType;
 
 type ContentChild = {
   text: string;

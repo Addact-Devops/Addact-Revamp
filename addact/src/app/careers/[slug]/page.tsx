@@ -50,7 +50,7 @@ export default async function CareerDetailPage({ params }: { params: Params }) {
 
   return (
     <>
-      <StructuredDataScript data={seo.structuredData} />
+      <StructuredDataScript data={seo?.structuredData} />
       <CareerDetailClient data={career} />
     </>
   );

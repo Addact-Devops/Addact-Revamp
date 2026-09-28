@@ -7,18 +7,9 @@ import RichText from "../atom/richText";
 import gsap from "gsap";
 import { useCursor } from "@/lib/useCursor";
 
-type IndustryData = {
-  industryListTitle?: string | null;
-  industry_list?: Array<{
-    Slug?: string | null;
-    listingContext?: {
-      title?: string | null;
-      description?: string | null;
-      image?: { url?: string | null } | null;
-      link?: { href?: string | null } | null;
-    } | null;
-  }> | null;
-};
+import type { Industry } from "@/graphql/fragments/industryFragment";
+
+type IndustryData = Partial<Industry>;
 
 type IndustryCard = {
   id: number;

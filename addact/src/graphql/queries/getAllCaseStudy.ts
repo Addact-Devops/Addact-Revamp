@@ -1,78 +1,52 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import {
+  HERO_BANNER_FRAGMENT,
+  CASE_STUDY_BANNER_SECTION_FIELDS,
+  type HeroBannerFragmentType,
+} from "../fragments/heroBannerFragment";
 import client from "../client";
+import {
+  CASE_STUDY_HERO_BANNER_FIELDS,
+  type CaseStudyHeroBannerType,
+} from "../fragments/caseStudyHeroBannerFragment";
+import type { SlugType } from "@/types/common";
+
+export type CaseStudyBannerType = {
+  CaseStudyBanner: {
+    Banner: HeroBannerFragmentType[];
+  };
+};
+
+export type CaseStudyCardType = CaseStudyHeroBannerType &
+  SlugType & {
+    ReferenceTitle?: string;
+    caseStudySummary?: string;
+    documentId?: string;
+  };
 
 const GET_ALL_CASE_STUDY = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query CaseStudyList {
     caseStudy {
-      CaseStudyBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              alternativeText
-              name
-              height
-              url
-              width
-            }
-            show_searchbox
-          }
-        }
-      }
+      ${CASE_STUDY_BANNER_SECTION_FIELDS}
     }
     addactCaseStudies(pagination: { page: 1, pageSize: 50 }) {
       ReferenceTitle
       Slug
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          PublishDate
-          BannerTitle
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-        }
-      }
+      ${CASE_STUDY_HERO_BANNER_FIELDS}
       caseStudySummary
       documentId
     }
   }
 `;
 
-type Image = {
-  alternativeText: string;
-  name: string;
-  height: number;
-  url: string;
-  width: number;
-};
-
 export interface IAllCaseStudy {
-  caseStudy: {
-    CaseStudyBanner: {
-      Banner: {
-        BannerTitle: string;
-        BannerDescription: string;
-        BannerImage: Image;
-        show_searchbox: boolean;
-      }[];
-    };
-  };
-  addactCaseStudies: {
-    ReferenceTitle: string;
-    Slug: string;
-    HeroBanner: {
-      PublishDate: string;
-      BannerTitle: string;
-      BannerImage: Image;
-    }[];
-    caseStudySummary: string;
-    documentId: string;
-  }[];
+  caseStudy: CaseStudyBannerType;
+  addactCaseStudies: CaseStudyCardType[];
 }
 
 export async function getAllCaseStudyData(): Promise<IAllCaseStudy> {

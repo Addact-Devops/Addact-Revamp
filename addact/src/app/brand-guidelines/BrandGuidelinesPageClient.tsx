@@ -50,20 +50,20 @@ const BrandGuidelinesPageClient = () => {
               <div className="sticky top-[140px] w-full">
                 <DownloadForm
                   title={formTitle}
-                  pdfUrl={pdf.url}
+                  pdfUrl={pdf?.url || ""}
                   submitUrl="/api/submit-form"
                   sheetName="Home_Page"
-                  NameLabel={formFields?.NameLable}
-                  EmailLabel={formFields?.EmailLabel}
-                  PhoneLabel={formFields?.PhoneLabel}
-                  ButtonLabel={formFields?.ButtonLabel}
-                  RecipientEmails={formFields?.RecipientEmails}
+                  NameLabel={formFields?.NameLable || ""}
+                  EmailLabel={formFields?.EmailLabel || ""}
+                  PhoneLabel={formFields?.PhoneLabel || ""}
+                  ButtonLabel={formFields?.ButtonLabel || ""}
+                  RecipientEmails={formFields?.RecipientEmails || ""}
                   pageTitle="Brand-Guidelines"
                 />
               </div>
             </div>
             <div className="lg:pl-[40px]">
-              <BlogContentRenderer blocks={brandGuideline.brandGuideline.Content} />
+              <BlogContentRenderer blocks={brandGuideline.brandGuideline.Content || []} />
             </div>
           </div>
         </div>

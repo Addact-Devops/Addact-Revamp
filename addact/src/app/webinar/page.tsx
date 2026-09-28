@@ -90,8 +90,8 @@ export default async function SitecorePage() {
               pageType="Webinar"
               title={banner.BannerTitle}
               date={formattedDate}
-              description={banner.BannerDescription}
-              imageUrl={banner.BannerImage.url}
+              description={banner.BannerDescription || ""}
+              imageUrl={banner.BannerImage?.url || ""}
               slug={event.Slug}
             />
           );

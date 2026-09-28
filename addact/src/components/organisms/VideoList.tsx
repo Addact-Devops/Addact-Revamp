@@ -4,20 +4,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/atom/loader";
 import Image from "../atom/image";
 
-type VideoContentType = {
-  Content: {
-    Title: string;
-    Description: string;
-    Link: {
-      isExternal: boolean;
-      href: string;
-      label: string;
-    };
-  };
-  Iframe: {
-    Richtext: string;
-  };
-};
+import type { VideoContentType } from "@/graphql/fragments/videoListFragment";
 
 type VideoListProps = {
   videoList: VideoContentType[];

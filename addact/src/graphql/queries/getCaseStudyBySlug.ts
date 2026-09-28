@@ -1,201 +1,83 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SHARED_IMAGE_FRAGMENT } from "../fragments/sharedImageFragment";
+import { TITLE_WITH_DESCRIPTION_FRAGMENT } from "../fragments/titleWithDescriptionFragment";
+import { RICHTEXT_FRAGMENT } from "../fragments/richtextFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { SEO_FIELDS, type SeoType } from "../fragments/seoFragment";
+import {
+  EVENT_HEADING_SECTION_FIELDS,
+  type EventHeadingSectionType,
+} from "../fragments/eventHeadingSectionFragment";
+import {
+  CASE_STUDY_HERO_BANNER_FIELDS,
+  type CaseStudyHeroBannerType,
+} from "../fragments/caseStudyHeroBannerFragment";
+import {
+  CASE_STUDY_PDF_FORM_FIELDS,
+  type CaseStudyPdfFormFieldsType,
+} from "../fragments/caseStudyPdfFormFieldsFragment";
+import type { TitleDescriptionType } from "../fragments/titleDescriptionFragment";
 import client from "../client";
+import { BLOG_CONTENT_INNER_FIELDS, type BlogContentItem } from "../fragments/blogContentFragment";
+
+export type CaseStudyFormTitleItem = Required<TitleDescriptionType>;
+
+export type CaseStudyFormTitleType = {
+  FormTitle: {
+    CommonTitle: CaseStudyFormTitleItem[];
+  };
+};
+
+export type {
+  EventHeadingSectionType,
+  CaseStudyHeroBannerType,
+  CaseStudyPdfFormFieldsType,
+  SeoType,
+};
 
 const GET_CASE_STUDY_BY_SLUG = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${SHARED_IMAGE_FRAGMENT}
+  ${TITLE_WITH_DESCRIPTION_FRAGMENT}
+  ${RICHTEXT_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactCaseStudies($filters: AddactCaseStudyFiltersInput) {
     addactCaseStudies(filters: $filters) {
-      SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
-      }
+      SEO { ${SEO_FIELDS} }
       Slug
-      HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
-      }
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          id
-          BannerTitle
-          BannerDescription
-          PublishDate
-          BannerImage {
-            width
-            name
-            height
-            url
-          }
-          blogcategory {
-            Category {
-              CategoryTitle
-            }
-          }
-          author {
-            Author {
-              AuthorName
-              designation {
-                DesignationTitle
-              }
-            }
-          }
-          ReadNow {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-        }
-        ... on Error {
-          code
-          message
-        }
-      }
+      ${EVENT_HEADING_SECTION_FIELDS}
+      ${CASE_STUDY_HERO_BANNER_FIELDS}
       CaseStudyContent {
-        ... on ComponentHeadingsH6 {
-          id
-          h6
-        }
-        ... on ComponentHeadingsH5 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH4 {
-          id
-          h5
-        }
-        ... on ComponentHeadingsH3 {
-          id
-          h3
-        }
-        ... on ComponentHeadingsH2 {
-          id
-          h2
-        }
-        ... on ComponentHeadingsH1 {
-          id
-          h1
-        }
-        ... on ComponentSharedLink {
-          id
-          href
-          label
-          target
-          isExternal
-        }
-        ... on ComponentSharedImage {
-          id
-          Image {
-            url
-            width
-            name
-            height
-          }
-        }
-        ... on ComponentBaseTemplateRichtext {
-          id
-          Richtext
-        }
-        ... on Error {
-          code
-          message
-        }
+        ${BLOG_CONTENT_INNER_FIELDS}
       }
       FormTitle {
         CommonTitle {
-          ... on ComponentBaseTemplateTitleWithDescription {
-            Title
-            Description
-          }
+          ... on ComponentBaseTemplateTitleWithDescription { ...TitleWithDescriptionFields }
         }
       }
-      CaseStudyPDF {
-        url
-        width
-        name
-        height
-      }
-      FormFields {
-        NameLable
-        EmailLabel
-        PhoneLabel
-        ButtonLabel
-        RecipientEmails
-      }
+      ${CASE_STUDY_PDF_FORM_FIELDS}
     }
   }
 `;
 
+export type CaseStudyContentItem = BlogContentItem;
+
+export type CaseStudyContentType = {
+  CaseStudyContent: CaseStudyContentItem[];
+};
+
 export type CaseStudyBySlugResponse = {
-  addactCaseStudies: {
-    SEO: {
-      metaTitle: string | null;
-      metaDescription: string | null;
-      ogTitle: string | null;
-      ogDescription: string | null;
-      ogImage: { url: string | null } | null;
-      metaRobots: string | null;
-      twitterCardTitle: string | null;
-      canonicalURL: string | null;
-      structuredData: Record<string, unknown> | null;
-      languageTag: string | null;
-    } | null;
-    Slug: string;
-    HeadingSection: {
-      PageTitle: string;
-    }[];
-    HeroBanner: {
-      id: string;
-      BannerTitle: string;
-      BannerDescription: string;
-      PublishDate: string;
-      BannerImage: {
-        width: number;
-        name: string;
-        height: number;
-        url: string;
-      };
-      blogcategory: string;
-      author: string;
-      ReadNow: string;
-    }[];
-    CaseStudyContent: {
-      id: string;
-      h2?: string;
-      Richtext?: string;
-      h3?: string;
-    }[];
-    FormTitle: {
-      CommonTitle: {
-        Title: string;
-        Description: string;
-      }[];
-    };
-    CaseStudyPDF: {
-      url: string;
-      width: string;
-      name: string;
-      height: string;
-    };
-    FormFields: {
-      NameLable: string;
-      EmailLabel: string;
-      PhoneLabel: string;
-      ButtonLabel: string;
-      RecipientEmails: string;
-    };
-  }[];
+  addactCaseStudies: (CaseStudyHeroBannerType &
+    CaseStudyContentType &
+    CaseStudyFormTitleType &
+    EventHeadingSectionType &
+    CaseStudyPdfFormFieldsType & {
+      SEO?: SeoType | null;
+      Slug: string;
+    })[];
 };
 
 export async function getCaseStudyBySlug(slug: string) {

@@ -1,93 +1,36 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
 import client from "../client";
-import { Image } from "@/types/common";
+import { PAGE_HERO_BANNER_FIELDS, type PageHeroBannerType } from "../fragments/pageHeroBannerFragment";
+import { PAGE_HEADING_FIELDS, type PageHeadingType } from "../fragments/pageHeadingFragment";
+import { WEBINAR_HERO_BANNER_FIELDS, type WebinarHeroBannerType } from "../fragments/webinarHeroBannerFragment";
 
 const GET_WEBINAR_LIST_PAGE = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
   query WebinarList {
     webinar {
-      HeroBanner {
-        Banner {
-          ... on ComponentBannerBanner {
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              alternativeText
-              height
-              name
-              url
-              width
-            }
-          }
-        }
-      }
-      PageHeading {
-        PageTitle
-        Slug
-      }
+      ${PAGE_HERO_BANNER_FIELDS}
+      ${PAGE_HEADING_FIELDS}
     }
     addactWebinars {
       Slug
       ReferenceTitle
-      HeroBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            alternativeText
-            height
-            name
-            url
-            width
-          }
-          PublishDate
-          ReadNow {
-            id
-            href
-            label
-            isExternal
-          }
-        }
-      }
+      ${WEBINAR_HERO_BANNER_FIELDS}
       WebinarSummary
     }
   }
 `;
 
 export interface WebinarListResponse {
-  webinar: {
-    HeroBanner: {
-      Banner: {
-        BannerTitle: string;
-        BannerDescription: string;
-        BannerImage: Image;
-        ReadNow: {
-          id: string;
-          href: string;
-          label: string;
-          isExternal: boolean;
-        };
-      }[];
-    };
-    PageHeading: {
-      PageTitle: string;
-      Slug: string;
-    };
-  };
+  webinar: PageHeroBannerType & PageHeadingType;
   addactWebinars: {
     Slug: string;
     ReferenceTitle: string;
-    HeroBanner: {
-      BannerTitle: string;
-      BannerDescription: string;
-      BannerImage: Image;
-      PublishDate: string;
-      ReadNow: {
-        id: string;
-        href: string;
-        label: string;
-        isExternal: boolean;
-      };
-    }[];
+    HeroBanner: WebinarHeroBannerType["HeroBanner"];
     WebinarSummary: string;
   }[];
 }

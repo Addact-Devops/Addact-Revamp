@@ -6,16 +6,16 @@ import Link from "next/link";
 
 // Inline types
 type HeadingBlock =
-  | { id: string; h1?: string }
-  | { id: string; h2?: string }
-  | { id: string; h3?: string }
-  | { id: string; h4?: string }
-  | { id: string; h5?: string }
-  | { id: string; h6?: string }
-  | { id: string; Richtext?: string };
+  | { id?: string; h1?: string }
+  | { id?: string; h2?: string }
+  | { id?: string; h3?: string }
+  | { id?: string; h4?: string }
+  | { id?: string; h5?: string }
+  | { id?: string; h6?: string }
+  | { id?: string; Richtext?: string };
 
 type GlobalCardItem = {
-  id: string;
+  id?: string;
   Title?: string | null;
   Description?: string | null;
   Image?: {

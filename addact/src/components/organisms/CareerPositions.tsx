@@ -4,42 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
+import type { PositionType } from "@/graphql/fragments/positionsFragment";
 
 // Types
-type ImageType = {
-  url: string;
-  width?: number;
-  height?: number;
-  alternativeText?: string;
-};
-
 type TitleBlock = {
   Title?: string;
   Description?: string;
-};
-
-type CardInfoType = {
-  AerrowIcon?: ImageType;
-  HoverIcon?: ImageType;
-  Icon?: ImageType;
-  LogoLink?: {
-    id: string;
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
-  };
-  LogoTitle?: string;
-  TitleIcon?: {
-    Title?: string;
-    Icon: ImageType;
-  }[];
-};
-
-type PositionType = {
-  id: string;
-  EventTitle: string;
-  CardInfo: CardInfoType[];
 };
 
 type Props = {

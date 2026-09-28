@@ -119,7 +119,13 @@ const DrawerField = ({
   );
 };
 
-const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInformation }: IProps) => {
+const ContactUs = ({
+  data,
+  isDrawer = false,
+  isOpen = false,
+  onClose,
+  addressInformation,
+}: IProps) => {
   const pathname = usePathname();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -162,7 +168,9 @@ const ContactUs = ({ data, isDrawer = false, isOpen = false, onClose, addressInf
 
     let itemsToUse = matchedItems;
     if (itemsToUse.length === 0) {
-      itemsToUse = addressInformation?.filter((item) => item?.urlKeyword === "default" || !item?.urlKeyword);
+      itemsToUse = addressInformation?.filter(
+        (item) => item?.urlKeyword === "default" || !item?.urlKeyword,
+      );
     }
 
     if (!itemsToUse || itemsToUse?.length === 0) return null;

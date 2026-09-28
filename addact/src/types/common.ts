@@ -23,3 +23,15 @@ export interface Heading {
   h5?: string;
   h6?: string;
 }
+
+export type RichTextBlock = {
+  type: string;
+  children: {
+    text: string;
+    type?: string;
+  }[];
+};
+
+export type SlugType = {
+  Slug?: string;
+};

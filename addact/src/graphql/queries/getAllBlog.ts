@@ -1,27 +1,58 @@
 import { gql } from "graphql-request";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { HERO_BANNER_FRAGMENT } from "../fragments/heroBannerFragment";
+import { COMMON_SECTION_FRAGMENT } from "../fragments/commonSectionFragment";
+import { BLOGS_PAGE_HEADING_FIELDS, type BlogsPageHeadingType } from "../fragments/blogsPageHeadingFragment";
+import { BLOG_HERO_BANNER_FIELDS, type BlogBannerItem } from "../fragments/blogHeroBannerFieldsFragment";
+import type { BaseHeading } from "../fragments/pageHeadingFragment";
+import type { HeroBannerFragmentType } from "../fragments/heroBannerFragment";
+import type { ContentError } from "../fragments/blogContentErrorFragment";
+import type { SlugType } from "@/types/common";
 import client from "../client";
 
+export type BlogPageBannerItem = HeroBannerFragmentType & Partial<ContentError> & {
+  id?: string;
+};
+
+export type BlogPageBannerType = {
+  blogBanner?: {
+    Banner: BlogPageBannerItem[];
+  };
+};
+
+export type Category = {
+  CategoryTitle: string;
+};
+
+export type BlogCategoryItem = {
+  Category: Category;
+};
+
+export type BlogCategoriesType = {
+  blogCategories: BlogCategoryItem[];
+};
+
+export type BlogCardItem = Required<SlugType> & {
+  documentId: string;
+  HeadingSection?: Partial<BaseHeading>[];
+  BlogBanner?: BlogBannerItem[];
+  blog_category?: BlogCategoryItem;
+};
+
 const GET_ALL_BLOGS = gql`
+  ${LINK_FRAGMENT}
+  ${IMAGE_FRAGMENT}
+  ${HERO_BANNER_FRAGMENT}
+  ${COMMON_SECTION_FRAGMENT}
   query AddactBlogs($page: Int, $pageSize: Int, $sort: [String]) {
     blogs {
-      PageHeading {
-        id
-        PageTitle
-        Slug
-      }
+      ${BLOGS_PAGE_HEADING_FIELDS}
       blogBanner {
         Banner {
           ... on ComponentBannerBanner {
             id
-            BannerTitle
-            BannerDescription
-            BannerImage {
-              width
-              url
-              name
-              height
-            }
-            show_searchbox
+            ...HeroBannerFields
           }
           ... on Error {
             code
@@ -35,41 +66,9 @@ const GET_ALL_BLOGS = gql`
       Slug
       documentId
       HeadingSection {
-        ... on ComponentBaseTemplateCommonSection {
-          PageTitle
-        }
+        ... on ComponentBaseTemplateCommonSection { ...CommonSectionFields }
       }
-      BlogBanner {
-        ... on ComponentBlogHeroBannerBlogHeroBanner {
-          BannerTitle
-          BannerDescription
-          BannerImage {
-            url
-            width
-            height
-            name
-            alternativeText
-          }
-          PublishDate
-          author {
-            Author {
-              AuthorName
-            }
-          }
-          ReadNow {
-            id
-            href
-            label
-            target
-            isExternal
-          }
-          blogcategory {
-            Category {
-              CategoryTitle
-            }
-          }
-        }
-      }
+      ${BLOG_HERO_BANNER_FIELDS}
       blog_category {
         Category {
           CategoryTitle
@@ -87,80 +86,24 @@ const GET_ALL_BLOGS = gql`
 
 type AddactBlogsResponse = {
   blogs: {
-    PageHeading?: {
-      id: string;
-      PageTitle?: string;
-      Slug?: string;
-    };
-    blogBanner?: {
-      Banner: {
-        id?: string;
-        BannerTitle?: string;
-        BannerDescription?: string;
-        BannerImage?: {
-          width: number;
-          url: string;
-          name: string;
-          height: number;
-        };
-        show_searchbox?: boolean;
-        code?: string;
-        message?: string;
-      }[];
-    };
+    PageHeading?: BlogsPageHeadingType["PageHeading"];
+    blogBanner?: BlogPageBannerType["blogBanner"];
   };
-  addactBlogs: {
-    Slug: string;
-    documentId: string;
-    HeadingSection?: {
-      PageTitle?: string;
-    }[];
-    BlogBanner?: {
-      BannerTitle?: string;
-      BannerDescription?: string;
-      BannerImage?: {
-        url: string;
-        width: number;
-        height: number;
-        name: string;
-        alternativeText?: string;
-      };
-      PublishDate?: string;
-      author?: {
-        Author?: {
-          AuthorName?: string;
-        };
-      };
-      ReadNow?: {
-        id?: string;
-        href?: string;
-        label?: string;
-        target?: string;
-        isExternal?: boolean;
-      };
-      blogcategory?: {
-        Category?: {
-          CategoryTitle?: string;
-        };
-      };
-    }[];
-    blog_category?: {
-      Category?: {
-        CategoryTitle?: string;
-      };
-    };
-  }[];
-  blogCategories: {
-    Category: {
-      CategoryTitle: string;
-    };
-  }[];
+  addactBlogs: BlogCardItem[];
+  blogCategories: BlogCategoriesType["blogCategories"];
 };
 
 type InitialDataResponse = Omit<AddactBlogsResponse, "addactBlogs"> & {
   addactBlogs: AddactBlogsResponse["addactBlogs"];
   hasMore: boolean;
 };
+
+export type {
+  BlogsPageHeadingType,
+  AddactBlogsResponse,
+  InitialDataResponse,
+};
+
 
 // Fetch initial page + metadata
 export async function getInitialBlogs(): Promise<InitialDataResponse> {

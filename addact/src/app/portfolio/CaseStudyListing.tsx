@@ -38,8 +38,8 @@ const CaseStudyListing = () => {
       {caseStudyBanner && (
         <div className="relative w-full flex items-center justify-center text-white">
           <Image
-            src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url}
-            alt={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.alternativeText}
+            src={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.url || ""}
+            alt={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerImage?.alternativeText || ""}
             layout="fill"
             objectFit="cover"
             priority
@@ -50,7 +50,7 @@ const CaseStudyListing = () => {
               {caseStudyBanner?.CaseStudyBanner?.Banner[0]?.BannerTitle}
             </h1>
             <div className="mt-4 prose:text-base prose:leading-8 md:text-lg max-w-2xl">
-              <RichText html={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription} />
+              <RichText html={caseStudyBanner.CaseStudyBanner?.Banner[0]?.BannerDescription || ""} />
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@ const CaseStudyListing = () => {
             <div className="relative w-full md:w-[550px] h-[200px] md:h-[300px]">
               <Image
                 src={item.HeroBanner[0].BannerImage.url}
-                alt={item.HeroBanner[0].BannerImage.alternativeText}
+                alt={item.HeroBanner[0].BannerImage.alternativeText || ""}
                 layout="fill"
                 objectFit="cover"
                 className="rounded-[20px]"
@@ -105,3 +105,4 @@ const CaseStudyListing = () => {
 };
 
 export default CaseStudyListing;
+

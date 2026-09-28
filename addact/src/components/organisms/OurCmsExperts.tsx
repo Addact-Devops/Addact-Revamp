@@ -116,7 +116,7 @@ const OurCmsExperts = (props: OurCmsExpertsProps) => {
           </h2>
 
           <div className="w-full text-left">
-            <RichText html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description} />
+            <RichText html={data?.ourExpertises[0]?.ExpertiseTitle[0]?.Description || ""} />
           </div>
         </div>
 

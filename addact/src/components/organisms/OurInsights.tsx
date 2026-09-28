@@ -17,16 +17,16 @@ export interface BlogBanner {
   BannerDescription?: string;
   BannerImage?: {
     url: string;
-    width: number;
-    height: number;
-    name: string;
+    width?: number;
+    height?: number;
+    name?: string;
     alternativeText?: string | null;
   };
   ReadNow?: {
-    href: string;
-    label: string;
-    target: string;
-    isExternal: boolean;
+    href?: string;
+    label?: string | null;
+    target?: string | null;
+    isExternal?: boolean;
   };
 }
 
@@ -53,10 +53,10 @@ interface InsightCardData {
   date: string;
   readTime: string;
   image?: {
-    url: string;
-    width: number;
-    height: number;
-    name: string;
+    url?: string;
+    width?: number;
+    height?: number;
+    name?: string;
     alternativeText?: string | null;
   };
   description: string;
@@ -81,8 +81,10 @@ export interface OurInsightsContent {
   };
 }
 
+import type { TitleWithDescription } from "@/graphql/fragments/ourInsightsTitleFragment";
+
 interface OurInsight {
-  titleData?: OurInsightsContent | null;
+  titleData?: TitleWithDescription | OurInsightsContent | null;
 }
 
 export default function OurInsights({ titleData: ourInsightsTitleData }: OurInsight = {}) {
@@ -226,7 +228,7 @@ function InsightCard({ item }: InsightCardProps) {
           {item.image?.url && (
             <Image
               src={item.image.url}
-              alt={item.image.alternativeText || item.image.name}
+              alt={item.image.alternativeText || item.image.name || item.title || ""}
               width={520}
               height={321}
               className="w-full h-full object-cover"

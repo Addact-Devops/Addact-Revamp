@@ -1,46 +1,22 @@
 import { gql } from "graphql-request";
 import client from "../client";
+import { IMAGE_FRAGMENT } from "../fragments/imageFragment";
+import { LINK_FRAGMENT } from "../fragments/linkFragment";
+import { SEO_FIELDS, type SeoType as SEO } from "../fragments/seoFragment";
+export type { SEO };
+import { TITLE_DESCRIPTION_FIELDS, type TitleDescriptionType } from "../fragments/titleDescriptionFragment";
+import { COMPONENT_BANNER_FIELDS, type HeroBannerFragmentType as ProjectCostEstimatorBannerType } from "../fragments/componentBannerFieldsFragment";
+export type { ProjectCostEstimatorBannerType };
+
+export type ProjectCostEstimatorContentType = Required<TitleDescriptionType>;
 
 // -----------------------------
 // ✅ Types
 // -----------------------------
 
-export type ProjectCostEstimatorBannerType = {
-  BannerImage?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  };
-  BannerTitle?: string;
-  BannerDescription?: string;
-  BannerLogo?: {
-    url?: string;
-    width?: number;
-    height?: number;
-    alternativeText?: string | null;
-  };
-};
-
-export type ProjectCostEstimatorContentType = {
-  Title: string;
-  Description: string;
-};
-
 export type ProjectCostEstimatorResponse = {
   projectCostEstimator: {
-    SEO: {
-      metaTitle?: string;
-      metaDescription?: string;
-      ogTitle?: string | null;
-      ogDescription?: string | null;
-      ogImage?: { url: string } | null;
-      metaRobots?: string | null;
-      twitterCardTitle?: string | null;
-      canonicalURL?: string | null;
-      structuredData?: string | null;
-      languageTag?: string | null;
-    };
+    SEO: SEO | null;
     banner: {
       Banner: ProjectCostEstimatorBannerType[];
     };
@@ -53,45 +29,20 @@ export type ProjectCostEstimatorResponse = {
 // -----------------------------
 
 const projectCostEstimatorQuery = gql`
+  ${IMAGE_FRAGMENT}
+  ${LINK_FRAGMENT}
   query ProjectCostEstimator {
     projectCostEstimator {
       SEO {
-        metaTitle
-        metaDescription
-        ogTitle
-        ogDescription
-        ogImage {
-          url
-        }
-        metaRobots
-        twitterCardTitle
-        canonicalURL
-        structuredData
-        languageTag
+        ${SEO_FIELDS}
       }
       banner {
         Banner {
-          ... on ComponentBannerBanner {
-            BannerImage {
-              url
-              alternativeText
-              width
-              height
-            }
-            BannerTitle
-            BannerDescription
-            BannerLogo {
-              url
-              alternativeText
-              width
-              height
-            }
-          }
+          ${COMPONENT_BANNER_FIELDS}
         }
       }
       Content {
-        Title
-        Description
+        ${TITLE_DESCRIPTION_FIELDS}
       }
     }
   }
