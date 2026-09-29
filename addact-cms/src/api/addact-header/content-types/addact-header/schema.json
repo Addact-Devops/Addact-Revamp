@@ -38,6 +38,16 @@
     },
     "additionalText": {
       "type": "string"
+    },
+    "announcementText": {
+      "type": "component",
+      "component": "base-template.title",
+      "repeatable": false
+    },
+    "announcementLink": {
+      "type": "component",
+      "component": "shared.link",
+      "repeatable": false
     }
   }
 }
