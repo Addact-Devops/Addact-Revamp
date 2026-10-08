@@ -1,118 +1,11 @@
 import { Core } from '@strapi/strapi';
+import speakeasy from 'speakeasy';
+import jwt from 'jsonwebtoken';
 import { parseUserAgent } from './utils/user-agent';
+import { getLocationFromIp, SERVER_SYSTEM_USER, sanitizeClientId } from './utils/location';
 import * as os from 'os';
 import * as http from 'http';
-
 import * as https from 'https';
-
-const ipLocationCache = new Map<string, string>();
-
-async function getLocationFromIp(ip: string): Promise<string> {
-  let targetIp = (ip || '').split(',')[0].trim();
-
-  if (!targetIp || targetIp === 'Unknown IP' || targetIp === '127.0.0.1' || targetIp === '::1' || targetIp === 'localhost' || targetIp.startsWith('192.168.') || targetIp.startsWith('10.')) {
-    targetIp = '';
-  }
-
-  if (targetIp && ipLocationCache.has(targetIp)) {
-    return ipLocationCache.get(targetIp)!;
-  }
-
-  // 1. Primary: ip-api.com (HTTP)
-  try {
-    const loc1 = await new Promise<string>((resolve) => {
-      const url = targetIp
-        ? `http://ip-api.com/json/${targetIp}?fields=status,city,regionName,country,lat,lon`
-        : `http://ip-api.com/json/?fields=status,city,regionName,country,lat,lon`;
-
-      const req = http.get(url, (res) => {
-        let rawData = '';
-        res.on('data', (chunk) => { rawData += chunk; });
-        res.on('end', () => {
-          try {
-            const parsed = JSON.parse(rawData);
-            if (parsed && parsed.status === 'success') {
-              const parts = [parsed.city, parsed.regionName, parsed.country].filter(Boolean);
-              let locStr = parts.join(', ');
-              if (parsed.lat !== undefined && parsed.lon !== undefined) {
-                locStr += ` (Lat: ${parsed.lat}, Lon: ${parsed.lon})`;
-              }
-              resolve(locStr);
-            } else {
-              resolve('');
-            }
-          } catch {
-            resolve('');
-          }
-        });
-      });
-
-      req.on('error', () => resolve(''));
-      req.setTimeout(2000, () => {
-        req.destroy();
-        resolve('');
-      });
-    });
-
-    if (loc1) {
-      if (targetIp) ipLocationCache.set(targetIp, loc1);
-      return loc1;
-    }
-  } catch (e) {}
-
-  // 2. Fallback: ipapi.co (HTTPS)
-  try {
-    const loc2 = await new Promise<string>((resolve) => {
-      const url = targetIp ? `https://ipapi.co/${targetIp}/json/` : `https://ipapi.co/json/`;
-      const options = {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
-      };
-
-      const req = https.get(url, options, (res) => {
-        let rawData = '';
-        res.on('data', (chunk) => { rawData += chunk; });
-        res.on('end', () => {
-          try {
-            const parsed = JSON.parse(rawData);
-            if (parsed && parsed.city) {
-              const parts = [parsed.city, parsed.region, parsed.country_name].filter(Boolean);
-              let locStr = parts.join(', ');
-              if (parsed.latitude !== undefined && parsed.longitude !== undefined) {
-                locStr += ` (Lat: ${parsed.latitude}, Lon: ${parsed.longitude})`;
-              }
-              resolve(locStr);
-            } else {
-              resolve('');
-            }
-          } catch {
-            resolve('');
-          }
-        });
-      });
-
-      req.on('error', () => resolve(''));
-      req.setTimeout(2000, () => {
-        req.destroy();
-        resolve('');
-      });
-    });
-
-    if (loc2) {
-      if (targetIp) ipLocationCache.set(targetIp, loc2);
-      return loc2;
-    }
-  } catch (e) {}
-
-  return 'Localhost / Internal';
-}
-
-const SERVER_SYSTEM_USER = (() => {
-  try {
-    return os.userInfo().username || os.hostname() || 'Unknown';
-  } catch {
-    return os.hostname() || 'Unknown';
-  }
-})();
 
 const IGNORED_KEYS = new Set([
   'id',
@@ -294,12 +187,7 @@ function diffValue(newVal: any, oldVal: any, path: string): string[] {
   return [];
 }
 
-const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-function sanitizeClientId(headerVal: any): string | null {
-  if (!headerVal || typeof headerVal !== 'string') return null;
-  const val = headerVal.trim();
-  return UUID_REGEX.test(val) ? val : null;
-}
+
 
 function getDocumentDisplayTitle(entry: any): string | null {
   if (!entry || typeof entry !== 'object') return null;
@@ -520,7 +408,7 @@ export default {
       return result;
     });
 
-    // 2. HTTP Server Middleware for Login & Logout
+    // 2. HTTP Server Middleware for Login, Logout, and 2FA Challenge Interception
     strapi.server.use(async (ctx, next) => {
       const path = ctx.path;
       const method = ctx.method;
@@ -529,6 +417,9 @@ export default {
       if (method === 'POST' && (path === '/admin/logout' || path === '/admin/logout/')) {
         logoutUser = ctx.state?.user;
       }
+
+      const isLoginRoute = method === 'POST' && (path === '/admin/login' || path === '/admin/login/');
+      const totpHeader = ctx.headers['x-2fa-code'] || ctx.request?.body?.totpCode;
 
       await next();
 
@@ -542,24 +433,81 @@ export default {
         const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : 'Unknown IP';
         const location = await getLocationFromIp(ipAddress);
 
-        // Admin Login
-        if (method === 'POST' && (path === '/admin/login' || path === '/admin/login/') && ctx.status === 200) {
-          const user = ctx.body?.data?.user || ctx.state?.user;
-          if (user && auditService?.createLog) {
-            const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
-            auditService.createLog({
-              userName: fullName || user.username || user.email || 'Admin User',
-              userEmail: user.email || 'N/A',
-              action: 'Login',
-              contentType: 'Admin Auth',
-              ipAddress,
-              clientId,
-              location,
-              browser,
-              os: osName,
-              deviceType,
-              systemUser: SERVER_SYSTEM_USER,
-            });
+        // Admin Login 2FA Challenge & Audit Log
+        if (isLoginRoute && ctx.status === 200 && ctx.body?.data) {
+          const user = ctx.body.data.user || ctx.state?.user;
+          if (user && user.id) {
+            let user2FA = { totpEnabled: false, totpSecret: null as string | null };
+            try {
+              const { getUser2FA } = await import('./api/audit-log/controllers/admin-2fa');
+              user2FA = await getUser2FA(strapi, user.id);
+            } catch (e) {}
+
+            if (user2FA.totpEnabled && user2FA.totpSecret) {
+              if (!totpHeader) {
+                // Password was valid! Create a signed, short-lived (5 min) 2FA challenge token bound strictly to THIS user ID
+                const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET || 'strapi-admin-secret') as string;
+                const challengeToken = jwt.sign(
+                  {
+                    userId: user.id,
+                    email: user.email,
+                    requires2FA: true,
+                    type: '2fa_challenge',
+                  },
+                  jwtSecret,
+                  { expiresIn: '5m' }
+                );
+
+                ctx.status = 200;
+                ctx.body = {
+                  data: {
+                    requires2FA: true,
+                    email: user.email,
+                    challengeToken,
+                    message: '2-Factor Authentication (TOTP) code required.',
+                  },
+                };
+                return;
+              } else {
+                // Verify 6-digit TOTP code against THIS USER's stored secret
+                const verified = speakeasy.totp.verify({
+                  secret: user2FA.totpSecret,
+                  encoding: 'base32',
+                  token: String(totpHeader).trim(),
+                  window: 1, // Standard strict 30-sec window
+                });
+
+                if (!verified) {
+                  ctx.status = 400;
+                  ctx.body = {
+                    error: {
+                      status: 400,
+                      name: 'ValidationError',
+                      message: 'Invalid 6-digit 2FA verification code. Access denied.',
+                    },
+                  };
+                  return;
+                }
+              }
+            }
+
+            // If 2FA passed or not enabled, log successful Login
+            if (auditService?.createLog) {
+              const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
+              auditService.createLog({
+                userName: fullName || user.username || user.email || 'Admin User',
+                userEmail: user.email || 'N/A',
+                action: 'Login',
+                contentType: 'Admin Auth',
+                ipAddress,
+                clientId,
+                location,
+                browser,
+                os: osName,
+                deviceType,
+                systemUser: SERVER_SYSTEM_USER,
+              });
+            }
           }
         }
 
