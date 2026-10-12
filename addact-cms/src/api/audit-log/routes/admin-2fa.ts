@@ -36,5 +36,23 @@ export default {
       handler: 'api::audit-log.admin-2fa.regenerateRecoveryCodes',
       config: { auth: false },
     },
+    {
+      method: 'GET',
+      path: '/admin-2fa/users-overview',
+      handler: 'api::audit-log.admin-2fa.getUsersOverview',
+      config: { auth: false },
+    },
+    {
+      method: 'POST',
+      path: '/admin-2fa/admin-reset-user',
+      handler: 'api::audit-log.admin-2fa.adminResetUser2FA',
+      config: { auth: false },
+    },
+    {
+      method: 'POST',
+      path: '/admin-2fa/admin-regenerate-codes',
+      handler: 'api::audit-log.admin-2fa.adminRegenerateUserRecoveryCodes',
+      config: { auth: false },
+    },
   ],
 };

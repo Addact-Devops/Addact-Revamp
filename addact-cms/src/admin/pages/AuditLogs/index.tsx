@@ -349,7 +349,7 @@ const AuditLogsPage: React.FC = () => {
                 <th style={thStyle}>Action</th>
                 <th style={thStyle}>Content Type</th>
                 <th style={thStyle}>Doc ID</th>
-                <th style={thStyle}>Updated Fields</th>
+                <th style={thStyle}>Details / Changes</th>
                 <th style={thStyle}>IP Address</th>
                 <th style={thStyle}>System / Device</th>
                 <th style={{ ...thStyle, textAlign: 'center' }}>Action</th>
@@ -391,7 +391,22 @@ const AuditLogsPage: React.FC = () => {
                     {log.updatedFields && log.updatedFields.length > 0 ? (
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                         {log.updatedFields.map((field) => (
-                          <span key={field} style={fieldChipStyle}>
+                          <span
+                            key={field}
+                            style={
+                              log.action === 'Delete'
+                                ? {
+                                    backgroundColor: '#fef3f2',
+                                    color: '#b42318',
+                                    border: '1px solid #fecdca',
+                                    fontSize: '11px',
+                                    padding: '2px 6px',
+                                    borderRadius: '3px',
+                                    fontFamily: 'monospace',
+                                  }
+                                : fieldChipStyle
+                            }
+                          >
                             {field}
                           </span>
                         ))}

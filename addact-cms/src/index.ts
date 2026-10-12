@@ -221,8 +221,167 @@ function getDocumentDisplayTitle(entry: any): string | null {
   return null;
 }
 
+const recentAuthEvents = new Map<string, number>();
+function shouldLogAuth(action: string, email: string): boolean {
+  const key = `${action}:${email.toLowerCase()}`;
+  const now = Date.now();
+  const last = recentAuthEvents.get(key) || 0;
+  if (now - last < 4000) return false;
+  recentAuthEvents.set(key, now);
+  return true;
+}
+
 export default {
-  register() {},
+  register({ strapi }: { strapi: Core.Strapi }) {
+    // 1. HTTP Server Middleware for Login, Logout, and 2FA Challenge Interception
+    strapi.server.use(async (ctx, next) => {
+      const path = ctx.path;
+      const method = ctx.method;
+
+      let logoutUser: any = null;
+      if (method === 'POST' && (path === '/admin/logout' || path === '/admin/logout/')) {
+        logoutUser = ctx.state?.user;
+      }
+
+      const isLoginRoute = method === 'POST' && (path === '/admin/login' || path === '/admin/login/');
+      const totpHeader = ctx.headers['x-2fa-code'] || ctx.request?.body?.totpCode;
+
+      await next();
+
+      try {
+        const auditService = strapi.service('api::audit-log.audit-log' as any) as any;
+        const rawClientId = ctx.headers['x-client-id'] || ctx.request?.headers?.['x-client-id'];
+        const clientId = sanitizeClientId(rawClientId) || undefined;
+
+        const uaString = ctx.headers['user-agent'] || '';
+        const { browser, os: osName, deviceType } = parseUserAgent(uaString);
+        const rawIp = ctx.headers['x-forwarded-for'] || ctx.ip || 'Unknown IP';
+        const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : 'Unknown IP';
+        const location = await getLocationFromIp(ipAddress);
+
+        // Admin Login 2FA Challenge & Audit Log
+        if (isLoginRoute && ctx.status === 200 && ctx.body?.data) {
+          const user = ctx.body.data.user || ctx.state?.user;
+          if (user && user.id) {
+            let user2FA = { totpEnabled: false, totpSecret: null as string | null };
+            try {
+              const { getUser2FA } = await import('./api/audit-log/controllers/admin-2fa');
+              user2FA = await getUser2FA(strapi, user.id);
+            } catch (e) {}
+
+            if (user2FA.totpEnabled && user2FA.totpSecret) {
+              if (!totpHeader) {
+                // Password was valid! Create a signed, short-lived (5 min) 2FA challenge token bound strictly to THIS user ID
+                const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET || 'strapi-admin-secret') as string;
+                const challengeToken = jwt.sign(
+                  {
+                    userId: user.id,
+                    email: user.email,
+                    requires2FA: true,
+                    type: '2fa_challenge',
+                  },
+                  jwtSecret,
+                  { expiresIn: '5m' }
+                );
+
+                ctx.status = 200;
+                ctx.body = {
+                  data: {
+                    requires2FA: true,
+                    email: user.email,
+                    challengeToken,
+                    message: '2-Factor Authentication (TOTP) code required.',
+                  },
+                };
+                return;
+              } else {
+                // Verify 6-digit TOTP code against THIS USER's stored secret
+                const verified = speakeasy.totp.verify({
+                  secret: user2FA.totpSecret,
+                  encoding: 'base32',
+                  token: String(totpHeader).trim(),
+                  window: 1, // Standard strict 30-sec window
+                });
+
+                if (!verified) {
+                  ctx.status = 400;
+                  ctx.body = {
+                    error: {
+                      status: 400,
+                      name: 'ValidationError',
+                      message: 'Invalid 6-digit 2FA verification code. Access denied.',
+                    },
+                  };
+                  return;
+                }
+
+                // If verified via X-2FA-Code header fallback, log successful Login
+                if (shouldLogAuth('Login', user.email || String(user.id)) && auditService?.createLog) {
+                  const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
+                  await auditService.createLog({
+                    userName: fullName || user.username || user.email || 'Admin User',
+                    userEmail: user.email || 'N/A',
+                    action: 'Login',
+                    contentType: 'Admin Auth',
+                    ipAddress,
+                    clientId,
+                    location,
+                    browser,
+                    os: osName,
+                    deviceType,
+                    systemUser: SERVER_SYSTEM_USER,
+                  });
+                }
+              }
+            }
+          }
+        }
+
+        // Admin Logout
+        if (method === 'POST' && (path === '/admin/logout' || path === '/admin/logout/') && (ctx.status === 200 || ctx.status === 204)) {
+          const user = logoutUser || ctx.state?.user;
+          if (user && shouldLogAuth('Logout', user.email || String(user.id)) && auditService?.createLog) {
+            const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
+            await auditService.createLog({
+              userName: fullName || user.username || user.email || 'Admin User',
+              userEmail: user.email || 'N/A',
+              action: 'Logout',
+              contentType: 'Admin Auth',
+              ipAddress,
+              clientId,
+              location,
+              browser,
+              os: osName,
+              deviceType,
+              systemUser: SERVER_SYSTEM_USER,
+            });
+          }
+        }
+
+        // Users-Permissions Auth Login
+        if (method === 'POST' && path === '/api/auth/local' && ctx.status === 200) {
+          const user = ctx.body?.user;
+          if (user && shouldLogAuth('Login', user.email || String(user.id)) && auditService?.createLog) {
+            await auditService.createLog({
+              userName: user.username || user.email || 'User',
+              userEmail: user.email || 'N/A',
+              action: 'Login',
+              contentType: 'Users-Permissions Auth',
+              ipAddress,
+              clientId,
+              location,
+              browser,
+              os: osName,
+              deviceType,
+              systemUser: SERVER_SYSTEM_USER,
+            });
+          }
+        }
+      } catch (err) {
+        strapi.log.error('AuditLog Server Middleware: Failed to process auth log:', err);
+      }
+    });
+  },
 
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     const auditService = strapi.service('api::audit-log.audit-log' as any) as any;
@@ -263,12 +422,47 @@ export default {
       }
     } catch (e) {}
 
-    // 1. Document Service Middleware for High-Level Content Tracking
+    strapi.eventHub.on('admin.logout', async ({ user }: any) => {
+      try {
+        if (!user) return;
+        if (!shouldLogAuth('Logout', user.email || String(user.id))) {
+          return;
+        }
+
+        const koaCtx = (strapi as any).requestContext?.get?.() || {};
+        const rawClientId = koaCtx.headers?.['x-client-id'] || koaCtx.request?.headers?.['x-client-id'];
+        const clientId = sanitizeClientId(rawClientId) || undefined;
+        const uaString = koaCtx.headers?.['user-agent'] || koaCtx.request?.headers?.['user-agent'] || '';
+        const { browser, os: osName, deviceType } = parseUserAgent(uaString);
+        const rawIp = koaCtx.headers?.['x-forwarded-for'] || koaCtx.ip || koaCtx.request?.ip || '127.0.0.1';
+        const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : '127.0.0.1';
+        const location = await getLocationFromIp(ipAddress);
+
+        const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
+        await auditService.createLog({
+          userName: fullName || user.username || user.email || 'Admin User',
+          userEmail: user.email || 'N/A',
+          action: 'Logout',
+          contentType: 'Admin Auth',
+          ipAddress,
+          clientId,
+          location,
+          browser,
+          os: osName,
+          deviceType,
+          systemUser: SERVER_SYSTEM_USER,
+        });
+      } catch (err) {
+        strapi.log.error('AuditLog EventHub admin.logout error:', err);
+      }
+    });
+
+    // 2. Document Service Middleware for High-Level Content Tracking
     strapi.documents.use(async (context, next) => {
       const { uid, action, params } = context;
 
       // Ignore audit-log itself
-      if (uid === 'api::audit-log.audit-log' || uid?.includes('audit-log')) {
+      if ((uid as string) === 'api::audit-log.audit-log' || (uid as string)?.includes('audit-log')) {
         return await next();
       }
 
@@ -285,20 +479,42 @@ export default {
 
       // Fetch old data BEFORE the action happens (for updates, deletes, publishes)
       let oldData: any = {};
-      const docIdParam = (params as any)?.documentId;
-      if (docIdParam && ['update', 'delete', 'publish', 'unpublish'].includes(action)) {
-        try {
-          oldData = await strapi.documents(uid as any).findOne({
-            documentId: docIdParam,
-            status: (params as any)?.status || 'draft',
-            populate: getDeepPopulate(uid),
-          });
-        } catch (e) {
+      const docIdParam = (params as any)?.documentId || (params as any)?.where?.documentId;
+      const idParam = (params as any)?.id || (params as any)?.where?.id;
+
+      if (['update', 'delete', 'publish', 'unpublish'].includes(action)) {
+        if (docIdParam) {
           try {
             oldData = await strapi.documents(uid as any).findOne({
               documentId: docIdParam,
+              status: (params as any)?.status || 'draft',
+              populate: getDeepPopulate(uid),
             });
-          } catch (e2) {}
+          } catch (e) {}
+
+          if (!oldData || Object.keys(oldData).length === 0) {
+            try {
+              oldData = await strapi.documents(uid as any).findOne({
+                documentId: docIdParam,
+                status: 'published',
+                populate: '*',
+              });
+            } catch (e) {}
+          }
+
+          if (!oldData || Object.keys(oldData).length === 0) {
+            try {
+              oldData = await (strapi.db.query(uid as any) as any).findOne({
+                where: { documentId: docIdParam },
+              });
+            } catch (e) {}
+          }
+        } else if (idParam) {
+          try {
+            oldData = await (strapi.db.query(uid as any) as any).findOne({
+              where: { id: idParam },
+            });
+          } catch (e) {}
         }
       }
 
@@ -365,6 +581,59 @@ export default {
           }
         }
 
+        // For DELETE: capture snapshot of key fields from the deleted content
+        if (action === 'delete') {
+          const snapshot: string[] = [];
+
+          if (oldData && typeof oldData === 'object' && Object.keys(oldData).length > 0) {
+            // Common title/name fields
+            const titleFields = [
+              'title', 'Title', 'name', 'Name', 'heading', 'Heading',
+              'ReferenceTitle', 'pageTitle', 'PageTitle', 'slug', 'Slug',
+              'metaTitle', 'label', 'Label',
+            ];
+            for (const field of titleFields) {
+              const val = oldData[field];
+              if (val && typeof val === 'string' && val.trim().length > 0) {
+                snapshot.push(`Title: "${val.trim().substring(0, 80)}"`);
+                break;
+              }
+            }
+
+            // Slug
+            if (oldData.slug && typeof oldData.slug === 'string' && !snapshot.some(s => s.toLowerCase().includes('slug'))) {
+              snapshot.push(`Slug: "${oldData.slug}"`);
+            }
+
+            // Published status
+            if (oldData.publishedAt !== undefined) {
+              snapshot.push(`Status: ${oldData.publishedAt ? 'Published' : 'Draft'}`);
+            }
+
+            // Capture other key fields
+            let fieldCount = 0;
+            for (const [key, val] of Object.entries(oldData)) {
+              if (fieldCount >= 5) break;
+              if (IGNORED_KEYS.has(key) || key.startsWith('__')) continue;
+              if (titleFields.includes(key) || key === 'slug' || key === 'publishedAt') continue;
+              if (val === null || val === undefined || val === '') continue;
+              if (typeof val === 'object') continue;
+
+              const displayVal = String(val).trim();
+              if (displayVal.length === 0) continue;
+              snapshot.push(`${key}: "${displayVal.substring(0, 50)}"`);
+              fieldCount++;
+            }
+          }
+
+          if (snapshot.length > 0) {
+            updatedFields = snapshot;
+          } else {
+            const rawId = (params as any)?.documentId || (params as any)?.id || (result as any)?.documentId;
+            updatedFields = [rawId ? `Deleted record (${rawId})` : 'Deleted content record'];
+          }
+        }
+
         // 1. Human-readable Content Type (e.g. "AddactBlog (api::addact-blog.addact-blog)")
         let contentTypeDisplay: string = String(uid);
         try {
@@ -407,154 +676,7 @@ export default {
 
       return result;
     });
-
-    // 2. HTTP Server Middleware for Login, Logout, and 2FA Challenge Interception
-    strapi.server.use(async (ctx, next) => {
-      const path = ctx.path;
-      const method = ctx.method;
-
-      let logoutUser: any = null;
-      if (method === 'POST' && (path === '/admin/logout' || path === '/admin/logout/')) {
-        logoutUser = ctx.state?.user;
-      }
-
-      const isLoginRoute = method === 'POST' && (path === '/admin/login' || path === '/admin/login/');
-      const totpHeader = ctx.headers['x-2fa-code'] || ctx.request?.body?.totpCode;
-
-      await next();
-
-      try {
-        const rawClientId = ctx.headers['x-client-id'] || ctx.request?.headers?.['x-client-id'];
-        const clientId = sanitizeClientId(rawClientId) || undefined;
-
-        const uaString = ctx.headers['user-agent'] || '';
-        const { browser, os: osName, deviceType } = parseUserAgent(uaString);
-        const rawIp = ctx.headers['x-forwarded-for'] || ctx.ip || 'Unknown IP';
-        const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : 'Unknown IP';
-        const location = await getLocationFromIp(ipAddress);
-
-        // Admin Login 2FA Challenge & Audit Log
-        if (isLoginRoute && ctx.status === 200 && ctx.body?.data) {
-          const user = ctx.body.data.user || ctx.state?.user;
-          if (user && user.id) {
-            let user2FA = { totpEnabled: false, totpSecret: null as string | null };
-            try {
-              const { getUser2FA } = await import('./api/audit-log/controllers/admin-2fa');
-              user2FA = await getUser2FA(strapi, user.id);
-            } catch (e) {}
-
-            if (user2FA.totpEnabled && user2FA.totpSecret) {
-              if (!totpHeader) {
-                // Password was valid! Create a signed, short-lived (5 min) 2FA challenge token bound strictly to THIS user ID
-                const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET || 'strapi-admin-secret') as string;
-                const challengeToken = jwt.sign(
-                  {
-                    userId: user.id,
-                    email: user.email,
-                    requires2FA: true,
-                    type: '2fa_challenge',
-                  },
-                  jwtSecret,
-                  { expiresIn: '5m' }
-                );
-
-                ctx.status = 200;
-                ctx.body = {
-                  data: {
-                    requires2FA: true,
-                    email: user.email,
-                    challengeToken,
-                    message: '2-Factor Authentication (TOTP) code required.',
-                  },
-                };
-                return;
-              } else {
-                // Verify 6-digit TOTP code against THIS USER's stored secret
-                const verified = speakeasy.totp.verify({
-                  secret: user2FA.totpSecret,
-                  encoding: 'base32',
-                  token: String(totpHeader).trim(),
-                  window: 1, // Standard strict 30-sec window
-                });
-
-                if (!verified) {
-                  ctx.status = 400;
-                  ctx.body = {
-                    error: {
-                      status: 400,
-                      name: 'ValidationError',
-                      message: 'Invalid 6-digit 2FA verification code. Access denied.',
-                    },
-                  };
-                  return;
-                }
-              }
-            }
-
-            // If 2FA passed or not enabled, log successful Login
-            if (auditService?.createLog) {
-              const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
-              auditService.createLog({
-                userName: fullName || user.username || user.email || 'Admin User',
-                userEmail: user.email || 'N/A',
-                action: 'Login',
-                contentType: 'Admin Auth',
-                ipAddress,
-                clientId,
-                location,
-                browser,
-                os: osName,
-                deviceType,
-                systemUser: SERVER_SYSTEM_USER,
-              });
-            }
-          }
-        }
-
-        // Admin Logout
-        if (method === 'POST' && (path === '/admin/logout' || path === '/admin/logout/') && (ctx.status === 200 || ctx.status === 204)) {
-          const user = logoutUser || ctx.state?.user;
-          if (user && auditService?.createLog) {
-            const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
-            auditService.createLog({
-              userName: fullName || user.username || user.email || 'Admin User',
-              userEmail: user.email || 'N/A',
-              action: 'Logout',
-              contentType: 'Admin Auth',
-              ipAddress,
-              clientId,
-              location,
-              browser,
-              os: osName,
-              deviceType,
-              systemUser: SERVER_SYSTEM_USER,
-            });
-          }
-        }
-
-        // Users-Permissions Auth Login
-        if (method === 'POST' && path === '/api/auth/local' && ctx.status === 200) {
-          const user = ctx.body?.user;
-          if (user && auditService?.createLog) {
-            auditService.createLog({
-              userName: user.username || user.email || 'User',
-              userEmail: user.email || 'N/A',
-              action: 'Login',
-              contentType: 'Users-Permissions Auth',
-              ipAddress,
-              clientId,
-              location,
-              browser,
-              os: osName,
-              deviceType,
-              systemUser: SERVER_SYSTEM_USER,
-            });
-          }
-        }
-      } catch (err) {
-        strapi.log.error('AuditLog Bootstrap: Failed to process auth log:', err);
-      }
-    });
   },
 };
+
 

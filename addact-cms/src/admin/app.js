@@ -31,74 +31,141 @@ function prompt2FACodeModal(email) {
     overlay.style.cssText = `
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(8px);
+      background: rgba(15, 23, 42, 0.76);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       z-index: 999999;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      padding: 20px;
+      box-sizing: border-box;
+      animation: strapiFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     `;
 
     const card = document.createElement('div');
     card.style.cssText = `
       background: #ffffff;
       width: 100%;
-      max-width: 420px;
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      border: 1px solid #e2e8f0;
+      max-width: 440px;
+      border-radius: 24px;
+      padding: 36px 32px 32px 32px;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(226, 232, 240, 0.8), 0 0 60px -15px rgba(79, 70, 229, 0.15);
+      border: 1px solid rgba(226, 232, 240, 0.9);
       text-align: center;
+      position: relative;
+      box-sizing: border-box;
+      animation: strapiSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     `;
 
     card.innerHTML = `
-      <div style="font-size: 40px; margin-bottom: 12px;">🔑</div>
-      <h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700; color: #0f172a;">Two-Factor Authentication</h2>
-      <p style="margin: 0 0 20px 0; font-size: 14px; color: #64748b; line-height: 1.5;">
-        Account <strong style="color: #4945ff;">${email || ''}</strong> is protected with 2FA.<br/>
-        Enter the 6-digit Authenticator code or an Emergency Recovery Code:
+      <style>
+        @keyframes strapiFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes strapiSlideUp { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        #strapi-2fa-otp-input:focus {
+          border-color: #4f46e5 !important;
+          background: #ffffff !important;
+          box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.14) !important;
+        }
+        #strapi-2fa-submit-btn:hover {
+          filter: brightness(1.06);
+          box-shadow: 0 8px 24px -4px rgba(79, 70, 229, 0.45);
+          transform: translateY(-1px);
+        }
+        #strapi-2fa-cancel-btn:hover {
+          background: #f1f5f9 !important;
+          color: #0f172a !important;
+        }
+      </style>
+
+      <!-- Security Status Badge -->
+      <div style="display: inline-flex; align-items: center; gap: 7px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 14px; border-radius: 9999px; margin-bottom: 20px;">
+        <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.7);"></span>
+        <span style="font-size: 11px; font-weight: 700; color: #475569; letter-spacing: 0.6px; text-transform: uppercase;">Zero-Trust Verification</span>
+      </div>
+
+      <!-- High-End Glowing Shield Icon -->
+      <div style="width: 60px; height: 60px; margin: 0 auto 18px auto; border-radius: 20px; background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border: 1px solid #c7d2fe; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px -4px rgba(99, 102, 241, 0.25);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M12 8v4"/>
+          <path d="M12 16h.01"/>
+        </svg>
+      </div>
+
+      <h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em;">Two-Factor Authentication</h2>
+      
+      <!-- Account Pill -->
+      <div style="display: inline-flex; align-items: center; gap: 6px; background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 4px 12px; border-radius: 8px; font-size: 12.5px; font-weight: 600; margin-bottom: 18px; max-width: 90%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>${email || 'Admin User'}</span>
+      </div>
+
+      <p style="margin: 0 0 22px 0; font-size: 13.5px; color: #64748b; line-height: 1.55;">
+        Enter the 6-digit code from your authenticator app (Google Authenticator, Microsoft Authenticator, 1Password) or an 8-character Emergency Recovery Key:
       </p>
 
-      <input id="strapi-2fa-otp-input" type="text" maxlength="12" placeholder="000000" style="
-        width: 100%;
-        box-sizing: border-box;
-        text-align: center;
-        letter-spacing: 4px;
-        font-size: 22px;
-        font-weight: 700;
-        padding: 12px 16px;
-        border: 2px solid #cbd5e1;
-        border-radius: 10px;
-        outline: none;
-        margin-bottom: 20px;
-        color: #1e293b;
-        text-transform: uppercase;
-      " autofocus />
+      <div style="margin-bottom: 20px;">
+        <input id="strapi-2fa-otp-input" type="text" maxlength="12" placeholder="000 000" style="
+          width: 100%;
+          box-sizing: border-box;
+          text-align: center;
+          letter-spacing: 8px;
+          font-size: 26px;
+          font-weight: 800;
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+          padding: 14px 16px;
+          border: 2px solid #cbd5e1;
+          border-radius: 14px;
+          outline: none;
+          background: #f8fafc;
+          color: #0f172a;
+          transition: all 0.2s ease;
+          text-transform: uppercase;
+        " autofocus />
+      </div>
 
-      <div id="strapi-2fa-error-msg" style="display: none; color: #ef4444; font-size: 13px; font-weight: 600; margin-bottom: 16px;"></div>
+      <div id="strapi-2fa-error-msg" style="display: none; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; font-size: 13px; font-weight: 600; padding: 11px 14px; border-radius: 10px; margin-bottom: 18px; text-align: left; line-height: 1.4;"></div>
 
       <div style="display: flex; gap: 12px;">
         <button id="strapi-2fa-cancel-btn" style="
           flex: 1;
-          padding: 12px;
+          padding: 13px 18px;
           border: 1px solid #cbd5e1;
-          background: #f8fafc;
+          background: #ffffff;
           color: #475569;
           font-weight: 600;
-          border-radius: 8px;
+          font-size: 14px;
+          border-radius: 12px;
           cursor: pointer;
+          transition: all 0.15s ease;
         ">Cancel</button>
         <button id="strapi-2fa-submit-btn" style="
-          flex: 1;
-          padding: 12px;
+          flex: 1.4;
+          padding: 13px 18px;
           border: none;
-          background: #4945ff;
+          background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
           color: #ffffff;
-          font-weight: 600;
-          border-radius: 8px;
+          font-weight: 700;
+          font-size: 14px;
+          border-radius: 12px;
           cursor: pointer;
-        ">Verify & Login</button>
+          transition: all 0.15s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        ">
+          <span>Verify & Login</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
     `;
 
@@ -135,6 +202,436 @@ function prompt2FACodeModal(email) {
       if (e.key === 'Enter') submitAction();
     };
   });
+}
+
+function getAuthToken() {
+  try {
+    const raw = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
+    if (!raw) return null;
+    return raw.replace(/^"|"$/g, '');
+  } catch (e) {
+    return null;
+  }
+}
+
+function applyMenuVisibility(isAdmin) {
+  if (typeof document === 'undefined') return;
+  let styleEl = document.getElementById('strapi-2fa-menu-visibility');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'strapi-2fa-menu-visibility';
+    document.head.appendChild(styleEl);
+  }
+  if (!isAdmin) {
+    styleEl.textContent = `
+      a[href*="/plugins/2fa-security"],
+      a[to="plugins/2fa-security"],
+      li:has(a[href*="/plugins/2fa-security"]),
+      [data-testid*="2fa-security"] {
+        display: none !important;
+      }
+    `;
+  } else {
+    styleEl.textContent = '';
+  }
+}
+
+function showPostLogin2FASetupModal(token, clientId) {
+  if (typeof document === 'undefined') return;
+  if (document.getElementById('strapi-2fa-setup-modal-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.id = 'strapi-2fa-setup-modal-overlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding: 24px;
+    box-sizing: border-box;
+    animation: strapiFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  `;
+
+  const card = document.createElement('div');
+  card.style.cssText = `
+    background: #ffffff;
+    width: 100%;
+    max-width: 530px;
+    max-height: 94vh;
+    overflow-y: auto;
+    border-radius: 24px;
+    padding: 36px 34px 32px 34px;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.3), 0 0 0 1px rgba(226, 232, 240, 0.8), 0 0 80px -20px rgba(79, 70, 229, 0.15);
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+    animation: strapiSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  `;
+
+  card.innerHTML = `
+    <style>
+      @keyframes strapiFadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes strapiSlideUp { from { opacity: 0; transform: translateY(14px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+      @keyframes strapiSpin { to { transform: rotate(360deg); } }
+    </style>
+
+    <div style="display: inline-flex; align-items: center; gap: 7px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 14px; border-radius: 9999px; margin-bottom: 20px;">
+      <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #4f46e5; box-shadow: 0 0 8px rgba(79, 70, 229, 0.6);"></span>
+      <span style="font-size: 11px; font-weight: 700; color: #475569; letter-spacing: 0.6px; text-transform: uppercase;">Security Enrollment</span>
+    </div>
+
+    <div style="width: 60px; height: 60px; margin: 0 auto 18px auto; border-radius: 20px; background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border: 1px solid #c7d2fe; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px -4px rgba(99, 102, 241, 0.2);">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+
+    <h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em;">Activate Two-Factor Protection</h2>
+    <p style="margin: 0 0 24px 0; font-size: 13.5px; color: #64748b; line-height: 1.5;">
+      Initializing secure cryptographic credentials...
+    </p>
+
+    <div style="display: flex; justify-content: center; padding: 32px 0;">
+      <div style="width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #4f46e5; border-radius: 50%; animation: strapiSpin 0.8s linear infinite;"></div>
+    </div>
+  `;
+
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+
+  // Fetch 2FA Setup secret & QR
+  fetch('/api/admin-2fa/setup', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      ...(clientId ? { 'X-Client-Id': clientId } : {}),
+    },
+  })
+    .then((res) => res.json())
+    .then((raw) => {
+      const data = raw?.data || raw;
+      const qrCodeUrl = data?.qrCode;
+      const secretKey = data?.secret;
+
+      if (!qrCodeUrl || !secretKey) {
+        throw new Error(data?.error?.message || raw?.error?.message || 'Failed to initialize 2FA setup');
+      }
+
+      card.innerHTML = `
+        <style>
+          #strapi-2fa-setup-code-input:focus {
+            border-color: #4f46e5 !important;
+            background: #ffffff !important;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.14) !important;
+          }
+          #strapi-2fa-setup-verify-btn:hover {
+            filter: brightness(1.06);
+            box-shadow: 0 8px 24px -4px rgba(79, 70, 229, 0.45);
+            transform: translateY(-1px);
+          }
+          .app-badge {
+            background: #f1f5f9;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 9px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+          }
+        </style>
+
+        <!-- Top Header & Security Level -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px;">
+          <div style="display: inline-flex; align-items: center; gap: 7px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 5px 12px; border-radius: 9999px;">
+            <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #4f46e5; box-shadow: 0 0 6px rgba(79, 70, 229, 0.5);"></span>
+            <span style="font-size: 11px; font-weight: 700; color: #475569; letter-spacing: 0.5px; text-transform: uppercase;">Zero-Trust Policy</span>
+          </div>
+          <span style="font-size: 11.5px; font-weight: 700; color: #059669; background: #ecfdf5; border: 1px solid #a7f3d0; padding: 3px 10px; border-radius: 9999px;">
+            Mandatory Security
+          </span>
+        </div>
+
+        <h2 style="margin: 0 0 6px 0; font-size: 22px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em;">
+          Enforce Two-Factor Authentication
+        </h2>
+        <p style="margin: 0 0 16px 0; font-size: 13px; color: #64748b; line-height: 1.5;">
+          Scan the QR code using your corporate or mobile authenticator application:
+        </p>
+
+        <!-- Supported Authenticators Bar -->
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 16px;">
+          <span class="app-badge">Google Authenticator</span>
+          <span class="app-badge">Microsoft Authenticator</span>
+          <span class="app-badge">1Password</span>
+          <span class="app-badge">Authy</span>
+        </div>
+
+        <!-- High-Tech QR Code Container with Viewfinder styling -->
+        <div style="
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 18px;
+          padding: 14px;
+          margin-bottom: 16px;
+          display: inline-block;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+          position: relative;
+        ">
+          <img src="${qrCodeUrl}" alt="2FA QR Code" style="width: 175px; height: 175px; display: block; margin: 0 auto; border-radius: 8px;" />
+        </div>
+
+        <!-- Secret Key Box -->
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; font-size: 12px; color: #475569; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+          <span style="font-weight: 600; color: #64748b;">Manual Secret:</span>
+          <code style="font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; font-weight: 800; color: #0f172a; letter-spacing: 1px;">${secretKey}</code>
+          <button id="strapi-2fa-copy-key-btn" style="
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #334155;
+            transition: all 0.15s ease;
+          ">Copy</button>
+        </div>
+
+        <!-- Code Input Section -->
+        <label style="display: block; text-align: left; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+          Enter 6-Digit Authenticator Code
+        </label>
+        <input id="strapi-2fa-setup-code-input" type="text" maxlength="6" placeholder="000 000" style="
+          width: 100%;
+          box-sizing: border-box;
+          text-align: center;
+          letter-spacing: 8px;
+          font-size: 26px;
+          font-weight: 800;
+          font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+          padding: 13px 16px;
+          border: 2px solid #cbd5e1;
+          border-radius: 12px;
+          outline: none;
+          background: #f8fafc;
+          margin-bottom: 12px;
+          color: #0f172a;
+          transition: all 0.2s ease;
+        " autofocus />
+
+        <div id="strapi-2fa-setup-error" style="display: none; background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; padding: 11px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; margin-bottom: 16px; text-align: left; line-height: 1.4;"></div>
+
+        <div style="margin-bottom: 6px;">
+          <button id="strapi-2fa-setup-verify-btn" style="
+            width: 100%;
+            padding: 14px 18px;
+            border: none;
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28);
+          ">
+            <span>Verify & Activate 2FA</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      `;
+
+      const copyKeyBtn = card.querySelector('#strapi-2fa-copy-key-btn');
+      const codeInput = card.querySelector('#strapi-2fa-setup-code-input');
+      const verifyBtn = card.querySelector('#strapi-2fa-setup-verify-btn');
+      const errorBox = card.querySelector('#strapi-2fa-setup-error');
+
+      if (copyKeyBtn) {
+        copyKeyBtn.onclick = () => {
+          navigator.clipboard?.writeText(secretKey);
+          copyKeyBtn.textContent = 'Copied!';
+          setTimeout(() => {
+            copyKeyBtn.textContent = 'Copy';
+          }, 2000);
+        };
+      }
+
+      const handleVerify = async () => {
+        const tokenCode = (codeInput?.value || '').trim();
+        if (!tokenCode || tokenCode.length !== 6) {
+          if (errorBox) {
+            errorBox.style.display = 'block';
+            errorBox.textContent = 'Please enter a valid 6-digit code from your authenticator app.';
+          }
+          return;
+        }
+
+        if (errorBox) errorBox.style.display = 'none';
+        if (verifyBtn) {
+          verifyBtn.disabled = true;
+          verifyBtn.textContent = 'Verifying...';
+        }
+
+        try {
+          const enableRes = await fetch('/api/admin-2fa/enable', {
+            method: 'POST',
+            headers: {
+              'Authorization': 'Bearer ' + token,
+              'Content-Type': 'application/json',
+              ...(clientId ? { 'X-Client-Id': clientId } : {}),
+            },
+            body: JSON.stringify({
+              token: tokenCode,
+              secret: secretKey,
+            }),
+          });
+
+          const enableData = await enableRes.json();
+
+          if (!enableRes.ok || !enableData.success) {
+            throw new Error(enableData?.error?.message || enableData?.message || 'Invalid verification code. Please try again.');
+          }
+
+          sessionStorage.setItem('strapi_2fa_setup_completed', 'true');
+
+          card.innerHTML = `
+            <div style="width: 60px; height: 60px; margin: 0 auto 18px auto; border-radius: 50%; background: #ecfdf5; border: 1px solid #a7f3d0; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+
+            <h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 800; color: #0f172a;">
+              2FA Activated Successfully!
+            </h2>
+            <p style="margin: 0 0 24px 0; font-size: 13.5px; color: #64748b; line-height: 1.55;">
+              Two-Factor Authentication is now active on your account. You will be prompted for an authenticator code on future logins.
+            </p>
+
+            <button id="strapi-2fa-finish-btn" style="
+              width: 100%;
+              padding: 14px 18px;
+              border: none;
+              background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+              color: #ffffff;
+              font-weight: 700;
+              font-size: 14px;
+              border-radius: 12px;
+              cursor: pointer;
+              transition: all 0.15s ease;
+              box-shadow: 0 4px 14px rgba(79, 70, 229, 0.28);
+            ">Continue to Admin Panel</button>
+          `;
+
+          const finishBtn = card.querySelector('#strapi-2fa-finish-btn');
+          if (finishBtn) {
+            finishBtn.onclick = () => {
+              overlay.remove();
+              window.location.reload();
+            };
+          }
+        } catch (err) {
+          if (errorBox) {
+            errorBox.style.display = 'block';
+            errorBox.textContent = err.message || 'Verification failed. Please check the code.';
+          }
+          if (verifyBtn) {
+            verifyBtn.disabled = false;
+            verifyBtn.textContent = 'Verify & Activate 2FA';
+          }
+        }
+      };
+
+      if (verifyBtn) verifyBtn.onclick = handleVerify;
+      if (codeInput) {
+        codeInput.onkeydown = (e) => {
+          if (e.key === 'Enter') handleVerify();
+        };
+        setTimeout(() => codeInput.focus(), 150);
+      }
+    })
+    .catch((err) => {
+      card.innerHTML = `
+        <div style="width: 60px; height: 60px; margin: 0 auto 18px auto; border-radius: 20px; background: #fef2f2; border: 1px solid #fecaca; display: flex; align-items: center; justify-content: center;">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <h2 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 800; color: #dc2626;">Failed to initialize 2FA</h2>
+        <p style="margin: 0 0 20px 0; font-size: 14px; color: #64748b; line-height: 1.5;">${err.message || 'An error occurred while preparing 2FA setup.'}</p>
+        <button id="strapi-2fa-close-err-btn" style="
+          padding: 12px 22px;
+          border: none;
+          background: #4f46e5;
+          color: #ffffff;
+          font-weight: 700;
+          border-radius: 10px;
+          cursor: pointer;
+        ">Retry Setup</button>
+      `;
+      const closeBtn = card.querySelector('#strapi-2fa-close-err-btn');
+      if (closeBtn) {
+        closeBtn.onclick = () => {
+          overlay.remove();
+          showPostLogin2FASetupModal(token, clientId);
+        };
+      }
+    });
+}
+
+function checkAndPromptPostLogin2FA(clientId) {
+  if (typeof window === 'undefined') return;
+
+  const path = window.location.pathname;
+  if (path.includes('/auth/login') || path.includes('/auth/register') || path.includes('/auth/forgot-password')) {
+    return;
+  }
+
+  const token = getAuthToken();
+  if (!token) return;
+
+  fetch('/api/admin-2fa/status', {
+    headers: {
+      'Authorization': 'Bearer ' + token,
+      'Content-Type': 'application/json',
+      ...(clientId ? { 'X-Client-Id': clientId } : {}),
+    },
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      // Support both flat response { isEnabled: false } and wrapped { data: { isEnabled: false } }
+      const data = json?.data || json;
+      if (!data) return;
+
+      const isEnabled = typeof data.isEnabled === 'boolean' ? data.isEnabled : json?.isEnabled;
+      const isAdmin = typeof data.isAdmin === 'boolean' ? data.isAdmin : json?.isAdmin;
+
+      // Apply RBAC sidebar visibility
+      applyMenuVisibility(Boolean(isAdmin));
+
+      // 2FA is strictly MANDATORY: If 2FA is NOT enabled, always enforce setup popup
+      if (isEnabled === false) {
+        showPostLogin2FASetupModal(token, clientId);
+      }
+    })
+    .catch(() => {});
 }
 
 export default {
@@ -185,12 +682,33 @@ export default {
       },
       intlLabel: {
         id: "2fa-security.name",
-        defaultMessage: "2FA Security",
+        defaultMessage: "2FA Management",
       },
     });
   },
   bootstrap(app) {
     const clientId = getOrCreateClientId();
+
+    // Default to hiding the 2FA Management menu until admin role is confirmed
+    try {
+      const userRaw = localStorage.getItem('userInfo') || sessionStorage.getItem('userInfo');
+      if (userRaw) {
+        const userObj = JSON.parse(userRaw);
+        const roles = Array.isArray(userObj.roles)
+          ? userObj.roles.map((r) => (typeof r === 'string' ? r : r.code || r.name || '')).map((s) => s.toLowerCase())
+          : [];
+        const isSuperOrAdmin = roles.some((r) => r.includes('super-admin') || r.includes('admin') || r.includes('administrator'));
+        applyMenuVisibility(isSuperOrAdmin);
+      } else {
+        applyMenuVisibility(false);
+      }
+    } catch (e) {
+      applyMenuVisibility(false);
+    }
+
+    // Schedule post-login 2FA checks when admin loads
+    setTimeout(() => checkAndPromptPostLogin2FA(clientId), 800);
+    setTimeout(() => checkAndPromptPostLogin2FA(clientId), 2000);
 
     // Attach X-Client-Id header cleanly to Strapi Admin API calls & handle 2FA Login Interception
     if (typeof window !== 'undefined' && window.fetch) {
@@ -216,11 +734,20 @@ export default {
 
         const response = await originalFetch.call(this, input, init);
 
+        // When user data or information is fetched after login, check 2FA status
+        if (urlStr.includes('/admin/users/me') || urlStr.includes('/admin/information')) {
+          setTimeout(() => checkAndPromptPostLogin2FA(clientId), 600);
+        }
+
         // Intercept /admin/login response to check if 2FA code is needed
         if (urlStr.includes('/admin/login')) {
           try {
             const clonedRes = response.clone();
             const body = await clonedRes.json();
+
+            // Clear session skip flag on fresh login
+            sessionStorage.removeItem('strapi_2fa_setup_skipped');
+
             if (body?.data?.requires2FA) {
               const code = await prompt2FACodeModal(body.data.email);
               if (code) {
@@ -250,6 +777,7 @@ export default {
                           localStorage.setItem('userInfo', JSON.stringify(user));
                           sessionStorage.setItem('userInfo', JSON.stringify(user));
                         }
+                        sessionStorage.removeItem('strapi_2fa_setup_skipped');
                         setTimeout(() => {
                           window.location.href = '/admin';
                         }, 50);
@@ -274,6 +802,23 @@ export default {
                 }
                 return await originalFetch.call(this, input, newInit);
               }
+            } else if (body?.data?.token) {
+              // Direct login successful without 2FA challenge (e.g. 2FA is reset or not yet configured)
+              const token = body.data.token;
+              const user = body.data.user;
+              if (token) {
+                localStorage.setItem('jwtToken', JSON.stringify(token));
+                sessionStorage.setItem('jwtToken', JSON.stringify(token));
+                if (user) {
+                  localStorage.setItem('userInfo', JSON.stringify(user));
+                  sessionStorage.setItem('userInfo', JSON.stringify(user));
+                }
+              }
+              sessionStorage.removeItem('strapi_2fa_setup_skipped');
+              // Navigate cleanly to /admin so post-login setup check can display modal
+              setTimeout(() => {
+                window.location.href = '/admin';
+              }, 50);
             }
           } catch (e) {}
         }

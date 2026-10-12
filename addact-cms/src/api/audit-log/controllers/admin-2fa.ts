@@ -196,6 +196,44 @@ function sanitizeAdminUser(user: any) {
   return copy;
 }
 
+function isAdminOrSuperAdmin(user: any): boolean {
+  if (!user) return false;
+
+  const roles = user.roles || [];
+  if (Array.isArray(roles) && roles.length > 0) {
+    const hasAllowedRole = roles.some((r: any) => {
+      const code = String(r.code || '').toLowerCase();
+      const name = String(r.name || '').toLowerCase();
+      return (
+        code === 'strapi-super-admin' ||
+        code === 'super-admin' ||
+        code === 'admin' ||
+        code === 'administrator' ||
+        name.includes('super admin') ||
+        name === 'admin' ||
+        name === 'administrator'
+      );
+    });
+    if (hasAllowedRole) return true;
+  }
+
+  const userRoleCode = String(user.role?.code || user.role || '').toLowerCase();
+  const userRoleName = String(user.role?.name || '').toLowerCase();
+  if (
+    userRoleCode === 'strapi-super-admin' ||
+    userRoleCode === 'super-admin' ||
+    userRoleCode === 'admin' ||
+    userRoleCode === 'administrator' ||
+    userRoleName.includes('super admin') ||
+    userRoleName === 'admin' ||
+    userRoleName === 'administrator'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 const pendingSetupSecrets = new Map<number | string, string>();
 const failedAttemptsMap = new Map<number | string, { count: number; lockedUntil?: number }>();
 
@@ -250,9 +288,13 @@ export default ({ strapi }: { strapi: any }) => ({
         await setUser2FA(strapi, user.id, user2FA.totpSecret, true, codes);
       }
 
+      const isAdmin = isAdminOrSuperAdmin(user);
+
       return ctx.send({
         isEnabled: user2FA.totpEnabled,
         email: user.email,
+        isAdmin,
+        roles: (user.roles || []).map((r: any) => r.name || r.code),
         recoveryCodes: user2FA.totpEnabled ? codes : [],
       });
     } catch (err) {
@@ -320,6 +362,41 @@ export default ({ strapi }: { strapi: any }) => ({
       await setUser2FA(strapi, user.id, secretToVerify, true, recoveryCodes);
 
       pendingSetupSecrets.delete(user.id);
+
+      // Record Audit Log for successful 2FA activation & login session
+      try {
+        const auditService = strapi.service('api::audit-log.audit-log' as any) as any;
+        if (auditService && typeof auditService.createLog === 'function') {
+          const fullName = `${user.firstname || ''} ${user.lastname || ''}`.trim();
+          const rawClientId = ctx.headers?.['x-client-id'] || ctx.request?.headers?.['x-client-id'];
+          const clientId = sanitizeClientId(rawClientId) || undefined;
+
+          const rawIp = ctx.headers?.['x-forwarded-for'] || ctx.ip || ctx.request?.ip || '127.0.0.1';
+          const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : '127.0.0.1';
+          const location = await getLocationFromIp(ipAddress);
+
+          const uaString = (typeof ctx.get === 'function' ? ctx.get('user-agent') : '') || ctx.headers?.['user-agent'] || ctx.request?.headers?.['user-agent'] || '';
+          const { browser, os: osName, deviceType } = parseUserAgent(uaString);
+
+          await auditService.createLog({
+            userName: fullName || user.username || user.email || 'Admin User',
+            userEmail: user.email || 'N/A',
+            action: 'Login',
+            contentType: 'Admin Auth',
+            targetDocumentId: '2FA Activated & Logged In',
+            updatedFields: ['User activated 2FA protection and authenticated'],
+            ipAddress,
+            clientId,
+            location,
+            browser,
+            os: osName,
+            deviceType,
+            systemUser: SERVER_SYSTEM_USER,
+          });
+        }
+      } catch (logErr) {
+        strapi.log.error('enable2FA: Failed to record audit log:', logErr);
+      }
 
       return ctx.send({
         success: true,
@@ -533,6 +610,222 @@ export default ({ strapi }: { strapi: any }) => ({
         recoveryCodes: newCodes,
       });
     } catch (err) {
+      return ctx.badRequest('Failed to regenerate recovery codes', { error: err });
+    }
+  },
+
+  async getUsersOverview(ctx: any) {
+    try {
+      const user = await getAdminUser(ctx, strapi);
+      if (!user) return ctx.unauthorized('User not authenticated.');
+
+      if (!isAdminOrSuperAdmin(user)) {
+        return ctx.forbidden('Access denied. Administrator privileges required.');
+      }
+
+      await ensure2FATable(strapi);
+      const knex = strapi.db.connection;
+
+      const users = await (strapi.db.query('admin::user' as any) as any).findMany({
+        populate: ['roles'],
+        orderBy: { createdAt: 'desc' },
+      });
+
+      const rows = await knex('strapi_2fa_secrets').select('user_id', 'totp_enabled', 'recovery_codes');
+      const secretMap = new Map();
+      for (const r of rows) {
+        secretMap.set(String(r.user_id), r);
+      }
+
+      const usersList = (users || []).map((u: any) => {
+        const sec = secretMap.get(String(u.id));
+        const is2FA = Boolean(sec ? sec.totp_enabled : u.totpEnabled);
+        let recoveryCount = 0;
+        if (sec && sec.recovery_codes) {
+          try {
+            const parsed = JSON.parse(sec.recovery_codes);
+            if (Array.isArray(parsed)) recoveryCount = parsed.length;
+          } catch (e) {}
+        }
+
+        const roles = (u.roles || []).map((r: any) => r.name || r.code);
+        const fullName = `${u.firstname || ''} ${u.lastname || ''}`.trim();
+
+        return {
+          id: u.id,
+          name: fullName || u.username || u.email,
+          email: u.email,
+          username: u.username,
+          isActive: Boolean(u.isActive),
+          roles,
+          is2FAEnabled: is2FA,
+          recoveryCodesCount: is2FA ? recoveryCount : 0,
+          createdAt: u.createdAt,
+        };
+      });
+
+      const totalUsers = usersList.length;
+      const enabledCount = usersList.filter((u: any) => u.is2FAEnabled).length;
+      const pendingCount = totalUsers - enabledCount;
+
+      return ctx.send({
+        success: true,
+        data: {
+          stats: {
+            totalUsers,
+            enabledCount,
+            pendingCount,
+          },
+          users: usersList,
+        },
+      });
+    } catch (err) {
+      strapi.log.error('2FA Controller: getUsersOverview error:', err);
+      return ctx.badRequest('Failed to fetch 2FA users overview', { error: err });
+    }
+  },
+
+  async adminResetUser2FA(ctx: any) {
+    try {
+      const user = await getAdminUser(ctx, strapi);
+      if (!user) return ctx.unauthorized('User not authenticated.');
+
+      if (!isAdminOrSuperAdmin(user)) {
+        return ctx.forbidden('Access denied. Administrator privileges required.');
+      }
+
+      const { targetUserId } = ctx.request.body || {};
+      if (!targetUserId) {
+        return ctx.badRequest('Target user ID is required.');
+      }
+
+      const targetUser = await (strapi.db.query('admin::user' as any) as any).findOne({
+        where: { id: targetUserId },
+        populate: ['roles'],
+      });
+
+      if (!targetUser) {
+        return ctx.notFound('Target admin user not found.');
+      }
+
+      await setUser2FA(strapi, targetUserId, null, false, null);
+
+      try {
+        const auditService = strapi.service('api::audit-log.audit-log' as any) as any;
+        if (auditService && typeof auditService.createLog === 'function') {
+          const rawClientId = ctx.headers?.['x-client-id'] || ctx.request?.headers?.['x-client-id'];
+          const clientId = sanitizeClientId(rawClientId) || undefined;
+          const rawIp = ctx.headers?.['x-forwarded-for'] || ctx.ip || ctx.request?.ip || '127.0.0.1';
+          const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : '127.0.0.1';
+          const location = await getLocationFromIp(ipAddress);
+          const uaString = (typeof ctx.get === 'function' ? ctx.get('user-agent') : '') || ctx.headers?.['user-agent'] || '';
+          const { browser, os: osName, deviceType } = parseUserAgent(uaString);
+
+          const adminName = `${user.firstname || ''} ${user.lastname || ''}`.trim() || user.username || user.email;
+          const targetName = `${targetUser.firstname || ''} ${targetUser.lastname || ''}`.trim() || targetUser.username || targetUser.email;
+
+          await auditService.createLog({
+            userName: adminName,
+            userEmail: user.email || 'N/A',
+            action: 'Update',
+            contentType: 'Admin 2FA Security',
+            targetDocumentId: `User #${targetUser.id} (${targetName} - ${targetUser.email})`,
+            updatedFields: ['2FA Disabled/Reset by Administrator'],
+            ipAddress,
+            clientId,
+            location,
+            browser,
+            os: osName,
+            deviceType,
+            systemUser: SERVER_SYSTEM_USER,
+          });
+        }
+      } catch (e) {
+        strapi.log.error('adminResetUser2FA: Failed to record audit log:', e);
+      }
+
+      return ctx.send({
+        success: true,
+        message: `2-Factor Authentication reset successfully for ${targetUser.email}.`,
+      });
+    } catch (err) {
+      strapi.log.error('2FA Controller: adminResetUser2FA error:', err);
+      return ctx.badRequest('Failed to reset user 2FA', { error: err });
+    }
+  },
+
+  async adminRegenerateUserRecoveryCodes(ctx: any) {
+    try {
+      const user = await getAdminUser(ctx, strapi);
+      if (!user) return ctx.unauthorized('User not authenticated.');
+
+      if (!isAdminOrSuperAdmin(user)) {
+        return ctx.forbidden('Access denied. Administrator privileges required.');
+      }
+
+      const { targetUserId } = ctx.request.body || {};
+      if (!targetUserId) {
+        return ctx.badRequest('Target user ID is required.');
+      }
+
+      const targetUser = await (strapi.db.query('admin::user' as any) as any).findOne({
+        where: { id: targetUserId },
+        populate: ['roles'],
+      });
+
+      if (!targetUser) {
+        return ctx.notFound('Target admin user not found.');
+      }
+
+      const user2FA = await getUser2FA(strapi, targetUserId);
+      if (!user2FA.totpEnabled || !user2FA.totpSecret) {
+        return ctx.badRequest(`Cannot regenerate recovery codes. ${targetUser.email} has not enabled 2FA yet.`);
+      }
+
+      const newCodes = generateRecoveryCodes(8);
+      await setUser2FA(strapi, targetUserId, user2FA.totpSecret, true, newCodes);
+
+      try {
+        const auditService = strapi.service('api::audit-log.audit-log' as any) as any;
+        if (auditService && typeof auditService.createLog === 'function') {
+          const rawClientId = ctx.headers?.['x-client-id'] || ctx.request?.headers?.['x-client-id'];
+          const clientId = sanitizeClientId(rawClientId) || undefined;
+          const rawIp = ctx.headers?.['x-forwarded-for'] || ctx.ip || ctx.request?.ip || '127.0.0.1';
+          const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : '127.0.0.1';
+          const location = await getLocationFromIp(ipAddress);
+          const uaString = (typeof ctx.get === 'function' ? ctx.get('user-agent') : '') || ctx.headers?.['user-agent'] || '';
+          const { browser, os: osName, deviceType } = parseUserAgent(uaString);
+
+          const adminName = `${user.firstname || ''} ${user.lastname || ''}`.trim() || user.username || user.email;
+          const targetName = `${targetUser.firstname || ''} ${targetUser.lastname || ''}`.trim() || targetUser.username || targetUser.email;
+
+          await auditService.createLog({
+            userName: adminName,
+            userEmail: user.email || 'N/A',
+            action: 'Update',
+            contentType: 'Admin 2FA Security',
+            targetDocumentId: `User #${targetUser.id} (${targetName} - ${targetUser.email})`,
+            updatedFields: ['Emergency Recovery Codes Regenerated by Administrator'],
+            ipAddress,
+            clientId,
+            location,
+            browser,
+            os: osName,
+            deviceType,
+            systemUser: SERVER_SYSTEM_USER,
+          });
+        }
+      } catch (e) {
+        strapi.log.error('adminRegenerateUserRecoveryCodes: Failed to record audit log:', e);
+      }
+
+      return ctx.send({
+        success: true,
+        message: `New recovery codes generated successfully for ${targetUser.email}.`,
+        recoveryCodes: newCodes,
+      });
+    } catch (err) {
+      strapi.log.error('2FA Controller: adminRegenerateUserRecoveryCodes error:', err);
       return ctx.badRequest('Failed to regenerate recovery codes', { error: err });
     }
   },
