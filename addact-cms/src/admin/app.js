@@ -1,3 +1,4 @@
+import { Shield, Key } from "@strapi/icons";
 import fevicon from "./extensions/addact-logo-white.svg";
 import mainlogo from "./extensions/addact-logo-white.svg";
 
@@ -634,6 +635,292 @@ function checkAndPromptPostLogin2FA(clientId) {
     .catch(() => {});
 }
 
+// ==========================================
+// 30-Minute Inactivity Auto-Logout System
+// ==========================================
+
+const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
+const INACTIVITY_WARNING_MS = 60 * 1000;      // 60 seconds warning before auto-logout
+
+function showSessionExpiredNoticeIfNeeded() {
+  if (typeof document === 'undefined') return;
+  try {
+    const timedOut = sessionStorage.getItem('strapi_session_timed_out');
+    if (!timedOut) return;
+    sessionStorage.removeItem('strapi_session_timed_out');
+
+    if (document.getElementById('strapi-session-timeout-banner')) return;
+
+    const banner = document.createElement('div');
+    banner.id = 'strapi-session-timeout-banner';
+    banner.style.cssText = `
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9999999;
+      background: #ffffff;
+      border: 1px solid #fed7aa;
+      border-left: 5px solid #f97316;
+      padding: 14px 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #1e293b;
+      max-width: 90%;
+      animation: strapiBannerSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    `;
+
+    banner.innerHTML = `
+      <style>
+        @keyframes strapiBannerSlideDown {
+          from { opacity: 0; transform: translate(-50%, -16px); }
+          to { opacity: 1; transform: translate(-50%, 0); }
+        }
+      </style>
+      <div style="width: 34px; height: 34px; border-radius: 10px; background: #fff7ed; border: 1px solid #ffedd5; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </div>
+      <div>
+        <div style="font-size: 13.5px; font-weight: 700; color: #0f172a;">Session Expired (Security Timeout)</div>
+        <div style="font-size: 12.5px; color: #64748b; margin-top: 2px;">You were automatically logged out due to 30 minutes of inactivity. Please log in again.</div>
+      </div>
+      <button id="strapi-timeout-dismiss-btn" style="
+        background: transparent;
+        border: none;
+        color: #94a3b8;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 4px 8px;
+        margin-left: 8px;
+        line-height: 1;
+      ">✕</button>
+    `;
+
+    document.body.appendChild(banner);
+
+    const closeBtn = banner.querySelector('#strapi-timeout-dismiss-btn');
+    if (closeBtn) closeBtn.onclick = () => banner.remove();
+    setTimeout(() => {
+      if (banner && banner.parentNode) banner.remove();
+    }, 10000);
+  } catch (e) {}
+}
+
+function showInactivityWarningModal(secondsLeft, onStayLoggedIn) {
+  if (typeof document === 'undefined') return;
+  let modal = document.getElementById('strapi-inactivity-warning-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'strapi-inactivity-warning-modal';
+    modal.style.cssText = `
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      padding: 20px;
+      box-sizing: border-box;
+      animation: strapiFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    `;
+
+    modal.innerHTML = `
+      <div style="
+        background: #ffffff;
+        border-radius: 24px;
+        padding: 34px 30px;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(226, 232, 240, 0.8);
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        box-sizing: border-box;
+        animation: strapiSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      ">
+        <div style="display: inline-flex; align-items: center; gap: 7px; background: #fff7ed; border: 1px solid #fed7aa; padding: 5px 12px; border-radius: 9999px; margin-bottom: 18px;">
+          <span style="display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #ea580c;"></span>
+          <span style="font-size: 11px; font-weight: 700; color: #c2410c; letter-spacing: 0.5px; text-transform: uppercase;">Inactivity Alert</span>
+        </div>
+
+        <div style="width: 58px; height: 58px; border-radius: 18px; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border: 1px solid #fed7aa; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; box-shadow: 0 8px 16px -4px rgba(234, 88, 12, 0.2);">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+
+        <h3 style="margin: 0 0 8px 0; font-size: 21px; font-weight: 800; color: #0f172a; letter-spacing: -0.02em;">Session Expiring Soon</h3>
+        <p style="margin: 0 0 18px 0; font-size: 13.5px; color: #64748b; line-height: 1.5;">
+          You have been idle. For system security, your Strapi session will automatically end in:
+        </p>
+
+        <div style="margin-bottom: 22px;">
+          <span id="strapi-inactivity-countdown" style="
+            display: inline-block;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 28px;
+            font-weight: 800;
+            color: #ea580c;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            padding: 8px 22px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+          ">${secondsLeft}s</span>
+        </div>
+
+        <div>
+          <button id="strapi-inactivity-stay-btn" style="
+            width: 100%;
+            padding: 13px 20px;
+            border: none;
+            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+            transition: all 0.15s ease;
+          ">
+            Stay Logged In
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    const stayBtn = modal.querySelector('#strapi-inactivity-stay-btn');
+    if (stayBtn) {
+      stayBtn.onclick = () => {
+        dismissInactivityWarningModal();
+        if (onStayLoggedIn) onStayLoggedIn();
+      };
+    }
+  } else {
+    const countdownEl = modal.querySelector('#strapi-inactivity-countdown');
+    if (countdownEl) countdownEl.textContent = `${secondsLeft}s`;
+  }
+}
+
+function dismissInactivityWarningModal() {
+  if (typeof document === 'undefined') return;
+  const modal = document.getElementById('strapi-inactivity-warning-modal');
+  if (modal) modal.remove();
+}
+
+async function executeAutoLogout(token, clientId) {
+  dismissInactivityWarningModal();
+
+  // 1. Send clean logout request so AuditLog registers 'Action: Logout'
+  if (token) {
+    try {
+      await fetch('/admin/logout', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json',
+          ...(clientId ? { 'X-Client-Id': clientId } : {}),
+        },
+      });
+    } catch (e) {}
+  }
+
+  // 2. Clear credentials from client storage
+  try {
+    localStorage.removeItem('jwtToken');
+    sessionStorage.removeItem('jwtToken');
+    localStorage.removeItem('userInfo');
+    sessionStorage.removeItem('userInfo');
+    sessionStorage.removeItem('strapi_2fa_setup_completed');
+    localStorage.removeItem('strapi_last_active_time');
+    sessionStorage.setItem('strapi_session_timed_out', 'true');
+  } catch (e) {}
+
+  // 3. Clean redirect to admin login page
+  window.location.href = '/admin/auth/login';
+}
+
+function setupInactivityTimeout(clientId) {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+  const path = window.location.pathname;
+  if (path.includes('/auth/login') || path.includes('/auth/register') || path.includes('/auth/forgot-password')) {
+    setTimeout(showSessionExpiredNoticeIfNeeded, 300);
+    return;
+  }
+
+  const token = getAuthToken();
+  if (!token) return;
+
+  // Initialize active timestamp
+  if (!localStorage.getItem('strapi_last_active_time')) {
+    localStorage.setItem('strapi_last_active_time', String(Date.now()));
+  }
+
+  let lastThrottle = 0;
+  const recordActivity = () => {
+    const now = Date.now();
+    if (now - lastThrottle > 4000) {
+      lastThrottle = now;
+      localStorage.setItem('strapi_last_active_time', String(now));
+      dismissInactivityWarningModal();
+    }
+  };
+
+  const activityEvents = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart', 'click'];
+  activityEvents.forEach((evt) => {
+    window.addEventListener(evt, recordActivity, { passive: true });
+  });
+
+  // Cross-tab synchronization via storage event
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'strapi_last_active_time') {
+      dismissInactivityWarningModal();
+    }
+  });
+
+  // Periodic inactivity check every 5 seconds
+  const intervalId = setInterval(() => {
+    const currentToken = getAuthToken();
+    const currentPath = window.location.pathname;
+    if (!currentToken || currentPath.includes('/auth/login')) {
+      clearInterval(intervalId);
+      return;
+    }
+
+    const lastActiveStr = localStorage.getItem('strapi_last_active_time');
+    const lastActive = lastActiveStr ? parseInt(lastActiveStr, 10) : Date.now();
+    const idleTime = Date.now() - lastActive;
+
+    if (idleTime >= INACTIVITY_TIMEOUT_MS) {
+      clearInterval(intervalId);
+      executeAutoLogout(currentToken, clientId);
+    } else if (idleTime >= INACTIVITY_TIMEOUT_MS - INACTIVITY_WARNING_MS) {
+      const remainingSec = Math.max(1, Math.ceil((INACTIVITY_TIMEOUT_MS - idleTime) / 1000));
+      showInactivityWarningModal(remainingSec, () => {
+        localStorage.setItem('strapi_last_active_time', String(Date.now()));
+        dismissInactivityWarningModal();
+      });
+    } else {
+      dismissInactivityWarningModal();
+    }
+  }, 5000);
+}
+
 export default {
   config: {
     head: {
@@ -658,7 +945,7 @@ export default {
   register(app) {
     app.addMenuLink({
       to: "plugins/audit-logs",
-      icon: () => "🛡️",
+      icon: Shield,
       name: "audit-logs",
       permissions: [],
       Component: async () => {
@@ -673,7 +960,7 @@ export default {
 
     app.addMenuLink({
       to: "plugins/2fa-security",
-      icon: () => "🔑",
+      icon: Key,
       name: "2fa-security",
       permissions: [],
       Component: async () => {
@@ -688,6 +975,9 @@ export default {
   },
   bootstrap(app) {
     const clientId = getOrCreateClientId();
+
+    // Setup 30-minute Inactivity Auto-Logout
+    setupInactivityTimeout(clientId);
 
     // Default to hiding the 2FA Management menu until admin role is confirmed
     try {
@@ -777,6 +1067,7 @@ export default {
                           localStorage.setItem('userInfo', JSON.stringify(user));
                           sessionStorage.setItem('userInfo', JSON.stringify(user));
                         }
+                        localStorage.setItem('strapi_last_active_time', String(Date.now()));
                         sessionStorage.removeItem('strapi_2fa_setup_skipped');
                         setTimeout(() => {
                           window.location.href = '/admin';
@@ -813,6 +1104,7 @@ export default {
                   localStorage.setItem('userInfo', JSON.stringify(user));
                   sessionStorage.setItem('userInfo', JSON.stringify(user));
                 }
+                localStorage.setItem('strapi_last_active_time', String(Date.now()));
               }
               sessionStorage.removeItem('strapi_2fa_setup_skipped');
               // Navigate cleanly to /admin so post-login setup check can display modal
