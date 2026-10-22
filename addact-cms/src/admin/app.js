@@ -1106,15 +1106,17 @@ export default {
                       if (token) {
                         localStorage.setItem('jwtToken', JSON.stringify(token));
                         sessionStorage.setItem('jwtToken', JSON.stringify(token));
+                        localStorage.setItem('isLoggedIn', 'true');
+                        try {
+                          document.cookie = `jwtToken=${encodeURIComponent(token)}; path=/; max-age=2592000; SameSite=Lax`;
+                        } catch (e) {}
                         if (user) {
                           localStorage.setItem('userInfo', JSON.stringify(user));
                           sessionStorage.setItem('userInfo', JSON.stringify(user));
                         }
                         localStorage.setItem('strapi_last_active_time', String(Date.now()));
+                        sessionStorage.removeItem('strapi_session_timed_out');
                         sessionStorage.removeItem('strapi_2fa_setup_skipped');
-                        setTimeout(() => {
-                          window.location.href = '/admin';
-                        }, 50);
                       }
                     } catch (e) {}
                   }
@@ -1143,17 +1145,18 @@ export default {
               if (token) {
                 localStorage.setItem('jwtToken', JSON.stringify(token));
                 sessionStorage.setItem('jwtToken', JSON.stringify(token));
+                localStorage.setItem('isLoggedIn', 'true');
+                try {
+                  document.cookie = `jwtToken=${encodeURIComponent(token)}; path=/; max-age=2592000; SameSite=Lax`;
+                } catch (e) {}
                 if (user) {
                   localStorage.setItem('userInfo', JSON.stringify(user));
                   sessionStorage.setItem('userInfo', JSON.stringify(user));
                 }
                 localStorage.setItem('strapi_last_active_time', String(Date.now()));
+                sessionStorage.removeItem('strapi_session_timed_out');
+                sessionStorage.removeItem('strapi_2fa_setup_skipped');
               }
-              sessionStorage.removeItem('strapi_2fa_setup_skipped');
-              // Navigate cleanly to /admin so post-login setup check can display modal
-              setTimeout(() => {
-                window.location.href = '/admin';
-              }, 50);
             }
           } catch (e) {}
         }
