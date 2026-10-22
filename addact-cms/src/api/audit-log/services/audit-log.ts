@@ -23,6 +23,20 @@ export interface CreateAuditLogPayload {
   systemUser?: string;
 }
 
+function parseAndValidateDate(dateStr: any, paramName: string): Date | null {
+  if (!dateStr) return null;
+  const str = String(dateStr).trim();
+  if (!str) return null;
+  const timestamp = Date.parse(str);
+  if (isNaN(timestamp)) {
+    const error: any = new Error(`Invalid date format for '${paramName}': "${dateStr}". Expected a valid ISO-8601 date (e.g. YYYY-MM-DD).`);
+    error.status = 400;
+    error.name = 'ValidationError';
+    throw error;
+  }
+  return new Date(timestamp);
+}
+
 export default factories.createCoreService('api::audit-log.audit-log' as any, ({ strapi }) => ({
   /**
    * Fail-safe log creation.
@@ -70,8 +84,9 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
    */
   async findLogs(params: any = {}) {
     try {
-      const page = parseInt(params.page, 10) || 1;
-      const pageSize = parseInt(params.pageSize, 10) || 20;
+      const page = Math.max(1, parseInt(params.page, 10) || 1);
+      // Enforce reasonable pagination limit between 1 and 100 (default: 20)
+      const pageSize = Math.min(100, Math.max(1, parseInt(params.pageSize, 10) || 20));
       const filters: any = {};
 
       if (params.action && params.action !== 'all') {
@@ -94,13 +109,30 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
         ];
       }
 
-      if (params.startDate || params.endDate) {
+      let startDateObj: Date | null = null;
+      let endDateObj: Date | null = null;
+
+      if (params.startDate) {
+        startDateObj = parseAndValidateDate(params.startDate, 'startDate');
+      }
+
+      if (params.endDate) {
+        endDateObj = parseAndValidateDate(params.endDate, 'endDate');
+      }
+
+      if (startDateObj && endDateObj && startDateObj.getTime() > endDateObj.getTime()) {
+        const error: any = new Error(`'startDate' (${params.startDate}) cannot be after 'endDate' (${params.endDate}).`);
+        error.status = 400;
+        error.name = 'ValidationError';
+        throw error;
+      }
+
+      if (startDateObj || endDateObj) {
         filters.createdAt = {};
-        if (params.startDate) {
-          filters.createdAt.$gte = new Date(params.startDate).toISOString();
+        if (startDateObj) {
+          filters.createdAt.$gte = startDateObj.toISOString();
         }
-        if (params.endDate) {
-          const endDateObj = new Date(params.endDate);
+        if (endDateObj) {
           endDateObj.setHours(23, 59, 59, 999);
           filters.createdAt.$lte = endDateObj.toISOString();
         }
@@ -126,7 +158,10 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
           total,
         },
       };
-    } catch (err) {
+    } catch (err: any) {
+      if (err?.name === 'ValidationError' || err?.status === 400) {
+        throw err;
+      }
       strapi.log.error('AuditLogService: Error finding audit logs:', err);
       return { data: [], pagination: { page: 1, pageSize: 20, pageCount: 0, total: 0 } };
     }
@@ -150,10 +185,14 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
   },
 
   /**
-   * Export matching audit logs for JSON download
+   * Export matching audit logs for JSON download with pagination and truncation transparency
    */
   async exportLogs(params: any = {}) {
     try {
+      const page = Math.max(1, parseInt(params.page, 10) || 1);
+      const pageSize = Math.min(10000, Math.max(1, parseInt(params.pageSize || params.limit, 10) || 10000));
+      const offset = params.offset !== undefined ? Math.max(0, parseInt(params.offset, 10)) : (page - 1) * pageSize;
+
       const filters: any = {};
 
       if (params.action && params.action !== 'all') {
@@ -176,25 +215,47 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
         ];
       }
 
-      if (params.startDate || params.endDate) {
+      let startDateObj: Date | null = null;
+      let endDateObj: Date | null = null;
+
+      if (params.startDate) {
+        startDateObj = parseAndValidateDate(params.startDate, 'startDate');
+      }
+
+      if (params.endDate) {
+        endDateObj = parseAndValidateDate(params.endDate, 'endDate');
+      }
+
+      if (startDateObj && endDateObj && startDateObj.getTime() > endDateObj.getTime()) {
+        const error: any = new Error(`'startDate' (${params.startDate}) cannot be after 'endDate' (${params.endDate}).`);
+        error.status = 400;
+        error.name = 'ValidationError';
+        throw error;
+      }
+
+      if (startDateObj || endDateObj) {
         filters.createdAt = {};
-        if (params.startDate) {
-          filters.createdAt.$gte = new Date(params.startDate).toISOString();
+        if (startDateObj) {
+          filters.createdAt.$gte = startDateObj.toISOString();
         }
-        if (params.endDate) {
-          const endDateObj = new Date(params.endDate);
+        if (endDateObj) {
           endDateObj.setHours(23, 59, 59, 999);
           filters.createdAt.$lte = endDateObj.toISOString();
         }
       }
 
+      const total = await (strapi.db.query('api::audit-log.audit-log') as any).count({
+        where: filters,
+      });
+
       const results = await (strapi.db.query('api::audit-log.audit-log') as any).findMany({
         where: filters,
         orderBy: { createdAt: 'desc' },
-        limit: 10000,
+        limit: pageSize,
+        offset,
       });
 
-      return (results || []).map((log: any) => ({
+      const formattedLogs = (results || []).map((log: any) => ({
         id: log.targetDocumentId || log.id,
         user: {
           name: log.userName,
@@ -214,9 +275,38 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
         },
         timestamp: log.createdAt,
       }));
-    } catch (err) {
+
+      const isTruncated = total > offset + formattedLogs.length;
+
+      return {
+        data: formattedLogs,
+        pagination: {
+          page,
+          pageSize,
+          pageCount: Math.ceil(total / pageSize) || 1,
+          total,
+          isTruncated,
+          warning: isTruncated
+            ? `Notice: Export contains ${formattedLogs.length} of ${total} total matching audit logs. To obtain the remaining records, use pagination parameters (?page=${page + 1}&pageSize=${pageSize}) or refine your date filter.`
+            : null,
+        },
+      };
+    } catch (err: any) {
+      if (err?.name === 'ValidationError' || err?.status === 400) {
+        throw err;
+      }
       strapi.log.error('AuditLogService: Error exporting audit logs:', err);
-      return [];
+      return {
+        data: [],
+        pagination: {
+          page: 1,
+          pageSize: 10000,
+          pageCount: 0,
+          total: 0,
+          isTruncated: false,
+          warning: null,
+        },
+      };
     }
   },
 

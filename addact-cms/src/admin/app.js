@@ -653,8 +653,10 @@ function checkAndPromptPostLogin2FA(clientId) {
       const isEnabled = typeof data.isEnabled === 'boolean' ? data.isEnabled : json?.isEnabled;
       const isAdmin = typeof data.isAdmin === 'boolean' ? data.isAdmin : json?.isAdmin;
 
-      // Apply RBAC sidebar visibility
-      applyMenuVisibility(Boolean(isAdmin));
+      // Apply RBAC sidebar visibility if explicitly provided
+      if (typeof isAdmin === 'boolean') {
+        applyMenuVisibility(isAdmin);
+      }
 
       // 2FA is strictly MANDATORY: If 2FA is NOT enabled, always enforce setup popup
       if (isEnabled === false) {
@@ -1022,7 +1024,7 @@ export default {
     // Setup 1-Hour Inactivity Auto-Logout
     setupInactivityTimeout(clientId);
 
-    // Default to hiding the 2FA Management menu until admin role is confirmed
+    // Check if user role is known, otherwise keep 2FA menu visible by default
     try {
       const userRaw = localStorage.getItem('userInfo') || sessionStorage.getItem('userInfo');
       if (userRaw) {
@@ -1033,10 +1035,10 @@ export default {
         const isSuperOrAdmin = roles.some((r) => r.includes('super-admin') || r.includes('admin') || r.includes('administrator'));
         applyMenuVisibility(isSuperOrAdmin);
       } else {
-        applyMenuVisibility(false);
+        applyMenuVisibility(true);
       }
     } catch (e) {
-      applyMenuVisibility(false);
+      applyMenuVisibility(true);
     }
 
     // Schedule post-login 2FA checks when admin loads

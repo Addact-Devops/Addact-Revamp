@@ -6,19 +6,42 @@ import { getLocationFromIp, SERVER_SYSTEM_USER, sanitizeClientId } from '../../.
 async function getAdminUser(ctx: any, strapi: any): Promise<any> {
   let user = ctx.state?.user;
 
-  const authHeader = ctx.headers?.authorization || ctx.header?.authorization;
+  const authHeader =
+    ctx.headers?.authorization ||
+    ctx.header?.authorization ||
+    ctx.request?.headers?.authorization ||
+    ctx.request?.header?.authorization;
   if (!user && authHeader) {
     try {
       const token = authHeader.replace(/^Bearer\s+/i, '').trim();
       if (token) {
-        let payload: any = null;
+        let userId: any = null;
+
+        // 1. Validate using Strapi's supported admin token service
         try {
-          payload = jwt.decode(token);
+          const tokenService = (strapi as any).service('admin::token');
+          if (tokenService && typeof tokenService.decodeJwtToken === 'function') {
+            const decoded = tokenService.decodeJwtToken(token);
+            if (decoded && decoded.isValid && decoded.payload) {
+              userId = decoded.payload.id || decoded.payload.userId;
+            }
+          }
         } catch (e) {}
 
-        if (payload) {
-          const userId = payload.id || payload.userId;
-          if (userId) {
+        // 2. Validate using jwt.verify with admin secret
+        if (!userId) {
+          try {
+            const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET) as string;
+            if (jwtSecret) {
+              const verifiedPayload: any = jwt.verify(token, jwtSecret);
+              if (verifiedPayload) userId = verifiedPayload.id || verifiedPayload.userId;
+            }
+          } catch (e) {
+            // Reject invalid or expired token
+          }
+        }
+
+        if (userId) {
             try {
               const adminUserService = (strapi as any).service('admin::user');
               if (adminUserService && typeof adminUserService.findOne === 'function') {
@@ -34,11 +57,10 @@ async function getAdminUser(ctx: any, strapi: any): Promise<any> {
             }
           }
         }
+      } catch (err) {
+        strapi.log.error('AuditLog Controller: getAdminUser error:', err);
       }
-    } catch (err) {
-      strapi.log.error('AuditLog Controller: getAdminUser error:', err);
     }
-  }
 
   if (user && user.id) {
     try {
@@ -89,9 +111,6 @@ function isAdminOrSuperAdmin(user: any): boolean {
     return true;
   }
 
-  // Primary Super Admin (ID 1)
-  if (user.id === 1 || user.id === '1') return true;
-
   return false;
 }
 
@@ -106,9 +125,9 @@ export default factories.createCoreController('api::audit-log.audit-log' as any,
       const service = strapi.service('api::audit-log.audit-log' as any) as any;
       const result = await service.findLogs(ctx.query);
       return ctx.send(result);
-    } catch (err) {
+    } catch (err: any) {
       strapi.log.error('AuditLog Controller findLogs error:', err);
-      return ctx.badRequest('Failed to fetch audit logs', { error: err });
+      return ctx.badRequest(err?.message || 'Failed to fetch audit logs', { error: err });
     }
   },
 
@@ -136,11 +155,20 @@ export default factories.createCoreController('api::audit-log.audit-log' as any,
       }
 
       const service = strapi.service('api::audit-log.audit-log' as any) as any;
-      const data = await service.exportLogs(ctx.query);
+      const result = await service.exportLogs(ctx.query);
 
       ctx.set('Content-Type', 'application/json');
       ctx.set('Content-Disposition', `attachment; filename=cms-audit-logs-${new Date().toISOString().slice(0, 10)}.json`);
-      return ctx.send(JSON.stringify(data, null, 2));
+      if (result.pagination) {
+        ctx.set('X-Total-Count', String(result.pagination.total));
+        ctx.set('X-Export-Page', String(result.pagination.page));
+        ctx.set('X-Export-PageSize', String(result.pagination.pageSize));
+        if (result.pagination.isTruncated) {
+          ctx.set('X-Export-Truncated', 'true');
+          ctx.set('X-Export-Warning', String(result.pagination.warning));
+        }
+      }
+      return ctx.send(JSON.stringify(result, null, 2));
     } catch (err) {
       strapi.log.error('AuditLog Controller exportLogs error:', err);
       return ctx.badRequest('Failed to export audit logs', { error: err });

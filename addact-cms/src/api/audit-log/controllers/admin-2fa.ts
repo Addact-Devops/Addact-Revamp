@@ -14,6 +14,70 @@ function generateRecoveryCodes(count = 8): string[] {
   return codes;
 }
 
+function getEncryptionKey(strapi: any): Buffer {
+  const secret =
+    strapi.config.get('admin.secrets.encryptionKey') ||
+    process.env.ENCRYPTION_KEY ||
+    strapi.config.get('admin.auth.secret') ||
+    process.env.ADMIN_JWT_SECRET ||
+    'fallback-local-key';
+  return crypto.createHash('sha256').update(String(secret)).digest();
+}
+
+/**
+ * Encrypt TOTP secret at rest using AES-256-GCM.
+ */
+function encryptSecret(text: string | null, strapi: any): string | null {
+  if (!text) return null;
+  try {
+    const key = getEncryptionKey(strapi);
+    const iv = crypto.randomBytes(16);
+    const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    const authTag = cipher.getAuthTag().toString('hex');
+    return `enc:${iv.toString('hex')}:${authTag}:${encrypted}`;
+  } catch (err) {
+    strapi.log.error('2FA encryptSecret error:', err);
+    return text;
+  }
+}
+
+/**
+ * Decrypt TOTP secret from storage. Preserves backward compatibility with legacy plaintext secrets.
+ */
+function decryptSecret(encryptedText: string | null, strapi: any): string | null {
+  if (!encryptedText) return null;
+  if (!encryptedText.startsWith('enc:')) {
+    // Legacy plaintext backward compatibility
+    return encryptedText;
+  }
+  try {
+    const parts = encryptedText.split(':');
+    if (parts.length !== 4) return null;
+    const iv = Buffer.from(parts[1], 'hex');
+    const authTag = Buffer.from(parts[2], 'hex');
+    const ciphertext = parts[3];
+    const key = getEncryptionKey(strapi);
+    const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
+    decipher.setAuthTag(authTag);
+    let decrypted = decipher.update(ciphertext, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
+  } catch (err) {
+    strapi.log.error('2FA decryptSecret error:', err);
+    return null;
+  }
+}
+
+/**
+ * Hash recovery code with SHA-256 so raw recovery codes are never stored in plaintext at rest.
+ */
+function hashRecoveryCode(code: string): string {
+  const normalized = code.replace(/[^A-Z0-9]/g, '').toUpperCase();
+  return crypto.createHash('sha256').update(normalized).digest('hex');
+}
+
 async function ensure2FATable(strapi: any) {
   try {
     const knex = strapi.db.connection;
@@ -36,6 +100,18 @@ async function ensure2FATable(strapi: any) {
         strapi.log.info('2FA Controller: Added recovery_codes column to strapi_2fa_secrets table.');
       }
     }
+
+    // Shared rate limits table for multi-instance deployments and restart persistence
+    const hasRateLimitsTable = await knex.schema.hasTable('strapi_2fa_rate_limits');
+    if (!hasRateLimitsTable) {
+      await knex.schema.createTable('strapi_2fa_rate_limits', (table: any) => {
+        table.string('key', 255).primary();
+        table.integer('count').defaultTo(0);
+        table.bigInteger('locked_until').nullable();
+        table.timestamp('updated_at').defaultTo(knex.fn.now());
+      });
+      strapi.log.info('2FA Controller: Created strapi_2fa_rate_limits database table.');
+    }
   } catch (err) {
     strapi.log.error('2FA Controller: ensure2FATable error:', err);
   }
@@ -54,21 +130,21 @@ export async function getUser2FA(strapi: any, userId: number | string) {
         } catch (e) {}
       }
       return {
-        totpSecret: row.totp_secret || null,
+        totpSecret: decryptSecret(row.totp_secret, strapi),
         totpEnabled: Boolean(row.totp_enabled),
         recoveryCodes,
       };
     }
   } catch (e) {}
 
-  // Fallback to admin::user record if table lookup yields nothing
+  // Fallback check to admin::user record if table lookup yields nothing (legacy migration)
   try {
     const dbUser = await (strapi.db.query('admin::user' as any) as any).findOne({
       where: { id: userId },
     });
-    if (dbUser) {
+    if (dbUser && dbUser.totpEnabled) {
       return {
-        totpSecret: dbUser.totpSecret || null,
+        totpSecret: decryptSecret(dbUser.totpSecret, strapi),
         totpEnabled: Boolean(dbUser.totpEnabled),
         recoveryCodes: [],
       };
@@ -90,14 +166,23 @@ export async function setUser2FA(
     const knex = strapi.db.connection;
     const existing = await knex('strapi_2fa_secrets').where({ user_id: String(userId) }).first();
 
+    const encryptedSecret = secret ? encryptSecret(secret, strapi) : null;
+
+    let storedRecoveryCodes: string | null = null;
+    if (recoveryCodes !== undefined && recoveryCodes !== null) {
+      // Store recovery codes strictly as secure SHA-256 hashes
+      const hashedCodes = recoveryCodes.map((code) => hashRecoveryCode(code));
+      storedRecoveryCodes = JSON.stringify(hashedCodes);
+    }
+
     const updateData: any = {
-      totp_secret: secret,
+      totp_secret: encryptedSecret,
       totp_enabled: enabled,
       updated_at: knex.fn.now(),
     };
 
     if (recoveryCodes !== undefined) {
-      updateData.recovery_codes = recoveryCodes ? JSON.stringify(recoveryCodes) : null;
+      updateData.recovery_codes = storedRecoveryCodes;
     } else if (secret === null) {
       updateData.recovery_codes = null;
     }
@@ -110,26 +195,43 @@ export async function setUser2FA(
         ...updateData,
       });
     }
+
+    // Clean up any legacy plaintext authentication secrets from admin-user record to avoid data duplication
+    if (secret === null) {
+      try {
+        await (strapi.db.query('admin::user' as any) as any).update({
+          where: { id: userId },
+          data: {
+            totpSecret: null,
+            totpEnabled: false,
+          },
+        });
+      } catch (e) {}
+    }
   } catch (e) {
     strapi.log.error('2FA Controller: setUser2FA error:', e);
   }
-
-  // Backup write to admin::user record
-  try {
-    await (strapi.db.query('admin::user' as any) as any).update({
-      where: { id: userId },
-      data: {
-        totpSecret: secret,
-        totpEnabled: enabled,
-      },
-    });
-  } catch (e) {}
 }
 
-async function getAdminUser(ctx: any, strapi: any): Promise<any> {
+export async function getAdminUser(ctx: any, strapi: any): Promise<any> {
   let user = ctx.state?.user;
 
-  const authHeader = ctx.headers?.authorization || ctx.header?.authorization;
+  if (user && (!user.roles || user.roles.length === 0)) {
+    try {
+      const fullUser = await (strapi.db.query('admin::user' as any) as any).findOne({
+        where: { id: user.id },
+        populate: ['roles'],
+      });
+      if (fullUser) user = fullUser;
+    } catch (e) {}
+  }
+
+  const authHeader =
+    ctx.headers?.authorization ||
+    ctx.header?.authorization ||
+    ctx.request?.headers?.authorization ||
+    ctx.request?.header?.authorization;
+
   if (!user && authHeader) {
     try {
       let token = authHeader.replace(/^Bearer\s+/i, '').trim();
@@ -150,14 +252,13 @@ async function getAdminUser(ctx: any, strapi: any): Promise<any> {
 
         if (!userId) {
           try {
-            const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET || 'strapi-admin-secret') as string;
-            const payload: any = jwt.verify(token, jwtSecret);
-            if (payload) userId = payload.id || payload.userId;
-          } catch (e) {
-            try {
-              const payload: any = jwt.decode(token);
+            const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET) as string;
+            if (jwtSecret) {
+              const payload: any = jwt.verify(token, jwtSecret);
               if (payload) userId = payload.id || payload.userId;
-            } catch (e2) {}
+            }
+          } catch (e) {
+            // Invalid or expired token: reject without falling back to unverified jwt.decode()
           }
         }
 
@@ -180,9 +281,14 @@ function issueAdminJwtToken(strapi: any, user: any): string {
     if (tokenService && typeof tokenService.createJwtToken === 'function') {
       return tokenService.createJwtToken(user);
     }
-  } catch (e) {}
+  } catch (e) {
+    strapi.log.error('[2FA Issue Token] Failed to create token via admin::token service:', e);
+  }
 
-  const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET || 'strapi-admin-secret') as string;
+  const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET) as string;
+  if (!jwtSecret) {
+    throw new Error('Admin JWT secret is not configured. Token issuance failed securely.');
+  }
   return jwt.sign({ id: user.id }, jwtSecret, { expiresIn: '30d' });
 }
 
@@ -196,7 +302,7 @@ function sanitizeAdminUser(user: any) {
   return copy;
 }
 
-function isAdminOrSuperAdmin(user: any): boolean {
+export function isAdminOrSuperAdmin(user: any): boolean {
   if (!user) return false;
 
   const roles = user.roles || [];
@@ -235,43 +341,97 @@ function isAdminOrSuperAdmin(user: any): boolean {
 }
 
 const pendingSetupSecrets = new Map<number | string, string>();
-const failedAttemptsMap = new Map<number | string, { count: number; lockedUntil?: number }>();
+const memoryFallbackRateLimitMap = new Map<string, { count: number; lockedUntil?: number }>();
 
-function checkRateLimit(userId: number | string): { allowed: boolean; message?: string } {
-  const record = failedAttemptsMap.get(userId);
-  if (!record) return { allowed: true };
-
+/**
+ * Shared rate-limiting across multi-instance deployments using MySQL database table,
+ * with memory map fallback in case of database unavailability.
+ */
+async function checkRateLimit(strapi: any, key: string, label = '2FA'): Promise<{ allowed: boolean; message?: string }> {
+  const strKey = String(key);
   const now = Date.now();
-  if (record.lockedUntil && now < record.lockedUntil) {
-    const secondsRemaining = Math.ceil((record.lockedUntil - now) / 1000);
-    return {
-      allowed: false,
-      message: `Too many failed 2FA attempts. Account locked for 2FA for ${secondsRemaining} seconds.`,
-    };
-  }
 
-  if (record.lockedUntil && now >= record.lockedUntil) {
-    failedAttemptsMap.delete(userId);
-    return { allowed: true };
+  try {
+    await ensure2FATable(strapi);
+    const knex = strapi.db.connection;
+    const row = await knex('strapi_2fa_rate_limits').where({ key: strKey }).first();
+
+    if (row && row.locked_until) {
+      const lockedUntil = Number(row.locked_until);
+      if (now < lockedUntil) {
+        const secondsRemaining = Math.ceil((lockedUntil - now) / 1000);
+        return {
+          allowed: false,
+          message: `Too many failed ${label} attempts. Temporarily locked for ${secondsRemaining} seconds.`,
+        };
+      }
+      // Lock period has expired: remove expired entry
+      await knex('strapi_2fa_rate_limits').where({ key: strKey }).delete();
+    }
+  } catch (err) {
+    strapi.log.warn('2FA: Shared rate-limit check failed, falling back to memory map:', err);
+    const memRecord = memoryFallbackRateLimitMap.get(strKey);
+    if (memRecord && memRecord.lockedUntil && now < memRecord.lockedUntil) {
+      const secondsRemaining = Math.ceil((memRecord.lockedUntil - now) / 1000);
+      return {
+        allowed: false,
+        message: `Too many failed ${label} attempts. Temporarily locked for ${secondsRemaining} seconds.`,
+      };
+    }
   }
 
   return { allowed: true };
 }
 
-function recordFailedAttempt(userId: number | string) {
+async function recordFailedAttempt(strapi: any, key: string) {
+  const strKey = String(key);
   const now = Date.now();
-  const record = failedAttemptsMap.get(userId) || { count: 0 };
-  record.count += 1;
 
-  if (record.count >= 5) {
-    record.lockedUntil = now + 5 * 60 * 1000;
+  try {
+    await ensure2FATable(strapi);
+    const knex = strapi.db.connection;
+    const existing = await knex('strapi_2fa_rate_limits').where({ key: strKey }).first();
+
+    const newCount = (existing ? Number(existing.count || 0) : 0) + 1;
+    const lockedUntil = newCount >= 5 ? now + 5 * 60 * 1000 : null;
+
+    if (existing) {
+      await knex('strapi_2fa_rate_limits')
+        .where({ key: strKey })
+        .update({
+          count: newCount,
+          locked_until: lockedUntil,
+          updated_at: knex.fn.now(),
+        });
+    } else {
+      await knex('strapi_2fa_rate_limits').insert({
+        key: strKey,
+        count: newCount,
+        locked_until: lockedUntil,
+        updated_at: knex.fn.now(),
+      });
+    }
+  } catch (err) {
+    strapi.log.warn('2FA: Shared rate-limit record failed, falling back to memory map:', err);
   }
 
-  failedAttemptsMap.set(userId, record);
+  // Also maintain in-memory fallback
+  const memRecord = memoryFallbackRateLimitMap.get(strKey) || { count: 0 };
+  memRecord.count += 1;
+  if (memRecord.count >= 5) {
+    memRecord.lockedUntil = now + 5 * 60 * 1000;
+  }
+  memoryFallbackRateLimitMap.set(strKey, memRecord);
 }
 
-function clearFailedAttempts(userId: number | string) {
-  failedAttemptsMap.delete(userId);
+async function clearFailedAttempts(strapi: any, key: string) {
+  const strKey = String(key);
+  try {
+    await ensure2FATable(strapi);
+    const knex = strapi.db.connection;
+    await knex('strapi_2fa_rate_limits').where({ key: strKey }).delete();
+  } catch (err) {}
+  memoryFallbackRateLimitMap.delete(strKey);
 }
 
 export default ({ strapi }: { strapi: any }) => ({
@@ -281,13 +441,6 @@ export default ({ strapi }: { strapi: any }) => ({
       if (!user) return ctx.unauthorized('User not authenticated.');
 
       const user2FA = await getUser2FA(strapi, user.id);
-      let codes = user2FA.recoveryCodes;
-
-      if (user2FA.totpEnabled && (!codes || codes.length === 0)) {
-        codes = generateRecoveryCodes(8);
-        await setUser2FA(strapi, user.id, user2FA.totpSecret, true, codes);
-      }
-
       const isAdmin = isAdminOrSuperAdmin(user);
 
       return ctx.send({
@@ -295,7 +448,8 @@ export default ({ strapi }: { strapi: any }) => ({
         email: user.email,
         isAdmin,
         roles: (user.roles || []).map((r: any) => r.name || r.code),
-        recoveryCodes: user2FA.totpEnabled ? codes : [],
+        hasRecoveryCodes: Boolean(user2FA.recoveryCodes && user2FA.recoveryCodes.length > 0),
+        recoveryCodesCount: user2FA.recoveryCodes ? user2FA.recoveryCodes.length : 0,
       });
     } catch (err) {
       return ctx.badRequest('Failed to fetch 2FA status', { error: err });
@@ -339,7 +493,7 @@ export default ({ strapi }: { strapi: any }) => ({
         return ctx.badRequest('Verification code (6 digits) and secret are required.');
       }
 
-      const rateCheck = checkRateLimit(user.id);
+      const rateCheck = await checkRateLimit(strapi, `user:${user.id}`);
       if (!rateCheck.allowed) {
         return ctx.badRequest(rateCheck.message);
       }
@@ -352,11 +506,11 @@ export default ({ strapi }: { strapi: any }) => ({
       });
 
       if (!verified) {
-        recordFailedAttempt(user.id);
+        await recordFailedAttempt(strapi, `user:${user.id}`);
         return ctx.badRequest('Invalid 6-digit verification code. Please check your Authenticator app.');
       }
 
-      clearFailedAttempts(user.id);
+      await clearFailedAttempts(strapi, `user:${user.id}`);
 
       const recoveryCodes = generateRecoveryCodes(8);
       await setUser2FA(strapi, user.id, secretToVerify, true, recoveryCodes);
@@ -410,39 +564,48 @@ export default ({ strapi }: { strapi: any }) => ({
 
   async verifyLogin2FA(ctx: any) {
     try {
-      const { challengeToken, token, email } = ctx.request.body || {};
+      const { challengeToken, token } = ctx.request.body || {};
       const otpCode = token || ctx.headers['x-2fa-code'];
+
+      if (!challengeToken) {
+        return ctx.badRequest('A valid 2FA challenge token is required. Please login with your credentials first.');
+      }
 
       if (!otpCode) {
         return ctx.badRequest('Verification code or recovery code is required.');
       }
 
+      const rawIp = ctx.headers?.['x-forwarded-for'] || ctx.ip || ctx.request?.ip || '127.0.0.1';
+      const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : '127.0.0.1';
+
+      const ipRate = await checkRateLimit(strapi, `ip:${ipAddress}`, 'login');
+      if (!ipRate.allowed) {
+        return ctx.badRequest(ipRate.message);
+      }
+
+      const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET) as string;
+      if (!jwtSecret) {
+        strapi.log.error('[2FA Verify] Admin JWT secret is not configured.');
+        return ctx.internalServerError('Authentication service unavailable.');
+      }
+
       let targetUserId: number | string | null = null;
-      const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET || 'strapi-admin-secret') as string;
-
-      if (challengeToken) {
-        try {
-          const decoded: any = jwt.verify(challengeToken, jwtSecret);
-          if (decoded && decoded.requires2FA && decoded.userId) {
-            targetUserId = decoded.userId;
-          }
-        } catch (e) {
-          return ctx.badRequest('Invalid or expired 2FA challenge token. Please login again.');
+      try {
+        const decoded: any = jwt.verify(challengeToken, jwtSecret);
+        if (decoded && decoded.requires2FA && decoded.type === '2fa_challenge' && decoded.userId) {
+          targetUserId = decoded.userId;
+        } else {
+          return ctx.badRequest('Invalid 2FA challenge token payload. Please login again.');
         }
+      } catch (e) {
+        await recordFailedAttempt(strapi, `ip:${ipAddress}`);
+        return ctx.badRequest('Invalid or expired 2FA challenge token. Please login again.');
       }
 
-      let user: any = null;
-      if (targetUserId) {
-        user = await (strapi.db.query('admin::user' as any) as any).findOne({
-          where: { id: targetUserId },
-          populate: ['roles'],
-        });
-      } else if (email) {
-        user = await (strapi.db.query('admin::user' as any) as any).findOne({
-          where: { email: email.trim().toLowerCase() },
-          populate: ['roles'],
-        });
-      }
+      const user = await (strapi.db.query('admin::user' as any) as any).findOne({
+        where: { id: targetUserId },
+        populate: ['roles'],
+      });
 
       if (!user) {
         return ctx.notFound('Admin user not found.');
@@ -454,7 +617,7 @@ export default ({ strapi }: { strapi: any }) => ({
         return ctx.badRequest('2FA is not enabled for this account.');
       }
 
-      const rateCheck = checkRateLimit(user.id);
+      const rateCheck = await checkRateLimit(strapi, `user:${user.id}`);
       if (!rateCheck.allowed) {
         return ctx.badRequest(rateCheck.message);
       }
@@ -473,7 +636,10 @@ export default ({ strapi }: { strapi: any }) => ({
 
       if (!verified && user2FA.recoveryCodes && user2FA.recoveryCodes.length > 0) {
         const normalizedInput = rawOtp.replace(/[^A-Z0-9]/g, '');
+        const inputHash = hashRecoveryCode(normalizedInput);
+
         const matchIndex = user2FA.recoveryCodes.findIndex((c: string) => {
+          if (c === inputHash) return true;
           const normalizedCode = c.replace(/[^A-Z0-9]/g, '').toUpperCase();
           return normalizedCode === normalizedInput;
         });
@@ -482,17 +648,25 @@ export default ({ strapi }: { strapi: any }) => ({
           verified = true;
           const updatedCodes = [...user2FA.recoveryCodes];
           updatedCodes.splice(matchIndex, 1);
-          await setUser2FA(strapi, user.id, user2FA.totpSecret, true, updatedCodes);
+          const knex = strapi.db.connection;
+          await knex('strapi_2fa_secrets')
+            .where({ user_id: String(user.id) })
+            .update({
+              recovery_codes: JSON.stringify(updatedCodes),
+              updated_at: knex.fn.now(),
+            });
           strapi.log.info(`2FA Controller: User ${user.email} logged in using an emergency recovery code.`);
         }
       }
 
       if (!verified) {
-        recordFailedAttempt(user.id);
+        await recordFailedAttempt(strapi, `user:${user.id}`);
+        await recordFailedAttempt(strapi, `ip:${ipAddress}`);
         return ctx.badRequest('Invalid 6-digit verification code or recovery code. Access denied.');
       }
 
-      clearFailedAttempts(user.id);
+      await clearFailedAttempts(strapi, `user:${user.id}`);
+      await clearFailedAttempts(strapi, `ip:${ipAddress}`);
 
       try {
         const auditService = strapi.service('api::audit-log.audit-log' as any) as any;
@@ -552,7 +726,7 @@ export default ({ strapi }: { strapi: any }) => ({
         return ctx.badRequest('Verification code is required to disable 2FA.');
       }
 
-      const rateCheck = checkRateLimit(user.id);
+      const rateCheck = await checkRateLimit(strapi, `user:${user.id}`);
       if (!rateCheck.allowed) {
         return ctx.badRequest(rateCheck.message);
       }
@@ -567,7 +741,9 @@ export default ({ strapi }: { strapi: any }) => ({
 
       if (!verified && user2FA.recoveryCodes && user2FA.recoveryCodes.length > 0) {
         const normalizedInput = rawCode.replace(/[^A-Z0-9]/g, '');
+        const inputHash = hashRecoveryCode(normalizedInput);
         const matchIndex = user2FA.recoveryCodes.findIndex((c: string) => {
+          if (c === inputHash) return true;
           const normalizedCode = c.replace(/[^A-Z0-9]/g, '').toUpperCase();
           return normalizedCode === normalizedInput;
         });
@@ -577,11 +753,11 @@ export default ({ strapi }: { strapi: any }) => ({
       }
 
       if (!verified) {
-        recordFailedAttempt(user.id);
+        await recordFailedAttempt(strapi, `user:${user.id}`);
         return ctx.badRequest('Invalid code. Cannot disable 2FA.');
       }
 
-      clearFailedAttempts(user.id);
+      await clearFailedAttempts(strapi, `user:${user.id}`);
 
       await setUser2FA(strapi, user.id, null, false, null);
 
@@ -601,12 +777,80 @@ export default ({ strapi }: { strapi: any }) => ({
         return ctx.badRequest('2FA is not enabled for this account.');
       }
 
+      // Step-up authentication: Require fresh TOTP verification code to prevent unauthorized regeneration from compromised sessions
+      const { token } = ctx.request.body || {};
+      const otpCode = token || ctx.headers['x-2fa-code'];
+      if (!otpCode) {
+        return ctx.badRequest('Fresh 6-digit TOTP verification code is required to regenerate recovery codes.');
+      }
+
+      const rateCheck = await checkRateLimit(strapi, `user:${user.id}`);
+      if (!rateCheck.allowed) {
+        return ctx.badRequest(rateCheck.message);
+      }
+
+      const verified = speakeasy.totp.verify({
+        secret: user2FA.totpSecret,
+        encoding: 'base32',
+        token: String(otpCode).trim(),
+        window: 1,
+      });
+
+      if (!verified) {
+        await recordFailedAttempt(strapi, `user:${user.id}`);
+        return ctx.badRequest('Invalid 6-digit verification code. Failed to regenerate recovery codes.');
+      }
+
+      await clearFailedAttempts(strapi, `user:${user.id}`);
+
+      const knex = strapi.db.connection;
       const newCodes = generateRecoveryCodes(8);
-      await setUser2FA(strapi, user.id, user2FA.totpSecret, true, newCodes);
+      const hashedCodes = newCodes.map((c) => hashRecoveryCode(c));
+
+      // Invalidate previous codes and set new hashed codes atomically within a transaction
+      await knex.transaction(async (trx: any) => {
+        await trx('strapi_2fa_secrets')
+          .where({ user_id: String(user.id) })
+          .update({
+            recovery_codes: JSON.stringify(hashedCodes),
+            updated_at: trx.fn.now(),
+          });
+      });
+
+      // Record Audit Log for recovery codes regeneration
+      try {
+        const auditService = strapi.service('api::audit-log.audit-log' as any) as any;
+        if (auditService && typeof auditService.createLog === 'function') {
+          const rawClientId = ctx.headers?.['x-client-id'] || ctx.request?.headers?.['x-client-id'];
+          const clientId = sanitizeClientId(rawClientId) || undefined;
+          const rawIp = ctx.headers?.['x-forwarded-for'] || ctx.ip || ctx.request?.ip || '127.0.0.1';
+          const ipAddress = typeof rawIp === 'string' ? rawIp.split(',')[0].trim() : '127.0.0.1';
+          const location = await getLocationFromIp(ipAddress);
+          const uaString = (typeof ctx.get === 'function' ? ctx.get('user-agent') : '') || ctx.headers?.['user-agent'] || '';
+          const { browser, os: osName, deviceType } = parseUserAgent(uaString);
+          const adminName = `${user.firstname || ''} ${user.lastname || ''}`.trim() || user.username || user.email;
+
+          await auditService.createLog({
+            userName: adminName,
+            userEmail: user.email || 'N/A',
+            action: 'Update',
+            contentType: 'Admin 2FA Security',
+            targetDocumentId: `User #${user.id} (${adminName} - ${user.email})`,
+            updatedFields: ['Recovery Codes Regenerated (Fresh TOTP Step-Up Authenticated)'],
+            ipAddress,
+            clientId,
+            location,
+            browser,
+            os: osName,
+            deviceType,
+            systemUser: SERVER_SYSTEM_USER,
+          });
+        }
+      } catch (e) {}
 
       return ctx.send({
         success: true,
-        message: 'New recovery codes generated successfully.',
+        message: 'New recovery codes generated successfully. Previous recovery codes have been invalidated.',
         recoveryCodes: newCodes,
       });
     } catch (err) {
@@ -783,7 +1027,16 @@ export default ({ strapi }: { strapi: any }) => ({
       }
 
       const newCodes = generateRecoveryCodes(8);
-      await setUser2FA(strapi, targetUserId, user2FA.totpSecret, true, newCodes);
+      const hashedCodes = newCodes.map((c) => hashRecoveryCode(c));
+      const knex = strapi.db.connection;
+      await knex.transaction(async (trx: any) => {
+        await trx('strapi_2fa_secrets')
+          .where({ user_id: String(targetUserId) })
+          .update({
+            recovery_codes: JSON.stringify(hashedCodes),
+            updated_at: trx.fn.now(),
+          });
+      });
 
       try {
         const auditService = strapi.service('api::audit-log.audit-log' as any) as any;

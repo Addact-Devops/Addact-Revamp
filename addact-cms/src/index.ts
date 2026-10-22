@@ -490,7 +490,11 @@ export default {
             if (user2FA.totpEnabled && user2FA.totpSecret) {
               if (!totpHeader) {
                 // Password was valid! Create a signed, short-lived (5 min) 2FA challenge token bound strictly to THIS user ID
-                const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET || 'strapi-admin-secret') as string;
+                const jwtSecret = (strapi.config.get('admin.auth.secret') || process.env.ADMIN_JWT_SECRET) as string;
+                if (!jwtSecret) {
+                  strapi.log.error('[2FA Challenge] Admin JWT secret is not configured.');
+                  return ctx.internalServerError('Authentication service unavailable.');
+                }
                 const challengeToken = jwt.sign(
                   {
                     userId: user.id,
