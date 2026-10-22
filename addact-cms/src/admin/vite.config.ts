@@ -6,10 +6,11 @@ export default (config: UserConfig) => {
     resolve: {
       alias: {
         '@': '/src',
+        'punycode.js': 'punycode/',
       },
     },
     server: {
-      allowedHosts: true
-    }
+      allowedHosts: true,
+    },
   });
 };
