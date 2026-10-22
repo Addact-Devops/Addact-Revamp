@@ -107,7 +107,7 @@ function prompt2FACodeModal(email) {
       </div>
 
       <p style="margin: 0 0 22px 0; font-size: 13.5px; color: #64748b; line-height: 1.55;">
-        Enter the 6-digit code from your authenticator app (Google Authenticator, Microsoft Authenticator, 1Password) or an 8-character Emergency Recovery Key:
+        Enter the 6-digit code from your authenticator app (Google Authenticator, Microsoft Authenticator, 1Password)
       </p>
 
       <div style="margin-bottom: 20px;">
@@ -207,9 +207,26 @@ function prompt2FACodeModal(email) {
 
 function getAuthToken() {
   try {
+    // 1. Check LocalStorage and SessionStorage
     const raw = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
-    if (!raw) return null;
-    return raw.replace(/^"|"$/g, '');
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed === 'string' && parsed) return parsed;
+      } catch (e) {
+        return raw.replace(/^"|"$/g, '');
+      }
+    }
+
+    // 2. Check document.cookie (Strapi v5 standard fallback)
+    if (typeof document !== 'undefined' && document.cookie) {
+      const match = document.cookie.match(/(?:^|;\s*)jwtToken=([^;]+)/);
+      if (match && match[1]) {
+        return decodeURIComponent(match[1]);
+      }
+    }
+
+    return null;
   } catch (e) {
     return null;
   }
@@ -597,6 +614,8 @@ function showPostLogin2FASetupModal(token, clientId) {
     });
 }
 
+let isChecking2FAStatus = false;
+
 function checkAndPromptPostLogin2FA(clientId) {
   if (typeof window === 'undefined') return;
 
@@ -605,8 +624,17 @@ function checkAndPromptPostLogin2FA(clientId) {
     return;
   }
 
+  // If setup modal or 2FA login modal is already displayed, don't trigger another fetch
+  if (document.getElementById('strapi-2fa-setup-modal-overlay') || document.getElementById('strapi-2fa-modal-overlay')) {
+    return;
+  }
+
+  if (isChecking2FAStatus) return;
+
   const token = getAuthToken();
   if (!token) return;
+
+  isChecking2FAStatus = true;
 
   fetch('/api/admin-2fa/status', {
     headers: {
@@ -617,6 +645,7 @@ function checkAndPromptPostLogin2FA(clientId) {
   })
     .then((res) => res.json())
     .then((json) => {
+      isChecking2FAStatus = false;
       // Support both flat response { isEnabled: false } and wrapped { data: { isEnabled: false } }
       const data = json?.data || json;
       if (!data) return;
@@ -632,15 +661,16 @@ function checkAndPromptPostLogin2FA(clientId) {
         showPostLogin2FASetupModal(token, clientId);
       }
     })
-    .catch(() => {});
+    .catch(() => {
+      isChecking2FAStatus = false;
+    });
 }
 
 // ==========================================
-// 30-Minute Inactivity Auto-Logout System
+// 1-Hour Inactivity Auto-Logout System
 // ==========================================
 
-const INACTIVITY_TIMEOUT_MS = 30 * 60 * 1000; // 30 minutes
-const INACTIVITY_WARNING_MS = 60 * 1000;      // 60 seconds warning before auto-logout
+const INACTIVITY_TIMEOUT_MS = 60 * 60 * 1000; // 1 hour (60 minutes)
 
 function showSessionExpiredNoticeIfNeeded() {
   if (typeof document === 'undefined') return;
@@ -689,7 +719,7 @@ function showSessionExpiredNoticeIfNeeded() {
       </div>
       <div>
         <div style="font-size: 13.5px; font-weight: 700; color: #0f172a;">Session Expired (Security Timeout)</div>
-        <div style="font-size: 12.5px; color: #64748b; margin-top: 2px;">You were automatically logged out due to 30 minutes of inactivity. Please log in again.</div>
+        <div style="font-size: 12.5px; color: #64748b; margin-top: 2px;">You were automatically logged out due to 1 hour of inactivity. Please log in again.</div>
       </div>
       <button id="strapi-timeout-dismiss-btn" style="
         background: transparent;
@@ -823,8 +853,6 @@ function dismissInactivityWarningModal() {
 }
 
 async function executeAutoLogout(token, clientId) {
-  dismissInactivityWarningModal();
-
   // 1. Send clean logout request so AuditLog registers 'Action: Logout'
   if (token) {
     try {
@@ -839,7 +867,7 @@ async function executeAutoLogout(token, clientId) {
     } catch (e) {}
   }
 
-  // 2. Clear credentials from client storage
+  // 2. Clear credentials from client storage and cookies
   try {
     localStorage.removeItem('jwtToken');
     sessionStorage.removeItem('jwtToken');
@@ -848,10 +876,12 @@ async function executeAutoLogout(token, clientId) {
     sessionStorage.removeItem('strapi_2fa_setup_completed');
     localStorage.removeItem('strapi_last_active_time');
     sessionStorage.setItem('strapi_session_timed_out', 'true');
+    // Clear cookie as well
+    document.cookie = 'jwtToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   } catch (e) {}
 
-  // 3. Clean redirect to admin login page
-  window.location.href = '/admin/auth/login';
+  // 3. Clean direct redirect to admin login page
+  window.location.replace('/admin/auth/login');
 }
 
 function setupInactivityTimeout(clientId) {
@@ -863,21 +893,51 @@ function setupInactivityTimeout(clientId) {
     return;
   }
 
-  const token = getAuthToken();
-  if (!token) return;
-
-  // Initialize active timestamp
+  // Initialize active timestamp if not already present
   if (!localStorage.getItem('strapi_last_active_time')) {
     localStorage.setItem('strapi_last_active_time', String(Date.now()));
   }
 
+  let isLoggingOut = false;
+
+  const checkInactivity = () => {
+    if (isLoggingOut) return;
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/auth/login') || currentPath.includes('/auth/register')) return;
+
+    const token = getAuthToken();
+    if (!token) return;
+
+    const lastActiveStr = localStorage.getItem('strapi_last_active_time');
+    const lastActive = lastActiveStr ? parseInt(lastActiveStr, 10) : Date.now();
+    const idleTime = Date.now() - lastActive;
+
+    // Direct auto-logout immediately when 1 hour of inactivity is reached
+    if (idleTime >= INACTIVITY_TIMEOUT_MS) {
+      isLoggingOut = true;
+      executeAutoLogout(token, clientId);
+    }
+  };
+
   let lastThrottle = 0;
   const recordActivity = () => {
+    if (isLoggingOut) return;
     const now = Date.now();
+
+    // Check if idle time ALREADY exceeded 1 hour before updating the timestamp!
+    // (This is critical when user re-opens laptop or comes back next day)
+    const lastActiveStr = localStorage.getItem('strapi_last_active_time');
+    if (lastActiveStr) {
+      const lastActive = parseInt(lastActiveStr, 10);
+      if (now - lastActive >= INACTIVITY_TIMEOUT_MS) {
+        checkInactivity();
+        return;
+      }
+    }
+
     if (now - lastThrottle > 4000) {
       lastThrottle = now;
       localStorage.setItem('strapi_last_active_time', String(now));
-      dismissInactivityWarningModal();
     }
   };
 
@@ -886,38 +946,21 @@ function setupInactivityTimeout(clientId) {
     window.addEventListener(evt, recordActivity, { passive: true });
   });
 
-  // Cross-tab synchronization via storage event
-  window.addEventListener('storage', (e) => {
-    if (e.key === 'strapi_last_active_time') {
-      dismissInactivityWarningModal();
+  // Check immediately when user switches tabs or wakes up computer
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      checkInactivity();
     }
   });
+  window.addEventListener('focus', checkInactivity);
 
   // Periodic inactivity check every 5 seconds
   const intervalId = setInterval(() => {
-    const currentToken = getAuthToken();
-    const currentPath = window.location.pathname;
-    if (!currentToken || currentPath.includes('/auth/login')) {
+    if (isLoggingOut) {
       clearInterval(intervalId);
       return;
     }
-
-    const lastActiveStr = localStorage.getItem('strapi_last_active_time');
-    const lastActive = lastActiveStr ? parseInt(lastActiveStr, 10) : Date.now();
-    const idleTime = Date.now() - lastActive;
-
-    if (idleTime >= INACTIVITY_TIMEOUT_MS) {
-      clearInterval(intervalId);
-      executeAutoLogout(currentToken, clientId);
-    } else if (idleTime >= INACTIVITY_TIMEOUT_MS - INACTIVITY_WARNING_MS) {
-      const remainingSec = Math.max(1, Math.ceil((INACTIVITY_TIMEOUT_MS - idleTime) / 1000));
-      showInactivityWarningModal(remainingSec, () => {
-        localStorage.setItem('strapi_last_active_time', String(Date.now()));
-        dismissInactivityWarningModal();
-      });
-    } else {
-      dismissInactivityWarningModal();
-    }
+    checkInactivity();
   }, 5000);
 }
 
@@ -976,7 +1019,7 @@ export default {
   bootstrap(app) {
     const clientId = getOrCreateClientId();
 
-    // Setup 30-minute Inactivity Auto-Logout
+    // Setup 1-Hour Inactivity Auto-Logout
     setupInactivityTimeout(clientId);
 
     // Default to hiding the 2FA Management menu until admin role is confirmed

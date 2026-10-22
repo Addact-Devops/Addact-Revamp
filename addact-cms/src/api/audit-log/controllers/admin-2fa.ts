@@ -348,7 +348,7 @@ export default ({ strapi }: { strapi: any }) => ({
         secret: secretToVerify,
         encoding: 'base32',
         token: String(token).trim(),
-        window: 1,
+        window: 2,
       });
 
       if (!verified) {
@@ -467,7 +467,7 @@ export default ({ strapi }: { strapi: any }) => ({
           secret: user2FA.totpSecret,
           encoding: 'base32',
           token: rawOtp,
-          window: 1,
+          window: 2,
         });
       }
 

@@ -6,6 +6,7 @@ export default (config: UserConfig) => {
     resolve: {
       alias: {
         '@': '/src',
+        'punycode.js': 'punycode/',
       },
     },
     server: {

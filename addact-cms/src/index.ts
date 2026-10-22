@@ -3,6 +3,7 @@ import speakeasy from 'speakeasy';
 import jwt from 'jsonwebtoken';
 import { parseUserAgent } from './utils/user-agent';
 import { getLocationFromIp, SERVER_SYSTEM_USER, sanitizeClientId } from './utils/location';
+import type { ChangeDetail } from './api/audit-log/services/audit-log';
 import * as os from 'os';
 import * as http from 'http';
 import * as https from 'https';
@@ -113,6 +114,223 @@ function getDeepPopulate(uid: string, depth = 3): any {
   } catch (e) {
     return '*';
   }
+}
+
+function getModelOrComponent(strapi: any, uid: string): any {
+  if (!uid || !strapi) return null;
+  return (strapi as any).getModel?.(uid) || (strapi as any).components?.[uid] || null;
+}
+
+function getEntityDisplayName(item: any): string | null {
+  if (!item) return null;
+  if (typeof item === 'string' || typeof item === 'number') return null;
+  if (typeof item !== 'object') return null;
+
+  const candidates = [
+    item.ReferenceTitle,
+    item.name,
+    item.Name,
+    item.title,
+    item.Title,
+    item.heading,
+    item.Heading,
+    item.pageTitle,
+    item.PageTitle,
+    item.label,
+    item.Label,
+    item.username,
+    item.Username,
+    item.email,
+    item.Email,
+    item.slug,
+    item.caption,
+    item.alternativeText,
+    item.Category?.Title,
+    item.Category?.title,
+    item.Author?.Name,
+    item.Author?.name,
+    item.HeadingSection?.[0]?.PageTitle,
+    item.BlogBanner?.[0]?.BannerTitle,
+  ];
+
+  for (const cand of candidates) {
+    if (cand && typeof cand === 'string' && cand.trim().length > 0) {
+      return cand.trim();
+    }
+  }
+
+  // Fallback for media: url filename
+  if (item.url && typeof item.url === 'string') {
+    const filename = item.url.split('/').pop();
+    if (filename) return filename;
+  }
+
+  return null;
+}
+
+function getTargetUidForField(strapi: any, baseUid: string, fieldPath: string): string | null {
+  try {
+    const cleanPath = fieldPath.replace(/ \(.*\)$/, '');
+    const pathParts = cleanPath.split('.');
+    let currentModel: any = getModelOrComponent(strapi, baseUid);
+
+    for (let i = 0; i < pathParts.length; i++) {
+      const part = pathParts[i];
+      if (!currentModel || !currentModel.attributes) return null;
+
+      if (/^\d+$/.test(part)) continue;
+
+      const attr = currentModel.attributes[part];
+      if (!attr) return null;
+
+      if (i === pathParts.length - 1) {
+        if (attr.type === 'relation') return attr.target || null;
+        if (attr.type === 'media') return 'plugin::upload.file';
+        return null;
+      }
+
+      if (attr.type === 'component') {
+        currentModel = getModelOrComponent(strapi, attr.component);
+      }
+    }
+  } catch (e) {}
+  return null;
+}
+
+async function resolveEntityNameById(strapi: any, targetUid: string, idOrDocId: any): Promise<string | null> {
+  if (!targetUid || !idOrDocId || !strapi) return null;
+  try {
+    let record: any = null;
+    const idStr = String(idOrDocId).trim();
+    if (!idStr) return null;
+
+    if (targetUid === 'plugin::upload.file') {
+      record = await (strapi.db.query('plugin::upload.file' as any) as any).findOne({
+        where: { $or: [{ id: idOrDocId }, { documentId: idOrDocId }] },
+      });
+      return getEntityDisplayName(record);
+    }
+
+    if (idStr.length > 10) {
+      try {
+        record = await (strapi.documents(targetUid as any) as any).findOne({
+          documentId: idStr,
+          populate: '*',
+        });
+      } catch (e) {}
+    }
+
+    if (!record) {
+      try {
+        record = await (strapi.db.query(targetUid as any) as any).findOne({
+          where: { $or: [{ id: idOrDocId }, { documentId: idOrDocId }] },
+          populate: true,
+        });
+      } catch (e) {}
+    }
+
+    return getEntityDisplayName(record);
+  } catch (e) {
+    return null;
+  }
+}
+
+async function formatValForDisplay(val: any, strapi?: any, targetUid?: string | null): Promise<string | null> {
+  if (val === null || val === undefined || val === '') return null;
+  if (typeof val === 'boolean') return val ? 'true' : 'false';
+  if (typeof val === 'number') {
+    if (targetUid && strapi) {
+      const resolved = await resolveEntityNameById(strapi, targetUid, val);
+      if (resolved) return resolved;
+    }
+    return String(val);
+  }
+  if (typeof val === 'string') {
+    const trimmed = val.trim();
+    if (trimmed.length === 0) return null;
+    if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        return JSON.stringify(parsed, null, 2);
+      } catch (e) {
+        return trimmed;
+      }
+    }
+    // If it's a documentId string in a relation field
+    if (targetUid && strapi && trimmed.length > 10 && !trimmed.includes(' ')) {
+      const resolved = await resolveEntityNameById(strapi, targetUid, trimmed);
+      if (resolved) return resolved;
+    }
+    return trimmed;
+  }
+  if (Array.isArray(val)) {
+    const ids = getEntityIds(val);
+    if (ids.length > 0) {
+      const names: string[] = [];
+      for (const it of val) {
+        let name = getEntityDisplayName(it);
+        const rawId = (typeof it === 'object' && it !== null) ? (it.documentId || it.id) : it;
+        if (!name && targetUid && strapi && rawId) {
+          name = await resolveEntityNameById(strapi, targetUid, rawId);
+        }
+        names.push(name || String(rawId || ''));
+      }
+      if (names.length > 0) {
+        return names.join(', ');
+      }
+    }
+    try {
+      return JSON.stringify(val, null, 2);
+    } catch (e) {
+      return `[${val.length} items]`;
+    }
+  }
+  if (typeof val === 'object') {
+    // 1. Connect / Disconnect relation payload
+    if ('connect' in val || 'disconnect' in val) {
+      const resolveList = async (items: any[]) => {
+        if (!Array.isArray(items)) return [];
+        const res: string[] = [];
+        for (const it of items) {
+          let name = getEntityDisplayName(it);
+          const rawId = (typeof it === 'object' && it !== null) ? (it.documentId || it.id) : it;
+          if (!name && targetUid && strapi && rawId) {
+            name = await resolveEntityNameById(strapi, targetUid, rawId);
+          }
+          res.push(name || String(rawId || ''));
+        }
+        return res.filter(Boolean);
+      };
+
+      const connectNames = await resolveList((val as any).connect);
+      const disconnectNames = await resolveList((val as any).disconnect);
+
+      const parts: string[] = [];
+      if (connectNames.length) parts.push(`+[${connectNames.join(', ')}]`);
+      if (disconnectNames.length) parts.push(`-[${disconnectNames.join(', ')}]`);
+      return parts.join(', ') || null;
+    }
+
+    // 2. Direct Relation or Media object
+    let objName = getEntityDisplayName(val);
+    if (!objName && targetUid && strapi && (val.id || val.documentId)) {
+      objName = await resolveEntityNameById(strapi, targetUid, val.documentId || val.id);
+    }
+    if (objName) {
+      return objName;
+    }
+
+    const ids = getEntityIds(val);
+    if (ids.length > 0) return `ID: ${ids.join(', ')}`;
+
+    // 3. Generic JSON object
+    try {
+      return JSON.stringify(val, null, 2);
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
 }
 
 function diffValue(newVal: any, oldVal: any, path: string): string[] {
@@ -422,6 +640,32 @@ export default {
       }
     } catch (e) {}
 
+    // Automated 30-Day Audit Log Retention Policy
+    // Run cleanup on bootstrap startup, and every 24 hours automatically
+    try {
+      if (auditService && typeof auditService.autoPurgeOlderThanDays === 'function') {
+        // Run once on server startup (after short delay so DB connections are fully ready)
+        setTimeout(async () => {
+          try {
+            await auditService.autoPurgeOlderThanDays(30);
+          } catch (e) {
+            strapi.log.error('[AuditLog Auto-Purge] Startup purge error:', e);
+          }
+        }, 15000);
+
+        // Run recurring cleanup every 24 hours
+        setInterval(async () => {
+          try {
+            await auditService.autoPurgeOlderThanDays(30);
+          } catch (e) {
+            strapi.log.error('[AuditLog Auto-Purge] Scheduled purge error:', e);
+          }
+        }, 24 * 60 * 60 * 1000);
+      }
+    } catch (e) {
+      strapi.log.error('[AuditLog Auto-Purge] Failed to initialize retention task:', e);
+    }
+
     strapi.eventHub.on('admin.logout', async ({ user }: any) => {
       try {
         if (!user) return;
@@ -557,25 +801,46 @@ export default {
         const location = await getLocationFromIp(ipAddress);
 
         let updatedFields: string[] = [];
+        let changeDetails: ChangeDetail[] = [];
         let actionName = action.charAt(0).toUpperCase() + action.slice(1);
 
         const paramsData = (params as any)?.data;
         if (action === 'update' && paramsData) {
           const rawKeys = Object.keys(paramsData);
-          
+
           for (const key of rawKeys) {
             if (IGNORED_KEYS.has(key) || key.startsWith('__')) continue;
-            
+
             const newVal = paramsData[key];
             if (newVal === undefined) continue;
             const oldVal = oldData?.[key];
-            
+
             const changes = diffValue(newVal, oldVal, key);
             if (changes.length > 0) {
               updatedFields.push(...changes);
+
+              // Build rich before/after detail for each changed field path
+              for (const fieldPath of changes) {
+                // Resolve nested value from oldData using the field path
+                const pathParts = fieldPath.replace(/ \(.*\)$/, '').split('.');
+                let resolvedOld: any = oldData;
+                let resolvedNew: any = paramsData;
+                for (const part of pathParts) {
+                  resolvedOld = resolvedOld?.[part];
+                  resolvedNew = resolvedNew?.[part];
+                }
+                const targetUid = getTargetUidForField(strapi, uid as string, fieldPath);
+                const beforeVal = await formatValForDisplay(resolvedOld, strapi, targetUid);
+                const afterVal = await formatValForDisplay(resolvedNew, strapi, targetUid);
+                changeDetails.push({
+                  field: fieldPath,
+                  before: beforeVal,
+                  after: afterVal,
+                });
+              }
             }
           }
-          
+
           if (updatedFields.length === 0) {
             return result; // Don't log if nothing changed
           }
@@ -661,6 +926,7 @@ export default {
             contentType: contentTypeDisplay as any,
             targetDocumentId: docIdDisplay ? String(docIdDisplay) : undefined,
             updatedFields,
+            changeDetails: changeDetails.length > 0 ? changeDetails : undefined,
             ipAddress,
             clientId,
             location,

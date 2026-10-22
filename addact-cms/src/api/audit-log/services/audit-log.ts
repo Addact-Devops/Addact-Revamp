@@ -1,12 +1,19 @@
 import { factories } from '@strapi/strapi';
 
+export interface ChangeDetail {
+  field: string;
+  before: string | null;
+  after: string | null;
+}
+
 export interface CreateAuditLogPayload {
   userName?: string;
   userEmail?: string;
   action: 'Create' | 'Update' | 'Delete' | 'Publish' | 'Unpublish' | 'Login' | 'Logout';
   contentType?: string;
   targetDocumentId?: string;
-  updatedFields?: string[];
+  updatedFields?: string[];       // plain field names (legacy & Delete/Publish)
+  changeDetails?: ChangeDetail[]; // rich before/after (Update action)
   ipAddress?: string;
   clientId?: string;
   location?: string;
@@ -18,10 +25,24 @@ export interface CreateAuditLogPayload {
 
 export default factories.createCoreService('api::audit-log.audit-log' as any, ({ strapi }) => ({
   /**
-   * Fail-safe log creation
+   * Fail-safe log creation.
+   * For Update actions: stores ChangeDetail[] in updatedFields (rich format).
+   * For all other actions: stores string[] in updatedFields (legacy format).
+   * Both fit the existing `updatedFields` JSON column — no migration needed.
    */
   async createLog(payload: CreateAuditLogPayload) {
     try {
+      // Decide what to store in the JSON `updatedFields` column:
+      // • If changeDetails provided → store rich objects [{field, before, after}]
+      // • Else if updatedFields provided → store plain strings ["fieldName"]
+      // • Else → null
+      let fieldsToStore: any = null;
+      if (payload.changeDetails && payload.changeDetails.length > 0) {
+        fieldsToStore = payload.changeDetails; // rich objects
+      } else if (payload.updatedFields && payload.updatedFields.length > 0) {
+        fieldsToStore = payload.updatedFields; // plain strings
+      }
+
       await (strapi.documents('api::audit-log.audit-log' as any) as any).create({
         data: {
           userName: payload.userName || 'Unknown User',
@@ -29,7 +50,7 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
           action: payload.action,
           contentType: payload.contentType || 'N/A',
           targetDocumentId: payload.targetDocumentId || null,
-          updatedFields: payload.updatedFields && payload.updatedFields.length > 0 ? payload.updatedFields : null,
+          updatedFields: fieldsToStore,
           ipAddress: payload.ipAddress || 'Unknown IP',
           clientId: payload.clientId || null,
           location: payload.location || null,
@@ -200,56 +221,35 @@ export default factories.createCoreService('api::audit-log.audit-log' as any, ({
   },
 
   /**
-   * Delete a single audit log by numeric DB id
+   * Automatically purge audit logs older than a given number of days (e.g. 30 days)
    */
-  async deleteLog(id: number) {
+  async autoPurgeOlderThanDays(days = 30) {
     try {
-      await (strapi.db.query('api::audit-log.audit-log') as any).delete({
-        where: { id },
-      });
-    } catch (err) {
-      strapi.log.error('AuditLogService: Failed to delete audit log:', err);
-      throw err;
-    }
-  },
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - days);
+      const cutoffIso = cutoffDate.toISOString();
 
-  /**
-   * Delete all audit logs (or filtered by action / contentType / date range)
-   */
-  async deleteAllLogs(params: any = {}) {
-    try {
-      const filters: any = {};
-
-      if (params.action && params.action !== 'all') {
-        filters.action = params.action;
-      }
-      if (params.contentType && params.contentType !== 'all') {
-        filters.contentType = params.contentType;
-      }
-      if (params.startDate || params.endDate) {
-        filters.createdAt = {};
-        if (params.startDate) {
-          filters.createdAt.$gte = new Date(params.startDate).toISOString();
-        }
-        if (params.endDate) {
-          const endDateObj = new Date(params.endDate);
-          endDateObj.setHours(23, 59, 59, 999);
-          filters.createdAt.$lte = endDateObj.toISOString();
-        }
-      }
+      const filters = {
+        createdAt: {
+          $lt: cutoffIso,
+        },
+      };
 
       const count = await (strapi.db.query('api::audit-log.audit-log') as any).count({
         where: filters,
       });
 
-      await (strapi.db.query('api::audit-log.audit-log') as any).deleteMany({
-        where: filters,
-      });
+      if (count > 0) {
+        await (strapi.db.query('api::audit-log.audit-log') as any).deleteMany({
+          where: filters,
+        });
+        strapi.log.info(`[AuditLog Auto-Purge] Cleaned up ${count} audit logs older than ${days} days (cutoff: ${cutoffIso}).`);
+      }
 
       return count;
     } catch (err) {
-      strapi.log.error('AuditLogService: Failed to delete all audit logs:', err);
-      throw err;
+      strapi.log.error(`[AuditLog Auto-Purge] Failed to purge logs older than ${days} days:`, err);
+      return 0;
     }
   },
 }));
