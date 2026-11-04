@@ -154,6 +154,23 @@ const GET_ADDACT_HEADER = gql`
         isNavHide
       }
       additionalText
+      announcementText {
+        Title
+      }
+      announcementLink {
+        id
+        href
+        label
+        target
+        isExternal
+        SubDisc
+        Icon {
+          alternativeText
+          url
+          width
+          height
+        }
+      }
       contactDetails {
         id
         href
@@ -233,6 +250,10 @@ export interface AddactHeaderData {
   contactButton?: HeaderCard; // SINGLE (repeatable: false)
   menu?: HeaderMenuItem[]; // ARRAY (repeatable: true)
   additionalText?: string;
+  announcementText?: {
+    Title?: string;
+  };
+  announcementLink?: HeaderLink;
   contactDetails?: HeaderLink[]; // ARRAY (repeatable: true)
 }
 

@@ -1,0 +1,72 @@
+{
+  "kind": "collectionType",
+  "collectionName": "audit_logs",
+  "info": {
+    "singularName": "audit-log",
+    "pluralName": "audit-logs",
+    "displayName": "Audit Log",
+    "description": "CMS Audit Logs recording user activities"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "userName": {
+      "type": "string"
+    },
+    "userEmail": {
+      "type": "string"
+    },
+    "action": {
+      "type": "enumeration",
+      "enum": [
+        "Create",
+        "Update",
+        "Delete",
+        "Publish",
+        "Unpublish",
+        "Login",
+        "Logout"
+      ],
+      "required": true
+    },
+    "contentType": {
+      "type": "string"
+    },
+    "targetDocumentId": {
+      "type": "string"
+    },
+    "updatedFields": {
+      "type": "json"
+    },
+    "ipAddress": {
+      "type": "string"
+    },
+    "clientId": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "browser": {
+      "type": "string"
+    },
+    "os": {
+      "type": "string"
+    },
+    "deviceType": {
+      "type": "string"
+    },
+    "systemUser": {
+      "type": "string"
+    }
+  }
+}

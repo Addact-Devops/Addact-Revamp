@@ -458,6 +458,12 @@ const Header = ({
     (lp.startsWith("/events") && lp.includes("sitecore")) ||
     (lp.startsWith("/press-releases") && lp.includes("sitecore"));
 
+  const hasTitle = Boolean(headerData?.announcementText?.Title?.trim());
+  const hasLink = Boolean(
+    headerData?.announcementLink?.href?.trim() && headerData?.announcementLink?.label?.trim()
+  );
+  const isBannerActuallyVisible = showBanner && (hasTitle || hasLink);
+
   const logo = headerData?.logo;
   const menu = headerData?.menu ?? [];
   const contactBtn = headerData?.contactButton;
@@ -503,22 +509,30 @@ const Header = ({
   ${headerHidden && !isMobileMenuOpen ? "-translate-y-full" : ""}`}
     >
       {/* Banner */}
-      {showBanner && (
+      {isBannerActuallyVisible && (
         <div
           className={`hidden lg:block bg-[#3C4CFF] overflow-hidden transition-all duration-300 ${bannerVisible ? "max-h-[60px]" : "max-h-0"}`}
         >
           <div className="container-main text-white justify-center items-center py-2 lg:py-2.5 hidden md:flex">
             <span className="text-[14px] 2xl:text-[18px]">
-              Need An Accurate Estimate For Your Sitecore XM Cloud Migration Project? Kickstart Your
-              Journey Here!
+              {headerData?.announcementText?.Title}
             </span>
-            <Link
-              href="/project-cost-estimators"
-              aria-label="Get My Estimation"
-              className="ml-6 hover:bg-white text-white px-3 rounded-[8px] border border-white font-semibold hover:text-[#3c4cff] text-[14px] h-10 flex items-center"
-            >
-              Get My Estimation
-            </Link>
+            {headerData?.announcementLink?.href && headerData?.announcementLink?.label && (() => {
+              const annLink = headerData.announcementLink;
+              const linkTarget = annLink.isExternal ? "_blank" : (annLink.target?.replace(/^_?/, "_") || "_self");
+
+              return (
+                <Link
+                  href={annLink.href ?? "#"}
+                  target={linkTarget}
+                  rel={linkTarget === "_blank" ? "noopener noreferrer" : undefined}
+                  aria-label={annLink.label}
+                  className="ml-6 hover:bg-white text-white px-3 rounded-[8px] border border-white font-semibold hover:text-[#3c4cff] text-[14px] h-10 flex items-center shrink-0"
+                >
+                  {annLink.label}
+                </Link>
+              );
+            })()}
           </div>
         </div>
       )}
@@ -595,7 +609,7 @@ const Header = ({
                     }}
                     className="fixed z-[140] overflow-hidden w-[calc(100vw-40px)] max-w-[1600px] min-h-[336px] left-1/2 -translate-x-1/2"
                     style={{
-                      top: `${showBanner && bannerVisible ? "190px" : "115px"}`,
+                      top: `${isBannerActuallyVisible && bannerVisible ? "190px" : "115px"}`,
                       background: "#0F0F0F",
                       border: "1px solid #2E2E2E",
                       borderRadius: "20px",
